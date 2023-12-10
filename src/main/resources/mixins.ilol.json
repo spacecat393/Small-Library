@@ -1,0 +1,17 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "com.nali.ilol.mixin",
+  "refmap": "refmap.ilol.json",
+  "mixins": [
+    "IMixinWorldServer",
+    "MixinItemMonsterPlacer",
+    "IMixinEntityRegistry",
+    "IMixinEntityLivingBase",
+    "IMixinEntity"
+  ],
+  "client": [
+    "IMixinGuiContainer",
+    "IMixinGuiScreen"
+  ],
+  "server": []
+}
