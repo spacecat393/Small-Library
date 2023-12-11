@@ -27,21 +27,22 @@ public class OpenGUIHelper
             SkinningEntities skinningentities = SkinningEntities.CLIENT_ENTITIES_MAP.get(BytesReader.getUUID(data, 4));
 //            minecraft.displayGuiScreen(new InventoryGui(skinningentities));
 
-            minecraft.addScheduledTask(() ->
-            {
-                try
-                {
-                    minecraft.displayGuiScreen((GuiContainer)constructor.newInstance(minecraft.player.inventory, skinningentities));
-                }
-                catch (InstantiationException | IllegalAccessException | InvocationTargetException e)
-                {
-                    throw new RuntimeException(e);
-                }
-            });
+            minecraft.displayGuiScreen((GuiContainer)constructor.newInstance(minecraft.player.inventory, skinningentities));
+//            minecraft.addScheduledTask(() ->
+//            {
+//                try
+//                {
+//                    minecraft.displayGuiScreen((GuiContainer)constructor.newInstance(minecraft.player.inventory, skinningentities));
+//                }
+//                catch (InstantiationException | IllegalAccessException | InvocationTargetException e)
+//                {
+//                    throw new RuntimeException(e);
+//                }
+//            });
 
             minecraft.player.openContainer.windowId = BytesReader.getInt(data, 20);
         }
-        catch (NoSuchMethodException e)
+        catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
         {
             ILOL.LOGGER.error(e.getMessage(), e);
         }

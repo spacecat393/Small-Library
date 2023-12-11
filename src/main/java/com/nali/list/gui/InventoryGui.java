@@ -5,7 +5,6 @@ import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.entities.skinning.SkinningEntitiesRender;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
 import com.nali.ilol.gui.MixGui;
-import com.nali.ilol.mixin.IMixinGuiContainer;
 import com.nali.ilol.mixin.IMixinGuiScreen;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.system.Reference;
@@ -43,8 +42,8 @@ public class InventoryGui extends MixGui
     {
         super(new InventoryContainer(iinventory, skinningentities, Minecraft.getMinecraft().player));
         this.mc = Minecraft.getMinecraft();
-//        ScaledResolution scaledresolution = new ScaledResolution(this.mc);
-//        this.setWorldAndResolution(Minecraft.getMinecraft(), scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
+        ScaledResolution scaledresolution = new ScaledResolution(this.mc);
+        this.setWorldAndResolution(Minecraft.getMinecraft(), scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
         this.skinningentitiesrender = (SkinningEntitiesRender)this.mc.getRenderManager().getEntityRenderObject(skinningentities);
         SkinningData skinningdata = (SkinningData)skinningentities.client_object;
         skinningdata.screen_float_array[3] = 0.0F;
@@ -220,7 +219,7 @@ public class InventoryGui extends MixGui
         x = this.guiLeft + 57; y = this.guiTop + 27; width = 5; height = 6;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            if (((IMixinGuiContainer)this).lastClickButton() == 0)
+            if (this.mouse_released == 0)
             {
                 byte[] byte_array = new byte[21];
                 byte_array[0] = 2;
@@ -255,7 +254,7 @@ public class InventoryGui extends MixGui
         /*x = this.guiLeft + 57; */y = this.guiTop + 35;/* width = 5; height = 6;*/
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            if (((IMixinGuiContainer)this).lastClickButton() == 0)
+            if (this.mouse_released == 0)
             {
                 byte[] byte_array = new byte[21];
                 byte_array[0] = 2;
@@ -290,7 +289,7 @@ public class InventoryGui extends MixGui
         x = this.guiLeft + 82; y = this.guiTop + 31; width = 18; height = 18;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            if (((IMixinGuiContainer)this).lastClickButton() == 0)
+            if (this.mouse_released == 0)
             {
                 this.page = this.page == 2 ? 0 : this.page == 1 ? 2 : (byte)1;
             }
@@ -342,7 +341,7 @@ public class InventoryGui extends MixGui
                 }
                 else
                 {
-                    if (((IMixinGuiContainer)this).lastClickButton() == 0)
+                    if (this.mouse_released == 0)
                     {
                         byte[] byte_array = new byte[22];
                         byte_array[0] = 1;
@@ -393,7 +392,7 @@ public class InventoryGui extends MixGui
                 }
                 else
                 {
-                    if (((IMixinGuiContainer)this).lastClickButton() == 0)
+                    if (this.mouse_released == 0)
                     {
                         byte[] byte_array = new byte[21];
                         byte_array[0] = 2;
@@ -431,7 +430,7 @@ public class InventoryGui extends MixGui
             {
                 if (this.page == 1)
                 {
-                    if (((IMixinGuiContainer)this).lastClickButton() == 0)
+                    if (this.mouse_released == 0)
                     {
                         byte[] byte_array = new byte[22];
                         byte_array[0] = 1;
@@ -464,7 +463,7 @@ public class InventoryGui extends MixGui
             {
                 if (this.page == 1)
                 {
-                    if (((IMixinGuiContainer)this).lastClickButton() == 0)
+                    if (this.mouse_released == 0)
                     {
                         byte[] byte_array = new byte[22];
                         byte_array[0] = 1;
@@ -497,7 +496,7 @@ public class InventoryGui extends MixGui
             {
                 if (this.page == 1)
                 {
-                    if (((IMixinGuiContainer)this).lastClickButton() == 0)
+                    if (this.mouse_released == 0)
                     {
                         byte[] byte_array = new byte[22];
                         byte_array[0] = 1;
@@ -530,7 +529,7 @@ public class InventoryGui extends MixGui
             {
                 if (this.page == 1)
                 {
-                    if (((IMixinGuiContainer)this).lastClickButton() == 0)
+                    if (this.mouse_released == 0)
                     {
                         byte[] byte_array = new byte[22];
                         byte_array[0] = 1;
@@ -563,7 +562,7 @@ public class InventoryGui extends MixGui
             {
                 if (this.page == 1)
                 {
-                    if (((IMixinGuiContainer)this).lastClickButton() == 0)
+                    if (this.mouse_released == 0)
                     {
                         byte[] byte_array = new byte[22];
                         byte_array[0] = 1;
@@ -674,7 +673,7 @@ public class InventoryGui extends MixGui
             }
         }
 
-        ((IMixinGuiContainer)this).lastClickButton(-1);
+        this.mouse_released = -1;
     }
 
     @Override
@@ -873,19 +872,6 @@ public class InventoryGui extends MixGui
         else
         {
             super.keyTyped(typedChar, keyCode);
-        }
-    }
-
-    @Override
-    public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
-    {
-        if (this.page == 0)
-        {
-            super.mouseClicked(mouseX, mouseY, mouseButton);
-        }
-        else
-        {
-            ((IMixinGuiContainer)this).lastClickButton(mouseButton);
         }
     }
 

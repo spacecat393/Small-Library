@@ -7,6 +7,8 @@ import net.minecraft.inventory.Container;
 
 public abstract class MixGui extends GuiContainer
 {
+    public int mouse_released;
+
     public MixGui(Container container)
     {
         super(container);
@@ -95,5 +97,12 @@ public abstract class MixGui extends GuiContainer
         GlStateManager.enableDepth();
         RenderHelper.enableStandardItemLighting();
         GlStateManager.enableRescaleNormal();
+    }
+
+    @Override
+    public void mouseReleased(int mouseX, int mouseY, int state)
+    {
+        this.mouse_released = state;
+        super.mouseReleased(mouseX, mouseY, state);
     }
 }
