@@ -106,7 +106,7 @@ public abstract class ObjectEntities extends Entity
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
         for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
         {
-            entitydatamanager.set(integer_dataparameter, nbttagcompound.getInteger("int" + i++));
+            entitydatamanager.set(integer_dataparameter, nbttagcompound.getInteger("int_" + i++));
         }
         i = 0;
 

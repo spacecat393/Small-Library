@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 
 public class InventoryContainer extends Container
 {
+    public static int ID;
     public EntityPlayer entityplayer;
     public SkinningEntities skinningentities;
     public InventoryContainer(IInventory iinventory, SkinningEntities skinningentities, EntityPlayer entityplayer)

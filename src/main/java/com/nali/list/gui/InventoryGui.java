@@ -4,7 +4,7 @@ import com.nali.data.SkinningData;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.entities.skinning.SkinningEntitiesRender;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
-import com.nali.ilol.gui.SmallGui;
+import com.nali.ilol.gui.MixGui;
 import com.nali.ilol.mixin.IMixinGuiContainer;
 import com.nali.ilol.mixin.IMixinGuiScreen;
 import com.nali.ilol.networks.NetworksRegistry;
@@ -28,9 +28,9 @@ import org.lwjgl.opengl.GL11;
 import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
-public class InventoryGui extends SmallGui
+public class InventoryGui extends MixGui
 {
-    public static ResourceLocation GUI_RESOURCELOCATION = new ResourceLocation(Reference.MOD_ID, "textures/gui/container/inventory.png");
+    public static ResourceLocation GUI_RESOURCELOCATION = new ResourceLocation(Reference.MOD_ID, "textures/gui/inventory.png");
     public SkinningEntitiesRender skinningentitiesrender;
     public byte page;
     public float px, py/*, rx, ry*/;
@@ -42,7 +42,7 @@ public class InventoryGui extends SmallGui
     public InventoryGui(IInventory iinventory, SkinningEntities skinningentities)
     {
         super(new InventoryContainer(iinventory, skinningentities, Minecraft.getMinecraft().player));
-//        this.mc = Minecraft.getMinecraft();
+        this.mc = Minecraft.getMinecraft();
 //        ScaledResolution scaledresolution = new ScaledResolution(this.mc);
 //        this.setWorldAndResolution(Minecraft.getMinecraft(), scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
         this.skinningentitiesrender = (SkinningEntitiesRender)this.mc.getRenderManager().getEntityRenderObject(skinningentities);

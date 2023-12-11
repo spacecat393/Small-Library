@@ -3,12 +3,14 @@ package com.nali.ilol.entities.skinning;
 import com.google.common.base.Optional;
 import com.nali.data.BothData;
 import com.nali.data.SkinningData;
+import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.bytes.SkinningEntitiesBytes;
 import com.nali.ilol.entities.skinning.ai.*;
 import com.nali.ilol.entities.skinning.data.SkinningEntitiesLiveFrame;
 import com.nali.ilol.mixin.IMixinEntity;
 import com.nali.ilol.mixin.IMixinEntityLivingBase;
 import com.nali.ilol.networks.NetworksRegistry;
+import com.nali.list.container.InventoryContainer;
 import com.nali.list.messages.OpenGUIMessage;
 import com.nali.system.Reflect;
 import com.nali.system.bytes.BytesWriter;
@@ -84,6 +86,19 @@ public abstract class SkinningEntities extends EntityLivingBase
     {
         CONTAINER_CLASS_LIST = Reflect.getClasses("com.nali.list.container");
         CONTAINER_CLASS_LIST.sort(Comparator.comparing(Class::getName));
+
+        int index = 0;
+        for (Class clasz : CONTAINER_CLASS_LIST)
+        {
+            try
+            {
+                clasz.getField("ID").set(null, index++);
+            }
+            catch (IllegalAccessException | NoSuchFieldException e)
+            {
+                ILOL.LOGGER.error(e.getMessage(), e);
+            }
+        }
 
         for (int i = 0; i < UUID_OPTIONAL_DATAPARAMETER_ARRAY.length; ++i)
         {
@@ -288,7 +303,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
         for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
         {
-            entitydatamanager.set(integer_dataparameter, nbttagcompound.getInteger("int" + i++));
+            entitydatamanager.set(integer_dataparameter, nbttagcompound.getInteger("int_" + i++));
         }
         i = 0;
 
@@ -677,7 +692,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         {
             if (!this.getEntityWorld().isRemote)
             {
-                setContainer(this, entityplayer, 0);
+                setContainer(this, entityplayer, InventoryContainer.ID);
             }
         }
         else

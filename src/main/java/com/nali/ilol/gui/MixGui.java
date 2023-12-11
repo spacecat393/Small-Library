@@ -5,9 +5,9 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Container;
 
-public abstract class SmallGui extends GuiContainer
+public abstract class MixGui extends GuiContainer
 {
-    public SmallGui(Container container)
+    public MixGui(Container container)
     {
         super(container);
     }
