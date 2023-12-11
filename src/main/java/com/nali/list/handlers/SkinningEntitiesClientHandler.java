@@ -1,5 +1,7 @@
-package com.nali.ilol.entities.skinning;
+package com.nali.list.handlers;
 
+import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

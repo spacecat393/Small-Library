@@ -31,6 +31,7 @@ public class CapabilitiesRegistryHelper
         CAPABILITIES_SERIALIZATIONS_CLASS_LIST.sort(Comparator.comparing(Class::getName));
         CAPABILITIES_TYPES_CLASS_LIST.sort(Comparator.comparing(Class::getName));
 
+        RESOURCELOCATION_ARRAY = new ResourceLocation[CAPABILITIES_STORAGES_CLASS_LIST.size()];
         int index = 0;
         for (Class clasz : CAPABILITIES_STORAGES_CLASS_LIST)
         {

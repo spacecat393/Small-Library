@@ -14,8 +14,6 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Comparator;
@@ -25,11 +23,9 @@ import java.util.WeakHashMap;
 public class ILOL
 {
     @Instance
-    public static com.nali.ilol.ILOL ILOL;
+    public static ILOL I;
 
     public static Logger LOGGER;
-
-    public static SimpleNetworkWrapper SIMPLENETWORKWRAPPER = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MOD_ID);
 
     @EventHandler
     public void onFMLPreInitializationEvent(FMLPreInitializationEvent event)

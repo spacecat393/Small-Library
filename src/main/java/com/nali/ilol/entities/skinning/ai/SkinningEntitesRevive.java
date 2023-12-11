@@ -1,8 +1,8 @@
 package com.nali.ilol.entities.skinning.ai;
 
-import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.skinning.SkinningEntities;
-import com.nali.ilol.entities.skinning.SkinningEntitiesClientMessage;
+import com.nali.ilol.networks.NetworksRegistry;
+import com.nali.list.messages.SkinningEntitiesClientMessage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -53,7 +53,7 @@ public class SkinningEntitesRevive
 
                         if (this.entity instanceof EntityPlayer)
                         {
-                            ILOL.SIMPLENETWORKWRAPPER.sendTo(new SkinningEntitiesClientMessage(new byte[]{1}), ((EntityPlayerMP)this.entity));
+                            NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(new byte[]{1}), ((EntityPlayerMP)this.entity));
                         }
                     }
 

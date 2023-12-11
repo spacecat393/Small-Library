@@ -1,5 +1,7 @@
-package com.nali.ilol.gui;
+package com.nali.list.handlers;
 
+import com.nali.ilol.gui.OpenGUIHelper;
+import com.nali.list.messages.OpenGUIMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

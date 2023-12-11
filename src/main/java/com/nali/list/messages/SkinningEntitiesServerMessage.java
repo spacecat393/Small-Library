@@ -1,9 +1,11 @@
-package com.nali.ilol.entities.skinning;
+package com.nali.list.messages;
 
 import com.nali.ilol.networks.NetworksMessage;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class SkinningEntitiesServerMessage extends NetworksMessage
 {
+    public static Side SIDE = Side.SERVER;
     public SkinningEntitiesServerMessage()
     {
 

@@ -1,5 +1,6 @@
 package com.nali.ilol.entities.object;
 
+import com.nali.data.BothData;
 import com.nali.data.ObjectData;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,14 +13,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class ObjectEntities extends Entity
 {
     public Object client_object;
+    public BothData bothdata;
+    public boolean server_sus_init;
 
     public ObjectEntities(World worldIn)
     {
         super(worldIn);
 
+        this.bothdata = this.createBothData();
+        float scale = this.bothdata.Scale();
+        this.width = this.bothdata.Width() * scale;
+        this.height = this.bothdata.Height() * scale;
+
         if (world.isRemote)
         {
-            this.setClientObject();
+            this.client_object = this.createClientObject();
+        }
+        else
+        {
+            this.getDataManager().set(this.getFloatDataParameterArray()[0], scale);
         }
     }
 
@@ -27,21 +39,21 @@ public abstract class ObjectEntities extends Entity
     public void entityInit()
     {
         DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
-        for (DataParameter<Byte> byteDataParameter : byte_dataparameter_array)
+        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
         {
-            this.dataManager.register(byteDataParameter, (byte) 0);
+            this.dataManager.register(byte_dataparameter, (byte) 0);
         }
 
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
-        for (DataParameter<Integer> integerDataParameter : integer_dataparameter_array)
+        for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
         {
-            this.dataManager.register(integerDataParameter, 0);
+            this.dataManager.register(integer_dataparameter, 0);
         }
 
         DataParameter<Float>[] float_dataparameter_array = this.getFloatDataParameterArray();
-        for (DataParameter<Float> floatDataParameter : float_dataparameter_array)
+        for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
         {
-            this.dataManager.register(floatDataParameter, 0.0F);
+            this.dataManager.register(float_dataparameter, 0.0F);
         }
     }
 
@@ -50,11 +62,32 @@ public abstract class ObjectEntities extends Entity
     {
         EntityDataManager entitydatamanager = this.getDataManager();
 
+        int i = 0;
         DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
-        for (int i = 0; i < byte_dataparameter_array.length; ++i)
+        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
         {
-            nbttagcompound.setByte("byte_" + i, entitydatamanager.get(byte_dataparameter_array[i]));
+            nbttagcompound.setByte("byte_" + i++, entitydatamanager.get(byte_dataparameter));
         }
+        i = 0;
+
+        DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
+        for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
+        {
+            nbttagcompound.setInteger("int_" + i++, entitydatamanager.get(integer_dataparameter));
+        }
+        i = 0;
+
+        DataParameter<Float>[] float_dataparameter_array = this.getFloatDataParameterArray();
+        for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
+        {
+            nbttagcompound.setFloat("float_" + i++, entitydatamanager.get(float_dataparameter));
+        }
+
+        if (!this.server_sus_init)
+        {
+            this.initWriteEntityToNBT(nbttagcompound);
+        }
+        nbttagcompound.setBoolean("sus_init", true);
     }
 
     @Override
@@ -62,10 +95,33 @@ public abstract class ObjectEntities extends Entity
     {
         EntityDataManager entitydatamanager = this.getDataManager();
 
+        int i = 0;
         DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
-        for (int i = 0; i < byte_dataparameter_array.length; ++i)
+        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
         {
-            entitydatamanager.set(byte_dataparameter_array[i], nbttagcompound.getByte("byte_" + i));
+            entitydatamanager.set(byte_dataparameter, nbttagcompound.getByte("byte_" + i++));
+        }
+        i = 0;
+
+        DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
+        for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
+        {
+            entitydatamanager.set(integer_dataparameter, nbttagcompound.getInteger("int" + i++));
+        }
+        i = 0;
+
+        DataParameter<Float>[] float_dataparameter_array = this.getFloatDataParameterArray();
+        for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
+        {
+            entitydatamanager.set(float_dataparameter, nbttagcompound.getFloat("float_" + i++));
+        }
+
+        this.server_sus_init = nbttagcompound.hasKey("sus_init");
+
+        if (!this.server_sus_init)
+        {
+            this.initReadEntityFromNBT();
+            this.server_sus_init = true;
         }
     }
 
@@ -73,6 +129,7 @@ public abstract class ObjectEntities extends Entity
     public void onUpdate()
     {
         super.onUpdate();
+        this.updateBox();
 
         if (this.getEntityWorld().isRemote)
         {
@@ -100,9 +157,19 @@ public abstract class ObjectEntities extends Entity
         }
     }
 
+    public void updateBox()
+    {
+        float scale = this.getDataManager().get(this.getFloatDataParameterArray()[0]);
+        this.width = this.bothdata.Width() * scale;
+        this.height = this.bothdata.Height() * scale;
+    }
+
+    public abstract void initWriteEntityToNBT(NBTTagCompound nbttagcompound);
+    public abstract void initReadEntityFromNBT();
+    public abstract BothData createBothData();
     public abstract DataParameter<Byte>[] getByteDataParameterArray();
     public abstract DataParameter<Integer>[] getIntegerDataParameterArray();
     public abstract DataParameter<Float>[] getFloatDataParameterArray();
     @SideOnly(Side.CLIENT)
-    public abstract void setClientObject();
+    public abstract Object createClientObject();
 }

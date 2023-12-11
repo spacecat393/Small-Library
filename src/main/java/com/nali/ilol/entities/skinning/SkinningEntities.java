@@ -3,13 +3,13 @@ package com.nali.ilol.entities.skinning;
 import com.google.common.base.Optional;
 import com.nali.data.BothData;
 import com.nali.data.SkinningData;
-import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.bytes.SkinningEntitiesBytes;
 import com.nali.ilol.entities.skinning.ai.*;
 import com.nali.ilol.entities.skinning.data.SkinningEntitiesLiveFrame;
-import com.nali.ilol.gui.OpenGUIMessage;
 import com.nali.ilol.mixin.IMixinEntity;
 import com.nali.ilol.mixin.IMixinEntityLivingBase;
+import com.nali.ilol.networks.NetworksRegistry;
+import com.nali.list.messages.OpenGUIMessage;
 import com.nali.system.Reflect;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.block.material.Material;
@@ -95,9 +95,15 @@ public abstract class SkinningEntities extends EntityLivingBase
     {
         super(world);
 
+        this.bothdata = this.createBothData();
+        this.skinningentitiesbytes = this.createBytes();
+        float scale = this.bothdata.Scale();
+        this.width = this.bothdata.Width() * scale;
+        this.height = this.bothdata.Height() * scale;
+
         if (world.isRemote)
         {
-            this.setClientObject();
+            this.client_object = this.createClientObject();
             this.client_work_byte_array = new byte[this.getByteDataParameterArray().length];
         }
         else
@@ -120,6 +126,7 @@ public abstract class SkinningEntities extends EntityLivingBase
             this.server_skinningentitiesliveframe_array = new SkinningEntitiesLiveFrame[size];
             this.server_frame_int_array = new int[size];
             this.createServer();
+            this.getDataManager().set(this.getFloatDataParameterArray()[0], scale);
 
 //            UUID uuid = this.getUniqueID();
 //            this.current_server_uuid = uuid;
@@ -138,26 +145,26 @@ public abstract class SkinningEntities extends EntityLivingBase
         super.entityInit();
 
         DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
-        for (DataParameter<Byte> bytedataparameter : byte_dataparameter_array)
+        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
         {
-            this.dataManager.register(bytedataparameter, (byte)0);
+            this.dataManager.register(byte_dataparameter, (byte)0);
         }
 
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
-        for (DataParameter<Integer> integerdataparameter : integer_dataparameter_array)
+        for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
         {
-            this.dataManager.register(integerdataparameter, 0);
+            this.dataManager.register(integer_dataparameter, 0);
         }
 
         DataParameter<Float>[] float_dataparameter_array = this.getFloatDataParameterArray();
-        for (DataParameter<Float> floatdataparameter : float_dataparameter_array)
+        for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
         {
-            this.dataManager.register(floatdataparameter, 0.0F);
+            this.dataManager.register(float_dataparameter, 0.0F);
         }
 
-        for (DataParameter<Optional<UUID>> optionalDataParameter : UUID_OPTIONAL_DATAPARAMETER_ARRAY)
+        for (DataParameter<Optional<UUID>> uuid_optional_dataparameter : UUID_OPTIONAL_DATAPARAMETER_ARRAY)
         {
-            this.getDataManager().register(optionalDataParameter, Optional.absent());
+            this.getDataManager().register(uuid_optional_dataparameter, Optional.absent());
         }
     }
 
@@ -169,10 +176,36 @@ public abstract class SkinningEntities extends EntityLivingBase
 
         EntityDataManager entitydatamanager = this.getDataManager();
 
+        int i = 0;
         DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
-        for (int i = 0; i < byte_dataparameter_array.length; ++i)
+        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
         {
-            nbttagcompound.setByte("byte_" + i, entitydatamanager.get(byte_dataparameter_array[i]));
+            nbttagcompound.setByte("byte_" + i++, entitydatamanager.get(byte_dataparameter));
+        }
+        i = 0;
+
+        DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
+        for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
+        {
+            nbttagcompound.setInteger("int_" + i++, entitydatamanager.get(integer_dataparameter));
+        }
+        i = 0;
+
+        DataParameter<Float>[] float_dataparameter_array = this.getFloatDataParameterArray();
+        for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
+        {
+            nbttagcompound.setFloat("float_" + i++, entitydatamanager.get(float_dataparameter));
+        }
+
+//        for (DataParameter<Optional<UUID>> uuid_optional_dataparameter : UUID_OPTIONAL_DATAPARAMETER_ARRAY)
+        for (i = 0; i < UUID_OPTIONAL_DATAPARAMETER_ARRAY.length; ++i)
+        {
+            UUID uuid = this.getUUID(i);
+
+            if (uuid != null)
+            {
+                nbttagcompound.setString("uuid_optional" + i, uuid.toString());
+            }
         }
 
         NBTTagList nbttaglist = new NBTTagList();
@@ -205,22 +238,12 @@ public abstract class SkinningEntities extends EntityLivingBase
 
         nbttagcompound.setTag("HandItems", nbttaglist);
 
-        for (int i = 0; i < this.skinninginventory.getSizeInventory(); ++i)
+        for (int l = 0; l < this.skinninginventory.getSizeInventory(); ++l)
         {
-            ItemStack itemstack = this.skinninginventory.getStackInSlot(i);
+            ItemStack itemstack = this.skinninginventory.getStackInSlot(l);
             if (!itemstack.isEmpty())
             {
-                nbttagcompound.setTag("ib" + i, itemstack.writeToNBT(new NBTTagCompound()));
-            }
-        }
-
-        for (int i = 1; i < UUID_OPTIONAL_DATAPARAMETER_ARRAY.length; ++i)
-        {
-            UUID uuid = this.getUUID(i);
-
-            if (uuid != null)
-            {
-                nbttagcompound.setString("uuid_optional" + i, uuid.toString());
+                nbttagcompound.setTag("ib" + l, itemstack.writeToNBT(new NBTTagCompound()));
             }
         }
 
@@ -231,6 +254,8 @@ public abstract class SkinningEntities extends EntityLivingBase
         {
             nbttagcompound.setByte("byte_" + this.skinningentitiesbytes.RANDOM_WALK(), (byte)1);
             nbttagcompound.setByte("byte_" + this.skinningentitiesbytes.RANDOM_LOOK(), (byte)1);
+            nbttagcompound.setFloat("float_0", this.bothdata.Scale());
+            this.initWriteEntityToNBT(nbttagcompound);
 //            nbttagcompound.setByte(hand_key, (byte)1);
         }
         nbttagcompound.setBoolean("sus_init", true);
@@ -252,19 +277,45 @@ public abstract class SkinningEntities extends EntityLivingBase
 
         EntityDataManager entitydatamanager = this.getDataManager();
 
+        int i = 0;
         DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
-        for (int i = 0; i < byte_dataparameter_array.length; ++i)
+        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
         {
-            entitydatamanager.set(byte_dataparameter_array[i], nbttagcompound.getByte("byte_" + i));
+            entitydatamanager.set(byte_dataparameter, nbttagcompound.getByte("byte_" + i++));
+        }
+        i = 0;
+
+        DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
+        for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
+        {
+            entitydatamanager.set(integer_dataparameter, nbttagcompound.getInteger("int" + i++));
+        }
+        i = 0;
+
+        DataParameter<Float>[] float_dataparameter_array = this.getFloatDataParameterArray();
+        for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
+        {
+            entitydatamanager.set(float_dataparameter, nbttagcompound.getFloat("float_" + i++));
+        }
+        i = 0;
+
+        for (DataParameter<Optional<UUID>> uuid_optional_dataparameter : UUID_OPTIONAL_DATAPARAMETER_ARRAY)
+        {
+            String key = "uuid_optional" + i++;
+
+            if (nbttagcompound.hasKey(key, 8))
+            {
+                entitydatamanager.set(uuid_optional_dataparameter, Optional.fromNullable(UUID.fromString(nbttagcompound.getString(key))));
+            }
         }
 
         if (nbttagcompound.hasKey("ArmorItems", 9))
         {
             NBTTagList nbttaglist = nbttagcompound.getTagList("ArmorItems", 10);
 
-            for (int i = 0; i < this.skinninginventory.armor_itemstack_nonnulllist.size(); ++i)
+            for (int l = 0; l < this.skinninginventory.armor_itemstack_nonnulllist.size(); ++l)
             {
-                this.skinninginventory.armor_itemstack_nonnulllist.set(i, new ItemStack(nbttaglist.getCompoundTagAt(i)));
+                this.skinninginventory.armor_itemstack_nonnulllist.set(l, new ItemStack(nbttaglist.getCompoundTagAt(l)));
             }
         }
 
@@ -278,23 +329,13 @@ public abstract class SkinningEntities extends EntityLivingBase
             }
         }
 
-        for (int i = 0; i < this.skinninginventory.getSizeInventory(); ++i)
+        for (int k = 0; k < this.skinninginventory.getSizeInventory(); ++k)
         {
-            String key = "ib" + i;
+            String key = "ib" + k;
 
             if (nbttagcompound.hasKey(key, 10))
             {
-                this.skinninginventory.setInventorySlotContents(i, new ItemStack(nbttagcompound.getCompoundTag(key)));
-            }
-        }
-
-        for (int i = 1; i < UUID_OPTIONAL_DATAPARAMETER_ARRAY.length; ++i)
-        {
-            String key = "uuid_optional" + i;
-
-            if (nbttagcompound.hasKey(key, 8))
-            {
-                entitydatamanager.set(UUID_OPTIONAL_DATAPARAMETER_ARRAY[i], Optional.fromNullable(UUID.fromString(nbttagcompound.getString(key))));
+                this.skinninginventory.setInventorySlotContents(k, new ItemStack(nbttagcompound.getCompoundTag(key)));
             }
         }
 
@@ -308,9 +349,11 @@ public abstract class SkinningEntities extends EntityLivingBase
 
         if (!this.server_sus_init)
         {
-            entitydatamanager.set(this.getByteDataParameterArray()[this.skinningentitiesbytes.RANDOM_WALK()], (byte)1);
-            entitydatamanager.set(this.getByteDataParameterArray()[this.skinningentitiesbytes.RANDOM_LOOK()], (byte)1);
+            entitydatamanager.set(byte_dataparameter_array[this.skinningentitiesbytes.RANDOM_WALK()], (byte)1);
+            entitydatamanager.set(byte_dataparameter_array[this.skinningentitiesbytes.RANDOM_LOOK()], (byte)1);
 //            entitydatamanager.set(HAND_STATES, (byte)1);
+            entitydatamanager.set(float_dataparameter_array[0], this.bothdata.Scale());
+            this.initReadEntityFromNBT();
             this.server_sus_init = true;
         }
 
@@ -421,6 +464,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     public void onUpdate()
     {
         super.onUpdate();
+        this.updateBox();
 
         //        Vec3d position_vec3d = this.getPositionVector();
 //        if (this.position_vec3d != null && !this.position_vec3d.equals(position_vec3d))
@@ -956,6 +1000,13 @@ public abstract class SkinningEntities extends EntityLivingBase
         }
     }
 
+    public void updateBox()
+    {
+        float scale = this.getDataManager().get(this.getFloatDataParameterArray()[0]);
+        this.width = this.bothdata.Width() * scale;
+        this.height = this.bothdata.Height() * scale;
+    }
+
     public static boolean doAttackEntityFrom(Entity target, Entity by_entity, DamageSource source, float amount)
     {
         EntityLivingBase entitylivingbase = null;
@@ -1199,7 +1250,7 @@ public abstract class SkinningEntities extends EntityLivingBase
                 BytesWriter.set(byte_array, entityplayermp.currentWindowId, 20);
                 //                CutePomi.LOGGER.info("Main Server " + skinningentities.getDataManager().get(UUID_OPTIONAL_DATAPARAMETER_ARRAY[0]).orNull().toString());
                 //                CutePomi.LOGGER.info("Old Server " + skinningentities.getUniqueID().toString());
-                ILOL.SIMPLENETWORKWRAPPER.sendTo(new OpenGUIMessage(byte_array), (EntityPlayerMP)entityplayer);
+                NetworksRegistry.I.sendTo(new OpenGUIMessage(byte_array), (EntityPlayerMP)entityplayer);
             }
             catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
             {
@@ -1208,10 +1259,15 @@ public abstract class SkinningEntities extends EntityLivingBase
         }
     }
 
+    public abstract void initWriteEntityToNBT(NBTTagCompound nbttagcompound);
+    public abstract void initReadEntityFromNBT();
+
+    public abstract BothData createBothData();
+    public abstract SkinningEntitiesBytes createBytes();
     public abstract void createServer();
     public abstract DataParameter<Byte>[] getByteDataParameterArray();
     public abstract DataParameter<Integer>[] getIntegerDataParameterArray();
     public abstract DataParameter<Float>[] getFloatDataParameterArray();
     @SideOnly(Side.CLIENT)
-    public abstract void setClientObject();
+    public abstract Object createClientObject();
 }

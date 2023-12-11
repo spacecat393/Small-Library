@@ -1,7 +1,9 @@
-package com.nali.ilol.entities.skinning;
+package com.nali.list.handlers;
 
 import com.google.common.base.Optional;
 import com.nali.ilol.ILOL;
+import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.list.messages.SkinningEntitiesServerMessage;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;

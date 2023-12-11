@@ -38,7 +38,7 @@ public class EntitiesRegistryHelper
             String name = clasz.getSimpleName().toLowerCase();
             try
             {
-                EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID, name), clasz, name, index++, ILOL.ILOL, 64, 1, true, (int)clasz.getField("eggPrimary").get(null), (int)clasz.getField("eggSecondary").get(null));
+                EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID, name), clasz, name, index++, ILOL.I, 64, 1, true, (int)clasz.getField("eggPrimary").get(null), (int)clasz.getField("eggSecondary").get(null));
             }
             catch (NoSuchFieldException | IllegalAccessException e)
             {
