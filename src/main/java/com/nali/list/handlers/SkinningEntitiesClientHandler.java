@@ -19,14 +19,17 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
         {
             case 0:
             {
-                for (int i = 1; i < skinningentitiesclientmessage.data.length; i += 16)
+                SkinningEntities.CLIENT_ENTITIES_MAP.clear();
+
+                for (int i = 1; i < skinningentitiesclientmessage.data.length; i += 4)
                 {
                     UUID uuid = BytesReader.getUUID(skinningentitiesclientmessage.data, i);
 
-                    if (!SkinningEntities.CLIENT_ENTITIES_MAP.containsKey(uuid))
-                    {
-                        SkinningEntities.CLIENT_ENTITIES_MAP.put(uuid, null);
-                    }
+//                    if (!SkinningEntities.CLIENT_ENTITIES_MAP.containsKey(uuid))
+//                    {
+                    i += 16;
+                    SkinningEntities.CLIENT_ENTITIES_MAP.put(uuid, (SkinningEntities)Minecraft.getMinecraft().player.getEntityWorld().getEntityByID(BytesReader.getInt(skinningentitiesclientmessage.data, i)));
+//                    }
                 }
 
                 break;

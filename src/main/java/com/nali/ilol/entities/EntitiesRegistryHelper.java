@@ -39,6 +39,7 @@ public class EntitiesRegistryHelper
             try
             {
                 EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID, name), clasz, name, index++, ILOL.I, 64, 1, true, (int)clasz.getField("eggPrimary").get(null), (int)clasz.getField("eggSecondary").get(null));
+//                clasz.getField("ID").set(null, index++);
             }
             catch (NoSuchFieldException | IllegalAccessException e)
             {

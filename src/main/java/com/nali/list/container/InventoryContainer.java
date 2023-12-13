@@ -1,6 +1,7 @@
 package com.nali.list.container;
 
 import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.ilol.entities.skinning.SkinningInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -12,10 +13,23 @@ public class InventoryContainer extends Container
     public static int ID;
     public EntityPlayer entityplayer;
     public SkinningEntities skinningentities;
+
     public InventoryContainer(IInventory iinventory, SkinningEntities skinningentities, EntityPlayer entityplayer)
     {
         this.entityplayer = entityplayer;
         this.skinningentities = skinningentities;
+        SkinningInventory skinninginventory = this.skinningentities.skinninginventory;
+//        SkinningInventory skinninginventory = null;
+
+//        if (skinningentities == null)
+//        {
+//            skinninginventory = new SkinningInventory();
+//        }
+//        else
+//        {
+//            skinninginventory = skinningentities.skinninginventory;
+//            this.skinningentities = skinningentities;
+//        }
 
         int i = 48;
 
@@ -36,20 +50,20 @@ public class InventoryContainer extends Container
         {
             for (int l = 0; l < 9; ++l)
             {
-                this.addSlotToContainer(new Slot(skinningentities.skinninginventory, l + k * 9, i + l * 18, 89 + k * 18));
+                this.addSlotToContainer(new Slot(skinninginventory, l + k * 9, i + l * 18, 89 + k * 18));
             }
         }
 
-        this.addSlotToContainer(new Slot(skinningentities.skinninginventory, 27, 167, 26));
-        this.addSlotToContainer(new Slot(skinningentities.skinninginventory, 28, 185, 26));
+        this.addSlotToContainer(new Slot(skinninginventory, 27, 167, 26));
+        this.addSlotToContainer(new Slot(skinninginventory, 28, 185, 26));
 
-        this.addSlotToContainer(new Slot(skinningentities.skinninginventory, 32, 54, 48));
-        this.addSlotToContainer(new Slot(skinningentities.skinninginventory, 31, 54, 68));
+        this.addSlotToContainer(new Slot(skinninginventory, 32, 54, 48));
+        this.addSlotToContainer(new Slot(skinninginventory, 31, 54, 68));
 
-        this.addSlotToContainer(new Slot(skinningentities.skinninginventory, 30, 186, 48));
-        this.addSlotToContainer(new Slot(skinningentities.skinninginventory, 29, 186, 68));
+        this.addSlotToContainer(new Slot(skinninginventory, 30, 186, 48));
+        this.addSlotToContainer(new Slot(skinninginventory, 29, 186, 68));
 
-//        this.addSlotToContainer(new Slot(skinningentities.skinninginventory, 33, 64, 26));
+//        this.addSlotToContainer(new Slot(skinninginventory, 33, 64, 26));
     }
 
     @Override

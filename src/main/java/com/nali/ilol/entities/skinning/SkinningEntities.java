@@ -10,15 +10,19 @@ import com.nali.ilol.entities.skinning.data.SkinningEntitiesLiveFrame;
 import com.nali.ilol.mixin.IMixinEntity;
 import com.nali.ilol.mixin.IMixinEntityLivingBase;
 import com.nali.ilol.networks.NetworksRegistry;
+import com.nali.ilol.world.ChunkMethods;
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.messages.OpenGUIMessage;
 import com.nali.system.Reflect;
 import com.nali.system.bytes.BytesWriter;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,11 +39,14 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.network.play.server.SPacketSpawnObject;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -511,19 +518,19 @@ public abstract class SkinningEntities extends EntityLivingBase
             this.updateClientObject();
             this.setInvisibility(this.client_object);
 
-            UUID uuid = this.getUUID(0);
-
-//            if (!CLIENT_ENTITIES_MAP.containsKey(uuid))
-            if (this.current_client_uuid == null || !this.current_client_uuid.equals(uuid) || (this.current_client_uuid.equals(uuid) && CLIENT_ENTITIES_MAP.get(uuid) == null))
-            {
-                if (this.current_client_uuid != null)
-                {
-                    CLIENT_ENTITIES_MAP.remove(this.current_client_uuid);
-                }
-
-                CLIENT_ENTITIES_MAP.put(uuid, this);
-                this.current_client_uuid = uuid;
-            }
+//            UUID uuid = this.getUUID(0);
+//
+////            if (!CLIENT_ENTITIES_MAP.containsKey(uuid))
+////            if (this.current_client_uuid == null || !this.current_client_uuid.equals(uuid) || (this.current_client_uuid.equals(uuid) && CLIENT_ENTITIES_MAP.get(uuid) == null))
+//            {
+//                if (this.current_client_uuid != null)
+//                {
+//                    CLIENT_ENTITIES_MAP.remove(this.current_client_uuid);
+//                }
+//
+//                CLIENT_ENTITIES_MAP.put(uuid, this);
+//                this.current_client_uuid = uuid;
+//            }
         }
         else
         {
@@ -533,7 +540,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 //            CutePomi.LOGGER.info("Current UUID : " + uuid);
 
 //            if (!SERVER_ENTITIES_MAP.containsKey(uuid))
-            if (this.current_server_uuid == null || !this.current_server_uuid.equals(uuid))
+//            if (this.current_server_uuid == null || !this.current_server_uuid.equals(uuid))
             {
                 if (this.current_server_uuid != null)
                 {
@@ -881,7 +888,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     @Override
     public void setDead()
     {
-        this.removeFromMap();
+//        this.removeFromMap();
         super.setDead();
     }
 
@@ -1237,6 +1244,8 @@ public abstract class SkinningEntities extends EntityLivingBase
 
     public static void setContainer(SkinningEntities skinningentities, EntityPlayer entityplayer, int id)
     {
+        //should check long with uuid
+        ChunkMethods.force(skinningentities.getUUID(0), (WorldServer) entityplayer.getEntityWorld(), new ChunkPos(skinningentities.getPosition()));
         Entity entity = skinningentities.getEntity(1);
 
         if (skinningentities.server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 0 || (entity != null && entity.equals(entityplayer)))
@@ -1259,19 +1268,47 @@ public abstract class SkinningEntities extends EntityLivingBase
                 entityplayermp.openContainer.windowId = entityplayermp.currentWindowId;
                 entityplayermp.openContainer.addListener(entityplayermp);
                 //
-                byte[] byte_array = new byte[24];
+                NBTTagCompound nbttagcompound = new NBTTagCompound();
+                skinningentities.writeToNBT(nbttagcompound);
+                byte[] nbt_byte_array = serializeNBT(nbttagcompound);
+                byte[] byte_array = new byte[24 + 4 + 4 + nbt_byte_array.length];
                 BytesWriter.set(byte_array, id, 0);
                 BytesWriter.set(byte_array, skinningentities.getUUID(0), 4);
                 BytesWriter.set(byte_array, entityplayermp.currentWindowId, 20);
+                BytesWriter.set(byte_array, skinningentities.getEntityId(), 24);
+                int entity_id = EntityList.getID(skinningentities.getClass());
+                entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, entity_id));
+
+                BytesWriter.set(byte_array, entity_id, 28);
+                System.arraycopy(nbt_byte_array, 0, byte_array, 32, nbt_byte_array.length);
                 //                CutePomi.LOGGER.info("Main Server " + skinningentities.getDataManager().get(UUID_OPTIONAL_DATAPARAMETER_ARRAY[0]).orNull().toString());
                 //                CutePomi.LOGGER.info("Old Server " + skinningentities.getUniqueID().toString());
                 NetworksRegistry.I.sendTo(new OpenGUIMessage(byte_array), (EntityPlayerMP)entityplayer);
             }
-            catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
+            catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException/* | NoSuchFieldException*/ e)
             {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public static byte[] serializeNBT(NBTTagCompound compound)
+    {
+        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer();
+        ByteBufUtils.writeTag(byteBuf, compound);
+        byte[] byteArray = new byte[byteBuf.readableBytes()];
+        byteBuf.readBytes(byteArray);
+        byteBuf.release(); // Release the ByteBuf to avoid memory leaks
+        return byteArray;
+    }
+
+    public static NBTTagCompound deserializeNBT(byte[] data)
+    {
+        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer();
+        byteBuf.writeBytes(data);
+        NBTTagCompound nbtTagCompound = ByteBufUtils.readTag(byteBuf);
+        byteBuf.release(); // Release the ByteBuf to avoid memory leaks
+        return nbtTagCompound;
     }
 
     public abstract void initWriteEntityToNBT(NBTTagCompound nbttagcompound);

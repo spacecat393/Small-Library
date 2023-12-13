@@ -3,16 +3,29 @@ package com.nali.list.handlers;
 import com.google.common.base.Optional;
 import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.ilol.networks.NetworksRegistry;
+import com.nali.ilol.world.ChunkMethods;
+import com.nali.list.container.InventoryContainer;
+import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
 import com.nali.system.bytes.BytesReader;
+import com.nali.system.bytes.BytesWriter;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.network.play.server.SPacketSpawnObject;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEntitiesServerMessage, IMessage>
 {
@@ -29,7 +42,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
             case 1:
             {
                 EntityPlayerMP entityplayermp = messagecontext.getServerHandler().player;
-                SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                UUID uuid = BytesReader.getUUID(skinningentitiesservermessage.data, 1);
+                SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(uuid);
 //                Entity temp_entity = ((WorldServer)entityplayermp.world).getEntityFromUuid(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
 //                if (!(temp_entity instanceof SkinningEntitiesHelper))
 //                {
@@ -192,31 +206,48 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
             }
             case 5:
             {
-//                EntityPlayerMP entityplayermp = messagecontext.getServerHandler().player;
+                EntityPlayerMP entityplayermp = messagecontext.getServerHandler().player;
 //                WorldServer worldserver = (WorldServer)entityplayermp.world;
 //                Map<UUID, Entity> entity_map = ((IMixinWorldServer)worldserver).entitiesByUuid();
 //                if (!entity_map.isEmpty())
-//                {
-//                    int index = 1;
+                if (!SkinningEntities.SERVER_ENTITIES_MAP.isEmpty())
+                {
+                    int index = 1;
 //                    Set<UUID> keys_set = new HashSet<>(entity_map.keySet());
-//                    byte[] byte_array = new byte[keys_set.size() * 16 + 1];
-////                    byte_array[0] = 0;
-//
-//                    for (UUID uuid : keys_set)
-//                    {
+                    Set<UUID> keys_set = new HashSet<>(SkinningEntities.SERVER_ENTITIES_MAP.keySet());
+                    byte[] byte_array = new byte[keys_set.size() * 16 + 1 + keys_set.size() * 4];
+//                    byte_array[0] = 0;
+
+                    for (UUID uuid : keys_set)
+                    {
+                        SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(uuid);
+                        entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, EntityList.getID(skinningentities.getClass())));
+                        //should check long with uuid
+                        ChunkMethods.force(skinningentities.getUUID(0), (WorldServer)entityplayermp.getEntityWorld(), new ChunkPos(skinningentities.getPosition()));
 //                        if (worldserver.getEntityFromUuid(uuid) instanceof SkinningEntities)
 //                        {
-//                            BytesWriter.set(byte_array, uuid, index);
-//                            index += 16;
+                        BytesWriter.set(byte_array, uuid, index);
+                        index += 16;
+                        BytesWriter.set(byte_array, skinningentities.getEntityId(), index);
+                        index += 4;
 //                        }
-//                    }
-//
-//                    ILOL.SIMPLENETWORKWRAPPER.sendTo(new SkinningEntitiesClientMessage(byte_array), entityplayermp);
-//                }
+                    }
+
+                    NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), entityplayermp);
+                }
 
                 break;
             }
             case 6:
+            {
+                SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                if (skinningentities != null)
+                {
+                    SkinningEntities.setContainer(skinningentities, messagecontext.getServerHandler().player, InventoryContainer.ID);
+                }
+                break;
+            }
+            case 7:
             {
                 String string = new String(skinningentitiesservermessage.data, 1, skinningentitiesservermessage.data.length - 1);
 //                Object[] key_array = new HashSet<>(((MixinEntityRegistry)EntityRegistry.instance()).entityClassEntries().keySet()).toArray();
@@ -227,7 +258,6 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 ILOL.LOGGER.info("Name : " + string);
                 ILOL.LOGGER.info("Have : " + ForgeRegistries.ENTITIES.containsKey(new ResourceLocation(string)));
 
-                break;
             }
             default:
             {

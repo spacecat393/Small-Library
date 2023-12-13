@@ -44,6 +44,9 @@ public class InventoryGui extends MixGui
         this.mc = Minecraft.getMinecraft();
         ScaledResolution scaledresolution = new ScaledResolution(this.mc);
         this.setWorldAndResolution(Minecraft.getMinecraft(), scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
+
+//        if (skinningentities != null)
+//        {
         this.skinningentitiesrender = (SkinningEntitiesRender)this.mc.getRenderManager().getEntityRenderObject(skinningentities);
         SkinningData skinningdata = (SkinningData)skinningentities.client_object;
         skinningdata.screen_float_array[3] = 0.0F;
@@ -52,6 +55,8 @@ public class InventoryGui extends MixGui
         skinningdata.screen_float_array[5] = -1.57079632679F;
 //        skinningdata.screen_float_array[6] = 0.0F;
         skinningdata.screen_float_array[7] = 0.0F;
+//        }
+
         this.xSize = 256;//170;
         this.ySize = 256;//206;
     }
@@ -59,7 +64,7 @@ public class InventoryGui extends MixGui
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        ScaledResolution scaledresolution = new ScaledResolution(this.mc);
+//        ScaledResolution scaledresolution = new ScaledResolution(this.mc);
 //        this.setWorldAndResolution(Minecraft.getMinecraft(), scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
         if (this.page == 0)
         {
@@ -70,10 +75,14 @@ public class InventoryGui extends MixGui
             this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
         }
 
-        InventoryContainer inventorycontainer = (InventoryContainer)this.inventorySlots;
-        SkinningEntities skinningentities = inventorycontainer.skinningentities;
+//        InventoryContainer inventorycontainer = (InventoryContainer)this.inventorySlots;
+        SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
+//        SkinningData skinningdata = null;
+//        if (skinningentities != null)
+//        {
         SkinningData skinningdata = (SkinningData)skinningentities.client_object;
 //        skinningentitiesrender.renderOnScreen(skinningentities, this.width, this.height, mouseX, mouseY);
+//        }
 
 //        float ty = 0.0F;
         int x = this.guiLeft + 100, y = this.guiTop + 26, width = 56, height = 49;
@@ -81,12 +90,15 @@ public class InventoryGui extends MixGui
         {
             if (((IMixinGuiScreen)this).eventButton() == 0)
             {
-                skinningdata.screen_float_array[7] += ((mouseX - this.px) / 20.0F) * DataLoader.TD;
-//                skinningdata.screen_float_array[5] += ((mouseY - this.py) / 20.0F) * DataLoader.TD;
-//                ty = ;
-//                skinningdata.screen_float_array[12] = 0.476175F;
-//                this.rx += mouseX - this.px;
-//                this.ry += mouseY - this.py;
+//                if (skinningentities != null)
+//                {
+                    skinningdata.screen_float_array[7] += ((mouseX - this.px) / 20.0F) * DataLoader.TD;
+    //                skinningdata.screen_float_array[5] += ((mouseY - this.py) / 20.0F) * DataLoader.TD;
+    //                ty = ;
+    //                skinningdata.screen_float_array[12] = 0.476175F;
+    //                this.rx += mouseX - this.px;
+    //                this.ry += mouseY - this.py;
+//                }
             }
         }
 
@@ -95,13 +107,15 @@ public class InventoryGui extends MixGui
         this.px = mouseX;
         this.py = mouseY;
 
+//        if (skinningentities != null)
+//        {
         float s = 0.2F;
+        ScaledResolution scaledresolution = new ScaledResolution(this.mc);
         if (scaledresolution.getScaleFactor() <= 1)//this.mc.gameSettings.guiScale == 0//if ((this.width / (double)this.height) <= 1.3325D || (this.height / (double)this.width) <= 0.5608D)
         {
             s = 0.1F;
         }
-        if (!skinningdata.should_render)
-        {
+        if (!skinningdata.should_render) {
             this.skinningentitiesrender.updateData(skinningentities, this.mc.getRenderPartialTicks());
         }
 
@@ -115,6 +129,7 @@ public class InventoryGui extends MixGui
         this.skinningentitiesrender.renderOnScreen(skinningentities);
 
 //        new Quaternion(-rx, -ry, 0.0F).getM4x4().multiply(skinningdata.skinning_float_array, 0);
+//        }
 
         if (this.page == 0)
         {
@@ -837,7 +852,7 @@ public class InventoryGui extends MixGui
                             byte[] string_byte_array = this.message_stringbuilder.toString().getBytes();
                             int string_byte_array_size = string_byte_array.length - 1;
                             byte[] byte_array = new byte[string_byte_array_size + 1];
-                            byte_array[0] = 6;
+                            byte_array[0] = 7;
                             System.arraycopy(string_byte_array, 0, byte_array, 1, string_byte_array_size);
                             NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
                             break;
