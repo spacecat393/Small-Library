@@ -10,7 +10,7 @@ import com.nali.ilol.entities.skinning.data.SkinningEntitiesLiveFrame;
 import com.nali.ilol.mixin.IMixinEntity;
 import com.nali.ilol.mixin.IMixinEntityLivingBase;
 import com.nali.ilol.networks.NetworksRegistry;
-import com.nali.ilol.world.ChunkMethods;
+import com.nali.ilol.world.ChunkLoader;
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.messages.OpenGUIMessage;
 import com.nali.system.Reflect;
@@ -42,7 +42,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.server.SPacketSpawnObject;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -1012,12 +1011,14 @@ public abstract class SkinningEntities extends EntityLivingBase
 
     public void removeFromMap()
     {
-        if (this.getEntityWorld().isRemote)
+//        if (this.getEntityWorld().isRemote)
+//        {
+//            CLIENT_ENTITIES_MAP.remove(this.current_client_uuid);
+//        }
+//        else
+        if (!this.getEntityWorld().isRemote)
         {
-            CLIENT_ENTITIES_MAP.remove(this.current_client_uuid);
-        }
-        else
-        {
+            ChunkLoader.removeChunk(this);
             SERVER_ENTITIES_MAP.remove(this.current_server_uuid);
         }
     }
@@ -1244,8 +1245,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 
     public static void setContainer(SkinningEntities skinningentities, EntityPlayer entityplayer, int id)
     {
-        //should check long with uuid
-        ChunkMethods.force(skinningentities.getUUID(0), (WorldServer) entityplayer.getEntityWorld(), new ChunkPos(skinningentities.getPosition()));
+        ChunkLoader.updateChunk(skinningentities);
         Entity entity = skinningentities.getEntity(1);
 
         if (skinningentities.server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 0 || (entity != null && entity.equals(entityplayer)))

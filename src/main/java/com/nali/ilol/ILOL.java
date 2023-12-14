@@ -7,6 +7,7 @@ import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.gui.OpenGUIHelper;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.system.Reference;
+import com.nali.ilol.world.ChunkCallBack;
 import com.nali.system.Reflect;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -60,5 +61,6 @@ public class ILOL
     public void onFMLServerStartedEvent(FMLServerStartedEvent event)
     {
         SkinningEntities.SERVER_ENTITIES_MAP = new WeakHashMap<>();
+        ChunkCallBack.set();
     }
 }

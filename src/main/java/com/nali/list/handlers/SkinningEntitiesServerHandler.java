@@ -4,7 +4,7 @@ import com.google.common.base.Optional;
 import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.networks.NetworksRegistry;
-import com.nali.ilol.world.ChunkMethods;
+import com.nali.ilol.world.ChunkLoader;
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
@@ -16,8 +16,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.server.SPacketSpawnObject;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -223,7 +221,7 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                         SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(uuid);
                         entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, EntityList.getID(skinningentities.getClass())));
                         //should check long with uuid
-                        ChunkMethods.force(skinningentities.getUUID(0), (WorldServer)entityplayermp.getEntityWorld(), new ChunkPos(skinningentities.getPosition()));
+                        ChunkLoader.updateChunk(skinningentities);
 //                        if (worldserver.getEntityFromUuid(uuid) instanceof SkinningEntities)
 //                        {
                         BytesWriter.set(byte_array, uuid, index);
