@@ -4,6 +4,7 @@ import com.nali.Nali;
 import com.nali.ilol.ILOL;
 import com.nali.ilol.system.Reference;
 import com.nali.system.Reflect;
+import com.nali.system.StringReader;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -35,10 +36,12 @@ public class EntitiesRegistryHelper
         int index = 0;
         for (Class clasz : ENTITIES_CLASS_LIST)
         {
-            String name = clasz.getSimpleName().toLowerCase();
             try
             {
-                EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID, name), clasz, name, index++, ILOL.I, 64, 1, true, (int)clasz.getField("eggPrimary").get(null), (int)clasz.getField("eggSecondary").get(null));
+//            String name = clasz.getSimpleName().toLowerCase();
+                String[] string_array = StringReader.get(clasz);
+                String name = string_array[0];
+                EntityRegistry.registerModEntity(new ResourceLocation(string_array[1], name), clasz, name, index++, ILOL.I, 64, 1, true, (int)clasz.getField("eggPrimary").get(null), (int)clasz.getField("eggSecondary").get(null));
 //                clasz.getField("ID").set(null, index++);
             }
             catch (NoSuchFieldException | IllegalAccessException e)

@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public abstract class ObjectEntitiesRender<T extends ObjectEntities> extends Render<T>
@@ -29,20 +30,32 @@ public abstract class ObjectEntitiesRender<T extends ObjectEntities> extends Ren
     @Override
     public void doRender(T objectentities, double ox, double oy, double oz, float entityYaw, float partialTicks)
     {
+        GL11.glTranslated(ox, oy, oz);
         ObjectData objectdata = (ObjectData)objectentities.client_object;
+
+        float scale = (objectdata.float_array[0] == 0 ? 1.0F : objectdata.float_array[0]);
+//        float sx = (objectdata.screen_float_array[8] == 0 ? 1.0F : objectdata.screen_float_array[8]);
+//        float sy = (objectdata.screen_float_array[9] == 0 ? 1.0F : objectdata.screen_float_array[9]);
+//        float sz = (objectdata.screen_float_array[10] == 0 ? 1.0F : objectdata.screen_float_array[10]);
+//        GL11.glTranslatef(objectdata.screen_float_array[2], objectdata.screen_float_array[3], objectdata.screen_float_array[4]);
+        GL11.glScalef(scale, scale, scale);
+        GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+//        GL11.glRotatef(objectdata.screen_float_array[6], 0.0F, 1.0F, 0.0F);
+//        GL11.glRotatef(objectdata.screen_float_array[7], 0.0F, 0.0F, 1.0F);
+//        GL11.glColor4f(objectdata.rgba_float_array[0], objectdata.rgba_float_array[1], objectdata.rgba_float_array[2], objectdata.rgba_float_array[3]);
 //        EntityDataManager entitydatamanager = objectentities.getDataManager();
         this.shadowOpaque *= objectdata.float_array[0];
         this.shadowSize *= objectdata.float_array[0];
 
-        WorldMath.WORLD_M4X4.cloneMat(objectdata.m4x4_array[0].mat, 0);
-        M4x4 scale_m4x4 = new M4x4();
-        float scale = objectdata.float_array[0];
-        scale_m4x4.scale(scale, scale, scale);
-        objectdata.m4x4_array[0].multiply(scale_m4x4.mat);
+//        WorldMath.WORLD_M4X4.cloneMat(objectdata.m4x4_array[0].mat, 0);
+//        M4x4 scale_m4x4 = new M4x4();
+//        float scale = objectdata.float_array[0];
+//        scale_m4x4.scale(scale, scale, scale);
+//        objectdata.m4x4_array[0].multiply(scale_m4x4.mat);
+//
+//        objectdata.m4x4_array[0].translate((float)ox, (float)oy/* - eye_height + 0.03F/* - (player_sleep ? 0.3F : 0.0F)*/, (float)oz); // world
 
-        objectdata.m4x4_array[0].translate((float)ox, (float)oy/* - eye_height + 0.03F/* - (player_sleep ? 0.3F : 0.0F)*/, (float)oz); // world
-
-        LightingMath.set(objectentities, objectdata.rgba_float_array, partialTicks);
+//        LightingMath.set(objectentities, objectdata.rgba_float_array, partialTicks);
 //        int color = ((IMixinEntityRenderer)Minecraft.getMinecraft().entityRenderer).lightmapColors()[0];
 //        float alpha = ((color >> 24) & 0xFF) / 255.0F;
 //        float red = ((color >> 16) & 0xFF) / 255.0F;
@@ -64,30 +77,48 @@ public abstract class ObjectEntitiesRender<T extends ObjectEntities> extends Ren
             }
         }
 
+//        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+//        GL11.glRotatef(-objectdata.screen_float_array[7], 0.0F, 0.0F, 1.0F);
+//        GL11.glRotatef(-objectdata.screen_float_array[6], 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
+        GL11.glScalef(1.0F / scale, 1.0F / scale, 1.0F / scale);
+//        GL11.glTranslatef(-objectdata.screen_float_array[2], -objectdata.screen_float_array[3], -objectdata.screen_float_array[4]);
+
+        GL11.glTranslated(-ox, -oy, -oz);
         super.doRender(objectentities, ox, oy, oz, entityYaw, partialTicks);
     }
 
     public void renderOnScreen(T objectentities)
     {
         ObjectData objectdata = (ObjectData)objectentities.client_object;
+
+        float sx = (objectdata.screen_float_array[8] == 0 ? 1.0F : objectdata.screen_float_array[8]);
+        float sy = (objectdata.screen_float_array[9] == 0 ? 1.0F : objectdata.screen_float_array[9]);
+        float sz = (objectdata.screen_float_array[10] == 0 ? 1.0F : objectdata.screen_float_array[10]);
+        GL11.glTranslatef(objectdata.screen_float_array[2], objectdata.screen_float_array[3], objectdata.screen_float_array[4]);
+        GL11.glScalef(sx, sy, sz);
+        GL11.glRotatef(objectdata.screen_float_array[5], 1.0F, 0.0F, 0.0F);
+        GL11.glRotatef(objectdata.screen_float_array[6], 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(objectdata.screen_float_array[7], 0.0F, 0.0F, 1.0F);
+        GL11.glColor4f(objectdata.screen_rgba_float_array[0], objectdata.screen_rgba_float_array[1], objectdata.screen_rgba_float_array[2], objectdata.screen_rgba_float_array[3]);
 //        float max = 1.0F;
-        float image_aspect_ratio = objectdata.screen_float_array[0] / objectdata.screen_float_array[1];
-//        float r = max * image_aspect_ratio;
-
-        objectdata.m4x4_array[1] = M4x4.getOrthographic(-1.0F, 1.0F, -image_aspect_ratio, image_aspect_ratio, 0.1F, 100.0F);
-        objectdata.m4x4_array[2] = new M4x4();
-        objectdata.m4x4_array[3] = new M4x4();
-        float new_x = (2.0F * objectdata.screen_float_array[2]) / objectdata.screen_float_array[0] - 1.0F;
-        float new_y = 1.0F - (2.0F * objectdata.screen_float_array[3]) / objectdata.screen_float_array[1];
-        objectdata.m4x4_array[2].translate(new_x * image_aspect_ratio, new_y, objectdata.screen_float_array[4]/*-10.0F*/);
-        M4x4 temp_m4x4 = new M4x4();
-
-//        float scale = s;// * image_aspect_ratio;
-        temp_m4x4.scale(objectdata.screen_float_array[8], objectdata.screen_float_array[9], objectdata.screen_float_array[10]);
-        objectdata.m4x4_array[2].multiply(temp_m4x4.mat);
+//        float image_aspect_ratio = objectdata.screen_float_array[0] / objectdata.screen_float_array[1];
+////        float r = max * image_aspect_ratio;
+//
+//        objectdata.m4x4_array[1] = M4x4.getOrthographic(-1.0F, 1.0F, -image_aspect_ratio, image_aspect_ratio, 0.1F, 100.0F);
+//        objectdata.m4x4_array[2] = new M4x4();
 //        objectdata.m4x4_array[3] = new M4x4();
-//        objectdata.m4x4_array[3].translate(objectdata.screen_float_array[11], objectdata.screen_float_array[12], 0.0F);
-        objectdata.m4x4_array[3].multiply(new Quaternion(/*-1.57079632679F + */objectdata.screen_float_array[5], objectdata.screen_float_array[6], objectdata.screen_float_array[7]).getM4x4().mat);
+//        float new_x = (2.0F * objectdata.screen_float_array[2]) / objectdata.screen_float_array[0] - 1.0F;
+//        float new_y = 1.0F - (2.0F * objectdata.screen_float_array[3]) / objectdata.screen_float_array[1];
+//        objectdata.m4x4_array[2].translate(new_x * image_aspect_ratio, new_y, objectdata.screen_float_array[4]/*-10.0F*/);
+//        M4x4 temp_m4x4 = new M4x4();
+//
+////        float scale = s;// * image_aspect_ratio;
+//        temp_m4x4.scale(objectdata.screen_float_array[8], objectdata.screen_float_array[9], objectdata.screen_float_array[10]);
+//        objectdata.m4x4_array[2].multiply(temp_m4x4.mat);
+////        objectdata.m4x4_array[3] = new M4x4();
+////        objectdata.m4x4_array[3].translate(objectdata.screen_float_array[11], objectdata.screen_float_array[12], 0.0F);
+//        objectdata.m4x4_array[3].multiply(new Quaternion(/*-1.57079632679F + */objectdata.screen_float_array[5], objectdata.screen_float_array[6], objectdata.screen_float_array[7]).getM4x4().mat);
 
         for (DataLoader.SCREEN_INDEX = 0; DataLoader.SCREEN_INDEX < objectdata.model_address_object_array.length; ++DataLoader.SCREEN_INDEX)
         {
@@ -96,6 +127,13 @@ public abstract class ObjectEntitiesRender<T extends ObjectEntities> extends Ren
                 OpenGLObjectDrawing.startScreenObjectGL(objectdata);
             }
         }
+
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glRotatef(-objectdata.screen_float_array[7], 0.0F, 0.0F, 1.0F);
+        GL11.glRotatef(-objectdata.screen_float_array[6], 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(-objectdata.screen_float_array[5], 1.0F, 0.0F, 0.0F);
+        GL11.glScalef(1.0F / sx, 1.0F / sy, 1.0F / sz);
+        GL11.glTranslatef(-objectdata.screen_float_array[2], -objectdata.screen_float_array[3], -objectdata.screen_float_array[4]);
     }
 
     public void updateData(T objectentities, float partialTicks)

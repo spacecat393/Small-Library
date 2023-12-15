@@ -3,6 +3,7 @@ package com.nali.ilol.items;
 import com.nali.ilol.ILOL;
 import com.nali.ilol.system.Reference;
 import com.nali.system.Reflect;
+import com.nali.system.StringReader;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -13,7 +14,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.List;
@@ -26,14 +26,15 @@ public class ItemsRegistryHelper
     static
     {
         ITEMS_CLASS_LIST.sort(Comparator.comparing(Class::getName));
-        ITEM_ARRAY = new Item[ITEMS_CLASS_LIST.size()];
+        int list_size = ITEMS_CLASS_LIST.size();
+        ITEM_ARRAY = new Item[list_size];
         int index = 0;
         for (Class clasz : ITEMS_CLASS_LIST)
         {
             try
             {
-                Constructor constructor = clasz.getConstructor(String.class);
-                ITEM_ARRAY[index++] = (Item)constructor.newInstance(clasz.getSimpleName().toLowerCase());
+                ITEM_ARRAY[index++] = (Item)clasz.getConstructor(String[].class).newInstance((Object)StringReader.get(clasz));
+//                ITEM_ARRAY[index++] = (Item)constructor.newInstance(clasz.getSimpleName().toLowerCase());
             }
             catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e)
             {

@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends Render<T>
@@ -29,8 +30,14 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
     @Override
     public void doRender(T skinningentities, double ox, double oy, double oz, float entityYaw, float partialTicks)
     {
+        GL11.glTranslated(ox, oy, oz);
 //        Minecraft minecraft = Minecraft.getMinecraft();
         SkinningData skinningdata = (SkinningData)skinningentities.client_object;
+        float scale = (skinningdata.float_array[0] == 0 ? 1.0F : skinningdata.float_array[0]);
+        GL11.glScalef(scale, scale, scale);
+        GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+//        GL11.glColor4f(skinningdata.rgba_float_array[0], skinningdata.rgba_float_array[1], skinningdata.rgba_float_array[2], skinningdata.rgba_float_array[3]);
+
         this.shadowOpaque *= skinningdata.float_array[0];
         this.shadowSize *= skinningdata.float_array[0];
 
@@ -73,11 +80,11 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 //        RenderManager rendermanager = minecraft.getRenderManager();
 //        Entity view_entity = minecraft.getRenderViewEntity();
 
-        WorldMath.WORLD_M4X4.cloneMat(skinningdata.m4x4_array[0].mat, 0);
-        M4x4 scale_m4x4 = new M4x4();
-        float scale = skinningdata.float_array[0];
-        scale_m4x4.scale(scale, scale, scale);
-        skinningdata.m4x4_array[0].multiply(scale_m4x4.mat);
+//        WorldMath.WORLD_M4X4.cloneMat(skinningdata.m4x4_array[0].mat, 0);
+//        M4x4 scale_m4x4 = new M4x4();
+//        float scale = skinningdata.float_array[0];
+//        scale_m4x4.scale(scale, scale, scale);
+//        skinningdata.m4x4_array[0].multiply(scale_m4x4.mat);
 
 //        float eye_height = view_entity.getEyeHeight();
 //        double xx = PomiMath.lerp((double)partialTicks, skinningentities.lastTickPosX, skinningentities.posX);
@@ -87,7 +94,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 //        boolean player_sneak = ((EntityLivingBase)view_entity).isSneaking();
 
 //        skinningdata.m4x4_array[0].translate((float)(rendermanager.viewerPosX - xx), (float)(yy - rendermanager.viewerPosY)/* - eye_height + 0.03F/* - (player_sleep ? 0.3F : 0.0F)*/, (float)(rendermanager.viewerPosZ - zz)); // world
-        skinningdata.m4x4_array[0].translate((float)ox, (float)oy/* - eye_height + 0.03F/* - (player_sleep ? 0.3F : 0.0F)*/, (float)oz); // world
+//        skinningdata.m4x4_array[0].translate((float)ox, (float)oy/* - eye_height + 0.03F/* - (player_sleep ? 0.3F : 0.0F)*/, (float)oz); // world
 //        WorldMath.VIEW_M4X4.translatePlus((float)(rendermanager.viewerPosX - xx), (float)(yy - rendermanager.viewerPosY)/* - eye_height + 0.03F/* - (player_sleep ? 0.3F : 0.0F)*/, (float)(rendermanager.viewerPosZ - zz)); // world
 //        skinningdata.m4x4_array[0].translate((float)ox, (float)oy, (float)oz); // world
 
@@ -124,7 +131,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
         //
 
-        LightingMath.set(skinningentities, skinningdata.rgba_float_array, partialTicks);
+//        LightingMath.set(skinningentities, skinningdata.rgba_float_array, partialTicks);
 //        int color = (Minecraft.getMinecraft().entityRenderer.tex).lightmapColors()[0];
 //        float alpha = ((color >> 24) & 0xFF) / 255.0F;
 //        float red = ((color >> 16) & 0xFF) / 255.0F;
@@ -182,13 +189,28 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 //            }
 //        }
 
+//        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
+        GL11.glScalef(1.0F / scale, 1.0F / scale, 1.0F / scale);
 //        WorldMath.VIEW_M4X4.translatePlus(-(float)(rendermanager.viewerPosX - xx), -(float)(yy - rendermanager.viewerPosY)/* - eye_height + 0.03F/* - (player_sleep ? 0.3F : 0.0F)*/, -(float)(rendermanager.viewerPosZ - zz)); // world
+        GL11.glTranslated(-ox, -oy, -oz);
         super.doRender(skinningentities, ox, oy, oz, entityYaw, partialTicks);
     }
 
     public void renderOnScreen(T skinningentities)
     {
         SkinningData skinningdata = (SkinningData)skinningentities.client_object;
+
+        float sx = (skinningdata.screen_float_array[8] == 0 ? 1.0F : skinningdata.screen_float_array[8]);
+        float sy = (skinningdata.screen_float_array[9] == 0 ? 1.0F : skinningdata.screen_float_array[9]);
+        float sz = (skinningdata.screen_float_array[10] == 0 ? 1.0F : skinningdata.screen_float_array[10]);
+        GL11.glTranslatef(skinningdata.screen_float_array[2], skinningdata.screen_float_array[3], skinningdata.screen_float_array[4]);
+        GL11.glScalef(sx, sy, sz);
+        GL11.glRotatef(skinningdata.screen_float_array[5], 1.0F, 0.0F, 0.0F);
+        GL11.glRotatef(skinningdata.screen_float_array[6], 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(skinningdata.screen_float_array[7], 0.0F, 0.0F, 1.0F);
+        GL11.glColor4f(skinningdata.screen_rgba_float_array[0], skinningdata.screen_rgba_float_array[1], skinningdata.screen_rgba_float_array[2], skinningdata.screen_rgba_float_array[3]);
+
 //        float width, float height, float x, float y, float s;
 //        float max = 4F;
 //        float image_aspect_ratio = (float)minecraft.displayWidth / (float)minecraft.displayHeight;
@@ -212,25 +234,25 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 //        }
 
 //        float max = 1.0F;
-        float image_aspect_ratio = skinningdata.screen_float_array[0] / skinningdata.screen_float_array[1];
+//        float image_aspect_ratio = skinningdata.screen_float_array[0] / skinningdata.screen_float_array[1];
 //        float r = max * image_aspect_ratio;
 
-        skinningdata.m4x4_array[1] = M4x4.getOrthographic(-1.0F, 1.0F, -image_aspect_ratio, image_aspect_ratio, 0.1F, 100.0F);
-        skinningdata.m4x4_array[2] = new M4x4();
-        skinningdata.m4x4_array[3] = new M4x4();
-        float new_x = (2.0F * skinningdata.screen_float_array[2]) / skinningdata.screen_float_array[0] - 1.0F;
-        float new_y = 1.0F - (2.0F * skinningdata.screen_float_array[3]) / skinningdata.screen_float_array[1];
-        skinningdata.m4x4_array[2].translate(new_x * image_aspect_ratio, new_y, /*-10.0F*/skinningdata.screen_float_array[4]);
-        M4x4 temp_m4x4 = new M4x4();
+//        skinningdata.m4x4_array[1] = M4x4.getOrthographic(-1.0F, 1.0F, -image_aspect_ratio, image_aspect_ratio, 0.1F, 100.0F);
+//        skinningdata.m4x4_array[2] = new M4x4();
+//        skinningdata.m4x4_array[3] = new M4x4();
+//        float new_x = (2.0F * skinningdata.screen_float_array[2]) / skinningdata.screen_float_array[0] - 1.0F;
+//        float new_y = 1.0F - (2.0F * skinningdata.screen_float_array[3]) / skinningdata.screen_float_array[1];
+//        skinningdata.m4x4_array[2].translate(new_x * image_aspect_ratio, new_y, /*-10.0F*/skinningdata.screen_float_array[4]);
+//        M4x4 temp_m4x4 = new M4x4();
 //        M4x4 temp2_m4x4 = new Quaternion(this.rx, this.ry, this.rz).getM4x4();
 
         //float scale = s;// * image_aspect_ratio;
-        temp_m4x4.scale(skinningdata.screen_float_array[8], skinningdata.screen_float_array[9], skinningdata.screen_float_array[10]);
-        skinningdata.m4x4_array[2].multiply(temp_m4x4.mat);
+//        temp_m4x4.scale(skinningdata.screen_float_array[8], skinningdata.screen_float_array[9], skinningdata.screen_float_array[10]);
+//        skinningdata.m4x4_array[2].multiply(temp_m4x4.mat);
 //        skinningdata.m4x4_array[2].multiply(temp2_m4x4.mat);
 //        skinningdata.m4x4_array[3] = new M4x4();
 //        skinningdata.m4x4_array[3].translate(skinningdata.screen_float_array[11], skinningdata.screen_float_array[12], 0.0F);
-        skinningdata.m4x4_array[3].multiply(new Quaternion(/*-1.57079632679F + */skinningdata.screen_float_array[5], skinningdata.screen_float_array[6], skinningdata.screen_float_array[7]).getM4x4().mat);
+//        skinningdata.m4x4_array[3].multiply(new Quaternion(/*-1.57079632679F + */skinningdata.screen_float_array[5], skinningdata.screen_float_array[6], skinningdata.screen_float_array[7]).getM4x4().mat);
 
         for (DataLoader.SCREEN_INDEX = 0; DataLoader.SCREEN_INDEX < skinningdata.model_address_object_array.length; ++DataLoader.SCREEN_INDEX)
         {
@@ -239,6 +261,13 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
                 OpenGLSkinningDrawing.startScreenSkinningGL(skinningdata);
             }
         }
+
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glRotatef(-skinningdata.screen_float_array[7], 0.0F, 0.0F, 1.0F);
+        GL11.glRotatef(-skinningdata.screen_float_array[6], 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(-skinningdata.screen_float_array[5], 1.0F, 0.0F, 0.0F);
+        GL11.glScalef(1.0F / sx, 1.0F / sy, 1.0F / sz);
+        GL11.glTranslatef(-skinningdata.screen_float_array[2], -skinningdata.screen_float_array[3], -skinningdata.screen_float_array[4]);
     }
 
     // public void drawIcon(T skinningentities, PoseStack posestack, int x, int y)
@@ -293,7 +322,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
             if (bones_byte_array[z] != 0)
             {
                 // Object[] object_array = entity.free_skinning_object_array_arraylist.get(0); // we need more id for do more free idle but it won't worth
-                ((M4x4)WorldMath.FREE_SKINNING_OBJECT_ARRAY[6]).multiply(skinningdata.skinning_float_array, z * 16);
+                ((M4x4)SkinningData.FREE_SKINNING_OBJECT_ARRAY[6]).multiply(skinningdata.skinning_float_array, z * 16);
             }
         }
 

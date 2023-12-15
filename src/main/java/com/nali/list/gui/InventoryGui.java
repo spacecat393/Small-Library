@@ -109,13 +109,14 @@ public class InventoryGui extends MixGui
 
 //        if (skinningentities != null)
 //        {
-        float s = 0.2F;
-        ScaledResolution scaledresolution = new ScaledResolution(this.mc);
-        if (scaledresolution.getScaleFactor() <= 1)//this.mc.gameSettings.guiScale == 0//if ((this.width / (double)this.height) <= 1.3325D || (this.height / (double)this.width) <= 0.5608D)
+        float s = 10.0F;
+//        ScaledResolution scaledresolution = new ScaledResolution(this.mc);
+//        if (scaledresolution.getScaleFactor() <= 1)//this.mc.gameSettings.guiScale == 0//if ((this.width / (double)this.height) <= 1.3325D || (this.height / (double)this.width) <= 0.5608D)
+//        {
+//            s = 0.1F;
+//        }
+        if (!skinningdata.should_render)
         {
-            s = 0.1F;
-        }
-        if (!skinningdata.should_render) {
             this.skinningentitiesrender.updateData(skinningentities, this.mc.getRenderPartialTicks());
         }
 
