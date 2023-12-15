@@ -38,10 +38,11 @@ public abstract class ObjectEntitiesRender<T extends ObjectEntities> extends Ren
 //        float sy = (objectdata.screen_float_array[9] == 0 ? 1.0F : objectdata.screen_float_array[9]);
 //        float sz = (objectdata.screen_float_array[10] == 0 ? 1.0F : objectdata.screen_float_array[10]);
 //        GL11.glTranslatef(objectdata.screen_float_array[2], objectdata.screen_float_array[3], objectdata.screen_float_array[4]);
+        float rx = -90.0F;
         GL11.glScalef(scale, scale, scale);
-        GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
-//        GL11.glRotatef(objectdata.screen_float_array[6], 0.0F, 1.0F, 0.0F);
-//        GL11.glRotatef(objectdata.screen_float_array[7], 0.0F, 0.0F, 1.0F);
+//        GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(rx, 1.0F, 0.0F, 0.0F);
+//        GL11.glRotatef(45.0F, 0.0F, 0.0F, 1.0F);
 //        GL11.glColor4f(objectdata.rgba_float_array[0], objectdata.rgba_float_array[1], objectdata.rgba_float_array[2], objectdata.rgba_float_array[3]);
 //        EntityDataManager entitydatamanager = objectentities.getDataManager();
         this.shadowOpaque *= objectdata.float_array[0];
@@ -78,9 +79,9 @@ public abstract class ObjectEntitiesRender<T extends ObjectEntities> extends Ren
         }
 
 //        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-//        GL11.glRotatef(-objectdata.screen_float_array[7], 0.0F, 0.0F, 1.0F);
-//        GL11.glRotatef(-objectdata.screen_float_array[6], 0.0F, 1.0F, 0.0F);
-        GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
+//        GL11.glRotatef(-45.0F, 0.0F, 0.0F, 1.0F);
+        GL11.glRotatef(-rx, 1.0F, 0.0F, 0.0F);
+//        GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
         GL11.glScalef(1.0F / scale, 1.0F / scale, 1.0F / scale);
 //        GL11.glTranslatef(-objectdata.screen_float_array[2], -objectdata.screen_float_array[3], -objectdata.screen_float_array[4]);
 
@@ -140,7 +141,7 @@ public abstract class ObjectEntitiesRender<T extends ObjectEntities> extends Ren
     {
         ObjectData objectdata = (ObjectData)objectentities.client_object;
         // head_rot
-        objectdata.float_array[1] = (float)Math.toRadians(MixMath.invert(MixMath.interpolateRotation(objectentities.rotationYaw, objectentities.prevRotationYaw, partialTicks)));
+        objectdata.float_array[1] = (float)Math.toRadians(MixMath.interpolateRotation(objectentities.rotationYaw, objectentities.prevRotationYaw, partialTicks));
         // head_pitch
         objectdata.float_array[2] = (float)Math.toRadians(objectentities.prevRotationPitch + (objectentities.rotationPitch - objectentities.prevRotationPitch) * partialTicks);
 

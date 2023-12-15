@@ -50,10 +50,10 @@ public class InventoryGui extends MixGui
         this.skinningentitiesrender = (SkinningEntitiesRender)this.mc.getRenderManager().getEntityRenderObject(skinningentities);
         SkinningData skinningdata = (SkinningData)skinningentities.client_object;
         skinningdata.screen_float_array[3] = 0.0F;
-        skinningdata.screen_float_array[4] = -10.0F;
+        skinningdata.screen_float_array[4] = 10.0F;
 //        this.rx = -1.57079632679F;
-        skinningdata.screen_float_array[5] = -1.57079632679F;
-//        skinningdata.screen_float_array[6] = 0.0F;
+        skinningdata.screen_float_array[5] = -90.0F;
+//        skinningdata.screen_float_array[6] = -90.0F;
         skinningdata.screen_float_array[7] = 0.0F;
 //        }
 
@@ -109,7 +109,7 @@ public class InventoryGui extends MixGui
 
 //        if (skinningentities != null)
 //        {
-        float s = 10.0F;
+        float s = -25.0F;
 //        ScaledResolution scaledresolution = new ScaledResolution(this.mc);
 //        if (scaledresolution.getScaleFactor() <= 1)//this.mc.gameSettings.guiScale == 0//if ((this.width / (double)this.height) <= 1.3325D || (this.height / (double)this.width) <= 0.5608D)
 //        {
@@ -122,8 +122,8 @@ public class InventoryGui extends MixGui
 
         skinningdata.screen_float_array[0] = this.width;
         skinningdata.screen_float_array[1] = this.height;
-        skinningdata.screen_float_array[2] = this.width / 2.0F;
-        skinningdata.screen_float_array[3] = this.guiTop + 72.0F;
+        skinningdata.screen_float_array[2] = this.guiLeft + 127.5F;
+        skinningdata.screen_float_array[3] = this.guiTop + 72;
         skinningdata.screen_float_array[8] = s;
         skinningdata.screen_float_array[9] = s;
         skinningdata.screen_float_array[10] = s;

@@ -2,16 +2,11 @@ new gui and system:
     eat
     lv
     point
-write chunk to file and load on start
 open door
 mine
 farm
-update hitbox
 get xp apply mending
 set spawn
 edit sstar
-check dim tp
-bytes datas width height
 
-update pomi and sshimi
 add nasu

@@ -10,7 +10,8 @@
     "IMixinEntity"
   ],
   "client": [
-    "IMixinGuiScreen"
+    "IMixinGuiScreen",
+    "MixinRenderItem"
   ],
   "server": []
 }

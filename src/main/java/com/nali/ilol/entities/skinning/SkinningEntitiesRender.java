@@ -35,7 +35,10 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         SkinningData skinningdata = (SkinningData)skinningentities.client_object;
         float scale = (skinningdata.float_array[0] == 0 ? 1.0F : skinningdata.float_array[0]);
         GL11.glScalef(scale, scale, scale);
-        GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+//        GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
+        float rx = -90.0F;
+        GL11.glRotatef(rx, 1.0F, 0.0F, 0.0F);
+//        GL11.glRotatef(45.0F, 0.0F, 0.0F, 1.0F);
 //        GL11.glColor4f(skinningdata.rgba_float_array[0], skinningdata.rgba_float_array[1], skinningdata.rgba_float_array[2], skinningdata.rgba_float_array[3]);
 
         this.shadowOpaque *= skinningdata.float_array[0];
@@ -190,7 +193,9 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 //        }
 
 //        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
+//        GL11.glRotatef(-45.0F, 0.0F, 0.0F, 1.0F);
+        GL11.glRotatef(-rx, 1.0F, 0.0F, 0.0F);
+//        GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
         GL11.glScalef(1.0F / scale, 1.0F / scale, 1.0F / scale);
 //        WorldMath.VIEW_M4X4.translatePlus(-(float)(rendermanager.viewerPosX - xx), -(float)(yy - rendermanager.viewerPosY)/* - eye_height + 0.03F/* - (player_sleep ? 0.3F : 0.0F)*/, -(float)(rendermanager.viewerPosZ - zz)); // world
         GL11.glTranslated(-ox, -oy, -oz);
@@ -281,9 +286,9 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         SkinningData skinningdata = (SkinningData)skinningentities.client_object;
 
         // body_rot
-        skinningdata.float_array[1] = (float)Math.toRadians(MixMath.invert(MixMath.interpolateRotation(skinningentities.prevRenderYawOffset, skinningentities.renderYawOffset, partialTicks)));
+        skinningdata.float_array[1] = (float)Math.toRadians(MixMath.interpolateRotation(skinningentities.prevRenderYawOffset, skinningentities.renderYawOffset, partialTicks));
         // head_rot
-        skinningdata.float_array[2] = (float)Math.toRadians(MixMath.invert(MixMath.interpolateRotation(skinningentities.prevRotationYawHead, skinningentities.rotationYawHead, partialTicks)));
+        skinningdata.float_array[2] = (float)Math.toRadians(MixMath.interpolateRotation(skinningentities.prevRotationYawHead, skinningentities.rotationYawHead, partialTicks));
         // net_head_yaw
         skinningdata.float_array[3] = skinningdata.float_array[2] - skinningdata.float_array[1];
         // head_pitch
