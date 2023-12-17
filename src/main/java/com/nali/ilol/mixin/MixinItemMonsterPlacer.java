@@ -1,8 +1,11 @@
 package com.nali.ilol.mixin;
 
+import com.nali.ilol.entities.object.ObjectEntities;
+import com.nali.ilol.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.ItemMonsterPlacer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -10,8 +13,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import static com.nali.ilol.entities.EntitiesRegistryHelper.ENTITIES_CLASS_LIST;
 
 @Mixin(ItemMonsterPlacer.class)
 public abstract class MixinItemMonsterPlacer
@@ -21,14 +22,13 @@ public abstract class MixinItemMonsterPlacer
     {
         Entity entity = EntityList.createEntityByIDFromName(entityID, worldIn);
 
-        for (Class clasz : ENTITIES_CLASS_LIST)
+        if (entity instanceof SkinningEntities || entity instanceof ObjectEntities)
         {
-            if (clasz.equals(entity.getClass()))
-            {
-                entity.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(worldIn.rand.nextFloat() * 360.0F), 0.0F);
-                worldIn.spawnEntity(entity);
-                break;
-            }
+            NBTTagCompound nbttagcompound = new NBTTagCompound();
+            nbttagcompound = entity.writeToNBT(nbttagcompound);
+            entity.readFromNBT(nbttagcompound);
+            entity.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(worldIn.rand.nextFloat() * 360.0F), 0.0F);
+            worldIn.spawnEntity(entity);
         }
     }
 }

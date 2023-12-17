@@ -13,6 +13,7 @@ import com.nali.system.bytes.BytesWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.server.SPacketSpawnObject;
 import net.minecraft.util.ResourceLocation;
@@ -49,26 +50,36 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
 //                }
 
 //                SkinningEntitiesHelper skinningentitieshelper = (SkinningEntitiesHelper)temp_entity;
-//                if (skinningentitieshelper != null)
-//                {
-                if (skinningentities.server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
+                if (skinningentities != null)
                 {
-                    Entity entity = skinningentities.getEntity(1);
-                    if (entity == null || !entity.equals(entityplayermp))
+                    if (skinningentities.server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
                     {
+                        Entity entity = skinningentities.getEntity(1);
+                        if (entity == null || !entity.equals(entityplayermp))
+                        {
+                            break;
+                        }
+                    }
+
+                    EntityDataManager entitydatamanager = skinningentities.getDataManager();
+                    int id = BytesReader.getInt(skinningentitiesservermessage.data, 17);
+                    if (id == skinningentities.skinningentitiesbytes.FOLLOW())
+                    {
+                        DataParameter<Byte> byte_dataparameter = skinningentities.getByteDataParameterArray()[id];
+                        entitydatamanager.set(byte_dataparameter, entitydatamanager.get(byte_dataparameter) == 1 ? (byte)0 : 1);
+//                        skinningentities.changeDimension(entityplayermp.getEntityWorld().provider.getDimension());
+                        skinningentities.getEntityWorld().removeEntity(skinningentities);
+                        skinningentities.isDead = false;
+                        entityplayermp.getEntityWorld().spawnEntity(skinningentities);
+                        entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, EntityList.getID(skinningentities.getClass())));
+
+                        skinningentities.setPositionAndRotation(entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, skinningentities.rotationYaw, skinningentities.rotationPitch);
+
                         break;
                     }
-                }
 
-                EntityDataManager entitydatamanager = skinningentities.getDataManager();
-                int id = BytesReader.getInt(skinningentitiesservermessage.data, 17);
-                if (id == skinningentities.skinningentitiesbytes.FOLLOW() && skinningentitiesservermessage.data[21] == 1)
-                {
-                    skinningentities.setPositionAndRotation(entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, skinningentities.rotationYaw, skinningentities.rotationPitch);
+                    entitydatamanager.set(skinningentities.getByteDataParameterArray()[id], skinningentitiesservermessage.data[21]);
                 }
-
-                entitydatamanager.set(skinningentities.getByteDataParameterArray()[id], skinningentitiesservermessage.data[21]);
-//                }
 
                 break;
             }
