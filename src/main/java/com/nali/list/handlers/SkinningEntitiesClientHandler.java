@@ -36,9 +36,14 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
             }
             case 1:
             {
-                Minecraft.getMinecraft().player.isDead = false;
-                Minecraft.getMinecraft().player.deathTime = 0;
-                Minecraft.getMinecraft().player.respawnPlayer();
+                Minecraft minecraft = Minecraft.getMinecraft();
+                minecraft.player.isDead = false;
+                minecraft.getMinecraft().player.deathTime = 0;
+                minecraft.getMinecraft().player.respawnPlayer();
+                minecraft.getMinecraft().addScheduledTask(() ->
+                {
+                    minecraft.displayGuiScreen(null);
+                });
                 break;
             }
             default:

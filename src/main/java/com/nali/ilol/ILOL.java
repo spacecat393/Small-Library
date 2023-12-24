@@ -1,6 +1,5 @@
 package com.nali.ilol;
 
-import com.nali.entities.EntitiesRender;
 import com.nali.ilol.capabilities.CapabilitiesRegistryHelper;
 import com.nali.ilol.entities.EntitiesRegistryHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
@@ -32,19 +31,12 @@ public class ILOL
     public void onFMLPreInitializationEvent(FMLPreInitializationEvent event)
     {
         LOGGER = event.getModLog();
-//        MinecraftForge.EVENT_BUS.register(this);
 
         if (event.getSide().isClient())
         {
-            EntitiesRender.set();
             CapabilitiesRegistryHelper.update();
-//            if (Loader.isModLoaded(com.nali.system.Reference.MOD_ID))
-//            {
-//
-//            }
             OpenGUIHelper.GUI_CLASS_LIST = Reflect.getClasses("com.nali.list.gui");
             OpenGUIHelper.GUI_CLASS_LIST.sort(Comparator.comparing(Class::getName));
-
             SkinningEntities.CLIENT_ENTITIES_MAP = new WeakHashMap<>();
         }
     }

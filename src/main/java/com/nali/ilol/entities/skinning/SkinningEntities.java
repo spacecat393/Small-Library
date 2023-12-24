@@ -2,7 +2,6 @@ package com.nali.ilol.entities.skinning;
 
 import com.google.common.base.Optional;
 import com.nali.data.BothData;
-import com.nali.data.SkinningData;
 import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.bytes.SkinningEntitiesBytes;
 import com.nali.ilol.entities.skinning.ai.*;
@@ -13,6 +12,7 @@ import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.world.ChunkLoader;
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.messages.OpenGUIMessage;
+import com.nali.render.SkinningRender;
 import com.nali.system.Reflect;
 import com.nali.system.bytes.BytesWriter;
 import io.netty.buffer.ByteBuf;
@@ -662,12 +662,12 @@ public abstract class SkinningEntities extends EntityLivingBase
     {
         if (this.isInvisible() || this.isInvisibleToPlayer(Minecraft.getMinecraft().player))
         {
-            SkinningData skinningdata = (SkinningData)object;
-            Arrays.fill(skinningdata.model_boolean_array, false);
+            SkinningRender skinningrender = (SkinningRender)object;
+            Arrays.fill(skinningrender.model_boolean_array, false);
         }
         else
         {
-            ((SkinningData)this.client_object).setBooleanArraylist();
+            ((SkinningRender)this.client_object).setModel();
         }
     }
 
@@ -893,20 +893,20 @@ public abstract class SkinningEntities extends EntityLivingBase
 
     public void updateClientObject()
     {
-        SkinningData skinningdata = (SkinningData)this.client_object;
+        SkinningRender skinningrender = (SkinningRender)this.client_object;
         EntityDataManager entitydatamanager = this.getDataManager();
 
-        skinningdata.float_array[0] = entitydatamanager.get(this.getFloatDataParameterArray()[0]);
+        skinningrender.scale = entitydatamanager.get(this.getFloatDataParameterArray()[0]);
 
         DataParameter<Integer>[] integer_dataparameter = this.getIntegerDataParameterArray();
-        for (int i = 0; i < skinningdata.texture_index_int_array.length; ++i)
+        for (int i = 0; i < skinningrender.texture_index_int_array.length; ++i)
         {
-            skinningdata.texture_index_int_array[i] = entitydatamanager.get(integer_dataparameter[i]);
+            skinningrender.texture_index_int_array[i] = entitydatamanager.get(integer_dataparameter[i]);
         }
 
-        for (int i = 0; i < skinningdata.frame_int_array.length; ++i)
+        for (int i = 0; i < skinningrender.frame_int_array.length; ++i)
         {
-            skinningdata.frame_int_array[i] = entitydatamanager.get(integer_dataparameter[this.bothdata.MaxPart() + i]);
+            skinningrender.frame_int_array[i] = entitydatamanager.get(integer_dataparameter[this.bothdata.MaxPart() + i]);
         }
     }
 

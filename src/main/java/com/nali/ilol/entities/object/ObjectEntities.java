@@ -1,7 +1,7 @@
 package com.nali.ilol.entities.object;
 
 import com.nali.data.BothData;
-import com.nali.data.ObjectData;
+import com.nali.render.ObjectRender;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -145,15 +145,15 @@ public abstract class ObjectEntities extends Entity
 
     public void updateClientObject()
     {
-        ObjectData objectdata = (ObjectData)this.client_object;
+        ObjectRender objectrender = (ObjectRender)this.client_object;
         EntityDataManager entitydatamanager = this.getDataManager();
 
-        objectdata.float_array[0] = entitydatamanager.get(this.getFloatDataParameterArray()[0]);
+        objectrender.scale = entitydatamanager.get(this.getFloatDataParameterArray()[0]);
 
         DataParameter<Integer>[] integer_dataparameter = this.getIntegerDataParameterArray();
-        for (int i = 0; i < objectdata.texture_index_int_array.length; ++i)
+        for (int i = 0; i < objectrender.texture_index_int_array.length; ++i)
         {
-            objectdata.texture_index_int_array[i] = entitydatamanager.get(integer_dataparameter[i]);
+            objectrender.texture_index_int_array[i] = entitydatamanager.get(integer_dataparameter[i]);
         }
     }
 
