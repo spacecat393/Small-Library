@@ -3,7 +3,6 @@ package com.nali.list.gui;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.entities.skinning.SkinningEntitiesRender;
 import com.nali.ilol.gui.MixGui;
-import com.nali.ilol.mixin.IMixinGuiScreen;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.system.Reference;
 import com.nali.list.container.InventoryContainer;
@@ -108,7 +107,7 @@ public class InventoryGui extends MixGui
         int x = this.guiLeft + 100, y = this.guiTop + 26, width = 56, height = 49;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            if (((IMixinGuiScreen)this).eventButton() == 0)
+            if (this.mouse_clicked == 0)
             {
 //                if (skinningentities != null)
 //                {

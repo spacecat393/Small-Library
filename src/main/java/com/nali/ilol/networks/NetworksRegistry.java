@@ -30,7 +30,7 @@ public class NetworksRegistry
             }
             catch (IllegalAccessException | NoSuchFieldException e)
             {
-                ILOL.LOGGER.error(e.getMessage(), e);
+                ILOL.error(e);
             }
         }
     }

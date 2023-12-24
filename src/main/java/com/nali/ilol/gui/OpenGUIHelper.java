@@ -65,7 +65,7 @@ public class OpenGUIHelper
         }
         catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
         {
-            ILOL.LOGGER.error(e.getMessage(), e);
+            ILOL.error(e);
         }
     }
 }

@@ -46,7 +46,7 @@ public class EntitiesRegistryHelper
             }
             catch (NoSuchFieldException | IllegalAccessException e)
             {
-                ILOL.LOGGER.error(e.getMessage(), e);
+                ILOL.error(e);
             }
         }
     }

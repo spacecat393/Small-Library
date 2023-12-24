@@ -60,7 +60,7 @@ public class CapabilitiesRegistryHelper
             }
             catch (InstantiationException | IllegalAccessException e)
             {
-                ILOL.LOGGER.error(e.getMessage(), e);
+                ILOL.error(e);
             }
         }
     }
@@ -78,7 +78,7 @@ public class CapabilitiesRegistryHelper
             }
             catch (InstantiationException | IllegalAccessException e)
             {
-                ILOL.LOGGER.error(e.getMessage(), e);
+                ILOL.error(e);
             }
         }
     }

@@ -8,12 +8,14 @@ import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.system.Reference;
 import com.nali.ilol.world.ChunkCallBack;
 import com.nali.system.Reflect;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Comparator;
@@ -25,13 +27,11 @@ public class ILOL
     @Instance
     public static ILOL I;
 
-    public static Logger LOGGER;
+    public static Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
 
     @EventHandler
     public void onFMLPreInitializationEvent(FMLPreInitializationEvent event)
     {
-        LOGGER = event.getModLog();
-
         if (event.getSide().isClient())
         {
             CapabilitiesRegistryHelper.update();
@@ -54,5 +54,17 @@ public class ILOL
     {
         SkinningEntities.SERVER_ENTITIES_MAP = new WeakHashMap<>();
         ChunkCallBack.set();
+    }
+
+    public static void error(Throwable t)
+    {
+        LOGGER.error(t);
+        FMLCommonHandler.instance().exitJava(-1, true);
+    }
+
+    public static void error(String s)
+    {
+        LOGGER.error(s);
+        FMLCommonHandler.instance().exitJava(-1, true);
     }
 }

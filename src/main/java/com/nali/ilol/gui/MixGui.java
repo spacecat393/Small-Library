@@ -5,9 +5,11 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Container;
 
+import java.io.IOException;
+
 public abstract class MixGui extends GuiContainer
 {
-    public int mouse_released;
+    public int mouse_released, mouse_clicked;
 
     public MixGui(Container container)
     {
@@ -100,8 +102,16 @@ public abstract class MixGui extends GuiContainer
     }
 
     @Override
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+    {
+        this.mouse_clicked = mouseButton;
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+    }
+
+    @Override
     public void mouseReleased(int mouseX, int mouseY, int state)
     {
+        this.mouse_clicked = -1;
         this.mouse_released = state;
         super.mouseReleased(mouseX, mouseY, state);
     }

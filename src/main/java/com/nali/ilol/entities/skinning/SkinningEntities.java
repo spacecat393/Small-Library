@@ -102,7 +102,7 @@ public abstract class SkinningEntities extends EntityLivingBase
             }
             catch (IllegalAccessException | NoSuchFieldException e)
             {
-                ILOL.LOGGER.error(e.getMessage(), e);
+                ILOL.error(e);
             }
         }
 

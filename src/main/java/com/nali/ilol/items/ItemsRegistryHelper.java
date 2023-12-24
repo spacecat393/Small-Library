@@ -38,7 +38,7 @@ public class ItemsRegistryHelper
             }
             catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e)
             {
-                ILOL.LOGGER.error(e.getMessage(), e);
+                ILOL.error(e);
             }
         }
     }
