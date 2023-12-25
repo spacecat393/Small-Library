@@ -10,4 +10,8 @@ set spawn
 edit sstar
 
 add nasu
-normal and loop bindtexture
+fix pomi
+fix head rotate
+
+fix light on box
+pre texture state

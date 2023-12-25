@@ -17,8 +17,38 @@ public abstract class MixinRenderItem
     {
         if (stack.getItem() instanceof MixItems)
         {
-            ((MixItems)stack.getItem()).render();
+            MixItems mixitems = ((MixItems)stack.getItem());
+            mixitems.render();
+            mixitems.objectrender.lig_b = 208.0F;
+            mixitems.objectrender.lig_s = 240.0F;
             ci.cancel();
         }
     }
+
+//    @Inject(method = "renderItemIntoGUI", at = @At("HEAD"))
+//    private void renderItemIntoGUI(ItemStack stack, int x, int y, CallbackInfo ci)
+//    {
+//        if (stack.getItem() instanceof MixItems)
+//        {
+//            ((MixItems)stack.getItem()).disableLightMap();
+//        }
+//    }
+//
+//    @Inject(method = "renderItemAndEffectIntoGUI(Lnet/minecraft/item/ItemStack;II)V", at = @At("HEAD"))
+//    private void renderItemAndEffectIntoGUI(ItemStack stack, int xPosition, int yPosition, CallbackInfo ci)
+//    {
+//        if (stack.getItem() instanceof MixItems)
+//        {
+//            ((MixItems)stack.getItem()).disableLightMap();
+//        }
+//    }
+//
+//    @Inject(method = "renderItemOverlays", at = @At("HEAD"))
+//    private void renderItemOverlayIntoGUI(FontRenderer fr, ItemStack stack, int xPosition, int yPosition, CallbackInfo ci)
+//    {
+//        if (stack.getItem() instanceof MixItems)
+//        {
+//            ((MixItems)stack.getItem()).disableLightMap();
+//        }
+//    }
 }

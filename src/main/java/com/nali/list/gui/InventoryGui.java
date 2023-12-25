@@ -85,6 +85,8 @@ public class InventoryGui extends MixGui
 //        skinningrender.sx = s;
 //        skinningrender.sy = s;
 //        skinningrender.sz = s;
+        skinningrender.lig_b = 208.0F;
+        skinningrender.lig_s = 240.0F;
         skinningrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
 
         if (this.page == 0)

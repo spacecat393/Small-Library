@@ -52,13 +52,9 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
     {
         SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
 
-        // 1
         skinningrender.body_rot = (float)Math.toRadians(MixMath.interpolateRotation(skinningentities.prevRenderYawOffset, skinningentities.renderYawOffset, partialTicks));
-        // 2
         skinningrender.head_rot = (float)Math.toRadians(MixMath.interpolateRotation(skinningentities.prevRotationYawHead, skinningentities.rotationYawHead, partialTicks));
-        // 3
         skinningrender.net_head_yaw = skinningrender.head_rot - skinningrender.body_rot;
-        // 4
         skinningrender.head_pitch = (float)Math.toRadians(skinningentities.prevRotationPitch + (skinningentities.rotationPitch - skinningentities.prevRotationPitch) * partialTicks);
 
         int max_bones = skinningrender.openglanimationmemory.idlebones_byte_array.length;

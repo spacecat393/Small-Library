@@ -41,9 +41,8 @@ public abstract class ObjectEntitiesRender<T extends ObjectEntities> extends Ren
     public void updateData(T objectentities, float partialTicks)
     {
         ObjectRender objectrender = (ObjectRender)objectentities.client_object;
-        // 1
+
         objectrender.head_rot = (float)Math.toRadians(MixMath.interpolateRotation(objectentities.rotationYaw, objectentities.prevRotationYaw, partialTicks));
-        // 2
         objectrender.head_pitch = (float)Math.toRadians(objectentities.prevRotationPitch + (objectentities.rotationPitch - objectentities.prevRotationPitch) * partialTicks);
 
         this.multiplyAnimation(objectentities);
