@@ -17,3 +17,7 @@ set glow outline
 
 keep bindpose and bones to render other with matrix
 set dmg to item on hand
+
+add to readme
+config/forge.cfg
+fixVanillaCascading=true

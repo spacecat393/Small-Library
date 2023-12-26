@@ -497,13 +497,15 @@ public class InventoryGui extends MixGui
                     {
                         I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.FOLLOW()] == 1 ? bf1 : bf0),
                         bf0 + " : " + I18n.translateToLocal("gui.info.bf00"),
-                        bf1 + " : " + I18n.translateToLocal("gui.info.bf10")
+                        bf1 + " : " + I18n.translateToLocal("gui.info.bf10"),
+                        I18n.translateToLocal("gui.info.bf000")
                     },
                     new int[]
                     {
                         0xFFF85A52,
                         0xFFFFFFFF,
-                        0xFFF85A52
+                        0xFFF85A52,
+                        0xFFFFFFFF
                     }, mouseX, mouseY, true);
                 }
             }

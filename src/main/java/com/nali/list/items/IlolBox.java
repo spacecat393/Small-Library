@@ -5,6 +5,7 @@ import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.items.MixItems;
 import com.nali.ilol.items.Tabs;
 import com.nali.ilol.mixin.IMixinWorldServer;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,13 +13,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
+import java.util.List;
 
 public class IlolBox extends MixItems
 {
@@ -29,6 +33,15 @@ public class IlolBox extends MixItems
         super(string_array[0], string_array[1], Tabs.TABS);
         this.setMaxStackSize(1);
         I = this;
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+        tooltip.add(I18n.translateToLocal("gui.info.box0"));
+        tooltip.add(I18n.translateToLocal("gui.info.box1"));
+        tooltip.add(I18n.translateToLocal("gui.info.box2"));
+        super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 
     @Override
