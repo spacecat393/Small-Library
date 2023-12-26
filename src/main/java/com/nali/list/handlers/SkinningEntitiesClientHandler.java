@@ -40,6 +40,7 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
                 minecraft.player.isDead = false;
                 minecraft.getMinecraft().player.deathTime = 0;
                 minecraft.getMinecraft().player.respawnPlayer();
+                minecraft.getMinecraft().player.setHealth(1.0F);
                 minecraft.getMinecraft().addScheduledTask(() ->
                 {
                     minecraft.displayGuiScreen(null);

@@ -129,6 +129,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         }
         else
         {
+            ChunkLoader.updateChunk(this);
             this.skinningentitiesarea = new SkinningEntitiesArea(this);
             this.skinningentitiesarea.init();
             this.skinningentitiesfindmove = new SkinningEntitiesFindMove(this);
@@ -1028,8 +1029,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         float scale = this.getDataManager().get(this.getFloatDataParameterArray()[0]);
         this.width = this.bothdata.Width() * scale;
         this.height = this.bothdata.Height() * scale;
-
-        this.dimension = this.getEntityWorld().provider.getDimension();
+//        this.dimension = this.getEntityWorld().provider.getDimension();
     }
 
     public static boolean doAttackEntityFrom(Entity target, Entity by_entity, DamageSource source, float amount)

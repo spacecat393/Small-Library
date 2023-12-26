@@ -1,11 +1,14 @@
 package com.nali.list.gui;
 
+import com.nali.ilol.data.BoxData;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.entities.skinning.SkinningEntitiesRender;
 import com.nali.ilol.gui.MixGui;
 import com.nali.ilol.networks.NetworksRegistry;
+import com.nali.ilol.render.BoxRender;
 import com.nali.ilol.system.Reference;
 import com.nali.list.container.InventoryContainer;
+import com.nali.list.container.PlayerContainer;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
 import com.nali.render.SkinningRender;
 import com.nali.system.bytes.BytesWriter;
@@ -24,6 +27,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 
+import static com.nali.ilol.render.RenderHelper.DATALOADER;
 import static com.nali.system.Timing.TD;
 
 @SideOnly(Side.CLIENT)
@@ -37,6 +41,7 @@ public class InventoryGui extends MixGui
     public long last_time = Minecraft.getSystemTime();//System.currentTimeMillis();
     public int limit_time = 1000;
     public int message_state;
+    public BoxRender boxrender = new BoxRender(new BoxData(), DATALOADER);
 
     public InventoryGui(IInventory iinventory, SkinningEntities skinningentities)
     {
@@ -63,6 +68,13 @@ public class InventoryGui extends MixGui
 
         this.xSize = 256;//170;
         this.ySize = 256;//206;
+//        this.boxrender.rx = 90.0F;
+//        this.boxrender.ry = 45.0F;
+        this.boxrender.rz = 45.0F * 3.0F;
+        float s = -3.5F;
+        this.boxrender.sx = s;
+        this.boxrender.sy = s;
+        this.boxrender.sz = s;
     }
 
     @Override
@@ -78,8 +90,8 @@ public class InventoryGui extends MixGui
             this.skinningentitiesrender.updateData(skinningentities, this.mc.getRenderPartialTicks());
         }
 
-        skinningrender.width = this.width;
-        skinningrender.height = this.height;
+//        skinningrender.width = this.width;
+//        skinningrender.height = this.height;
         skinningrender.x = this.guiLeft + 127.5F;
         skinningrender.y = this.guiTop + 72;
 //        skinningrender.sx = s;
@@ -88,6 +100,10 @@ public class InventoryGui extends MixGui
         skinningrender.lig_b = 208.0F;
         skinningrender.lig_s = 240.0F;
         skinningrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
+
+        this.boxrender.x = this.guiLeft + 84 + 6.5F + 0.5F;
+        this.boxrender.y = this.guiTop + 33 + 18 + 18 + 6.5F + 2.5F;
+        this.boxrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
 
         if (this.page == 0)
         {
@@ -336,6 +352,49 @@ public class InventoryGui extends MixGui
                 0xFFF85A52,
                 0xFFFFFFFF
             }, mouseX, mouseY, true);
+        }
+
+        /*x = this.guiLeft + 82; */y = this.guiTop + 31 + 18;// width = 18; height = 18;
+        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+        {
+            if (this.mouse_released == 0)
+            {
+                Minecraft.getMinecraft().displayGuiScreen(new PlayerGui(new PlayerContainer()));
+            }
+
+            this.drawHoveringText(new String[]
+            {
+                I18n.translateToLocal("gui.info.a2"),
+                I18n.translateToLocal("gui.info.a20")
+            },
+            new int[]
+            {
+                0xFFF85A52,
+                0xFFFFFFFF
+            }, mouseX, mouseY, false);
+        }
+
+        /*x = this.guiLeft + 82; */y = this.guiTop + 31 + 18 + 18;// width = 18; height = 18;
+        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+        {
+            if (this.mouse_released == 0)
+            {
+                byte[] byte_array = new byte[17];
+                byte_array[0] = 8;
+                BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+            }
+
+            this.drawHoveringText(new String[]
+            {
+                I18n.translateToLocal("gui.info.i0"),
+                I18n.translateToLocal("gui.info.i00")
+            },
+            new int[]
+            {
+                0xFFF85A52,
+                0xFFFFFFFF
+            }, mouseX, mouseY, false);
         }
 
         if (this.page > 0)
@@ -709,18 +768,21 @@ public class InventoryGui extends MixGui
         this.mc.getTextureManager().bindTexture(GUI_RESOURCELOCATION);
         this.drawTexturedModalRect(this.guiLeft + 43, this.guiTop + 25, 86, 50, 170, 206);
 
+        float tx = this.guiLeft + 84;
         if (this.page == 0)
         {
-            this.drawTexturedModalRect(this.guiLeft + 84, this.guiTop + 33, 238, 0, 14, 14);
+            this.drawTexturedModalRect(tx, this.guiTop + 33, 238, 0, 14, 14);
         }
         else if (this.page == 2)
         {
-            this.drawTexturedModalRect(this.guiLeft + 84, this.guiTop + 33, 44, 0, 14, 14);
+            this.drawTexturedModalRect(tx, this.guiTop + 33, 44, 0, 14, 14);
         }
         else
         {
-            this.drawTexturedModalRect(this.guiLeft + 84, this.guiTop + 33, 16, 0, 14, 14);
+            this.drawTexturedModalRect(tx, this.guiTop + 33, 16, 0, 14, 14);
         }
+
+        this.drawTexturedModalRect(tx, this.guiTop + 53/*33 + 18 + 2*/, 224, 0, 14, 11);
 
         for (int i = 0; i < 36; ++i)
         {

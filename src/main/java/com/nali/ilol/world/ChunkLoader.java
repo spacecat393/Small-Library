@@ -38,6 +38,7 @@ public class ChunkLoader
             chunkdata.ticket = ForgeChunkManager.requestTicket(ILOL.I, chunkdata.world, ForgeChunkManager.Type.ENTITY);
             chunkdata.ticket.bindEntity(skinningentities);
             ForgeChunkManager.forceChunk(chunkdata.ticket, chunkdata.chunkpos);
+            CHUNK_MAP.put(skinningentities, chunkdata);
         }
     }
 
@@ -48,6 +49,7 @@ public class ChunkLoader
             ChunkData chunkdata = CHUNK_MAP.get(skinningentities);
 //            ForgeChunkManager.unforceChunk(chunkdata.ticket, chunkdata.chunkpos);
             ForgeChunkManager.releaseTicket(chunkdata.ticket);
+            CHUNK_MAP.remove(skinningentities);
         }
     }
 }

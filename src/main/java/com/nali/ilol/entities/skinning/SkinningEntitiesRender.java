@@ -9,16 +9,13 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.nali.entities.EntitiesRender.supportEntities;
-import static com.nali.render.SkinningRender.FREE_SKINNING_OBJECT_ARRAY;
-
 @SideOnly(Side.CLIENT)
 public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends Render<T>
 {
-    static
-    {
-        supportEntities();
-    }
+//    static
+//    {
+//        supportEntities();
+//    }
 
     public SkinningEntitiesRender(RenderManager rendermanager)
     {
@@ -57,7 +54,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         skinningrender.net_head_yaw = skinningrender.head_rot - skinningrender.body_rot;
         skinningrender.head_pitch = (float)Math.toRadians(skinningentities.prevRotationPitch + (skinningentities.rotationPitch - skinningentities.prevRotationPitch) * partialTicks);
 
-        int max_bones = skinningrender.openglanimationmemory.idlebones_byte_array.length;
+        int max_bones = skinningrender.openglanimationmemory.bones;
 
         //
 
@@ -70,13 +67,13 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
         this.multiplyAnimation(skinningentities);
 
-        for (int z = 0; z < max_bones; ++z)
-        {
-            if (skinningrender.openglanimationmemory.idlebones_byte_array[z] != 0)
-            {
-                ((M4x4)FREE_SKINNING_OBJECT_ARRAY[6]).multiply(skinningrender.skinning_float_array, z * 16);
-            }
-        }
+//        for (int z = 0; z < max_bones; ++z)
+//        {
+//            if (skinningrender.openglanimationmemory.idlebones_byte_array[z] != 0)
+//            {
+//                ((M4x4)FREE_SKINNING_OBJECT_ARRAY[6]).multiply(skinningrender.skinning_float_array, z * 16);
+//            }
+//        }
 
         for (int i = 0; i < max_bones; ++i)
         {

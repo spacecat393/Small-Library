@@ -5,8 +5,10 @@ import com.nali.ilol.entities.EntitiesRegistryHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.gui.OpenGUIHelper;
 import com.nali.ilol.networks.NetworksRegistry;
+import com.nali.ilol.render.RenderHelper;
 import com.nali.ilol.system.Reference;
 import com.nali.ilol.world.ChunkCallBack;
+import com.nali.system.DataLoader;
 import com.nali.system.Reflect;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -34,6 +36,8 @@ public class ILOL
     {
         if (event.getSide().isClient())
         {
+            DataLoader.setModels(RenderHelper.DATALOADER, Reference.MOD_ID, "OpenGLShaders/", false);
+
             CapabilitiesRegistryHelper.update();
             OpenGUIHelper.GUI_CLASS_LIST = Reflect.getClasses("com.nali.list.gui");
             OpenGUIHelper.GUI_CLASS_LIST.sort(Comparator.comparing(Class::getName));
@@ -47,6 +51,11 @@ public class ILOL
         EntitiesRegistryHelper.set();
         NetworksRegistry.register();
         CapabilitiesRegistryHelper.register();
+
+        if (event.getSide().isClient())
+        {
+            RenderHelper.init();
+        }
     }
 
     @EventHandler

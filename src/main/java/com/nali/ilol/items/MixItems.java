@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class MixItems extends Item
+public class MixItems extends Item
 {
     @SideOnly(Side.CLIENT)
     public ObjectRender objectrender;
@@ -19,5 +19,8 @@ public abstract class MixItems extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public abstract void render();
+    public void render()
+    {
+        this.objectrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
+    }
 }

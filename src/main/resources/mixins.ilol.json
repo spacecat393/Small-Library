@@ -7,12 +7,14 @@
     "MixinItemMonsterPlacer",
     "IMixinEntityRegistry",
     "IMixinEntityLivingBase",
-    "IMixinEntity"
+    "IMixinEntity",
+    "MixinEntityLivingBase"
   ],
   "client": [
     "MixinRenderItem",
     "MixinItemRenderer",
-    "MixinRenderEntityItem"
+    "MixinRenderEntityItem",
+    "MixinMinecraft"
   ],
   "server": []
 }

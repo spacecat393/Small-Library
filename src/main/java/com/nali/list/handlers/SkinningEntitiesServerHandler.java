@@ -2,27 +2,40 @@ package com.nali.list.handlers;
 
 import com.google.common.base.Optional;
 import com.nali.ilol.ILOL;
+import com.nali.ilol.entities.EntitiesRegistryHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.ilol.mixin.IMixinEntityRegistry;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.world.ChunkLoader;
+import com.nali.list.capabilitiesserializations.IlolSakuraSerializations;
+import com.nali.list.capabilitiestypes.IlolSakuraTypes;
 import com.nali.list.container.InventoryContainer;
+import com.nali.list.items.IlolBox;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
 import com.nali.system.bytes.BytesReader;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.server.SPacketSpawnObject;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
@@ -63,20 +76,18 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
 
                     EntityDataManager entitydatamanager = skinningentities.getDataManager();
                     int id = BytesReader.getInt(skinningentitiesservermessage.data, 17);
-                    if (id == skinningentities.skinningentitiesbytes.FOLLOW())
-                    {
-                        DataParameter<Byte> byte_dataparameter = skinningentities.getByteDataParameterArray()[id];
-                        entitydatamanager.set(byte_dataparameter, entitydatamanager.get(byte_dataparameter) == 1 ? (byte)0 : 1);
-//                        skinningentities.changeDimension(entityplayermp.getEntityWorld().provider.getDimension());
-                        skinningentities.getEntityWorld().removeEntity(skinningentities);
-                        skinningentities.isDead = false;
-                        entityplayermp.getEntityWorld().spawnEntity(skinningentities);
-                        entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, EntityList.getID(skinningentities.getClass())));
-
-                        skinningentities.setPositionAndRotation(entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, skinningentities.rotationYaw, skinningentities.rotationPitch);
-
-                        break;
-                    }
+//                    if (id == skinningentities.skinningentitiesbytes.FOLLOW())
+//                    {
+//                        DataParameter<Byte> byte_dataparameter = skinningentities.getByteDataParameterArray()[id];
+//                        entitydatamanager.set(byte_dataparameter, entitydatamanager.get(byte_dataparameter) == 1 ? (byte)0 : 1);
+////                        skinningentities.changeDimension(entityplayermp.getEntityWorld().provider.getDimension());
+//                        skinningentities.getEntityWorld().removeEntity(skinningentities);
+//                        skinningentities.isDead = false;
+//                        entityplayermp.getEntityWorld().spawnEntity(skinningentities);
+//                        entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, EntityList.getID(skinningentities.getClass())));
+//
+//                        skinningentities.setPositionAndRotation(entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, skinningentities.rotationYaw, skinningentities.rotationPitch);
+//                    }
 
                     entitydatamanager.set(skinningentities.getByteDataParameterArray()[id], skinningentitiesservermessage.data[21]);
                 }
@@ -113,103 +124,74 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
             }
             case 3://x12
             {
-//                EntityPlayerMP entityplayermp = messagecontext.getServerHandler().player;
-//                Random random = entityplayermp.getRNG();
-//                PyroxeneTypes pyroxenetypes = entityplayermp.getCapability(PyroxeneSerializations.PYROXENETYPES_CAPABILITY, null);
-//                int value = pyroxenetypes.get();
-////                if (value >= 12)
-//                {
-////                    pyroxenetypes.set(value - 12);
-//                    if (random.nextInt(7) == 0)
-//                    {
-//                        try
-//                        {
-//                            ItemStack itemstack = ItemsRegistryHelper.BOX_ITEM.getDefaultInstance();
-//                            int id = random.nextInt(EntitiesRegistryHelper.ENTITIES_CLASS_LIST.size());
-//                            Constructor constructor = EntitiesRegistryHelper.ENTITIES_CLASS_LIST.get(id).getConstructor(World.class);
-//                            Entity entity = (Entity)constructor.newInstance(entityplayermp.world);
-//
-//                            itemstack.setTagCompound(new NBTTagCompound());
-//                            NBTTagCompound nbttagcompound = itemstack.getTagCompound();
-//
-//                            String key_id = "key_id";
-//                            if (!nbttagcompound.hasKey(key_id))
-//                            {
-//                                nbttagcompound.setInteger(key_id, id);
-//                            }
-//
-//                            String entity_key = "entity";
-//                            NBTTagCompound entity_nbttagcompound = new NBTTagCompound();
-//                            entity.writeToNBT(entity_nbttagcompound);
-//                            nbttagcompound.setTag(entity_key, entity_nbttagcompound);
-//                            itemstack.setStackDisplayName(entity.getName());
-//
-//                            entityplayermp.entityDropItem(itemstack, 0.0F);
-//                        }
-//                        catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
-//                        {
-//                            ILOL.LOGGER.error(e.getMessage(), e);
-//                        }
-//                    }
-//                    else
-//                    {
-//                        entityplayermp.dropItem(Items.STICK, 1);
-//                    }
-//                }
+                EntityPlayerMP entityplayermp = messagecontext.getServerHandler().player;
+                Random random = entityplayermp.getRNG();
+                IlolSakuraTypes ilolsakuratypes = entityplayermp.getCapability(IlolSakuraSerializations.ILOLSAKURATYPES_CAPABILITY, null);
+                int value = ilolsakuratypes.get();
+                if (value >= 12)
+                {
+                    ilolsakuratypes.set(value - 12);
+                    if (random.nextInt(7) == 0)
+                    {
+                        try
+                        {
+                            ItemStack itemstack = IlolBox.I.getDefaultInstance();
+                            int id = random.nextInt(EntitiesRegistryHelper.ENTITIES_CLASS_LIST.size());
+                            Constructor constructor = EntitiesRegistryHelper.ENTITIES_CLASS_LIST.get(id).getConstructor(World.class);
+                            Entity entity = (Entity)constructor.newInstance(entityplayermp.world);
+                            IlolBox.putToBox(entity, itemstack);
+                            entityplayermp.entityDropItem(itemstack, 0.0F);
+                        }
+                        catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
+                        {
+                            ILOL.error(e);
+                        }
+                    }
+                    else
+                    {
+                        entityplayermp.dropItem(Items.STICK, 1);
+                    }
+                }
 
                 break;
             }
             case 4://x64
             {
-//                EntityPlayerMP entityplayermp = messagecontext.getServerHandler().player;
-//                Random random = entityplayermp.getRNG();
-//                PyroxeneTypes pyroxenetypes = entityplayermp.getCapability(PyroxeneSerializations.PYROXENETYPES_CAPABILITY, null);
-//                int value = pyroxenetypes.get();
-//
-////                if (value >= 64)
-//                {
-////                    pyroxenetypes.set(value - 64);
-//                    if (random.nextBoolean())
-//                    {
-//                        entityplayermp.dropItem(Item.getItemById(entityplayermp.getRNG().nextInt(Item.REGISTRY.getKeys().size())), 1);
-//                    }
-//                    else
-//                    {
-//                        Object[] key_array = new HashSet<>(((IMixinEntityRegistry)EntityRegistry.instance()).entityClassEntries().keySet()).toArray();
-//                        try
-//                        {
-//                            ItemStack itemstack = ItemsRegistryHelper.BOX_ITEM.getDefaultInstance();
-//                            int id = entityplayermp.getRNG().nextInt(key_array.length);
-//                            Constructor constructor = ((Class)key_array[id]).getConstructor(World.class);
-//                            Entity entity = (Entity)constructor.newInstance(entityplayermp.world);
-//
-//                            if (!(entity instanceof EntityPlayer))
-//                            {
-//                                itemstack.setTagCompound(new NBTTagCompound());
-//                                NBTTagCompound nbttagcompound = itemstack.getTagCompound();
-//
-//                                String mc_key_id = "mc_key_id";
-//                                if (!nbttagcompound.hasKey(mc_key_id))
-//                                {
-//                                    nbttagcompound.setInteger(mc_key_id, id);
-//                                }
-//
-//                                String entity_key = "entity";
-//                                NBTTagCompound entity_nbttagcompound = new NBTTagCompound();
-//                                entity.writeToNBT(entity_nbttagcompound);
-//                                nbttagcompound.setTag(entity_key, entity_nbttagcompound);
-//                            }
-//
-//                            itemstack.setStackDisplayName(entity.getName());
-//
-//                            entityplayermp.entityDropItem(itemstack, 0.0F);
-//                        }
-//                        catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
-//                        {
-//                            ILOL.LOGGER.error(e.getMessage(), e);
-//                        }
-//                    }
-//                }
+                EntityPlayerMP entityplayermp = messagecontext.getServerHandler().player;
+                Random random = entityplayermp.getRNG();
+                IlolSakuraTypes ilolsakuratypes = entityplayermp.getCapability(IlolSakuraSerializations.ILOLSAKURATYPES_CAPABILITY, null);
+                int value = ilolsakuratypes.get();
+
+                if (value >= 64)
+                {
+                    ilolsakuratypes.set(value - 64);
+                    if (random.nextBoolean())
+                    {
+                        entityplayermp.dropItem(Item.getItemById(entityplayermp.getRNG().nextInt(Item.REGISTRY.getKeys().size())), 1);
+                    }
+                    else
+                    {
+                        Object[] key_array = new HashSet<>(((IMixinEntityRegistry) EntityRegistry.instance()).entityClassEntries().keySet()).toArray();
+                        try
+                        {
+                            ItemStack itemstack = IlolBox.I.getDefaultInstance();
+                            int id = entityplayermp.getRNG().nextInt(key_array.length);
+                            Constructor constructor = ((Class)key_array[id]).getConstructor(World.class);
+                            Entity entity = (Entity)constructor.newInstance(entityplayermp.world);
+
+                            if (!(entity instanceof EntityPlayer))
+                            {
+                                IlolBox.putToBox(entity, itemstack);
+                            }
+
+                            entityplayermp.entityDropItem(itemstack, 0.0F);
+                        }
+                        catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
+                        {
+                            ILOL.error(e);
+                        }
+                    }
+                }
 
                 break;
             }
@@ -267,6 +249,23 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 ILOL.LOGGER.info("Name : " + string);
                 ILOL.LOGGER.info("Have : " + ForgeRegistries.ENTITIES.containsKey(new ResourceLocation(string)));
 
+            }
+            case 8:
+            {
+                SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                if (skinningentities != null)
+                {
+                    EntityPlayerMP entityplayermp = messagecontext.getServerHandler().player;
+                    ItemStack itemstack = entityplayermp.getHeldItemMainhand();
+
+                    if (itemstack.getItem() == IlolBox.I && itemstack.getTagCompound() == null)
+                    {
+                        IlolBox.putToBox(skinningentities, itemstack);
+                        entityplayermp.closeScreen();
+                    }
+                }
+
+                break;
             }
             default:
             {

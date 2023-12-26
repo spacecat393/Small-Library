@@ -1,6 +1,5 @@
 package com.nali.ilol.entities;
 
-import com.nali.Nali;
 import com.nali.ilol.ILOL;
 import com.nali.ilol.system.Reference;
 import com.nali.system.Reflect;
@@ -75,7 +74,7 @@ public class EntitiesRegistryHelper
                         }
                         catch (InstantiationException | InvocationTargetException | IllegalAccessException e)
                         {
-                            Nali.LOGGER.error(e.getMessage(), e);
+                            ILOL.error(e);
                         }
 
                         return null;

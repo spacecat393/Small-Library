@@ -1,17 +1,19 @@
 new gui and system:
     eat
     lv
-    point
-open door
+    point -> Sakura Power
 mine
 farm
-get xp apply mending
 set spawn
-edit sstar
 
+apply height path finding
+open door
+get xp apply mending
+fix when out of world -> take item
+edit sstar
 add nasu
 fix pomi
-fix head rotate
+set glow outline
 
-fix light on box
-pre texture state
+keep bindpose and bones to render other with matrix
+set dmg to item on hand

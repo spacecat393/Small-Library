@@ -53,7 +53,9 @@ public class SkinningEntitesRevive
 
                         if (this.entity instanceof EntityPlayer)
                         {
-                            NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(new byte[]{1}), ((EntityPlayerMP)this.entity));
+                            EntityPlayerMP entityplayermp = (EntityPlayerMP)this.entity;
+//                            entityplayermp.closeScreen();
+                            NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(new byte[]{1}), entityplayermp);
                         }
                     }
 

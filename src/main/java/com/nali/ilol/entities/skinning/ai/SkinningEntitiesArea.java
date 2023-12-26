@@ -62,7 +62,7 @@ public class SkinningEntitiesArea
         {
             Entity entity = entity_map.get(id);
 
-            if (entity.dimension != this.skinningentities.dimension || !entity.isEntityAlive())
+            if (/*entity.dimension != this.skinningentities.dimension || */!entity.isEntityAlive())
             {
                 continue;
             }
