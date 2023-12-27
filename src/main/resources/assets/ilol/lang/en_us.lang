@@ -66,7 +66,6 @@ itemGroup.ilol=Small
 item.box.name=Box
 gui.info.box0=Box's name wasn't changed, quickly unbox before world save. [When Player TP to Entity from Other Dimension]
 gui.info.box1=You can use on Inventory GUI to put Our Entity to Box.
-gui.info.box2=Then you should keep that Entity to Box when close world to avoid entity mark as removable or gone!!!.
 
 key.categories.ilol=Small
 key.ilol.player_gui=Player GUI

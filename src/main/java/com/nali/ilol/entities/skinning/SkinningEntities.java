@@ -61,7 +61,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     public final static DataParameter<Optional<UUID>>[] UUID_OPTIONAL_DATAPARAMETER_ARRAY = new DataParameter[2];
     public static List<Class> CONTAINER_CLASS_LIST;
     public static Map<UUID, SkinningEntities> CLIENT_ENTITIES_MAP;
-    public UUID current_client_uuid;
+//    public UUID current_client_uuid;
     public static Map<UUID, SkinningEntities> SERVER_ENTITIES_MAP;
     public UUID current_server_uuid;
     public byte[] client_work_byte_array;
@@ -885,12 +885,12 @@ public abstract class SkinningEntities extends EntityLivingBase
         return !this.isDead;
     }
 
-    @Override
-    public void setDead()
-    {
-//        this.removeFromMap();
-        super.setDead();
-    }
+//    @Override
+//    public void setDead()
+//    {
+////        this.removeFromMap();
+//        super.setDead();
+//    }
 
     public void updateClientObject()
     {
@@ -1324,4 +1324,10 @@ public abstract class SkinningEntities extends EntityLivingBase
     public abstract DataParameter<Float>[] getFloatDataParameterArray();
     @SideOnly(Side.CLIENT)
     public abstract Object createClientObject();
+
+//    @Override
+//    public void setPortal(BlockPos blockpos)
+//    {
+//
+//    }
 }

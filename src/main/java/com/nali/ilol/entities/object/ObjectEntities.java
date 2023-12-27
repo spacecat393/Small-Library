@@ -172,4 +172,10 @@ public abstract class ObjectEntities extends Entity
     public abstract DataParameter<Float>[] getFloatDataParameterArray();
     @SideOnly(Side.CLIENT)
     public abstract Object createClientObject();
+
+//    @Override
+//    public void setPortal(BlockPos blockpos)
+//    {
+//
+//    }
 }

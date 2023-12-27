@@ -21,3 +21,5 @@ set dmg to item on hand
 add to readme
 config/forge.cfg
 fixVanillaCascading=true
+
+15 sec cooldown for changing dimension.

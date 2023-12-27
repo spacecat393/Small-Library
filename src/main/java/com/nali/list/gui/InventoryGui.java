@@ -99,11 +99,11 @@ public class InventoryGui extends MixGui
 //        skinningrender.sz = s;
         skinningrender.lig_b = 208.0F;
         skinningrender.lig_s = 240.0F;
-        skinningrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
+        skinningrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 0.9F);
 
         this.boxrender.x = this.guiLeft + 84 + 6.5F + 0.5F;
         this.boxrender.y = this.guiTop + 33 + 18 + 18 + 6.5F + 2.5F;
-        this.boxrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
+        this.boxrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 0.9F);
 
         if (this.page == 0)
         {

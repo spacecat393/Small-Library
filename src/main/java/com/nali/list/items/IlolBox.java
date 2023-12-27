@@ -40,16 +40,17 @@ public class IlolBox extends MixItems
     {
         tooltip.add(I18n.translateToLocal("gui.info.box0"));
         tooltip.add(I18n.translateToLocal("gui.info.box1"));
-        tooltip.add(I18n.translateToLocal("gui.info.box2"));
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 
     @Override
     public void render()
     {
+        GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, -0.07357F, 0.0F);
         super.render();
-        GL11.glTranslatef(0.0F, 0.07357F, 0.0F);
+//        GL11.glTranslatef(0.0F, 0.07357F, 0.0F);
+        GL11.glPopMatrix();
     }
 
     @Override
@@ -121,6 +122,7 @@ public class IlolBox extends MixItems
                                 entity.readFromNBT(entity_nbttagcompound);
                                 pos = pos.up();
                                 entity.setLocationAndAngles(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, entity.rotationYaw, entity.rotationPitch);
+                                entity.isDead = false;
                                 world.spawnEntity(entity);
                                 nbttagcompound.removeTag(key_id);
                                 nbttagcompound.removeTag(entity_key);
