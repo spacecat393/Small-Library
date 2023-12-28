@@ -12,39 +12,42 @@ public class ChunkLoader
 {
     public static void updateChunk(SkinningEntities skinningentities)
     {
-        ChunkPos chunkpos = new ChunkPos(skinningentities.getPosition());
-        World world = skinningentities.getEntityWorld();
-
-        if (CHUNK_MAP.containsKey(skinningentities))
+        if (skinningentities != null && CHUNK_MAP != null)
         {
-            ChunkData chunkdata = CHUNK_MAP.get(skinningentities);
+            ChunkPos chunkpos = new ChunkPos(skinningentities.getPosition());
+            World world = skinningentities.getEntityWorld();
 
-            if (!world.equals(chunkdata.world) || !chunkpos.equals(chunkdata.chunkpos))
+            if (CHUNK_MAP.containsKey(skinningentities))
             {
-//                ForgeChunkManager.unforceChunk(chunkdata.ticket, chunkdata.chunkpos);
-                ForgeChunkManager.releaseTicket(chunkdata.ticket);
+                ChunkData chunkdata = CHUNK_MAP.get(skinningentities);
+
+                if (!world.equals(chunkdata.world) || !chunkpos.equals(chunkdata.chunkpos))
+                {
+    //                ForgeChunkManager.unforceChunk(chunkdata.ticket, chunkdata.chunkpos);
+                    ForgeChunkManager.releaseTicket(chunkdata.ticket);
+                    chunkdata.world = world;
+                    chunkdata.chunkpos = chunkpos;
+                    chunkdata.ticket = ForgeChunkManager.requestTicket(ILOL.I, chunkdata.world, ForgeChunkManager.Type.ENTITY);
+                    chunkdata.ticket.bindEntity(skinningentities);
+                    ForgeChunkManager.forceChunk(chunkdata.ticket, chunkdata.chunkpos);
+                }
+            }
+            else
+            {
+                ChunkData chunkdata = new ChunkData();
                 chunkdata.world = world;
                 chunkdata.chunkpos = chunkpos;
                 chunkdata.ticket = ForgeChunkManager.requestTicket(ILOL.I, chunkdata.world, ForgeChunkManager.Type.ENTITY);
                 chunkdata.ticket.bindEntity(skinningentities);
                 ForgeChunkManager.forceChunk(chunkdata.ticket, chunkdata.chunkpos);
+                CHUNK_MAP.put(skinningentities, chunkdata);
             }
-        }
-        else
-        {
-            ChunkData chunkdata = new ChunkData();
-            chunkdata.world = world;
-            chunkdata.chunkpos = chunkpos;
-            chunkdata.ticket = ForgeChunkManager.requestTicket(ILOL.I, chunkdata.world, ForgeChunkManager.Type.ENTITY);
-            chunkdata.ticket.bindEntity(skinningentities);
-            ForgeChunkManager.forceChunk(chunkdata.ticket, chunkdata.chunkpos);
-            CHUNK_MAP.put(skinningentities, chunkdata);
         }
     }
 
     public static void removeChunk(SkinningEntities skinningentities)
     {
-        if (CHUNK_MAP.containsKey(skinningentities))
+        if (skinningentities != null && CHUNK_MAP != null && CHUNK_MAP.containsKey(skinningentities))
         {
             ChunkData chunkdata = CHUNK_MAP.get(skinningentities);
 //            ForgeChunkManager.unforceChunk(chunkdata.ticket, chunkdata.chunkpos);

@@ -6,7 +6,8 @@ public interface SkinningEntitiesBytes
     //STATE
     int LOCK_INVENTORY();
     int LOCK_DAMAGE();
-    int ON_TANK();
+    int READY();
+    int ON_ATTACK();
     //ACTION
     int SIT();
     int REVIVE();

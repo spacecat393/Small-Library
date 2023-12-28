@@ -1,5 +1,6 @@
 package com.nali.ilol.entities.skinning.data;
 
+import com.nali.ilol.entities.bytes.SkinningEntitiesBytes;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 
 import java.util.function.Supplier;
@@ -7,7 +8,7 @@ import java.util.function.Supplier;
 public class SkinningEntitiesLiveFrame
 {
     public SkinningEntities skinningentities;
-    public int integer_index; // integer
+    public int integer_index;
     public int[][] int_2d_array; // start end
     public Supplier<Boolean>[] condition_boolean_supplier_array;
 
@@ -20,7 +21,7 @@ public class SkinningEntitiesLiveFrame
 
     public void onUpdate()
     {
-        for (int i = 0; i < condition_boolean_supplier_array.length; ++i)
+        for (int i = 0; i < this.condition_boolean_supplier_array.length; ++i)
         {
             if (this.condition_boolean_supplier_array[i].get())
             {
@@ -34,106 +35,89 @@ public class SkinningEntitiesLiveFrame
         }
     }
 
-    /*
-    0 die
-    1 sit
-    1 move
-    2 end move
-    3 hold
-    */
-    public static void set(SkinningEntitiesLiveFrame skinningentitiesliveframe)
+    /**0-FLoop
+     * 1-TLoop
+     * 2-FLoopOffSet*/
+    public boolean setCondition(byte state, int id0, int id1, boolean result)
+    {
+        if (result)
+        {
+            SkinningEntities skinningentities = this.skinningentities;
+
+            switch (state)
+            {
+                case 0:
+                {
+                    if (skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1] - 1)
+                    {
+                        skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][1];
+                    }
+                    else if (skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] || skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1])
+                    {
+                        skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
+                    }
+
+                    break;
+                }
+                case 1:
+                {
+                    if (skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] || skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1] - 1)
+                    {
+                        skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
+                    }
+
+                    break;
+                }
+                case 2:
+                {
+                    result = skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][0] && skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][1];
+
+                    if (result)
+                    {
+                        if (skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1] - 1 && skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][0])
+                        {
+                            skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][0];
+                        }
+                    }
+
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**0-Die
+     * 1-Sit
+     * 2-OnAttack
+     * 3-Run
+     * 4-EndRun
+     * 5-Walk
+     * 6-Ready
+     * 7-HardIdle
+     * 8-SoftIdle*/
+    public static void set(SkinningEntitiesLiveFrame skinningentitiesliveframe, byte hard_idle)
     {
         SkinningEntities skinningentities = skinningentitiesliveframe.skinningentities;
-//        EntityDataManager entitydatamanager = skinningentities.getDataManager();
-//        DataParameter<Integer> integer_dataparameter = skinningentities.getIntegerDataParameterArray()[skinningentities.getMaxPart() + skinningentitiesliveframe.integer_index];
-
+        SkinningEntitiesBytes skinningentitiesbytes = skinningentities.skinningentitiesbytes;
+        byte[] server_work_byte_array = skinningentities.server_work_byte_array;
         skinningentitiesliveframe.condition_boolean_supplier_array = new Supplier[]
         {
-            () ->
-            {
-                boolean result = skinningentities.isZeroMove();// don't loop die
-                if (result)
-                {
-                    if (skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] == skinningentitiesliveframe.int_2d_array[0][1] - 1)
-                    {
-                        skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] = skinningentitiesliveframe.int_2d_array[0][1];
-                    }
-                    else if (skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] < skinningentitiesliveframe.int_2d_array[0][0] || skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] > skinningentitiesliveframe.int_2d_array[0][1])
-                    {
-                        skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] = skinningentitiesliveframe.int_2d_array[0][0];
-                    }
-//                    else if (skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] < skinningentitiesliveframe.int_2d_array[0][1] - 1)
-//                    {
-//                        skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] += 1;
-//                    }
-                }
-
-                return result;
-            },
-            () ->
-            {
-                boolean result = skinningentities.server_work_byte_array[skinningentities.skinningentitiesbytes.SIT()] == 1;
-                if (result)
-                {
-                    if (skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] < skinningentitiesliveframe.int_2d_array[1][0] || skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] > skinningentitiesliveframe.int_2d_array[1][1] - 1)// loop sit
-                    {
-                        skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] = skinningentitiesliveframe.int_2d_array[1][0];
-                    }
-//                    else if (skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] < skinningentitiesliveframe.int_2d_array[1][1])
-//                    {
-//                        skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] += 1;
-//                    }
-                }
-
-                return result;
-            },
-            () ->
-            {
-                boolean result = skinningentities.moveForward != 0; // loop move
-                if (result)
-                {
-                    if (skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] < skinningentitiesliveframe.int_2d_array[2][0] || skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] > skinningentitiesliveframe.int_2d_array[2][1] - 1)
-                    {
-                        skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] = skinningentitiesliveframe.int_2d_array[2][0];
-                    }
-//                    else
-//                    {
-//                        skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] += 1;
-//                    }
-                }
-
-                return result;
-            },
-            () ->
-            {
-                boolean result = skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] > skinningentitiesliveframe.int_2d_array[2][0] && skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] < skinningentitiesliveframe.int_2d_array[3][1];// don't loop end move
-                if (result)
-                {
-                    if (skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] > skinningentitiesliveframe.int_2d_array[2][1] - 1 && skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] < skinningentitiesliveframe.int_2d_array[3][0])
-                    {
-                        skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] = skinningentitiesliveframe.int_2d_array[3][0];
-                    }
-//                    else
-//                    {
-//                        skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] += 1;
-//                    }
-                }
-
-                return result;
-            },
-            () ->
-            {
-                if (skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] < skinningentitiesliveframe.int_2d_array[4][0] || skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] > skinningentitiesliveframe.int_2d_array[4][1] - 1)// loop hold
-                {
-                    skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] = skinningentitiesliveframe.int_2d_array[4][0];
-                }
-//                else
-//                {
-//                    skinningentities.server_frame_int_array[skinningentitiesliveframe.integer_index] += 1;
-//                }
-
-                return true;
-            }
+            () -> skinningentitiesliveframe.setCondition((byte)0, 0, -1, skinningentities.isZeroMove()),
+            () -> skinningentitiesliveframe.setCondition((byte)1, 1, -1, server_work_byte_array[skinningentitiesbytes.SIT()] == 1),
+            () -> skinningentitiesliveframe.setCondition((byte)1, 2, -1, server_work_byte_array[skinningentitiesbytes.ON_ATTACK()] == 1),
+                //pop up tank
+            () -> skinningentitiesliveframe.setCondition((byte)1, 3, -1, skinningentities.current_server_work_byte_array[skinningentitiesbytes.ATTACK()] == 1 && skinningentities.moveForward != 0),
+            () -> skinningentitiesliveframe.setCondition((byte)2, 3, 4, true),
+            () -> skinningentitiesliveframe.setCondition((byte)1, 5, -1, skinningentities.moveForward != 0),
+            () -> skinningentitiesliveframe.setCondition((byte)1, 6, -1, server_work_byte_array[skinningentitiesbytes.READY()] == 1),
+            () -> skinningentitiesliveframe.setCondition(hard_idle, 7, -1, skinningentities.current_server_work_byte_array[skinningentitiesbytes.ATTACK()] == 1),
+            () -> skinningentitiesliveframe.setCondition((byte)1, 8, -1, true)
         };
     }
 }

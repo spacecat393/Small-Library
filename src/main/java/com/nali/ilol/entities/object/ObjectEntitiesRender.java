@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public abstract class ObjectEntitiesRender<T extends ObjectEntities> extends Render<T>
@@ -27,14 +28,18 @@ public abstract class ObjectEntitiesRender<T extends ObjectEntities> extends Ren
     @Override
     public void doRender(T objectentities, double ox, double oy, double oz, float entityYaw, float partialTicks)
     {
+        GL11.glPushMatrix();
         ObjectRender objectrender = (ObjectRender)objectentities.client_object;
+        GL11.glTranslated(ox, oy, oz);
+        GL11.glScalef(objectrender.scale, objectrender.scale, objectrender.scale);
         float scale = (objectrender.scale == 0 ? 1.0F : objectrender.scale);
         this.shadowOpaque *= scale;
         this.shadowSize *= scale;
 
         this.updateData(objectentities, partialTicks);
-        objectrender.objectworlddraw.renderWorld(ox, oy, oz, scale);
+        objectrender.objectworlddraw.renderWorld();
 
+        GL11.glPopMatrix();
         super.doRender(objectentities, ox, oy, oz, entityYaw, partialTicks);
     }
 

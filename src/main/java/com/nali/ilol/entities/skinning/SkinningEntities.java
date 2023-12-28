@@ -53,6 +53,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+import static com.nali.ilol.world.ChunkCallBack.CHUNK_MAP;
+
 public abstract class SkinningEntities extends EntityLivingBase
 {
     @SideOnly(Side.CLIENT)
@@ -66,6 +68,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     public UUID current_server_uuid;
     public byte[] client_work_byte_array;
     public byte[] server_work_byte_array;
+    public byte[] current_server_work_byte_array;
     public int[] server_frame_int_array;
     public SkinningEntitiesArea skinningentitiesarea;
     public SkinningEntitiesFindMove skinningentitiesfindmove;
@@ -144,6 +147,7 @@ public abstract class SkinningEntities extends EntityLivingBase
             this.skinningentitesrevive = new SkinningEntitesRevive(this);
 
             this.server_work_byte_array = new byte[this.getByteDataParameterArray().length];
+            this.current_server_work_byte_array = new byte[this.server_work_byte_array.length];
             int size = this.getIntegerDataParameterArray().length - this.bothdata.MaxPart();
             this.server_skinningentitiesliveframe_array = new SkinningEntitiesLiveFrame[size];
             this.server_frame_int_array = new int[size];
@@ -931,6 +935,7 @@ public abstract class SkinningEntities extends EntityLivingBase
             for (int i = 0; i < byte_dataparameter.length; ++i)
             {
                 this.server_work_byte_array[i] = entitydatamanager.get(byte_dataparameter[i]);
+                this.current_server_work_byte_array[i] = this.server_work_byte_array[i];
             }
 
             int max_part = this.bothdata.MaxPart();
@@ -1030,6 +1035,11 @@ public abstract class SkinningEntities extends EntityLivingBase
         this.width = this.bothdata.Width() * scale;
         this.height = this.bothdata.Height() * scale;
 //        this.dimension = this.getEntityWorld().provider.getDimension();
+
+        if (!CHUNK_MAP.containsKey(this))
+        {
+            ChunkLoader.updateChunk(this);
+        }
     }
 
     public static boolean doAttackEntityFrom(Entity target, Entity by_entity, DamageSource source, float amount)
