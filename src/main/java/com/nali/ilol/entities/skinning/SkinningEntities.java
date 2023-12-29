@@ -5,7 +5,7 @@ import com.nali.data.BothData;
 import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.bytes.SkinningEntitiesBytes;
 import com.nali.ilol.entities.skinning.ai.*;
-import com.nali.ilol.entities.skinning.data.SkinningEntitiesLiveFrame;
+import com.nali.ilol.entities.skinning.ai.SkinningEntitiesLiveFrame;
 import com.nali.ilol.mixin.IMixinEntity;
 import com.nali.ilol.mixin.IMixinEntityLivingBase;
 import com.nali.ilol.networks.NetworksRegistry;
@@ -70,18 +70,18 @@ public abstract class SkinningEntities extends EntityLivingBase
     public byte[] server_work_byte_array;
     public byte[] current_server_work_byte_array;
     public int[] server_frame_int_array;
+    public SkinningEntitiesBody skinningentitiesbody = new SkinningEntitiesBody(this);
     public SkinningEntitiesArea skinningentitiesarea;
     public SkinningEntitiesFindMove skinningentitiesfindmove;
-    public SkinningEntitiesBody skinningentitiesbody = new SkinningEntitiesBody(this);
     public SkinningEntitiesLook skinningentitieslook;
     public SkinningEntitiesMove skinningentitiesmove;
     public SkinningEntitiesJump skinningentitiesjump;
-    public SkinningEntitesGetItem skinningentitesgetitem;
-    public SkinningEntitesFollow skinningentitesfollow;
+    public SkinningEntitiesGetItem skinningentitiesgetitem;
+    public SkinningEntitiesFollow skinningentitiesfollow;
     public SkinningEntitiesRandomWalk skinningentitiesrandomwalk;
     public SkinningEntitiesRandomLook skinningentitiesrandomlook;
     public SkinningEntitiesAttack skinningentitiesattack;
-    public SkinningEntitesRevive skinningentitesrevive;
+    public SkinningEntitiesRevive skinningentitiesrevive;
     public SkinningEntitiesLiveFrame[] server_skinningentitiesliveframe_array;
     public boolean server_sus_init;
 
@@ -134,17 +134,16 @@ public abstract class SkinningEntities extends EntityLivingBase
         {
             ChunkLoader.updateChunk(this);
             this.skinningentitiesarea = new SkinningEntitiesArea(this);
-            this.skinningentitiesarea.init();
             this.skinningentitiesfindmove = new SkinningEntitiesFindMove(this);
             this.skinningentitieslook = new SkinningEntitiesLook(this);
             this.skinningentitiesmove = new SkinningEntitiesMove(this);
             this.skinningentitiesjump = new SkinningEntitiesJump(this);
-            this.skinningentitesgetitem = new SkinningEntitesGetItem(this);
-            this.skinningentitesfollow = new SkinningEntitesFollow(this);
+            this.skinningentitiesgetitem = new SkinningEntitiesGetItem(this);
+            this.skinningentitiesfollow = new SkinningEntitiesFollow(this);
             this.skinningentitiesrandomwalk = new SkinningEntitiesRandomWalk(this);
             this.skinningentitiesrandomlook = new SkinningEntitiesRandomLook(this);
             this.skinningentitiesattack = new SkinningEntitiesAttack(this);
-            this.skinningentitesrevive = new SkinningEntitesRevive(this);
+            this.skinningentitiesrevive = new SkinningEntitiesRevive(this);
 
             this.server_work_byte_array = new byte[this.getByteDataParameterArray().length];
             this.current_server_work_byte_array = new byte[this.server_work_byte_array.length];
@@ -559,10 +558,10 @@ public abstract class SkinningEntities extends EntityLivingBase
             if (this.isMove())
             {
                 this.skinningentitiesarea.onUpdate();
-                this.skinningentitesrevive.onUpdate();
-                this.skinningentitesfollow.onUpdate();
+                this.skinningentitiesrevive.onUpdate();
+                this.skinningentitiesfollow.onUpdate();
                 this.skinningentitiesattack.onUpdate();
-                this.skinningentitesgetitem.onUpdate();
+                this.skinningentitiesgetitem.onUpdate();
                 this.skinningentitiesrandomwalk.onUpdate();
                 this.skinningentitiesrandomlook.onUpdate();
 
@@ -685,7 +684,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     @Override
     public float updateDistance(float f0, float f1)
     {
-        this.skinningentitiesbody.updateRenderAngles();
+        this.skinningentitiesbody.onUpdate();//.updateRenderAngles();
         return f1;
 //        return super.updateDistance(f0, f1);
     }
@@ -808,8 +807,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 
         if (flag)
         {
-            mainhand_itemstack.attemptDamageItem(1, this.getRNG(), null);
-
+//            mainhand_itemstack.attemptDamageItem(1, this.getRNG(), null);
             if (i > 0 && entity instanceof EntityLivingBase)
             {
                 ((EntityLivingBase)entity).knockBack(this, (float)i * 0.5F, MathHelper.sin(this.rotationYaw * 0.017453292F), -MathHelper.cos(this.rotationYaw * 0.017453292F));

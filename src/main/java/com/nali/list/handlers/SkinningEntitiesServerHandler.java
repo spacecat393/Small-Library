@@ -22,6 +22,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.server.SPacketSpawnObject;
 import net.minecraft.util.ResourceLocation;
@@ -104,7 +105,19 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
     //                        skinningentities.setPositionAndRotation(entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, skinningentities.rotationYaw, skinningentities.rotationPitch);
                         }
 
-                        entitydatamanager.set(skinningentities.getByteDataParameterArray()[id], skinningentitiesservermessage.data[21]);
+                        DataParameter<Byte>[] byte_dataparameter_array = skinningentities.getByteDataParameterArray();
+                        if (skinningentitiesservermessage.data[21] == 0)
+                        {
+                            entitydatamanager.set(byte_dataparameter_array[skinningentities.skinningentitiesbytes.SOFT_READY()], (byte)1);
+                            entitydatamanager.set(byte_dataparameter_array[skinningentities.skinningentitiesbytes.HARD_READY()], (byte)0);
+                        }
+                        else
+                        {
+                            entitydatamanager.set(byte_dataparameter_array[skinningentities.skinningentitiesbytes.HARD_READY()], (byte)1);
+                            entitydatamanager.set(byte_dataparameter_array[skinningentities.skinningentitiesbytes.SOFT_READY()], (byte)0);
+                        }
+
+                        entitydatamanager.set(byte_dataparameter_array[id], skinningentitiesservermessage.data[21]);
                     }
 
                     break;

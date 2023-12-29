@@ -3,18 +3,19 @@ package com.nali.ilol.entities.skinning.ai;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import net.minecraft.util.math.MathHelper;
 
-public class SkinningEntitiesBody
+public class SkinningEntitiesBody extends SkinningEntitiesAI
 {
-    public SkinningEntities skinningentities;
     public int rotationTickCounter;
     public float prevRenderYawHead;
 
     public SkinningEntitiesBody(SkinningEntities skinningentities)
     {
-        this.skinningentities = skinningentities;
+        super(skinningentities);
     }
 
-    public void updateRenderAngles()
+    @Override
+    public void onUpdate()
+//    public void updateRenderAngles()
     {
         double d0 = this.skinningentities.posX - this.skinningentities.prevPosX;
         double d1 = this.skinningentities.posZ - this.skinningentities.prevPosZ;

@@ -4,9 +4,8 @@ import com.nali.ilol.entities.skinning.SkinningEntities;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.math.MathHelper;
 
-public class SkinningEntitiesMove
+public class SkinningEntitiesMove extends SkinningEntitiesAI
 {
-    public SkinningEntities skinningentities;
     public double x;
     public double y;
     public double z;
@@ -15,9 +14,10 @@ public class SkinningEntitiesMove
 
     public SkinningEntitiesMove(SkinningEntities skinningentities)
     {
-        this.skinningentities = skinningentities;
+        super(skinningentities);
     }
 
+    @Override
     public void onUpdate()
     {
         double wy = this.y - this.skinningentities.posY;

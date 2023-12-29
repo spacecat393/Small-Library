@@ -1,24 +1,25 @@
 package com.nali.ilol.entities.skinning.ai;
 
 import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.math.MixMath;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 
 import static com.nali.ilol.entities.skinning.ai.SkinningEntitiesFindMove.PATH_BYTE_ARRAY;
 
-public class SkinningEntitesFollow
+public class SkinningEntitiesFollow extends SkinningEntitiesAI
 {
-    public SkinningEntities skinningentities;
     public float max_distance = 196.0F;
     public float min_distance = 96.0F;
     public boolean follow;
 
-    public SkinningEntitesFollow(SkinningEntities skinningentities)
+    public SkinningEntitiesFollow(SkinningEntities skinningentities)
     {
-        this.skinningentities = skinningentities;
+        super(skinningentities);
     }
 
+    @Override
     public void onUpdate()
     {
         Entity owner_entity = this.skinningentities.getEntity(1);
@@ -33,6 +34,18 @@ public class SkinningEntitesFollow
 
         if (owner_entity != null && this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.FOLLOW()) && (this.skinningentities.getDistanceSq(owner_entity) > this.min_distance || this.follow))
         {
+            if ((owner_entity.getEntityWorld()).provider.getDimension() != ((this.skinningentities.getEntityWorld()).provider.getDimension()))
+            {
+                if (this.follow)
+                {
+                    this.skinningentities.skinningentitiesfindmove.endGoal();
+                    this.follow = false;
+                }
+
+                this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.FOLLOW()] = 0;
+                return;
+            }
+
             this.follow = true;
             if (this.skinningentities.isRiding())
             {
@@ -47,7 +60,7 @@ public class SkinningEntitesFollow
             }
             else
             {
-                if (step <= 8.0D)
+                if (step <= MixMath.getClose(this.skinningentities, owner_entity, 1.0D))
                 {
                     this.skinningentities.skinningentitiesfindmove.endGoal();
                     this.follow = false;

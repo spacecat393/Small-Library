@@ -1,25 +1,22 @@
 package com.nali.ilol.entities.skinning.ai;
 
 import com.nali.ilol.entities.skinning.SkinningEntities;
-import com.nali.ilol.entities.skinning.ai.path.SNode;
 import com.nali.math.MixMath;
+import com.nali.math.SNode;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 
 import java.util.ArrayList;
 
-public class SkinningEntitiesFindMove
+public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 {
     public static byte[] PATH_BYTE_ARRAY = { -1, 0, 1 };
     public static int MAX_G = 64; //block
 //    public int max_run = 50;
 
-    public SkinningEntities skinningentities;
     public int goal_x;
     public int goal_y;
     public int goal_z;
@@ -49,9 +46,10 @@ public class SkinningEntitiesFindMove
 
     public SkinningEntitiesFindMove(SkinningEntities skinningentities)
     {
-        this.skinningentities = skinningentities;
+        super(skinningentities);
     }
 
+    @Override
     public void onUpdate()
     {
         // {
@@ -78,17 +76,17 @@ public class SkinningEntitiesFindMove
         //     Main.LOGGER.info("Goal :" + (this.temp_goal_x == this.goal_x && this.temp_goal_y == this.goal_y && this.temp_goal_z == this.goal_z));
         // }
 
-        World world = this.skinningentities.getEntityWorld();
-//        if (this.path_blockpos_array != null)
+//        World world = this.skinningentities.getEntityWorld();
+////        if (this.path_blockpos_array != null)
+////        {
+//        for (BlockPos bp : this.path_blockpos_arraylist)
 //        {
-        for (BlockPos bp : this.path_blockpos_arraylist)
-        {
-            if (bp != null)
-            {
-                ((WorldServer) world).spawnParticle(EnumParticleTypes.CRIT, bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, 1, 0.0D, 0.0D, 0.0D, 0.0D);
-            }
-        }
+//            if (bp != null)
+//            {
+//                ((WorldServer) world).spawnParticle(EnumParticleTypes.CRIT, bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+//            }
 //        }
+////        }
 
         if (this.try_move)
         {

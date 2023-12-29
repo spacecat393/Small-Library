@@ -12,27 +12,21 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import java.util.*;
 
-public class SkinningEntitiesArea
+public class SkinningEntitiesArea extends SkinningEntitiesAI
 {
-    public SkinningEntities skinningentities;
     public Entity[] target_entity_array = new Entity[2]; // xp item
     public ArrayList<Entity> all_entity_arraylist = new ArrayList<Entity>(); // target
     public double[] distance_to_target_array = new double[2];
 
-    public ArrayList<Integer> troublemaker_arraylist;
-    public ArrayList<Integer> target_arraylist;
+    public ArrayList<Integer> troublemaker_arraylist = new ArrayList<>();
+    public ArrayList<Integer> target_arraylist = new ArrayList<>();
 
     public SkinningEntitiesArea(SkinningEntities skinningentities)
     {
-        this.skinningentities = skinningentities;
+        super(skinningentities);
     }
 
-    public void init()
-    {
-        this.troublemaker_arraylist = new ArrayList<>();
-        this.target_arraylist = new ArrayList<>();
-    }
-
+    @Override
     public void onUpdate()
     {
         this.all_entity_arraylist.clear();

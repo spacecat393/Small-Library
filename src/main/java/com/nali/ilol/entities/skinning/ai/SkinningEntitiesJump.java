@@ -2,14 +2,13 @@ package com.nali.ilol.entities.skinning.ai;
 
 import com.nali.ilol.entities.skinning.SkinningEntities;
 
-public class SkinningEntitiesJump
+public class SkinningEntitiesJump extends SkinningEntitiesAI
 {
-    public SkinningEntities skinningentities;
     public boolean isJumping;
 
     public SkinningEntitiesJump(SkinningEntities skinningentities)
     {
-        this.skinningentities = skinningentities;
+        super(skinningentities);
     }
 
     public void setJumping()
@@ -17,6 +16,7 @@ public class SkinningEntitiesJump
         this.isJumping = true;
     }
 
+    @Override
     public void onUpdate()
     {
         this.skinningentities.setJumping(this.isJumping);

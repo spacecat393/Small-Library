@@ -2,18 +2,18 @@ package com.nali.ilol.entities.skinning.ai;
 
 import com.nali.ilol.entities.skinning.SkinningEntities;
 
-public class SkinningEntitiesRandomLook
+public class SkinningEntitiesRandomLook extends SkinningEntitiesAI
 {
-    public SkinningEntities skinningentities;
     public int tick;
     public boolean look;
     public double x, y, z;
 
     public SkinningEntitiesRandomLook(SkinningEntities skinningentities)
     {
-        this.skinningentities = skinningentities;
+        super(skinningentities);
     }
 
+    @Override
     public void onUpdate()
     {
         if (this.skinningentities.isWorkBypass(this.skinningentities.skinningentitiesbytes.RANDOM_LOOK(), this.skinningentities.skinningentitiesbytes.SIT()))

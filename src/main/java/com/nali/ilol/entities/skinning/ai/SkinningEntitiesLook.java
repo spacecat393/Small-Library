@@ -4,9 +4,8 @@ import com.nali.ilol.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
-public class SkinningEntitiesLook
+public class SkinningEntitiesLook extends SkinningEntitiesAI
 {
-    public final SkinningEntities skinningentities;
 //    public float deltaLookYaw;
 //    public float deltaLookPitch;
     public boolean looking;
@@ -17,7 +16,7 @@ public class SkinningEntitiesLook
 
     public SkinningEntitiesLook(SkinningEntities skinningentities)
     {
-        this.skinningentities = skinningentities;
+        super(skinningentities);
     }
 
 //    public void setLookPositionWithEntity(Entity entityIn, float deltaYaw, float deltaPitch)
@@ -58,6 +57,7 @@ public class SkinningEntitiesLook
         this.looking = true;
     }
 
+    @Override
     public void onUpdate()
     {
 //        this.skinningentities.rotationPitch = 0.0F;

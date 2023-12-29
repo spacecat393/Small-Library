@@ -5,16 +5,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 
-public class SkinningEntitesGetItem
+public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 {
-    public SkinningEntities skinningentities;
     public boolean pickup;
 
-    public SkinningEntitesGetItem(SkinningEntities skinningentities)
+    public SkinningEntitiesGetItem(SkinningEntities skinningentities)
     {
-        this.skinningentities = skinningentities;
+        super(skinningentities);
     }
 
+    @Override
     public void onUpdate()
     {
         Entity[] entity_array = this.skinningentities.skinningentitiesarea.target_entity_array;

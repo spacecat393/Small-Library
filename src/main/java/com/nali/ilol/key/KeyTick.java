@@ -23,7 +23,7 @@ public class KeyTick
 //        {
 //            com.nali.key.KeyTick.addKey(key);
 //        }
-        if (Keyboard.isKeyDown(IlolPlayerGui.I.getKeyCode()) && Minecraft.getMinecraft().currentScreen == null)
+        if (Keyboard.isKeyDown(IlolPlayerGui.I.getKeyCode()) && (Minecraft.getMinecraft().currentScreen == null || Minecraft.getMinecraft().currentScreen instanceof PlayerGui))
         {
             Minecraft.getMinecraft().displayGuiScreen(new PlayerGui(new PlayerContainer()));
 //            Minecraft minecraft = Minecraft.getMinecraft();
