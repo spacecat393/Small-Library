@@ -2,6 +2,7 @@ package com.nali.list.handlers;
 
 import com.google.common.base.Optional;
 import com.nali.ilol.ILOL;
+import com.nali.ilol.entities.EntitiesContainerHelper;
 import com.nali.ilol.entities.EntitiesRegistryHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.mixin.IMixinEntityRegistry;
@@ -258,7 +259,7 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
                     if (skinningentities != null)
                     {
-                        SkinningEntities.setContainer(skinningentities, messagecontext.getServerHandler().player, InventoryContainer.ID);
+                        EntitiesContainerHelper.setContainer(skinningentities, messagecontext.getServerHandler().player, InventoryContainer.ID);
                     }
                     break;
                 }

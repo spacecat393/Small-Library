@@ -2,36 +2,23 @@ package com.nali.ilol.entities.skinning;
 
 import com.google.common.base.Optional;
 import com.nali.data.BothData;
-import com.nali.ilol.ILOL;
+import com.nali.ilol.entities.EntitiesAttackHelper;
+import com.nali.ilol.entities.EntitiesContainerHelper;
 import com.nali.ilol.entities.bytes.SkinningEntitiesBytes;
 import com.nali.ilol.entities.skinning.ai.*;
-import com.nali.ilol.entities.skinning.ai.SkinningEntitiesLiveFrame;
-import com.nali.ilol.mixin.IMixinEntity;
-import com.nali.ilol.mixin.IMixinEntityLivingBase;
-import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.world.ChunkLoader;
 import com.nali.list.container.InventoryContainer;
-import com.nali.list.messages.OpenGUIMessage;
 import com.nali.render.SkinningRender;
-import com.nali.system.Reflect;
-import com.nali.system.bytes.BytesWriter;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -39,19 +26,19 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.network.play.server.SPacketSpawnObject;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.UUID;
 
 import static com.nali.ilol.world.ChunkCallBack.CHUNK_MAP;
 
@@ -61,9 +48,8 @@ public abstract class SkinningEntities extends EntityLivingBase
     public Object client_object;
 
     public final static DataParameter<Optional<UUID>>[] UUID_OPTIONAL_DATAPARAMETER_ARRAY = new DataParameter[2];
-    public static List<Class> CONTAINER_CLASS_LIST;
     public static Map<UUID, SkinningEntities> CLIENT_ENTITIES_MAP;
-//    public UUID current_client_uuid;
+    //    public UUID current_client_uuid;
     public static Map<UUID, SkinningEntities> SERVER_ENTITIES_MAP;
     public UUID current_server_uuid;
     public byte[] client_work_byte_array;
@@ -93,22 +79,6 @@ public abstract class SkinningEntities extends EntityLivingBase
 
     static
     {
-        CONTAINER_CLASS_LIST = Reflect.getClasses("com.nali.list.container");
-        CONTAINER_CLASS_LIST.sort(Comparator.comparing(Class::getName));
-
-        int index = 0;
-        for (Class clasz : CONTAINER_CLASS_LIST)
-        {
-            try
-            {
-                clasz.getField("ID").set(null, index++);
-            }
-            catch (IllegalAccessException | NoSuchFieldException e)
-            {
-                ILOL.error(e);
-            }
-        }
-
         for (int i = 0; i < UUID_OPTIONAL_DATAPARAMETER_ARRAY.length; ++i)
         {
             UUID_OPTIONAL_DATAPARAMETER_ARRAY[i] = EntityDataManager.createKey(SkinningEntities.class, DataSerializers.OPTIONAL_UNIQUE_ID);
@@ -702,7 +672,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         {
             if (!this.getEntityWorld().isRemote)
             {
-                setContainer(this, entityplayer, InventoryContainer.ID);
+                EntitiesContainerHelper.setContainer(this, entityplayer, InventoryContainer.ID);
             }
         }
         else
@@ -743,15 +713,15 @@ public abstract class SkinningEntities extends EntityLivingBase
 //                }
 //                else
 //                {
-                    DataParameter<Byte> byte_dataparameter = this.getByteDataParameterArray()[this.skinningentitiesbytes.SIT()];
-                    if (this.server_work_byte_array[this.skinningentitiesbytes.SIT()] == 1)
-                    {
-                        this.getDataManager().set(byte_dataparameter, (byte) 0);
-                    }
-                    else
-                    {
-                        this.getDataManager().set(byte_dataparameter, (byte) 1);
-                    }
+                DataParameter<Byte> byte_dataparameter = this.getByteDataParameterArray()[this.skinningentitiesbytes.SIT()];
+                if (this.server_work_byte_array[this.skinningentitiesbytes.SIT()] == 1)
+                {
+                    this.getDataManager().set(byte_dataparameter, (byte) 0);
+                }
+                else
+                {
+                    this.getDataManager().set(byte_dataparameter, (byte) 1);
+                }
 //                }
             }
         }
@@ -803,7 +773,7 @@ public abstract class SkinningEntities extends EntityLivingBase
             i += EnchantmentHelper.getKnockbackModifier(this);
         }
 
-        boolean flag = doAttackEntityFrom(entity, this, DamageSource.causeMobDamage(by_entitylivingbase), f);
+        boolean flag = EntitiesAttackHelper.doAttackEntityFrom(entity, this, DamageSource.causeMobDamage(by_entitylivingbase), f);
 
         if (flag)
         {
@@ -1038,287 +1008,6 @@ public abstract class SkinningEntities extends EntityLivingBase
         {
             ChunkLoader.updateChunk(this);
         }
-    }
-
-    public static boolean doAttackEntityFrom(Entity target, Entity by_entity, DamageSource source, float amount)
-    {
-        EntityLivingBase entitylivingbase = null;
-        if (target instanceof EntityLivingBase)
-        {
-            entitylivingbase = (EntityLivingBase)target;
-        }
-
-//        if (entitylivingbase != null)
-//        {
-//            if (!net.minecraftforge.common.ForgeHooks.onLivingAttack(entitylivingbase, source, amount)) return false;
-//        }
-
-        if (target.isEntityInvulnerable(source))
-        {
-            return false;
-        }
-        else if (target.world.isRemote)
-        {
-            return false;
-        }
-        else if (entitylivingbase != null)
-        {
-            ((IMixinEntityLivingBase)entitylivingbase).idleTime(0);
-
-            if (entitylivingbase.getHealth() <= 0.0F)
-            {
-                return false;
-            }
-            else if (source.isFireDamage() && entitylivingbase.isPotionActive(MobEffects.FIRE_RESISTANCE))
-            {
-                return false;
-            }
-            else
-            {
-                if ((source == DamageSource.ANVIL || source == DamageSource.FALLING_BLOCK) && !entitylivingbase.getItemStackFromSlot(EntityEquipmentSlot.HEAD).isEmpty())
-                {
-                    entitylivingbase.getItemStackFromSlot(EntityEquipmentSlot.HEAD).attemptDamageItem((int)(amount * 4.0F + entitylivingbase.getRNG().nextFloat() * amount * 2.0F), entitylivingbase.getRNG(), null);
-                    amount *= 0.75F;
-                }
-
-                boolean flag = false;
-
-                if (amount > 0.0F && ((IMixinEntityLivingBase)entitylivingbase).GOcanBlockDamageSource(source))
-                {
-                    ((IMixinEntityLivingBase)entitylivingbase).GOdamageShield(amount);
-                    amount = 0.0F;
-
-                    if (!source.isProjectile())
-                    {
-                        Entity entity = source.getImmediateSource();
-
-                        if (entity instanceof EntityLivingBase)
-                        {
-                            ((IMixinEntityLivingBase)entitylivingbase).GOblockUsingShield((EntityLivingBase)entity);
-                        }
-                    }
-
-                    flag = true;
-                }
-
-                entitylivingbase.limbSwingAmount = 1.5F;
-                boolean flag1 = true;
-
-                if ((float)target.hurtResistantTime > (float)entitylivingbase.maxHurtResistantTime / 2.0F)
-                {
-                    if (amount <= ((IMixinEntityLivingBase)entitylivingbase).lastDamage())
-                    {
-                        return false;
-                    }
-
-                    ((IMixinEntityLivingBase)entitylivingbase).GOdamageEntity(source, amount - ((IMixinEntityLivingBase)entitylivingbase).lastDamage());
-                    ((IMixinEntityLivingBase)entitylivingbase).lastDamage(amount);
-                    flag1 = false;
-                }
-                else
-                {
-                    ((IMixinEntityLivingBase)entitylivingbase).lastDamage(amount);
-                    target.hurtResistantTime = entitylivingbase.maxHurtResistantTime;
-                    ((IMixinEntityLivingBase)entitylivingbase).GOdamageEntity(source, amount);
-                    entitylivingbase.maxHurtTime = 10;
-                    entitylivingbase.hurtTime = entitylivingbase.maxHurtTime;
-                }
-
-                entitylivingbase.attackedAtYaw = 0.0F;
-//                Entity by_entity = source.getTrueSource();
-
-                if (by_entity != null)
-                {
-                    if (by_entity instanceof EntityLivingBase)
-                    {
-                        entitylivingbase.setRevengeTarget((EntityLivingBase)by_entity);
-                    }
-
-//                    if (by_entity instanceof EntityPlayer)
-//                    {
-//                        target.recentlyHit = 100;
-//                        target.attackingPlayer = (EntityPlayer)by_entity;
-//                    }
-//                    else if (by_entity instanceof net.minecraft.entity.passive.EntityTameable)
-//                    {
-//                        net.minecraft.entity.passive.EntityTameable entitywolf = (net.minecraft.entity.passive.EntityTameable)by_entity;
-//
-//                        if (entitywolf.isTamed())
-//                        {
-//                            target.recentlyHit = 100;
-//                            target.attackingPlayer = null;
-//                        }
-//                    }
-                }
-
-                if (flag1)
-                {
-                    if (flag)
-                    {
-                        target.world.setEntityState(target, (byte)29);
-                    }
-                    else if (source instanceof EntityDamageSource && ((EntityDamageSource)source).getIsThornsDamage())
-                    {
-                        target.world.setEntityState(target, (byte)33);
-                    }
-                    else
-                    {
-                        byte b0;
-
-                        if (source == DamageSource.DROWN)
-                        {
-                            b0 = 36;
-                        }
-                        else if (source.isFireDamage())
-                        {
-                            b0 = 37;
-                        }
-                        else
-                        {
-                            b0 = 2;
-                        }
-
-                        target.world.setEntityState(target, b0);
-                    }
-
-                    if (source != DamageSource.DROWN && !flag)
-                    {
-                        ((IMixinEntity)target).GOmarkVelocityChanged();
-                    }
-
-                    if (by_entity != null)
-                    {
-                        double d1 = by_entity.posX - target.posX;
-                        double d0;
-
-                        for (d0 = by_entity.posZ - target.posZ; d1 * d1 + d0 * d0 < 1.0E-4D; d0 = (Math.random() - Math.random()) * 0.01D)
-                        {
-                            d1 = (Math.random() - Math.random()) * 0.01D;
-                        }
-
-                        entitylivingbase.attackedAtYaw = (float)(MathHelper.atan2(d0, d1) * (180D / Math.PI) - (double)target.rotationYaw);
-                        entitylivingbase.knockBack(by_entity, 0.4F, d1, d0);
-                    }
-                    else
-                    {
-                        entitylivingbase.attackedAtYaw = (float)((int)(Math.random() * 2.0D) * 180);
-                    }
-                }
-
-                if (entitylivingbase.getHealth() <= 0.0F)
-                {
-                    if (!((IMixinEntityLivingBase)entitylivingbase).GOcheckTotemDeathProtection(source))
-                    {
-                        SoundEvent soundevent = ((IMixinEntityLivingBase)entitylivingbase).GOgetDeathSound();
-
-                        if (flag1 && soundevent != null)
-                        {
-                            target.playSound(soundevent, ((IMixinEntityLivingBase)entitylivingbase).GOgetSoundVolume(), ((IMixinEntityLivingBase)entitylivingbase).GOgetSoundPitch());
-                        }
-
-                        entitylivingbase.onDeath(source);
-                    }
-                }
-                else if (flag1)
-                {
-                    ((IMixinEntityLivingBase)entitylivingbase).GOplayHurtSound(source);
-                }
-
-                boolean flag2 = !flag;
-
-                if (flag2)
-                {
-                    ((IMixinEntityLivingBase)entitylivingbase).lastDamageSource(source);
-                    ((IMixinEntityLivingBase)entitylivingbase).lastDamageStamp(target.world.getTotalWorldTime());
-                }
-
-//                if (target instanceof EntityPlayerMP)
-//                {
-//                    CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((EntityPlayerMP)target, source, f, amount, flag);
-//                }
-//
-//                if (by_entity instanceof EntityPlayerMP)
-//                {
-//                    CriteriaTriggers.PLAYER_HURT_ENTITY.trigger((EntityPlayerMP)by_entity, target, source, f, amount, flag);
-//                }
-
-                return flag2;
-            }
-        }
-        else
-        {
-            target.setDead();
-        }
-
-        return false;
-    }
-
-    public static void setContainer(SkinningEntities skinningentities, EntityPlayer entityplayer, int id)
-    {
-        ChunkLoader.updateChunk(skinningentities);
-        Entity entity = skinningentities.getEntity(1);
-
-        if (skinningentities.server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 0 || (entity != null && entity.equals(entityplayer)))
-        {
-            try
-            {
-                Class container_class = CONTAINER_CLASS_LIST.get(id);
-                Constructor constructor = container_class.getConstructor(IInventory.class, SkinningEntities.class, EntityPlayer.class);
-
-                if (entityplayer.openContainer != entityplayer.inventoryContainer)
-                {
-                    entityplayer.closeScreen();
-                }
-
-                EntityPlayerMP entityplayermp = (EntityPlayerMP)entityplayer;
-                entityplayermp.getNextWindowId();
-                //                entityplayermp.connection.sendPacket(new SPacketOpenWindow(entityplayermp.currentWindowId, "EntityHorse", inventoryIn.getDisplayName(), inventoryIn.getSizeInventory(), horse.getEntityId()));
-                //                entityplayermp.openContainer = new ContainerHorseInventory(entityplayermp.inventory, inventoryIn, horse, entityplayermp);
-                entityplayermp.openContainer = ((Container)constructor.newInstance(entityplayermp.inventory, skinningentities, entityplayermp));
-                entityplayermp.openContainer.windowId = entityplayermp.currentWindowId;
-                entityplayermp.openContainer.addListener(entityplayermp);
-                //
-                NBTTagCompound nbttagcompound = new NBTTagCompound();
-                skinningentities.writeToNBT(nbttagcompound);
-                byte[] nbt_byte_array = serializeNBT(nbttagcompound);
-                byte[] byte_array = new byte[24 + 4 + 4 + nbt_byte_array.length];
-                BytesWriter.set(byte_array, id, 0);
-                BytesWriter.set(byte_array, skinningentities.getUUID(0), 4);
-                BytesWriter.set(byte_array, entityplayermp.currentWindowId, 20);
-                BytesWriter.set(byte_array, skinningentities.getEntityId(), 24);
-                int entity_id = EntityList.getID(skinningentities.getClass());
-                entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, entity_id));
-
-                BytesWriter.set(byte_array, entity_id, 28);
-                System.arraycopy(nbt_byte_array, 0, byte_array, 32, nbt_byte_array.length);
-                //                CutePomi.LOGGER.info("Main Server " + skinningentities.getDataManager().get(UUID_OPTIONAL_DATAPARAMETER_ARRAY[0]).orNull().toString());
-                //                CutePomi.LOGGER.info("Old Server " + skinningentities.getUniqueID().toString());
-                NetworksRegistry.I.sendTo(new OpenGUIMessage(byte_array), (EntityPlayerMP)entityplayer);
-            }
-            catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException/* | NoSuchFieldException*/ e)
-            {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    public static byte[] serializeNBT(NBTTagCompound compound)
-    {
-        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer();
-        ByteBufUtils.writeTag(byteBuf, compound);
-        byte[] byteArray = new byte[byteBuf.readableBytes()];
-        byteBuf.readBytes(byteArray);
-        byteBuf.release(); // Release the ByteBuf to avoid memory leaks
-        return byteArray;
-    }
-
-    public static NBTTagCompound deserializeNBT(byte[] data)
-    {
-        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer();
-        byteBuf.writeBytes(data);
-        NBTTagCompound nbtTagCompound = ByteBufUtils.readTag(byteBuf);
-        byteBuf.release(); // Release the ByteBuf to avoid memory leaks
-        return nbtTagCompound;
     }
 
     public abstract void initWriteEntityToNBT(NBTTagCompound nbttagcompound);

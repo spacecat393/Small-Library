@@ -1,6 +1,7 @@
 package com.nali.ilol.gui;
 
 import com.nali.ilol.ILOL;
+import com.nali.ilol.NBTHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.client.Minecraft;
@@ -38,7 +39,7 @@ public class OpenGUIHelper
                 int size = data.length - 24 - 4 - 4;
                 byte[] nbt_byte_array = new byte[size];
                 System.arraycopy(data, data.length - size, nbt_byte_array, 0, nbt_byte_array.length);
-                skinningentities.readFromNBT(SkinningEntities.deserializeNBT(nbt_byte_array));
+                skinningentities.readFromNBT(NBTHelper.deserializeNBT(nbt_byte_array));
 //            skinningentities.setUniqueId(uuid);
 //            world.spawnEntity(skinningentities);
             }

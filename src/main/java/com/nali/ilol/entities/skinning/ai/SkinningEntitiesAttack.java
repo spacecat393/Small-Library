@@ -25,7 +25,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
 
             for (Entity entity : this.skinningentities.skinningentitiesarea.all_entity_arraylist)
             {
-                if (MixMath.isTooClose(this.skinningentities, entity, 2.0D))
+                if (this.skinningentities.canEntityBeSeen(entity) && MixMath.isTooClose(this.skinningentities, entity, 2.0D))
                 {
                     attack = true;
                     Vec3d a_pos = this.skinningentities.getPositionVector();
