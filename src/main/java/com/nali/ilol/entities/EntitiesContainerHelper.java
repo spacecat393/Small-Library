@@ -71,7 +71,19 @@ public class EntitiesContainerHelper
                 entityplayermp.openContainer.addListener(entityplayermp);
                 //
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
-                skinningentities.writeToNBT(nbttagcompound);
+
+                skinningentities.writeEntityToNBTHelper(nbttagcompound);
+                //                nbttagcompound.removeTag("ArmorItems");
+//                nbttagcompound.removeTag("HandItems");
+//                for (int l = 0; l < skinningentities.skinninginventory.getSizeInventory(); ++l)
+//                {
+//                    ItemStack itemstack = skinningentities.skinninginventory.getStackInSlot(l);
+//                    if (!itemstack.isEmpty())
+//                    {
+//                        nbttagcompound.removeTag("ib" + l);
+//                    }
+//                }
+
                 byte[] nbt_byte_array = NBTHelper.serializeNBT(nbttagcompound);
                 byte[] byte_array = new byte[24 + 4 + 4 + nbt_byte_array.length];
                 BytesWriter.set(byte_array, id, 0);

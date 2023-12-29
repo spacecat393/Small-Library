@@ -23,9 +23,13 @@ public class KeyTick
 //        {
 //            com.nali.key.KeyTick.addKey(key);
 //        }
-        if (Keyboard.isKeyDown(IlolPlayerGui.I.getKeyCode()) && (Minecraft.getMinecraft().currentScreen == null || Minecraft.getMinecraft().currentScreen instanceof PlayerGui))
+        if (Keyboard.isKeyDown(IlolPlayerGui.I.getKeyCode()))
         {
-            Minecraft.getMinecraft().displayGuiScreen(new PlayerGui(new PlayerContainer()));
+            PlayerGui.PAGE = 0;
+            if (Minecraft.getMinecraft().currentScreen == null)
+            {
+                Minecraft.getMinecraft().displayGuiScreen(new PlayerGui(new PlayerContainer()));
+            }
 //            Minecraft minecraft = Minecraft.getMinecraft();
 //            minecraft.addScheduledTask(() -> minecraft.displayGuiScreen(new PlayerGui(new PlayerContainer())));
         }

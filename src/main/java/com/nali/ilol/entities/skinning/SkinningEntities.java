@@ -168,7 +168,12 @@ public abstract class SkinningEntities extends EntityLivingBase
     public void writeEntityToNBT(NBTTagCompound nbttagcompound)
     {
         super.writeEntityToNBT(nbttagcompound);
+        this.writeEntityToNBTHelper(nbttagcompound);
+        this.writeInventoryNBT(nbttagcompound);
+    }
 
+    public void writeEntityToNBTHelper(NBTTagCompound nbttagcompound)
+    {
         EntityDataManager entitydatamanager = this.getDataManager();
 
         int i = 0;
@@ -203,6 +208,33 @@ public abstract class SkinningEntities extends EntityLivingBase
             }
         }
 
+        //write inv
+
+//        String hand_key = "is_hand_active";
+//        nbttagcompound.setByte(hand_key, this.getDataManager().get(HAND_STATES));
+
+        if (!this.server_sus_init)
+        {
+            nbttagcompound.setByte("byte_" + this.skinningentitiesbytes.RANDOM_WALK(), (byte)1);
+            nbttagcompound.setByte("byte_" + this.skinningentitiesbytes.RANDOM_LOOK(), (byte)1);
+            nbttagcompound.setFloat("float_0", this.bothdata.Scale());
+            this.initWriteEntityToNBT(nbttagcompound);
+//            nbttagcompound.setByte(hand_key, (byte)1);
+        }
+        nbttagcompound.setBoolean("sus_init", true);
+
+//        for (int i = 0; i < this.inventorybasic.getSizeInventory(); ++i)
+//        {
+//            ItemStack itemstack = this.inventorybasic.getStackInSlot(i);
+//            if (!itemstack.isEmpty())
+//            {
+//                nbttagcompound.setTag("ib" + i, itemstack.writeToNBT(new NBTTagCompound()));
+//            }
+//        }
+    }
+
+    public void writeInventoryNBT(NBTTagCompound nbttagcompound)
+    {
         NBTTagList nbttaglist = new NBTTagList();
         for (ItemStack itemstack : this.skinninginventory.armor_itemstack_nonnulllist)
         {
@@ -241,28 +273,6 @@ public abstract class SkinningEntities extends EntityLivingBase
                 nbttagcompound.setTag("ib" + l, itemstack.writeToNBT(new NBTTagCompound()));
             }
         }
-
-//        String hand_key = "is_hand_active";
-//        nbttagcompound.setByte(hand_key, this.getDataManager().get(HAND_STATES));
-
-        if (!this.server_sus_init)
-        {
-            nbttagcompound.setByte("byte_" + this.skinningentitiesbytes.RANDOM_WALK(), (byte)1);
-            nbttagcompound.setByte("byte_" + this.skinningentitiesbytes.RANDOM_LOOK(), (byte)1);
-            nbttagcompound.setFloat("float_0", this.bothdata.Scale());
-            this.initWriteEntityToNBT(nbttagcompound);
-//            nbttagcompound.setByte(hand_key, (byte)1);
-        }
-        nbttagcompound.setBoolean("sus_init", true);
-
-//        for (int i = 0; i < this.inventorybasic.getSizeInventory(); ++i)
-//        {
-//            ItemStack itemstack = this.inventorybasic.getStackInSlot(i);
-//            if (!itemstack.isEmpty())
-//            {
-//                nbttagcompound.setTag("ib" + i, itemstack.writeToNBT(new NBTTagCompound()));
-//            }
-//        }
     }
 
     @Override

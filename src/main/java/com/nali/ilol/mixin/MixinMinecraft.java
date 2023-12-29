@@ -16,4 +16,10 @@ public abstract class MixinMinecraft
     {
         KeyTick.run(Keyboard.getEventKey());
     }
+
+    @Inject(method = "dispatchKeypresses", at = @At("HEAD"))
+    private void dispatchKeypresses(CallbackInfo ci)
+    {
+        KeyTick.run(Keyboard.getEventKey());
+    }
 }

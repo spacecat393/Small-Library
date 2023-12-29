@@ -28,7 +28,7 @@ import java.util.UUID;
 public class PlayerGui extends MixGui
 {
     public ObjectRender sakura_objectrender = new SakuraRender(new SakuraData(), RenderHelper.DATALOADER);
-    public byte page;
+    public static byte PAGE;
     public MixButton[] mixbutton_array;
 
     public PlayerGui(Container container)
@@ -49,7 +49,7 @@ public class PlayerGui extends MixGui
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         super.drawScreen(mouseX, mouseY, partialTicks);
-        if (this.page == 0)
+        if (PAGE == 0)
         {
             int x = this.guiLeft + 10, y = this.guiTop + 118, width = 18, height = 19;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
@@ -103,7 +103,33 @@ public class PlayerGui extends MixGui
                     byte[] byte_array = new byte[1];
                     byte_array[0] = 5;
                     NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
-                    this.page = 1;
+
+                    int index = 0; x = 10; y = 10;
+                    Set<UUID> keys_set = new HashSet<>(SkinningEntities.CLIENT_ENTITIES_MAP.keySet());
+                    this.mixbutton_array = new MixButton[keys_set.size()];
+                    for (UUID uuid : keys_set)
+                    {
+                        SkinningEntities skinningentities = SkinningEntities.CLIENT_ENTITIES_MAP.get(uuid);
+//                    if (skinningentities == null)
+//                    {
+//                        this.mixbutton_array = null;
+//                        break;
+//                    }
+                        this.mixbutton_array[index++] = new MixButton(skinningentities, uuid, x, y, 143, 51, 56, 60);
+//                    this.mixbutton_array[index++] = new MixButton(SkinningEntities.CLIENT_ENTITIES_MAP.get(uuid), this.guiLeft + x, this.guiTop + y, 143, 51, 56, 60);
+
+                        if (x >= this.width)
+                        {
+                            y += 60 + 10;
+                            x = 10;
+                        }
+                        else
+                        {
+                            x += 56 + 10;
+                        }
+                    }
+
+                    PAGE = 1;
                 }
 
                 this.drawHoveringText(new String[]
@@ -134,7 +160,7 @@ public class PlayerGui extends MixGui
 
         this.mc.getTextureManager().bindTexture(InventoryGui.GUI_RESOURCELOCATION);
 
-        if (this.page == 0)
+        if (PAGE == 0)
         {
             this.drawTexturedModalRect(this.guiLeft + 10, this.guiTop + 118.5F, 106, 50, 18, 19);
             this.drawTexturedModalRect(this.guiLeft + 10 + 2, this.guiTop + 121, 16, 0, 14, 14);
@@ -145,34 +171,7 @@ public class PlayerGui extends MixGui
         }
         else
         {
-            if (this.mixbutton_array == null)
-            {
-                int index = 0, x = 10, y = 10;
-                Set<UUID> keys_set = new HashSet<>(SkinningEntities.CLIENT_ENTITIES_MAP.keySet());
-                this.mixbutton_array = new MixButton[keys_set.size()];
-                for (UUID uuid : keys_set)
-                {
-                    SkinningEntities skinningentities = SkinningEntities.CLIENT_ENTITIES_MAP.get(uuid);
-//                    if (skinningentities == null)
-//                    {
-//                        this.mixbutton_array = null;
-//                        break;
-//                    }
-                    this.mixbutton_array[index++] = new MixButton(skinningentities, uuid, x, y, 143, 51, 56, 60);
-//                    this.mixbutton_array[index++] = new MixButton(SkinningEntities.CLIENT_ENTITIES_MAP.get(uuid), this.guiLeft + x, this.guiTop + y, 143, 51, 56, 60);
-
-                    if (x >= this.width)
-                    {
-                        y += 60 + 10;
-                        x = 10;
-                    }
-                    else
-                    {
-                        x += 56 + 10;
-                    }
-                }
-            }
-            else
+            if (this.mixbutton_array != null)
             {
                 for (MixButton mixbutton : this.mixbutton_array)
                 {
