@@ -8,7 +8,6 @@ import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.render.BoxRender;
 import com.nali.ilol.system.Reference;
 import com.nali.list.container.InventoryContainer;
-import com.nali.list.container.PlayerContainer;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
 import com.nali.render.SkinningRender;
 import com.nali.system.bytes.BytesWriter;
@@ -36,10 +35,6 @@ public class InventoryGui extends MixGui
     public SkinningEntitiesRender skinningentitiesrender;
     public byte page;
     public float px, py/*, rx, ry*/;
-    public StringBuilder message_stringbuilder = new StringBuilder("_");
-    public long last_time = Minecraft.getSystemTime();//System.currentTimeMillis();
-    public int limit_time = 1000;
-    public int message_state;
     public BoxRender boxrender = new BoxRender(new BoxData(), DATALOADER);
 
     public InventoryGui(IInventory iinventory, SkinningEntities skinningentities)
@@ -79,6 +74,8 @@ public class InventoryGui extends MixGui
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+        this.message_state = -1;
+
 //        ScaledResolution scaledresolution = new ScaledResolution(this.mc);
 //        this.setWorldAndResolution(Minecraft.getMinecraft(), scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
 
@@ -161,14 +158,7 @@ public class InventoryGui extends MixGui
         }
         else if (this.page == 2)
         {
-            long current_time = Minecraft.getSystemTime();//System.currentTimeMillis();
-            if (current_time - this.last_time >= this.limit_time)
-            {
-                int index = this.message_stringbuilder.length() - 1;
-                boolean show = this.message_stringbuilder.charAt(index) == '_';
-                this.message_stringbuilder.deleteCharAt(index).append(show ? ' ' : '_');
-                this.last_time = current_time;
-            }
+            this.setMessage();
         }
 
         this.renderEntitiesName(skinningentities, this.guiLeft + 100, this.guiTop + 75, 56, 11, mouseX, mouseY);
@@ -329,7 +319,9 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                Minecraft.getMinecraft().displayGuiScreen(new PlayerGui(new PlayerContainer()));
+                byte[] byte_array = new byte[1];
+                byte_array[0] = 9;
+                NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
             }
 
             this.drawHoveringText(new String[]
@@ -369,8 +361,6 @@ public class InventoryGui extends MixGui
 
         if (this.page > 0)
         {
-            this.message_state = -1;
-
             x = this.guiLeft + 48; y = this.guiTop + 89; width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
@@ -870,7 +860,7 @@ public class InventoryGui extends MixGui
 //        this.type_char = typedChar;
 //        this.key_code = keyCode;
 //        CutePomi.LOGGER.info((int)typedChar);
-        if (this.page == 2 && this.message_state != -1)
+        if (this.message_state != -1)
         {
             int index = this.message_stringbuilder.length() - 1;
             char end = this.message_stringbuilder.charAt(index);
@@ -892,12 +882,12 @@ public class InventoryGui extends MixGui
                     {
                         case 0:
                         {
-                            byte[] string_byte_array = this.message_stringbuilder.toString().getBytes();
-                            int string_byte_array_size = string_byte_array.length - 1;
-                            byte[] byte_array = new byte[string_byte_array_size + 1];
-                            byte_array[0] = 7;
-                            System.arraycopy(string_byte_array, 0, byte_array, 1, string_byte_array_size);
-                            NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+//                            byte[] string_byte_array = this.message_stringbuilder.toString().getBytes();
+//                            int string_byte_array_size = string_byte_array.length - 1;
+//                            byte[] byte_array = new byte[string_byte_array_size + 1];
+//                            byte_array[0] = 7;//
+//                            System.arraycopy(string_byte_array, 0, byte_array, 1, string_byte_array_size);
+//                            NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
                             break;
                         }
                         case 1:

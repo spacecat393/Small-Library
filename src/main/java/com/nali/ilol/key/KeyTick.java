@@ -28,7 +28,11 @@ public class KeyTick
             PlayerGui.PAGE = 0;
             if (Minecraft.getMinecraft().currentScreen == null)
             {
-                Minecraft.getMinecraft().displayGuiScreen(new PlayerGui(new PlayerContainer()));
+                Minecraft minecraft = Minecraft.getMinecraft();
+                minecraft.addScheduledTask(() ->
+                {
+                    Minecraft.getMinecraft().displayGuiScreen(new PlayerGui(new PlayerContainer()));
+                });
             }
 //            Minecraft minecraft = Minecraft.getMinecraft();
 //            minecraft.addScheduledTask(() -> minecraft.displayGuiScreen(new PlayerGui(new PlayerContainer())));

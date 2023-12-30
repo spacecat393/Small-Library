@@ -66,6 +66,13 @@ gui.info.i00=Need empty box on main hand.
 gui.info.a3=Drop Items.
 gui.info.a30=1 Stack for 1 Sakura.
 gui.info.a31=Enter Slot like [0 1 ...]
+gui.info.a4=Back
+gui.info.a5=Fetch
+gui.info.a50=Left Click to load data.
+gui.info.a51=Right Click to send request.
+gui.info.a6=Next
+gui.info.a7=Enter UUID
+gui.info.a70=Click to paste.
 
 itemGroup.ilol=Small
 item.box.name=Box

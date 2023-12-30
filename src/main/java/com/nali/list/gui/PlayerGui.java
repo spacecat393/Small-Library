@@ -12,7 +12,6 @@ import com.nali.ilol.render.RenderHelper;
 import com.nali.ilol.render.SakuraRender;
 import com.nali.list.messages.CapabilitiesServerMessage;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
-import com.nali.render.ObjectRender;
 import com.nali.render.SkinningRender;
 import com.nali.system.Timing;
 import com.nali.system.bytes.BytesWriter;
@@ -23,6 +22,7 @@ import net.minecraft.util.text.translation.I18n;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -31,11 +31,11 @@ import static com.nali.ilol.render.RenderHelper.DATALOADER;
 
 public class PlayerGui extends MixGui
 {
-    public ObjectRender sakura_objectrender = new SakuraRender(new SakuraData(), RenderHelper.DATALOADER);
-    public static byte PAGE;
+    public static MixButton[] MIXBUTTON_ARRAY;
+    public static int CURRENT_INDEX;
+    public SakuraRender sakurarender = new SakuraRender(new SakuraData(), RenderHelper.DATALOADER);
     public BoxRender boxrender = new BoxRender(new BoxData(), DATALOADER);
-    public MixButton[] mixbutton_array;
-    public int current_index;
+    public static byte PAGE;
 
     public PlayerGui(Container container)
     {
@@ -60,9 +60,13 @@ public class PlayerGui extends MixGui
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+        this.message_state = -1;
+
         super.drawScreen(mouseX, mouseY, partialTicks);
         if (PAGE == 0)
         {
+            this.setMessage();
+
             float x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F, y = this.guiTop + 256/2.0F - 19/2.0F, width = 18, height = 19;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
@@ -112,11 +116,11 @@ public class PlayerGui extends MixGui
             {
                 if (this.mouse_released == 0)
                 {
-                    byte[] byte_array = new byte[1];
-                    byte_array[0] = 5;
-                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
-
-                    this.initEntities();
+//                    byte[] byte_array = new byte[1];
+//                    byte_array[0] = 5;
+//                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+//
+//                    this.initEntities();
 
                     PAGE = 1;
                 }
@@ -136,8 +140,11 @@ public class PlayerGui extends MixGui
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3;// y = this.guiTop + 118; width = 18; height = 19;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
+                this.message_state = 0;
+
                 this.drawHoveringText(new String[]
                 {
+                    this.message_stringbuilder.toString(),
                     I18n.translateToLocal("gui.info.a3"),
                     I18n.translateToLocal("gui.info.a30"),
                     I18n.translateToLocal("gui.info.a31")
@@ -146,20 +153,25 @@ public class PlayerGui extends MixGui
                 {
                     0xFFF85A52,
                     0xFFFFFFFF,
-                    0xFFF85A52
+                    0xFFF85A52,
+                    0xFFFFFFFF
                 }, mouseX, mouseY, true);
             }
         }
         else
         {
-            if (this.mixbutton_array != null)
+            if (MIXBUTTON_ARRAY != null)
             {
-                int img = 4 + (this.mixbutton_array.length - (this.current_index + 4));
+                int img = 4 + (MIXBUTTON_ARRAY.length - (CURRENT_INDEX + 4));
+                if (img > 4)
+                {
+                    img = 4;
+                }
                 int max = 0;
                 float x = 256/2.0F - (56 + 1)*img/2.0F, y = 256/2.0F - 60/2.0F;
-                for (int i = this.current_index; i < this.mixbutton_array.length; ++i)
+                for (int i = CURRENT_INDEX; i < MIXBUTTON_ARRAY.length; ++i)
                 {
-                    this.mixbutton_array[i].renderTooltip(this, this.guiLeft + x, this.guiTop + y, mouseX, mouseY/*, this.guiLeft, this.guiTop, this.width, this.height*/);
+                    MIXBUTTON_ARRAY[i].renderTooltip(this, this.guiLeft + x, this.guiTop + y, mouseX, mouseY/*, this.guiLeft, this.guiTop, this.width, this.height*/);
 
                     if (++max == 4)
                     {
@@ -167,6 +179,127 @@ public class PlayerGui extends MixGui
                     }
                     x += (56 + 1);
                 }
+            }
+
+            int max_next = 0;
+            int next = (CURRENT_INDEX / 4);
+            if (MIXBUTTON_ARRAY != null)
+            {
+                max_next = (int)Math.ceil(MIXBUTTON_ARRAY.length / 4.0F) - 1;
+                if (max_next == -1)
+                {
+                    max_next = 0;
+                }
+                if (CURRENT_INDEX > MIXBUTTON_ARRAY.length)
+                {
+                    CURRENT_INDEX = MIXBUTTON_ARRAY.length - 4;
+                }
+                if (CURRENT_INDEX < 0)
+                {
+                    CURRENT_INDEX = 0;
+                }
+            }
+
+            float x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F, y = this.guiTop + 256/2.0F - 19/2.0F + 61, width = 18, height = 19;
+            if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+            {
+                if (this.mouse_released == 0)
+                {
+                    if (next > 0)
+                    {
+                        CURRENT_INDEX -= 4;
+                    }
+                }
+
+                this.drawHoveringText(new String[]
+                {
+                    I18n.translateToLocal("gui.info.a4"),
+                    next + " / " + max_next
+                },
+                new int[]
+                {
+                    0xFFF85A52,
+                    0xFFFFFFFF
+                }, mouseX, mouseY, true);
+            }
+
+            x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1);
+            if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+            {
+                if (this.mouse_released == 0)
+                {
+                    this.initEntities();
+                }
+                else if (this.mouse_released == 1)
+                {
+                    byte[] byte_array = new byte[1];
+                    byte_array[0] = 5;
+                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                }
+
+                this.drawHoveringText(new String[]
+                {
+                    I18n.translateToLocal("gui.info.a5"),
+                    I18n.translateToLocal("gui.info.a50"),
+                    I18n.translateToLocal("gui.info.a51"),
+                },
+                new int[]
+                {
+                    0xFFF85A52,
+                    0xFFFFFFFF,
+                    0xFFF85A52,
+                }, mouseX, mouseY, true);
+            }
+
+            x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*2;
+            if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+            {
+                if (this.mouse_released == 0)
+                {
+                    if (next < max_next)
+                    {
+                        CURRENT_INDEX += 4;
+                    }
+                }
+
+                this.drawHoveringText(new String[]
+                {
+                    I18n.translateToLocal("gui.info.a6"),
+                    next + " / " + max_next
+                },
+                new int[]
+                {
+                    0xFFF85A52,
+                    0xFFFFFFFF
+                }, mouseX, mouseY, true);
+            }
+
+            x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3;
+            if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+            {
+                if (this.mouse_released == 0)
+                {
+                    String uuid_string = getTextFromClipboard();
+                    if (isValidUUIDString(uuid_string))
+                    {
+                        byte[] byte_array = new byte[21];
+                        byte_array[0] = 6;
+                        BytesWriter.set(byte_array, UUID.fromString(uuid_string), 1);
+                        BytesWriter.set(byte_array, 1, 17);
+                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                    }
+                }
+
+                this.drawHoveringText(new String[]
+                {
+                    I18n.translateToLocal("gui.info.a7"),
+                    I18n.translateToLocal("gui.info.a70")
+                },
+                new int[]
+                {
+                    0xFFF85A52,
+                    0xFFFFFFFF
+                }, mouseX, mouseY, true);
             }
         }
 
@@ -197,18 +330,26 @@ public class PlayerGui extends MixGui
         else
         {
             this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F, this.guiTop + 256/2.0F - 19/2.0F + 61, 106, 50, 18, 19);
+            this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18-8)/2.0F, this.guiTop + 256/2.0F - 6/2.0F + 61, 30, 0, 8, 6);
             this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1), this.guiTop + 256/2.0F - 19/2.0F + 61, 106, 50, 18, 19);
+            this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1) + (18-12)/2.0F, this.guiTop + 256/2.0F - 12/2.0F + 61, 52, 14, 12, 12);
             this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*2, this.guiTop + 256/2.0F - 19/2.0F + 61, 106, 50, 18, 19);
+            this.drawTextureRightToLeft(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*2 + (18-8)/2.0F, this.guiTop + 256/2.0F - 6/2.0F + 61, 30, 0, 8, 6);
             this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3, this.guiTop + 256/2.0F - 19/2.0F + 61, 106, 50, 18, 19);
+            this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3 + (18-14)/2.0F, this.guiTop + 256/2.0F - 8/2.0F + 61, 38, 14, 14, 8);
 
-            if (this.mixbutton_array != null)
+            if (MIXBUTTON_ARRAY != null)
             {
-                int img = 4 + (this.mixbutton_array.length - (this.current_index + 4));
+                int img = 4 + (MIXBUTTON_ARRAY.length - (CURRENT_INDEX + 4));
+                if (img > 4)
+                {
+                    img = 4;
+                }
                 int max = 0;
                 float x = 256/2.0F - (56 + 1)*img/2.0F, y = 256/2.0F - 60/2.0F;
-                for (int i = this.current_index; i < this.mixbutton_array.length; ++i)
+                for (int i = CURRENT_INDEX; i < MIXBUTTON_ARRAY.length; ++i)
                 {
-                    this.mixbutton_array[i].render(this, this.guiLeft + x, this.guiTop + y, mouseX, mouseY/*, this.guiLeft, this.guiTop, this.width, this.height*/);
+                    MIXBUTTON_ARRAY[i].render(this, this.guiLeft + x, this.guiTop + y, mouseX, mouseY/*, this.guiLeft, this.guiTop, this.width, this.height*/);
 
                     if (++max == 4)
                     {
@@ -230,18 +371,78 @@ public class PlayerGui extends MixGui
 
 //        this.sakura_objectrender.width = this.width;
 //        this.sakura_objectrender.height = this.height;
-        this.sakura_objectrender.x = 15.0F;
-        this.sakura_objectrender.y = 15.0F;
-        this.sakura_objectrender.ry += 2.0F * Timing.TD;
+        this.sakurarender.x = 15.0F;
+        this.sakurarender.y = 15.0F;
+        this.sakurarender.ry += 2.0F * Timing.TD;
 //        this.pyroxene_objectrender.z = -1.0F;
 //        this.pyroxene_objectdata.screen_float_array[2] = this.width / 2.0F;
 //        this.pyroxene_objectdata.screen_float_array[3] = this.guiTop + 72.0F;
-        this.sakura_objectrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
+        this.sakurarender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
 
 //        if (CapabilitiesRegistryHelper.CLIENT_CAPABILITY_OBJECT_ARRAYLIST.size() > 0)
 //        {
         Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("" + CapabilitiesRegistryHelper.CLIENT_CAPABILITY_OBJECT_ARRAYLIST.get(0), 25, 11, generateRainbowColor());
 //        }
+    }
+
+    @Override
+    public void keyTyped(char typedChar, int keyCode) throws IOException
+    {
+        if (this.message_state != -1)
+        {
+            int index = this.message_stringbuilder.length() - 1;
+            char end = this.message_stringbuilder.charAt(index);
+
+            switch (typedChar)
+            {
+                case '\b':
+                {
+                    if (this.message_stringbuilder.length() > 1)
+                    {
+                        this.message_stringbuilder.deleteCharAt(index - 1);
+                    }
+
+                    break;
+                }
+                case '\r':
+                {
+//                    switch (this.message_state)
+//                    {
+//                        case 0:
+//                        {
+                    byte[] string_byte_array = this.message_stringbuilder.toString().getBytes();
+                    int string_byte_array_size = string_byte_array.length - 1;
+                    byte[] byte_array = new byte[string_byte_array_size + 1];
+                    byte_array[0] = 7;//
+                    System.arraycopy(string_byte_array, 0, byte_array, 1, string_byte_array_size);
+                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                    this.message_stringbuilder.setLength(0);
+                    this.message_stringbuilder.append("!");
+//                            break;
+//                        }
+//                        default:
+//                        {
+//                            break;
+//                        }
+//                    }
+//
+                    break;
+                }
+//                case 0:// if ((typedChar >= 'a' && typedChar <= 'z') || (typedChar >= 'A' && typedChar <= 'Z'))
+//                {
+//                    break;
+//                }
+                default:
+                {
+                    this.message_stringbuilder.deleteCharAt(index).append(typedChar).append(end);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            super.keyTyped(typedChar, keyCode);
+        }
     }
 
     public static int generateRainbowColor()
@@ -349,7 +550,7 @@ public class PlayerGui extends MixGui
     {
         int index = 0;//, x = 10, y = 10;
         Set<UUID> keys_set = new HashSet<>(SkinningEntities.CLIENT_ENTITIES_MAP.keySet());
-        this.mixbutton_array = new MixButton[keys_set.size()];
+        MIXBUTTON_ARRAY = new MixButton[keys_set.size()];
         for (UUID uuid : keys_set)
         {
             SkinningEntities skinningentities = SkinningEntities.CLIENT_ENTITIES_MAP.get(uuid);
@@ -358,7 +559,7 @@ public class PlayerGui extends MixGui
 //                        this.mixbutton_array = null;
 //                        break;
 //                    }
-            this.mixbutton_array[index++] = new MixButton(skinningentities, uuid/*, 0, 0*/, 143, 51, 56, 60);
+            MIXBUTTON_ARRAY[index++] = new MixButton(skinningentities, uuid/*, 0, 0*/, 143, 51, 56, 60);
 //            this.mixbutton_array[index++] = new MixButton(skinningentities, uuid, x, y, 143, 51, 56, 60);
 //                    this.mixbutton_array[index++] = new MixButton(SkinningEntities.CLIENT_ENTITIES_MAP.get(uuid), this.guiLeft + x, this.guiTop + y, 143, 51, 56, 60);
 

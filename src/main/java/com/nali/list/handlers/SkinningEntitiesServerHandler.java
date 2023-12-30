@@ -20,20 +20,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.server.SPacketSpawnObject;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -265,15 +264,66 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 }
                 case 7:
                 {
+                    InventoryPlayer inventoryplayer = entityplayermp.inventory;
                     String string = new String(skinningentitiesservermessage.data, 1, skinningentitiesservermessage.data.length - 1);
-    //                Object[] key_array = new HashSet<>(((MixinEntityRegistry)EntityRegistry.instance()).entityClassEntries().keySet()).toArray();
-    //                for (Object object : key_array)
-    //                {
-    //                    ((Class)object).getName();
-    //                }
-                    ILOL.LOGGER.info("Name : " + string);
-                    ILOL.LOGGER.info("Have : " + ForgeRegistries.ENTITIES.containsKey(new ResourceLocation(string)));
+                    String[] string_array = string.split(" ");
 
+                    int max_count = 0, index = 0;
+                    int[] index_int_array = new int[string_array.length];
+                    int hand_index = inventoryplayer.mainInventory.size() + inventoryplayer.armorInventory.size();
+                    int armor_index = inventoryplayer.mainInventory.size();
+                    for (String new_string : string_array)
+                    {
+                        int i = Integer.parseInt(new_string);
+                        index_int_array[index++] = i;
+
+                        if (i < inventoryplayer.mainInventory.size() + inventoryplayer.mainInventory.size() + inventoryplayer.armorInventory.size())
+                        {
+                            if (i >= inventoryplayer.mainInventory.size() + inventoryplayer.armorInventory.size())
+                            {
+                                max_count += inventoryplayer.offHandInventory.get(i - hand_index).getCount();
+                            }
+                            else if (i >= inventoryplayer.mainInventory.size())
+                            {
+                                max_count += inventoryplayer.armorInventory.get(i - armor_index).getCount();
+                            }
+                            else
+                            {
+                                max_count += inventoryplayer.mainInventory.get(i).getCount();
+                            }
+                        }
+                    }
+
+                    if (max_count % 64 == 0)
+                    {
+                        for (int i : index_int_array)
+                        {
+                            if (i >= inventoryplayer.mainInventory.size() + inventoryplayer.armorInventory.size())
+                            {
+                                inventoryplayer.offHandInventory.set(i - hand_index, ItemStack.EMPTY);
+                            }
+                            else if (i >= inventoryplayer.mainInventory.size())
+                            {
+                                inventoryplayer.armorInventory.set(i - armor_index, ItemStack.EMPTY);
+                            }
+                            else
+                            {
+                                inventoryplayer.mainInventory.set(i, ItemStack.EMPTY);
+                            }
+                        }
+
+                        entityplayermp.getCapability(IlolSakuraSerializations.ILOLSAKURATYPES_CAPABILITY, null).add(max_count / 64);
+                    }
+
+//    //                Object[] key_array = new HashSet<>(((MixinEntityRegistry)EntityRegistry.instance()).entityClassEntries().keySet()).toArray();
+//    //                for (Object object : key_array)
+//    //                {
+//    //                    ((Class)object).getName();
+//    //                }
+//                    ILOL.LOGGER.info("Name : " + string);
+//                    ILOL.LOGGER.info("Have : " + ForgeRegistries.ENTITIES.containsKey(new ResourceLocation(string)));
+
+                    break;
                 }
                 case 8:
                 {
@@ -289,6 +339,12 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                         }
                     }
 
+                    break;
+                }
+                case 9:
+                {
+                    entityplayermp.closeScreen();
+                    NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(new byte[]{2}), entityplayermp);
                     break;
                 }
                 default:

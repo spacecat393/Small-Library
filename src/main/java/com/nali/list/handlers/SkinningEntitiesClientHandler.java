@@ -1,6 +1,8 @@
 package com.nali.list.handlers;
 
 import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.list.container.PlayerContainer;
+import com.nali.list.gui.PlayerGui;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.client.Minecraft;
@@ -38,12 +40,21 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
             {
                 Minecraft minecraft = Minecraft.getMinecraft();
                 minecraft.player.isDead = false;
-                minecraft.getMinecraft().player.deathTime = 0;
-                minecraft.getMinecraft().player.respawnPlayer();
-                minecraft.getMinecraft().player.setHealth(1.0F);
-                minecraft.getMinecraft().addScheduledTask(() ->
+                minecraft.player.deathTime = 0;
+                minecraft.player.respawnPlayer();
+                minecraft.player.setHealth(1.0F);
+                minecraft.addScheduledTask(() ->
                 {
                     minecraft.displayGuiScreen(null);
+                });
+                break;
+            }
+            case 2:
+            {
+                Minecraft minecraft = Minecraft.getMinecraft();
+                minecraft.addScheduledTask(() ->
+                {
+                    minecraft.displayGuiScreen(new PlayerGui(new PlayerContainer()));
                 });
                 break;
             }
