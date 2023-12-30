@@ -1,19 +1,99 @@
 package com.nali.ilol.gui;
 
+import com.nali.ilol.ILOL;
+import com.nali.ilol.entities.skinning.SkinningEntities;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.entity.EntityList;
 import net.minecraft.inventory.Container;
+import net.minecraft.util.text.translation.I18n;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.io.IOException;
+import java.util.UUID;
 
 public abstract class MixGui extends GuiContainer
 {
-    public int mouse_released, mouse_clicked;
+    public int mouse_released = -1, mouse_clicked = -1;
 
     public MixGui(Container container)
     {
         super(container);
+    }
+
+    public void renderEntitiesName(SkinningEntities skinningentities, float x, float y, int width, int height, int mouseX, int mouseY)
+    {
+        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+        {
+            String uuid_string = skinningentities.getUUID(0).toString();
+            if (this.mouse_released == 0)
+            {
+                copyToClipboard(uuid_string);
+            }
+
+            String custom_name_string = "-";
+            if (skinningentities.hasCustomName())
+            {
+                custom_name_string = skinningentities.getCustomNameTag();
+            }
+
+            String entity_string = EntityList.getEntityString(skinningentities);
+            if (entity_string == null)
+            {
+                entity_string = "generic";
+            }
+
+            this.drawHoveringText(new String[]
+            {
+                I18n.translateToLocal("gui.info.n"),
+                I18n.translateToLocal("entity." + entity_string + ".name"),
+                I18n.translateToLocal("gui.info.cn"),
+                custom_name_string,
+                I18n.translateToLocal("gui.info.un"),
+                uuid_string,
+                I18n.translateToLocal("gui.info.unh")
+            },
+            new int[]
+            {
+                0xFFF85A52,
+                0xFFFFFFFF,
+                0xFFF85A52,
+                0xFFFFFFFF,
+                0xFFF85A52,
+                0xFFFFFFFF,
+                0xFFF85A52
+            }, mouseX, mouseY, false);
+        }
+    }
+
+    public void renderEntitiesUUID(UUID uuid, float x, float y, int width, int height, int mouseX, int mouseY)
+    {
+        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+        {
+            String uuid_string = uuid.toString();
+            if (this.mouse_released == 0)
+            {
+                copyToClipboard(uuid_string);
+            }
+
+            this.drawHoveringText(new String[]
+            {
+                I18n.translateToLocal("gui.info.un"),
+                uuid_string,
+                I18n.translateToLocal("gui.info.unh")
+            },
+            new int[]
+            {
+                0xFFF85A52,
+                0xFFFFFFFF,
+                0xFFF85A52
+            }, mouseX, mouseY, false);
+        }
     }
 
     public void drawHoveringText(String[] text_string_array, int[] color_int_array, int x, int y, boolean have_head)
@@ -114,5 +194,32 @@ public abstract class MixGui extends GuiContainer
         this.mouse_clicked = -1;
         this.mouse_released = state;
         super.mouseReleased(mouseX, mouseY, state);
+    }
+
+    public static void copyToClipboard(String text)
+    {
+        StringSelection stringSelection = new StringSelection(text);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
+    }
+
+    public static String getTextFromClipboard()
+    {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable transferable = clipboard.getContents(null);
+
+        if (transferable != null && transferable.isDataFlavorSupported(DataFlavor.stringFlavor))
+        {
+            try
+            {
+                return (String) transferable.getTransferData(DataFlavor.stringFlavor);
+            }
+            catch (Exception e)
+            {
+                ILOL.error(e);
+            }
+        }
+
+        return null;
     }
 }

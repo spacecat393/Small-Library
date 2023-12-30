@@ -1,5 +1,7 @@
 gui.info.n=Name
 gui.info.cn=CustomNameTag
+gui.info.un=UUID
+gui.info.unh=Click to copy UUID.
 gui.info.hp=HP
 gui.info.mhp=MAX
 gui.info.cv=Current
@@ -61,6 +63,9 @@ gui.info.a2=MimiTalk
 gui.info.a20=Call Army.
 gui.info.i0=Put in a Box
 gui.info.i00=Need empty box on main hand.
+gui.info.a3=Drop Items.
+gui.info.a30=1 Stack for 1 Sakura.
+gui.info.a31=Enter Slot like [0 1 ...]
 
 itemGroup.ilol=Small
 item.box.name=Box

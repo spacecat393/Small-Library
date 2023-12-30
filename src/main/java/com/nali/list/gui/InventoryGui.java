@@ -14,7 +14,6 @@ import com.nali.render.SkinningRender;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.inventory.IInventory;
@@ -172,36 +171,7 @@ public class InventoryGui extends MixGui
             }
         }
 
-        x = this.guiLeft + 100; y = this.guiTop + 75; width = 56; height = 11;
-        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
-        {
-            String custom_name_string = "-";
-            if (skinningentities.hasCustomName())
-            {
-                custom_name_string = skinningentities.getCustomNameTag();
-            }
-
-            String entity_string = EntityList.getEntityString(skinningentities);
-            if (entity_string == null)
-            {
-                entity_string = "generic";
-            }
-
-            this.drawHoveringText(new String[]
-            {
-                I18n.translateToLocal("gui.info.n"),
-                "   " + I18n.translateToLocal("entity." + entity_string + ".name"),
-                I18n.translateToLocal("gui.info.cn"),
-                "   " + custom_name_string
-            },
-            new int[]
-            {
-                0xFFF85A52,
-                0xFFFFFFFF,
-                0xFFF85A52,
-                0xFFFFFFFF
-            }, mouseX, mouseY, false);
-        }
+        this.renderEntitiesName(skinningentities, this.guiLeft + 100, this.guiTop + 75, 56, 11, mouseX, mouseY);
 
         x = this.guiLeft + 47; y = this.guiTop + 25; width = 5; height = 62;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
