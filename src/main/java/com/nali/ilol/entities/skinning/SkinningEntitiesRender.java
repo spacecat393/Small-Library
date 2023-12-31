@@ -115,6 +115,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 //                    }
                 }
             }
+            M4x4.inverse(skinningrender.skinning_float_array, i * 16);
         }
     }
 

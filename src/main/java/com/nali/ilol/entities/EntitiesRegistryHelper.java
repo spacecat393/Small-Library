@@ -83,7 +83,7 @@ public class EntitiesRegistryHelper
             }
             catch (NoSuchMethodException e)
             {
-                throw new RuntimeException(e);
+                ILOL.error(e);
             }
         }
     }

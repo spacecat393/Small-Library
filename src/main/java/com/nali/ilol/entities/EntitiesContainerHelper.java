@@ -101,7 +101,7 @@ public class EntitiesContainerHelper
             }
             catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException/* | NoSuchFieldException*/ e)
             {
-                throw new RuntimeException(e);
+                ILOL.error(e);
             }
         }
     }

@@ -9,6 +9,8 @@ import net.minecraft.util.math.Vec3d;
 public class SkinningEntitiesAttack extends SkinningEntitiesAI
 {
     public boolean attack = false;
+    public double minimum_distance = 3.0D;
+    public double minimum_away_distance = 2.0D;
 
     public SkinningEntitiesAttack(SkinningEntities skinningentities)
     {
@@ -25,16 +27,25 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
 
             for (Entity entity : this.skinningentities.skinningentitiesarea.all_entity_arraylist)
             {
-                if (this.skinningentities.canEntityBeSeen(entity) && MixMath.isTooClose(this.skinningentities, entity, 2.0D))
+                if (this.skinningentities.canEntityBeSeen(entity) && MixMath.isTooClose(this.skinningentities, entity, this.minimum_distance))
                 {
                     attack = true;
-                    Vec3d a_pos = this.skinningentities.getPositionVector();
-                    Vec3d direction = a_pos.subtract(entity.getPositionVector()).normalize();
-                    Vec3d targetPos = a_pos.add(direction);
-                    this.skinningentities.skinningentitiesfindmove.setGoal(targetPos.x, targetPos.y, targetPos.z);
+
+                    this.skinningentities.skinningentitieslook.set(entity.posX, entity.posY, entity.posZ, 90.0F);
                     this.skinningentities.swingArm(EnumHand.MAIN_HAND);
                     this.skinningentities.attackEntityAsMob(entity);
-                    this.skinningentities.skinningentitieslook.set(entity.posX, entity.posY, entity.posZ, 90.0F);
+
+                    if (MixMath.isTooClose(this.skinningentities, entity, this.minimum_away_distance))
+                    {
+                        Vec3d a_pos = this.skinningentities.getPositionVector();
+                        Vec3d direction = a_pos.subtract(entity.getPositionVector()).normalize();
+                        Vec3d targetPos = a_pos.add(direction);
+                        this.skinningentities.skinningentitiesfindmove.setGoal(targetPos.x, targetPos.y, targetPos.z);
+                    }
+                    else
+                    {
+                        this.skinningentities.skinningentitiesfindmove.endGoal();
+                    }
                 }
                 else
                 {
