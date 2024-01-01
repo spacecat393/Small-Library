@@ -6,6 +6,7 @@ import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.world.World;
@@ -31,25 +32,28 @@ public class OpenGUIHelper
 //            SkinningEntities skinningentities = SkinningEntities.CLIENT_ENTITIES_MAP.get(BytesReader.getUUID(data, 4));
 //            Constructor entity_constructor = EntitiesRegistryHelper.ENTITIES_CLASS_LIST.get(BytesReader.getInt(data, 24)).getConstructor(World.class);
 //            SkinningEntities skinningentities = (SkinningEntities)entity_constructor.newInstance(world);
-            SkinningEntities skinningentities = (SkinningEntities)minecraft.player.getEntityWorld().getEntityByID(BytesReader.getInt(data, 24));
+            int list_id = BytesReader.getInt(data, 24);
+            World world = minecraft.player.getEntityWorld();
+            Entity entity = world.getEntityByID(list_id);
 
-            if (skinningentities == null)
+            if (!(entity instanceof SkinningEntities))
             {
-                skinningentities = (SkinningEntities)EntityList.getClassFromID(BytesReader.getInt(data, 28)).getConstructor(World.class).newInstance(minecraft.player.getEntityWorld());
+                entity = EntityList.getClassFromID(BytesReader.getInt(data, 28)).getConstructor(World.class).newInstance(minecraft.player.getEntityWorld());
                 int size = data.length - 24 - 4 - 4;
                 byte[] nbt_byte_array = new byte[size];
                 System.arraycopy(data, data.length - size, nbt_byte_array, 0, nbt_byte_array.length);
-                skinningentities.readFromNBT(NBTHelper.deserializeNBT(nbt_byte_array));
-//            skinningentities.setUniqueId(uuid);
-//            world.spawnEntity(skinningentities);
+                entity.readFromNBT(NBTHelper.deserializeNBT(nbt_byte_array));
+                entity.setEntityId(list_id);
+                entity.setUniqueId(uuid);
+                world.spawnEntity(entity);//won't work correct on other dimension ?not load
             }
 
-            SkinningEntities.CLIENT_ENTITIES_MAP.clear();
-            SkinningEntities.CLIENT_ENTITIES_MAP.put(uuid, skinningentities);
+//            SkinningEntities.CLIENT_ENTITIES_MAP.clear();
+            SkinningEntities.CLIENT_ENTITIES_MAP.put(uuid, (SkinningEntities)entity);
 
 //            minecraft.displayGuiScreen(new InventoryGui(skinningentities));
 
-            minecraft.displayGuiScreen((GuiContainer)gui_constructor.newInstance(minecraft.player.inventory, skinningentities));
+            minecraft.displayGuiScreen((GuiContainer)gui_constructor.newInstance(minecraft.player.inventory, entity));
 //            minecraft.addScheduledTask(() ->
 //            {
 //                try

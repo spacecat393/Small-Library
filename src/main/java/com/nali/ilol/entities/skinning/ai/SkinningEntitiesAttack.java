@@ -4,7 +4,6 @@ import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.math.MixMath;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.Vec3d;
 
 public class SkinningEntitiesAttack extends SkinningEntitiesAI
 {
@@ -37,10 +36,10 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
 
                     if (MixMath.isTooClose(this.skinningentities, entity, this.minimum_away_distance))
                     {
-                        Vec3d a_pos = this.skinningentities.getPositionVector();
-                        Vec3d direction = a_pos.subtract(entity.getPositionVector()).normalize();
-                        Vec3d targetPos = a_pos.add(direction);
-                        this.skinningentities.skinningentitiesfindmove.setGoal(targetPos.x, targetPos.y, targetPos.z);
+//                        Vec3d a_pos = this.skinningentities.getPositionVector();
+//                        Vec3d direction = a_pos.subtract(entity.getPositionVector()).normalize();
+//                        Vec3d targetPos = a_pos.add(direction);
+//                        this.skinningentities.skinningentitiesfindmove.setGoal(targetPos.x, targetPos.y, targetPos.z);
                     }
                     else
                     {

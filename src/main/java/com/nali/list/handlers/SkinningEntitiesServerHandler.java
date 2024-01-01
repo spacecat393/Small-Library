@@ -17,7 +17,6 @@ import com.nali.list.messages.SkinningEntitiesServerMessage;
 import com.nali.system.bytes.BytesReader;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -26,7 +25,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.network.play.server.SPacketSpawnObject;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -236,7 +234,7 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                         for (UUID uuid : keys_set)
                         {
                             SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(uuid);
-                            entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, EntityList.getID(skinningentities.getClass())));
+//                            entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, EntityList.getID(skinningentities.getClass())));
                             //should check long with uuid
                             ChunkLoader.updateChunk(skinningentities);
     //                        if (worldserver.getEntityFromUuid(uuid) instanceof SkinningEntities)

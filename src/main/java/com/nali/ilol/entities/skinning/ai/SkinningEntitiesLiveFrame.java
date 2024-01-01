@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 
 public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
 {
+    public int step = 1;
     public int integer_index;
     public int[][] int_2d_array; // start end
     public Supplier<Boolean>[] condition_boolean_supplier_array;
@@ -20,15 +21,11 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
-        for (int i = 0; i < this.condition_boolean_supplier_array.length; ++i)
+        for (Supplier<Boolean> boolean_supplier : this.condition_boolean_supplier_array)
         {
-            if (this.condition_boolean_supplier_array[i].get())
+            if (boolean_supplier.get())
             {
-                if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[i][1])
-                {
-                    this.skinningentities.getDataManager().set(this.skinningentities.getIntegerDataParameterArray()[this.skinningentities.bothdata.MaxPart() + this.integer_index], this.skinningentities.server_frame_int_array[this.integer_index] + 1);
-                }
-
+                this.skinningentities.getDataManager().set(this.skinningentities.getIntegerDataParameterArray()[this.skinningentities.bothdata.MaxPart() + this.integer_index], this.skinningentities.server_frame_int_array[this.integer_index] + this.step);
                 return;
             }
         }
@@ -36,6 +33,8 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
 
     public boolean setFLoop(int id0)
     {
+        this.step = 1;
+
         if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1] - 1)
         {
             this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][1];
@@ -45,7 +44,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
             this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
         }
 
-        return true;
+        return this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][1];
     }
 
     public boolean setFLoop(int id0, boolean result)
@@ -62,6 +61,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
     {
         if (result)
         {
+            this.step = 1;
             if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1] - 1)
             {
                 this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][1];
@@ -75,6 +75,8 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
             {
                 this.skinningentities.getDataManager().set(this.skinningentities.getByteDataParameterArray()[byte_id], (byte)0);
             }
+
+            return this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][1];
         }
 
         return result;
@@ -86,10 +88,13 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
 
         if (result)
         {
+            this.step = 1;
             if (this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1] - 1 && this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][0])
             {
                 this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][0];
             }
+
+            return this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][1];
         }
 
         return result;
@@ -99,9 +104,32 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
     {
         if (result)
         {
+            this.step = 1;
             if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1] - 1)
             {
                 this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
+            }
+
+            return this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][1];
+        }
+
+        return result;
+    }
+
+    public boolean setTLoopFB(int id0, boolean result)
+    {
+        if (result)
+        {
+            if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] + 1)
+            {
+                this.step = 1;
+                this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
+            }
+
+            if (this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1] - 1)
+            {
+                this.step = -1;
+                this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][1];
             }
         }
 

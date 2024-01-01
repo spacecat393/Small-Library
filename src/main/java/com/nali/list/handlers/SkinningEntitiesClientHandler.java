@@ -6,6 +6,7 @@ import com.nali.list.gui.PlayerGui;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -30,7 +31,12 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
 //                    if (!SkinningEntities.CLIENT_ENTITIES_MAP.containsKey(uuid))
 //                    {
                     i += 16;
-                    SkinningEntities.CLIENT_ENTITIES_MAP.put(uuid, (SkinningEntities)Minecraft.getMinecraft().player.getEntityWorld().getEntityByID(BytesReader.getInt(skinningentitiesclientmessage.data, i)));
+                    Entity entity = Minecraft.getMinecraft().player.getEntityWorld().getEntityByID(BytesReader.getInt(skinningentitiesclientmessage.data, i));
+                    if (!(entity instanceof SkinningEntities))
+                    {
+                        entity = null;
+                    }
+                    SkinningEntities.CLIENT_ENTITIES_MAP.put(uuid, (SkinningEntities)entity);
 //                    }
                 }
 

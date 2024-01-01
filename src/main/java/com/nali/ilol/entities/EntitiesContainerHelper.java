@@ -15,7 +15,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.SPacketSpawnObject;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -89,11 +88,12 @@ public class EntitiesContainerHelper
                 BytesWriter.set(byte_array, id, 0);
                 BytesWriter.set(byte_array, skinningentities.getUUID(0), 4);
                 BytesWriter.set(byte_array, entityplayermp.currentWindowId, 20);
+//                int list_id = skinningentities.getEntityId();
                 BytesWriter.set(byte_array, skinningentities.getEntityId(), 24);
-                int entity_id = EntityList.getID(skinningentities.getClass());
-                entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, entity_id));
+//                int entity_id = EntityList.getID(skinningentities.getClass());
+//                entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, entity_id, list_id));
 
-                BytesWriter.set(byte_array, entity_id, 28);
+                BytesWriter.set(byte_array, EntityList.getID(skinningentities.getClass()), 28);
                 System.arraycopy(nbt_byte_array, 0, byte_array, 32, nbt_byte_array.length);
                 //                CutePomi.LOGGER.info("Main Server " + skinningentities.getDataManager().get(UUID_OPTIONAL_DATAPARAMETER_ARRAY[0]).orNull().toString());
                 //                CutePomi.LOGGER.info("Old Server " + skinningentities.getUniqueID().toString());
