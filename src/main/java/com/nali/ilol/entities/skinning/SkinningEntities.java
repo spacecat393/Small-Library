@@ -2,6 +2,7 @@ package com.nali.ilol.entities.skinning;
 
 import com.google.common.base.Optional;
 import com.nali.data.BothData;
+import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.EntitiesAttackHelper;
 import com.nali.ilol.entities.EntitiesContainerHelper;
 import com.nali.ilol.entities.bytes.SkinningEntitiesBytes;
@@ -14,6 +15,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
@@ -51,6 +53,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     public boolean fake;
     public UUID client_uuid;
     public static Map<UUID, SkinningEntities> CLIENT_ENTITIES_MAP;
+    public static Map<UUID, SkinningEntities> FAKE_CLIENT_ENTITIES_MAP;
     //    public UUID current_client_uuid;
     public static Map<UUID, SkinningEntities> SERVER_ENTITIES_MAP;
     public UUID current_server_uuid;
@@ -688,7 +691,8 @@ public abstract class SkinningEntities extends EntityLivingBase
         {
             if (!this.getEntityWorld().isRemote)
             {
-                EntitiesContainerHelper.setContainer(this, entityplayer, InventoryContainer.ID);
+                entityplayer.openGui(ILOL.I, 0, entityplayer.world, this.getEntityId(), 0, 0);
+//                EntitiesContainerHelper.setContainer(this, entityplayer, InventoryContainer.ID);
             }
         }
         else

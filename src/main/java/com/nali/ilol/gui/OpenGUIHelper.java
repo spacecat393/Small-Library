@@ -67,7 +67,7 @@ public class OpenGUIHelper
             }
 
 //            SkinningEntities.CLIENT_ENTITIES_MAP.clear();
-            SkinningEntities.CLIENT_ENTITIES_MAP.put(uuid, (SkinningEntities)entity);
+//            SkinningEntities.CLIENT_ENTITIES_MAP.put(uuid, (SkinningEntities)entity);
 
 //            minecraft.displayGuiScreen(new InventoryGui(skinningentities));
 

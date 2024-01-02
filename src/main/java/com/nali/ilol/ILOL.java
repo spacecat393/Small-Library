@@ -3,6 +3,7 @@ package com.nali.ilol;
 import com.nali.ilol.capabilities.CapabilitiesRegistryHelper;
 import com.nali.ilol.entities.EntitiesRegistryHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.ilol.gui.GuiHandler;
 import com.nali.ilol.gui.OpenGUIHelper;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.render.RenderHelper;
@@ -17,6 +18,7 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,6 +53,7 @@ public class ILOL
         EntitiesRegistryHelper.set();
         NetworksRegistry.register();
         CapabilitiesRegistryHelper.register();
+        NetworkRegistry.INSTANCE.registerGuiHandler(I, new GuiHandler());
 
         if (event.getSide().isClient())
         {
