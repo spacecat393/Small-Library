@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -32,6 +33,11 @@ public class GuiHandler implements IGuiHandler
         if (ID == 0)
         {
             Entity entity = world.getEntityByID(x);
+            if (!(entity instanceof SkinningEntities))
+            {
+                UUID uuid = SkinningEntities.FAKE_CLIENT_ENTITIES_MAP.get(x);
+                entity = SkinningEntities.CLIENT_ENTITIES_MAP.get(uuid);
+            }
             return new InventoryGui(player.inventory, (SkinningEntities)entity);
         }
 

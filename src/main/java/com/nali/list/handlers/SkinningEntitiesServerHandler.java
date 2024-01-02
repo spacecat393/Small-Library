@@ -2,14 +2,12 @@ package com.nali.list.handlers;
 
 import com.google.common.base.Optional;
 import com.nali.ilol.ILOL;
-import com.nali.ilol.entities.EntitiesContainerHelper;
 import com.nali.ilol.entities.EntitiesRegistryHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.world.ChunkLoader;
 import com.nali.list.capabilitiesserializations.IlolSakuraSerializations;
 import com.nali.list.capabilitiestypes.IlolSakuraTypes;
-import com.nali.list.container.InventoryContainer;
 import com.nali.list.items.IlolBox;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
@@ -33,7 +31,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
 
 import static com.nali.ilol.entities.EntitiesRegistryHelper.ENTITY_CLASS_ENTRIES;
 
@@ -256,7 +257,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
                     if (skinningentities != null)
                     {
-                        EntitiesContainerHelper.setContainer(skinningentities, messagecontext.getServerHandler().player, InventoryContainer.ID);
+                        entityplayermp.openGui(ILOL.I, 0, entityplayermp.world, skinningentities.getEntityId(), 0, 0);
+//                        EntitiesContainerHelper.setContainer(skinningentities, messagecontext.getServerHandler().player, InventoryContainer.ID);
                     }
                     break;
                 }

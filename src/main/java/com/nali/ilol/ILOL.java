@@ -44,6 +44,7 @@ public class ILOL
             OpenGUIHelper.GUI_CLASS_LIST = Reflect.getClasses("com.nali.list.gui");
             OpenGUIHelper.GUI_CLASS_LIST.sort(Comparator.comparing(Class::getName));
             SkinningEntities.CLIENT_ENTITIES_MAP = new WeakHashMap<>();
+            SkinningEntities.FAKE_CLIENT_ENTITIES_MAP = new WeakHashMap<>();
         }
     }
 
