@@ -1,11 +1,13 @@
 {
-  "compatibilityLevel": "JAVA_8",
   "package": "com.nali.ilol.mixin",
-  "refmap": "refmap.ilol.json",
+  "refmap": "mixins.ilol.refmap.json",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "required": true,
+  "minVersion": "0.7.11",
   "mixins": [
     "IMixinWorldServer",
     "MixinItemMonsterPlacer",
-    "IMixinEntityRegistry",
     "IMixinEntityLivingBase",
     "IMixinEntity",
     "MixinEntityLivingBase"
@@ -15,6 +17,5 @@
     "MixinItemRenderer",
     "MixinRenderEntityItem",
     "MixinMinecraft"
-  ],
-  "server": []
+  ]
 }

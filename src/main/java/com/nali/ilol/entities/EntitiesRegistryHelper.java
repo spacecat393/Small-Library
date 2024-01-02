@@ -6,24 +6,29 @@ import com.nali.system.Reflect;
 import com.nali.system.StringReader;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.registries.GameData;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
 public class EntitiesRegistryHelper
 {
+    public static Map<Class<? extends Entity>, EntityEntry> ENTITY_CLASS_ENTRIES = GameData.getEntityClassMap();
     public static List<Class> ENTITIES_CLASS_LIST = Reflect.getClasses("com.nali.list.entities");
     static
     {

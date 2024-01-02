@@ -1021,9 +1021,12 @@ public abstract class SkinningEntities extends EntityLivingBase
         this.height = this.bothdata.Height() * scale;
 //        this.dimension = this.getEntityWorld().provider.getDimension();
 
-        if (!CHUNK_MAP.containsKey(this))
+        if (!this.world.isRemote)
         {
-            ChunkLoader.updateChunk(this);
+            if (!CHUNK_MAP.containsKey(this))
+            {
+                ChunkLoader.updateChunk(this);
+            }
         }
     }
 

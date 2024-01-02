@@ -21,6 +21,8 @@ run/servers.dat
 run/whitelist.json
 run/screenshots
 run/server
+run/natives
+run/.mixin.out
 defaultconfigs
 mods
 resourcepacks

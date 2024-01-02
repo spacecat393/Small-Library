@@ -2,6 +2,8 @@ package com.nali.ilol.gui;
 
 import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.list.container.PlayerContainer;
+import com.nali.list.gui.PlayerGui;
 import com.nali.render.ObjectRender;
 import com.nali.render.SkinningRender;
 import com.nali.system.bytes.BytesReader;
@@ -88,5 +90,14 @@ public class OpenGUIHelper
         {
             ILOL.error(e);
         }
+    }
+
+    public static void callPlayerGUI()
+    {
+        Minecraft minecraft = Minecraft.getMinecraft();
+        minecraft.addScheduledTask(() ->
+        {
+            minecraft.displayGuiScreen(new PlayerGui(new PlayerContainer()));
+        });
     }
 }

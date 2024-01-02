@@ -5,7 +5,6 @@ import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.EntitiesContainerHelper;
 import com.nali.ilol.entities.EntitiesRegistryHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
-import com.nali.ilol.mixin.IMixinEntityRegistry;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.world.ChunkLoader;
 import com.nali.list.capabilitiesserializations.IlolSakuraSerializations;
@@ -31,14 +30,12 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+
+import static com.nali.ilol.entities.EntitiesRegistryHelper.ENTITY_CLASS_ENTRIES;
 
 public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEntitiesServerMessage, IMessage>
 {
@@ -195,7 +192,7 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                         }
                         else
                         {
-                            Object[] key_array = new HashSet<>(((IMixinEntityRegistry) EntityRegistry.instance()).entityClassEntries().keySet()).toArray();
+                            Object[] key_array = new HashSet<>(ENTITY_CLASS_ENTRIES.keySet()).toArray();
                             try
                             {
                                 ItemStack itemstack = IlolBox.I.getDefaultInstance();

@@ -2,8 +2,7 @@ package com.nali.list.handlers;
 
 import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.skinning.SkinningEntities;
-import com.nali.list.container.PlayerContainer;
-import com.nali.list.gui.PlayerGui;
+import com.nali.ilol.gui.OpenGUIHelper;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.render.ObjectRender;
 import com.nali.render.SkinningRender;
@@ -95,11 +94,7 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
             }
             case 2:
             {
-                Minecraft minecraft = Minecraft.getMinecraft();
-                minecraft.addScheduledTask(() ->
-                {
-                    minecraft.displayGuiScreen(new PlayerGui(new PlayerContainer()));
-                });
+                OpenGUIHelper.callPlayerGUI();
                 break;
             }
             default:

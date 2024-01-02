@@ -2,16 +2,16 @@ package com.nali.ilol.entities.skinning.ai;
 
 import com.nali.ilol.entities.EntitiesRegistryHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
-import com.nali.ilol.mixin.IMixinEntityRegistry;
 import com.nali.ilol.mixin.IMixinWorldServer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.*;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import java.util.*;
+
+import static com.nali.ilol.entities.EntitiesRegistryHelper.ENTITY_CLASS_ENTRIES;
 
 public class SkinningEntitiesArea extends SkinningEntitiesAI
 {
@@ -141,7 +141,7 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
             }
         }
 
-        Object[] key_array = new HashSet<>(((IMixinEntityRegistry) EntityRegistry.instance()).entityClassEntries().keySet()).toArray();
+        Object[] key_array = new HashSet<>(ENTITY_CLASS_ENTRIES.keySet()).toArray();
         for (int id : this.troublemaker_arraylist)
         {
             if (entity.getClass().equals(key_array[id]))
