@@ -17,6 +17,7 @@ import com.nali.list.messages.SkinningEntitiesServerMessage;
 import com.nali.system.bytes.BytesReader;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -228,7 +229,7 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                         int index = 1;
     //                    Set<UUID> keys_set = new HashSet<>(entity_map.keySet());
                         Set<UUID> keys_set = new HashSet<>(SkinningEntities.SERVER_ENTITIES_MAP.keySet());
-                        byte[] byte_array = new byte[keys_set.size() * 16 + 1 + keys_set.size() * 4];
+                        byte[] byte_array = new byte[keys_set.size() * 16 + 1 + keys_set.size() * 8];
     //                    byte_array[0] = 0;
 
                         for (UUID uuid : keys_set)
@@ -242,6 +243,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                             BytesWriter.set(byte_array, uuid, index);
                             index += 16;
                             BytesWriter.set(byte_array, skinningentities.getEntityId(), index);
+                            index += 4;
+                            BytesWriter.set(byte_array, EntityList.getID(skinningentities.getClass()), index);
                             index += 4;
     //                        }
                         }

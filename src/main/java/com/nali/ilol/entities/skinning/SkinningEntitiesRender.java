@@ -78,7 +78,10 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 //            System.arraycopy(M4x4.IDENTITY, 0, skinningrender.inverse_skinning_float_array, i * 16, 16);
         }
 
-        this.multiplyAnimation(skinningentities);
+        if (!skinningentities.fake)
+        {
+            this.multiplyAnimation(skinningentities);
+        }
 
 //        for (int z = 0; z < max_bones; ++z)
 //        {

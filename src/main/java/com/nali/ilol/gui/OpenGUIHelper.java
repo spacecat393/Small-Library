@@ -1,14 +1,16 @@
 package com.nali.ilol.gui;
 
 import com.nali.ilol.ILOL;
-import com.nali.ilol.NBTHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.render.ObjectRender;
+import com.nali.render.SkinningRender;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 import java.lang.reflect.Constructor;
@@ -39,13 +41,27 @@ public class OpenGUIHelper
             if (!(entity instanceof SkinningEntities))
             {
                 entity = EntityList.getClassFromID(BytesReader.getInt(data, 28)).getConstructor(World.class).newInstance(minecraft.player.getEntityWorld());
-                int size = data.length - 24 - 4 - 4;
-                byte[] nbt_byte_array = new byte[size];
-                System.arraycopy(data, data.length - size, nbt_byte_array, 0, nbt_byte_array.length);
-                entity.readFromNBT(NBTHelper.deserializeNBT(nbt_byte_array));
+//                int size = data.length - 24 - 4 - 4;
+//                byte[] nbt_byte_array = new byte[size];
+//                System.arraycopy(data, data.length - size, nbt_byte_array, 0, nbt_byte_array.length);
+//                entity.readFromNBT(NBTHelper.deserializeNBT(nbt_byte_array));
                 entity.setEntityId(list_id);
                 entity.setUniqueId(uuid);
-                world.spawnEntity(entity);//won't work correct on other dimension ?not load
+                SkinningEntities skinningentities = (SkinningEntities)entity;
+                skinningentities.fake = true;
+                skinningentities.client_uuid = uuid;
+                NBTTagCompound nbttagcompound = new NBTTagCompound();
+                skinningentities.initWriteEntityToNBT(nbttagcompound);
+                for (int ii = 0; ii < skinningentities.bothdata.MaxPart(); ++ii)
+                {
+                    ((ObjectRender)skinningentities.client_object).texture_index_int_array[ii] = nbttagcompound.getInteger("int_" + ii);
+                }
+
+                String key = "int_" + skinningentities.bothdata.MaxPart();
+                if (nbttagcompound.hasKey(key))
+                {
+                    ((SkinningRender)skinningentities.client_object).frame_int_array[0] = nbttagcompound.getInteger(key);
+                }
             }
 
 //            SkinningEntities.CLIENT_ENTITIES_MAP.clear();

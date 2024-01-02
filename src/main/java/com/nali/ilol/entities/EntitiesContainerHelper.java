@@ -1,7 +1,6 @@
 package com.nali.ilol.entities;
 
 import com.nali.ilol.ILOL;
-import com.nali.ilol.NBTHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.world.ChunkLoader;
@@ -14,7 +13,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.nbt.NBTTagCompound;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -69,9 +67,9 @@ public class EntitiesContainerHelper
                 entityplayermp.openContainer.windowId = entityplayermp.currentWindowId;
                 entityplayermp.openContainer.addListener(entityplayermp);
                 //
-                NBTTagCompound nbttagcompound = new NBTTagCompound();
+//                NBTTagCompound nbttagcompound = new NBTTagCompound();
 
-                skinningentities.writeEntityToNBTHelper(nbttagcompound);
+//                skinningentities.writeEntityToNBTHelper(nbttagcompound);
                 //                nbttagcompound.removeTag("ArmorItems");
 //                nbttagcompound.removeTag("HandItems");
 //                for (int l = 0; l < skinningentities.skinninginventory.getSizeInventory(); ++l)
@@ -83,8 +81,8 @@ public class EntitiesContainerHelper
 //                    }
 //                }
 
-                byte[] nbt_byte_array = NBTHelper.serializeNBT(nbttagcompound);
-                byte[] byte_array = new byte[24 + 4 + 4 + nbt_byte_array.length];
+//                byte[] nbt_byte_array = NBTHelper.serializeNBT(nbttagcompound);
+                byte[] byte_array = new byte[24 + 4 + 4/* + nbt_byte_array.length*/];
                 BytesWriter.set(byte_array, id, 0);
                 BytesWriter.set(byte_array, skinningentities.getUUID(0), 4);
                 BytesWriter.set(byte_array, entityplayermp.currentWindowId, 20);
@@ -94,7 +92,7 @@ public class EntitiesContainerHelper
 //                entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, entity_id, list_id));
 
                 BytesWriter.set(byte_array, EntityList.getID(skinningentities.getClass()), 28);
-                System.arraycopy(nbt_byte_array, 0, byte_array, 32, nbt_byte_array.length);
+//                System.arraycopy(nbt_byte_array, 0, byte_array, 32, nbt_byte_array.length);
                 //                CutePomi.LOGGER.info("Main Server " + skinningentities.getDataManager().get(UUID_OPTIONAL_DATAPARAMETER_ARRAY[0]).orNull().toString());
                 //                CutePomi.LOGGER.info("Old Server " + skinningentities.getUniqueID().toString());
                 NetworksRegistry.I.sendTo(new OpenGUIMessage(byte_array), (EntityPlayerMP)entityplayer);

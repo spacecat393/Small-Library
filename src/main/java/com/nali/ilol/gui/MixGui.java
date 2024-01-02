@@ -55,7 +55,7 @@ public abstract class MixGui extends GuiContainer
     {
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            String uuid_string = skinningentities.getUUID(0).toString();
+            String uuid_string = skinningentities.client_uuid.toString();
             if (this.mouse_released == 0)
             {
                 copyToClipboard(uuid_string);

@@ -5,8 +5,9 @@ import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.mixin.IMixinEntityRegistry;
 import com.nali.ilol.mixin.IMixinWorldServer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.*;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
@@ -16,7 +17,7 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
 {
     public Entity[] target_entity_array = new Entity[2]; // xp item
     public ArrayList<Entity> all_entity_arraylist = new ArrayList<Entity>(); // target
-    public double[] distance_to_target_array = new double[2];
+//    public double[] distance_to_target_array = new double[2];
 
     public ArrayList<Integer> troublemaker_arraylist = new ArrayList<>();
     public ArrayList<Integer> target_arraylist = new ArrayList<>();
@@ -36,19 +37,19 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
 //        {
 //            target_level = this.getEntityData().get(this.getByteEntityDataAccessorArray()[7]);
 //        }
-        Arrays.fill(this.distance_to_target_array, Double.MAX_VALUE);
+//        Arrays.fill(this.distance_to_target_array, Double.MAX_VALUE);
 
 
         Map<UUID, Entity> entity_map = ((IMixinWorldServer)this.skinningentities.getEntityWorld()).entitiesByUuid();
 //        List<Entity> entity_list = this.skinningentities.getEntityWorld().getEntitiesWithinAABB(Entity.class, this.skinningentities.getEntityBoundingBox().grow(30.0D), entity -> entity.isEntityAlive());
 
-        for (int i = 0; i < this.target_entity_array.length; ++i)
-        {
-            if ((this.target_entity_array[i] != null && this.target_entity_array[i].isEntityAlive()))
-            {
-                this.distance_to_target_array[i] = this.skinningentities.getDistanceSq(this.target_entity_array[i]);
-            }
-        }
+//        for (int i = 0; i < this.target_entity_array.length; ++i)
+//        {
+//            if ((this.target_entity_array[i] != null && this.target_entity_array[i].isEntityAlive()))
+//            {
+//                this.distance_to_target_array[i] = this.skinningentities.getDistanceSq(this.target_entity_array[i]);
+//            }
+//        }
 
 //        for (Entity entity : entity_list)
         Set<UUID> keys_set = new HashSet<>(entity_map.keySet());
@@ -119,16 +120,16 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
         }
     }
 
-    public void setTarget(Entity entity, int index)
-    {
-        double new_distance_to_target = this.skinningentities.getDistanceSq(entity);
-
-        if (this.distance_to_target_array[index] > new_distance_to_target)
-        {
-            this.target_entity_array[index] = entity;
-            this.distance_to_target_array[index] = new_distance_to_target;
-        }
-    }
+//    public void setTarget(Entity entity, int index)
+//    {
+//        double new_distance_to_target = this.skinningentities.getDistanceSq(entity);
+//
+//        if (this.distance_to_target_array[index] > new_distance_to_target)
+//        {
+//            this.target_entity_array[index] = entity;
+//            this.distance_to_target_array[index] = new_distance_to_target;
+//        }
+//    }
 
     public boolean isTarget(Entity entity)
     {
@@ -149,6 +150,17 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
             }
         }
 
-        return !(entity instanceof EntityPlayer);
+        return !(entity instanceof EntityPlayer) && fastCheck(entity);
+    }
+
+    //should use in list but let use this one
+    public static boolean fastCheck(Entity entity)
+    {
+        if (entity instanceof EntityTameable && ((EntityTameable)entity).getOwnerId() != null)
+        {
+            return false;
+        }
+
+        return entity instanceof EntityLivingBase;
     }
 }

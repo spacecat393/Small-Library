@@ -48,6 +48,8 @@ public abstract class SkinningEntities extends EntityLivingBase
     public Object client_object;
 
     public final static DataParameter<Optional<UUID>>[] UUID_OPTIONAL_DATAPARAMETER_ARRAY = new DataParameter[2];
+    public boolean fake;
+    public UUID client_uuid;
     public static Map<UUID, SkinningEntities> CLIENT_ENTITIES_MAP;
     //    public UUID current_client_uuid;
     public static Map<UUID, SkinningEntities> SERVER_ENTITIES_MAP;
@@ -498,7 +500,11 @@ public abstract class SkinningEntities extends EntityLivingBase
 
         if (this.getEntityWorld().isRemote)
         {
-            this.updateClientObject();
+            if (!this.fake)
+            {
+                this.updateClientObject();
+            }
+
             this.setInvisibility(this.client_object);
 
 //            UUID uuid = this.getUUID(0);
@@ -878,6 +884,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     {
         SkinningRender skinningrender = (SkinningRender)this.client_object;
         EntityDataManager entitydatamanager = this.getDataManager();
+        this.client_uuid = this.getUUID(0);
 
         skinningrender.scale = entitydatamanager.get(this.getFloatDataParameterArray()[0]);
 

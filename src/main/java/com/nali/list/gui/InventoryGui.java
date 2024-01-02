@@ -223,12 +223,12 @@ public class InventoryGui extends MixGui
             {
                 byte[] byte_array = new byte[21];
                 byte_array[0] = 2;
-                BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                 BytesWriter.set(byte_array, 1, 17);
                 NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
                 byte_array = new byte[22];
                 byte_array[0] = 1;
-                BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                 BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.LOCK_INVENTORY(), 17);
                 byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1 ? (byte)0 : (byte)1;
                 NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
@@ -258,12 +258,12 @@ public class InventoryGui extends MixGui
             {
                 byte[] byte_array = new byte[21];
                 byte_array[0] = 2;
-                BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                 BytesWriter.set(byte_array, 1, 17);
                 NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
                 byte_array = new byte[22];
                 byte_array[0] = 1;
-                BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                 BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.LOCK_DAMAGE(), 17);
                 byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_DAMAGE()] == 1 ? (byte)0 : (byte)1;
                 NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
@@ -343,7 +343,7 @@ public class InventoryGui extends MixGui
             {
                 byte[] byte_array = new byte[17];
                 byte_array[0] = 8;
-                BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                 NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
             }
 
@@ -388,7 +388,7 @@ public class InventoryGui extends MixGui
                     {
                         byte[] byte_array = new byte[22];
                         byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                         BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.SIT(), 17);
                         byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.SIT()] == 1 ? (byte)0 : (byte)1;
                         NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
@@ -439,12 +439,12 @@ public class InventoryGui extends MixGui
                     {
                         byte[] byte_array = new byte[21];
                         byte_array[0] = 2;
-                        BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                         BytesWriter.set(byte_array, 1, 17);
                         NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
                         byte_array = new byte[22];
                         byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                         BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.FOLLOW(), 17);
                         byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.FOLLOW()] == 1 ? (byte)0 : (byte)1;
                         NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
@@ -479,7 +479,7 @@ public class InventoryGui extends MixGui
                     {
                         byte[] byte_array = new byte[22];
                         byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                         BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.FIND_ITEM(), 17);
                         byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.FIND_ITEM()] == 1 ? (byte)0 : (byte)1;
                         NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
@@ -512,7 +512,7 @@ public class InventoryGui extends MixGui
                     {
                         byte[] byte_array = new byte[22];
                         byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                         BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.RANDOM_WALK(), 17);
                         byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.RANDOM_WALK()] == 1 ? (byte)0 : (byte)1;
                         NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
@@ -545,7 +545,7 @@ public class InventoryGui extends MixGui
                     {
                         byte[] byte_array = new byte[22];
                         byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                         BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.RANDOM_LOOK(), 17);
                         byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.RANDOM_LOOK()] == 1 ? (byte)0 : (byte)1;
                         NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
@@ -578,7 +578,7 @@ public class InventoryGui extends MixGui
                     {
                         byte[] byte_array = new byte[22];
                         byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                         BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.ATTACK(), 17);
                         byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.ATTACK()] == 1 ? (byte)0 : (byte)1;
                         NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
@@ -611,7 +611,7 @@ public class InventoryGui extends MixGui
                     {
                         byte[] byte_array = new byte[22];
                         byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.getUUID(0), 1);
+                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                         BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.REVIVE(), 17);
                         byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.REVIVE()] == 1 ? (byte)0 : (byte)1;
                         NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));

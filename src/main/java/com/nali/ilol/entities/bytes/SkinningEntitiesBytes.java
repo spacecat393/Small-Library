@@ -8,7 +8,8 @@ public interface SkinningEntitiesBytes
     int LOCK_DAMAGE();
     int HARD_READY();
     int SOFT_READY();
-    int ON_ATTACK();
+//    int ON_ATTACK();
+    int AMMO();
     int ON_REVIVE();
     //ACTION
     int SIT();
