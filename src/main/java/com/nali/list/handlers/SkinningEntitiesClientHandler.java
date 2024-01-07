@@ -44,7 +44,7 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
                     if (!(entity instanceof SkinningEntities))
                     {
                         int entity_id = BytesReader.getInt(skinningentitiesclientmessage.data, i);
-                        SkinningEntities.FAKE_CLIENT_ENTITIES_MAP.put(entity_id, uuid);
+                        SkinningEntities.FAKE_CLIENT_ENTITIES_MAP.put(list_id, uuid);
 
                         try
                         {
