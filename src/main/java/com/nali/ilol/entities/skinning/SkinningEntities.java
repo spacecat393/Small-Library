@@ -35,7 +35,6 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -650,14 +649,16 @@ public abstract class SkinningEntities extends EntityLivingBase
     @SideOnly(Side.CLIENT)
     public void setInvisibility(Object object)
     {
+        SkinningRender skinningrender = (SkinningRender)object;
         if (this.isInvisible() || this.isInvisibleToPlayer(Minecraft.getMinecraft().player))
         {
-            SkinningRender skinningrender = (SkinningRender)object;
-            Arrays.fill(skinningrender.model_boolean_array, false);
+            skinningrender.a = 0.25F;
+//            Arrays.fill(skinningrender.model_boolean_array, false);
         }
         else
         {
-            ((SkinningRender)this.client_object).setModel();
+            skinningrender.a = 1.0F;
+//        ((SkinningRender)this.client_object).setModel();
         }
     }
 

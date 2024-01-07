@@ -257,7 +257,7 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
                     if (skinningentities != null)
                     {
-                        entityplayermp.openGui(ILOL.I, 0, entityplayermp.world, skinningentities.getEntityId(), 0, 0);
+                        entityplayermp.openGui(ILOL.I, 0, skinningentities.getEntityWorld(), skinningentities.getEntityId(), 0, 0);
 //                        EntitiesContainerHelper.setContainer(skinningentities, messagecontext.getServerHandler().player, InventoryContainer.ID);
                     }
                     break;
