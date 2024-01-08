@@ -914,9 +914,16 @@ public abstract class SkinningEntities extends EntityLivingBase
             {
                 this.client_work_byte_array[i] = entitydatamanager.get(byte_dataparameter[i]);
             }
+
+            this.updateClient();
         }
         else
         {
+            if (!CHUNK_MAP.containsKey(this))
+            {
+                ChunkLoader.updateChunk(this);
+            }
+
 //            this.getDataManager().set(this.getByteDataParameterArray()[8], (byte)1);
 //            this.getDataManager().set(this.getByteDataParameterArray()[9], (byte)1);
             for (int i = 0; i < byte_dataparameter.length; ++i)
@@ -1022,15 +1029,9 @@ public abstract class SkinningEntities extends EntityLivingBase
         this.width = this.bothdata.Width() * scale;
         this.height = this.bothdata.Height() * scale;
 //        this.dimension = this.getEntityWorld().provider.getDimension();
-
-        if (!this.world.isRemote)
-        {
-            if (!CHUNK_MAP.containsKey(this))
-            {
-                ChunkLoader.updateChunk(this);
-            }
-        }
     }
+
+    public abstract void updateClient();
 
     public abstract void initWriteEntityToNBT(NBTTagCompound nbttagcompound);
     public abstract void initReadEntityFromNBT();
