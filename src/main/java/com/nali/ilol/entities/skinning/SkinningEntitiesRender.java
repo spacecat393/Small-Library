@@ -42,6 +42,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
     public void doRender(T skinningentities, double ox, double oy, double oz, float entityYaw, float partialTicks)
     {
         GL11.glPushMatrix();
+
         SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
         GL11.glTranslated(ox, oy, oz);
         GL11.glScalef(skinningrender.scale, skinningrender.scale, skinningrender.scale);

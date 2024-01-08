@@ -8,6 +8,7 @@ import com.nali.render.ObjectRender;
 import com.nali.render.SkinningRender;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.NBTTagCompound;
@@ -78,10 +79,11 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
             case 1:
             {
                 Minecraft minecraft = Minecraft.getMinecraft();
-                minecraft.player.isDead = false;
-                minecraft.player.deathTime = 0;
-                minecraft.player.respawnPlayer();
-                minecraft.player.setHealth(1.0F);
+                EntityPlayerSP entityplayersp = minecraft.player;
+                entityplayersp.isDead = false;
+                entityplayersp.deathTime = 0;
+                entityplayersp.respawnPlayer();
+                entityplayersp.setHealth(entityplayersp.getMaxHealth());
                 minecraft.addScheduledTask(() ->
                 {
                     minecraft.displayGuiScreen(null);

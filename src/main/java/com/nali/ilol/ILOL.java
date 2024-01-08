@@ -38,7 +38,7 @@ public class ILOL
     {
         if (event.getSide().isClient())
         {
-            DataLoader.setModels(RenderHelper.DATALOADER, Reference.MOD_ID, "OpenGLShaders/", false);
+            DataLoader.setModels(RenderHelper.DATALOADER, Reference.MOD_ID);
 
             CapabilitiesRegistryHelper.update();
             OpenGUIHelper.GUI_CLASS_LIST = Reflect.getClasses("com.nali.list.gui");

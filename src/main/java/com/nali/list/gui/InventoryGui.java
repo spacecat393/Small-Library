@@ -727,6 +727,10 @@ public class InventoryGui extends MixGui
         boolean gl_blend = GL11.glIsEnabled(GL11.GL_BLEND);
         GL11.glEnable(GL11.GL_BLEND);
 
+//        this.mc.getTextureManager().bindTexture(GUI0_RESOURCELOCATION);
+//
+//        blit(this.guiLeft, this.guiTop, 0, 0, 16, 16, 16, 16);
+
         this.mc.getTextureManager().bindTexture(GUI_RESOURCELOCATION);
         this.drawTexturedModalRect(this.guiLeft + 43, this.guiTop + 25, 86, 50, 170, 206);
 

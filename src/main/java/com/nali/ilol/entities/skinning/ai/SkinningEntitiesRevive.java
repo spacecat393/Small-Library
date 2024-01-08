@@ -14,7 +14,6 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
     public int tick = 0;
     public Entity entity;
     public boolean die;
-    public boolean try_move;
 
     public SkinningEntitiesRevive(SkinningEntities skinningentities)
     {
@@ -65,7 +64,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
                             if (this.entity instanceof EntityLivingBase)
                             {
                                 EntityLivingBase entitylivingbase = (EntityLivingBase)this.entity;
-                                entitylivingbase.setHealth(1.0F);
+                                entitylivingbase.setHealth(entitylivingbase.getMaxHealth());
                                 entitylivingbase.deathTime = 0;
 
                                 if (this.entity instanceof EntityPlayer)
