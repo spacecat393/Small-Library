@@ -81,4 +81,4 @@ gui.info.box0=Box's name wasn't changed, quickly unbox before world save. [When 
 gui.info.box1=You can use on Inventory GUI to put Our Entity to Box.
 
 key.categories.ilol=Small
-key.ilol.player_gui=Player GUI
+key.ilol.playergui=Player GUI
