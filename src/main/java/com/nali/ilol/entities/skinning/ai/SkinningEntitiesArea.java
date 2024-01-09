@@ -4,14 +4,12 @@ import com.nali.ilol.entities.EntitiesRegistryHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.mixin.IMixinWorldServer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.*;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.*;
-
-import static com.nali.ilol.entities.EntitiesRegistryHelper.ENTITY_CLASS_ENTRIES;
 
 public class SkinningEntitiesArea extends SkinningEntitiesAI
 {
@@ -133,27 +131,41 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
 
     public boolean isTarget(Entity entity)
     {
-        for (Class clasz : EntitiesRegistryHelper.ENTITIES_CLASS_LIST)
+        boolean result = this.target_arraylist.isEmpty();
+
+        if (result)
         {
-            if (entity.getClass().equals(clasz))
+            for (Class clasz : EntitiesRegistryHelper.ENTITIES_CLASS_LIST)
             {
-                return false;
+                if (entity.getClass().equals(clasz))
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            for (int id : this.target_arraylist)
+            {
+                if (id < EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length && entity.getClass().equals(EntitiesRegistryHelper.ENTITY_KEY_ARRAY[id]))
+                {
+                    result = true;
+                    break;
+                }
             }
         }
 
-        Object[] key_array = new HashSet<>(ENTITY_CLASS_ENTRIES.keySet()).toArray();
         for (int id : this.troublemaker_arraylist)
         {
-            if (entity.getClass().equals(key_array[id]))
+            if (id < EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length && entity.getClass().equals(EntitiesRegistryHelper.ENTITY_KEY_ARRAY[id]))
             {
                 return false;
             }
         }
 
-        return !(entity instanceof EntityPlayer) && fastCheck(entity);
+        return result && !(entity instanceof EntityPlayer) && fastCheck(entity);
     }
 
-    //should use in list but let use this one
     public static boolean fastCheck(Entity entity)
     {
         if (entity instanceof EntityTameable && ((EntityTameable)entity).getOwnerId() != null)
@@ -161,6 +173,6 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
             return false;
         }
 
-        return entity instanceof EntityLivingBase;
+        return true/*entity instanceof EntityLivingBase*/;
     }
 }

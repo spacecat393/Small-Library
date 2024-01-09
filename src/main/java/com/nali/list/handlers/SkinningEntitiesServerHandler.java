@@ -36,8 +36,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
-import static com.nali.ilol.entities.EntitiesRegistryHelper.ENTITY_CLASS_ENTRIES;
-
 public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEntitiesServerMessage, IMessage>
 {
     @Override
@@ -193,12 +191,11 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                         }
                         else
                         {
-                            Object[] key_array = new HashSet<>(ENTITY_CLASS_ENTRIES.keySet()).toArray();
                             try
                             {
                                 ItemStack itemstack = IlolBox.I.getDefaultInstance();
-                                int id = entityplayermp.getRNG().nextInt(key_array.length);
-                                Constructor constructor = ((Class)key_array[id]).getConstructor(World.class);
+                                int id = entityplayermp.getRNG().nextInt(EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length);
+                                Constructor constructor = ((Class)EntitiesRegistryHelper.ENTITY_KEY_ARRAY[id]).getConstructor(World.class);
                                 Entity entity = (Entity)constructor.newInstance(entityplayermp.world);
 
                                 if (!(entity instanceof EntityPlayer))
@@ -345,6 +342,172 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 {
                     entityplayermp.closeScreen();
                     NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(new byte[]{2}), entityplayermp);
+                    break;
+                }
+                case 10://add t
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                    if (skinningentities != null)
+                    {
+                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
+                        String[] string_array = string.split(" ");
+
+                        for (String new_string : string_array)
+                        {
+                            int id = Integer.parseInt(new_string);
+
+                            if (id >= EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length)
+                            {
+                                continue;
+                            }
+
+                            boolean result = true;
+                            for (int i : skinningentities.skinningentitiesarea.target_arraylist)
+                            {
+                                if (i == id)
+                                {
+                                    result = false;
+                                    break;
+                                }
+                            }
+
+                            if (result)
+                            {
+                                skinningentities.skinningentitiesarea.target_arraylist.add(id);
+                            }
+                        }
+                    }
+
+                    break;
+                }
+                case 11://view t
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+
+                    if (skinningentities != null)
+                    {
+                        int size = skinningentities.skinningentitiesarea.target_arraylist.size() * 4;
+                        byte[] byte_array = new byte[1 + size];
+                        byte_array[0] = 3;
+                        int index = 0;
+                        for (int i = 1; i < size; i += 4)
+                        {
+                            BytesWriter.set(byte_array, skinningentities.skinningentitiesarea.target_arraylist.get(index++), i);
+                        }
+
+                        NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), entityplayermp);
+                    }
+
+                    break;
+                }
+                case 12://remove t
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                    if (skinningentities != null)
+                    {
+                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
+                        String[] string_array = string.split(" ");
+
+                        for (String new_string : string_array)
+                        {
+                            int id = Integer.parseInt(new_string);
+
+                            int index = 0;
+                            for (int i : skinningentities.skinningentitiesarea.target_arraylist)
+                            {
+                                if (i == id)
+                                {
+                                    skinningentities.skinningentitiesarea.target_arraylist.remove(index);
+                                    break;
+                                }
+                                ++index;
+                            }
+                        }
+                    }
+
+                    break;
+                }
+                case 13://add tm
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                    if (skinningentities != null)
+                    {
+                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
+                        String[] string_array = string.split(" ");
+
+                        for (String new_string : string_array)
+                        {
+                            int id = Integer.parseInt(new_string);
+
+                            if (id >= EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length)
+                            {
+                                continue;
+                            }
+
+                            boolean result = true;
+                            for (int i : skinningentities.skinningentitiesarea.troublemaker_arraylist)
+                            {
+                                if (i == id)
+                                {
+                                    result = false;
+                                    break;
+                                }
+                            }
+
+                            if (result)
+                            {
+                                skinningentities.skinningentitiesarea.troublemaker_arraylist.add(id);
+                            }
+                        }
+                    }
+
+                    break;
+                }
+                case 14://view tm
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+
+                    if (skinningentities != null)
+                    {
+                        int size = skinningentities.skinningentitiesarea.troublemaker_arraylist.size() * 4;
+                        byte[] byte_array = new byte[1 + size];
+                        byte_array[0] = 4;
+                        int index = 0;
+                        for (int i = 1; i < size; i += 4)
+                        {
+                            BytesWriter.set(byte_array, skinningentities.skinningentitiesarea.troublemaker_arraylist.get(index++), i);
+                        }
+
+                        NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), entityplayermp);
+                    }
+
+                    break;
+                }
+                case 15://remove tm
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                    if (skinningentities != null)
+                    {
+                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
+                        String[] string_array = string.split(" ");
+
+                        for (String new_string : string_array)
+                        {
+                            int id = Integer.parseInt(new_string);
+
+                            int index = 0;
+                            for (int i : skinningentities.skinningentitiesarea.troublemaker_arraylist)
+                            {
+                                if (i == id)
+                                {
+                                    skinningentities.skinningentitiesarea.troublemaker_arraylist.remove(index);
+                                    break;
+                                }
+                                ++index;
+                            }
+                        }
+                    }
+
                     break;
                 }
                 default:

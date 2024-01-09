@@ -1,9 +1,11 @@
 package com.nali.list.gui;
 
 import com.nali.ilol.data.BoxData;
+import com.nali.ilol.entities.EntitiesRegistryHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.entities.skinning.SkinningEntitiesRender;
 import com.nali.ilol.gui.MixGui;
+import com.nali.ilol.gui.features.TargetGUIFeatures;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.render.BoxRender;
 import com.nali.ilol.system.Reference;
@@ -25,6 +27,8 @@ import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 
+import static com.nali.ilol.gui.features.TargetGUIFeatures.TARGET_INT_ARRAY;
+import static com.nali.ilol.gui.features.TargetGUIFeatures.TROUBLEMAKER_INT_ARRAY;
 import static com.nali.ilol.render.RenderHelper.DATALOADER;
 import static com.nali.system.Timing.TD;
 
@@ -170,11 +174,6 @@ public class InventoryGui extends MixGui
             {
                 I18n.translateToLocal("gui.info.hp") + " : " + skinningentities.getHealth(),
                 I18n.translateToLocal("gui.info.mhp") + " : " + skinningentities.getMaxHealth()
-            },
-            new int[]
-            {
-                0xFFF85A52,
-                0xFFFFFFFF
             }, mouseX, mouseY, false);
         }
 
@@ -183,7 +182,6 @@ public class InventoryGui extends MixGui
         {
             int size = skinningentities.getAttributeMap().getAllAttributes().size();
             String[] string_array = new String[size];
-            int[] int_array = new int[size];
             int index = 0;
             for (IAttributeInstance iattributeinstance : skinningentities.getAttributeMap().getAllAttributes())
             {
@@ -193,10 +191,9 @@ public class InventoryGui extends MixGui
                     value += attributemodifier.getAmount();
                 }
 
-                int_array[index] = index % 2 == 0 ? 0xFFFFFFFF : 0xFFF85A52;
                 string_array[index++] = I18n.translateToLocal("attribute.name." + iattributeinstance.getAttribute().getName()) + " : " + value;
             }
-            this.drawHoveringText(string_array, int_array, mouseX, mouseY, false);
+            this.drawHoveringText(string_array, mouseX, mouseY, false);
         }
 
 //        get from server
@@ -242,12 +239,6 @@ public class InventoryGui extends MixGui
                 I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1 ? lock : unlock),
                 lock + " : " + I18n.translateToLocal("gui.info.l0"),
                 unlock + " : " + I18n.translateToLocal("gui.info.ul0")
-            },
-            new int[]
-            {
-                0xFFF85A52,
-                0xFFFFFFFF,
-                0xFFF85A52
             }, mouseX, mouseY, true);
         }
 
@@ -277,12 +268,6 @@ public class InventoryGui extends MixGui
                 I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_DAMAGE()] == 1 ? lock : unlock),
                 lock + " : " + I18n.translateToLocal("gui.info.l1"),
                 unlock + " : " + I18n.translateToLocal("gui.info.ul1")
-            },
-            new int[]
-            {
-                0xFFF85A52,
-                0xFFFFFFFF,
-                0xFFF85A52
             }, mouseX, mouseY, true);
         }
 
@@ -304,13 +289,6 @@ public class InventoryGui extends MixGui
                 sp + " : " + I18n.translateToLocal("gui.info.sp0"),
                 si + " : " + I18n.translateToLocal("gui.info.si0"),
                 ss + " : " + I18n.translateToLocal("gui.info.ss0")
-            },
-            new int[]
-            {
-                0xFFF85A52,
-                0xFFFFFFFF,
-                0xFFF85A52,
-                0xFFFFFFFF
             }, mouseX, mouseY, true);
         }
 
@@ -328,11 +306,6 @@ public class InventoryGui extends MixGui
             {
                 I18n.translateToLocal("gui.info.a2"),
                 I18n.translateToLocal("gui.info.a20")
-            },
-            new int[]
-            {
-                0xFFF85A52,
-                0xFFFFFFFF
             }, mouseX, mouseY, false);
         }
 
@@ -351,11 +324,6 @@ public class InventoryGui extends MixGui
             {
                 I18n.translateToLocal("gui.info.i0"),
                 I18n.translateToLocal("gui.info.i00")
-            },
-            new int[]
-            {
-                0xFFF85A52,
-                0xFFFFFFFF
             }, mouseX, mouseY, false);
         }
 
@@ -373,13 +341,6 @@ public class InventoryGui extends MixGui
                         I18n.translateToLocal("gui.info.t0"),
                         I18n.translateToLocal("gui.info.st0"),
                         I18n.translateToLocal("gui.info.st1")
-                    },
-                    new int[]
-                    {
-                        0xFFF85A52,
-                        0xFFFFFFFF,
-                        0xFFF85A52,
-                        0xFFFFFFFF
                     }, mouseX, mouseY, false);
                 }
                 else
@@ -402,12 +363,6 @@ public class InventoryGui extends MixGui
                         I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.SIT()] == 1 ? bs1 : bs0),
                         bs0 + " : " + I18n.translateToLocal("gui.info.bs00"),
                         bs1 + " : " + I18n.translateToLocal("gui.info.bs10")
-                    },
-                    new int[]
-                    {
-                        0xFFF85A52,
-                        0xFFFFFFFF,
-                        0xFFF85A52
                     }, mouseX, mouseY, true);
                 }
             }
@@ -424,13 +379,6 @@ public class InventoryGui extends MixGui
                         I18n.translateToLocal("gui.info.t5"),
                         I18n.translateToLocal("gui.info.st0"),
                         I18n.translateToLocal("gui.info.st1")
-                    },
-                    new int[]
-                    {
-                        0xFFF85A52,
-                        0xFFFFFFFF,
-                        0xFFF85A52,
-                        0xFFFFFFFF
                     }, mouseX, mouseY, false);
                 }
                 else
@@ -459,13 +407,6 @@ public class InventoryGui extends MixGui
                         bf0 + " : " + I18n.translateToLocal("gui.info.bf00"),
                         bf1 + " : " + I18n.translateToLocal("gui.info.bf10"),
                         I18n.translateToLocal("gui.info.bf000")
-                    },
-                    new int[]
-                    {
-                        0xFFF85A52,
-                        0xFFFFFFFF,
-                        0xFFF85A52,
-                        0xFFFFFFFF
                     }, mouseX, mouseY, true);
                 }
             }
@@ -473,7 +414,19 @@ public class InventoryGui extends MixGui
             x = this.guiLeft + 84;// y = this.guiTop + 89; width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (this.page == 1)
+                if (this.page == 2)
+                {
+                    String[] string_array = new String[EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length + 1];
+                    string_array[0] = I18n.translateToLocal("gui.info.t3");
+                    int index = 1;
+                    for (Object o : EntitiesRegistryHelper.ENTITY_KEY_ARRAY)
+                    {
+                        string_array[index] = (index++ - 1) + " " + ((Class)o).getName();
+                    }
+
+                    this.drawHoveringText(string_array, mouseX, mouseY, false);
+                }
+                else
                 {
                     if (this.mouse_released == 0)
                     {
@@ -493,12 +446,6 @@ public class InventoryGui extends MixGui
                         I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.FIND_ITEM()] == 1 ? bfi1 : bfi0),
                         bfi0 + " : " + I18n.translateToLocal("gui.info.bfi00"),
                         bfi1 + " : " + I18n.translateToLocal("gui.info.bfi10")
-                    },
-                    new int[]
-                    {
-                        0xFFF85A52,
-                        0xFFFFFFFF,
-                        0xFFF85A52
                     }, mouseX, mouseY, true);
                 }
             }
@@ -526,12 +473,6 @@ public class InventoryGui extends MixGui
                         I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.RANDOM_WALK()] == 1 ? brw1 : brw0),
                         brw0 + " : " + I18n.translateToLocal("gui.info.brw00"),
                         brw1 + " : " + I18n.translateToLocal("gui.info.brw10")
-                    },
-                    new int[]
-                    {
-                        0xFFF85A52,
-                        0xFFFFFFFF,
-                        0xFFF85A52
                     }, mouseX, mouseY, true);
                 }
             }
@@ -559,12 +500,6 @@ public class InventoryGui extends MixGui
                         I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.RANDOM_LOOK()] == 1 ? brl1 : brl0),
                         brl0 + " : " + I18n.translateToLocal("gui.info.brl00"),
                         brl1 + " : " + I18n.translateToLocal("gui.info.brl10")
-                    },
-                    new int[]
-                    {
-                        0xFFF85A52,
-                        0xFFFFFFFF,
-                        0xFFF85A52
                     }, mouseX, mouseY, true);
                 }
             }
@@ -592,12 +527,6 @@ public class InventoryGui extends MixGui
                         I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.ATTACK()] == 1 ? ba1 : ba0),
                         ba0 + " : " + I18n.translateToLocal("gui.info.ba00"),
                         ba1 + " : " + I18n.translateToLocal("gui.info.ba10")
-                    },
-                    new int[]
-                    {
-                        0xFFF85A52,
-                        0xFFFFFFFF,
-                        0xFFF85A52
                     }, mouseX, mouseY, true);
                 }
             }
@@ -625,12 +554,6 @@ public class InventoryGui extends MixGui
                         I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.REVIVE()] == 1 ? br1 : br0),
                         br0 + " : " + I18n.translateToLocal("gui.info.br00"),
                         br1 + " : " + I18n.translateToLocal("gui.info.br10")
-                    },
-                    new int[]
-                    {
-                        0xFFF85A52,
-                        0xFFFFFFFF,
-                        0xFFF85A52
                     }, mouseX, mouseY, true);
                 }
             }
@@ -647,13 +570,6 @@ public class InventoryGui extends MixGui
                         I18n.translateToLocal("gui.info.t1"),
                         I18n.translateToLocal("gui.info.st0"),
                         I18n.translateToLocal("gui.info.st1")
-                    },
-                    new int[]
-                    {
-                        0xFFF85A52,
-                        0xFFFFFFFF,
-                        0xFFF85A52,
-                        0xFFFFFFFF
                     }, mouseX, mouseY, false);
                 }
             }
@@ -663,16 +579,15 @@ public class InventoryGui extends MixGui
             {
                 if (this.page == 2)
                 {
-                    this.drawHoveringText(new String[]
+                    if (this.mouse_released == 0)
                     {
-                        I18n.translateToLocal("gui.info.t2"),
-                        "",
-                    },
-                    new int[]
-                    {
-                        0xFFF85A52,
-                        0xFFFFFFFF
-                    }, mouseX, mouseY, false);
+                        byte[] byte_array = new byte[1 + 16];
+                        byte_array[0] = 11;
+                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
+                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                    }
+
+                    TargetGUIFeatures.draw(TARGET_INT_ARRAY, "gui.info.t2", this, mouseX, mouseY);
                 }
             }
 
@@ -688,13 +603,6 @@ public class InventoryGui extends MixGui
                         I18n.translateToLocal("gui.info.t6"),
                         I18n.translateToLocal("gui.info.st0"),
                         I18n.translateToLocal("gui.info.st1")
-                    },
-                    new int[]
-                    {
-                        0xFFF85A52,
-                        0xFFFFFFFF,
-                        0xFFF85A52,
-                        0xFFFFFFFF
                     }, mouseX, mouseY, false);
                 }
             }
@@ -704,16 +612,15 @@ public class InventoryGui extends MixGui
             {
                 if (this.page == 2)
                 {
-                    this.drawHoveringText(new String[]
+                    if (this.mouse_released == 0)
                     {
-                        I18n.translateToLocal("gui.info.t4"),
-                        "",
-                    },
-                    new int[]
-                    {
-                        0xFFF85A52,
-                        0xFFFFFFFF
-                    }, mouseX, mouseY, false);
+                        byte[] byte_array = new byte[1 + 16];
+                        byte_array[0] = 14;
+                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
+                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                    }
+
+                    TargetGUIFeatures.draw(TROUBLEMAKER_INT_ARRAY, "gui.info.t4", this, mouseX, mouseY);
                 }
             }
         }
@@ -825,6 +732,7 @@ public class InventoryGui extends MixGui
             {
                 this.drawTexturedModalRect(this.guiLeft + 49, this.guiTop + 90, 106, 14, 14, 14);
                 this.drawTexturedModalRect(this.guiLeft + 67, this.guiTop + 90, 78, 14, 14, 14);
+                this.drawTexturedModalRect(this.guiLeft + 67 + 18, this.guiTop + 90, 16, 0, 14, 14);
                 this.drawTexturedModalRect(this.guiLeft + 49, this.guiTop + 108, 92, 14, 14, 14);
                 this.drawTexturedModalRect(this.guiLeft + 67, this.guiTop + 108, 92, 14, 14, 14);
                 this.drawTexturedModalRect(this.guiLeft + 49, this.guiTop + 126, 120, 14, 14, 14);
@@ -882,24 +790,32 @@ public class InventoryGui extends MixGui
                 }
                 case '\r':
                 {
+                    SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
+
+                    byte[] string_byte_array = this.message_stringbuilder.toString().getBytes();
+                    int string_byte_array_size = string_byte_array.length - 1;
+                    byte[] byte_array = new byte[string_byte_array_size + 1 + 16];
+
                     switch (this.message_state)
                     {
                         case 0:
                         {
-//                            byte[] string_byte_array = this.message_stringbuilder.toString().getBytes();
-//                            int string_byte_array_size = string_byte_array.length - 1;
-//                            byte[] byte_array = new byte[string_byte_array_size + 1];
-//                            byte_array[0] = 7;//
-//                            System.arraycopy(string_byte_array, 0, byte_array, 1, string_byte_array_size);
-//                            NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                            byte_array[0] = 10;
                             break;
                         }
                         case 1:
                         {
+                            byte_array[0] = 13;
                             break;
                         }
                         case 2:
                         {
+                            byte_array[0] = 12;
+                            break;
+                        }
+                        case 3:
+                        {
+                            byte_array[0] = 15;
                             break;
                         }
                         default:
@@ -907,6 +823,12 @@ public class InventoryGui extends MixGui
                             break;
                         }
                     }
+
+                    BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
+                    System.arraycopy(string_byte_array, 0, byte_array, 1 + 16, string_byte_array_size);
+                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                    this.message_stringbuilder.setLength(0);
+                    this.message_stringbuilder.append("!");
 
                     break;
                 }

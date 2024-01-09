@@ -82,16 +82,6 @@ public abstract class MixGui extends GuiContainer
                 I18n.translateToLocal("gui.info.un"),
                 uuid_string,
                 I18n.translateToLocal("gui.info.unh")
-            },
-            new int[]
-            {
-                0xFFF85A52,
-                0xFFFFFFFF,
-                0xFFF85A52,
-                0xFFFFFFFF,
-                0xFFF85A52,
-                0xFFFFFFFF,
-                0xFFF85A52
             }, mouseX, mouseY, false);
         }
     }
@@ -111,17 +101,11 @@ public abstract class MixGui extends GuiContainer
                 I18n.translateToLocal("gui.info.un"),
                 uuid_string,
                 I18n.translateToLocal("gui.info.unh")
-            },
-            new int[]
-            {
-                0xFFF85A52,
-                0xFFFFFFFF,
-                0xFFF85A52
             }, mouseX, mouseY, false);
         }
     }
 
-    public void drawHoveringText(String[] text_string_array, int[] color_int_array, int x, int y, boolean have_head)
+    public void drawHoveringText(String[] text_string_array, int x, int y, boolean have_head)
     {
 //        net.minecraftforge.fml.client.config.GuiUtils.drawHoveringText(textLines, x, y, width, height, -1, font);
 //        if (false && !textLines.isEmpty())
@@ -185,7 +169,7 @@ public abstract class MixGui extends GuiContainer
 
         for (int k1 = 0; k1 < length; ++k1)
         {
-            this.fontRenderer.drawStringWithShadow(text_string_array[k1], (float)l1, (float)i2, color_int_array[k1]);
+            this.fontRenderer.drawStringWithShadow(text_string_array[k1], (float)l1, (float)i2, (k1 + 1) % 2 == 0 ? 0xFFFFFFFF : 0xFFF85A52);
 
             if (have_head)
             {

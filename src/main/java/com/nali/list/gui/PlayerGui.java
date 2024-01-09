@@ -81,11 +81,6 @@ public class PlayerGui extends MixGui
                 {
                     I18n.translateToLocal("gui.info.a0"),
                     I18n.translateToLocal("gui.info.a00")
-                },
-                new int[]
-                {
-                    0xFFF85A52,
-                    0xFFFFFFFF
                 }, mouseX, mouseY, true);
             }
 
@@ -103,11 +98,6 @@ public class PlayerGui extends MixGui
                 {
                     I18n.translateToLocal("gui.info.a1"),
                     I18n.translateToLocal("gui.info.a10")
-                },
-                new int[]
-                {
-                    0xFFF85A52,
-                    0xFFFFFFFF
                 }, mouseX, mouseY, true);
             }
 
@@ -129,11 +119,6 @@ public class PlayerGui extends MixGui
                 {
                     I18n.translateToLocal("gui.info.a2"),
                     I18n.translateToLocal("gui.info.a20")
-                },
-                new int[]
-                {
-                    0xFFF85A52,
-                    0xFFFFFFFF
                 }, mouseX, mouseY, true);
             }
 
@@ -148,13 +133,6 @@ public class PlayerGui extends MixGui
                     I18n.translateToLocal("gui.info.a3"),
                     I18n.translateToLocal("gui.info.a30"),
                     I18n.translateToLocal("gui.info.a31")
-                },
-                new int[]
-                {
-                    0xFFF85A52,
-                    0xFFFFFFFF,
-                    0xFFF85A52,
-                    0xFFFFFFFF
                 }, mouseX, mouseY, true);
             }
         }
@@ -215,11 +193,6 @@ public class PlayerGui extends MixGui
                 {
                     I18n.translateToLocal("gui.info.a4"),
                     next + " / " + max_next
-                },
-                new int[]
-                {
-                    0xFFF85A52,
-                    0xFFFFFFFF
                 }, mouseX, mouseY, true);
             }
 
@@ -242,12 +215,6 @@ public class PlayerGui extends MixGui
                     I18n.translateToLocal("gui.info.a5"),
                     I18n.translateToLocal("gui.info.a50"),
                     I18n.translateToLocal("gui.info.a51"),
-                },
-                new int[]
-                {
-                    0xFFF85A52,
-                    0xFFFFFFFF,
-                    0xFFF85A52,
                 }, mouseX, mouseY, true);
             }
 
@@ -266,11 +233,6 @@ public class PlayerGui extends MixGui
                 {
                     I18n.translateToLocal("gui.info.a6"),
                     next + " / " + max_next
-                },
-                new int[]
-                {
-                    0xFFF85A52,
-                    0xFFFFFFFF
                 }, mouseX, mouseY, true);
             }
 
@@ -294,11 +256,6 @@ public class PlayerGui extends MixGui
                 {
                     I18n.translateToLocal("gui.info.a7"),
                     I18n.translateToLocal("gui.info.a70")
-                },
-                new int[]
-                {
-                    0xFFF85A52,
-                    0xFFFFFFFF
                 }, mouseX, mouseY, true);
             }
         }
@@ -413,7 +370,7 @@ public class PlayerGui extends MixGui
                     byte[] string_byte_array = this.message_stringbuilder.toString().getBytes();
                     int string_byte_array_size = string_byte_array.length - 1;
                     byte[] byte_array = new byte[string_byte_array_size + 1];
-                    byte_array[0] = 7;//
+                    byte_array[0] = 7;
                     System.arraycopy(string_byte_array, 0, byte_array, 1, string_byte_array_size);
                     NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
                     this.message_stringbuilder.setLength(0);

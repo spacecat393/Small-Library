@@ -209,6 +209,13 @@ public abstract class SkinningEntities extends EntityLivingBase
             }
         }
 
+        //
+        if (!this.getEntityWorld().isRemote)
+        {
+            nbttagcompound.setIntArray("target", this.skinningentitiesarea.target_arraylist.stream().mapToInt(Integer::intValue).toArray());
+            nbttagcompound.setIntArray("troublemaker", this.skinningentitiesarea.troublemaker_arraylist.stream().mapToInt(Integer::intValue).toArray());
+        }
+
         //write inv
 
 //        String hand_key = "is_hand_active";
@@ -350,6 +357,21 @@ public abstract class SkinningEntities extends EntityLivingBase
 //        {
 //            entitydatamanager.set(HAND_STATES, nbttagcompound.getByte(hand_key));
 //        }
+
+        if (!this.getEntityWorld().isRemote)
+        {
+            int[] int_array = nbttagcompound.getIntArray("target");
+            for (int x : int_array)
+            {
+                this.skinningentitiesarea.target_arraylist.add(x);
+            }
+
+            int_array = nbttagcompound.getIntArray("troublemaker");
+            for (int x : int_array)
+            {
+                this.skinningentitiesarea.troublemaker_arraylist.add(x);
+            }
+        }
 
         this.server_sus_init = nbttagcompound.hasKey("sus_init");
 

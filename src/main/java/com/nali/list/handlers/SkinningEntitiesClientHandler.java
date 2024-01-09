@@ -3,6 +3,7 @@ package com.nali.list.handlers;
 import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.gui.OpenGUIHelper;
+import com.nali.ilol.gui.features.TargetGUIFeatures;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.render.ObjectRender;
 import com.nali.render.SkinningRender;
@@ -93,6 +94,28 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
             case 2:
             {
                 OpenGUIHelper.callPlayerGUI();
+                break;
+            }
+            case 3:
+            {
+                TargetGUIFeatures.TARGET_INT_ARRAY = new int[(skinningentitiesclientmessage.data.length - 1) / 4];
+                int index = 0;
+                for (int i = 1; i < skinningentitiesclientmessage.data.length; i += 4)
+                {
+                    TargetGUIFeatures.TARGET_INT_ARRAY[index++] = BytesReader.getInt(skinningentitiesclientmessage.data, i);
+                }
+
+                break;
+            }
+            case 4:
+            {
+                TargetGUIFeatures.TROUBLEMAKER_INT_ARRAY = new int[(skinningentitiesclientmessage.data.length - 1) / 4];
+                int index = 0;
+                for (int i = 1; i < skinningentitiesclientmessage.data.length; i += 4)
+                {
+                    TargetGUIFeatures.TROUBLEMAKER_INT_ARRAY[index++] = BytesReader.getInt(skinningentitiesclientmessage.data, i);
+                }
+
                 break;
             }
             default:

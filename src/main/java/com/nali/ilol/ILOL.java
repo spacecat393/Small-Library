@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -23,7 +24,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.WeakHashMap;
+
+import static com.nali.ilol.entities.EntitiesRegistryHelper.ENTITY_CLASS_ENTRIES;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.NAME)
 public class ILOL
@@ -60,6 +64,12 @@ public class ILOL
         {
             RenderHelper.init();
         }
+    }
+
+    @EventHandler
+    public void onFMLPostInitializationEvent(FMLPostInitializationEvent event)
+    {
+        EntitiesRegistryHelper.ENTITY_KEY_ARRAY = new HashSet<>(ENTITY_CLASS_ENTRIES.keySet()).toArray();
     }
 
     @EventHandler
