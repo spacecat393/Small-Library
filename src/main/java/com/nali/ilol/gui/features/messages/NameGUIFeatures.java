@@ -9,11 +9,10 @@ import net.minecraft.util.text.translation.I18n;
 
 public class NameGUIFeatures extends GUIFeaturesLoader
 {
-    public NameGUIFeatures(MixGui mixgui)
+    public NameGUIFeatures(MixGui mixgui, SkinningEntities skinningentities)
     {
         super(mixgui);
 
-        SkinningEntities skinningentities = ((InventoryContainer)this.mixgui.inventorySlots).skinningentities;
         String uuid_string = skinningentities.client_uuid.toString();
 
         String custom_name_string = "-";

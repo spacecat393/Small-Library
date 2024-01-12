@@ -3,7 +3,7 @@ package com.nali.ilol.gui;
 import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.gui.features.GUIFeaturesLoader;
-import com.nali.ilol.gui.features.messages.inventory.TargetGUIFeatures;
+import com.nali.ilol.gui.features.messages.NameGUIFeatures;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
@@ -116,9 +116,9 @@ public abstract class MixGui extends GuiContainer
     {
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            if (!(GUIFEATURESLOADER instanceof TargetGUIFeatures))
+            if (!(GUIFEATURESLOADER instanceof NameGUIFeatures))
             {
-                GUIFEATURESLOADER = new TargetGUIFeatures(this);
+                GUIFEATURESLOADER = new NameGUIFeatures(this, skinningentities);
             }
 
             if (this.mouse_released == 0)
