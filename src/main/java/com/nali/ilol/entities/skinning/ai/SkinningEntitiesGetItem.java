@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 {
     public boolean pickup;
+    public int time_out;
 
     public SkinningEntitiesGetItem(SkinningEntities skinningentities)
     {
@@ -35,8 +36,10 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 
             ItemStack itemstack = entityitem.getItem();
 
-            if (this.skinningentities.getDistanceSq(entityitem) < 4.0D/* || --this.pickup_tick <= 0*/)
+            if (this.skinningentities.getDistanceSq(entityitem) < 4.0D/* || --this.pickup_tick <= 0*/ || ++this.time_out >= 600)
             {
+                this.time_out = 0;
+
                 if (this.pickup)
                 {
                     skinningentitiesfindmove.endGoal();
