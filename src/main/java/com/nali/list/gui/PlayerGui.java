@@ -6,6 +6,7 @@ import com.nali.ilol.data.SakuraData;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.entities.skinning.SkinningEntitiesRender;
 import com.nali.ilol.gui.MixGui;
+import com.nali.ilol.gui.features.messages.player.*;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.render.BoxRender;
 import com.nali.ilol.render.RenderHelper;
@@ -18,7 +19,6 @@ import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.inventory.Container;
-import net.minecraft.util.text.translation.I18n;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -36,6 +36,9 @@ public class PlayerGui extends MixGui
     public SakuraRender sakurarender = new SakuraRender(new SakuraData(), RenderHelper.DATALOADER);
     public BoxRender boxrender = new BoxRender(new BoxData(), DATALOADER);
     public static byte PAGE;
+
+    public static int MAX_NEXT;
+    public static int NEXT;
 
     public PlayerGui(Container container)
     {
@@ -61,6 +64,7 @@ public class PlayerGui extends MixGui
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.message_state = -1;
+        this.render_text = false;
 
         super.drawScreen(mouseX, mouseY, partialTicks);
         if (PAGE == 0)
@@ -72,16 +76,14 @@ public class PlayerGui extends MixGui
             {
                 if (this.mouse_released == 0)
                 {
-                    byte[] byte_array = new byte[1];
-                    byte_array[0] = 3;
-                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                    this.sendPacket1((byte) 3);
                 }
 
-                this.drawHoveringText(new String[]
+                if (!(GUIFEATURESLOADER instanceof RandomAGUIFeatures))
                 {
-                    I18n.translateToLocal("gui.info.a0"),
-                    I18n.translateToLocal("gui.info.a00")
-                }, mouseX, mouseY, true);
+                    GUIFEATURESLOADER = new RandomAGUIFeatures(this);
+                }
+                this.render_text = true;
             }
 
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1);// y = this.guiTop + 118; width = 18; height = 19;
@@ -89,16 +91,14 @@ public class PlayerGui extends MixGui
             {
                 if (this.mouse_released == 0)
                 {
-                    byte[] byte_array = new byte[1];
-                    byte_array[0] = 4;
-                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                    this.sendPacket1((byte)4);
                 }
 
-                this.drawHoveringText(new String[]
+                if (!(GUIFEATURESLOADER instanceof RandomBGUIFeatures))
                 {
-                    I18n.translateToLocal("gui.info.a1"),
-                    I18n.translateToLocal("gui.info.a10")
-                }, mouseX, mouseY, true);
+                    GUIFEATURESLOADER = new RandomBGUIFeatures(this);
+                }
+                this.render_text = true;
             }
 
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*2;// y = this.guiTop + 118; width = 18; height = 19;
@@ -115,11 +115,11 @@ public class PlayerGui extends MixGui
                     PAGE = 1;
                 }
 
-                this.drawHoveringText(new String[]
+                if (!(GUIFEATURESLOADER instanceof MimiTalkGUIFeatures))
                 {
-                    I18n.translateToLocal("gui.info.a2"),
-                    I18n.translateToLocal("gui.info.a20")
-                }, mouseX, mouseY, true);
+                    GUIFEATURESLOADER = new MimiTalkGUIFeatures(this);
+                }
+                this.render_text = true;
             }
 
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3;// y = this.guiTop + 118; width = 18; height = 19;
@@ -127,13 +127,11 @@ public class PlayerGui extends MixGui
             {
                 this.message_state = 0;
 
-                this.drawHoveringText(new String[]
+                if (!(GUIFEATURESLOADER instanceof DropGUIFeatures))
                 {
-                    this.message_stringbuilder.toString(),
-                    I18n.translateToLocal("gui.info.a3"),
-                    I18n.translateToLocal("gui.info.a30"),
-                    I18n.translateToLocal("gui.info.a31")
-                }, mouseX, mouseY, true);
+                    GUIFEATURESLOADER = new DropGUIFeatures(this);
+                }
+                this.render_text = true;
             }
         }
         else
@@ -159,14 +157,14 @@ public class PlayerGui extends MixGui
                 }
             }
 
-            int max_next = 0;
-            int next = (CURRENT_INDEX / 4);
+            MAX_NEXT = 0;
+            NEXT = (CURRENT_INDEX / 4);
             if (MIXBUTTON_ARRAY != null)
             {
-                max_next = (int)Math.ceil(MIXBUTTON_ARRAY.length / 4.0F) - 1;
-                if (max_next == -1)
+                MAX_NEXT = (int)Math.ceil(MIXBUTTON_ARRAY.length / 4.0F) - 1;
+                if (MAX_NEXT == -1)
                 {
-                    max_next = 0;
+                    MAX_NEXT = 0;
                 }
                 if (CURRENT_INDEX > MIXBUTTON_ARRAY.length)
                 {
@@ -183,17 +181,17 @@ public class PlayerGui extends MixGui
             {
                 if (this.mouse_released == 0)
                 {
-                    if (next > 0)
+                    if (NEXT > 0)
                     {
                         CURRENT_INDEX -= 4;
                     }
                 }
 
-                this.drawHoveringText(new String[]
+                if (!(GUIFEATURESLOADER instanceof BackGUIFeatures))
                 {
-                    I18n.translateToLocal("gui.info.a4"),
-                    next + " / " + max_next
-                }, mouseX, mouseY, true);
+                    GUIFEATURESLOADER = new BackGUIFeatures(this);
+                }
+                this.render_text = true;
             }
 
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1);
@@ -205,17 +203,14 @@ public class PlayerGui extends MixGui
                 }
                 else if (this.mouse_released == 1)
                 {
-                    byte[] byte_array = new byte[1];
-                    byte_array[0] = 5;
-                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                    this.sendPacket1((byte)5);
                 }
 
-                this.drawHoveringText(new String[]
+                if (!(GUIFEATURESLOADER instanceof FetchGUIFeatures))
                 {
-                    I18n.translateToLocal("gui.info.a5"),
-                    I18n.translateToLocal("gui.info.a50"),
-                    I18n.translateToLocal("gui.info.a51"),
-                }, mouseX, mouseY, true);
+                    GUIFEATURESLOADER = new FetchGUIFeatures(this);
+                }
+                this.render_text = true;
             }
 
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*2;
@@ -223,17 +218,17 @@ public class PlayerGui extends MixGui
             {
                 if (this.mouse_released == 0)
                 {
-                    if (next < max_next)
+                    if (NEXT < MAX_NEXT)
                     {
                         CURRENT_INDEX += 4;
                     }
                 }
 
-                this.drawHoveringText(new String[]
+                if (!(GUIFEATURESLOADER instanceof NextGUIFeatures))
                 {
-                    I18n.translateToLocal("gui.info.a6"),
-                    next + " / " + max_next
-                }, mouseX, mouseY, true);
+                    GUIFEATURESLOADER = new NextGUIFeatures(this);
+                }
+                this.render_text = true;
             }
 
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3;
@@ -244,20 +239,21 @@ public class PlayerGui extends MixGui
                     String uuid_string = getTextFromClipboard();
                     if (isValidUUIDString(uuid_string))
                     {
-                        byte[] byte_array = new byte[21];
-                        byte_array[0] = 6;
-                        BytesWriter.set(byte_array, UUID.fromString(uuid_string), 1);
-                        BytesWriter.set(byte_array, 1, 17);
-                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                        this.sendPacketUUID((byte)6, UUID.fromString(uuid_string));
                     }
                 }
 
-                this.drawHoveringText(new String[]
+                if (!(GUIFEATURESLOADER instanceof EnterGUIFeatures))
                 {
-                    I18n.translateToLocal("gui.info.a7"),
-                    I18n.translateToLocal("gui.info.a70")
-                }, mouseX, mouseY, true);
+                    GUIFEATURESLOADER = new EnterGUIFeatures(this);
+                }
+                this.render_text = true;
             }
+        }
+
+        if (this.render_text)
+        {
+            GUIFEATURESLOADER.drawText(mouseX, mouseY);
         }
 
         this.mouse_released = -1;
@@ -347,16 +343,16 @@ public class PlayerGui extends MixGui
     {
         if (this.message_state != -1)
         {
-            int index = this.message_stringbuilder.length() - 1;
-            char end = this.message_stringbuilder.charAt(index);
+            int index = MESSAGE_STRINGBUILDER.length() - 1;
+            char end = MESSAGE_STRINGBUILDER.charAt(index);
 
             switch (typedChar)
             {
                 case '\b':
                 {
-                    if (this.message_stringbuilder.length() > 1)
+                    if (MESSAGE_STRINGBUILDER.length() > 1)
                     {
-                        this.message_stringbuilder.deleteCharAt(index - 1);
+                        MESSAGE_STRINGBUILDER.deleteCharAt(index - 1);
                     }
 
                     break;
@@ -367,14 +363,14 @@ public class PlayerGui extends MixGui
 //                    {
 //                        case 0:
 //                        {
-                    byte[] string_byte_array = this.message_stringbuilder.toString().getBytes();
+                    byte[] string_byte_array = MESSAGE_STRINGBUILDER.toString().getBytes();
                     int string_byte_array_size = string_byte_array.length - 1;
                     byte[] byte_array = new byte[string_byte_array_size + 1];
                     byte_array[0] = 7;
                     System.arraycopy(string_byte_array, 0, byte_array, 1, string_byte_array_size);
                     NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
-                    this.message_stringbuilder.setLength(0);
-                    this.message_stringbuilder.append("!");
+                    MESSAGE_STRINGBUILDER.setLength(0);
+                    MESSAGE_STRINGBUILDER.append("!");
 //                            break;
 //                        }
 //                        default:
@@ -391,7 +387,7 @@ public class PlayerGui extends MixGui
 //                }
                 default:
                 {
-                    this.message_stringbuilder.deleteCharAt(index).append(typedChar).append(end);
+                    MESSAGE_STRINGBUILDER.deleteCharAt(index).append(typedChar).append(end);
                     break;
                 }
             }
@@ -425,9 +421,9 @@ public class PlayerGui extends MixGui
         public MixButton(SkinningEntities skinningentities, UUID uuid/*, int x, int y*/, int tx, int ty, int width, int height)
         {
             this.skinningentities = skinningentities;
-            if (this.skinningentities != null)
-            {
-                this.skinningentitiesrender = (SkinningEntitiesRender)Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(skinningentities);
+//            if (this.skinningentities != null)
+//            {
+            this.skinningentitiesrender = (SkinningEntitiesRender)Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(skinningentities);
 //                SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
 //                skinningrender.screen_float_array[3] = 0.0F;
 //                skinningrender.screen_float_array[4] = -10.0F;
@@ -435,7 +431,7 @@ public class PlayerGui extends MixGui
 //                skinningrender.screen_float_array[5] = -1.57079632679F;
 //        skinningdata.screen_float_array[6] = 0.0F;
 //                skinningrender.screen_float_array[7] = 0.0F;
-            }
+//            }
 
 //            this.x = x;
 //            this.y = y;
@@ -480,14 +476,14 @@ public class PlayerGui extends MixGui
 
         public void renderTooltip(MixGui mixgui, float x, float y, int mouseX, int mouseY/*, int left, int top, int sys_width, int sys_height*/)
         {
-            if (this.skinningentities != null)
-            {
-                mixgui.renderEntitiesName(this.skinningentities, x, y + 49, 56, 11, mouseX, mouseY);
-            }
-            else
-            {
-                mixgui.renderEntitiesUUID(this.uuid, x, y + 49, 56, 11, mouseX, mouseY);
-            }
+//            if (this.skinningentities != null)
+//            {
+            mixgui.renderEntitiesName(this.skinningentities, x, y + 49, 56, 11, mouseX, mouseY);
+//            }
+//            else
+//            {
+//                mixgui.renderEntitiesUUID(this.uuid, x, y + 49, 56, 11, mouseX, mouseY);
+//            }
 
             if (mouseX >= x && mouseY >= y && mouseX < x + this.width && mouseY < y + this.height)
             {

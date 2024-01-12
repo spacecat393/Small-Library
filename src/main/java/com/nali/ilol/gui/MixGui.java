@@ -2,6 +2,12 @@ package com.nali.ilol.gui;
 
 import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.ilol.gui.features.GUIFeaturesLoader;
+import com.nali.ilol.gui.features.messages.TargetGUIFeatures;
+import com.nali.ilol.networks.NetworksRegistry;
+import com.nali.list.container.InventoryContainer;
+import com.nali.list.messages.SkinningEntitiesServerMessage;
+import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -9,9 +15,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.EntityList;
 import net.minecraft.inventory.Container;
-import net.minecraft.util.text.translation.I18n;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -26,14 +30,19 @@ public abstract class MixGui extends GuiContainer
 {
     public int mouse_released = -1, mouse_clicked = -1;
 
-    public StringBuilder message_stringbuilder = new StringBuilder("_");
+    public static MixGui I;
+    public static GUIFeaturesLoader GUIFEATURESLOADER;
+    public static StringBuilder MESSAGE_STRINGBUILDER = new StringBuilder("_");
     public long last_time = Minecraft.getSystemTime();//System.currentTimeMillis();
     public int limit_time = 1000;
     public int message_state;
+    public boolean render_text;
 
     public MixGui(Container container)
     {
         super(container);
+        I = this;
+        GUIFEATURESLOADER = new GUIFeaturesLoader(I);
     }
 
     @Override
@@ -51,61 +60,96 @@ public abstract class MixGui extends GuiContainer
         super.mouseReleased(mouseX, mouseY, state);
     }
 
+    public void setMessage()
+    {
+        long current_time = Minecraft.getSystemTime();//System.currentTimeMillis();
+        if (current_time - this.last_time >= this.limit_time)
+        {
+            int index = MESSAGE_STRINGBUILDER.length() - 1;
+            boolean show = MESSAGE_STRINGBUILDER.charAt(index) == '_';
+            MESSAGE_STRINGBUILDER.deleteCharAt(index).append(show ? ' ' : '_');
+            this.last_time = current_time;
+        }
+    }
+
+    public void sendPacket1(byte id)
+    {
+        byte[] byte_array = new byte[1];
+        byte_array[0] = id;
+        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+    }
+
+    public void sendPacketUUID(byte id)
+    {
+        this.sendPacketUUID(id, ((InventoryContainer)this.inventorySlots).skinningentities.client_uuid);
+    }
+
+    public void sendPacketUUID(byte id, UUID uuid)
+    {
+        byte[] byte_array = new byte[17];
+        byte_array[0] = id;
+        BytesWriter.set(byte_array, uuid, 1);
+        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+    }
+
+//    public void sendPacketUUIDInt(byte id, UUID uuid, int i)
+//    {
+//        byte[] byte_array = new byte[21];
+//        byte_array[0] = id;
+//        BytesWriter.set(byte_array, uuid, 1);
+//        BytesWriter.set(byte_array, i, 17);
+//        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+//    }
+
+    public void sendPacketUUIDInt(int i)
+    {
+        SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
+        byte[] byte_array = new byte[22];
+        byte_array[0] = 1;
+        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
+        BytesWriter.set(byte_array, i, 17);
+        byte_array[21] = skinningentities.client_work_byte_array[i] == 1 ? (byte)0 : (byte)1;
+        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+    }
+
     public void renderEntitiesName(SkinningEntities skinningentities, float x, float y, int width, int height, int mouseX, int mouseY)
     {
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            String uuid_string = skinningentities.client_uuid.toString();
+            if (!(GUIFEATURESLOADER instanceof TargetGUIFeatures))
+            {
+                GUIFEATURESLOADER = new TargetGUIFeatures(this);
+            }
+
             if (this.mouse_released == 0)
             {
-                copyToClipboard(uuid_string);
+                copyToClipboard(skinningentities.client_uuid.toString());
             }
 
-            String custom_name_string = "-";
-            if (skinningentities.hasCustomName())
-            {
-                custom_name_string = skinningentities.getCustomNameTag();
-            }
-
-            String entity_string = EntityList.getEntityString(skinningentities);
-            if (entity_string == null)
-            {
-                entity_string = "generic";
-            }
-
-            this.drawHoveringText(new String[]
-            {
-                I18n.translateToLocal("gui.info.n"),
-                I18n.translateToLocal("entity." + entity_string + ".name"),
-                I18n.translateToLocal("gui.info.cn"),
-                custom_name_string,
-                I18n.translateToLocal("gui.info.un"),
-                uuid_string,
-                I18n.translateToLocal("gui.info.unh")
-            }, mouseX, mouseY, false);
+            this.render_text = true;
         }
     }
 
-    public void renderEntitiesUUID(UUID uuid, float x, float y, int width, int height, int mouseX, int mouseY)
-    {
-        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
-        {
-            String uuid_string = uuid.toString();
-            if (this.mouse_released == 0)
-            {
-                copyToClipboard(uuid_string);
-            }
+//    public void renderEntitiesUUID(UUID uuid, float x, float y, int width, int height, int mouseX, int mouseY)
+//    {
+//        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+//        {
+//            String uuid_string = uuid.toString();
+//            if (this.mouse_released == 0)
+//            {
+//                copyToClipboard(uuid_string);
+//            }
+//
+//            this.drawHoveringText(new String[]
+//            {
+//                I18n.translateToLocal("gui.info.un"),
+//                uuid_string,
+//                I18n.translateToLocal("gui.info.unh")
+//            }, mouseX, mouseY, false);
+//        }
+//    }
 
-            this.drawHoveringText(new String[]
-            {
-                I18n.translateToLocal("gui.info.un"),
-                uuid_string,
-                I18n.translateToLocal("gui.info.unh")
-            }, mouseX, mouseY, false);
-        }
-    }
-
-    public void drawHoveringText(String[] text_string_array, int x, int y, boolean have_head)
+    public void drawHoveringText(String[] text_string_array, int[] color_int_array, int x, int y, boolean have_head)
     {
 //        net.minecraftforge.fml.client.config.GuiUtils.drawHoveringText(textLines, x, y, width, height, -1, font);
 //        if (false && !textLines.isEmpty())
@@ -114,6 +158,7 @@ public abstract class MixGui extends GuiContainer
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableLighting();
         GlStateManager.disableDepth();
+
         int i = 0;
 
         for (String s : text_string_array)
@@ -169,7 +214,7 @@ public abstract class MixGui extends GuiContainer
 
         for (int k1 = 0; k1 < length; ++k1)
         {
-            this.fontRenderer.drawStringWithShadow(text_string_array[k1], (float)l1, (float)i2, (k1 + 1) % 2 == 0 ? 0xFFFFFFFF : 0xFFF85A52);
+            this.fontRenderer.drawStringWithShadow(text_string_array[k1], (float)l1, (float)i2, color_int_array[k1]/*(k1 + 1) % 2 == 0 ? 0xFFFFFFFF : 0xFFF85A52*/);
 
             if (have_head)
             {
@@ -188,18 +233,6 @@ public abstract class MixGui extends GuiContainer
         GlStateManager.enableDepth();
         RenderHelper.enableStandardItemLighting();
         GlStateManager.enableRescaleNormal();
-    }
-
-    public void setMessage()
-    {
-        long current_time = Minecraft.getSystemTime();//System.currentTimeMillis();
-        if (current_time - this.last_time >= this.limit_time)
-        {
-            int index = this.message_stringbuilder.length() - 1;
-            boolean show = this.message_stringbuilder.charAt(index) == '_';
-            this.message_stringbuilder.deleteCharAt(index).append(show ? ' ' : '_');
-            this.last_time = current_time;
-        }
     }
 
     public void drawTextureRightToLeft(float xCoord, float yCoord, int minU, int minV, int maxU, int maxV)

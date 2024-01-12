@@ -1,15 +1,13 @@
-//package com.nali.ilol.gui.features;
-//
-//import com.nali.ilol.entities.skinning.SkinningEntities;
-//import com.nali.list.container.InventoryContainer;
-//import com.nali.list.gui.InventoryGui;
-//import net.minecraft.util.text.translation.I18n;
-//
-//public class MessagesFeatures
-//{
-//    public static void drawOnOff2(String[] main_key_string_array, String[] sub_key_string_array, int id, InventoryGui inventorygui, int mouseX, int mouseY)
+package com.nali.ilol.gui.features;
+
+import com.nali.ilol.entities.EntitiesRegistryHelper;
+import net.minecraft.util.text.translation.I18n;
+
+public class MessagesFeatures
+{
+//    public static void initOnOff2(String[] main_key_string_array, String[] sub_key_string_array, int id, GUIFeaturesLoader guifeaturesloader)
 //    {
-//        SkinningEntities skinningentities = ((InventoryContainer)inventorygui.inventorySlots).skinningentities;
+//        SkinningEntities skinningentities = ((InventoryContainer)guifeaturesloader.mixgui.inventorySlots).skinningentities;
 //
 //        for (int i = 0; i < main_key_string_array.length; ++i)
 //        {
@@ -21,14 +19,44 @@
 //            sub_key_string_array[i] = I18n.translateToLocal(sub_key_string_array[i]);
 //        }
 //
-//        String[] string_array = new String[sub_key_string_array.length + 1];
-//        string_array[0] = I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[id] == 1 ? main_key_string_array[0] : main_key_string_array[1]);
+//        guifeaturesloader.string_array = new String[sub_key_string_array.length + 1];
+//        guifeaturesloader.string_array[0] = I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[id] == 1 ? main_key_string_array[0] : main_key_string_array[1]);
 //
 //        for (int i = 0; i < sub_key_string_array.length; ++i)
 //        {
-//            string_array[i + 1] = main_key_string_array[i] + " : " + sub_key_string_array[i];
+//            guifeaturesloader.string_array[i + 1] = main_key_string_array[i] + " : " + sub_key_string_array[i];
 //        }
 //
-//        inventorygui.drawHoveringText(string_array, mouseX, mouseY, true);
+//        guifeaturesloader.createColor();
 //    }
-//}
+
+    public static void initEntities(int[] int_array, String key, GUIFeaturesLoader guifeaturesloader)
+    {
+        if (int_array != null && int_array.length != 0)
+        {
+            guifeaturesloader.string_array = new String[int_array.length + 2];
+
+            int index = 1;
+            for (int i : int_array)
+            {
+                if (i < EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length)
+                {
+                    guifeaturesloader.string_array[index++] = i + " " + ((Class)EntitiesRegistryHelper.ENTITY_KEY_ARRAY[i]).getName();
+                }
+                else
+                {
+                    guifeaturesloader.string_array[index++] = i + " OUT_ARRAY";
+                }
+            }
+        }
+        else
+        {
+            guifeaturesloader.string_array = new String[2];
+        }
+
+        guifeaturesloader.string_array[0] = I18n.translateToLocal(key);
+        guifeaturesloader.string_array[guifeaturesloader.string_array.length - 1] = I18n.translateToLocal("gui.info.st2");
+
+        guifeaturesloader.createColor();
+    }
+}

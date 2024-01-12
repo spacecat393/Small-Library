@@ -2,8 +2,10 @@ package com.nali.list.handlers;
 
 import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.ilol.gui.MixGui;
 import com.nali.ilol.gui.OpenGUIHelper;
-import com.nali.ilol.gui.features.TargetGUIFeatures;
+import com.nali.ilol.gui.features.messages.TargetGUIFeatures;
+import com.nali.ilol.gui.features.messages.TroublemakerGUIFeatures;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.render.ObjectRender;
 import com.nali.render.SkinningRender;
@@ -20,6 +22,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
+
+import static com.nali.ilol.gui.features.messages.TargetGUIFeatures.TARGET_INT_ARRAY;
+import static com.nali.ilol.gui.features.messages.TroublemakerGUIFeatures.TROUBLEMAKER_INT_ARRAY;
 
 public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEntitiesClientMessage, IMessage>
 {
@@ -98,24 +103,55 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
             }
             case 3:
             {
-                TargetGUIFeatures.TARGET_INT_ARRAY = new int[(skinningentitiesclientmessage.data.length - 1) / 4];
+                TARGET_INT_ARRAY = new int[(skinningentitiesclientmessage.data.length - 1) / 4];
                 int index = 0;
                 for (int i = 1; i < skinningentitiesclientmessage.data.length; i += 4)
                 {
-                    TargetGUIFeatures.TARGET_INT_ARRAY[index++] = BytesReader.getInt(skinningentitiesclientmessage.data, i);
+                    TARGET_INT_ARRAY[index++] = BytesReader.getInt(skinningentitiesclientmessage.data, i);
                 }
+
+                MixGui.GUIFEATURESLOADER = new TargetGUIFeatures(MixGui.I);
 
                 break;
             }
             case 4:
             {
-                TargetGUIFeatures.TROUBLEMAKER_INT_ARRAY = new int[(skinningentitiesclientmessage.data.length - 1) / 4];
+                TROUBLEMAKER_INT_ARRAY = new int[(skinningentitiesclientmessage.data.length - 1) / 4];
                 int index = 0;
                 for (int i = 1; i < skinningentitiesclientmessage.data.length; i += 4)
                 {
-                    TargetGUIFeatures.TROUBLEMAKER_INT_ARRAY[index++] = BytesReader.getInt(skinningentitiesclientmessage.data, i);
+                    TROUBLEMAKER_INT_ARRAY[index++] = BytesReader.getInt(skinningentitiesclientmessage.data, i);
                 }
 
+                MixGui.GUIFEATURESLOADER = new TroublemakerGUIFeatures(MixGui.I);
+
+                break;
+            }
+            case 5://sync server uuid to client
+            {
+                Entity entity = Minecraft.getMinecraft().world.getEntityByID(BytesReader.getInt(skinningentitiesclientmessage.data, 1 + 16));
+                if (entity instanceof SkinningEntities)
+                {
+                    ((SkinningEntities)entity).client_uuid = BytesReader.getUUID(skinningentitiesclientmessage.data, 1);
+                }
+
+                break;
+            }
+            case 6://sync work bytes
+            {
+                int id = BytesReader.getInt(skinningentitiesclientmessage.data, 1);
+                Entity entity = Minecraft.getMinecraft().world.getEntityByID(id);
+                if (!(entity instanceof SkinningEntities))
+                {
+                    UUID uuid = SkinningEntities.FAKE_CLIENT_ENTITIES_MAP.get(id);
+                    entity = SkinningEntities.CLIENT_ENTITIES_MAP.get(uuid);
+                }
+
+                if (entity instanceof SkinningEntities)
+                {
+                    SkinningEntities skinningentities = (SkinningEntities)entity;
+                    System.arraycopy(skinningentitiesclientmessage.data, 1 + 4, skinningentities.client_work_byte_array, 0, skinningentities.client_work_byte_array.length);
+                }
                 break;
             }
             default:

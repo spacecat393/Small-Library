@@ -1,11 +1,16 @@
 package com.nali.list.gui;
 
 import com.nali.ilol.data.BoxData;
-import com.nali.ilol.entities.EntitiesRegistryHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.entities.skinning.SkinningEntitiesRender;
 import com.nali.ilol.gui.MixGui;
-import com.nali.ilol.gui.features.TargetGUIFeatures;
+import com.nali.ilol.gui.features.messages.AttributeGUIFeatures;
+import com.nali.ilol.gui.features.messages.HPGUIFeatures;
+import com.nali.ilol.gui.features.messages.TargetGUIFeatures;
+import com.nali.ilol.gui.features.messages.TroublemakerGUIFeatures;
+import com.nali.ilol.gui.features.messages.inventory.*;
+import com.nali.ilol.gui.features.messages.player.MimiTalkGUIFeatures;
+import com.nali.ilol.gui.features.messages.works.*;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.render.BoxRender;
 import com.nali.ilol.system.Reference;
@@ -15,20 +20,15 @@ import com.nali.render.SkinningRender;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 
-import static com.nali.ilol.gui.features.TargetGUIFeatures.TARGET_INT_ARRAY;
-import static com.nali.ilol.gui.features.TargetGUIFeatures.TROUBLEMAKER_INT_ARRAY;
 import static com.nali.ilol.render.RenderHelper.DATALOADER;
 import static com.nali.system.Timing.TD;
 
@@ -36,8 +36,8 @@ import static com.nali.system.Timing.TD;
 public class InventoryGui extends MixGui
 {
     public static ResourceLocation GUI_RESOURCELOCATION = new ResourceLocation(Reference.MOD_ID, "textures/gui/inventory.png");
+    public static byte PAGE;
     public SkinningEntitiesRender skinningentitiesrender;
-    public byte page;
     public float px, py/*, rx, ry*/;
     public BoxRender boxrender = new BoxRender(new BoxData(), DATALOADER);
 
@@ -79,6 +79,7 @@ public class InventoryGui extends MixGui
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.message_state = -1;
+        this.render_text = false;
 
 //        ScaledResolution scaledresolution = new ScaledResolution(this.mc);
 //        this.setWorldAndResolution(Minecraft.getMinecraft(), scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
@@ -105,7 +106,7 @@ public class InventoryGui extends MixGui
         this.boxrender.y = this.guiTop + 33 + 18 + 18 + 6.5F + 2.5F;
         this.boxrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 0.9F);
 
-        if (this.page == 0)
+        if (PAGE == 0)
         {
             super.drawScreen(mouseX, mouseY, partialTicks);
         }
@@ -156,11 +157,11 @@ public class InventoryGui extends MixGui
 //        new Quaternion(-rx, -ry, 0.0F).getM4x4().multiply(skinningdata.skinning_float_array, 0);
 //        }
 
-        if (this.page == 0)
+        if (PAGE == 0)
         {
             this.renderHoveredToolTip(mouseX, mouseY);
         }
-        else if (this.page == 2)
+        else if (PAGE == 2)
         {
             this.setMessage();
         }
@@ -170,30 +171,21 @@ public class InventoryGui extends MixGui
         x = this.guiLeft + 47; y = this.guiTop + 25; width = 5; height = 62;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            this.drawHoveringText(new String[]
+            if (!(GUIFEATURESLOADER instanceof HPGUIFeatures))
             {
-                I18n.translateToLocal("gui.info.hp") + " : " + skinningentities.getHealth(),
-                I18n.translateToLocal("gui.info.mhp") + " : " + skinningentities.getMaxHealth()
-            }, mouseX, mouseY, false);
+                GUIFEATURESLOADER = new HPGUIFeatures(this);
+            }
+            this.render_text = true;
         }
 
         x = this.guiLeft + 158;/* y = this.guiTop + 25;*/ width = 9; height = 19;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            int size = skinningentities.getAttributeMap().getAllAttributes().size();
-            String[] string_array = new String[size];
-            int index = 0;
-            for (IAttributeInstance iattributeinstance : skinningentities.getAttributeMap().getAllAttributes())
+            if (!(GUIFEATURESLOADER instanceof AttributeGUIFeatures))
             {
-                double value = iattributeinstance.getAttributeValue();
-                for (AttributeModifier attributemodifier : iattributeinstance.getModifiers())
-                {
-                    value += attributemodifier.getAmount();
-                }
-
-                string_array[index++] = I18n.translateToLocal("attribute.name." + iattributeinstance.getAttribute().getName()) + " : " + value;
+                GUIFEATURESLOADER = new AttributeGUIFeatures(this);
             }
-            this.drawHoveringText(string_array, mouseX, mouseY, false);
+            this.render_text = true;
         }
 
 //        get from server
@@ -218,28 +210,15 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                byte[] byte_array = new byte[21];
-                byte_array[0] = 2;
-                BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                BytesWriter.set(byte_array, 1, 17);
-                NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
-                byte_array = new byte[22];
-                byte_array[0] = 1;
-                BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.LOCK_INVENTORY(), 17);
-                byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1 ? (byte)0 : (byte)1;
-                NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                this.sendPacketUUID((byte)2);
+                this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.LOCK_INVENTORY());
             }
 
-            String lock = I18n.translateToLocal("gui.info.l");
-            String unlock = I18n.translateToLocal("gui.info.ul");
-
-            this.drawHoveringText(new String[]
+            if (!(GUIFEATURESLOADER instanceof LockInventoryGUIFeatures))
             {
-                I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1 ? lock : unlock),
-                lock + " : " + I18n.translateToLocal("gui.info.l0"),
-                unlock + " : " + I18n.translateToLocal("gui.info.ul0")
-            }, mouseX, mouseY, true);
+                GUIFEATURESLOADER = new LockInventoryGUIFeatures(this);
+            }
+            this.render_text = true;
         }
 
         /*x = this.guiLeft + 57; */y = this.guiTop + 35;/* width = 5; height = 6;*/
@@ -247,28 +226,15 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                byte[] byte_array = new byte[21];
-                byte_array[0] = 2;
-                BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                BytesWriter.set(byte_array, 1, 17);
-                NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
-                byte_array = new byte[22];
-                byte_array[0] = 1;
-                BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.LOCK_DAMAGE(), 17);
-                byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_DAMAGE()] == 1 ? (byte)0 : (byte)1;
-                NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                this.sendPacketUUID((byte)2);
+                this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.LOCK_DAMAGE());
             }
 
-            String lock = I18n.translateToLocal("gui.info.l");
-            String unlock = I18n.translateToLocal("gui.info.ul");
-
-            this.drawHoveringText(new String[]
+            if (!(GUIFEATURESLOADER instanceof LockDamageGUIFeatures))
             {
-                I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_DAMAGE()] == 1 ? lock : unlock),
-                lock + " : " + I18n.translateToLocal("gui.info.l1"),
-                unlock + " : " + I18n.translateToLocal("gui.info.ul1")
-            }, mouseX, mouseY, true);
+                GUIFEATURESLOADER = new LockDamageGUIFeatures(this);
+            }
+            this.render_text = true;
         }
 
         x = this.guiLeft + 82; y = this.guiTop + 31; width = 18; height = 18;
@@ -276,20 +242,14 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                this.page = this.page == 2 ? 0 : this.page == 1 ? 2 : (byte)1;
+                PAGE = PAGE == 2 ? 0 : PAGE == 1 ? 2 : (byte)1;
             }
 
-            String ss = I18n.translateToLocal("gui.info.ss");
-            String sp = I18n.translateToLocal("gui.info.sp");
-            String si = I18n.translateToLocal("gui.info.si");
-
-            this.drawHoveringText(new String[]
+            if (!(GUIFEATURESLOADER instanceof MenuGUIFeatures))
             {
-                I18n.translateToLocal("gui.info.cv") + " : " + (this.page == 2 ? ss : this.page == 1 ? sp : si),
-                sp + " : " + I18n.translateToLocal("gui.info.sp0"),
-                si + " : " + I18n.translateToLocal("gui.info.si0"),
-                ss + " : " + I18n.translateToLocal("gui.info.ss0")
-            }, mouseX, mouseY, true);
+                GUIFEATURESLOADER = new MenuGUIFeatures(this);
+            }
+            this.render_text = true;
         }
 
         /*x = this.guiLeft + 82; */y = this.guiTop + 31 + 18;// width = 18; height = 18;
@@ -297,16 +257,14 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                byte[] byte_array = new byte[1];
-                byte_array[0] = 9;
-                NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                this.sendPacket1((byte)9);
             }
 
-            this.drawHoveringText(new String[]
+            if (!(GUIFEATURESLOADER instanceof MimiTalkGUIFeatures))
             {
-                I18n.translateToLocal("gui.info.a2"),
-                I18n.translateToLocal("gui.info.a20")
-            }, mouseX, mouseY, false);
+                GUIFEATURESLOADER = new MimiTalkGUIFeatures(this);
+            }
+            this.render_text = true;
         }
 
         /*x = this.guiLeft + 82; */y = this.guiTop + 31 + 18 + 18;// width = 18; height = 18;
@@ -314,315 +272,243 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                byte[] byte_array = new byte[17];
-                byte_array[0] = 8;
-                BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                this.sendPacketUUID((byte)8);
             }
 
-            this.drawHoveringText(new String[]
+            if (!(GUIFEATURESLOADER instanceof BoxGUIFeatures))
             {
-                I18n.translateToLocal("gui.info.i0"),
-                I18n.translateToLocal("gui.info.i00")
-            }, mouseX, mouseY, false);
+                GUIFEATURESLOADER = new BoxGUIFeatures(this);
+            }
+            this.render_text = true;
         }
 
-        if (this.page > 0)
+        if (PAGE > 0)
         {
             x = this.guiLeft + 48; y = this.guiTop + 89; width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (this.page == 2)
+                if (PAGE == 2)
                 {
                     this.message_state = 0;
-                    this.drawHoveringText(new String[]
+
+                    if (!(GUIFEATURESLOADER instanceof AddTargetGUIFeatures))
                     {
-                        this.message_stringbuilder.toString(),
-                        I18n.translateToLocal("gui.info.t0"),
-                        I18n.translateToLocal("gui.info.st0"),
-                        I18n.translateToLocal("gui.info.st1")
-                    }, mouseX, mouseY, false);
+                        GUIFEATURESLOADER = new AddTargetGUIFeatures(this);
+                    }
+                    this.render_text = true;
                 }
                 else
                 {
                     if (this.mouse_released == 0)
                     {
-                        byte[] byte_array = new byte[22];
-                        byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                        BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.SIT(), 17);
-                        byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.SIT()] == 1 ? (byte)0 : (byte)1;
-                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.SIT());
                     }
 
-                    String bs0 = I18n.translateToLocal("gui.info.bs0");
-                    String bs1 = I18n.translateToLocal("gui.info.bs1");
-
-                    this.drawHoveringText(new String[]
+                    if (!(GUIFEATURESLOADER instanceof SitGUIFeatures))
                     {
-                        I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.SIT()] == 1 ? bs1 : bs0),
-                        bs0 + " : " + I18n.translateToLocal("gui.info.bs00"),
-                        bs1 + " : " + I18n.translateToLocal("gui.info.bs10")
-                    }, mouseX, mouseY, true);
+                        GUIFEATURESLOADER = new SitGUIFeatures(this);
+                    }
+                    this.render_text = true;
                 }
             }
 
             x = this.guiLeft + 66;// y = this.guiTop + 89; width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (this.page == 2)
+                if (PAGE == 2)
                 {
                     this.message_state = 1;
-                    this.drawHoveringText(new String[]
+
+                    if (!(GUIFEATURESLOADER instanceof AddTroublemakerGUIFeatures))
                     {
-                        this.message_stringbuilder.toString(),
-                        I18n.translateToLocal("gui.info.t5"),
-                        I18n.translateToLocal("gui.info.st0"),
-                        I18n.translateToLocal("gui.info.st1")
-                    }, mouseX, mouseY, false);
+                        GUIFEATURESLOADER = new AddTroublemakerGUIFeatures(this);
+                    }
+                    this.render_text = true;
                 }
                 else
                 {
                     if (this.mouse_released == 0)
                     {
-                        byte[] byte_array = new byte[21];
-                        byte_array[0] = 2;
-                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                        BytesWriter.set(byte_array, 1, 17);
-                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
-                        byte_array = new byte[22];
-                        byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                        BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.FOLLOW(), 17);
-                        byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.FOLLOW()] == 1 ? (byte)0 : (byte)1;
-                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                        this.sendPacketUUID((byte)2);
+                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.FOLLOW());
                     }
 
-                    String bf0 = I18n.translateToLocal("gui.info.bf0");
-                    String bf1 = I18n.translateToLocal("gui.info.bf1");
-
-                    this.drawHoveringText(new String[]
+                    if (!(GUIFEATURESLOADER instanceof FollowGUIFeatures))
                     {
-                        I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.FOLLOW()] == 1 ? bf1 : bf0),
-                        bf0 + " : " + I18n.translateToLocal("gui.info.bf00"),
-                        bf1 + " : " + I18n.translateToLocal("gui.info.bf10"),
-                        I18n.translateToLocal("gui.info.bf000")
-                    }, mouseX, mouseY, true);
+                        GUIFEATURESLOADER = new FollowGUIFeatures(this);
+                    }
+                    this.render_text = true;
                 }
             }
 
             x = this.guiLeft + 84;// y = this.guiTop + 89; width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (this.page == 2)
+                if (PAGE == 2)
                 {
-                    String[] string_array = new String[EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length + 1];
-                    string_array[0] = I18n.translateToLocal("gui.info.t3");
-                    int index = 1;
-                    for (Object o : EntitiesRegistryHelper.ENTITY_KEY_ARRAY)
+                    if (!(GUIFEATURESLOADER instanceof EntityListGUIFeatures))
                     {
-                        string_array[index] = (index++ - 1) + " " + ((Class)o).getName();
+                        GUIFEATURESLOADER = new EntityListGUIFeatures(this);
                     }
-
-                    this.drawHoveringText(string_array, mouseX, mouseY, false);
+                    this.render_text = true;
                 }
                 else
                 {
                     if (this.mouse_released == 0)
                     {
-                        byte[] byte_array = new byte[22];
-                        byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                        BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.FIND_ITEM(), 17);
-                        byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.FIND_ITEM()] == 1 ? (byte)0 : (byte)1;
-                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.FIND_ITEM());
                     }
 
-                    String bfi0 = I18n.translateToLocal("gui.info.bfi0");
-                    String bfi1 = I18n.translateToLocal("gui.info.bfi1");
-
-                    this.drawHoveringText(new String[]
+                    if (!(GUIFEATURESLOADER instanceof FindItemGUIFeatures))
                     {
-                        I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.FIND_ITEM()] == 1 ? bfi1 : bfi0),
-                        bfi0 + " : " + I18n.translateToLocal("gui.info.bfi00"),
-                        bfi1 + " : " + I18n.translateToLocal("gui.info.bfi10")
-                    }, mouseX, mouseY, true);
+                        GUIFEATURESLOADER = new FindItemGUIFeatures(this);
+                    }
+                    this.render_text = true;
                 }
             }
 
             x = this.guiLeft + 102;// y = this.guiTop + 89; width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (this.page == 1)
+                if (PAGE == 1)
                 {
                     if (this.mouse_released == 0)
                     {
-                        byte[] byte_array = new byte[22];
-                        byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                        BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.RANDOM_WALK(), 17);
-                        byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.RANDOM_WALK()] == 1 ? (byte)0 : (byte)1;
-                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.RANDOM_WALK());
                     }
 
-                    String brw0 = I18n.translateToLocal("gui.info.brw0");
-                    String brw1 = I18n.translateToLocal("gui.info.brw1");
-
-                    this.drawHoveringText(new String[]
+                    if (!(GUIFEATURESLOADER instanceof RandomWalkGUIFeatures))
                     {
-                        I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.RANDOM_WALK()] == 1 ? brw1 : brw0),
-                        brw0 + " : " + I18n.translateToLocal("gui.info.brw00"),
-                        brw1 + " : " + I18n.translateToLocal("gui.info.brw10")
-                    }, mouseX, mouseY, true);
+                        GUIFEATURESLOADER = new RandomWalkGUIFeatures(this);
+                    }
+                    this.render_text = true;
                 }
             }
 
             x = this.guiLeft + 120;// y = this.guiTop + 89; width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (this.page == 1)
+                if (PAGE == 1)
                 {
                     if (this.mouse_released == 0)
                     {
-                        byte[] byte_array = new byte[22];
-                        byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                        BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.RANDOM_LOOK(), 17);
-                        byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.RANDOM_LOOK()] == 1 ? (byte)0 : (byte)1;
-                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.RANDOM_LOOK());
                     }
 
-                    String brl0 = I18n.translateToLocal("gui.info.brl0");
-                    String brl1 = I18n.translateToLocal("gui.info.brl1");
-
-                    this.drawHoveringText(new String[]
+                    if (!(GUIFEATURESLOADER instanceof RandomLookGUIFeatures))
                     {
-                        I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.RANDOM_LOOK()] == 1 ? brl1 : brl0),
-                        brl0 + " : " + I18n.translateToLocal("gui.info.brl00"),
-                        brl1 + " : " + I18n.translateToLocal("gui.info.brl10")
-                    }, mouseX, mouseY, true);
+                        GUIFEATURESLOADER = new RandomLookGUIFeatures(this);
+                    }
+                    this.render_text = true;
                 }
             }
 
             x = this.guiLeft + 138;// y = this.guiTop + 89; width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (this.page == 1)
+                if (PAGE == 1)
                 {
                     if (this.mouse_released == 0)
                     {
-                        byte[] byte_array = new byte[22];
-                        byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                        BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.ATTACK(), 17);
-                        byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.ATTACK()] == 1 ? (byte)0 : (byte)1;
-                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.ATTACK());
                     }
 
-                    String ba0 = I18n.translateToLocal("gui.info.ba0");
-                    String ba1 = I18n.translateToLocal("gui.info.ba1");
-
-                    this.drawHoveringText(new String[]
+                    if (!(GUIFEATURESLOADER instanceof AttackGUIFeatures))
                     {
-                        I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.ATTACK()] == 1 ? ba1 : ba0),
-                        ba0 + " : " + I18n.translateToLocal("gui.info.ba00"),
-                        ba1 + " : " + I18n.translateToLocal("gui.info.ba10")
-                    }, mouseX, mouseY, true);
+                        GUIFEATURESLOADER = new AttackGUIFeatures(this);
+                    }
+                    this.render_text = true;
                 }
             }
 
             x = this.guiLeft + 156;// y = this.guiTop + 89; width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (this.page == 1)
+                if (PAGE == 1)
                 {
                     if (this.mouse_released == 0)
                     {
-                        byte[] byte_array = new byte[22];
-                        byte_array[0] = 1;
-                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                        BytesWriter.set(byte_array, skinningentities.skinningentitiesbytes.REVIVE(), 17);
-                        byte_array[21] = skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.REVIVE()] == 1 ? (byte)0 : (byte)1;
-                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.REVIVE());
                     }
 
-                    String br0 = I18n.translateToLocal("gui.info.br0");
-                    String br1 = I18n.translateToLocal("gui.info.br1");
-
-                    this.drawHoveringText(new String[]
+                    if (!(GUIFEATURESLOADER instanceof ReviveGUIFeatures))
                     {
-                        I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.REVIVE()] == 1 ? br1 : br0),
-                        br0 + " : " + I18n.translateToLocal("gui.info.br00"),
-                        br1 + " : " + I18n.translateToLocal("gui.info.br10")
-                    }, mouseX, mouseY, true);
+                        GUIFEATURESLOADER = new ReviveGUIFeatures(this);
+                    }
+                    this.render_text = true;
                 }
             }
 
             x = this.guiLeft + 48; y = this.guiTop + 107;// width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (this.page == 2)
+                if (PAGE == 2)
                 {
                     this.message_state = 2;
-                    this.drawHoveringText(new String[]
+
+                    if (!(GUIFEATURESLOADER instanceof RemoveTargetGUIFeatures))
                     {
-                        this.message_stringbuilder.toString(),
-                        I18n.translateToLocal("gui.info.t1"),
-                        I18n.translateToLocal("gui.info.st0"),
-                        I18n.translateToLocal("gui.info.st1")
-                    }, mouseX, mouseY, false);
+                        GUIFEATURESLOADER = new RemoveTargetGUIFeatures(this);
+                    }
+                    this.render_text = true;
                 }
             }
 
             /*x = this.guiLeft + 48; */y = this.guiTop + 125;// width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (this.page == 2)
+                if (PAGE == 2)
                 {
                     if (this.mouse_released == 0)
                     {
-                        byte[] byte_array = new byte[1 + 16];
-                        byte_array[0] = 11;
-                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                        this.sendPacketUUID((byte)11);
                     }
 
-                    TargetGUIFeatures.draw(TARGET_INT_ARRAY, "gui.info.t2", this, mouseX, mouseY);
+                    if (!(GUIFEATURESLOADER instanceof TargetGUIFeatures))
+                    {
+                        GUIFEATURESLOADER = new TargetGUIFeatures(this);
+                    }
+                    this.render_text = true;
                 }
             }
 
             x = this.guiLeft + 66; y = this.guiTop + 107;// width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (this.page == 2)
+                if (PAGE == 2)
                 {
                     this.message_state = 3;
-                    this.drawHoveringText(new String[]
+
+                    if (!(GUIFEATURESLOADER instanceof RemoveTroublemakerGUIFeatures))
                     {
-                        this.message_stringbuilder.toString(),
-                        I18n.translateToLocal("gui.info.t6"),
-                        I18n.translateToLocal("gui.info.st0"),
-                        I18n.translateToLocal("gui.info.st1")
-                    }, mouseX, mouseY, false);
+                        GUIFEATURESLOADER = new RemoveTroublemakerGUIFeatures(this);
+                    }
+                    this.render_text = true;
                 }
             }
 
             /*x = this.guiLeft + 66; */y = this.guiTop + 125;// width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (this.page == 2)
+                if (PAGE == 2)
                 {
                     if (this.mouse_released == 0)
                     {
-                        byte[] byte_array = new byte[1 + 16];
-                        byte_array[0] = 14;
-                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                        this.sendPacketUUID((byte)14);
                     }
 
-                    TargetGUIFeatures.draw(TROUBLEMAKER_INT_ARRAY, "gui.info.t4", this, mouseX, mouseY);
+                    if (!(GUIFEATURESLOADER instanceof TroublemakerGUIFeatures))
+                    {
+                        GUIFEATURESLOADER = new TroublemakerGUIFeatures(this);
+                    }
+                    this.render_text = true;
                 }
             }
+        }
+
+        if (this.render_text)
+        {
+            GUIFEATURESLOADER.drawText(mouseX, mouseY);
         }
 
         this.mouse_released = -1;
@@ -642,11 +528,11 @@ public class InventoryGui extends MixGui
         this.drawTexturedModalRect(this.guiLeft + 43, this.guiTop + 25, 86, 50, 170, 206);
 
         float tx = this.guiLeft + 84;
-        if (this.page == 0)
+        if (PAGE == 0)
         {
             this.drawTexturedModalRect(tx, this.guiTop + 33, 238, 0, 14, 14);
         }
-        else if (this.page == 2)
+        else if (PAGE == 2)
         {
             this.drawTexturedModalRect(tx, this.guiTop + 33, 44, 0, 14, 14);
         }
@@ -666,7 +552,7 @@ public class InventoryGui extends MixGui
             }
         }
 
-        if (this.page == 0)
+        if (PAGE == 0)
         {
             for (int i = 36; i < 63; ++i)
             {
@@ -679,7 +565,7 @@ public class InventoryGui extends MixGui
             }
         }
 
-        switch (this.page)
+        switch (PAGE)
         {
             case 0:
             {
@@ -774,16 +660,16 @@ public class InventoryGui extends MixGui
 //        CutePomi.LOGGER.info((int)typedChar);
         if (this.message_state != -1)
         {
-            int index = this.message_stringbuilder.length() - 1;
-            char end = this.message_stringbuilder.charAt(index);
+            int index = MESSAGE_STRINGBUILDER.length() - 1;
+            char end = MESSAGE_STRINGBUILDER.charAt(index);
 
             switch (typedChar)
             {
                 case '\b':
                 {
-                    if (this.message_stringbuilder.length() > 1)
+                    if (MESSAGE_STRINGBUILDER.length() > 1)
                     {
-                        this.message_stringbuilder.deleteCharAt(index - 1);
+                        MESSAGE_STRINGBUILDER.deleteCharAt(index - 1);
                     }
 
                     break;
@@ -792,7 +678,7 @@ public class InventoryGui extends MixGui
                 {
                     SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
 
-                    byte[] string_byte_array = this.message_stringbuilder.toString().getBytes();
+                    byte[] string_byte_array = MESSAGE_STRINGBUILDER.toString().getBytes();
                     int string_byte_array_size = string_byte_array.length - 1;
                     byte[] byte_array = new byte[string_byte_array_size + 1 + 16];
 
@@ -827,8 +713,8 @@ public class InventoryGui extends MixGui
                     BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
                     System.arraycopy(string_byte_array, 0, byte_array, 1 + 16, string_byte_array_size);
                     NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
-                    this.message_stringbuilder.setLength(0);
-                    this.message_stringbuilder.append("!");
+                    MESSAGE_STRINGBUILDER.setLength(0);
+                    MESSAGE_STRINGBUILDER.append("!");
 
                     break;
                 }
@@ -838,7 +724,7 @@ public class InventoryGui extends MixGui
 //                }
                 default:
                 {
-                    this.message_stringbuilder.deleteCharAt(index).append(typedChar).append(end);
+                    MESSAGE_STRINGBUILDER.deleteCharAt(index).append(typedChar).append(end);
                     break;
                 }
             }

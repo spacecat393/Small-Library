@@ -1,6 +1,5 @@
 package com.nali.list.handlers;
 
-import com.google.common.base.Optional;
 import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.EntitiesRegistryHelper;
 import com.nali.ilol.entities.skinning.SkinningEntities;
@@ -21,8 +20,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -46,12 +43,22 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
         {
             switch (skinningentitiesservermessage.data[0])
             {
-    //            case 0:
-    //            {
+                case 0://sync server uuid to client
+                {
+                    int id = BytesReader.getInt(skinningentitiesservermessage.data, 1);
+                    Entity entity = entityplayermp.getEntityWorld().getEntityByID(id);
+                    if (entity instanceof SkinningEntities)
+                    {
+                        byte[] byte_array = new byte[1 + 16 + 4];
+                        byte_array[0] = 5;
+                        BytesWriter.set(byte_array, entity.getUniqueID(), 1);
+                        BytesWriter.set(byte_array, id, 1 + 16);
+                        NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), entityplayermp);
+                    }
     //                entitydatamanager.set(skinningentitieshelper.getIntegerDataParameterArray()[id], BytesReader.getInt(skinningentitiesmessage.data, 21));
-    //                break;
-    //            }
-                case 1:
+                    break;
+                }
+                case 1://set byte
                 {
                     UUID uuid = BytesReader.getUUID(skinningentitiesservermessage.data, 1);
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(uuid);
@@ -64,16 +71,16 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
     //                SkinningEntitiesHelper skinningentitieshelper = (SkinningEntitiesHelper)temp_entity;
                     if (skinningentities != null)
                     {
-                        if (skinningentities.server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
+                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
                         {
-                            Entity entity = skinningentities.getEntity(1);
+                            Entity entity = skinningentities.getOwner();
                             if (entity == null || !entity.equals(entityplayermp))
                             {
                                 break;
                             }
                         }
 
-                        EntityDataManager entitydatamanager = skinningentities.getDataManager();
+//                        EntityDataManager entitydatamanager = skinningentities.getDataManager();
                         int id = BytesReader.getInt(skinningentitiesservermessage.data, 17);
                         if (id == skinningentities.skinningentitiesbytes.FOLLOW())
                         {
@@ -100,24 +107,35 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
     //                        skinningentities.setPositionAndRotation(entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, skinningentities.rotationYaw, skinningentities.rotationPitch);
                         }
 
-                        DataParameter<Byte>[] byte_dataparameter_array = skinningentities.getByteDataParameterArray();
+//                        DataParameter<Byte>[] byte_dataparameter_array = skinningentities.getByteDataParameterArray();
                         if (skinningentitiesservermessage.data[21] == 0)
                         {
-                            entitydatamanager.set(byte_dataparameter_array[skinningentities.skinningentitiesbytes.SOFT_READY()], (byte)1);
-                            entitydatamanager.set(byte_dataparameter_array[skinningentities.skinningentitiesbytes.HARD_READY()], (byte)0);
+                            skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.SOFT_READY()] = 1;
+                            skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.HARD_READY()] = 0;
+//                            entitydatamanager.set(byte_dataparameter_array[skinningentities.skinningentitiesbytes.SOFT_READY()], (byte)1);
+//                            entitydatamanager.set(byte_dataparameter_array[skinningentities.skinningentitiesbytes.HARD_READY()], (byte)0);
                         }
                         else
                         {
-                            entitydatamanager.set(byte_dataparameter_array[skinningentities.skinningentitiesbytes.HARD_READY()], (byte)1);
-                            entitydatamanager.set(byte_dataparameter_array[skinningentities.skinningentitiesbytes.SOFT_READY()], (byte)0);
+                            skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.SOFT_READY()] = 0;
+                            skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.HARD_READY()] = 1;
+//                            entitydatamanager.set(byte_dataparameter_array[skinningentities.skinningentitiesbytes.HARD_READY()], (byte)1);
+//                            entitydatamanager.set(byte_dataparameter_array[skinningentities.skinningentitiesbytes.SOFT_READY()], (byte)0);
                         }
 
-                        entitydatamanager.set(byte_dataparameter_array[id], skinningentitiesservermessage.data[21]);
+                        skinningentities.main_server_work_byte_array[id] = skinningentitiesservermessage.data[21];
+//                        entitydatamanager.set(byte_dataparameter_array[id], skinningentitiesservermessage.data[21]);
+
+                        byte[] byte_array = new byte[1 + 4 + skinningentities.main_server_work_byte_array.length];
+                        byte_array[0] = 6;
+                        BytesWriter.set(byte_array, skinningentities.getEntityId(), 1);
+                        System.arraycopy(skinningentities.main_server_work_byte_array, 0, byte_array, 1 + 4, skinningentities.main_server_work_byte_array.length);
+                        NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), entityplayermp);
                     }
 
                     break;
                 }
-                case 2:
+                case 2://set owner
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
     //                Entity temp_entity = ((WorldServer)entityplayermp.world).getEntityFromUuid(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
@@ -129,17 +147,18 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
     //                SkinningEntitiesHelper skinningentitieshelper = (SkinningEntitiesHelper)temp_entity;
                     if (skinningentities != null)
                     {
-                        if (skinningentities.server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
+                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
                         {
-                            Entity entity = skinningentities.getEntity(1);
+                            Entity entity = skinningentities.getOwner();
                             if (entity == null || !entity.equals(entityplayermp))
                             {
                                 break;
                             }
                         }
 
-                        EntityDataManager entitydatamanager = skinningentities.getDataManager();
-                        entitydatamanager.set(SkinningEntities.UUID_OPTIONAL_DATAPARAMETER_ARRAY[BytesReader.getInt(skinningentitiesservermessage.data, 17)], Optional.fromNullable(entityplayermp.getUniqueID()));
+                        skinningentities.owner_uuid = entityplayermp.getUniqueID();
+//                        EntityDataManager entitydatamanager = skinningentities.getDataManager();
+//                        entitydatamanager.set(SkinningEntities.UUID_OPTIONAL_DATAPARAMETER_ARRAY[BytesReader.getInt(skinningentitiesservermessage.data, 17)], Optional.fromNullable(entityplayermp.getUniqueID()));
                     }
 
                     break;
@@ -255,6 +274,12 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     if (skinningentities != null)
                     {
                         entityplayermp.openGui(ILOL.I, 0, skinningentities.getEntityWorld(), skinningentities.getEntityId(), 0, 0);
+
+                        byte[] byte_array = new byte[1 + 4 + skinningentities.main_server_work_byte_array.length];
+                        byte_array[0] = 6;
+                        BytesWriter.set(byte_array, skinningentities.getEntityId(), 1);
+                        System.arraycopy(skinningentities.main_server_work_byte_array, 0, byte_array, 1 + 4, skinningentities.main_server_work_byte_array.length);
+                        NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), entityplayermp);
 //                        EntitiesContainerHelper.setContainer(skinningentities, messagecontext.getServerHandler().player, InventoryContainer.ID);
                     }
                     break;

@@ -22,7 +22,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
-        Entity owner_entity = this.skinningentities.getEntity(1);
+        Entity owner_entity = this.skinningentities.getOwner();
 
         if (owner_entity instanceof EntityPlayerMP)
         {

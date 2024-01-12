@@ -1,7 +1,6 @@
 package com.nali.ilol.entities.skinning.ai;
 
 import com.nali.ilol.entities.skinning.SkinningEntities;
-import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
 
 import java.util.function.Supplier;
@@ -79,7 +78,8 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         {
             if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1] - 1)
             {
-                this.skinningentities.getDataManager().set(this.skinningentities.getByteDataParameterArray()[byte_id], (byte)0);
+//                this.skinningentities.getDataManager().set(this.skinningentities.getByteDataParameterArray()[byte_id], (byte)0);
+                this.skinningentities.main_server_work_byte_array[byte_id] = 0;
                 this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][1] - 1;
                 this.step = 0;
                 return true;
@@ -153,8 +153,9 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         this.step = 1;
         byte state = skinningentitiesframeai.getByte();
         EntityDataManager entitydatamanager = this.skinningentities.getDataManager();
-        DataParameter<Byte> byte_dataparameter = this.skinningentities.getByteDataParameterArray()[this.skinningentities.skinningentitiesbytes.AMMO()];
-        byte ammo = entitydatamanager.get(byte_dataparameter);
+//        DataParameter<Byte> byte_dataparameter = this.skinningentities.getByteDataParameterArray()[this.skinningentities.skinningentitiesbytes.AMMO()];
+//        byte ammo = entitydatamanager.get(byte_dataparameter);
+        byte ammo = this.skinningentities.main_server_work_byte_array[this.skinningentities.skinningentitiesbytes.AMMO()];
         if (ammo <= 0)
         {
             if (this.checkShoot(id0, id1, id2))
@@ -173,7 +174,8 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
                 {
                     if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id3][1] -1)
                     {
-                        entitydatamanager.set(byte_dataparameter, this.max_ammo);
+                        this.skinningentities.main_server_work_byte_array[this.skinningentities.skinningentitiesbytes.AMMO()] = this.max_ammo;
+//                        entitydatamanager.set(byte_dataparameter, this.max_ammo);
                     }
 
                     return true;
@@ -203,7 +205,8 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
                 {
                     if (this.skinningentities.server_frame_int_array[this.integer_index] == attack_frame)
                     {
-                        entitydatamanager.set(byte_dataparameter, (byte)(ammo - 1));
+                        this.skinningentities.main_server_work_byte_array[this.skinningentities.skinningentitiesbytes.AMMO()] = (byte)(ammo - 1);
+//                        entitydatamanager.set(byte_dataparameter, (byte)(ammo - 1));
                         skinningentitiesframeai.setByte((byte)1);
                         break;
                     }

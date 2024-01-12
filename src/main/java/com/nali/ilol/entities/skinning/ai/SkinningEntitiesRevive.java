@@ -27,7 +27,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
         {
             if (this.entity == null)
             {
-                this.entity = this.skinningentities.getEntity(1);
+                this.entity = this.skinningentities.getOwner();
                 this.tick = 0;
             }
 
@@ -50,7 +50,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
                     {
                         if (this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.ON_REVIVE()] != 1)
                         {
-                            this.skinningentities.getDataManager().set(this.skinningentities.getByteDataParameterArray()[this.skinningentities.skinningentitiesbytes.ON_REVIVE()], (byte)1);
+                            this.skinningentities.main_server_work_byte_array[this.skinningentities.skinningentitiesbytes.ON_REVIVE()] = 1;
                         }
 
                         this.skinningentities.skinningentitieslook.set(this.entity.posX, this.entity.posY, this.entity.posZ, 90.0F);
