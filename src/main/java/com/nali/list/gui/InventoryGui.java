@@ -6,8 +6,6 @@ import com.nali.ilol.entities.skinning.SkinningEntitiesRender;
 import com.nali.ilol.gui.MixGui;
 import com.nali.ilol.gui.features.messages.AttributeGUIFeatures;
 import com.nali.ilol.gui.features.messages.HPGUIFeatures;
-import com.nali.ilol.gui.features.messages.TargetGUIFeatures;
-import com.nali.ilol.gui.features.messages.TroublemakerGUIFeatures;
 import com.nali.ilol.gui.features.messages.inventory.*;
 import com.nali.ilol.gui.features.messages.player.MimiTalkGUIFeatures;
 import com.nali.ilol.gui.features.messages.works.*;
@@ -25,6 +23,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
@@ -346,6 +345,8 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 2)
                 {
+                    this.message_state = 4;
+
                     if (!(GUIFEATURESLOADER instanceof EntityListGUIFeatures))
                     {
                         GUIFEATURESLOADER = new EntityListGUIFeatures(this);
@@ -676,45 +677,48 @@ public class InventoryGui extends MixGui
                 }
                 case '\r':
                 {
-                    SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
-
-                    byte[] string_byte_array = MESSAGE_STRINGBUILDER.toString().getBytes();
-                    int string_byte_array_size = string_byte_array.length - 1;
-                    byte[] byte_array = new byte[string_byte_array_size + 1 + 16];
-
-                    switch (this.message_state)
+                    if (this.message_state < 5)
                     {
-                        case 0:
-                        {
-                            byte_array[0] = 10;
-                            break;
-                        }
-                        case 1:
-                        {
-                            byte_array[0] = 13;
-                            break;
-                        }
-                        case 2:
-                        {
-                            byte_array[0] = 12;
-                            break;
-                        }
-                        case 3:
-                        {
-                            byte_array[0] = 15;
-                            break;
-                        }
-                        default:
-                        {
-                            break;
-                        }
-                    }
+                        SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
 
-                    BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                    System.arraycopy(string_byte_array, 0, byte_array, 1 + 16, string_byte_array_size);
-                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
-                    MESSAGE_STRINGBUILDER.setLength(0);
-                    MESSAGE_STRINGBUILDER.append("!");
+                        byte[] string_byte_array = MESSAGE_STRINGBUILDER.toString().getBytes();
+                        int string_byte_array_size = string_byte_array.length - 1;
+                        byte[] byte_array = new byte[string_byte_array_size + 1 + 16];
+
+                        switch (this.message_state)
+                        {
+                            case 0:
+                            {
+                                byte_array[0] = 10;
+                                break;
+                            }
+                            case 1:
+                            {
+                                byte_array[0] = 13;
+                                break;
+                            }
+                            case 2:
+                            {
+                                byte_array[0] = 12;
+                                break;
+                            }
+                            case 3:
+                            {
+                                byte_array[0] = 15;
+                                break;
+                            }
+                            default:
+                            {
+                                break;
+                            }
+                        }
+
+                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
+                        System.arraycopy(string_byte_array, 0, byte_array, 1 + 16, string_byte_array_size);
+                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                        MESSAGE_STRINGBUILDER.setLength(0);
+                        MESSAGE_STRINGBUILDER.append("!");
+                    }
 
                     break;
                 }
@@ -724,7 +728,13 @@ public class InventoryGui extends MixGui
 //                }
                 default:
                 {
-                    MESSAGE_STRINGBUILDER.deleteCharAt(index).append(typedChar).append(end);
+                    boolean isShiftKeyDown = (keyCode == Keyboard.KEY_LSHIFT || keyCode == Keyboard.KEY_RSHIFT);
+
+                    if (!(isShiftKeyDown && (typedChar == ' ' || typedChar == '\0')))
+                    {
+                        MESSAGE_STRINGBUILDER.deleteCharAt(index).append(typedChar).append(end);
+                    }
+
                     break;
                 }
             }

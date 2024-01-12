@@ -4,8 +4,8 @@ import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.gui.MixGui;
 import com.nali.ilol.gui.OpenGUIHelper;
-import com.nali.ilol.gui.features.messages.TargetGUIFeatures;
-import com.nali.ilol.gui.features.messages.TroublemakerGUIFeatures;
+import com.nali.ilol.gui.features.messages.inventory.TargetGUIFeatures;
+import com.nali.ilol.gui.features.messages.inventory.TroublemakerGUIFeatures;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.render.ObjectRender;
 import com.nali.render.SkinningRender;
@@ -23,8 +23,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
-import static com.nali.ilol.gui.features.messages.TargetGUIFeatures.TARGET_INT_ARRAY;
-import static com.nali.ilol.gui.features.messages.TroublemakerGUIFeatures.TROUBLEMAKER_INT_ARRAY;
+import static com.nali.ilol.gui.features.messages.inventory.TargetGUIFeatures.TARGET_INT_ARRAY;
+import static com.nali.ilol.gui.features.messages.inventory.TroublemakerGUIFeatures.TROUBLEMAKER_INT_ARRAY;
 
 public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEntitiesClientMessage, IMessage>
 {

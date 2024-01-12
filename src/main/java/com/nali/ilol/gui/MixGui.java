@@ -3,7 +3,7 @@ package com.nali.ilol.gui;
 import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.gui.features.GUIFeaturesLoader;
-import com.nali.ilol.gui.features.messages.TargetGUIFeatures;
+import com.nali.ilol.gui.features.messages.inventory.TargetGUIFeatures;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.messages.SkinningEntitiesServerMessage;

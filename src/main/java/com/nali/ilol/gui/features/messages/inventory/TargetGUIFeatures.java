@@ -1,4 +1,4 @@
-package com.nali.ilol.gui.features.messages;
+package com.nali.ilol.gui.features.messages.inventory;
 
 import com.nali.ilol.gui.MixGui;
 import com.nali.ilol.gui.features.GUIFeaturesLoader;
