@@ -429,6 +429,7 @@ public class InventoryGui extends MixGui
                 {
                     if (this.mouse_released == 0)
                     {
+                        this.sendPacketUUID((byte)2);
                         this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.REVIVE());
                     }
 
