@@ -38,11 +38,11 @@ public abstract class ObjectEntities extends Entity
     @Override
     public void entityInit()
     {
-        DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
-        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
-        {
-            this.dataManager.register(byte_dataparameter, (byte) 0);
-        }
+//        DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
+//        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
+//        {
+//            this.dataManager.register(byte_dataparameter, (byte) 0);
+//        }
 
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
         for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
@@ -63,12 +63,12 @@ public abstract class ObjectEntities extends Entity
         EntityDataManager entitydatamanager = this.getDataManager();
 
         int i = 0;
-        DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
-        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
-        {
-            nbttagcompound.setByte("byte_" + i++, entitydatamanager.get(byte_dataparameter));
-        }
-        i = 0;
+//        DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
+//        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
+//        {
+//            nbttagcompound.setByte("byte_" + i++, entitydatamanager.get(byte_dataparameter));
+//        }
+//        i = 0;
 
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
         for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
@@ -96,12 +96,12 @@ public abstract class ObjectEntities extends Entity
         EntityDataManager entitydatamanager = this.getDataManager();
 
         int i = 0;
-        DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
-        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
-        {
-            entitydatamanager.set(byte_dataparameter, nbttagcompound.getByte("byte_" + i++));
-        }
-        i = 0;
+//        DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
+//        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
+//        {
+//            entitydatamanager.set(byte_dataparameter, nbttagcompound.getByte("byte_" + i++));
+//        }
+//        i = 0;
 
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
         for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
@@ -167,7 +167,7 @@ public abstract class ObjectEntities extends Entity
     public abstract void initWriteEntityToNBT(NBTTagCompound nbttagcompound);
     public abstract void initReadEntityFromNBT();
     public abstract BothData createBothData();
-    public abstract DataParameter<Byte>[] getByteDataParameterArray();
+//    public abstract DataParameter<Byte>[] getByteDataParameterArray();
     public abstract DataParameter<Integer>[] getIntegerDataParameterArray();
     public abstract DataParameter<Float>[] getFloatDataParameterArray();
     @SideOnly(Side.CLIENT)

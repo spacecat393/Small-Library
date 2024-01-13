@@ -1049,7 +1049,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                         children_snode.calculateG(start_snode);
 //                        children_snode.walk_able = walk_able;
 
-                        if (this.isWalkAble(start_snode, x, y, z, world) && children_snode.g < MAX_G /*&& blockpos.getDistance(this.goal_x, this.goal_y, this.goal_z) <= 16.0D*/)
+                        if (this.isWalkAble(start_snode, x, y, z) && children_snode.g < MAX_G /*&& blockpos.getDistance(this.goal_x, this.goal_y, this.goal_z) <= 16.0D*/)
                         {
 //                            children_snode.calculateH(this.goal_x, this.goal_y, this.goal_z);
 //                            children_snode.calculateF();
@@ -1100,7 +1100,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
             {
 //                boolean walk_able = this.isWalkAble(start_snode, new_x, new_y, new_z, world);
 
-                if (this.isWalkAble(start_snode, new_x, new_y, new_z, world) && children_snode.g < MAX_G/* && blockpos.getDistance(this.goal_x, this.goal_y, this.goal_z) <= 16.0D*/)
+                if (this.isWalkAble(start_snode, new_x, new_y, new_z) && children_snode.g < MAX_G/* && blockpos.getDistance(this.goal_x, this.goal_y, this.goal_z) <= 16.0D*/)
                 {
 //                    children_snode.calculateH(this.goal_x, this.goal_y, this.goal_z);
 //                    children_snode.calculateF();
@@ -1116,7 +1116,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
         }
     }
 
-    public boolean isWalkAble(SNode snode, byte x, byte y, byte z, World world)
+    public boolean isWalkAble(SNode snode, byte x, byte y, byte z)
     {
         if (x != 0 && z != 0)
         {
@@ -1139,6 +1139,25 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                 // Material temp_material4 = temp_blockstate4.getMaterial();
                 Material temp_material3 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() + y - 1, snode.blockpos.getZ() + z));
                 Material temp_material4 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() + y - 2, snode.blockpos.getZ() + z));
+
+//                if (this.skinningentities.height >= 1.0)
+//                {
+//                    int max_block = (int)this.skinningentities.height + 1;
+//
+//                    for (int i = 1; i < max_block; ++i)
+//                    {
+//                        Material temp_material00 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() + i, snode.blockpos.getZ()));
+//                        Material temp_material10 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX(), snode.blockpos.getY() + i, snode.blockpos.getZ() + z));
+//
+//                        if
+//                        (
+//                            (isBlock(temp_material00) && isBlock(temp_material10))
+//                        )
+//                        {
+//                            return false;
+//                        }
+//                    }
+//                }
 
                 // if (this.isBlock(temp_material3) && this.passBlock(temp_material2) && this.passBlock(temp_material0))
                 // {
@@ -1181,6 +1200,25 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                 Material temp_material1 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX(), snode.blockpos.getY(), snode.blockpos.getZ() + z));//temp_iblockstate1.getMaterial();
                 Material temp_material2 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() + y - 1, snode.blockpos.getZ() + z));
                 Material temp_material3 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() + y - 2, snode.blockpos.getZ() + z));
+
+//                if (this.skinningentities.height >= 1.0)
+//                {
+//                    int max_block = (int)this.skinningentities.height + 1;
+//
+//                    for (int i = 1; i < max_block; ++i)
+//                    {
+//                        Material temp_material00 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() + i, snode.blockpos.getZ()));
+//                        Material temp_material10 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX(), snode.blockpos.getY() + i, snode.blockpos.getZ() + z));
+//
+//                        if
+//                        (
+//                            (isBlock(temp_material00) && isBlock(temp_material10))
+//                        )
+//                        {
+//                            return false;
+//                        }
+//                    }
+//                }
 
                 // Material temp_material2 = temp_blockstate2.getMaterial();
                 // Material temp_material3 = temp_blockstate3.getMaterial();
@@ -1231,6 +1269,25 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                 Material temp_material4 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() + y, snode.blockpos.getZ()));//temp_iblockstate4.getMaterial();
                 Material temp_material5 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX(), snode.blockpos.getY() + y, snode.blockpos.getZ() + z));//temp_iblockstate5.getMaterial();
                 Material start_down_material = this.skinningentities.getMaterial(snode.blockpos.down());
+
+//                if (this.skinningentities.height >= 1.0)
+//                {
+//                    int max_block = (int)this.skinningentities.height + 1;
+//
+//                    for (int i = 1; i < max_block; ++i)
+//                    {
+//                        Material temp_material00 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() + y + i, snode.blockpos.getZ()));
+//                        Material temp_material10 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX(), snode.blockpos.getY() + y + i, snode.blockpos.getZ() + z));
+//
+//                        if
+//                        (
+//                            (isBlock(temp_material00) && isBlock(temp_material10))
+//                        )
+//                        {
+//                            return false;
+//                        }
+//                    }
+//                }
 
                 // Material temp_material6 = temp_blockstate6.getMaterial();
                 // Material temp_material7 = temp_blockstate7.getMaterial();
@@ -1367,6 +1424,24 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                 Material temp_material1 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() + y - 1, snode.blockpos.getZ() + z));//temp_iblockstate1.getMaterial();
                 Material temp_material2 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() + y - 2, snode.blockpos.getZ() + z));//temp_iblockstate2.getMaterial();
 
+//                if (this.skinningentities.height >= 1.0)
+//                {
+//                    int max_block = (int)this.skinningentities.height + 1;
+//
+//                    for (int i = 1; i < max_block; ++i)
+//                    {
+//                        Material temp_material00 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() + i, snode.blockpos.getZ() + z));
+//
+//                        if
+//                        (
+//                            isBlock(temp_material00)
+//                        )
+//                        {
+//                            return false;
+//                        }
+//                    }
+//                }
+
                 if
                 (
                     isBlock(temp_material0) ||
@@ -1384,6 +1459,24 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 //                IBlockState temp_iblockstate1 = world.getBlockState(temp_blockpos1);
                 Material temp_material0 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() - 1, snode.blockpos.getZ() + z));//temp_iblockstate0.getMaterial();
                 Material temp_material1 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() - 2, snode.blockpos.getZ() + z));//temp_iblockstate1.getMaterial();
+
+//                if (this.skinningentities.height >= 1.0)
+//                {
+//                    int max_block = (int)this.skinningentities.height + 1;
+//
+//                    for (int i = 1; i < max_block; ++i)
+//                    {
+//                        Material temp_material00 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() + i, snode.blockpos.getZ() + z));
+//
+//                        if
+//                        (
+//                            isBlock(temp_material00)
+//                        )
+//                        {
+//                            return false;
+//                        }
+//                    }
+//                }
 
                 if
                 (
@@ -1405,6 +1498,24 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 //                Material temp_material1 = temp_iblockstate1.getMaterial();
                 Material temp_material2 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX(), snode.blockpos.getY() + y, snode.blockpos.getZ()));//temp_iblockstate2.getMaterial();
                 Material start_down_material = this.skinningentities.getMaterial(snode.blockpos.down());
+
+//                if (this.skinningentities.height >= 1.0)
+//                {
+//                    int max_block = (int)this.skinningentities.height + 1;
+//
+//                    for (int i = 1; i < max_block; ++i)
+//                    {
+//                        Material temp_material00 = this.skinningentities.getMaterial(new BlockPos(snode.blockpos.getX() + x, snode.blockpos.getY() + i, snode.blockpos.getZ() + z));
+//
+//                        if
+//                        (
+//                                isBlock(temp_material00)
+//                        )
+//                        {
+//                            return false;
+//                        }
+//                    }
+//                }
 
                 if
                 (

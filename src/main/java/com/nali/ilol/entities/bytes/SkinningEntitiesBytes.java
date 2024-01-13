@@ -3,8 +3,6 @@ package com.nali.ilol.entities.bytes;
 public interface SkinningEntitiesBytes
 {
 //    int MAX_STATES();
-    int MAX_WORKS();
-    int AFTER_STATE();
 //STATE
     int LOCK_INVENTORY();
     int LOCK_DAMAGE();
@@ -13,14 +11,22 @@ public interface SkinningEntitiesBytes
 //    int ON_ATTACK();
     int AMMO();
     int ON_REVIVE();
+    int ON_PAT();
+    int ON_EAT();
+    int ON_HEAL();
+    int ON_PROTECT();
+//    int AFTER_STATE();
 //ACTION
     int SIT();
     int REVIVE();
     int FOLLOW();
     int ATTACK();
+    int HEAL();
+    int PROTECT();
     int MINE();
     int PLANT();
     int FIND_ITEM();
     int RANDOM_WALK();
     int RANDOM_LOOK();
+    int MAX_WORKS();
 }
