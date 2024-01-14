@@ -1,7 +1,6 @@
 package com.nali.ilol.entities.skinning;
 
 import com.nali.math.M4x4;
-import com.nali.math.MixMath;
 import com.nali.render.SkinningRender;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.Render;
@@ -9,6 +8,8 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
+
+import static com.nali.ilol.entities.EntitiesMathHelper.interpolateRotation;
 
 @SideOnly(Side.CLIENT)
 public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends Render<T>
@@ -62,8 +63,8 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
     {
         SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
 
-        skinningrender.body_rot = (float)Math.toRadians(MixMath.interpolateRotation(skinningentities.prevRenderYawOffset, skinningentities.renderYawOffset, partialTicks));
-        skinningrender.head_rot = (float)Math.toRadians(MixMath.interpolateRotation(skinningentities.prevRotationYawHead, skinningentities.rotationYawHead, partialTicks));
+        skinningrender.body_rot = (float)Math.toRadians(interpolateRotation(skinningentities.prevRenderYawOffset, skinningentities.renderYawOffset, partialTicks));
+        skinningrender.head_rot = (float)Math.toRadians(interpolateRotation(skinningentities.prevRotationYawHead, skinningentities.rotationYawHead, partialTicks));
         skinningrender.net_head_yaw = skinningrender.head_rot - skinningrender.body_rot;
         skinningrender.head_pitch = (float)Math.toRadians(skinningentities.prevRotationPitch + (skinningentities.rotationPitch - skinningentities.prevRotationPitch) * partialTicks);
 

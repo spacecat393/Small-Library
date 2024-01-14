@@ -1,8 +1,8 @@
-package com.nali.ilol.entities.skinning.ai;
+package com.nali.ilol.entities.skinning.ai.path;
 
 import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.ilol.entities.skinning.ai.SkinningEntitiesAI;
 import com.nali.math.MixMath;
-import com.nali.math.SNode;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;

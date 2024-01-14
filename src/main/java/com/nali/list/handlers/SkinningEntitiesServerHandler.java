@@ -14,6 +14,7 @@ import com.nali.system.bytes.BytesReader;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -533,6 +534,16 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                         }
                     }
 
+                    break;
+                }
+                case 16://pat
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                    if (skinningentities != null)
+                    {
+                        skinningentities.server_work_byte_array[skinningentities.skinningentitiesbytes.ON_PAT()] = 1;
+                        skinningentities.getEntityWorld().spawnEntity(new EntityXPOrb(skinningentities.getEntityWorld(), skinningentities.posX, skinningentities.posY, skinningentities.posZ, 10));
+                    }
                     break;
                 }
                 default:

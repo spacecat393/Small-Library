@@ -1,7 +1,9 @@
 package com.nali.ilol.entities.skinning.ai;
 
 import com.nali.ilol.entities.skinning.SkinningEntities;
-import net.minecraft.entity.item.EntityXPOrb;
+import com.nali.ilol.networks.NetworksRegistry;
+import com.nali.list.messages.SkinningEntitiesServerMessage;
+import com.nali.system.bytes.BytesWriter;
 
 public class SkinningEntitiesPat extends SkinningEntitiesAI
 {
@@ -15,25 +17,28 @@ public class SkinningEntitiesPat extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
-        if (!this.skinningentities.getEntityWorld().isRemote)
-        {
 //                    ItemStack itemstack = entityplayer.getHeldItem(enumhand);
 ////                    this.getEntityData().set(this.getByteEntityDataAccessorArray()[2], (byte)5);
 ////
 ////                    if (itemstack.getItem() == ItemsRegistry.HAIRBRUSH_ITEM_REGISTRYOBJECT.get())
 ////                    {
-            if (--this.pat_time <= 0)
-            {
-                this.pat_time = (byte)this.skinningentities.getRNG().nextInt(16);
-                this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.ON_PAT()] = 1;
-                this.skinningentities.getEntityWorld().spawnEntity(new EntityXPOrb(this.skinningentities.getEntityWorld(), this.skinningentities.posX, this.skinningentities.posY, this.skinningentities.posZ, 10));
+        if (--this.pat_time <= 0)
+        {
+            this.pat_time = (byte)this.skinningentities.getRNG().nextInt(16);
+
+            byte[] byte_array = new byte[17];
+            byte_array[0] = 16;
+            BytesWriter.set(byte_array, this.skinningentities.client_uuid, 1);
+            NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+
+//            this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.ON_PAT()] = 1;
+//            this.skinningentities.getEntityWorld().spawnEntity(new EntityXPOrb(this.skinningentities.getEntityWorld(), this.skinningentities.posX, this.skinningentities.posY, this.skinningentities.posZ, 10));
 //
 //                            if (!entityplayer.isCreative())
 //                            {
 //                                itemstack.damageItem(1, entityplayer);
 //                            }
-            }
-////                    }
         }
+////                    }
     }
 }

@@ -5,11 +5,12 @@ import com.nali.ilol.ILOL;
 import com.nali.ilol.entities.EntitiesAttackHelper;
 import com.nali.ilol.entities.bytes.SkinningEntitiesBytes;
 import com.nali.ilol.entities.skinning.ai.*;
+import com.nali.ilol.entities.skinning.ai.path.SkinningEntitiesFindMove;
+import com.nali.ilol.entities.skinning.ai.path.SkinningEntitiesMove;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.ilol.world.ChunkLoader;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
-import com.nali.math.RayMath;
 import com.nali.render.SkinningRender;
 import com.nali.system.bytes.BytesReader;
 import com.nali.system.bytes.BytesWriter;
@@ -44,6 +45,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.nali.ilol.entities.EntitiesMathHelper.rayTargetsView;
 import static com.nali.ilol.world.ChunkCallBack.CHUNK_MAP;
 
 public abstract class SkinningEntities extends EntityLivingBase
@@ -116,6 +118,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 //            this.client_work_byte_array = new byte[this.getByteDataParameterArray().length];
 //            this.client_state_byte_array = new byte[max_states];
             this.client_work_byte_array = new byte[max_works];
+            this.skinningentitiespat = new SkinningEntitiesPat(this);
         }
         else
         {
@@ -124,7 +127,6 @@ public abstract class SkinningEntities extends EntityLivingBase
 
             ChunkLoader.updateChunk(this);
             this.skinningentitiesarea = new SkinningEntitiesArea(this);
-            this.skinningentitiespat = new SkinningEntitiesPat(this);
             this.skinningentitiesfindmove = new SkinningEntitiesFindMove(this);
             this.skinningentitieslook = new SkinningEntitiesLook(this);
             this.skinningentitiesmove = new SkinningEntitiesMove(this);
@@ -792,6 +794,22 @@ public abstract class SkinningEntities extends EntityLivingBase
 
     }
 
+    public static AxisAlignedBB getNewAxisAlignedBB(SkinningEntities skinningentities, double new_y)
+    {
+        float scale = skinningentities.getDataManager().get(skinningentities.getFloatDataParameterArray()[0]);
+
+        double hw = skinningentities.bothdata.Width() * scale / 2.0;
+        double hh = skinningentities.bothdata.Height() * scale / 2.0;
+
+        double y = skinningentities.posY + new_y;
+
+        return new AxisAlignedBB
+        (
+        skinningentities.posX - hw, y, skinningentities.posZ - hw,
+        skinningentities.posX + hw, y + hh, skinningentities.posZ + hw
+        );
+    }
+
     @Override
     public boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
     {
@@ -811,64 +829,72 @@ public abstract class SkinningEntities extends EntityLivingBase
         }
         else
         {
-            AxisAlignedBB axisalignedbb = this.getEntityBoundingBox();
-            if (RayMath.targetsView(entityplayer, new AxisAlignedBB(axisalignedbb.minX, axisalignedbb.minY - (axisalignedbb.minY - axisalignedbb.maxY) / 1.5D, axisalignedbb.minZ, axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.maxZ)))
-            {
-                if (this.getEntityWorld().isRemote)
-                {
-                    //send packet to server
-                    
-                }
-//                this.skinningentitiespat.onUpdate();
-            }
-            else if (!this.getEntityWorld().isRemote)
-            {
-//                ItemStack itemstack = entityplayer.getHeldItem(enumhand);
-//                if (itemstack.getItem() == ItemsRegistryHelper.BOX_ITEM)
+//            if (!this.getEntityWorld().isRemote)
+//            {
+////                ItemStack itemstack = entityplayer.getHeldItem(enumhand);
+////                if (itemstack.getItem() == ItemsRegistryHelper.BOX_ITEM)
+////                {
+////                    for (int i = 0; i < EntitiesRegistryHelper.ENTITIES_CLASS_LIST.size(); ++i)
+////                    {
+////                        if (EntitiesRegistryHelper.ENTITIES_CLASS_LIST.get(i).equals(this.getClass()))
+////                        {
+////                            NBTTagCompound nbttagcompound = itemstack.getTagCompound();
+////
+////                            if (nbttagcompound == null)
+////                            {
+////                                itemstack.setTagCompound(new NBTTagCompound());
+////                                nbttagcompound = itemstack.getTagCompound();
+////
+////                                String id_key = "key_id";
+////                                if (!nbttagcompound.hasKey(id_key))
+////                                {
+////                                    nbttagcompound.setInteger(id_key, i);
+////                                }
+////
+////                                String entity_key = "entity";
+////                                NBTTagCompound entity_nbttagcompound = new NBTTagCompound();
+////                                this.writeToNBT(entity_nbttagcompound);
+////                                nbttagcompound.setTag(entity_key, entity_nbttagcompound);
+////                                this.getEntityWorld().removeEntity(this);
+////                                itemstack.setStackDisplayName(this.getName());
+////                            }
+////
+////                            break;
+////                        }
+////                    }
+////                }
+////                else
+////                {
+////                DataParameter<Byte> byte_dataparameter = this.getByteDataParameterArray()[this.skinningentitiesbytes.SIT()];
+//                if (this.main_server_work_byte_array[this.skinningentitiesbytes.SIT()] == 1)
 //                {
-//                    for (int i = 0; i < EntitiesRegistryHelper.ENTITIES_CLASS_LIST.size(); ++i)
-//                    {
-//                        if (EntitiesRegistryHelper.ENTITIES_CLASS_LIST.get(i).equals(this.getClass()))
-//                        {
-//                            NBTTagCompound nbttagcompound = itemstack.getTagCompound();
-//
-//                            if (nbttagcompound == null)
-//                            {
-//                                itemstack.setTagCompound(new NBTTagCompound());
-//                                nbttagcompound = itemstack.getTagCompound();
-//
-//                                String id_key = "key_id";
-//                                if (!nbttagcompound.hasKey(id_key))
-//                                {
-//                                    nbttagcompound.setInteger(id_key, i);
-//                                }
-//
-//                                String entity_key = "entity";
-//                                NBTTagCompound entity_nbttagcompound = new NBTTagCompound();
-//                                this.writeToNBT(entity_nbttagcompound);
-//                                nbttagcompound.setTag(entity_key, entity_nbttagcompound);
-//                                this.getEntityWorld().removeEntity(this);
-//                                itemstack.setStackDisplayName(this.getName());
-//                            }
-//
-//                            break;
-//                        }
-//                    }
+//                    this.main_server_work_byte_array[this.skinningentitiesbytes.SIT()] = 0;
+////                    this.getDataManager().set(byte_dataparameter, (byte) 0);
 //                }
 //                else
 //                {
-//                DataParameter<Byte> byte_dataparameter = this.getByteDataParameterArray()[this.skinningentitiesbytes.SIT()];
-                if (this.main_server_work_byte_array[this.skinningentitiesbytes.SIT()] == 1)
+//                    this.main_server_work_byte_array[this.skinningentitiesbytes.SIT()] = 1;
+////                    this.getDataManager().set(byte_dataparameter, (byte) 1);
+//                }
+////                }
+//            }
+//            else
+            if (this.getEntityWorld().isRemote)
+            {
+                if (rayTargetsView(entityplayer, getNewAxisAlignedBB(this, this.bothdata.Height() / 1.125F)))
                 {
-                    this.main_server_work_byte_array[this.skinningentitiesbytes.SIT()] = 0;
-//                    this.getDataManager().set(byte_dataparameter, (byte) 0);
+                    this.skinningentitiespat.onUpdate();
                 }
                 else
                 {
-                    this.main_server_work_byte_array[this.skinningentitiesbytes.SIT()] = 1;
-//                    this.getDataManager().set(byte_dataparameter, (byte) 1);
+                    int i = this.skinningentitiesbytes.SIT();
+                    byte[] byte_array = new byte[22];
+                    byte_array[0] = 1;
+                    BytesWriter.set(byte_array, this.client_uuid, 1);
+                    BytesWriter.set(byte_array, i, 17);
+                    byte_array[21] = this.client_work_byte_array[i] == 1 ? (byte)0 : (byte)1;
+                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
                 }
-//                }
             }
         }
 

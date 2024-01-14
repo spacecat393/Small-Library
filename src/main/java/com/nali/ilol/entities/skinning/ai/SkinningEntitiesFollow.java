@@ -1,12 +1,13 @@
 package com.nali.ilol.entities.skinning.ai;
 
 import com.nali.ilol.entities.skinning.SkinningEntities;
-import com.nali.math.MixMath;
+import com.nali.ilol.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 
-import static com.nali.ilol.entities.skinning.ai.SkinningEntitiesFindMove.PATH_BYTE_ARRAY;
+import static com.nali.ilol.entities.EntitiesMathHelper.getClose;
+import static com.nali.ilol.entities.skinning.ai.path.SkinningEntitiesFindMove.PATH_BYTE_ARRAY;
 
 public class SkinningEntitiesFollow extends SkinningEntitiesAI
 {
@@ -60,7 +61,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
             }
             else
             {
-                if (step <= MixMath.getClose(this.skinningentities, owner_entity, 1.0D))
+                if (step <= getClose(this.skinningentities, owner_entity, 1.0D))
                 {
                     this.skinningentities.skinningentitiesfindmove.endGoal();
                     this.follow = false;

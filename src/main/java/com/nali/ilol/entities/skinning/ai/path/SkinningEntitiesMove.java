@@ -1,6 +1,7 @@
-package com.nali.ilol.entities.skinning.ai;
+package com.nali.ilol.entities.skinning.ai.path;
 
 import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.ilol.entities.skinning.ai.SkinningEntitiesAI;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.math.MathHelper;
 

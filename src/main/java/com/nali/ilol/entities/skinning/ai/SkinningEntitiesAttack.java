@@ -1,10 +1,11 @@
 package com.nali.ilol.entities.skinning.ai;
 
 import com.nali.ilol.entities.skinning.SkinningEntities;
-import com.nali.math.MixMath;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumHand;
+
+import static com.nali.ilol.entities.EntitiesMathHelper.isTooClose;
 
 public class SkinningEntitiesAttack extends SkinningEntitiesAI implements SkinningEntitiesFrameAI
 {
@@ -39,7 +40,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI implements Skinni
                     this.state = 0;
                 }
 
-                if (this.skinningentities.canEntityBeSeen(entity) && MixMath.isTooClose(this.skinningentities, entity, this.minimum_distance))
+                if (this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance))
                 {
 //                    attack = true;
 
@@ -97,7 +98,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI implements Skinni
                 this.skinningentities.skinningentitieslook.set(entity.posX, entity.posY, entity.posZ, 20.0F);
             }
 
-            if (this.skinningentities.canEntityBeSeen(entity) && MixMath.isTooClose(this.skinningentities, entity, this.minimum_distance))
+            if (this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance))
             {
 //                if (MixMath.isTooClose(this.skinningentities, entity, this.minimum_away_distance))
 //                {

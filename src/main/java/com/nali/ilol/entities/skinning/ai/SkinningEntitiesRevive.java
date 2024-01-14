@@ -3,11 +3,12 @@ package com.nali.ilol.entities.skinning.ai;
 import com.nali.ilol.entities.skinning.SkinningEntities;
 import com.nali.ilol.networks.NetworksRegistry;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
-import com.nali.math.MixMath;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+
+import static com.nali.ilol.entities.EntitiesMathHelper.isTooClose;
 
 public class SkinningEntitiesRevive extends SkinningEntitiesAI
 {
@@ -46,7 +47,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
                 }
                 else
                 {
-                    if (MixMath.isTooClose(this.skinningentities, entity, 1.0D))
+                    if (isTooClose(this.skinningentities, entity, 1.0D))
                     {
                         if (this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.ON_REVIVE()] != 1)
                         {

@@ -1,6 +1,7 @@
 package com.nali.ilol.entities.skinning.ai;
 
 import com.nali.ilol.entities.skinning.SkinningEntities;
+import com.nali.ilol.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
