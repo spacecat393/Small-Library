@@ -1,13 +1,13 @@
 package com.nali.list.handlers;
 
-import com.nali.ilol.ILOL;
-import com.nali.ilol.entities.EntitiesRegistryHelper;
-import com.nali.ilol.entities.skinning.SkinningEntities;
-import com.nali.ilol.networks.NetworksRegistry;
-import com.nali.ilol.world.ChunkLoader;
-import com.nali.list.capabilitiesserializations.IlolSakuraSerializations;
-import com.nali.list.capabilitiestypes.IlolSakuraTypes;
-import com.nali.list.items.IlolBox;
+import com.nali.small.Small;
+import com.nali.small.entities.EntitiesRegistryHelper;
+import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.networks.NetworksRegistry;
+import com.nali.small.world.ChunkLoader;
+import com.nali.list.capabilitiesserializations.SmallSakuraSerializations;
+import com.nali.list.capabilitiestypes.SmallSakuraTypes;
+import com.nali.list.items.SmallBox;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
 import com.nali.system.bytes.BytesReader;
@@ -167,25 +167,25 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 3://x12
                 {
                     Random random = entityplayermp.getRNG();
-                    IlolSakuraTypes ilolsakuratypes = entityplayermp.getCapability(IlolSakuraSerializations.ILOLSAKURATYPES_CAPABILITY, null);
-                    int value = ilolsakuratypes.get();
+                    SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
+                    int value = smallsakuratypes.get();
                     if (value >= 12)
                     {
-                        ilolsakuratypes.set(value - 12);
+                        smallsakuratypes.set(value - 12);
                         if (random.nextInt(7) == 0)
                         {
                             try
                             {
-                                ItemStack itemstack = IlolBox.I.getDefaultInstance();
+                                ItemStack itemstack = SmallBox.I.getDefaultInstance();
                                 int id = random.nextInt(EntitiesRegistryHelper.ENTITIES_CLASS_LIST.size());
                                 Constructor constructor = EntitiesRegistryHelper.ENTITIES_CLASS_LIST.get(id).getConstructor(World.class);
                                 Entity entity = (Entity)constructor.newInstance(entityplayermp.world);
-                                IlolBox.putToBox(entity, itemstack);
+                                SmallBox.putToBox(entity, itemstack);
                                 entityplayermp.entityDropItem(itemstack, 0.0F);
                             }
                             catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
                             {
-                                ILOL.error(e);
+                                Small.error(e);
                             }
                         }
                         else
@@ -199,12 +199,12 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 4://x64
                 {
                     Random random = entityplayermp.getRNG();
-                    IlolSakuraTypes ilolsakuratypes = entityplayermp.getCapability(IlolSakuraSerializations.ILOLSAKURATYPES_CAPABILITY, null);
-                    int value = ilolsakuratypes.get();
+                    SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
+                    int value = smallsakuratypes.get();
 
                     if (value >= 64)
                     {
-                        ilolsakuratypes.set(value - 64);
+                        smallsakuratypes.set(value - 64);
                         if (random.nextBoolean())
                         {
                             entityplayermp.dropItem(Item.getItemById(entityplayermp.getRNG().nextInt(Item.REGISTRY.getKeys().size())), 1);
@@ -213,21 +213,21 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                         {
                             try
                             {
-                                ItemStack itemstack = IlolBox.I.getDefaultInstance();
+                                ItemStack itemstack = SmallBox.I.getDefaultInstance();
                                 int id = entityplayermp.getRNG().nextInt(EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length);
                                 Constructor constructor = ((Class)EntitiesRegistryHelper.ENTITY_KEY_ARRAY[id]).getConstructor(World.class);
                                 Entity entity = (Entity)constructor.newInstance(entityplayermp.world);
 
                                 if (!(entity instanceof EntityPlayer))
                                 {
-                                    IlolBox.putToBox(entity, itemstack);
+                                    SmallBox.putToBox(entity, itemstack);
                                 }
 
                                 entityplayermp.entityDropItem(itemstack, 0.0F);
                             }
                             catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
                             {
-                                ILOL.error(e);
+                                Small.error(e);
                             }
                         }
                     }
@@ -274,7 +274,7 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
                     if (skinningentities != null)
                     {
-                        entityplayermp.openGui(ILOL.I, 0, skinningentities.getEntityWorld(), skinningentities.getEntityId(), 0, 0);
+                        entityplayermp.openGui(Small.I, 0, skinningentities.getEntityWorld(), skinningentities.getEntityId(), 0, 0);
 
                         byte[] byte_array = new byte[1 + 4 + skinningentities.main_server_work_byte_array.length];
                         byte_array[0] = 6;
@@ -335,7 +335,7 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                             }
                         }
 
-                        entityplayermp.getCapability(IlolSakuraSerializations.ILOLSAKURATYPES_CAPABILITY, null).add(max_count / 64);
+                        entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null).add(max_count / 64);
                     }
 
 //    //                Object[] key_array = new HashSet<>(((MixinEntityRegistry)EntityRegistry.instance()).entityClassEntries().keySet()).toArray();
@@ -343,8 +343,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
 //    //                {
 //    //                    ((Class)object).getName();
 //    //                }
-//                    ILOL.LOGGER.info("Name : " + string);
-//                    ILOL.LOGGER.info("Have : " + ForgeRegistries.ENTITIES.containsKey(new ResourceLocation(string)));
+//                    SMALL.LOGGER.info("Name : " + string);
+//                    SMALL.LOGGER.info("Have : " + ForgeRegistries.ENTITIES.containsKey(new ResourceLocation(string)));
 
                     break;
                 }
@@ -355,9 +355,9 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     {
                         ItemStack itemstack = entityplayermp.getHeldItemMainhand();
 
-                        if (itemstack.getItem() == IlolBox.I && itemstack.getTagCompound() == null)
+                        if (itemstack.getItem() == SmallBox.I && itemstack.getTagCompound() == null)
                         {
-                            IlolBox.putToBox(skinningentities, itemstack);
+                            SmallBox.putToBox(skinningentities, itemstack);
                             entityplayermp.closeScreen();
                         }
                     }

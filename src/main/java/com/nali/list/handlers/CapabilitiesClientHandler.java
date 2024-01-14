@@ -1,6 +1,6 @@
 package com.nali.list.handlers;
 
-import com.nali.ilol.capabilities.CapabilitiesRegistryHelper;
+import com.nali.small.capabilities.CapabilitiesRegistryHelper;
 import com.nali.list.messages.CapabilitiesClientMessage;
 import com.nali.system.bytes.BytesReader;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

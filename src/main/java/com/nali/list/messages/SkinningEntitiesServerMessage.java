@@ -1,6 +1,6 @@
 package com.nali.list.messages;
 
-import com.nali.ilol.networks.NetworksMessage;
+import com.nali.small.networks.NetworksMessage;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class SkinningEntitiesServerMessage extends NetworksMessage

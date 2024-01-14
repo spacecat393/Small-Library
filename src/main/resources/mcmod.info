@@ -1,7 +1,7 @@
 [
 	{
-		"modid": "ilol",
-		"name": "ilolLibrary",
+		"modid": "small",
+		"name": "SmallLibrary",
 		"description": "Small entity library",
 		"version": "${version}",
 		"mcversion": "1.12.2",

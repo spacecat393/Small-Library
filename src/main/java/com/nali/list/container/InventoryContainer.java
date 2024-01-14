@@ -1,7 +1,7 @@
 package com.nali.list.container;
 
-import com.nali.ilol.entities.skinning.SkinningEntities;
-import com.nali.ilol.entities.skinning.SkinningInventory;
+import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entities.skinning.SkinningInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;

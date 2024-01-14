@@ -1,0 +1,21 @@
+{
+  "package": "com.nali.small.mixin",
+  "refmap": "mixins.small.refmap.json",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "required": true,
+  "minVersion": "0.7.11",
+  "mixins": [
+    "IMixinWorldServer",
+    "MixinItemMonsterPlacer",
+    "IMixinEntityLivingBase",
+    "IMixinEntity",
+    "MixinEntityLivingBase"
+  ],
+  "client": [
+    "MixinRenderItem",
+    "MixinItemRenderer",
+    "MixinRenderEntityItem",
+    "MixinMinecraft"
+  ]
+}

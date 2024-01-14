@@ -1,16 +1,16 @@
 package com.nali.list.gui;
 
-import com.nali.ilol.capabilities.CapabilitiesRegistryHelper;
-import com.nali.ilol.data.BoxData;
-import com.nali.ilol.data.SakuraData;
-import com.nali.ilol.entities.skinning.SkinningEntities;
-import com.nali.ilol.entities.skinning.SkinningEntitiesRender;
-import com.nali.ilol.gui.MixGui;
-import com.nali.ilol.gui.features.messages.player.*;
-import com.nali.ilol.networks.NetworksRegistry;
-import com.nali.ilol.render.BoxRender;
-import com.nali.ilol.render.RenderHelper;
-import com.nali.ilol.render.SakuraRender;
+import com.nali.small.capabilities.CapabilitiesRegistryHelper;
+import com.nali.small.data.BoxData;
+import com.nali.small.data.SakuraData;
+import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entities.skinning.SkinningEntitiesRender;
+import com.nali.small.gui.MixGui;
+import com.nali.small.gui.features.messages.player.*;
+import com.nali.small.networks.NetworksRegistry;
+import com.nali.small.render.BoxRender;
+import com.nali.small.render.RenderHelper;
+import com.nali.small.render.SakuraRender;
 import com.nali.list.messages.CapabilitiesServerMessage;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
 import com.nali.render.SkinningRender;
@@ -27,7 +27,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import static com.nali.ilol.render.RenderHelper.DATALOADER;
+import static com.nali.small.render.RenderHelper.DATALOADER;
 
 public class PlayerGui extends MixGui
 {

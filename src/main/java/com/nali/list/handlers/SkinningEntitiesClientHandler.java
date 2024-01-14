@@ -1,11 +1,11 @@
 package com.nali.list.handlers;
 
-import com.nali.ilol.ILOL;
-import com.nali.ilol.entities.skinning.SkinningEntities;
-import com.nali.ilol.gui.MixGui;
-import com.nali.ilol.gui.OpenGUIHelper;
-import com.nali.ilol.gui.features.messages.inventory.TargetGUIFeatures;
-import com.nali.ilol.gui.features.messages.inventory.TroublemakerGUIFeatures;
+import com.nali.small.Small;
+import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.gui.MixGui;
+import com.nali.small.gui.OpenGUIHelper;
+import com.nali.small.gui.features.messages.inventory.TargetGUIFeatures;
+import com.nali.small.gui.features.messages.inventory.TroublemakerGUIFeatures;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.render.ObjectRender;
 import com.nali.render.SkinningRender;
@@ -23,8 +23,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
-import static com.nali.ilol.gui.features.messages.inventory.TargetGUIFeatures.TARGET_INT_ARRAY;
-import static com.nali.ilol.gui.features.messages.inventory.TroublemakerGUIFeatures.TROUBLEMAKER_INT_ARRAY;
+import static com.nali.small.gui.features.messages.inventory.TargetGUIFeatures.TARGET_INT_ARRAY;
+import static com.nali.small.gui.features.messages.inventory.TroublemakerGUIFeatures.TROUBLEMAKER_INT_ARRAY;
 
 public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEntitiesClientMessage, IMessage>
 {
@@ -74,7 +74,7 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
                         }
                         catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
                         {
-                            ILOL.error(e);
+                            Small.error(e);
                         }
                     }
                     SkinningEntities.CLIENT_ENTITIES_MAP.put(uuid, (SkinningEntities)entity);

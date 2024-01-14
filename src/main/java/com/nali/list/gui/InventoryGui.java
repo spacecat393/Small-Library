@@ -1,17 +1,17 @@
 package com.nali.list.gui;
 
-import com.nali.ilol.data.BoxData;
-import com.nali.ilol.entities.skinning.SkinningEntities;
-import com.nali.ilol.entities.skinning.SkinningEntitiesRender;
-import com.nali.ilol.gui.MixGui;
-import com.nali.ilol.gui.features.messages.AttributeGUIFeatures;
-import com.nali.ilol.gui.features.messages.HPGUIFeatures;
-import com.nali.ilol.gui.features.messages.inventory.*;
-import com.nali.ilol.gui.features.messages.player.MimiTalkGUIFeatures;
-import com.nali.ilol.gui.features.messages.works.*;
-import com.nali.ilol.networks.NetworksRegistry;
-import com.nali.ilol.render.BoxRender;
-import com.nali.ilol.system.Reference;
+import com.nali.small.data.BoxData;
+import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entities.skinning.SkinningEntitiesRender;
+import com.nali.small.gui.MixGui;
+import com.nali.small.gui.features.messages.AttributeGUIFeatures;
+import com.nali.small.gui.features.messages.HPGUIFeatures;
+import com.nali.small.gui.features.messages.inventory.*;
+import com.nali.small.gui.features.messages.player.MimiTalkGUIFeatures;
+import com.nali.small.gui.features.messages.works.*;
+import com.nali.small.networks.NetworksRegistry;
+import com.nali.small.render.BoxRender;
+import com.nali.small.system.Reference;
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
 import com.nali.render.SkinningRender;
@@ -28,7 +28,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 
-import static com.nali.ilol.render.RenderHelper.DATALOADER;
+import static com.nali.small.render.RenderHelper.DATALOADER;
 import static com.nali.system.Timing.TD;
 
 @SideOnly(Side.CLIENT)

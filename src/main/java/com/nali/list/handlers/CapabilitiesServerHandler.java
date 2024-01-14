@@ -1,7 +1,7 @@
 package com.nali.list.handlers;
 
-import com.nali.ilol.networks.NetworksRegistry;
-import com.nali.list.capabilitiesserializations.IlolSakuraSerializations;
+import com.nali.small.networks.NetworksRegistry;
+import com.nali.list.capabilitiesserializations.SmallSakuraSerializations;
 import com.nali.list.messages.CapabilitiesClientMessage;
 import com.nali.list.messages.CapabilitiesServerMessage;
 import com.nali.system.bytes.BytesWriter;
@@ -16,7 +16,7 @@ public class CapabilitiesServerHandler implements IMessageHandler<CapabilitiesSe
     {
         byte[] byte_array = new byte[8];
         System.arraycopy(capabilityservermessage.data, 0, byte_array, 0, 4);
-        BytesWriter.set(byte_array, messagecontext.getServerHandler().player.getCapability(IlolSakuraSerializations.ILOLSAKURATYPES_CAPABILITY, null).get(), 4);
+        BytesWriter.set(byte_array, messagecontext.getServerHandler().player.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null).get(), 4);
         NetworksRegistry.I.sendTo(new CapabilitiesClientMessage(byte_array), messagecontext.getServerHandler().player);
         return null;
     }
