@@ -363,11 +363,25 @@ public class PlayerGui extends MixGui
 //                    {
 //                        case 0:
 //                        {
-                    byte[] string_byte_array = MESSAGE_STRINGBUILDER.toString().getBytes();
-                    int string_byte_array_size = string_byte_array.length - 1;
-                    byte[] byte_array = new byte[string_byte_array_size + 1];
+//                    byte[] string_byte_array = MESSAGE_STRINGBUILDER.toString().getBytes();
+//                    int string_byte_array_size = string_byte_array.length - 1;
+                    String[] string_array = MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString().split(" ");
+                    byte[] byte_array = new byte[/*string_byte_array_size*/string_array.length * 4 + 1];
                     byte_array[0] = 7;
-                    System.arraycopy(string_byte_array, 0, byte_array, 1, string_byte_array_size);
+                    int new_index = 1;
+                    for (String new_string : string_array)
+                    {
+                        try
+                        {
+                            BytesWriter.set(byte_array, Integer.parseInt(new_string), new_index);
+                        }
+                        catch (Exception ignored)
+                        {
+                            break;
+                        }
+                        new_index += 4;
+                    }
+//                    System.arraycopy(string_byte_array, 0, byte_array, 1, string_byte_array_size);
                     NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
                     MESSAGE_STRINGBUILDER.setLength(0);
                     MESSAGE_STRINGBUILDER.append("!");

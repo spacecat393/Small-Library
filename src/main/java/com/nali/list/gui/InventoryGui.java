@@ -681,9 +681,21 @@ public class InventoryGui extends MixGui
                     {
                         SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
 
-                        byte[] string_byte_array = MESSAGE_STRINGBUILDER.toString().getBytes();
-                        int string_byte_array_size = string_byte_array.length - 1;
-                        byte[] byte_array = new byte[string_byte_array_size + 1 + 16];
+                        String[] string_array = MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString().split(" ");
+                        byte[] byte_array = new byte[string_array.length * 4 + 1 + 16];
+                        int new_index = 1 + 16;
+                        for (String new_string : string_array)
+                        {
+                            try
+                            {
+                                BytesWriter.set(byte_array, Integer.parseInt(new_string), new_index);
+                            }
+                            catch (Exception ignored)
+                            {
+                                break;
+                            }
+                            new_index += 4;
+                        }
 
                         switch (this.message_state)
                         {
@@ -714,7 +726,6 @@ public class InventoryGui extends MixGui
                         }
 
                         BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                        System.arraycopy(string_byte_array, 0, byte_array, 1 + 16, string_byte_array_size);
                         NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
                         MESSAGE_STRINGBUILDER.setLength(0);
                         MESSAGE_STRINGBUILDER.append("!");

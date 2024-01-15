@@ -289,31 +289,48 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 7:
                 {
                     InventoryPlayer inventoryplayer = entityplayermp.inventory;
-                    String string = new String(skinningentitiesservermessage.data, 1, skinningentitiesservermessage.data.length - 1);
-                    String[] string_array = string.split(" ");
+//                    String string = new String(skinningentitiesservermessage.data, 1, skinningentitiesservermessage.data.length - 1);
+//                    String[] string_array = string.split(" ");
 
                     int max_count = 0, index = 0;
-                    int[] index_int_array = new int[string_array.length];
+                    int[] index_int_array = new int[(skinningentitiesservermessage.data.length - 1) / 4];
+                    Arrays.fill(index_int_array, -1);
                     int hand_index = inventoryplayer.mainInventory.size() + inventoryplayer.armorInventory.size();
                     int armor_index = inventoryplayer.mainInventory.size();
-                    for (String new_string : string_array)
+//                    for (String new_string : string_array)
+                    for (int x = 1; x < skinningentitiesservermessage.data.length; x += 4)
                     {
-                        int i = Integer.parseInt(new_string);
-                        index_int_array[index++] = i;
+                        int i = BytesReader.getInt(skinningentitiesservermessage.data, x);
+//                        int i = Integer.parseInt(new_string);
 
-                        if (i < inventoryplayer.mainInventory.size() + inventoryplayer.mainInventory.size() + inventoryplayer.armorInventory.size())
+                        boolean result = true;
+                        for (int y : index_int_array)
                         {
-                            if (i >= inventoryplayer.mainInventory.size() + inventoryplayer.armorInventory.size())
+                            if (i == y)
                             {
-                                max_count += inventoryplayer.offHandInventory.get(i - hand_index).getCount();
+                                result = false;
+                                break;
                             }
-                            else if (i >= inventoryplayer.mainInventory.size())
+                        }
+
+                        if (result)
+                        {
+                            if (i < inventoryplayer.mainInventory.size() + inventoryplayer.offHandInventory.size() + inventoryplayer.armorInventory.size())
                             {
-                                max_count += inventoryplayer.armorInventory.get(i - armor_index).getCount();
-                            }
-                            else
-                            {
-                                max_count += inventoryplayer.mainInventory.get(i).getCount();
+                                index_int_array[index++] = i;
+
+                                if (i >= inventoryplayer.mainInventory.size() + inventoryplayer.armorInventory.size())
+                                {
+                                    max_count += inventoryplayer.offHandInventory.get(i - hand_index).getCount();
+                                }
+                                else if (i >= inventoryplayer.mainInventory.size())
+                                {
+                                    max_count += inventoryplayer.armorInventory.get(i - armor_index).getCount();
+                                }
+                                else
+                                {
+                                    max_count += inventoryplayer.mainInventory.get(i).getCount();
+                                }
                             }
                         }
                     }
@@ -322,17 +339,20 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     {
                         for (int i : index_int_array)
                         {
-                            if (i >= inventoryplayer.mainInventory.size() + inventoryplayer.armorInventory.size())
+                            if (i != -1)
                             {
-                                inventoryplayer.offHandInventory.set(i - hand_index, ItemStack.EMPTY);
-                            }
-                            else if (i >= inventoryplayer.mainInventory.size())
-                            {
-                                inventoryplayer.armorInventory.set(i - armor_index, ItemStack.EMPTY);
-                            }
-                            else
-                            {
-                                inventoryplayer.mainInventory.set(i, ItemStack.EMPTY);
+                                if (i >= inventoryplayer.mainInventory.size() + inventoryplayer.armorInventory.size())
+                                {
+                                    inventoryplayer.offHandInventory.set(i - hand_index, ItemStack.EMPTY);
+                                }
+                                else if (i >= inventoryplayer.mainInventory.size())
+                                {
+                                    inventoryplayer.armorInventory.set(i - armor_index, ItemStack.EMPTY);
+                                }
+                                else
+                                {
+                                    inventoryplayer.mainInventory.set(i, ItemStack.EMPTY);
+                                }
                             }
                         }
 
@@ -376,12 +396,14 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
                     if (skinningentities != null)
                     {
-                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
-                        String[] string_array = string.split(" ");
+//                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
+//                        String[] string_array = string.split(" ");
 
-                        for (String new_string : string_array)
+//                        for (String new_string : string_array)
+                        for (int index = 1 + 16; index < skinningentitiesservermessage.data.length; index += 4)
                         {
-                            int id = Integer.parseInt(new_string);
+                            int id = BytesReader.getInt(skinningentitiesservermessage.data, index);
+//                            int id = Integer.parseInt(new_string);
 
                             if (id >= EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length)
                             {
@@ -432,12 +454,14 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
                     if (skinningentities != null)
                     {
-                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
-                        String[] string_array = string.split(" ");
+//                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
+//                        String[] string_array = string.split(" ");
 
-                        for (String new_string : string_array)
+//                        for (String new_string : string_array)
+                        for (int x = 1 + 16; x < skinningentitiesservermessage.data.length; x += 4)
                         {
-                            int id = Integer.parseInt(new_string);
+                            int id = BytesReader.getInt(skinningentitiesservermessage.data, x);
+//                            int id = Integer.parseInt(new_string);
 
                             int index = 0;
                             for (int i : skinningentities.skinningentitiesarea.target_arraylist)
@@ -459,12 +483,14 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
                     if (skinningentities != null)
                     {
-                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
-                        String[] string_array = string.split(" ");
+//                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
+//                        String[] string_array = string.split(" ");
 
-                        for (String new_string : string_array)
+//                        for (String new_string : string_array)
+                        for (int index = 1 + 16; index < skinningentitiesservermessage.data.length; index += 4)
                         {
-                            int id = Integer.parseInt(new_string);
+                            int id = BytesReader.getInt(skinningentitiesservermessage.data, index);
+//                            int id = Integer.parseInt(new_string);
 
                             if (id >= EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length)
                             {
@@ -515,12 +541,14 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
                     if (skinningentities != null)
                     {
-                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
-                        String[] string_array = string.split(" ");
+//                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
+//                        String[] string_array = string.split(" ");
 
-                        for (String new_string : string_array)
+//                        for (String new_string : string_array)
+                        for (int x = 1 + 16; x < skinningentitiesservermessage.data.length; x += 4)
                         {
-                            int id = Integer.parseInt(new_string);
+                            int id = BytesReader.getInt(skinningentitiesservermessage.data, x);
+//                            int id = Integer.parseInt(new_string);
 
                             int index = 0;
                             for (int i : skinningentities.skinningentitiesarea.troublemaker_arraylist)
