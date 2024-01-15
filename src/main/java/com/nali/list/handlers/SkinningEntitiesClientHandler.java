@@ -1,14 +1,15 @@
 package com.nali.list.handlers;
 
+import com.nali.list.messages.SkinningEntitiesClientMessage;
+import com.nali.render.ObjectRender;
+import com.nali.render.SkinningRender;
 import com.nali.small.Small;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.OpenGUIHelper;
+import com.nali.small.gui.features.messages.EffectsGUIFeatures;
 import com.nali.small.gui.features.messages.inventory.TargetGUIFeatures;
 import com.nali.small.gui.features.messages.inventory.TroublemakerGUIFeatures;
-import com.nali.list.messages.SkinningEntitiesClientMessage;
-import com.nali.render.ObjectRender;
-import com.nali.render.SkinningRender;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -23,6 +24,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
+import static com.nali.small.gui.features.messages.EffectsGUIFeatures.EFFECTS_INT_ARRAY;
 import static com.nali.small.gui.features.messages.inventory.TargetGUIFeatures.TARGET_INT_ARRAY;
 import static com.nali.small.gui.features.messages.inventory.TroublemakerGUIFeatures.TROUBLEMAKER_INT_ARRAY;
 
@@ -154,8 +156,26 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
                 }
                 break;
             }
-//            case 7://sync looking
-//            {
+            case 7://get effect
+            {
+                Entity entity = Minecraft.getMinecraft().world.getEntityByID(BytesReader.getInt(skinningentitiesclientmessage.data, 1));
+
+                if (entity instanceof SkinningEntities)
+                {
+                    EFFECTS_INT_ARRAY = new int[(skinningentitiesclientmessage.data.length - 1 - 4) / 4];
+                    int index = 0;
+                    for (int i = 1 + 4; i < skinningentitiesclientmessage.data.length; i += 4)
+                    {
+                        EFFECTS_INT_ARRAY[index++] = BytesReader.getInt(skinningentitiesclientmessage.data, i);
+                        i += 4;
+                        EFFECTS_INT_ARRAY[index++] = BytesReader.getInt(skinningentitiesclientmessage.data, i);
+                        i += 4;
+                        EFFECTS_INT_ARRAY[index++] = BytesReader.getInt(skinningentitiesclientmessage.data, i);
+                    }
+
+                    MixGui.GUIFEATURESLOADER = new EffectsGUIFeatures(MixGui.I);
+                }
+//                //sync looking
 //                Entity entity = Minecraft.getMinecraft().world.getEntityByID(BytesReader.getInt(skinningentitiesclientmessage.data, 1));
 //
 //                if (entity instanceof SkinningEntities)
@@ -166,8 +186,16 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
 //                    skinningentities.rotationYawHead = BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 4 + 4 + 4);
 //                    skinningentities.renderYawOffset = BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 4 + 4 + 4 + 4);
 //                }
-//                break;
-//            }
+                break;
+            }
+            case 8://eat sound
+            {
+                break;
+            }
+            case 9://milk sound
+            {
+                break;
+            }
             default:
             {
                 break;

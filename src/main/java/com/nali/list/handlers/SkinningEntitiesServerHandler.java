@@ -1,18 +1,17 @@
 package com.nali.list.handlers;
 
-import com.nali.small.Small;
-import com.nali.small.entities.EntitiesRegistryHelper;
-import com.nali.small.entities.skinning.SkinningEntities;
-import com.nali.small.networks.NetworksRegistry;
-import com.nali.small.world.ChunkLoader;
 import com.nali.list.capabilitiesserializations.SmallSakuraSerializations;
 import com.nali.list.capabilitiestypes.SmallSakuraTypes;
 import com.nali.list.items.SmallBox;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
+import com.nali.small.Small;
+import com.nali.small.entities.EntitiesRegistryHelper;
+import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.networks.NetworksRegistry;
+import com.nali.small.world.ChunkLoader;
 import com.nali.system.bytes.BytesReader;
 import com.nali.system.bytes.BytesWriter;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -23,6 +22,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -31,10 +33,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEntitiesServerMessage, IMessage>
 {
@@ -557,13 +556,34 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                         ItemFood itemfood = (ItemFood)itemstack.getItem();
                         skinningentities.server_work_byte_array[skinningentities.skinningentitiesbytes.ON_EAT()] = 1;
                         skinningentities.world.spawnEntity(new EntityXPOrb(skinningentities.world, skinningentities.posX, skinningentities.posY, skinningentities.posZ, 10));
-                        skinningentities.heal(itemfood.getHealAmount(itemstack));
+                        skinningentities.heal(itemfood.getHealAmount(itemstack) + itemfood.getSaturationModifier(itemstack));
                         itemstack.shrink(1);
                     }
                     break;
                 }
-//                case 18://sync looking
-//                {
+                case 18://get effect
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                    if (skinningentities != null)
+                    {
+                        Collection<PotionEffect> potioneffect_collection = skinningentities.getActivePotionEffects();
+                        byte[] byte_array = new byte[1 + 4 + (potioneffect_collection.size() * 3 * 4)];
+                        byte_array[0] = 7;
+                        BytesWriter.set(byte_array, skinningentities.getEntityId(), 1);
+                        int index = 1 + 4;
+                        for (PotionEffect potioneffect : potioneffect_collection)
+                        {
+                            BytesWriter.set(byte_array, Potion.getIdFromPotion(potioneffect.getPotion()), index);
+                            index += 4;
+                            BytesWriter.set(byte_array, potioneffect.getDuration(), index);
+                            index += 4;
+                            BytesWriter.set(byte_array, potioneffect.getAmplifier(), index);
+                            index += 4;
+                        }
+                        NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), entityplayermp);
+                    }
+
+                    //sync looking
 //                    Entity entity = Minecraft.getMinecraft().world.getEntityByID(BytesReader.getInt(skinningentitiesservermessage.data, 1));
 ////                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
 //                    if (entity instanceof SkinningEntities)
@@ -579,8 +599,24 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
 //                        NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), entityplayermp);
 //                    }
 //
-//                    break;
-//                }
+                    break;
+                }
+                case 19://milk
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                    ItemStack itemstack = entityplayermp.getHeldItemMainhand();
+                    if (skinningentities != null && itemstack.getItem() == Items.MILK_BUCKET)
+                    {
+                        skinningentities.clearActivePotions();
+                        entityplayermp.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.BUCKET));
+                    }
+
+                    break;
+                }
+                case 20://use item
+                {
+                    break;
+                }
                 default:
                 {
                     break;

@@ -1,10 +1,14 @@
 package com.nali.list.gui;
 
+import com.nali.list.container.InventoryContainer;
+import com.nali.list.messages.SkinningEntitiesServerMessage;
+import com.nali.render.SkinningRender;
 import com.nali.small.data.BoxData;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;
-import com.nali.small.gui.features.messages.AttributeGUIFeatures;
+import com.nali.small.gui.features.messages.AttributesGUIFeatures;
+import com.nali.small.gui.features.messages.EffectsGUIFeatures;
 import com.nali.small.gui.features.messages.HPGUIFeatures;
 import com.nali.small.gui.features.messages.inventory.*;
 import com.nali.small.gui.features.messages.player.MimiTalkGUIFeatures;
@@ -12,9 +16,6 @@ import com.nali.small.gui.features.messages.works.*;
 import com.nali.small.networks.NetworksRegistry;
 import com.nali.small.render.BoxRender;
 import com.nali.small.system.Reference;
-import com.nali.list.container.InventoryContainer;
-import com.nali.list.messages.SkinningEntitiesServerMessage;
-import com.nali.render.SkinningRender;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -180,29 +181,27 @@ public class InventoryGui extends MixGui
         x = this.guiLeft + 158;/* y = this.guiTop + 25;*/ width = 9; height = 19;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            if (!(GUIFEATURESLOADER instanceof AttributeGUIFeatures))
+            if (!(GUIFEATURESLOADER instanceof AttributesGUIFeatures))
             {
-                GUIFEATURESLOADER = new AttributeGUIFeatures(this);
+                GUIFEATURESLOADER = new AttributesGUIFeatures(this);
             }
             this.render_text = true;
         }
 
-//        get from server
-//        x = this.guiLeft + 204; y = this.guiTop + 144; width = 5; height = 6;
-//        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
-//        {
-//            int size = skinningentities.getActivePotionEffects().size();
-//            String[] string_array = new String[size];
-//            int[] int_array = new int[size];
-//            int index = 0;
-//            for (PotionEffect potioneffect : skinningentities.getActivePotionEffects())
-//            {
-//                int id = Potion.getIdFromPotion(potioneffect.getPotion());
-//                int_array[index] = index % 2 == 0 ? 0xFFFFFFFF : 0xFFF85A52;
-//                string_array[index++] = I18n.translateToLocal(potioneffect.getEffectName()) + " : D[" + potioneffect.getDuration() + "] A[" + potioneffect.getAmplifier() + "]";
-//            }
-//            this.drawHoveringText(string_array, int_array, mouseX, mouseY);
-//        }
+        x = this.guiLeft + 204; y = this.guiTop + 144; width = 5; height = 6;
+        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+        {
+            if (this.mouse_released == 0)
+            {
+                this.sendPacketUUID((byte)18);
+            }
+
+            if (!(GUIFEATURESLOADER instanceof EffectsGUIFeatures))
+            {
+                GUIFEATURESLOADER = new EffectsGUIFeatures(this);
+            }
+            this.render_text = true;
+        }
 
         x = this.guiLeft + 57; y = this.guiTop + 27; width = 5; height = 6;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)

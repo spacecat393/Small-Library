@@ -25,6 +25,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -896,16 +897,23 @@ public abstract class SkinningEntities extends EntityLivingBase
                         case 1:
                         {
                             Item item = entityplayer.getHeldItemMainhand().getItem();
-                            if (item instanceof ItemFood)
+
+                            byte[] byte_array = new byte[17];
+                            if (item == Items.MILK_BUCKET)
                             {
-                                byte[] byte_array = new byte[17];
+                                byte_array[0] = 19;
+                                this.playSound(SoundEvents.ENTITY_GENERIC_DRINK, this.getSoundVolume(), this.getSoundPitch());
+                            }
+                            else if (item instanceof ItemFood)
+                            {
                                 byte_array[0] = 17;
-                                BytesWriter.set(byte_array, this.client_uuid, 1);
-                                NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
                                 Vec3d view_vec3d = this.getLookVec().scale(0.5F);
                                 this.world.spawnParticle(EnumParticleTypes.ITEM_CRACK, this.posX + view_vec3d.x, this.posY + getEyeHeight() + view_vec3d.y, this.posZ + view_vec3d.z, 0.0D, 0.0D, 0.0D, ItemArmor.getIdFromItem(item));
                                 this.playSound(SoundEvents.ENTITY_GENERIC_EAT, this.getSoundVolume(), this.getSoundPitch());
                             }
+
+                            BytesWriter.set(byte_array, this.client_uuid, 1);
+                            NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
 
                             break;
                         }

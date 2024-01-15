@@ -74,6 +74,10 @@ gui.info.a51=Right Click to send request.
 gui.info.a6=Next
 gui.info.a7=Enter UUID
 gui.info.a70=Click to paste.
+gui.info.a=Attributes
+gui.info.e=Effects
+gui.info.ed=Duration
+gui.info.ea=Amplifier
 
 itemGroup.small=Small
 item.box.name=Box
