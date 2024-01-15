@@ -15,7 +15,7 @@ public class ChunkLoader
         if (skinningentities != null && CHUNK_MAP != null)
         {
             ChunkPos chunkpos = new ChunkPos(skinningentities.getPosition());
-            World world = skinningentities.getEntityWorld();
+            World world = skinningentities.world;
 
             if (CHUNK_MAP.containsKey(skinningentities))
             {

@@ -24,7 +24,7 @@ public class ObjectEntitiesRender extends ObjectRender
 
 //        int brightness = this.entity.getBrightnessForRender();
         int brightness = 0;
-        World world = this.entity.getEntityWorld();
+        World world = this.entity.world;
         BlockPos blockpos = this.entity.getPosition();
 
         if (world.isBlockLoaded(blockpos))

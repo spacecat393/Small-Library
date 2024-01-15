@@ -1,6 +1,7 @@
-package com.nali.small.entities.skinning.ai;
+package com.nali.small.entities.skinning.ai.eyes;
 
 import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
@@ -87,7 +88,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
 //            entity.rotationYaw = this.skinningentities.rotationYaw;
                 riding_entity.setRotationYawHead(riding_entity.rotationYaw);
                 this.skinningentities.rotationYaw = riding_entity.rotationYaw;
-                this.skinningentities.rotationYawHead = riding_entity.rotationYaw;
+//                this.skinningentities.rotationYawHead = riding_entity.rotationYaw;
             }
             else
             {
@@ -95,12 +96,14 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
                 this.skinningentities.rotationPitch = this.limitAngle(this.skinningentities.rotationPitch, f1, this.max);
     //        this.skinningentities.prevRotationYaw = this.skinningentities.rotationYaw;
     //        this.skinningentities.renderYawOffset += 22.5F;
-                this.skinningentities.rotationYawHead = this.skinningentities.rotationYaw;
+//                this.skinningentities.rotationYawHead = this.skinningentities.rotationYaw;
     //        this.skinningentities.prevRotationYawHead = this.skinningentities.rotationYaw;
     //        this.skinningentities.renderYawOffset = this.skinningentities.rotationYaw;
     //        this.skinningentities.prevRenderYawOffset = this.skinningentities.rotationYaw;
             }
         }
+//        this.skinningentities.skinningentitiesbody.onUpdate();//.updateRenderAngles();
+        this.skinningentities.rotationYawHead = this.skinningentities.rotationYaw;
 //        else
 //        {
 //            this.skinningentities.rotationYawHead = this.updateRotation(this.skinningentities.rotationYawHead, this.skinningentities.renderYawOffset, 10.0F);

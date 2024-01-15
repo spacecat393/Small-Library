@@ -2,9 +2,12 @@ package com.nali.small.entities.skinning;
 
 import com.nali.math.M4x4;
 import com.nali.render.SkinningRender;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -46,6 +49,28 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
         SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
         GL11.glTranslated(ox, oy, oz);
+        //
+        GlStateManager.pushMatrix();
+        GlStateManager.disableTexture2D();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+//        GlStateManager.color(0.0F, 1.0F, 0.0F, 0.4F);
+        GL11.glTranslated(-skinningentities.posX, -skinningentities.posY, -skinningentities.posZ);
+
+        AxisAlignedBB[] axisalignedbb_array = new AxisAlignedBB[]
+        {
+            skinningentities.getHeadAxisAlignedBB(),
+            skinningentities.getMouthAxisAlignedBB()
+        };
+        for (AxisAlignedBB axisalignedbb : axisalignedbb_array)
+        {
+            RenderGlobal.drawSelectionBoundingBox(axisalignedbb, 1.0F, 0.0F, 0.0F, 1.0F);
+        }
+
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
+        //
         GL11.glScalef(skinningrender.scale, skinningrender.scale, skinningrender.scale);
         float scale = (skinningrender.scale == 0 ? 1.0F : skinningrender.scale);
         this.shadowOpaque *= scale;

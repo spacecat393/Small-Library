@@ -38,8 +38,8 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
 //        Arrays.fill(this.distance_to_target_array, Double.MAX_VALUE);
 
 
-        Map<UUID, Entity> entity_map = ((IMixinWorldServer)this.skinningentities.getEntityWorld()).entitiesByUuid();
-//        List<Entity> entity_list = this.skinningentities.getEntityWorld().getEntitiesWithinAABB(Entity.class, this.skinningentities.getEntityBoundingBox().grow(30.0D), entity -> entity.isEntityAlive());
+        Map<UUID, Entity> entity_map = ((IMixinWorldServer)this.skinningentities.world).entitiesByUuid();
+//        List<Entity> entity_list = this.skinningentities.world.getEntitiesWithinAABB(Entity.class, this.skinningentities.getEntityBoundingBox().grow(30.0D), entity -> entity.isEntityAlive());
 
 //        for (int i = 0; i < this.target_entity_array.length; ++i)
 //        {

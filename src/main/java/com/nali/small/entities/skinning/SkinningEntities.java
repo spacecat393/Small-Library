@@ -1,17 +1,19 @@
 package com.nali.small.entities.skinning;
 
 import com.nali.data.BothData;
+import com.nali.list.messages.SkinningEntitiesClientMessage;
+import com.nali.list.messages.SkinningEntitiesServerMessage;
+import com.nali.render.SkinningRender;
 import com.nali.small.Small;
 import com.nali.small.entities.EntitiesAttackHelper;
 import com.nali.small.entities.bytes.SkinningEntitiesBytes;
 import com.nali.small.entities.skinning.ai.*;
+import com.nali.small.entities.skinning.ai.eyes.SkinningEntitiesBody;
+import com.nali.small.entities.skinning.ai.eyes.SkinningEntitiesLook;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesMove;
 import com.nali.small.networks.NetworksRegistry;
 import com.nali.small.world.ChunkLoader;
-import com.nali.list.messages.SkinningEntitiesClientMessage;
-import com.nali.list.messages.SkinningEntitiesServerMessage;
-import com.nali.render.SkinningRender;
 import com.nali.system.bytes.BytesReader;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.block.material.Material;
@@ -25,7 +27,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -34,9 +38,11 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -45,7 +51,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.nali.small.entities.EntitiesMathHelper.rayTargetsView;
+import static com.nali.small.entities.EntitiesMathHelper.rayAllTargetsView;
 import static com.nali.small.world.ChunkCallBack.CHUNK_MAP;
 
 public abstract class SkinningEntities extends EntityLivingBase
@@ -99,6 +105,11 @@ public abstract class SkinningEntities extends EntityLivingBase
 //        }
 //    }
 
+    //1_YAW 2_PITCH 3_BODY
+//    public static DataParameter<Float> YAW_FLOAT_DATAPARAMETER = EntityDataManager.<Float>createKey(SkinningEntities.class, DataSerializers.FLOAT);
+//    public static DataParameter<Float> PITCH_FLOAT_DATAPARAMETER = EntityDataManager.<Float>createKey(SkinningEntities.class, DataSerializers.FLOAT);
+//    public static DataParameter<Float> BODY_FLOAT_DATAPARAMETER = EntityDataManager.<Float>createKey(SkinningEntities.class, DataSerializers.FLOAT);
+
     public SkinningEntities(World world)
     {
         super(world);
@@ -119,6 +130,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 //            this.client_state_byte_array = new byte[max_states];
             this.client_work_byte_array = new byte[max_works];
             this.skinningentitiespat = new SkinningEntitiesPat(this);
+//            this.rotationYawHead = this.rotationYaw;
         }
         else
         {
@@ -234,7 +246,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 //                nbttagcompound.setString("uuid_optional" + i, uuid.toString());
 //            }
 //        }
-//        if (!this.getEntityWorld().isRemote)
+//        if (!this.world.isRemote)
 //        {
         if (this.owner_uuid != null)
         {
@@ -245,7 +257,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 //        }
 
         //
-//        if (!this.getEntityWorld().isRemote)
+//        if (!this.world.isRemote)
 //        {
         nbttagcompound.setIntArray("target", this.skinningentitiesarea.target_arraylist.stream().mapToInt(Integer::intValue).toArray());
         nbttagcompound.setIntArray("troublemaker", this.skinningentitiesarea.troublemaker_arraylist.stream().mapToInt(Integer::intValue).toArray());
@@ -401,7 +413,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 //            entitydatamanager.set(HAND_STATES, nbttagcompound.getByte(hand_key));
 //        }
 
-        if (!this.getEntityWorld().isRemote)
+        if (!this.world.isRemote)
         {
             int[] int_array = nbttagcompound.getIntArray("target");
             for (int x : int_array)
@@ -507,7 +519,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 //    {
 //        if (entityplayer.isSneaking() && entityplayer.getHeldItemMainhand().isEmpty())
 //        {
-//            if (this.getEntityWorld().isRemote)
+//            if (this.world.isRemote)
 //            {
 //                Nali.COMMONPROXY.openInventoryGui(this, entityplayer);
 //            }
@@ -526,7 +538,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 //                entityplayermp.openContainer.windowId = entityplayermp.currentWindowId;
 //                entityplayermp.openContainer.addListener(entityplayermp);
 //            }
-////            entityplayer.openGui(Main.MAIN, 0, entityplayer.getEntityWorld(), 0, 0, 0);
+////            entityplayer.openGui(Main.MAIN, 0, entityplayer.world, 0, 0, 0);
 //            return true;
 //        }
 //
@@ -564,7 +576,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 //            this.skinningentitiesjump.onUpdate();
 //        }
 
-        if (this.getEntityWorld().isRemote)
+        if (this.world.isRemote)
         {
 //            for (int i = 0; i < this.client_work_byte_array.length; ++i)
 //            {
@@ -794,28 +806,12 @@ public abstract class SkinningEntities extends EntityLivingBase
 
     }
 
-    public static AxisAlignedBB getNewAxisAlignedBB(SkinningEntities skinningentities, double new_y)
-    {
-        float scale = skinningentities.getDataManager().get(skinningentities.getFloatDataParameterArray()[0]);
-
-        double hw = skinningentities.bothdata.Width() * scale / 2.0;
-        double hh = skinningentities.bothdata.Height() * scale / 2.0;
-
-        double y = skinningentities.posY + new_y;
-
-        return new AxisAlignedBB
-        (
-        skinningentities.posX - hw, y, skinningentities.posZ - hw,
-        skinningentities.posX + hw, y + hh, skinningentities.posZ + hw
-        );
-    }
-
     @Override
     public boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
     {
         if (entityplayer.isSneaking())
         {
-            if (!this.getEntityWorld().isRemote)
+            if (!this.world.isRemote)
             {
                 entityplayer.openGui(Small.I, 0, entityplayer.world, this.getEntityId(), 0, 0);
 
@@ -829,7 +825,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         }
         else
         {
-//            if (!this.getEntityWorld().isRemote)
+//            if (!this.world.isRemote)
 //            {
 ////                ItemStack itemstack = entityplayer.getHeldItem(enumhand);
 ////                if (itemstack.getItem() == ItemsRegistryHelper.BOX_ITEM)
@@ -855,7 +851,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 ////                                NBTTagCompound entity_nbttagcompound = new NBTTagCompound();
 ////                                this.writeToNBT(entity_nbttagcompound);
 ////                                nbttagcompound.setTag(entity_key, entity_nbttagcompound);
-////                                this.getEntityWorld().removeEntity(this);
+////                                this.world.removeEntity(this);
 ////                                itemstack.setStackDisplayName(this.getName());
 ////                            }
 ////
@@ -879,11 +875,44 @@ public abstract class SkinningEntities extends EntityLivingBase
 ////                }
 //            }
 //            else
-            if (this.getEntityWorld().isRemote)
+            if (this.world.isRemote)
             {
-                if (rayTargetsView(entityplayer, getNewAxisAlignedBB(this, this.bothdata.Height() / 1.125F)))
+                int state = rayAllTargetsView(entityplayer, new AxisAlignedBB[]
                 {
-                    this.skinningentitiespat.onUpdate();
+                    this.getHeadAxisAlignedBB(),
+                    this.getMouthAxisAlignedBB()
+                }, (byte)50);
+
+                if (state != -1)
+                {
+                    switch (state)
+                    {
+                        case 0:
+                        {
+                            this.skinningentitiespat.onUpdate();
+                            break;
+                        }
+                        case 1:
+                        {
+                            Item item = entityplayer.getHeldItemMainhand().getItem();
+                            if (item instanceof ItemFood)
+                            {
+                                byte[] byte_array = new byte[17];
+                                byte_array[0] = 17;
+                                BytesWriter.set(byte_array, this.client_uuid, 1);
+                                NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                                Vec3d view_vec3d = this.getLookVec().scale(0.5F);
+                                this.world.spawnParticle(EnumParticleTypes.ITEM_CRACK, this.posX + view_vec3d.x, this.posY + getEyeHeight() + view_vec3d.y, this.posZ + view_vec3d.z, 0.0D, 0.0D, 0.0D, ItemArmor.getIdFromItem(item));
+                                this.playSound(SoundEvents.ENTITY_GENERIC_EAT, this.getSoundVolume(), this.getSoundPitch());
+                            }
+
+                            break;
+                        }
+                        default:
+                        {
+                            break;
+                        }
+                    }
                 }
                 else
                 {
@@ -1047,6 +1076,10 @@ public abstract class SkinningEntities extends EntityLivingBase
             byte_array[0] = 0;
             BytesWriter.set(byte_array, this.getEntityId(), 1);
             NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+//            byte_array = new byte[5];
+//            byte_array[0] = 18;
+//            BytesWriter.set(byte_array, this.getEntityId(), 1);
+//            NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
         }
 
         skinningrender.scale = entitydatamanager.get(this.getFloatDataParameterArray()[0]);
@@ -1110,7 +1143,7 @@ public abstract class SkinningEntities extends EntityLivingBase
             return null;
         }
 
-        return ((WorldServer)this.getEntityWorld()).getEntityFromUuid(this.owner_uuid);
+        return ((WorldServer)this.world).getEntityFromUuid(this.owner_uuid);
     }
 
 //    public UUID getUUID(int id)
@@ -1120,18 +1153,50 @@ public abstract class SkinningEntities extends EntityLivingBase
 
     public Material getMaterial(BlockPos blockpos)
     {
-        IBlockState temp_iblockstate = this.getEntityWorld().getBlockState(blockpos);
+        IBlockState temp_iblockstate = this.world.getBlockState(blockpos);
         return temp_iblockstate.getMaterial();
     }
 
+    public AxisAlignedBB getHeadAxisAlignedBB()
+    {
+        double hw = this.width / 2.0F;
+        double hh = this.height / 2.0F;
+
+        double y = this.posY + this.height / 1.125F;
+
+        return new AxisAlignedBB
+        (
+        this.posX - hw, y, this.posZ - hw,
+        this.posX + hw, y + hh, this.posZ + hw
+        );
+    }
+
+    public AxisAlignedBB getMouthAxisAlignedBB()
+    {
+        double hw = this.width / 2.0F;
+        double hh = 0.5F;
+
+        Vec3d view_vec3d = this.getLookVec().scale(0.5F);
+        double x = this.posX + view_vec3d.x;
+        double y = (this.posY + this.height / 2.0F) + view_vec3d.y;
+        double z = this.posZ + view_vec3d.z;
+
+        return new AxisAlignedBB
+        (
+        x - hw, y, z - hw,
+        x + hw, y + hh, z + hw
+        );
+    }
+
+
     public void removeFromMap()
     {
-//        if (this.getEntityWorld().isRemote)
+//        if (this.world.isRemote)
 //        {
 //            CLIENT_ENTITIES_MAP.remove(this.current_client_uuid);
 //        }
 //        else
-        if (!this.getEntityWorld().isRemote)
+        if (!this.world.isRemote)
         {
             ChunkLoader.removeChunk(this);
             SERVER_ENTITIES_MAP.remove(this.current_server_uuid);
@@ -1143,7 +1208,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 //        float scale = this.getDataManager().get(this.getFloatDataParameterArray()[0]);
 //        this.width = this.bothdata.Width() * scale;
 //        this.height = this.bothdata.Height() * scale;
-////        this.dimension = this.getEntityWorld().provider.getDimension();
+////        this.dimension = this.world.provider.getDimension();
 //    }
 
     public void updateClient()

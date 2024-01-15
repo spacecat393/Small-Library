@@ -35,7 +35,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
 
         if (owner_entity != null && this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.FOLLOW()) && (this.skinningentities.getDistanceSq(owner_entity) > this.min_distance || this.follow))
         {
-            if ((owner_entity.getEntityWorld()).provider.getDimension() != ((this.skinningentities.getEntityWorld()).provider.getDimension()))
+            if ((owner_entity.world).provider.getDimension() != ((this.skinningentities.world).provider.getDimension()))
             {
                 if (this.follow)
                 {

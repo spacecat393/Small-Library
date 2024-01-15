@@ -131,7 +131,7 @@ public abstract class ObjectEntities extends Entity
         super.onUpdate();
         this.updateBox();
 
-        if (this.getEntityWorld().isRemote)
+        if (this.world.isRemote)
         {
             this.updateClientObject();
         }

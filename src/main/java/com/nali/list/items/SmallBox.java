@@ -169,7 +169,7 @@ public class SmallBox extends MixItems
             ((SkinningEntities)entity).removeFromMap();
         }
 
-        entity.getEntityWorld().removeEntity(entity);
+        entity.world.removeEntity(entity);
         itemstack.setStackDisplayName(entity.getName());
     }
 }

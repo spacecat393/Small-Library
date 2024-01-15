@@ -76,7 +76,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
         //     Main.LOGGER.info("Goal :" + (this.temp_goal_x == this.goal_x && this.temp_goal_y == this.goal_y && this.temp_goal_z == this.goal_z));
         // }
 
-//        World world = this.skinningentities.getEntityWorld();
+//        World world = this.skinningentities.world;
 ////        if (this.path_blockpos_array != null)
 ////        {
 //        for (BlockPos bp : this.path_blockpos_arraylist)
@@ -478,7 +478,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
     {
 //        double far = this.skinningentities.getDistanceSq(goal_x + 0.5D, goal_y, goal_z + 0.5D);
 
-//        World world = this.skinningentities.getEntityWorld();
+//        World world = this.skinningentities.world;
 
         // int max_y = this.snode_arraylist.get(0).blockpos.getY();
 
@@ -664,7 +664,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 //            return null;
 //        }
 
-        World world = this.skinningentities.getEntityWorld();
+        World world = this.skinningentities.world;
 //        byte index = 0;
 
         SNode pre_snode;
@@ -1087,7 +1087,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
     {
         int index = getIndex(new_x, new_y, new_z);
 
-        World world = this.skinningentities.getEntityWorld();
+        World world = this.skinningentities.world;
         if (index != -1 && start_snode.children_snode_array[index] == null)
         {
             BlockPos blockpos = new BlockPos(start_snode.blockpos.getX() + new_x, start_snode.blockpos.getY() + new_y, start_snode.blockpos.getZ() + new_z);

@@ -46,7 +46,7 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
                     int list_id = BytesReader.getInt(skinningentitiesclientmessage.data, i);
                     i += 4;
 
-                    World world = Minecraft.getMinecraft().player.getEntityWorld();
+                    World world = Minecraft.getMinecraft().player.world;
                     Entity entity = world.getEntityByID(list_id);
                     if (!(entity instanceof SkinningEntities))
                     {
@@ -154,6 +154,20 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
                 }
                 break;
             }
+//            case 7://sync looking
+//            {
+//                Entity entity = Minecraft.getMinecraft().world.getEntityByID(BytesReader.getInt(skinningentitiesclientmessage.data, 1));
+//
+//                if (entity instanceof SkinningEntities)
+//                {
+//                    SkinningEntities skinningentities = (SkinningEntities)entity;
+//                    skinningentities.rotationYaw = BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 4);
+//                    skinningentities.rotationPitch = BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 4 + 4);
+//                    skinningentities.rotationYawHead = BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 4 + 4 + 4);
+//                    skinningentities.renderYawOffset = BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 4 + 4 + 4 + 4);
+//                }
+//                break;
+//            }
             default:
             {
                 break;

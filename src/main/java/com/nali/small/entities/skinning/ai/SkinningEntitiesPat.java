@@ -33,7 +33,7 @@ public class SkinningEntitiesPat extends SkinningEntitiesAI
             NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
 
 //            this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.ON_PAT()] = 1;
-//            this.skinningentities.getEntityWorld().spawnEntity(new EntityXPOrb(this.skinningentities.getEntityWorld(), this.skinningentities.posX, this.skinningentities.posY, this.skinningentities.posZ, 10));
+//            this.skinningentities.world.spawnEntity(new EntityXPOrb(this.skinningentities.world, this.skinningentities.posX, this.skinningentities.posY, this.skinningentities.posZ, 10));
 //
 //                            if (!entityplayer.isCreative())
 //                            {

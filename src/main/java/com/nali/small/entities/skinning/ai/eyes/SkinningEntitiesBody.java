@@ -1,6 +1,8 @@
-package com.nali.small.entities.skinning.ai;
+package com.nali.small.entities.skinning.ai.eyes;
 
 import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.math.MathHelper;
 
 public class SkinningEntitiesBody extends SkinningEntitiesAI
@@ -29,7 +31,7 @@ public class SkinningEntitiesBody extends SkinningEntitiesAI
         }
         else
         {
-//            if (this.skinningentities.getPassengers().isEmpty() || !(this.skinningentities.getPassengers().get(0) instanceof EntityLiving))
+            if (this.skinningentities.getPassengers().isEmpty() || !(this.skinningentities.getPassengers().get(0) instanceof EntityLiving))
             {
                 float f = 75.0F;
 

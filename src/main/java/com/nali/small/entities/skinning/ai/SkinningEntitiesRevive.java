@@ -40,7 +40,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
 
             if (this.die && !this.entity.isEntityAlive())
             {
-                if ((this.entity.getEntityWorld()).provider.getDimension() != ((this.skinningentities.getEntityWorld()).provider.getDimension()))
+                if ((this.entity.world).provider.getDimension() != ((this.skinningentities.world).provider.getDimension()))
                 {
                     this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.REVIVE()] = 0;
                     return;

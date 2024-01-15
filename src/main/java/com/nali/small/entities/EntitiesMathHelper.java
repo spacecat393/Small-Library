@@ -38,20 +38,25 @@ public class EntitiesMathHelper
     }
 
     @SideOnly(Side.CLIENT)
-    public static boolean rayTargetsView(Entity player, AxisAlignedBB axisalignedbb)
+    public static int rayAllTargetsView(Entity player, AxisAlignedBB[] axisalignedbb_array, byte max)
     {
         byte step = 0;
-        boolean result = false;
         Vec3d view_vec3d = player.getLookVec();
         Vec3d start_vec3d = new Vec3d(player.posX, player.posY + player.getEyeHeight(), player.posZ);
         view_vec3d = view_vec3d.scale(0.05);
 
-        for (Vec3d end_vec3d = start_vec3d.add(view_vec3d); !result && step < 50; ++step)
+        for (Vec3d end_vec3d = start_vec3d.add(view_vec3d); step < max; ++step)
         {
+            for (int i = 0; i < axisalignedbb_array.length; ++i)
+            {
+                if (axisalignedbb_array[i].contains(end_vec3d))
+                {
+                    return i;
+                }
+            }
             end_vec3d = end_vec3d.add(view_vec3d);
-            result = axisalignedbb.contains(end_vec3d);
         }
 
-        return result;
+        return -1;
     }
 }
