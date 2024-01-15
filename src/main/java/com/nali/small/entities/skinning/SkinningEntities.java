@@ -130,7 +130,6 @@ public abstract class SkinningEntities extends EntityLivingBase
 //            this.client_state_byte_array = new byte[max_states];
             this.client_work_byte_array = new byte[max_works];
             this.skinningentitiespat = new SkinningEntitiesPat(this);
-//            this.rotationYawHead = this.rotationYaw;
         }
         else
         {
@@ -548,6 +547,8 @@ public abstract class SkinningEntities extends EntityLivingBase
     @Override
     public void onUpdate()
     {
+        this.rotationYawHead = this.rotationYaw;
+
         super.onUpdate();
 //        this.updateBox();
 
