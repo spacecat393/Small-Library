@@ -19,12 +19,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -586,6 +590,10 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                         skinningentities.world.spawnEntity(new EntityXPOrb(skinningentities.world, skinningentities.posX, skinningentities.posY, skinningentities.posZ, 10));
                         skinningentities.heal(itemfood.getHealAmount(itemstack) + itemfood.getSaturationModifier(itemstack));
                         itemstack.shrink(1);
+
+                        Vec3d view_vec3d = skinningentities.getLookVec().scale(0.25F);
+                        ((WorldServer)skinningentities.world).spawnParticle(EnumParticleTypes.ITEM_CRACK, skinningentities.posX + view_vec3d.x, skinningentities.posY + skinningentities.getEyeHeight() + view_vec3d.y + 0.5F, skinningentities.posZ + view_vec3d.z, 10, 0.0D, 0.0D, 0.0D, 0.0D, ItemArmor.getIdFromItem(itemfood));
+                        skinningentities.playSound(SoundEvents.ENTITY_GENERIC_EAT, skinningentities.getSoundVolume(), skinningentities.getSoundPitch());
                     }
                     break;
                 }
@@ -637,6 +645,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     {
                         skinningentities.clearActivePotions();
                         entityplayermp.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.BUCKET));
+
+                        skinningentities.playSound(SoundEvents.ENTITY_GENERIC_DRINK, skinningentities.getSoundVolume(), skinningentities.getSoundPitch());
                     }
 
                     break;

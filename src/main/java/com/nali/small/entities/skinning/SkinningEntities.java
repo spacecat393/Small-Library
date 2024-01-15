@@ -39,7 +39,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -902,19 +901,14 @@ public abstract class SkinningEntities extends EntityLivingBase
                             if (item == Items.MILK_BUCKET)
                             {
                                 byte_array[0] = 19;
-                                this.playSound(SoundEvents.ENTITY_GENERIC_DRINK, this.getSoundVolume(), this.getSoundPitch());
                             }
                             else if (item instanceof ItemFood)
                             {
                                 byte_array[0] = 17;
-                                Vec3d view_vec3d = this.getLookVec().scale(0.5F);
-                                this.world.spawnParticle(EnumParticleTypes.ITEM_CRACK, this.posX + view_vec3d.x, this.posY + getEyeHeight() + view_vec3d.y, this.posZ + view_vec3d.z, 0.0D, 0.0D, 0.0D, ItemArmor.getIdFromItem(item));
-                                this.playSound(SoundEvents.ENTITY_GENERIC_EAT, this.getSoundVolume(), this.getSoundPitch());
                             }
 
                             BytesWriter.set(byte_array, this.client_uuid, 1);
                             NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
-
                             break;
                         }
                         default:
@@ -1067,6 +1061,18 @@ public abstract class SkinningEntities extends EntityLivingBase
         return !this.isDead;
     }
 
+    @Override
+    public float getSoundVolume()
+    {
+        return super.getSoundVolume();
+    }
+
+    @Override
+    public float getSoundPitch()
+    {
+        return super.getSoundPitch();
+    }
+
 //    @Override
 //    public void setDead()
 //    {
@@ -1185,7 +1191,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         double hw = this.width / 2.0F;
         double hh = 0.5F;
 
-        Vec3d view_vec3d = this.getLookVec().scale(0.5F);
+        Vec3d view_vec3d = this.getLookVec().scale(0.25F);
         double x = this.posX + view_vec3d.x;
         double y = (this.posY + this.height / 2.0F) + view_vec3d.y;
         double z = this.posZ + view_vec3d.z;
