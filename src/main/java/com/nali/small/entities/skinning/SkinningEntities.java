@@ -547,7 +547,13 @@ public abstract class SkinningEntities extends EntityLivingBase
     @Override
     public void onUpdate()
     {
-        this.rotationYawHead = this.rotationYaw;
+        if (!this.world.isRemote)
+        {
+            if (this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] == 0)
+            {
+                this.rotationYawHead = this.rotationYaw;
+            }
+        }
 
         super.onUpdate();
 //        this.updateBox();
