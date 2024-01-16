@@ -1,5 +1,8 @@
 package com.nali.list.gui;
 
+import com.nali.list.messages.CapabilitiesServerMessage;
+import com.nali.list.messages.SkinningEntitiesServerMessage;
+import com.nali.render.SkinningRender;
 import com.nali.small.capabilities.CapabilitiesRegistryHelper;
 import com.nali.small.data.BoxData;
 import com.nali.small.data.SakuraData;
@@ -11,9 +14,6 @@ import com.nali.small.networks.NetworksRegistry;
 import com.nali.small.render.BoxRender;
 import com.nali.small.render.RenderHelper;
 import com.nali.small.render.SakuraRender;
-import com.nali.list.messages.CapabilitiesServerMessage;
-import com.nali.list.messages.SkinningEntitiesServerMessage;
-import com.nali.render.SkinningRender;
 import com.nali.system.Timing;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
@@ -21,7 +21,6 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.inventory.Container;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -410,19 +409,6 @@ public class PlayerGui extends MixGui
         {
             super.keyTyped(typedChar, keyCode);
         }
-    }
-
-    public static int generateRainbowColor()
-    {
-        float hue = (Minecraft.getSystemTime()/*System.currentTimeMillis()*/ % 3600) / 10.0F;
-        Color color = Color.getHSBColor(hue / 360.0F, 1.0F, 1.0F);
-
-        int red = color.getRed();
-        int green = color.getGreen();
-        int blue = color.getBlue();
-        int alpha = 255;
-
-        return (alpha << 24) | (red << 16) | (green << 8) | blue;
     }
 
     public static class MixButton

@@ -878,44 +878,46 @@ public abstract class SkinningEntities extends EntityLivingBase
 //            else
             if (this.world.isRemote)
             {
-                int state = rayAllTargetsView(entityplayer, new AxisAlignedBB[]
-                {
-                    this.getHeadAxisAlignedBB(),
-                    this.getMouthAxisAlignedBB()
-                }, (byte)50);
+                Item item = entityplayer.getHeldItemMainhand().getItem();
+                boolean milk_bucket = item == Items.MILK_BUCKET;
+                boolean eat_state = item instanceof ItemFood || milk_bucket;
 
-                if (state != -1)
+                AxisAlignedBB[] axisalignedbb_array;
+                if (eat_state)
                 {
-                    switch (state)
+                    axisalignedbb_array = new AxisAlignedBB[]
                     {
-                        case 0:
-                        {
-                            this.skinningentitiespat.onUpdate();
-                            break;
-                        }
-                        case 1:
-                        {
-                            Item item = entityplayer.getHeldItemMainhand().getItem();
+                        this.getEntityBoundingBox(),
+                        this.getMouthAxisAlignedBB()
+                    };
+                }
+                else
+                {
+                    axisalignedbb_array = new AxisAlignedBB[]
+                    {
+                        this.getHeadAxisAlignedBB()
+                    };
+                }
+                int state = rayAllTargetsView(entityplayer, axisalignedbb_array, (byte)50);
 
-                            byte[] byte_array = new byte[17];
-                            if (item == Items.MILK_BUCKET)
-                            {
-                                byte_array[0] = 19;
-                            }
-                            else if (item instanceof ItemFood)
-                            {
-                                byte_array[0] = 17;
-                            }
-
-                            BytesWriter.set(byte_array, this.client_uuid, 1);
-                            NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
-                            break;
-                        }
-                        default:
-                        {
-                            break;
-                        }
+                if (state == 0 && !eat_state)
+                {
+                    this.skinningentitiespat.onUpdate();
+                }
+                else if (state == 1)
+                {
+                    byte[] byte_array = new byte[17];
+                    if (milk_bucket)
+                    {
+                        byte_array[0] = 19;
                     }
+                    else
+                    {
+                        byte_array[0] = 17;
+                    }
+
+                    BytesWriter.set(byte_array, this.client_uuid, 1);
+                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
                 }
                 else
                 {
@@ -1172,20 +1174,20 @@ public abstract class SkinningEntities extends EntityLivingBase
         return temp_iblockstate.getMaterial();
     }
 
+    @SideOnly(Side.CLIENT)
     public AxisAlignedBB getHeadAxisAlignedBB()
     {
-        double hw = this.width / 2.0F;
-        double hh = this.height / 2.0F;
-
+        double hw = this.width / 2.0F + 0.001F;
         double y = this.posY + this.height / 1.125F;
 
         return new AxisAlignedBB
         (
         this.posX - hw, y, this.posZ - hw,
-        this.posX + hw, y + hh, this.posZ + hw
+        this.posX + hw, this.posY + this.height + 0.001F, this.posZ + hw
         );
     }
 
+    @SideOnly(Side.CLIENT)
     public AxisAlignedBB getMouthAxisAlignedBB()
     {
         double hw = this.width / 2.0F;

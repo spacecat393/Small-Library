@@ -651,10 +651,10 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
 
                     break;
                 }
-                case 20://use item
-                {
-                    break;
-                }
+//                case 20://use item
+//                {
+//                    break;
+//                }
                 default:
                 {
                     break;

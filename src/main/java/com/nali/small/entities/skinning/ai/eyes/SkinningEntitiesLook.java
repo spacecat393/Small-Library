@@ -103,7 +103,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
             }
         }
 //        this.skinningentities.skinningentitiesbody.onUpdate();//.updateRenderAngles();
-//        this.skinningentities.rotationYawHead = this.skinningentities.rotationYaw;
+        this.skinningentities.rotationYawHead = this.skinningentities.rotationYaw;
 //        this.skinningentities.renderYawOffset = this.skinningentities.rotationYaw;
 //        else
 //        {

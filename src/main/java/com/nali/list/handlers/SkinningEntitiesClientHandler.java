@@ -188,14 +188,6 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
 //                }
                 break;
             }
-            case 8://eat sound
-            {
-                break;
-            }
-            case 9://milk sound
-            {
-                break;
-            }
             default:
             {
                 break;
