@@ -44,7 +44,7 @@ public class EffectsGUIFeatures extends GUIFeaturesLoader
 
                     this.string_array[index++] = id + " " + potion.getName();
                     this.string_array[index++] = this.ed + " " + String.format("%02d:%02d:%02d", hours, minutes, seconds);
-                    this.string_array[index++] = this.ea + " " + EFFECTS_INT_ARRAY[i] + 1;
+                    this.string_array[index++] = this.ea + " " + EFFECTS_INT_ARRAY[i];//(EFFECTS_INT_ARRAY[i] == 0 ? 1 : EFFECTS_INT_ARRAY[i]);
                 }
             }
         }

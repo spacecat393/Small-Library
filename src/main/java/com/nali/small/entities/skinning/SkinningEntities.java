@@ -900,20 +900,25 @@ public abstract class SkinningEntities extends EntityLivingBase
                 }
                 int state = rayAllTargetsView(entityplayer, axisalignedbb_array, (byte)50);
 
-                if (state == 0 && !eat_state)
+                if (state == 0 && !eat_state && this.isMove())
                 {
                     this.skinningentitiespat.onUpdate();
                 }
                 else if (state == 1)
                 {
-                    byte[] byte_array = new byte[17];
+                    byte[] byte_array;
                     if (milk_bucket)
                     {
+                        byte_array = new byte[1 + 16];
                         byte_array[0] = 19;
                     }
                     else
                     {
+                        byte_array = new byte[1 + 16 + 4 + 4 + 4];
                         byte_array[0] = 17;
+                        BytesWriter.set(byte_array, (float)(axisalignedbb_array[1].maxX + (axisalignedbb_array[1].minX - axisalignedbb_array[1].maxX) / 2.0D), 1 + 16);
+                        BytesWriter.set(byte_array, (float)(axisalignedbb_array[1].maxY + (axisalignedbb_array[1].minY - axisalignedbb_array[1].maxY) / 2.0D), 1 + 16 + 4);
+                        BytesWriter.set(byte_array, (float)(axisalignedbb_array[1].maxZ + (axisalignedbb_array[1].minZ - axisalignedbb_array[1].maxZ) / 2.0D), 1 + 16 + 4 + 4);
                     }
 
                     BytesWriter.set(byte_array, this.client_uuid, 1);
@@ -1190,19 +1195,26 @@ public abstract class SkinningEntities extends EntityLivingBase
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getMouthAxisAlignedBB()
     {
-        double hw = this.width / 2.0F;
-        double hh = 0.5F;
+        if (this.isZeroMove())
+        {
+            return this.getEntityBoundingBox().grow(0.25F);
+        }
+        else
+        {
+            double hw = this.width / 2.0F;
+            double hh = 0.5F;
 
-        Vec3d view_vec3d = this.getLookVec().scale(0.25F);
-        double x = this.posX + view_vec3d.x;
-        double y = (this.posY + this.height / 2.0F) + view_vec3d.y;
-        double z = this.posZ + view_vec3d.z;
+            Vec3d view_vec3d = this.getLookVec().scale(0.25F);
+            double x = this.posX + view_vec3d.x;
+            double y = (this.posY + this.height / 2.0F) + view_vec3d.y;
+            double z = this.posZ + view_vec3d.z;
 
-        return new AxisAlignedBB
-        (
-        x - hw, y, z - hw,
-        x + hw, y + hh, z + hw
-        );
+            return new AxisAlignedBB
+            (
+            x - hw, y, z - hw,
+            x + hw, y + hh, z + hw
+            );
+        }
     }
 
 

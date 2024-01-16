@@ -26,7 +26,7 @@ public class AttributesGUIFeatures extends GUIFeaturesLoader
                 value += attributemodifier.getAmount();
             }
 
-            this.string_array[index++] = "attribute.name." + iattributeinstance.getAttribute().getName() + " : " + value;
+            this.string_array[index] = (index++ - 1) + " " + iattributeinstance.getAttribute().getName() + " : " + value;
         }
         this.createColor();
     }

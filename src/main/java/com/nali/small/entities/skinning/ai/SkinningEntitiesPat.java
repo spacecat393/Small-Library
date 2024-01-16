@@ -27,9 +27,10 @@ public class SkinningEntitiesPat extends SkinningEntitiesAI
         {
             this.pat_time = (byte)this.skinningentities.getRNG().nextInt(16);
 
-            byte[] byte_array = new byte[17];
+            byte[] byte_array = new byte[1 + 16 + 4];
             byte_array[0] = 16;
             BytesWriter.set(byte_array, this.skinningentities.client_uuid, 1);
+            BytesWriter.set(byte_array, (float)this.skinningentities.getEntityBoundingBox().maxY, 1 + 16);
             NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
 
 //            this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.ON_PAT()] = 1;

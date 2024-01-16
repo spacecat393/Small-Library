@@ -28,7 +28,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -574,8 +573,9 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
                     if (skinningentities != null)
                     {
-                        skinningentities.server_work_byte_array[skinningentities.skinningentitiesbytes.ON_PAT()] = 1;
-                        skinningentities.world.spawnEntity(new EntityXPOrb(skinningentities.world, skinningentities.posX, skinningentities.posY, skinningentities.posZ, 10));
+                        skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.ON_PAT()] = 1;
+                        ((WorldServer)skinningentities.world).spawnParticle(EnumParticleTypes.HEART, skinningentities.posX, BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16), skinningentities.posZ, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+//                        skinningentities.world.spawnEntity(new EntityXPOrb(skinningentities.world, skinningentities.posX, skinningentities.posY, skinningentities.posZ, 10));
                     }
                     break;
                 }
@@ -586,13 +586,16 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     if (skinningentities != null && itemstack.getItem() instanceof ItemFood)
                     {
                         ItemFood itemfood = (ItemFood)itemstack.getItem();
-                        skinningentities.server_work_byte_array[skinningentities.skinningentitiesbytes.ON_EAT()] = 1;
+                        skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.ON_EAT()] = 1;
                         skinningentities.world.spawnEntity(new EntityXPOrb(skinningentities.world, skinningentities.posX, skinningentities.posY, skinningentities.posZ, 10));
                         skinningentities.heal(itemfood.getHealAmount(itemstack) + itemfood.getSaturationModifier(itemstack));
                         itemstack.shrink(1);
 
-                        Vec3d view_vec3d = skinningentities.getLookVec().scale(0.25F);
-                        ((WorldServer)skinningentities.world).spawnParticle(EnumParticleTypes.ITEM_CRACK, skinningentities.posX + view_vec3d.x, skinningentities.posY + skinningentities.getEyeHeight() + view_vec3d.y + 0.5F, skinningentities.posZ + view_vec3d.z, 10, 0.0D, 0.0D, 0.0D, 0.0D, ItemArmor.getIdFromItem(itemfood));
+//                        Vec3d view_vec3d = skinningentities.getLookVec().scale(0.25F);
+                        float x = BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16);
+                        float y = BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4);
+                        float z = BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4 + 4);
+                        ((WorldServer)skinningentities.world).spawnParticle(EnumParticleTypes.ITEM_CRACK, /*skinningentities.posX + view_vec3d.x*/x, /*skinningentities.posY + skinningentities.getEyeHeight() + view_vec3d.y + 0.5F*/y, /*skinningentities.posZ + view_vec3d.z*/z, 10, 0.0D, 0.0D, 0.0D, 0.0D, ItemArmor.getIdFromItem(itemfood));
                         skinningentities.playSound(SoundEvents.ENTITY_GENERIC_EAT, skinningentities.getSoundVolume(), skinningentities.getSoundPitch());
                     }
                     break;
