@@ -1,7 +1,6 @@
 package com.nali.small.entities.skinning.ai;
 
 import com.nali.small.entities.skinning.SkinningEntities;
-import net.minecraft.network.datasync.EntityDataManager;
 
 import java.util.function.Supplier;
 
@@ -152,7 +151,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
     {
         this.step = 1;
         byte state = skinningentitiesframeai.getByte();
-        EntityDataManager entitydatamanager = this.skinningentities.getDataManager();
+//        EntityDataManager entitydatamanager = this.skinningentities.getDataManager();
 //        DataParameter<Byte> byte_dataparameter = this.skinningentities.getByteDataParameterArray()[this.skinningentities.skinningentitiesbytes.AMMO()];
 //        byte ammo = entitydatamanager.get(byte_dataparameter);
         byte ammo = this.skinningentities.main_server_work_byte_array[this.skinningentities.skinningentitiesbytes.AMMO()];
