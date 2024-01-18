@@ -103,60 +103,14 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         skinningrender.net_head_yaw = skinningrender.head_rot - skinningrender.body_rot;
         skinningrender.head_pitch = (float)Math.toRadians(skinningentities.prevRotationPitch + (skinningentities.rotationPitch - skinningentities.prevRotationPitch) * partialTicks);
 
-        int max_bones = skinningrender.openglanimationmemory.bones;
-
-        //
-
-        int max_key = skinningrender.openglanimationmemory.length;
-
-        for (int i = 0; i < max_bones; ++i)
-        {
-            System.arraycopy(M4x4.IDENTITY, 0, skinningrender.skinning_float_array, i * 16, 16);
-//            System.arraycopy(M4x4.IDENTITY, 0, skinningrender.inverse_skinning_float_array, i * 16, 16);
-        }
+        skinningrender.initSkinning();
 
         if (!skinningentities.fake)
         {
             this.multiplyAnimation(skinningentities);
         }
 
-//        for (int z = 0; z < max_bones; ++z)
-//        {
-//            if (skinningrender.openglanimationmemory.idlebones_byte_array[z] != 0)
-//            {
-//                ((M4x4)FREE_SKINNING_OBJECT_ARRAY[6]).multiply(skinningrender.skinning_float_array, z * 16);
-//            }
-//        }
-
-        for (int i = 0; i < max_bones; ++i)
-        {
-            M4x4.multiply(skinningrender.openglanimationmemory.transforms_float_array, skinningrender.skinning_float_array, (skinningrender.frame_int_array[0] + max_key * i) * 16, i * 16);
-//            M4x4.multiply(skinningrender.openglanimationmemory.transforms_float_array, skinningrender.inverse_skinning_float_array, (skinningrender.frame_int_array[0] + max_key * i) * 16, i * 16);
-
-//            {
-//                M4x4 m4x4 = new M4x4();
-//                M4x4.multiply(skinningrender.openglanimationmemory.transforms_float_array, m4x4.mat, (skinningrender.frame_int_array[0] + max_key * i) * 16, 0);
-////                m4x4.inverse();
-//                M4x4.multiply(m4x4.mat, skinningrender.inverse_skinning_float_array, 0, i * 16);
-//            }
-
-            for (int f = 1; f < skinningrender.frame_int_array.length; ++f)
-            {
-                if (skinningrender.frame_boolean_array[f - 1])
-                {
-                    M4x4.multiply(skinningrender.openglanimationmemory.transforms_float_array, skinningrender.skinning_float_array, (skinningrender.frame_int_array[f] + max_key * i) * 16, i * 16);
-//                    M4x4.multiply(skinningrender.openglanimationmemory.transforms_float_array, skinningrender.inverse_skinning_float_array, (skinningrender.frame_int_array[f] + max_key * i) * 16, i * 16);
-
-//                    {
-//                        M4x4 m4x4 = new M4x4();
-//                        M4x4.multiply(skinningrender.openglanimationmemory.transforms_float_array, m4x4.mat, (skinningrender.frame_int_array[f] + max_key * i) * 16, 0);
-////                        m4x4.inverse();
-//                        M4x4.multiply(m4x4.mat, skinningrender.inverse_skinning_float_array, 0, i * 16);
-//                    }
-                }
-            }
-            M4x4.inverse(skinningrender.skinning_float_array, i * 16);
-        }
+        skinningrender.setSkinning();
     }
 
 //    public void renderHeldItem(SkinningEntities skinningentities, ItemStack itemstack, int hand_index, ItemCameraTransforms.TransformType transformtype)

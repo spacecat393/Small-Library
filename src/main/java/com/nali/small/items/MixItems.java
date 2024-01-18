@@ -6,21 +6,21 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MixItems extends Item
+public interface MixItems
 {
     @SideOnly(Side.CLIENT)
-    public ObjectRender objectrender;
+    ObjectRender getObjectRender();
 
-    public MixItems(String name, String mod_id, CreativeTabs creativetabs)
+    default void init(Item item, String name, String mod_id, CreativeTabs creativetabs)
     {
-        this.setRegistryName(mod_id, name);
-        this.setCreativeTab(creativetabs);
-        this.setTranslationKey(name);
+        item.setRegistryName(mod_id, name);
+        item.setCreativeTab(creativetabs);
+        item.setTranslationKey(name);
     }
 
     @SideOnly(Side.CLIENT)
-    public void render()
+    default void render()
     {
-        this.objectrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
+        this.getObjectRender().objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
     }
 }

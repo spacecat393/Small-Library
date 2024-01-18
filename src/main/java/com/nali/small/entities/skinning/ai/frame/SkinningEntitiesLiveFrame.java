@@ -1,24 +1,26 @@
-package com.nali.small.entities.skinning.ai;
+package com.nali.small.entities.skinning.ai.frame;
 
 import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
+import com.nali.small.entities.skinning.ai.SkinningEntitiesAttack;
 
 import java.util.function.Supplier;
 
 public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
 {
     public int step = 1;
+//    public int main_integer_index;
     public int integer_index;
     public int[][] int_2d_array; // start end
-    public int[] attack_frame_int_array;
     public byte max_ammo = 16;
     public Supplier<Boolean>[] condition_boolean_supplier_array;
 
-    public SkinningEntitiesLiveFrame(SkinningEntities skinningentities, int integer_index, int[][] int_2d_array, int[] attack_frame_int_array)
+    public SkinningEntitiesLiveFrame(SkinningEntities skinningentities/*, int main_integer_index*/, int integer_index, int[][] int_2d_array)
     {
         super(skinningentities);
+//        this.main_integer_index = main_integer_index;
         this.integer_index = integer_index;
         this.int_2d_array = int_2d_array;
-        this.attack_frame_int_array = attack_frame_int_array;
     }
 
     @Override
@@ -28,7 +30,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         {
             if (boolean_supplier.get())
             {
-                this.skinningentities.getDataManager().set(this.skinningentities.getIntegerDataParameterArray()[this.skinningentities.bothdata.MaxPart() + this.integer_index], this.skinningentities.server_frame_int_array[this.integer_index] + this.step);
+                this.skinningentities.getDataManager().set(this.skinningentities.getIntegerDataParameterArray()[/*this.main_integer_index*/this.integer_index], this.skinningentities.server_frame_int_array[this.integer_index] + this.step);
                 return;
             }
         }
@@ -147,10 +149,10 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         return result;
     }
 
-    public boolean setShoot(int id0, int id1, int id2, int id3, SkinningEntitiesFrameAI skinningentitiesframeai)
+    public boolean setShoot(int id0, int id1, int id2, int id3, SkinningEntitiesAttack skinningentitiesattack)
     {
         this.step = 1;
-        byte state = skinningentitiesframeai.getByte();
+//        byte state = skinningentitiesattack.getByte();
 //        EntityDataManager entitydatamanager = this.skinningentities.getDataManager();
 //        DataParameter<Byte> byte_dataparameter = this.skinningentities.getByteDataParameterArray()[this.skinningentities.skinningentitiesbytes.AMMO()];
 //        byte ammo = entitydatamanager.get(byte_dataparameter);
@@ -181,7 +183,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
                 }
             }
         }
-        else if (state == 0 || state == 1)
+        else if (skinningentitiesattack.state == 0 || skinningentitiesattack.state == 1)
         {
             //start gun
             if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id1][1])
@@ -200,13 +202,13 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
                 }
 
 //                skinningentitiesframeai.setByte((byte)1);
-                for (int attack_frame : this.attack_frame_int_array)
+                for (int attack_frame : skinningentitiesattack.attack_frame_int_array)
                 {
                     if (this.skinningentities.server_frame_int_array[this.integer_index] == attack_frame)
                     {
                         this.skinningentities.main_server_work_byte_array[this.skinningentities.skinningentitiesbytes.AMMO()] = (byte)(ammo - 1);
 //                        entitydatamanager.set(byte_dataparameter, (byte)(ammo - 1));
-                        skinningentitiesframeai.setByte((byte)1);
+                        skinningentitiesattack.state = 1;
                         break;
                     }
                 }

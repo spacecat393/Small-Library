@@ -1,8 +1,6 @@
 package com.nali.list.handlers;
 
 import com.nali.list.messages.SkinningEntitiesClientMessage;
-import com.nali.render.ObjectRender;
-import com.nali.render.SkinningRender;
 import com.nali.small.Small;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
@@ -15,7 +13,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -61,18 +58,14 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
                             SkinningEntities skinningentities = (SkinningEntities)entity;
                             skinningentities.fake = true;
                             skinningentities.client_uuid = uuid;
-                            NBTTagCompound nbttagcompound = new NBTTagCompound();
-                            skinningentities.initWriteEntityToNBT(nbttagcompound);
-                            for (int ii = 0; ii < skinningentities.bothdata.MaxPart(); ++ii)
-                            {
-                                ((ObjectRender)skinningentities.client_object).texture_index_int_array[ii] = nbttagcompound.getInteger("int_" + ii);
-                            }
-
-                            String key = "int_" + skinningentities.bothdata.MaxPart();
-                            if (nbttagcompound.hasKey(key))
-                            {
-                                ((SkinningRender)skinningentities.client_object).frame_int_array[0] = nbttagcompound.getInteger(key);
-                            }
+//                            NBTTagCompound nbttagcompound = new NBTTagCompound();
+//                            skinningentities.initWriteEntityToNBT(nbttagcompound);
+//                            for (int ii = 0; ii < skinningentities.bothdata.MaxPart(); ++ii)
+//                            {
+//                                ((ObjectRender)skinningentities.client_object).texture_index_int_array[ii] = nbttagcompound.getInteger("int_" + ii);
+//                            }
+//                            skinningentities.initWriteEntityToNBT(nbttagcompound);
+                            skinningentities.initFakeFrame();
                         }
                         catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
                         {

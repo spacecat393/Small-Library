@@ -24,7 +24,7 @@ public abstract class MixinItemRenderer
         if (stack.getItem() instanceof MixItems)
         {
             int lig_coord = Minecraft.getMinecraft().world.getCombinedLight(new BlockPos(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ), 0);
-            ObjectRender objectrender = ((MixItems)stack.getItem()).objectrender;
+            ObjectRender objectrender = ((MixItems)stack.getItem()).getObjectRender();
             objectrender.lig_b = lig_coord & 0xFFFF;
             objectrender.lig_s = (lig_coord >> 16) & 0xFFFF;
         }
@@ -36,7 +36,7 @@ public abstract class MixinItemRenderer
         if (heldStack.getItem() instanceof MixItems)
         {
             int lig_coord = Minecraft.getMinecraft().world.getCombinedLight(new BlockPos(entitylivingbaseIn.posX, entitylivingbaseIn.posY + (double)entitylivingbaseIn.getEyeHeight(), entitylivingbaseIn.posZ), 0);
-            ObjectRender objectrender = ((MixItems)heldStack.getItem()).objectrender;
+            ObjectRender objectrender = ((MixItems)heldStack.getItem()).getObjectRender();
             objectrender.lig_b = lig_coord & 0xFFFF;
             objectrender.lig_s = (lig_coord >> 16) & 0xFFFF;
         }

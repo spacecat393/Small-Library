@@ -10,6 +10,8 @@ import com.nali.small.entities.bytes.SkinningEntitiesBytes;
 import com.nali.small.entities.skinning.ai.*;
 import com.nali.small.entities.skinning.ai.eyes.SkinningEntitiesBody;
 import com.nali.small.entities.skinning.ai.eyes.SkinningEntitiesLook;
+import com.nali.small.entities.skinning.ai.SkinningEntitiesAttack;
+import com.nali.small.entities.skinning.ai.frame.SkinningEntitiesLiveFrame;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesMove;
 import com.nali.small.networks.NetworksRegistry;
@@ -146,7 +148,11 @@ public abstract class SkinningEntities extends EntityLivingBase
             this.skinningentitiesfollow = new SkinningEntitiesFollow(this);
             this.skinningentitiesrandomwalk = new SkinningEntitiesRandomWalk(this);
             this.skinningentitiesrandomlook = new SkinningEntitiesRandomLook(this);
-            this.skinningentitiesattack = new SkinningEntitiesAttack(this);
+
+            if (this.skinningentitiesbytes.ATTACK() != -1)
+            {
+                this.skinningentitiesattack = new SkinningEntitiesAttack(this);
+            }
             this.skinningentitiesrevive = new SkinningEntitiesRevive(this);
 
 //            this.server_work_byte_array = new byte[this.getByteDataParameterArray().length];
@@ -154,9 +160,10 @@ public abstract class SkinningEntities extends EntityLivingBase
 //            this.server_state_byte_array = new byte[max_states];
             this.server_work_byte_array = new byte[max_works];
 //            this.current_server_work_byte_array = new byte[max_works];
-            int size = this.getIntegerDataParameterArray().length - this.bothdata.MaxPart();
-            this.server_skinningentitiesliveframe_array = new SkinningEntitiesLiveFrame[size];
-            this.server_frame_int_array = new int[size];
+//            int size = this.getIntegerDataParameterArray().length - this.bothdata.MaxPart();
+//            this.server_skinningentitiesliveframe_array = new SkinningEntitiesLiveFrame[size];
+//            this.server_frame_int_array = new int[size];
+            this.server_frame_int_array = new int[this.getIntegerDataParameterArray().length];
             this.createServer();
             this.getDataManager().set(this.getFloatDataParameterArray()[0], scale);
 
@@ -346,7 +353,13 @@ public abstract class SkinningEntities extends EntityLivingBase
 //            entitydatamanager.set(byte_dataparameter, nbttagcompound.getByte("byte_" + i++));
 //        }
 //        i = 0;
-        this.main_server_work_byte_array = nbttagcompound.getByteArray("work_bytes");
+
+        //check on bytes changed
+        byte[] work_bytes = nbttagcompound.getByteArray("work_bytes");
+        if (work_bytes.length == this.main_server_work_byte_array.length)
+        {
+            this.main_server_work_byte_array = work_bytes;
+        }
 
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
         for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
@@ -635,10 +648,10 @@ public abstract class SkinningEntities extends EntityLivingBase
             System.arraycopy(this.main_server_work_byte_array, 0, this.server_work_byte_array, 0, this.server_work_byte_array.length);
 //            System.arraycopy(this.server_work_byte_array, 0, this.current_server_work_byte_array, 0, this.server_work_byte_array.length);
 
-            int max_part = this.bothdata.MaxPart();
+//            int max_part = this.bothdata.MaxPart();
             for (int i = 0; i < this.server_frame_int_array.length; ++i)
             {
-                this.server_frame_int_array[i] = entitydatamanager.get(integer_dataparameter[max_part + i]);
+                this.server_frame_int_array[i] = entitydatamanager.get(integer_dataparameter[i]);
             }
 
 //            this.hands_itemstack_nonnulllist.set(0, this.inventorybasic.getStackInSlot(27));//mainhand
@@ -673,10 +686,19 @@ public abstract class SkinningEntities extends EntityLivingBase
             //
             if (this.isMove())
             {
-                this.skinningentitiesarea.onUpdate();
+                if (this.ticksExisted % 100 == 0)//5sec
+                {
+                    this.skinningentitiesarea.onUpdate();
+                }
+
                 this.skinningentitiesrevive.onUpdate();
                 this.skinningentitiesfollow.onUpdate();
-                this.skinningentitiesattack.onUpdate();
+
+                if (this.skinningentitiesattack != null)
+                {
+                    this.skinningentitiesattack.onUpdate();
+                }
+
                 this.skinningentitiesgetitem.onUpdate();
                 this.skinningentitiesrandomwalk.onUpdate();
                 this.skinningentitiesrandomlook.onUpdate();
@@ -1111,16 +1133,24 @@ public abstract class SkinningEntities extends EntityLivingBase
         }
 
         skinningrender.scale = entitydatamanager.get(this.getFloatDataParameterArray()[0]);
+        this.updateRendering(skinningrender, entitydatamanager);
+    }
 
+    public void updateRendering(SkinningRender skinningrender, EntityDataManager entitydatamanager)
+    {
         DataParameter<Integer>[] integer_dataparameter = this.getIntegerDataParameterArray();
-        for (int i = 0; i < skinningrender.texture_index_int_array.length; ++i)
+//        while (i < skinningrender.texture_index_int_array.length)
+//        {
+//            skinningrender.texture_index_int_array[i] = entitydatamanager.get(integer_dataparameter[i++]);
+//        }
+//
+//        for (int x = 0; i < skinningrender.frame_int_array.length; ++x)
+//        {
+//            skinningrender.frame_int_array[x] = entitydatamanager.get(integer_dataparameter[i++]);
+//        }
+        for (int x = 0; x < skinningrender.frame_int_array.length; ++x)
         {
-            skinningrender.texture_index_int_array[i] = entitydatamanager.get(integer_dataparameter[i]);
-        }
-
-        for (int i = 0; i < skinningrender.frame_int_array.length; ++i)
-        {
-            skinningrender.frame_int_array[i] = entitydatamanager.get(integer_dataparameter[this.bothdata.MaxPart() + i]);
+            skinningrender.frame_int_array[x] = entitydatamanager.get(integer_dataparameter[x++]);
         }
     }
 
@@ -1258,8 +1288,9 @@ public abstract class SkinningEntities extends EntityLivingBase
 
     }
 
-    public abstract void initWriteEntityToNBT(NBTTagCompound nbttagcompound);
-    public abstract void initReadEntityFromNBT();
+    public void initFakeFrame(){}
+    public void initWriteEntityToNBT(NBTTagCompound nbttagcompound){}
+    public void initReadEntityFromNBT(){}
 
     public abstract BothData createBothData();
     public abstract SkinningEntitiesBytes createBytes();

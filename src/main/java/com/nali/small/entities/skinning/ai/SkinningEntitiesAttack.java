@@ -7,8 +7,10 @@ import net.minecraft.util.EnumHand;
 
 import static com.nali.small.entities.EntitiesMathHelper.isTooClose;
 
-public class SkinningEntitiesAttack extends SkinningEntitiesAI implements SkinningEntitiesFrameAI
+public class SkinningEntitiesAttack extends SkinningEntitiesAI
 {
+    public int[] attack_frame_int_array;
+
     public boolean attack = false;
     public double minimum_distance = 3.0D;
 //    public double minimum_away_distance = 2.0D;
@@ -142,17 +144,5 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI implements Skinni
 
             this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.ATTACK()] = 0;
         }
-    }
-
-    @Override
-    public byte getByte()
-    {
-        return this.state;
-    }
-
-    @Override
-    public void setByte(byte b)
-    {
-        this.state = b;
     }
 }

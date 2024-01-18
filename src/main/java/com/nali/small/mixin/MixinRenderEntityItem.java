@@ -21,7 +21,7 @@ public class MixinRenderEntityItem
         if (itemstack.getItem() instanceof MixItems)
         {
             int lig_coord = Minecraft.getMinecraft().world.getCombinedLight(entity.getPosition(), 0);
-            ObjectRender objectrender = ((MixItems)itemstack.getItem()).objectrender;
+            ObjectRender objectrender = ((MixItems)itemstack.getItem()).getObjectRender();
             objectrender.lig_b = lig_coord & 0xFFFF;
             objectrender.lig_s = (lig_coord >> 16) & 0xFFFF;
         }

@@ -1,5 +1,6 @@
 package com.nali.small.mixin;
 
+import com.nali.render.ObjectRender;
 import com.nali.small.items.MixItems;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -19,8 +20,9 @@ public abstract class MixinRenderItem
         {
             MixItems mixitems = ((MixItems)stack.getItem());
             mixitems.render();
-            mixitems.objectrender.lig_b = 208.0F;
-            mixitems.objectrender.lig_s = 240.0F;
+            ObjectRender objectrender = mixitems.getObjectRender();
+            objectrender.lig_b = 208.0F;
+            objectrender.lig_s = 240.0F;
             ci.cancel();
         }
     }

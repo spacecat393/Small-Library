@@ -1,5 +1,6 @@
 package com.nali.list.items;
 
+import com.nali.render.ObjectRender;
 import com.nali.small.Small;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.items.MixItems;
@@ -9,6 +10,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
@@ -24,13 +26,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.List;
 
-public class SmallBox extends MixItems
+public class SmallBox extends Item implements MixItems
 {
     public static SmallBox I;
+    public static ObjectRender OBJECTRENDER;
 
     public SmallBox(String[] string_array)
     {
-        super(string_array[0], string_array[1], Tabs.TABS);
+        super();
+        this.init(this, string_array[0], string_array[1], Tabs.TABS);
         this.setMaxStackSize(1);
         I = this;
     }
@@ -44,11 +48,17 @@ public class SmallBox extends MixItems
     }
 
     @Override
+    public ObjectRender getObjectRender()
+    {
+        return OBJECTRENDER;
+    }
+
+    @Override
     public void render()
     {
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, -0.07357F, 0.0F);
-        super.render();
+        MixItems.super.render();
 //        GL11.glTranslatef(0.0F, 0.07357F, 0.0F);
         GL11.glPopMatrix();
     }

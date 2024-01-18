@@ -408,14 +408,25 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 1)
                 {
-                    if (this.mouse_released == 0)
+                    int id = skinningentities.skinningentitiesbytes.ATTACK();
+                    if (id != -1)
                     {
-                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.ATTACK());
-                    }
+                        if (this.mouse_released == 0)
+                        {
+                            this.sendPacketUUIDInt(id);
+                        }
 
-                    if (!(GUIFEATURESLOADER instanceof AttackGUIFeatures))
+                        if (!(GUIFEATURESLOADER instanceof AttackGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new AttackGUIFeatures(this);
+                        }
+                    }
+                    else
                     {
-                        GUIFEATURESLOADER = new AttackGUIFeatures(this);
+                        if (!(GUIFEATURESLOADER instanceof CantAttackGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new CantAttackGUIFeatures(this);
+                        }
                     }
                     this.render_text = true;
                 }
@@ -566,6 +577,8 @@ public class InventoryGui extends MixGui
             }
         }
 
+        SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
+
         switch (PAGE)
         {
             case 0:
@@ -610,7 +623,16 @@ public class InventoryGui extends MixGui
                 this.drawTexturedModalRect(this.guiLeft + 85, this.guiTop + 90, 142, 0, 14, 14);
                 this.drawTexturedModalRect(this.guiLeft + 105, this.guiTop + 92, 52, 14, 12, 12);
                 this.drawTexturedModalRect(this.guiLeft + 121, this.guiTop + 94, 38, 14, 14, 8);
-                this.drawTexturedModalRect(this.guiLeft + 139, this.guiTop + 90, 58, 0, 14, 14);
+
+                if (skinningentities.skinningentitiesbytes.ATTACK() == -1)
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 139, this.guiTop + 90, 134, 14, 14, 14);
+                }
+                else
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 139, this.guiTop + 90, 58, 0, 14, 14);
+                }
+
                 this.drawTexturedModalRect(this.guiLeft + 157, this.guiTop + 90, 64, 14, 14, 14);
 
                 break;
@@ -632,7 +654,6 @@ public class InventoryGui extends MixGui
             }
         }
 
-        SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
         float health_percent = skinningentities.getHealth() / skinningentities.getMaxHealth();
         int health = (int)(59 * health_percent);
         for (int i = 0; i < health; ++i)

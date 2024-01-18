@@ -78,6 +78,7 @@ gui.info.a=Attributes
 gui.info.e=Effects
 gui.info.ed=Duration
 gui.info.ea=Amplifier
+gui.info.c0=Can't Attack
 
 itemGroup.small=Small
 item.box.name=Box

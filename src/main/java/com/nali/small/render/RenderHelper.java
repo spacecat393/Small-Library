@@ -14,10 +14,10 @@ public class RenderHelper
     public static void init()
     {
         float s = 0.25F;
-        SmallBox.I.objectrender = new BoxRender(new BoxData(), DATALOADER);
-        SmallBox.I.objectrender.sx = s;
-        SmallBox.I.objectrender.sy = s;
-        SmallBox.I.objectrender.sz = s;
-        SmallBox.I.objectrender.z = 0.0F;
+        SmallBox.OBJECTRENDER = new BoxRender(new BoxData(), DATALOADER);
+        SmallBox.OBJECTRENDER.sx = s;
+        SmallBox.OBJECTRENDER.sy = s;
+        SmallBox.OBJECTRENDER.sz = s;
+        SmallBox.OBJECTRENDER.z = 0.0F;
     }
 }
