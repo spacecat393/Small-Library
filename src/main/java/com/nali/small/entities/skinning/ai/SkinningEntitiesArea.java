@@ -15,6 +15,7 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
 {
     public Entity[] target_entity_array = new Entity[2]; // xp item
     public ArrayList<Entity> all_entity_arraylist = new ArrayList<Entity>(); // target
+    public ArrayList<Entity> out_entity_arraylist = new ArrayList<Entity>(); // target
 //    public double[] distance_to_target_array = new double[2];
 
     public ArrayList<Integer> troublemaker_arraylist = new ArrayList<>();
@@ -29,6 +30,7 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
     public void onUpdate()
     {
         this.all_entity_arraylist.clear();
+        this.out_entity_arraylist.clear();
 //        byte target_level = -1;
 //
 //        if (this.skinningentities.getByteDataParameterArray().length > 7)
@@ -76,11 +78,19 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
                 this.target_entity_array[0] = entity;
             }
 
-            if (entity.isEntityAlive() && this.isTarget(entity))
+            if (this.isTarget(entity))
             {
-                this.all_entity_arraylist.add(entity);
+                if (entity.isEntityAlive())
+                {
+                    this.all_entity_arraylist.add(entity);
 //                this.setTarget(entity, 0);
+                }
             }
+            else
+            {
+                this.out_entity_arraylist.add(entity);
+            }
+
 //            else if (target_level != -1 && entity.isAlive())
 //            {
 //                switch (target_level)

@@ -2,7 +2,6 @@ package com.nali.small.entities.skinning.ai;
 
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumHand;
 
 import static com.nali.small.entities.EntitiesMathHelper.isTooClose;
@@ -100,24 +99,25 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
                 this.skinningentities.skinningentitieslook.set(entity.posX, entity.posY, entity.posZ, 20.0F);
             }
 
-            if (this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance))
-            {
-//                if (MixMath.isTooClose(this.skinningentities, entity, this.minimum_away_distance))
-//                {
-//                    Vec3d a_pos = this.skinningentities.getPositionVector();
-//                    Vec3d direction = a_pos.subtract(entity.getPositionVector()).normalize();
-//                    Vec3d targetPos = a_pos.add(direction);
-//                    this.skinningentities.skinningentitiesfindmove.setGoal(targetPos.x, targetPos.y, targetPos.z);
-//                    this.state = 2;
-                    if (entity instanceof EntityLivingBase)
-                    {
-                        ((EntityLivingBase)entity).moveForward = 0;
-                        ((EntityLivingBase)entity).moveVertical = 0;
-                        ((EntityLivingBase)entity).moveStrafing = 0;
-                    }
-//                }
-            }
-            else
+//            if (this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance))
+//            {
+//////                if (MixMath.isTooClose(this.skinningentities, entity, this.minimum_away_distance))
+//////                {
+//////                    Vec3d a_pos = this.skinningentities.getPositionVector();
+//////                    Vec3d direction = a_pos.subtract(entity.getPositionVector()).normalize();
+//////                    Vec3d targetPos = a_pos.add(direction);
+//////                    this.skinningentities.skinningentitiesfindmove.setGoal(targetPos.x, targetPos.y, targetPos.z);
+//////                    this.state = 2;
+////                    if (entity instanceof EntityLivingBase)
+////                    {
+////                        ((EntityLivingBase)entity).moveForward = 0;
+////                        ((EntityLivingBase)entity).moveVertical = 0;
+////                        ((EntityLivingBase)entity).moveStrafing = 0;
+////                    }
+//////                }
+//            }
+//            else
+            if (!(this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance)))
             {
                 this.skinningentities.skinningentitiesfindmove.setGoal(entity.posX, entity.posY, entity.posZ);
                 this.state = 3;

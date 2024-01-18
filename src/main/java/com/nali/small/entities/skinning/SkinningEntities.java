@@ -89,6 +89,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     public SkinningEntitiesRandomWalk skinningentitiesrandomwalk;
     public SkinningEntitiesRandomLook skinningentitiesrandomlook;
     public SkinningEntitiesAttack skinningentitiesattack;
+    public SkinningEntitiesHeal skinningentitiesheal;
     public SkinningEntitiesRevive skinningentitiesrevive;
     public SkinningEntitiesLiveFrame[] server_skinningentitiesliveframe_array;
     public boolean server_sus_init;
@@ -152,6 +153,10 @@ public abstract class SkinningEntities extends EntityLivingBase
             if (this.skinningentitiesbytes.ATTACK() != -1)
             {
                 this.skinningentitiesattack = new SkinningEntitiesAttack(this);
+            }
+            if (this.skinningentitiesbytes.HEAL() != -1)
+            {
+                this.skinningentitiesheal = new SkinningEntitiesHeal(this);
             }
             this.skinningentitiesrevive = new SkinningEntitiesRevive(this);
 
@@ -697,6 +702,10 @@ public abstract class SkinningEntities extends EntityLivingBase
                 if (this.skinningentitiesattack != null)
                 {
                     this.skinningentitiesattack.onUpdate();
+                }
+                if (this.skinningentitiesheal != null)
+                {
+                    this.skinningentitiesheal.onUpdate();
                 }
 
                 this.skinningentitiesgetitem.onUpdate();

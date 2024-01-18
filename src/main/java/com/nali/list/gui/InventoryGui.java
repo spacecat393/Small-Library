@@ -10,6 +10,7 @@ import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.AttributesGUIFeatures;
 import com.nali.small.gui.features.messages.EffectsGUIFeatures;
 import com.nali.small.gui.features.messages.HPGUIFeatures;
+import com.nali.small.gui.features.messages.ScaleGUIFeatures;
 import com.nali.small.gui.features.messages.inventory.*;
 import com.nali.small.gui.features.messages.player.MimiTalkGUIFeatures;
 import com.nali.small.gui.features.messages.works.*;
@@ -240,7 +241,11 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                PAGE = PAGE == 2 ? 0 : PAGE == 1 ? 2 : (byte)1;
+                ++PAGE;
+                if (PAGE == 4)
+                {
+                    PAGE = 0;
+                }
             }
 
             if (!(GUIFEATURESLOADER instanceof MenuGUIFeatures))
@@ -292,6 +297,14 @@ public class InventoryGui extends MixGui
                     if (!(GUIFEATURESLOADER instanceof AddTargetGUIFeatures))
                     {
                         GUIFEATURESLOADER = new AddTargetGUIFeatures(this);
+                    }
+                    this.render_text = true;
+                }
+                else if (PAGE == 3)
+                {
+                    if (!(GUIFEATURESLOADER instanceof ScaleGUIFeatures))
+                    {
+                        GUIFEATURESLOADER = new ScaleGUIFeatures(this);
                     }
                     this.render_text = true;
                 }
@@ -451,6 +464,35 @@ public class InventoryGui extends MixGui
                 }
             }
 
+            x = this.guiLeft + 156 + 18;// y = this.guiTop + 89; width = 16; height = 16;
+            if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+            {
+                if (PAGE == 1)
+                {
+                    int id = skinningentities.skinningentitiesbytes.HEAL();
+                    if (id != -1)
+                    {
+                        if (this.mouse_released == 0)
+                        {
+                            this.sendPacketUUIDInt(id);
+                        }
+
+                        if (!(GUIFEATURESLOADER instanceof HealGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new HealGUIFeatures(this);
+                        }
+                    }
+                    else
+                    {
+                        if (!(GUIFEATURESLOADER instanceof CantHealGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new CantHealGUIFeatures(this);
+                        }
+                    }
+                    this.render_text = true;
+                }
+            }
+
             x = this.guiLeft + 48; y = this.guiTop + 107;// width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
@@ -548,6 +590,10 @@ public class InventoryGui extends MixGui
         {
             this.drawTexturedModalRect(tx, this.guiTop + 33, 44, 0, 14, 14);
         }
+        else if (PAGE == 3)
+        {
+            this.drawTexturedModalRect(tx, this.guiTop + 33, 16, 14, 14, 14);
+        }
         else
         {
             this.drawTexturedModalRect(tx, this.guiTop + 33, 16, 0, 14, 14);
@@ -635,6 +681,15 @@ public class InventoryGui extends MixGui
 
                 this.drawTexturedModalRect(this.guiLeft + 157, this.guiTop + 90, 64, 14, 14, 14);
 
+                if (skinningentities.skinningentitiesbytes.HEAL() == -1)
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 157 + 18, this.guiTop + 90, 134, 14, 14, 14);
+                }
+                else
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 157 + 18, this.guiTop + 90, 114, 0, 14, 14);
+                }
+
                 break;
             }
             case 2:
@@ -646,6 +701,12 @@ public class InventoryGui extends MixGui
                 this.drawTexturedModalRect(this.guiLeft + 67, this.guiTop + 108, 92, 14, 14, 14);
                 this.drawTexturedModalRect(this.guiLeft + 49, this.guiTop + 126, 120, 14, 14, 14);
                 this.drawTexturedModalRect(this.guiLeft + 67, this.guiTop + 126, 120, 14, 14, 14);
+                break;
+            }
+            case 3:
+            {
+                this.drawTexturedModalRect(this.guiLeft + 49, this.guiTop + 90, 16, 28, 14, 14);
+                this.drawTexturedModalRect(this.guiLeft + 67, this.guiTop + 90, 106, 14, 14, 14);
                 break;
             }
             default:
