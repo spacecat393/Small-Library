@@ -14,6 +14,7 @@ import com.nali.system.bytes.BytesReader;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -654,10 +655,57 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
 
                     break;
                 }
-//                case 20://use item
-//                {
-//                    break;
-//                }
+                case 20://scale
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                    float s = BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16);
+                    int need = (int)s;
+                    if (skinningentities != null && s >= 0.5F)
+                    {
+                        SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
+                        int value = smallsakuratypes.get();
+
+                        if (value >= need)
+                        {
+                            smallsakuratypes.set(value - need);
+                            skinningentities.getDataManager().set(skinningentities.getFloatDataParameterArray()[0], s);
+                        }
+                    }
+
+                    break;
+                }
+                case 21://att stat
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                    int id = (int)BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16);
+                    float f = BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4);
+                    int need = (int)f;
+                    if (skinningentities != null)
+                    {
+                        SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
+                        int value = smallsakuratypes.get();
+
+                        if (value >= need)
+                        {
+                            if (need > 0)
+                            {
+                                smallsakuratypes.set(value - need);
+                            }
+
+                            int index = 0;
+                            for (IAttributeInstance iattributeinstance : skinningentities.getAttributeMap().getAllAttributes())
+                            {
+                                if (id == index++)
+                                {
+                                    iattributeinstance.setBaseValue(f);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    break;
+                }
                 default:
                 {
                     break;

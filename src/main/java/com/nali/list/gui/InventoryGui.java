@@ -7,10 +7,7 @@ import com.nali.small.data.BoxData;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;
-import com.nali.small.gui.features.messages.AttributesGUIFeatures;
-import com.nali.small.gui.features.messages.EffectsGUIFeatures;
-import com.nali.small.gui.features.messages.HPGUIFeatures;
-import com.nali.small.gui.features.messages.ScaleGUIFeatures;
+import com.nali.small.gui.features.messages.*;
 import com.nali.small.gui.features.messages.inventory.*;
 import com.nali.small.gui.features.messages.player.MimiTalkGUIFeatures;
 import com.nali.small.gui.features.messages.works.*;
@@ -162,7 +159,7 @@ public class InventoryGui extends MixGui
         {
             this.renderHoveredToolTip(mouseX, mouseY);
         }
-        else if (PAGE == 2)
+        else if (PAGE == 2 || PAGE == 3)
         {
             this.setMessage();
         }
@@ -302,6 +299,8 @@ public class InventoryGui extends MixGui
                 }
                 else if (PAGE == 3)
                 {
+                    this.message_state = 5;
+
                     if (!(GUIFEATURESLOADER instanceof ScaleGUIFeatures))
                     {
                         GUIFEATURESLOADER = new ScaleGUIFeatures(this);
@@ -336,6 +335,16 @@ public class InventoryGui extends MixGui
                     }
                     this.render_text = true;
                 }
+                else if (PAGE == 3)
+                {
+                    this.message_state = 6;
+
+                    if (!(GUIFEATURESLOADER instanceof AttributeStatGUIFeatures))
+                    {
+                        GUIFEATURESLOADER = new AttributeStatGUIFeatures(this);
+                    }
+                    this.render_text = true;
+                }
                 else
                 {
                     if (this.mouse_released == 0)
@@ -365,7 +374,7 @@ public class InventoryGui extends MixGui
                     }
                     this.render_text = true;
                 }
-                else
+                else if (PAGE == 1)
                 {
                     if (this.mouse_released == 0)
                     {
@@ -759,7 +768,7 @@ public class InventoryGui extends MixGui
                 }
                 case '\r':
                 {
-                    if (this.message_state < 5)
+                    if (this.message_state != 4)
                     {
                         SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
 
@@ -770,7 +779,14 @@ public class InventoryGui extends MixGui
                         {
                             try
                             {
-                                BytesWriter.set(byte_array, Integer.parseInt(new_string), new_index);
+                                if (this.message_state == 5 || this.message_state == 6)
+                                {
+                                    BytesWriter.set(byte_array, Float.parseFloat(new_string), new_index);
+                                }
+                                else
+                                {
+                                    BytesWriter.set(byte_array, Integer.parseInt(new_string), new_index);
+                                }
                             }
                             catch (Exception ignored)
                             {
@@ -799,6 +815,16 @@ public class InventoryGui extends MixGui
                             case 3:
                             {
                                 byte_array[0] = 15;
+                                break;
+                            }
+                            case 5:
+                            {
+                                byte_array[0] = 20;
+                                break;
+                            }
+                            case 6:
+                            {
+                                byte_array[0] = 21;
                                 break;
                             }
                             default:

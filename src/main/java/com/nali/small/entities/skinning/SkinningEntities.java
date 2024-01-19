@@ -150,14 +150,15 @@ public abstract class SkinningEntities extends EntityLivingBase
             this.skinningentitiesrandomwalk = new SkinningEntitiesRandomWalk(this);
             this.skinningentitiesrandomlook = new SkinningEntitiesRandomLook(this);
 
-            if (this.skinningentitiesbytes.ATTACK() != -1)
-            {
-                this.skinningentitiesattack = new SkinningEntitiesAttack(this);
-            }
             if (this.skinningentitiesbytes.HEAL() != -1)
             {
                 this.skinningentitiesheal = new SkinningEntitiesHeal(this);
             }
+            if (this.skinningentitiesbytes.ATTACK() != -1)
+            {
+                this.skinningentitiesattack = new SkinningEntitiesAttack(this);
+            }
+
             this.skinningentitiesrevive = new SkinningEntitiesRevive(this);
 
 //            this.server_work_byte_array = new byte[this.getByteDataParameterArray().length];
@@ -389,7 +390,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 //                entitydatamanager.set(uuid_optional_dataparameter, Optional.fromNullable(UUID.fromString(nbttagcompound.getString(key))));
 //            }
 //        }
-        if (nbttagcompound.hasKey("owner_uuid", 9))
+        if (nbttagcompound.hasKey("owner_uuid", 7))
         {
             this.owner_uuid = BytesReader.getUUID(nbttagcompound.getByteArray("owner_uuid"), 0);
         }
@@ -691,21 +692,21 @@ public abstract class SkinningEntities extends EntityLivingBase
             //
             if (this.isMove())
             {
-                if (this.ticksExisted % 100 == 0)//5sec
-                {
-                    this.skinningentitiesarea.onUpdate();
-                }
+//                if (this.ticksExisted % 100 == 0)//5sec
+//                {
+                this.skinningentitiesarea.onUpdate();
+//                }
 
                 this.skinningentitiesrevive.onUpdate();
                 this.skinningentitiesfollow.onUpdate();
 
-                if (this.skinningentitiesattack != null)
-                {
-                    this.skinningentitiesattack.onUpdate();
-                }
                 if (this.skinningentitiesheal != null)
                 {
                     this.skinningentitiesheal.onUpdate();
+                }
+                if (this.skinningentitiesattack != null)
+                {
+                    this.skinningentitiesattack.onUpdate();
                 }
 
                 this.skinningentitiesgetitem.onUpdate();

@@ -65,7 +65,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
 //                    }
 //                    else
 //                    {
-                        this.skinningentities.skinningentitiesfindmove.endGoal();
+                    this.skinningentities.skinningentitiesfindmove.endGoal();
 //                    }
                 }
 //                else// if (++this.wait_tick == 60)
@@ -75,6 +75,8 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
 //                    this.state = 3;
 //                }
             }
+
+            index = 0;
 
             double max_dis = Double.MAX_VALUE;
 

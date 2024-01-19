@@ -61,8 +61,8 @@ public class EntityListGUIFeatures extends GUIFeaturesLoader
         else
         {
             String[] string_array = new String[this.int_array.length];
-            string_array[0] = this.string_array[0];
-            string_array[1] = MESSAGE_STRINGBUILDER.toString();
+            string_array[0] = MESSAGE_STRINGBUILDER.toString();
+            string_array[1] = this.string_array[0];
             System.arraycopy(this.string_array, 1, string_array, 2, this.string_array.length - 1);
             this.mixgui.drawHoveringText(string_array, this.int_array, mouseX, mouseY, this.have_head);
 //            super.drawText(mouseX, mouseY);

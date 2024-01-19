@@ -14,11 +14,11 @@ gui.info.ul1=Given damage from entity by this.
 gui.info.sp=Profile
 gui.info.si=Inventory
 gui.info.ss=Scanner
-gui.info.sa=Attribute
+gui.info.sa=SpecialStat
 gui.info.sp0=Show Enable / Disable AI menu.
 gui.info.si0=Show Inventory menu.
 gui.info.ss0=Show Target Finder Setting menu.
-gui.info.sa0=Show Attribute menu.
+gui.info.sa0=Show SpecialStat menu.
 gui.info.bs0=Stand
 gui.info.bs1=Sit
 gui.info.bs00=Enable Movement.
@@ -87,8 +87,11 @@ gui.info.ea=Amplifier
 gui.info.c0=Can't Attack
 gui.info.c1=Can't Heal
 gui.info.s0=Scale
-gui.info.s00=Enter [float] or [0.1]
-gui.info.s01=1 Sakura == 0.1s
+gui.info.s00=Enter [float] or [1.0]
+gui.info.s01=1 Sakura == 1.0s
+gui.info.s1=Attribute Stat
+gui.info.s10=Enter [id, float] or [0, 1.0]
+gui.info.s11=1 Sakura == 1.0
 
 itemGroup.small=Small
 item.box.name=Box

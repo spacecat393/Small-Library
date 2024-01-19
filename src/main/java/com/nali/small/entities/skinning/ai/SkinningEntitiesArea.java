@@ -15,7 +15,7 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
 {
     public Entity[] target_entity_array = new Entity[2]; // xp item
     public ArrayList<Entity> all_entity_arraylist = new ArrayList<Entity>(); // target
-    public ArrayList<Entity> out_entity_arraylist = new ArrayList<Entity>(); // target
+    public ArrayList<Entity> out_entity_arraylist = new ArrayList<Entity>(); // not_target
 //    public double[] distance_to_target_array = new double[2];
 
     public ArrayList<Integer> troublemaker_arraylist = new ArrayList<>();
