@@ -221,13 +221,13 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
                 }
                 else
                 {
+                    this.step = 1;
                     if (this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id0][0] && this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][1])
                     {
                         if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id1][1] - 1)
                         {
                             this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][0];
                             this.step = 0;
-                            return true;
                         }
                     }
                 }

@@ -13,9 +13,9 @@ import static com.nali.small.entities.EntitiesMathHelper.isTooClose;
 
 public class SkinningEntitiesRevive extends SkinningEntitiesAI
 {
-//    public int tick = 0;
+    public int tick = 0;
     public Entity entity;
-//    public Entity current_entity;
+    public Entity current_entity;
     public boolean die;
     public boolean should_set_spawn_point;
     public BlockPos blockpos;
@@ -51,11 +51,11 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
             {
 //                this.entity.isDead = false;
 //                this.current_entity = ((WorldServer)this.entity.world).getEntityFromUuid(this.entity.getUniqueID());
-//                this.current_entity = this.skinningentities.getOwner();
+                this.current_entity = this.skinningentities.getOwner();
                 this.die = true;
             }
 
-            if (this.die && !this.entity.isEntityAlive()/* && (this.current_entity == null || !this.current_entity.isEntityAlive())*/)
+            if (this.die && !this.entity.isEntityAlive() && (this.current_entity == null || !this.current_entity.isEntityAlive()))
             {
                 if ((this.entity.world).provider.getDimension() != ((this.skinningentities.world).provider.getDimension()))
                 {
@@ -73,10 +73,10 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
 
                         this.skinningentities.skinningentitieslook.set(this.entity.posX, this.entity.posY, this.entity.posZ, 90.0F);
 //                        ++this.tick;
-//                        if (this.tick == 100)
+                        if (++this.tick >= 60)
     //                if (this.entity != null)
                         {
-//                            this.tick = 0;
+                            this.tick = 0;
 //                            this.entity.isDead = false;
 //                            this.skinningentities.world.spawnEntity(this.entity);
 //                            if (this.entity instanceof EntityLivingBase)
@@ -139,7 +139,10 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
 //            }
             else
             {
+                this.skinningentities.skinningentitiesfindmove.endGoal();
                 this.entity = null;
+                this.die = false;
+                this.current_entity = null;
             }
 
             if (!this.die)
