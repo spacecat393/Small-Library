@@ -6,16 +6,17 @@
   "required": true,
   "minVersion": "0.7.11",
   "mixins": [
-    "IMixinWorldServer",
-    "MixinItemMonsterPlacer",
-    "IMixinEntityLivingBase",
     "IMixinEntity",
-    "MixinEntityLivingBase"
+    "IMixinEntityLivingBase",
+    "IMixinEntityPlayer",
+    "IMixinWorldServer",
+    "MixinEntityLivingBase",
+    "MixinItemMonsterPlacer"
   ],
   "client": [
-    "MixinRenderItem",
     "MixinItemRenderer",
+    "MixinMinecraft",
     "MixinRenderEntityItem",
-    "MixinMinecraft"
+    "MixinRenderItem"
   ]
 }

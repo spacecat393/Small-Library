@@ -81,14 +81,18 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
             {
                 Minecraft minecraft = Minecraft.getMinecraft();
                 EntityPlayerSP entityplayersp = minecraft.player;
-                entityplayersp.isDead = false;
-                entityplayersp.deathTime = 0;
                 entityplayersp.respawnPlayer();
-                entityplayersp.setHealth(entityplayersp.getMaxHealth());
-                minecraft.addScheduledTask(() ->
-                {
-                    minecraft.displayGuiScreen(null);
-                });
+////                entityplayersp.isDead = false;
+////                entityplayersp.deathTime = 0;
+//////                entityplayersp.respawnPlayer();
+////                entityplayersp.setHealth(entityplayersp.getMaxHealth());
+//////                entityplayersp.world.spawnEntity(entityplayersp);
+////                entityplayersp.respawnPlayer();
+////                entityplayersp.setPosition(BytesReader.getFloat(skinningentitiesclientmessage.data, 1), BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 4), BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 4 + 4));
+//                minecraft.addScheduledTask(() ->
+//                {
+//                    minecraft.displayGuiScreen(null);
+//                });
                 break;
             }
             case 2:
