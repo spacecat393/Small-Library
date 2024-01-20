@@ -502,6 +502,35 @@ public class InventoryGui extends MixGui
                 }
             }
 
+            x = this.guiLeft + 156 + 18 + 18;// y = this.guiTop + 89; width = 16; height = 16;
+            if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+            {
+                if (PAGE == 1)
+                {
+                    int id = skinningentities.skinningentitiesbytes.PROTECT();
+                    if (id != -1)
+                    {
+                        if (this.mouse_released == 0)
+                        {
+                            this.sendPacketUUIDInt(id);
+                        }
+
+                        if (!(GUIFEATURESLOADER instanceof ProtectGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new ProtectGUIFeatures(this);
+                        }
+                    }
+                    else
+                    {
+                        if (!(GUIFEATURESLOADER instanceof CantProtectGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new CantProtectGUIFeatures(this);
+                        }
+                    }
+                    this.render_text = true;
+                }
+            }
+
             x = this.guiLeft + 48; y = this.guiTop + 107;// width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
@@ -699,6 +728,15 @@ public class InventoryGui extends MixGui
                     this.drawTexturedModalRect(this.guiLeft + 157 + 18, this.guiTop + 90, 114, 0, 14, 14);
                 }
 
+                if (skinningentities.skinningentitiesbytes.PROTECT() == -1)
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 157 + 18 + 18, this.guiTop + 90, 134, 14, 14, 14);
+                }
+                else
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 157 + 18 + 18, this.guiTop + 90, 148, 14, 14, 14);
+                }
+
                 break;
             }
             case 2:
@@ -861,6 +899,33 @@ public class InventoryGui extends MixGui
         else
         {
             super.keyTyped(typedChar, keyCode);
+        }
+    }
+
+    @Override
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+    {
+        if (PAGE < 1)
+        {
+            super.mouseClicked(mouseX, mouseY, mouseButton);
+        }
+        else
+        {
+            this.mouse_clicked = mouseButton;
+        }
+    }
+
+    @Override
+    public void mouseReleased(int mouseX, int mouseY, int state)
+    {
+        if (PAGE < 1)
+        {
+            super.mouseReleased(mouseX, mouseY, state);
+        }
+        else
+        {
+            this.mouse_clicked = -1;
+            this.mouse_released = state;
         }
     }
 

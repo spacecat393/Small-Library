@@ -88,8 +88,9 @@ public abstract class SkinningEntities extends EntityLivingBase
     public SkinningEntitiesFollow skinningentitiesfollow;
     public SkinningEntitiesRandomWalk skinningentitiesrandomwalk;
     public SkinningEntitiesRandomLook skinningentitiesrandomlook;
-    public SkinningEntitiesAttack skinningentitiesattack;
     public SkinningEntitiesHeal skinningentitiesheal;
+    public SkinningEntitiesProtect skinningentitiesprotect;
+    public SkinningEntitiesAttack skinningentitiesattack;
     public SkinningEntitiesRevive skinningentitiesrevive;
     public SkinningEntitiesLiveFrame[] server_skinningentitiesliveframe_array;
     public boolean server_sus_init;
@@ -153,6 +154,10 @@ public abstract class SkinningEntities extends EntityLivingBase
             if (this.skinningentitiesbytes.HEAL() != -1)
             {
                 this.skinningentitiesheal = new SkinningEntitiesHeal(this);
+            }
+            if (this.skinningentitiesbytes.PROTECT() != -1)
+            {
+                this.skinningentitiesprotect = new SkinningEntitiesProtect(this);
             }
             if (this.skinningentitiesbytes.ATTACK() != -1)
             {
@@ -704,6 +709,10 @@ public abstract class SkinningEntities extends EntityLivingBase
                 {
                     this.skinningentitiesheal.onUpdate();
                 }
+                if (this.skinningentitiesprotect != null)
+                {
+                    this.skinningentitiesprotect.onUpdate();
+                }
                 if (this.skinningentitiesattack != null)
                 {
                     this.skinningentitiesattack.onUpdate();
@@ -1188,12 +1197,22 @@ public abstract class SkinningEntities extends EntityLivingBase
         return this.server_work_byte_array[index] != 0;
     }
 
-    public boolean isWorkBypass(int index, int bypass)
+    public boolean isWorkBypass(int index, int[] bypass_int_array)
     {
         for (int i = this.skinningentitiesbytes.SIT(); i < this.server_work_byte_array.length; ++i)
 //        for (int i = 0; i < this.server_work_byte_array.length; ++i)
         {
-            if (i != bypass && i < index && this.server_work_byte_array[i] > 0)
+            boolean on_bypass = false;
+            for (int bypass : bypass_int_array)
+            {
+                if (i == bypass)
+                {
+                    on_bypass = true;
+                    break;
+                }
+            }
+
+            if (!on_bypass && i < index && this.server_work_byte_array[i] > 0)
             {
                 return false;
             }

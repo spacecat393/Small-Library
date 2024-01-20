@@ -4,6 +4,7 @@ import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.mixin.IMixinEntityPlayer;
 import com.nali.small.networks.NetworksRegistry;
+import com.nali.small.world.ChunkLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -17,8 +18,8 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
     public Entity entity;
     public Entity current_entity;
     public boolean die;
-    public boolean should_set_spawn_point;
     public BlockPos blockpos;
+    public BlockPos need_blockpos;
 
     public SkinningEntitiesRevive(SkinningEntities skinningentities)
     {
@@ -28,15 +29,28 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
-        if (this.should_set_spawn_point)
+        if (this.skinningentities.getEntityData().getBoolean("revive_nali"))
         {
             Entity owner = this.skinningentities.getOwner();
-            if (owner instanceof EntityPlayerMP)
+            if (owner instanceof EntityPlayerMP && ((EntityPlayerMP)owner).getHealth() > 0.0F)
             {
-                EntityPlayerMP entityplayermp = (EntityPlayerMP)owner;
-                entityplayermp.setSpawnPoint(blockpos, true);
+                if (this.need_blockpos != null)
+                {
+                    if (!this.need_blockpos.equals(owner.getPosition()))
+                    {
+                        owner.setPositionAndUpdate(this.need_blockpos.getX(), this.need_blockpos.getY(), this.need_blockpos.getZ());
+                    }
+
+                    EntityPlayerMP entityplayermp = (EntityPlayerMP)owner;
+                    int dimension = entityplayermp.dimension;
+                    entityplayermp.dimension = 0;
+                    entityplayermp.setSpawnPoint(this.blockpos, true);
+                    entityplayermp.dimension = dimension;
+                    entityplayermp.getEntityData().removeTag("revive_nali");
+                }
+
+                this.skinningentities.getEntityData().setBoolean("revive_nali", false);
             }
-            this.should_set_spawn_point = false;
         }
 
         if (this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.REVIVE()))
@@ -89,8 +103,14 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
                             {
                                 EntityPlayerMP entityplayermp = (EntityPlayerMP)this.entity;
                                 this.blockpos = ((IMixinEntityPlayer)entityplayermp).spawnPos();
-                                this.should_set_spawn_point = true;
+                                this.need_blockpos = entityplayermp.getPosition();
+                                this.skinningentities.getEntityData().setBoolean("revive_nali", true);
+                                int dimension = entityplayermp.dimension;
+                                entityplayermp.dimension = 0;
                                 entityplayermp.setSpawnPoint(entityplayermp.getPosition(), true);
+                                entityplayermp.dimension = dimension;
+                                entityplayermp.getEntityData().setBoolean("revive_nali", true);
+                                ChunkLoader.updateChunk(this.skinningentities);
                                 NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(new byte[]{1}), entityplayermp);
 //                                entityplayermp.setPositionAndUpdate(x, y, z);
 

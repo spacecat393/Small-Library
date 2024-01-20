@@ -4,6 +4,7 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
 import com.nali.small.entities.skinning.ai.SkinningEntitiesAttack;
 import com.nali.small.entities.skinning.ai.SkinningEntitiesHeal;
+import com.nali.small.entities.skinning.ai.SkinningEntitiesProtect;
 
 import java.util.function.Supplier;
 
@@ -337,5 +338,82 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         }
 
         return false;
+    }
+
+    public boolean setProtect(int id0, int id1, int id2, int id3, SkinningEntitiesProtect skinningentitiesprotect)
+    {
+        this.step = 1;
+        switch (skinningentitiesprotect.state)
+        {
+            case 0:
+            {
+                if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1])
+                {
+                    this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
+                    this.step = 0;
+                }
+                else if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1])
+                {
+                    this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][0];
+                    this.step = 0;
+                    skinningentitiesprotect.main_state = 1;
+                }
+
+                break;
+            }
+            case 1:
+            {
+                if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id1][1])
+                {
+                    this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][0];
+                    this.step = 0;
+                }
+                else if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id1][1])
+                {
+                    this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][0];
+                    this.step = 0;
+                }
+
+                break;
+            }
+            case 2:
+            {
+                if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id2][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id2][1])
+                {
+                    this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id2][0];
+                    this.step = 0;
+                }
+                else if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id2][1])
+                {
+                    this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id2][0];
+                    this.step = 0;
+                    skinningentitiesprotect.main_state = 1;
+                }
+
+                break;
+            }
+            case 3:
+            {
+                if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id3][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id3][1])
+                {
+                    this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id3][0];
+                    this.step = 0;
+                }
+                else if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id3][1])
+                {
+//                    this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id3][0];
+                    this.step = 0;
+                    skinningentitiesprotect.main_state = -2;
+                    return true;
+                }
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+
+        return skinningentitiesprotect.state > -1;
     }
 }

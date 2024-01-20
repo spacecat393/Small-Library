@@ -11,7 +11,8 @@
     "IMixinEntityPlayer",
     "IMixinWorldServer",
     "MixinEntityLivingBase",
-    "MixinItemMonsterPlacer"
+    "MixinItemMonsterPlacer",
+    "MixinWorldProvider"
   ],
   "client": [
     "MixinItemRenderer",

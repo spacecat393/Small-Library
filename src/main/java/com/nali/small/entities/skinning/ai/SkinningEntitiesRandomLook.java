@@ -7,6 +7,7 @@ public class SkinningEntitiesRandomLook extends SkinningEntitiesAI
     public int tick;
     public boolean look;
     public double x, y, z;
+    public int[] bypass_int_array = {this.skinningentities.skinningentitiesbytes.SIT(), this.skinningentities.skinningentitiesbytes.PROTECT()};
 
     public SkinningEntitiesRandomLook(SkinningEntities skinningentities)
     {
@@ -16,7 +17,7 @@ public class SkinningEntitiesRandomLook extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
-        if (this.skinningentities.isWorkBypass(this.skinningentities.skinningentitiesbytes.RANDOM_LOOK(), this.skinningentities.skinningentitiesbytes.SIT()))
+        if (this.skinningentities.isWorkBypass(this.skinningentities.skinningentitiesbytes.RANDOM_LOOK(), this.bypass_int_array))
         {
             if (--this.tick <= 0)
             {
