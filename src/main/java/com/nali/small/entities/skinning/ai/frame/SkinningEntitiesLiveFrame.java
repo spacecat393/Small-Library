@@ -57,9 +57,9 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
     {
         if (result)
         {
-            if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1] - 1)
+            if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1])
             {
-                this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][1] - 1;
+                this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][1];
                 this.step = 0;
                 return true;
             }
@@ -123,11 +123,43 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         return result;
     }
 
+    public boolean setFLoopInSet(int id0, int id1)
+    {
+        boolean result = this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id0][1] && this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][1];
+
+        if (result)
+        {
+            this.step = 1;
+        }
+
+        return result;
+    }
+
     public boolean setTLoop(int id0, boolean result)
     {
         if (result)
         {
             return this.setTLoop(id0);
+        }
+
+        return result;
+    }
+
+    public boolean setTLoopInSet(int id0, int id1)
+    {
+        boolean result = this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id0][1] && this.skinningentities.server_frame_int_array[this.integer_index] <= this.int_2d_array[id1][1];
+
+        if (result)
+        {
+            if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id1][1])
+            {
+                this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][0];
+                this.step = 0;
+                return true;
+            }
+
+            this.step = 1;
+            return this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][1];
         }
 
         return result;
