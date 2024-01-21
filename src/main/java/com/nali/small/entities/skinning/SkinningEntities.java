@@ -3,6 +3,7 @@ package com.nali.small.entities.skinning;
 import com.nali.data.BothData;
 import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
+import com.nali.render.ObjectRender;
 import com.nali.render.SkinningRender;
 import com.nali.small.Small;
 import com.nali.small.entities.EntitiesAttackHelper;
@@ -380,6 +381,12 @@ public abstract class SkinningEntities extends EntityLivingBase
             {
                 this.main_server_work_byte_array = work_bytes;
             }
+        }
+        else
+        {
+            ObjectRender objectrender = (ObjectRender)this.client_object;
+            this.initFakeFrame();
+            objectrender.scale = objectrender.bothdata.Scale();
         }
 
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
