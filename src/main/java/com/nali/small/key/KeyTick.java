@@ -10,11 +10,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
+import java.util.function.Function;
+
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, value = Side.CLIENT)
 @SideOnly(Side.CLIENT)
 public class KeyTick
 {
-    public static void run(int key)
+    public static Function FUNCTION = (v) -> v;
+    public static Void run(int key)
     {
 //        if
 //        (
@@ -37,5 +40,7 @@ public class KeyTick
 //            Minecraft minecraft = Minecraft.getMinecraft();
 //            minecraft.addScheduledTask(() -> minecraft.displayGuiScreen(new PlayerGui(new PlayerContainer())));
         }
+
+        return null;
     }
 }

@@ -1,12 +1,12 @@
 package com.nali.small.mixin;
 
-import com.nali.small.key.KeyTick;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static com.nali.small.key.KeyTick.FUNCTION;
 
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft
@@ -14,12 +14,12 @@ public abstract class MixinMinecraft
     @Inject(method = "runTickKeyboard", at = @At("HEAD"))
     private void runTickKeyboard(CallbackInfo ci)
     {
-        KeyTick.run(Keyboard.getEventKey());
+        FUNCTION.apply(null);
     }
 
     @Inject(method = "dispatchKeypresses", at = @At("HEAD"))
     private void dispatchKeypresses(CallbackInfo ci)
     {
-        KeyTick.run(Keyboard.getEventKey());
+        FUNCTION.apply(null);
     }
 }

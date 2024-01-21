@@ -38,9 +38,13 @@ public class ChunkLoader
                 chunkdata.world = world;
                 chunkdata.chunkpos = chunkpos;
                 chunkdata.ticket = ForgeChunkManager.requestTicket(Small.I, chunkdata.world, ForgeChunkManager.Type.ENTITY);
-                chunkdata.ticket.bindEntity(skinningentities);
-                ForgeChunkManager.forceChunk(chunkdata.ticket, chunkdata.chunkpos);
-                CHUNK_MAP.put(skinningentities, chunkdata);
+
+                if (chunkdata.ticket != null)
+                {
+                    chunkdata.ticket.bindEntity(skinningentities);
+                    ForgeChunkManager.forceChunk(chunkdata.ticket, chunkdata.chunkpos);
+                    CHUNK_MAP.put(skinningentities, chunkdata);
+                }
             }
         }
     }

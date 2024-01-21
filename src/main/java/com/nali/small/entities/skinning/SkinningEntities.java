@@ -238,7 +238,10 @@ public abstract class SkinningEntities extends EntityLivingBase
 //            nbttagcompound.setByte("byte_" + i++, entitydatamanager.get(byte_dataparameter));
 //        }
 //        i = 0;
-        nbttagcompound.setByteArray("work_bytes", this.main_server_work_byte_array);
+        if (!this.world.isRemote)
+        {
+            nbttagcompound.setByteArray("work_bytes", this.main_server_work_byte_array);
+        }
 
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
         for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
@@ -285,17 +288,21 @@ public abstract class SkinningEntities extends EntityLivingBase
 //        String hand_key = "is_hand_active";
 //        nbttagcompound.setByte(hand_key, this.getDataManager().get(HAND_STATES));
 
-        if (!this.server_sus_init)
+        if (!this.world.isRemote)
         {
-            this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_WALK()] = 1;
-            this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] = 1;
-            nbttagcompound.setByteArray("work_bytes", this.main_server_work_byte_array);
-//            nbttagcompound.setByte("byte_" + this.skinningentitiesbytes.RANDOM_WALK(), (byte)1);
-//            nbttagcompound.setByte("byte_" + this.skinningentitiesbytes.RANDOM_LOOK(), (byte)1);
-            nbttagcompound.setFloat("float_0", this.bothdata.Scale());
-            this.initWriteEntityToNBT(nbttagcompound);
-//            nbttagcompound.setByte(hand_key, (byte)1);
+            if (!this.server_sus_init)
+            {
+                this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_WALK()] = 1;
+                this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] = 1;
+                nbttagcompound.setByteArray("work_bytes", this.main_server_work_byte_array);
+    //            nbttagcompound.setByte("byte_" + this.skinningentitiesbytes.RANDOM_WALK(), (byte)1);
+    //            nbttagcompound.setByte("byte_" + this.skinningentitiesbytes.RANDOM_LOOK(), (byte)1);
+                nbttagcompound.setFloat("float_0", this.bothdata.Scale());
+                this.initWriteEntityToNBT(nbttagcompound);
+    //            nbttagcompound.setByte(hand_key, (byte)1);
+            }
         }
+
         nbttagcompound.setBoolean("sus_init", true);
 
 //        for (int i = 0; i < this.inventorybasic.getSizeInventory(); ++i)
@@ -367,9 +374,12 @@ public abstract class SkinningEntities extends EntityLivingBase
 
         //check on bytes changed
         byte[] work_bytes = nbttagcompound.getByteArray("work_bytes");
-        if (work_bytes.length == this.main_server_work_byte_array.length)
+        if (!this.world.isRemote)
         {
-            this.main_server_work_byte_array = work_bytes;
+            if (work_bytes.length == this.main_server_work_byte_array.length)
+            {
+                this.main_server_work_byte_array = work_bytes;
+            }
         }
 
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
@@ -451,18 +461,21 @@ public abstract class SkinningEntities extends EntityLivingBase
             }
         }
 
-        this.server_sus_init = nbttagcompound.hasKey("sus_init");
-
-        if (!this.server_sus_init)
+        if (!this.world.isRemote)
         {
-            this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_WALK()] = 1;
-            this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] = 1;
-//            entitydatamanager.set(byte_dataparameter_array[this.skinningentitiesbytes.RANDOM_WALK()], (byte)1);
-//            entitydatamanager.set(byte_dataparameter_array[this.skinningentitiesbytes.RANDOM_LOOK()], (byte)1);
-////            entitydatamanager.set(HAND_STATES, (byte)1);
-            entitydatamanager.set(float_dataparameter_array[0], this.bothdata.Scale());
-            this.initReadEntityFromNBT();
-            this.server_sus_init = true;
+            this.server_sus_init = nbttagcompound.hasKey("sus_init");
+
+            if (!this.server_sus_init)
+            {
+                this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_WALK()] = 1;
+                this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] = 1;
+    //            entitydatamanager.set(byte_dataparameter_array[this.skinningentitiesbytes.RANDOM_WALK()], (byte)1);
+    //            entitydatamanager.set(byte_dataparameter_array[this.skinningentitiesbytes.RANDOM_LOOK()], (byte)1);
+    ////            entitydatamanager.set(HAND_STATES, (byte)1);
+                entitydatamanager.set(float_dataparameter_array[0], this.bothdata.Scale());
+                this.initReadEntityFromNBT();
+                this.server_sus_init = true;
+            }
         }
 
 //        for (int i = 0; i < this.inventorybasic.getSizeInventory(); ++i)
