@@ -1185,10 +1185,10 @@ public abstract class SkinningEntities extends EntityLivingBase
 
     public boolean isWork(int index)
     {
-        for (int i = this.skinningentitiesbytes.SIT(); i < this.server_work_byte_array.length; ++i)
+        for (int i = this.skinningentitiesbytes.SIT(); i < index; ++i)
 //        for (int i = 0; i < this.server_work_byte_array.length; ++i)
         {
-            if (i < index && this.server_work_byte_array[i] > 0)
+            if (this.server_work_byte_array[i] > 0)
             {
                 return false;
             }
@@ -1199,7 +1199,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 
     public boolean isWorkBypass(int index, int[] bypass_int_array)
     {
-        for (int i = this.skinningentitiesbytes.SIT(); i < this.server_work_byte_array.length; ++i)
+        for (int i = this.skinningentitiesbytes.SIT(); i < index; ++i)
 //        for (int i = 0; i < this.server_work_byte_array.length; ++i)
         {
             boolean on_bypass = false;
@@ -1212,7 +1212,7 @@ public abstract class SkinningEntities extends EntityLivingBase
                 }
             }
 
-            if (!on_bypass && i < index && this.server_work_byte_array[i] > 0)
+            if (!on_bypass && this.server_work_byte_array[i] > 0)
             {
                 return false;
             }
