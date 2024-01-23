@@ -12,6 +12,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
 
     public boolean attack = false;
     public double minimum_distance = 3.0D;
+    public byte max_ammo = 16;
 //    public double minimum_away_distance = 2.0D;
 //    public byte wait_tick = 0;
 //    public byte out_tick = 0;
