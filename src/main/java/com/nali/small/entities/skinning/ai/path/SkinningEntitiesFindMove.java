@@ -657,6 +657,12 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
         this.try_move = false;
     }
 
+    public boolean endGoalT()
+    {
+        this.try_move = false;
+        return true;
+    }
+
     public SNode nextSNode(SNode start_snode)
     {
 //        if (start_snode.children_snode_array == null)

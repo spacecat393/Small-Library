@@ -1026,6 +1026,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     {
         Entity owner_entity = this.getOwner();
 
+        entity.hurtResistantTime = 0;
         if (entity instanceof EntityLivingBase)
         {
             EntityLivingBase entitylivingbase = (EntityLivingBase)entity;
