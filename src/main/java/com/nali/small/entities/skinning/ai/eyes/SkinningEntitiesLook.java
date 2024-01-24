@@ -14,6 +14,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
     public double y;
     public double z;
     public float max;
+    public boolean done;
 
     public SkinningEntitiesLook(SkinningEntities skinningentities)
     {
@@ -56,6 +57,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
         this.z = z;
         this.max = max;
         this.looking = true;
+        this.done = false;
     }
 
     @Override
@@ -69,6 +71,8 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
 //
         if (this.looking)
         {
+            float yaw, pitch;
+
             this.looking = false;
             double d0 = this.x - this.skinningentities.posX;
             double d1 = this.y - this.skinningentities.posY;
@@ -83,15 +87,24 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
             if (riding_entity != null)
 //        for (Entity entity : this.skinningentities.getPassengers())
             {
+                yaw = riding_entity.rotationYaw;
+                pitch = riding_entity.rotationPitch;
                 riding_entity.rotationYaw = this.limitAngle(riding_entity.rotationYaw, f, this.max);
                 riding_entity.rotationPitch = this.limitAngle(riding_entity.rotationPitch, f1, this.max);
 //            entity.rotationYaw = this.skinningentities.rotationYaw;
                 riding_entity.setRotationYawHead(riding_entity.rotationYaw);
                 this.skinningentities.rotationYaw = riding_entity.rotationYaw;
 //                this.skinningentities.rotationYawHead = riding_entity.rotationYaw;
+
+                if (yaw == riding_entity.rotationYaw && pitch == riding_entity.rotationPitch)
+                {
+                    this.done = true;
+                }
             }
             else
             {
+                yaw = this.skinningentities.rotationYaw;
+                pitch = this.skinningentities.rotationPitch;
                 this.skinningentities.rotationYaw = this.limitAngle(this.skinningentities.rotationYaw, f, this.max);
                 this.skinningentities.rotationPitch = this.limitAngle(this.skinningentities.rotationPitch, f1, this.max);
     //        this.skinningentities.prevRotationYaw = this.skinningentities.rotationYaw;
@@ -100,6 +113,11 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
     //        this.skinningentities.prevRotationYawHead = this.skinningentities.rotationYaw;
     //        this.skinningentities.renderYawOffset = this.skinningentities.rotationYaw;
     //        this.skinningentities.prevRenderYawOffset = this.skinningentities.rotationYaw;
+
+                if (yaw == this.skinningentities.rotationYaw && pitch == this.skinningentities.rotationPitch)
+                {
+                    this.done = true;
+                }
             }
         }
 //        this.skinningentities.skinningentitiesbody.onUpdate();//.updateRenderAngles();

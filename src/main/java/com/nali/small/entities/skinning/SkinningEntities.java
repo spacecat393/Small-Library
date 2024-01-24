@@ -11,10 +11,10 @@ import com.nali.small.entities.bytes.SkinningEntitiesBytes;
 import com.nali.small.entities.skinning.ai.*;
 import com.nali.small.entities.skinning.ai.eyes.SkinningEntitiesBody;
 import com.nali.small.entities.skinning.ai.eyes.SkinningEntitiesLook;
-import com.nali.small.entities.skinning.ai.SkinningEntitiesAttack;
 import com.nali.small.entities.skinning.ai.frame.SkinningEntitiesLiveFrame;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesMove;
+import com.nali.small.mixin.IMixinEntityCreeper;
 import com.nali.small.networks.NetworksRegistry;
 import com.nali.small.world.ChunkLoader;
 import com.nali.system.bytes.BytesReader;
@@ -26,6 +26,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
@@ -715,7 +716,8 @@ public abstract class SkinningEntities extends EntityLivingBase
                 this.current_server_uuid = uuid;
             }
             //
-            if (this.isMove())
+            boolean is_move = this.isMove();
+            if (is_move)
             {
 //                if (this.ticksExisted % 100 == 0)//5sec
 //                {
@@ -741,7 +743,15 @@ public abstract class SkinningEntities extends EntityLivingBase
                 this.skinningentitiesgetitem.onUpdate();
                 this.skinningentitiesrandomwalk.onUpdate();
                 this.skinningentitiesrandomlook.onUpdate();
+            }
 
+            for (SkinningEntitiesLiveFrame skinningentitiesliveframe : this.server_skinningentitiesliveframe_array)
+            {
+                skinningentitiesliveframe.onUpdate();
+            }
+
+            if (is_move)
+            {
                 if (this.main_server_work_byte_array[this.skinningentitiesbytes.SIT()] == 0)
                 {
                     this.skinningentitiesfindmove.onUpdate();
@@ -750,17 +760,13 @@ public abstract class SkinningEntities extends EntityLivingBase
 
                 this.skinningentitieslook.onUpdate();
             }
-            else
+
+            if (!is_move)
             {
                 this.skinningentitiesfindmove.path_blockpos_arraylist.clear();
             }
 
             this.skinningentitiesjump.onUpdate();
-
-            for (SkinningEntitiesLiveFrame skinningentitiesliveframe : this.server_skinningentitiesliveframe_array)
-            {
-                skinningentitiesliveframe.onUpdate();
-            }
 
 //            Arrays.fill(this.server_work_boolean_array, false);
         }
@@ -1020,18 +1026,18 @@ public abstract class SkinningEntities extends EntityLivingBase
     {
         Entity owner_entity = this.getOwner();
 
-//        if (entity instanceof EntityLivingBase)
-//        {
-//            EntityLivingBase entitylivingbase = (EntityLivingBase)entity;
-//            entitylivingbase.maxHurtTime = 0;
-//            entitylivingbase.hurtTime = 0;
-//        }
+        if (entity instanceof EntityLivingBase)
+        {
+            EntityLivingBase entitylivingbase = (EntityLivingBase)entity;
+            entitylivingbase.maxHurtTime = 0;
+            entitylivingbase.hurtTime = 0;
+        }
 
-//        if (entity instanceof EntityCreeper)
-//        {
-//            EntityCreeper entitycreeper = (EntityCreeper)entity;
-//            ((IMixinEntityCreeper)entitycreeper).timeSinceIgnited(1);
-//        }
+        if (entity instanceof EntityCreeper)
+        {
+            EntityCreeper entitycreeper = (EntityCreeper)entity;
+            ((IMixinEntityCreeper)entitycreeper).timeSinceIgnited(1);
+        }
 
         EntityLivingBase by_entitylivingbase = this;
 

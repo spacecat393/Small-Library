@@ -200,6 +200,8 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
             }
             else
             {
+                this.skinningentities.skinningentitiesfindmove.endGoal();
+
                 if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id3][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id3][1])
                 {
                     this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id3][0];
@@ -292,6 +294,8 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
     {
         if (this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id0][0] && this.skinningentities.server_frame_int_array[this.integer_index] <= this.int_2d_array[id0][1])
         {
+            this.skinningentities.skinningentitiesfindmove.endGoal();
+
 //            this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id2][0];
 //            this.step = 0;
 //            return true;
@@ -305,6 +309,8 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         }
         else if (this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id1][0] && this.skinningentities.server_frame_int_array[this.integer_index] <= this.int_2d_array[id1][1])
         {
+            this.skinningentities.skinningentitiesfindmove.endGoal();
+
 //            this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id2][0];
 //            this.step = 0;
 //            return true;
@@ -318,6 +324,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         }
         else if (!try_reload && this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id2][0] && this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id2][1])
         {
+            this.skinningentities.skinningentitiesfindmove.endGoal();
             return true;
         }
         else

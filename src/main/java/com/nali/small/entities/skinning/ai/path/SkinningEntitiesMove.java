@@ -133,9 +133,13 @@ public class SkinningEntitiesMove extends SkinningEntitiesAI
 //            float f9 = (float)(MathHelper.atan2(d1, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
 //            this.skinningentities.rotationYaw = this.limitAngle(this.skinningentities.rotationYaw, f9, 90.0F);
 //            this.skinningentities.rotationYawHead = this.skinningentities.rotationYaw;
-            this.skinningentities.skinningentitieslook.set(this.x, this.y, this.z, 90.0F);
+            if (this.skinningentities.skinningentitieslook.done)
+            {
+                this.skinningentities.setAIMoveSpeed((float)(this.speed * this.skinningentities.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue()));
+            }
+
+            this.skinningentities.skinningentitieslook.set(this.x, this.y, this.z, 4.5F);
 //            this.speed = 4.0F;
-            this.skinningentities.setAIMoveSpeed((float)(this.speed * this.skinningentities.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue()));
             // BlockPos blockpos = this.mob.blockPosition();
             // BlockState blockstate = this.mob.level.getBlockState(blockpos);
             // VoxelShape voxelshape = blockstate.getCollisionShape(this.mob.level, blockpos);
