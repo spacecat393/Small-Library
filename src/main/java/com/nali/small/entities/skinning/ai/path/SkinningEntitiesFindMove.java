@@ -1,8 +1,8 @@
 package com.nali.small.entities.skinning.ai.path;
 
+import com.nali.math.MixMath;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
-import com.nali.math.MixMath;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -650,16 +650,19 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
         this.goal_y = y;
         this.goal_z = z;
         this.try_move = true;
+//        Small.LOGGER.info("START");
     }
 
     public void endGoal()
     {
         this.try_move = false;
+//        Small.LOGGER.info("STOP");
     }
 
     public boolean endGoalT()
     {
         this.try_move = false;
+//        Small.LOGGER.info("STOP");
         return true;
     }
 

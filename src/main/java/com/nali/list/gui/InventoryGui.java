@@ -347,15 +347,26 @@ public class InventoryGui extends MixGui
                 }
                 else
                 {
-                    if (this.mouse_released == 0)
+                    int id = skinningentities.skinningentitiesbytes.FOLLOW();
+                    if (id != -1)
                     {
-                        this.sendPacketUUID((byte)2);
-                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.FOLLOW());
-                    }
+                        if (this.mouse_released == 0)
+                        {
+                            this.sendPacketUUID((byte)2);
+                            this.sendPacketUUIDInt(id);
+                        }
 
-                    if (!(GUIFEATURESLOADER instanceof FollowGUIFeatures))
+                        if (!(GUIFEATURESLOADER instanceof FollowGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new FollowGUIFeatures(this);
+                        }
+                    }
+                    else
                     {
-                        GUIFEATURESLOADER = new FollowGUIFeatures(this);
+                        if (!(GUIFEATURESLOADER instanceof CantFollowGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new CantFollowGUIFeatures(this);
+                        }
                     }
                     this.render_text = true;
                 }
@@ -394,14 +405,25 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 1)
                 {
-                    if (this.mouse_released == 0)
+                    int id = skinningentities.skinningentitiesbytes.RANDOM_WALK();
+                    if (id != -1)
                     {
-                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.RANDOM_WALK());
-                    }
+                        if (this.mouse_released == 0)
+                        {
+                            this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.RANDOM_WALK());
+                        }
 
-                    if (!(GUIFEATURESLOADER instanceof RandomWalkGUIFeatures))
+                        if (!(GUIFEATURESLOADER instanceof RandomWalkGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new RandomWalkGUIFeatures(this);
+                        }
+                    }
+                    else
                     {
-                        GUIFEATURESLOADER = new RandomWalkGUIFeatures(this);
+                        if (!(GUIFEATURESLOADER instanceof CantRandomWalkGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new CantRandomWalkGUIFeatures(this);
+                        }
                     }
                     this.render_text = true;
                 }
@@ -412,14 +434,25 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 1)
                 {
-                    if (this.mouse_released == 0)
+                    int id = skinningentities.skinningentitiesbytes.RANDOM_LOOK();
+                    if (id != -1)
                     {
-                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.RANDOM_LOOK());
-                    }
+                        if (this.mouse_released == 0)
+                        {
+                            this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.RANDOM_LOOK());
+                        }
 
-                    if (!(GUIFEATURESLOADER instanceof RandomLookGUIFeatures))
+                        if (!(GUIFEATURESLOADER instanceof RandomLookGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new RandomLookGUIFeatures(this);
+                        }
+                    }
+                    else
                     {
-                        GUIFEATURESLOADER = new RandomLookGUIFeatures(this);
+                        if (!(GUIFEATURESLOADER instanceof CantRandomLookGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new CantRandomLookGUIFeatures(this);
+                        }
                     }
                     this.render_text = true;
                 }
@@ -459,15 +492,26 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 1)
                 {
-                    if (this.mouse_released == 0)
+                    int id = skinningentities.skinningentitiesbytes.REVIVE();
+                    if (id != -1)
                     {
-                        this.sendPacketUUID((byte)2);
-                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.REVIVE());
-                    }
+                        if (this.mouse_released == 0)
+                        {
+                            this.sendPacketUUID((byte)2);
+                            this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.REVIVE());
+                        }
 
-                    if (!(GUIFEATURESLOADER instanceof ReviveGUIFeatures))
+                        if (!(GUIFEATURESLOADER instanceof ReviveGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new ReviveGUIFeatures(this);
+                        }
+                    }
+                    else
                     {
-                        GUIFEATURESLOADER = new ReviveGUIFeatures(this);
+                        if (!(GUIFEATURESLOADER instanceof CantReviveGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new CantReviveGUIFeatures(this);
+                        }
                     }
                     this.render_text = true;
                 }
@@ -534,7 +578,31 @@ public class InventoryGui extends MixGui
             x = this.guiLeft + 48; y = this.guiTop + 107;// width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (PAGE == 2)
+                if (PAGE == 1)
+                {
+                    int id = skinningentities.skinningentitiesbytes.PLAY();
+                    if (id != -1)
+                    {
+                        if (this.mouse_released == 0)
+                        {
+                            this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.PLAY());
+                        }
+
+                        if (!(GUIFEATURESLOADER instanceof PlayGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new PlayGUIFeatures(this);
+                        }
+                    }
+                    else
+                    {
+                        if (!(GUIFEATURESLOADER instanceof CantPlayGUIFeatures))
+                        {
+                            GUIFEATURESLOADER = new CantPlayGUIFeatures(this);
+                        }
+                    }
+                    this.render_text = true;
+                }
+                else if (PAGE == 2)
                 {
                     this.message_state = 2;
 
@@ -703,10 +771,35 @@ public class InventoryGui extends MixGui
             case 1:
             {
                 this.drawTexturedModalRect(this.guiLeft + 49, this.guiTop + 90, 86, 0, 14, 14);
-                this.drawTexturedModalRect(this.guiLeft + 67, this.guiTop + 90, 30, 0, 14, 14);
+
+                if (skinningentities.skinningentitiesbytes.FOLLOW() == -1)
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 67, this.guiTop + 90, 134, 14, 14, 14);
+                }
+                else
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 67, this.guiTop + 90, 30, 0, 14, 14);
+                }
+
                 this.drawTexturedModalRect(this.guiLeft + 85, this.guiTop + 90, 142, 0, 14, 14);
-                this.drawTexturedModalRect(this.guiLeft + 105, this.guiTop + 92, 52, 14, 12, 12);
-                this.drawTexturedModalRect(this.guiLeft + 121, this.guiTop + 94, 38, 14, 14, 8);
+
+                if (skinningentities.skinningentitiesbytes.RANDOM_WALK() == -1)
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 103, this.guiTop + 90, 134, 14, 14, 14);
+                }
+                else
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 105, this.guiTop + 92, 52, 14, 12, 12);
+                }
+
+                if (skinningentities.skinningentitiesbytes.RANDOM_LOOK() == -1)
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 121, this.guiTop + 90, 134, 14, 14, 14);
+                }
+                else
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 121, this.guiTop + 94, 38, 14, 14, 8);
+                }
 
                 if (skinningentities.skinningentitiesbytes.ATTACK() == -1)
                 {
@@ -717,7 +810,14 @@ public class InventoryGui extends MixGui
                     this.drawTexturedModalRect(this.guiLeft + 139, this.guiTop + 90, 58, 0, 14, 14);
                 }
 
-                this.drawTexturedModalRect(this.guiLeft + 157, this.guiTop + 90, 64, 14, 14, 14);
+                if (skinningentities.skinningentitiesbytes.REVIVE() == -1)
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 157, this.guiTop + 90, 134, 14, 14, 14);
+                }
+                else
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 157, this.guiTop + 90, 64, 14, 14, 14);
+                }
 
                 if (skinningentities.skinningentitiesbytes.HEAL() == -1)
                 {
@@ -735,6 +835,15 @@ public class InventoryGui extends MixGui
                 else
                 {
                     this.drawTexturedModalRect(this.guiLeft + 157 + 18 + 18, this.guiTop + 90, 148, 14, 14, 14);
+                }
+
+                if (skinningentities.skinningentitiesbytes.PLAY() == -1)
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 49, this.guiTop + 90 + 18, 134, 14, 14, 14);
+                }
+                else
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 49, this.guiTop + 90 + 18, 182, 0, 14, 14);
                 }
 
                 break;

@@ -584,7 +584,7 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
                     ItemStack itemstack = entityplayermp.getHeldItemMainhand();
-                    if (skinningentities != null && itemstack.getItem() instanceof ItemFood)
+                    if (skinningentities != null && skinningentities.canEat() && itemstack.getItem() instanceof ItemFood)
                     {
                         ItemFood itemfood = (ItemFood)itemstack.getItem();
                         skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.ON_EAT()] = 1;
@@ -645,7 +645,7 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
                     ItemStack itemstack = entityplayermp.getHeldItemMainhand();
-                    if (skinningentities != null && itemstack.getItem() == Items.MILK_BUCKET)
+                    if (skinningentities != null && skinningentities.canEat() && itemstack.getItem() == Items.MILK_BUCKET)
                     {
                         skinningentities.clearActivePotions();
                         entityplayermp.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.BUCKET));

@@ -7,9 +7,8 @@ import net.minecraft.util.math.MathHelper;
 
 public class SkinningEntitiesMove extends SkinningEntitiesAI
 {
-    public double x;
-    public double y;
-    public double z;
+    public double x, y, z;
+//    public double ox, oy, oz;
     public double speed;
     public boolean move = false;
 
@@ -139,6 +138,14 @@ public class SkinningEntitiesMove extends SkinningEntitiesAI
             }
 
             this.skinningentities.skinningentitieslook.set(this.x, this.y, this.z, 4.5F);
+//            if (this.ox == this.x && this.oy == this.y && this.oz == this.z)
+//            {
+//            this.skinningentities.skinningentitieslook.done = true;
+//            }
+//
+//            this.ox = this.x;
+//            this.oy = this.y;
+//            this.oz = this.z;
 //            this.speed = 4.0F;
             // BlockPos blockpos = this.mob.blockPosition();
             // BlockState blockstate = this.mob.level.getBlockState(blockpos);

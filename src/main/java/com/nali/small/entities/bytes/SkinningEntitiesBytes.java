@@ -20,6 +20,7 @@ public interface SkinningEntitiesBytes
     int SIT();
     int REVIVE();
     int FOLLOW();
+    int PLAY();
     int HEAL();
     int PROTECT();
     int ATTACK();

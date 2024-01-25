@@ -94,12 +94,14 @@ public abstract class SkinningEntities extends EntityLivingBase
     public SkinningEntitiesProtect skinningentitiesprotect;
     public SkinningEntitiesAttack skinningentitiesattack;
     public SkinningEntitiesRevive skinningentitiesrevive;
+    public SkinningEntitiesPlayWith skinningentitiesplaywith;
     public SkinningEntitiesLiveFrame[] server_skinningentitiesliveframe_array;
     public boolean server_sus_init;
 
     public SkinningEntitiesBytes skinningentitiesbytes;
     public BothData bothdata;
     public SkinningInventory skinninginventory = new SkinningInventory();
+    public SkinningEntities server_skinningentities;
     //    public Vec3d position_vec3d;
 //    public boolean moving;
 
@@ -149,9 +151,18 @@ public abstract class SkinningEntities extends EntityLivingBase
             this.skinningentitiesmove = new SkinningEntitiesMove(this);
             this.skinningentitiesjump = new SkinningEntitiesJump(this);
             this.skinningentitiesgetitem = new SkinningEntitiesGetItem(this);
-            this.skinningentitiesfollow = new SkinningEntitiesFollow(this);
-            this.skinningentitiesrandomwalk = new SkinningEntitiesRandomWalk(this);
-            this.skinningentitiesrandomlook = new SkinningEntitiesRandomLook(this);
+            if (this.skinningentitiesbytes.FOLLOW() != -1)
+            {
+                this.skinningentitiesfollow = new SkinningEntitiesFollow(this);
+            }
+            if (this.skinningentitiesbytes.RANDOM_WALK() != -1)
+            {
+                this.skinningentitiesrandomwalk = new SkinningEntitiesRandomWalk(this);
+            }
+            if (this.skinningentitiesbytes.RANDOM_LOOK() != -1)
+            {
+                this.skinningentitiesrandomlook = new SkinningEntitiesRandomLook(this);
+            }
 
             if (this.skinningentitiesbytes.HEAL() != -1)
             {
@@ -161,12 +172,18 @@ public abstract class SkinningEntities extends EntityLivingBase
             {
                 this.skinningentitiesprotect = new SkinningEntitiesProtect(this);
             }
+            if (this.skinningentitiesbytes.PLAY() != -1)
+            {
+                this.skinningentitiesplaywith = new SkinningEntitiesPlayWith(this);
+            }
             if (this.skinningentitiesbytes.ATTACK() != -1)
             {
                 this.skinningentitiesattack = new SkinningEntitiesAttack(this);
             }
-
-            this.skinningentitiesrevive = new SkinningEntitiesRevive(this);
+            if (this.skinningentitiesbytes.REVIVE() != -1)
+            {
+                this.skinningentitiesrevive = new SkinningEntitiesRevive(this);
+            }
 
 //            this.server_work_byte_array = new byte[this.getByteDataParameterArray().length];
             this.main_server_work_byte_array = new byte[max_works];
@@ -294,8 +311,14 @@ public abstract class SkinningEntities extends EntityLivingBase
         {
             if (!this.server_sus_init)
             {
-                this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_WALK()] = 1;
-                this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] = 1;
+                if (this.skinningentitiesbytes.RANDOM_WALK() != -1)
+                {
+                    this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_WALK()] = 1;
+                }
+                if (this.skinningentitiesbytes.RANDOM_LOOK() != -1)
+                {
+                    this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] = 1;
+                }
                 nbttagcompound.setByteArray("work_bytes", this.main_server_work_byte_array);
     //            nbttagcompound.setByte("byte_" + this.skinningentitiesbytes.RANDOM_WALK(), (byte)1);
     //            nbttagcompound.setByte("byte_" + this.skinningentitiesbytes.RANDOM_LOOK(), (byte)1);
@@ -475,8 +498,14 @@ public abstract class SkinningEntities extends EntityLivingBase
 
             if (!this.server_sus_init)
             {
-                this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_WALK()] = 1;
-                this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] = 1;
+                if (this.skinningentitiesbytes.RANDOM_WALK() != -1)
+                {
+                    this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_WALK()] = 1;
+                }
+                if (this.skinningentitiesbytes.RANDOM_LOOK() != -1)
+                {
+                    this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] = 1;
+                }
     //            entitydatamanager.set(byte_dataparameter_array[this.skinningentitiesbytes.RANDOM_WALK()], (byte)1);
     //            entitydatamanager.set(byte_dataparameter_array[this.skinningentitiesbytes.RANDOM_LOOK()], (byte)1);
     ////            entitydatamanager.set(HAND_STATES, (byte)1);
@@ -592,13 +621,13 @@ public abstract class SkinningEntities extends EntityLivingBase
     @Override
     public void onUpdate()
     {
-        if (!this.world.isRemote)
+//        if (!this.world.isRemote)
+//        {
+        if (this.skinningentitiesbytes.RANDOM_LOOK() == -1/* || this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] == 0*/)
         {
-            if (this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] == 0)
-            {
-                this.rotationYawHead = this.rotationYaw;
-            }
+            this.rotationYawHead = this.rotationYaw;
         }
+//        }
 
         super.onUpdate();
 //        this.updateBox();
@@ -724,9 +753,19 @@ public abstract class SkinningEntities extends EntityLivingBase
                 this.skinningentitiesarea.onUpdate();
 //                }
 
-                this.skinningentitiesrevive.onUpdate();
-                this.skinningentitiesfollow.onUpdate();
+                if (this.skinningentitiesrevive != null)
+                {
+                    this.skinningentitiesrevive.onUpdate();
+                }
+                if (this.skinningentitiesfollow != null)
+                {
+                    this.skinningentitiesfollow.onUpdate();
+                }
 
+                if (this.skinningentitiesplaywith != null)
+                {
+                    this.skinningentitiesplaywith.onUpdate();
+                }
                 if (this.skinningentitiesheal != null)
                 {
                     this.skinningentitiesheal.onUpdate();
@@ -741,8 +780,14 @@ public abstract class SkinningEntities extends EntityLivingBase
                 }
 
                 this.skinningentitiesgetitem.onUpdate();
-                this.skinningentitiesrandomwalk.onUpdate();
-                this.skinningentitiesrandomlook.onUpdate();
+                if (this.skinningentitiesrandomwalk != null)
+                {
+                    this.skinningentitiesrandomwalk.onUpdate();
+                }
+                if (this.skinningentitiesrandomlook != null)
+                {
+                    this.skinningentitiesrandomlook.onUpdate();
+                }
             }
 
             for (SkinningEntitiesLiveFrame skinningentitiesliveframe : this.server_skinningentitiesliveframe_array)
@@ -949,7 +994,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 ////                }
 //            }
 //            else
-            if (this.world.isRemote)
+            if (this.world.isRemote && this.canEat())
             {
                 Item item = entityplayer.getHeldItemMainhand().getItem();
                 boolean milk_bucket = item == Items.MILK_BUCKET;
@@ -1013,6 +1058,11 @@ public abstract class SkinningEntities extends EntityLivingBase
         entityplayer.swingArm(enumhand);
         return true;
 //        return super.processInitialInteract(entityplayer, enumhand);
+    }
+
+    public boolean canEat()
+    {
+        return true;
     }
 
 //    @Override
