@@ -706,6 +706,25 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
 
                     break;
                 }
+                case 22://set yaw pitch
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                    int id = (int)BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16);
+                    float f = BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4);
+                    if (skinningentities != null)
+                    {
+                        if (id == 1)
+                        {
+                            skinningentities.rotationPitch = f;
+                        }
+                        else if (id == 0)
+                        {
+                            skinningentities.rotationYaw = f;
+                        }
+                    }
+
+                    break;
+                }
                 default:
                 {
                     break;

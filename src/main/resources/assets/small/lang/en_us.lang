@@ -106,6 +106,9 @@ gui.info.s01=1 Sakura == 1.0s
 gui.info.s1=Attribute Stat
 gui.info.s10=Enter [id, float] or [0, 1.0]
 gui.info.s11=1 Sakura == 1.0
+gui.info.sl0=Yaw
+gui.info.sl1=Pitch
+gui.info.sl2=Enter [id, float] or [0, 180.0]
 
 itemGroup.small=Small
 item.box.name=Box

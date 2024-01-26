@@ -2,8 +2,11 @@ package com.nali.small.entities.skinning.ai.path;
 
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 
 public class SkinningEntitiesMove extends SkinningEntitiesAI
 {
@@ -134,7 +137,16 @@ public class SkinningEntitiesMove extends SkinningEntitiesAI
 //            this.skinningentities.rotationYawHead = this.skinningentities.rotationYaw;
             if (this.skinningentities.skinningentitieslook.done)
             {
-                this.skinningentities.setAIMoveSpeed((float)(this.speed * this.skinningentities.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue()));
+                Entity riding_entity = this.skinningentities.getRidingEntity();
+                if (riding_entity != null)
+                {
+                    Vec3d vec3d = riding_entity.getLookVec().scale((float)(this.speed * this.skinningentities.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue()));
+                    riding_entity.move(MoverType.SELF, vec3d.x, vec3d.y, vec3d.z);
+                }
+                else
+                {
+                    this.skinningentities.setAIMoveSpeed((float)(this.speed * this.skinningentities.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue()));
+                }
             }
 
             this.skinningentities.skinningentitieslook.set(this.x, this.y, this.z, 4.5F);

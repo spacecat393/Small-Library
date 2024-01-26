@@ -1,6 +1,5 @@
 package com.nali.small.mixin;
 
-import com.nali.small.entities.object.ObjectEntities;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.server.CommandSummon;
@@ -27,7 +26,7 @@ public abstract class MixinCommandSummon
     @Inject(method = "execute", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setLocationAndAngles(DDDFF)V", shift = At.Shift.AFTER, ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void execute(MinecraftServer server, ICommandSender sender, String[] args, CallbackInfo ci, Entity entity)
     {
-        if (this.should_execute && (entity instanceof SkinningEntities || entity instanceof ObjectEntities))
+        if (this.should_execute && (entity instanceof SkinningEntities/* || entity instanceof ObjectEntities*/))
         {
             NBTTagCompound nbttagcompound = new NBTTagCompound();
             nbttagcompound = entity.writeToNBT(nbttagcompound);

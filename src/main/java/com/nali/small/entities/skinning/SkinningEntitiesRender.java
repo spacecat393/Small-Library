@@ -1,6 +1,5 @@
 package com.nali.small.entities.skinning;
 
-import com.nali.math.M4x4;
 import com.nali.render.SkinningRender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -99,7 +98,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
 
         skinningrender.body_rot = (float)Math.toRadians(interpolateRotation(skinningentities.prevRenderYawOffset, skinningentities.renderYawOffset, partialTicks));
-        skinningrender.head_rot = (float)Math.toRadians(interpolateRotation(skinningentities.prevRotationYawHead, skinningentities.rotationYawHead, partialTicks));
+        skinningrender.head_rot = (float)Math.toRadians(interpolateRotation(skinningentities.prevRotationYaw, skinningentities.rotationYaw, partialTicks));
         skinningrender.net_head_yaw = skinningrender.head_rot - skinningrender.body_rot;
         skinningrender.head_pitch = (float)Math.toRadians(skinningentities.prevRotationPitch + (skinningentities.rotationPitch - skinningentities.prevRotationPitch) * partialTicks);
 

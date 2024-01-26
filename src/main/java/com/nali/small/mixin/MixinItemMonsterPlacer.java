@@ -1,6 +1,5 @@
 package com.nali.small.mixin;
 
-import com.nali.small.entities.object.ObjectEntities;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -22,7 +21,7 @@ public abstract class MixinItemMonsterPlacer
     {
         Entity entity = EntityList.createEntityByIDFromName(entityID, worldIn);
 
-        if (entity instanceof SkinningEntities || entity instanceof ObjectEntities)
+        if (entity instanceof SkinningEntities/* || entity instanceof ObjectEntities*/)
         {
             NBTTagCompound nbttagcompound = new NBTTagCompound();
             nbttagcompound = entity.writeToNBT(nbttagcompound);

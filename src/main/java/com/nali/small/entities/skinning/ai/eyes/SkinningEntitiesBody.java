@@ -7,7 +7,7 @@ import net.minecraft.util.math.MathHelper;
 public class SkinningEntitiesBody extends SkinningEntitiesAI
 {
     public int rotationTickCounter;
-    public float prevRenderYawHead;
+    public float prevRenderYaw;
 
     public SkinningEntitiesBody(SkinningEntities skinningentities)
     {
@@ -34,10 +34,10 @@ public class SkinningEntitiesBody extends SkinningEntitiesAI
 //        {
         float f = 75.0F;
 
-        if (Math.abs(this.skinningentities.rotationYawHead - this.prevRenderYawHead) > 15.0F)
+        if (Math.abs(this.skinningentities.rotationYaw - this.prevRenderYaw) > 15.0F)
         {
             this.rotationTickCounter = 0;
-            this.prevRenderYawHead = this.skinningentities.rotationYawHead;
+            this.prevRenderYaw = this.skinningentities.rotationYaw;
         }
         else
         {
@@ -50,7 +50,7 @@ public class SkinningEntitiesBody extends SkinningEntitiesAI
             }
         }
 
-        this.skinningentities.renderYawOffset = this.computeAngleWithBound(this.skinningentities.rotationYawHead, this.skinningentities.renderYawOffset, f);
+        this.skinningentities.renderYawOffset = this.computeAngleWithBound(this.skinningentities.rotationYaw, this.skinningentities.renderYawOffset, f);
 //        }
 //        }
     }

@@ -47,10 +47,17 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
                     SkinningEntities playwith_skinningentities = null;
                     for (Entity entity : this.skinningentities.skinningentitiesarea.out_entity_arraylist)
                     {
-                        if (entity.getClass() == clasz)
+                        if (entity.getClass() == this.clasz)
                         {
                             playwith_skinningentities = (SkinningEntities)entity;
-                            break;
+                            if (this.skinningentities.getDataManager().get(this.skinningentities.getFloatDataParameterArray()[0]) <= playwith_skinningentities.getDataManager().get(playwith_skinningentities.getFloatDataParameterArray()[0]))
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                playwith_skinningentities = null;
+                            }
                         }
                     }
 
@@ -86,7 +93,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
                     {
                         this.skinningentities.setPositionAndUpdate(this.playwith_skinningentities.posX, this.playwith_skinningentities.posY, this.playwith_skinningentities.posZ);
                         this.skinningentities.rotationYaw = this.playwith_skinningentities.rotationYaw;
-                        this.skinningentities.rotationYawHead = this.playwith_skinningentities.rotationYawHead;
+//                        this.skinningentities.rotationYawHead = this.playwith_skinningentities.rotationYawHead;
                         this.skinningentities.rotationPitch = this.playwith_skinningentities.rotationPitch;
                         this.skinningentities.renderYawOffset = this.playwith_skinningentities.renderYawOffset;
                     }

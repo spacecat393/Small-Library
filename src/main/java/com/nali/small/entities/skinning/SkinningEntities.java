@@ -623,11 +623,26 @@ public abstract class SkinningEntities extends EntityLivingBase
     {
 //        if (!this.world.isRemote)
 //        {
-        if (this.skinningentitiesbytes.RANDOM_LOOK() == -1/* || this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] == 0*/)
-        {
-            this.rotationYawHead = this.rotationYaw;
-        }
+//            if (this.skinningentitiesbytes.RANDOM_LOOK() == -1/* || this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] == 0*/)
+//            {
+//        this.rotationYawHead = this.rotationYaw;
+//        this.prevRotationYawHead = this.rotationYaw;
+//        this.renderYawOffset = this.rotationYaw;
+//        this.prevRenderYawOffset = this.rotationYaw;
+//            }
+//        if (this.world.isRemote)
+//        {
+//            Small.LOGGER.info("CLIENT_YAW " + this.rotationYaw);
 //        }
+//        else
+//        {
+//            Small.LOGGER.info("SERVER_YAW " + this.rotationYaw);
+//        }
+//        }
+
+
+//        EntityDataManager entitydatamanager = this.getDataManager();
+//        DataParameter<Float> float_dataparameter = this.getFloatDataParameterArray()[1];
 
         super.onUpdate();
 //        this.updateBox();
@@ -659,6 +674,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 
         if (this.world.isRemote)
         {
+//            this.rotationYawHead = entitydatamanager.get(float_dataparameter);
 //            for (int i = 0; i < this.client_work_byte_array.length; ++i)
 //            {
 //                this.client_work_byte_array[i] = entitydatamanager.get(byte_dataparameter[i]);
@@ -689,9 +705,10 @@ public abstract class SkinningEntities extends EntityLivingBase
         }
         else
         {
+            EntityDataManager entitydatamanager = this.getDataManager();
+//            entitydatamanager.set(float_dataparameter, this.rotationYawHead);
             //        DataParameter<Byte>[] byte_dataparameter = this.getByteDataParameterArray();
             DataParameter<Integer>[] integer_dataparameter = this.getIntegerDataParameterArray();
-            EntityDataManager entitydatamanager = this.getDataManager();
 
             if (!CHUNK_MAP.containsKey(this))
             {
@@ -857,6 +874,21 @@ public abstract class SkinningEntities extends EntityLivingBase
     }
 
     @Override
+    public Vec3d getLook(float partialTicks)
+    {
+        if (partialTicks == 1.0F)
+        {
+            return this.getVectorForRotation(this.rotationPitch, this.rotationYaw);
+        }
+        else
+        {
+            float f = this.prevRotationPitch + (this.rotationPitch - this.prevRotationPitch) * partialTicks;
+            float f1 = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * partialTicks;
+            return this.getVectorForRotation(f, f1);
+        }
+    }
+
+    @Override
     public void damageShield(float damage)
     {
         if (damage >= 3.0F && this.activeItemStack.getItem().isShield(this.activeItemStack, this))
@@ -1018,7 +1050,7 @@ public abstract class SkinningEntities extends EntityLivingBase
                 }
                 int state = rayAllTargetsView(entityplayer, axisalignedbb_array, (byte)50);
 
-                if (state == 0 && !eat_state && this.isMove())
+                if (state == 0 && !eat_state && this.isMove() && this.canPat())
                 {
                     this.skinningentitiespat.onUpdate();
                 }
@@ -1058,6 +1090,11 @@ public abstract class SkinningEntities extends EntityLivingBase
         entityplayer.swingArm(enumhand);
         return true;
 //        return super.processInitialInteract(entityplayer, enumhand);
+    }
+
+    public boolean canPat()
+    {
+        return true;
     }
 
     public boolean canEat()

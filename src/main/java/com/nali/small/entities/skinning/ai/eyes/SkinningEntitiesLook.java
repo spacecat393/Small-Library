@@ -96,6 +96,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
                 this.skinningentities.rotationYaw = riding_entity.rotationYaw;
 //                this.skinningentities.rotationYawHead = riding_entity.rotationYaw;
 
+//                if (yaw * yaw - riding_entity.rotationYaw * riding_entity.rotationYaw < 0.000001F && pitch * pitch - riding_entity.rotationPitch * riding_entity.rotationPitch < 0.000001F)
                 if (yaw == riding_entity.rotationYaw && pitch == riding_entity.rotationPitch)
                 {
                     this.done = true;
@@ -114,6 +115,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
     //        this.skinningentities.renderYawOffset = this.skinningentities.rotationYaw;
     //        this.skinningentities.prevRenderYawOffset = this.skinningentities.rotationYaw;
 
+//                if (yaw * yaw - this.skinningentities.renderYawOffset * this.skinningentities.renderYawOffset < 0.000001F && pitch * pitch - this.skinningentities.rotationPitch * this.skinningentities.rotationPitch < 0.000001F)
                 if (yaw == this.skinningentities.rotationYaw && pitch == this.skinningentities.rotationPitch)
                 {
                     this.done = true;
@@ -121,7 +123,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
             }
         }
 //        this.skinningentities.skinningentitiesbody.onUpdate();//.updateRenderAngles();
-        this.skinningentities.rotationYawHead = this.skinningentities.rotationYaw;
+//        this.skinningentities.rotationYawHead = this.skinningentities.rotationYaw;
 //        this.skinningentities.renderYawOffset = this.skinningentities.rotationYaw;
 //        else
 //        {
