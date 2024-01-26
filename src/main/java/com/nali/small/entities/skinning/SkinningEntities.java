@@ -257,10 +257,6 @@ public abstract class SkinningEntities extends EntityLivingBase
 //            nbttagcompound.setByte("byte_" + i++, entitydatamanager.get(byte_dataparameter));
 //        }
 //        i = 0;
-        if (!this.world.isRemote)
-        {
-            nbttagcompound.setByteArray("work_bytes", this.main_server_work_byte_array);
-        }
 
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
         for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
@@ -309,6 +305,11 @@ public abstract class SkinningEntities extends EntityLivingBase
 
         if (!this.world.isRemote)
         {
+            if (this.main_server_work_byte_array == null)
+            {
+                this.main_server_work_byte_array = new byte[this.skinningentitiesbytes.MAX_WORKS()];
+            }
+
             if (!this.server_sus_init)
             {
                 if (this.skinningentitiesbytes.RANDOM_WALK() != -1)
@@ -326,6 +327,8 @@ public abstract class SkinningEntities extends EntityLivingBase
                 this.initWriteEntityToNBT(nbttagcompound);
     //            nbttagcompound.setByte(hand_key, (byte)1);
             }
+
+            nbttagcompound.setByteArray("work_bytes", this.main_server_work_byte_array);
         }
 
         nbttagcompound.setBoolean("sus_init", true);
