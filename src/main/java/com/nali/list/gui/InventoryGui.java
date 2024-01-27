@@ -1,6 +1,7 @@
 package com.nali.list.gui;
 
 import com.nali.list.container.InventoryContainer;
+import com.nali.list.messages.CapabilitiesServerMessage;
 import com.nali.list.messages.SkinningEntitiesServerMessage;
 import com.nali.render.SkinningRender;
 import com.nali.small.data.BoxData;
@@ -45,6 +46,7 @@ public class InventoryGui extends MixGui
         this.mc = Minecraft.getMinecraft();
         ScaledResolution scaledresolution = new ScaledResolution(this.mc);
         this.setWorldAndResolution(Minecraft.getMinecraft(), scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
+        NetworksRegistry.I.sendToServer(new CapabilitiesServerMessage(new byte[4]));
 
 //        if (skinningentities != null)
 //        {
@@ -165,6 +167,21 @@ public class InventoryGui extends MixGui
         }
 
         this.renderEntitiesName(skinningentities, this.guiLeft + 100, this.guiTop + 75, 56, 11, mouseX, mouseY);
+
+        x = this.guiLeft + 63; y = this.guiTop + 25; width = 18; height = 19;
+        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+        {
+            if (this.mouse_released == 0)
+            {
+                this.sendPacketUUID((byte)24);
+            }
+
+            if (!(GUIFEATURESLOADER instanceof TPGUIFeatures))
+            {
+                GUIFEATURESLOADER = new TPGUIFeatures(this);
+            }
+            this.render_text = true;
+        }
 
         x = this.guiLeft + 47; y = this.guiTop + 25; width = 5; height = 62;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
@@ -413,7 +430,17 @@ public class InventoryGui extends MixGui
             x = this.guiLeft + 102;// y = this.guiTop + 89; width = 16; height = 16;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                if (PAGE == 1)
+                if (PAGE == 3)
+                {
+                    this.message_state = 8;
+
+                    if (!(GUIFEATURESLOADER instanceof MoveGUIFeatures))
+                    {
+                        GUIFEATURESLOADER = new MoveGUIFeatures(this);
+                    }
+                    this.render_text = true;
+                }
+                else if (PAGE == 1)
                 {
                     int id = skinningentities.skinningentitiesbytes.RANDOM_WALK();
                     if (id != -1)
@@ -741,6 +768,7 @@ public class InventoryGui extends MixGui
 
         SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
 
+        this.drawTexturedModalRect(this.guiLeft + 64 + 1, this.guiTop + 26 + 1, 30, 0, 14, 14);
         switch (PAGE)
         {
             case 0:
@@ -874,7 +902,7 @@ public class InventoryGui extends MixGui
                 this.drawTexturedModalRect(this.guiLeft + 49, this.guiTop + 90, 16, 28, 14, 14);
                 this.drawTexturedModalRect(this.guiLeft + 67, this.guiTop + 90, 106, 14, 14, 14);
                 this.drawTexturedModalRect(this.guiLeft + 67 + 18, this.guiTop + 94, 38, 14, 14, 8);
-//                this.drawTexturedModalRect(this.guiLeft + 67 + 18 + 18, this.guiTop + 90, 44, 0, 14, 14);
+                this.drawTexturedModalRect(this.guiLeft + 67 + 18 + 18, this.guiTop + 90, 44, 0, 14, 14);
                 break;
             }
             default:
@@ -938,7 +966,7 @@ public class InventoryGui extends MixGui
                         {
                             try
                             {
-                                if (this.message_state == 5 || this.message_state == 6 || this.message_state == 7)
+                                if (this.message_state == 5 || this.message_state == 6 || this.message_state == 7 || this.message_state == 8)
                                 {
                                     BytesWriter.set(byte_array, Float.parseFloat(new_string), new_index);
                                 }
@@ -989,6 +1017,11 @@ public class InventoryGui extends MixGui
                             case 7:
                             {
                                 byte_array[0] = 22;
+                                break;
+                            }
+                            case 8:
+                            {
+                                byte_array[0] = 23;
                                 break;
                             }
                             default:

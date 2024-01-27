@@ -967,14 +967,18 @@ public abstract class SkinningEntities extends EntityLivingBase
         {
             if (!this.world.isRemote)
             {
-                entityplayer.openGui(Small.I, 0, entityplayer.world, this.getEntityId(), 0, 0);
+                Entity entity = this.getOwner();
+                if (!(this.main_server_work_byte_array[this.skinningentitiesbytes.LOCK_INVENTORY()] == 1 && this.owner_uuid != null && (entity == null || !entity.equals(entityplayer))))
+                {
+                    entityplayer.openGui(Small.I, 0, entityplayer.world, this.getEntityId(), 0, 0);
 
-                byte[] byte_array = new byte[1 + 4 + this.main_server_work_byte_array.length];
-                byte_array[0] = 6;
-                BytesWriter.set(byte_array, this.getEntityId(), 1);
-                System.arraycopy(this.main_server_work_byte_array, 0, byte_array, 1 + 4, this.main_server_work_byte_array.length);
-                NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), (EntityPlayerMP)entityplayer);
+                    byte[] byte_array = new byte[1 + 4 + this.main_server_work_byte_array.length];
+                    byte_array[0] = 6;
+                    BytesWriter.set(byte_array, this.getEntityId(), 1);
+                    System.arraycopy(this.main_server_work_byte_array, 0, byte_array, 1 + 4, this.main_server_work_byte_array.length);
+                    NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), (EntityPlayerMP)entityplayer);
 //                EntitiesContainerHelper.setContainer(this, entityplayer, InventoryContainer.ID);
+                }
             }
         }
         else

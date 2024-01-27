@@ -46,9 +46,10 @@ public class PlayerGui extends MixGui
         ScaledResolution scaledresolution = new ScaledResolution(this.mc);
         this.setWorldAndResolution(Minecraft.getMinecraft(), scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
 
-        byte[] byte_array = new byte[4];
-        BytesWriter.set(byte_array, 0, 0);
-        NetworksRegistry.I.sendToServer(new CapabilitiesServerMessage(byte_array));
+//        byte[] byte_array = new byte[4];
+//        BytesWriter.set(byte_array, 0, 0);
+//        NetworksRegistry.I.sendToServer(new CapabilitiesServerMessage(byte_array));
+        NetworksRegistry.I.sendToServer(new CapabilitiesServerMessage(new byte[4]));
         this.xSize = 256;
         this.ySize = 256;
 

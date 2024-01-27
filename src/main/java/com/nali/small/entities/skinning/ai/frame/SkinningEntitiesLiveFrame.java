@@ -186,11 +186,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
 
     public boolean setShoot(int id0, int id1, int id2, int id3, boolean bf, SkinningEntitiesAttack skinningentitiesattack)
     {
-//        this.step = 1;
-//        byte state = skinningentitiesattack.getByte();
-//        EntityDataManager entitydatamanager = this.skinningentities.getDataManager();
-//        DataParameter<Byte> byte_dataparameter = this.skinningentities.getByteDataParameterArray()[this.skinningentities.skinningentitiesbytes.AMMO()];
-//        byte ammo = entitydatamanager.get(byte_dataparameter);
+//        Small.LOGGER.info("STATE " + skinningentitiesattack.state);
         if (this.skinningentities.main_server_work_byte_array[this.skinningentities.skinningentitiesbytes.AMMO()] <= 0)
         {
             this.step = 1;
@@ -204,60 +200,57 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
 
                 if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id3][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id3][1])
                 {
-                    this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id3][0];
                     this.step = 0;
+                    this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id3][0];
                     return true;
                 }
-                else if (this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id3][0] && this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id3][1])
+                else if (this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id3][0] && this.skinningentities.server_frame_int_array[this.integer_index] <= this.int_2d_array[id3][1])
                 {
-                    if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id3][1] - 1)
+                    if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id3][1])
                     {
+                        this.step = 0;
                         this.skinningentities.main_server_work_byte_array[this.skinningentities.skinningentitiesbytes.AMMO()] = skinningentitiesattack.max_ammo;
-//                        entitydatamanager.set(byte_dataparameter, this.max_ammo);
+//                        if (skinningentitiesattack.state == 0 || skinningentitiesattack.state == 1)
+//                        {
+//                            this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][1];
+//                        }
+                        return true;
                     }
-
-                    return true;
                 }
+                return true;
             }
         }
         else if (skinningentitiesattack.state == 0 || skinningentitiesattack.state == 1)
         {
-            //start gun
-            if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id1][1])
-            {
-                this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
-                this.step = 0;
-                return true;
-            }
-            else
+            if (this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id1][0] && this.skinningentities.server_frame_int_array[this.integer_index] <= this.int_2d_array[id1][1])
             {
                 if (bf)
                 {
-                    if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][0])
+//                    if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][0])
+//                    {
+//                        this.step = 1;
+//                    }
+//                    else
+//                    {
+                    if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][0] + 1)
                     {
                         this.step = 1;
+                        this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][0];
                     }
-                    else
-                    {
-                        if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][0] + 1)
-                        {
-                            this.step = 1;
-                            this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][0];
-                        }
 
-                        if (this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id1][1] - 1)
-                        {
-                            this.step = -1;
-                            this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][1];
-                        }
+                    if (this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id1][1] - 1)
+                    {
+                        this.step = -1;
+                        this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][1];
                     }
+//                    }
                 }
                 else
                 {
                     this.step = 1;
-                    if (this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id0][0] && this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][1])
+                    if (this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id1][0] && this.skinningentities.server_frame_int_array[this.integer_index] <= this.int_2d_array[id1][1])
                     {
-                        if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id1][1] - 1)
+                        if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id1][1])
                         {
                             this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][0];
                             this.step = 0;
@@ -265,25 +258,39 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
                     }
                 }
 
-                //                skinningentitiesframeai.setByte((byte)1);
                 for (int attack_frame : skinningentitiesattack.attack_frame_int_array)
                 {
                     if (this.skinningentities.server_frame_int_array[this.integer_index] == attack_frame)
                     {
                         this.skinningentities.main_server_work_byte_array[this.skinningentities.skinningentitiesbytes.AMMO()] -= 1;
-//                        entitydatamanager.set(byte_dataparameter, (byte)(ammo - 1));
                         skinningentitiesattack.state = 1;
                         break;
                     }
                 }
+                return true;
+            }
+            else if (this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id0][0] && this.skinningentities.server_frame_int_array[this.integer_index] <= this.int_2d_array[id0][1])
+            {
+                if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1])
+                {
+                    this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][1];
+                    this.step = 0;
+                    return true;
+                }
 
+                this.step = 1;
+                return true;
+            }
+            else if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1])
+            {
+                this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
+                this.step = 0;
                 return true;
             }
         }
-        else// if (state > 1)
+        else
         {
             this.step = 1;
-            //if gun / shoot -> end gun
             return this.checkShoot(id0, id1, id2, false);
         }
 
@@ -295,31 +302,21 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         if (this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id0][0] && this.skinningentities.server_frame_int_array[this.integer_index] <= this.int_2d_array[id0][1])
         {
             this.skinningentities.skinningentitiesfindmove.endGoal();
-
-//            this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id2][0];
-//            this.step = 0;
-//            return true;
             if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1])
             {
                 this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id2][0];
                 this.step = 0;
             }
-
             return true;
         }
         else if (this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id1][0] && this.skinningentities.server_frame_int_array[this.integer_index] <= this.int_2d_array[id1][1])
         {
             this.skinningentities.skinningentitiesfindmove.endGoal();
-
-//            this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id2][0];
-//            this.step = 0;
-//            return true;
             if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id1][1])
             {
                 this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id2][0];
                 this.step = 0;
             }
-
             return true;
         }
         else if (!try_reload && this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id2][0] && this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id2][1])

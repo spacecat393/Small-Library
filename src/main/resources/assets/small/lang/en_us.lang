@@ -27,7 +27,6 @@ gui.info.bf0=Stay
 gui.info.bf1=Follow
 gui.info.bf00=Won't find player.
 gui.info.bf10=Find a way to player.
-gui.info.bf000=Player will tp to this.
 gui.info.bfi0=Get Items
 gui.info.bfi1=Find Items
 gui.info.bfi00=Get closest items.
@@ -109,6 +108,11 @@ gui.info.s11=1 Sakura == 1.0
 gui.info.sl0=Yaw
 gui.info.sl1=Pitch
 gui.info.sl2=Enter [id, float] or [0, 180.0]
+gui.info.sm0=Move
+gui.info.sm1=Enter [x_float, y_float, z_float] or [0.0, 1.0, 0.0]
+gui.info.tp0=Teleport
+gui.info.tp1=1 Sakura to TP to this.
+gui.info.tp2=Sakura
 
 itemGroup.small=Small
 item.box.name=Box

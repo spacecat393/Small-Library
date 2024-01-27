@@ -29,7 +29,7 @@ public class SkinningEntitiesRandomWalk extends SkinningEntitiesAI
             if (--this.tick <= 0)
             {
                 this.skinningentities.skinningentitiesfindmove.setGoal(this.skinningentities.posX + this.skinningentities.getRNG().nextInt(5) - this.skinningentities.getRNG().nextInt(5), this.skinningentities.posY + this.skinningentities.getRNG().nextInt(5) - this.skinningentities.getRNG().nextInt(5), this.skinningentities.posZ + this.skinningentities.getRNG().nextInt(5) - this.skinningentities.getRNG().nextInt(5));
-                this.tick = this.skinningentities.getRNG().nextInt(1000) + 100;
+                this.tick = this.skinningentities.getRNG().nextInt(100) + 100;
                 this.walk = true;
             }
         }
