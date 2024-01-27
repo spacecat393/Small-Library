@@ -383,12 +383,12 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
 
                     break;
                 }
-//                case 9:
-//                {
-//                    entityplayermp.closeScreen();
-//                    NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(new byte[]{2}), entityplayermp);
-//                    break;
-//                }
+                case 9:
+                {
+                    entityplayermp.closeScreen();
+                    NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(new byte[]{2}), entityplayermp);
+                    break;
+                }
                 case 10://add t
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));

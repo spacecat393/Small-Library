@@ -4,6 +4,7 @@ import com.nali.list.messages.SkinningEntitiesClientMessage;
 import com.nali.small.Small;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
+import com.nali.small.gui.OpenGUIHelper;
 import com.nali.small.gui.features.messages.EffectsGUIFeatures;
 import com.nali.small.gui.features.messages.inventory.TargetGUIFeatures;
 import com.nali.small.gui.features.messages.inventory.TroublemakerGUIFeatures;
@@ -94,11 +95,11 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
 //                });
                 break;
             }
-//            case 2:
-//            {
-//                OpenGUIHelper.callPlayerGUI();
-//                break;
-//            }
+            case 2:
+            {
+                OpenGUIHelper.callPlayerGUI();
+                break;
+            }
             case 3:
             {
                 TARGET_INT_ARRAY = new int[(skinningentitiesclientmessage.data.length - 1) / 4];
