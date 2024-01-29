@@ -50,7 +50,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
                         if (entity.getClass() == this.clasz)
                         {
                             playwith_skinningentities = (SkinningEntities)entity;
-                            if (this.skinningentities.getDataManager().get(this.skinningentities.getFloatDataParameterArray()[0]) <= playwith_skinningentities.getDataManager().get(playwith_skinningentities.getFloatDataParameterArray()[0]))
+                            if (playwith_skinningentities.server_skinningentities == null && this.skinningentities.getDataManager().get(this.skinningentities.getFloatDataParameterArray()[0]) <= playwith_skinningentities.getDataManager().get(playwith_skinningentities.getFloatDataParameterArray()[0]))
                             {
                                 break;
                             }
@@ -81,8 +81,16 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
                     {
                         if (isTooClose(this.skinningentities, this.playwith_skinningentities, 0.0F))
                         {
-                            this.playwith_skinningentities.server_skinningentities = this.skinningentities;
-                            this.should_play = true;
+                            if (this.playwith_skinningentities.server_skinningentities == null)
+                            {
+                                this.playwith_skinningentities.server_skinningentities = this.skinningentities;
+                                this.should_play = true;
+                            }
+                            else
+                            {
+                                this.playwith_skinningentities = null;
+                                this.tick = 0;
+                            }
                         }
                         else
                         {
