@@ -7,6 +7,7 @@ import net.minecraft.util.math.MathHelper;
 
 public class SkinningEntitiesLook extends SkinningEntitiesAI
 {
+//    public static float EPSILON = 1e-6f;
 //    public float deltaLookYaw;
 //    public float deltaLookPitch;
     public boolean looking;
@@ -98,6 +99,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
 
 //                if (yaw * yaw - riding_entity.rotationYaw * riding_entity.rotationYaw < 0.000001F && pitch * pitch - riding_entity.rotationPitch * riding_entity.rotationPitch < 0.000001F)
                 if (yaw == riding_entity.rotationYaw && pitch == riding_entity.rotationPitch)
+//                if (Math.abs(yaw - riding_entity.rotationYaw) < EPSILON && Math.abs(pitch - riding_entity.rotationPitch) < EPSILON)
                 {
                     this.done = true;
                 }
@@ -117,6 +119,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
 
 //                if (yaw * yaw - this.skinningentities.renderYawOffset * this.skinningentities.renderYawOffset < 0.000001F && pitch * pitch - this.skinningentities.rotationPitch * this.skinningentities.rotationPitch < 0.000001F)
                 if (yaw == this.skinningentities.rotationYaw && pitch == this.skinningentities.rotationPitch)
+//                if (Math.abs(yaw - this.skinningentities.rotationYaw) < EPSILON && Math.abs(pitch - this.skinningentities.rotationPitch) < EPSILON)
                 {
                     this.done = true;
                 }

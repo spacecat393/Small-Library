@@ -5,7 +5,6 @@ import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 public class SkinningEntitiesMove extends SkinningEntitiesAI
@@ -211,33 +210,33 @@ public class SkinningEntitiesMove extends SkinningEntitiesAI
 //        this.action = action;
 //    }
 
-    public float limitAngle(float sourceAngle, float targetAngle, float maximumChange)
-    {
-        float f = MathHelper.wrapDegrees(targetAngle - sourceAngle);
-
-        if (f > maximumChange)
-        {
-            f = maximumChange;
-        }
-
-        if (f < -maximumChange)
-        {
-            f = -maximumChange;
-        }
-
-        float f1 = sourceAngle + f;
-
-        if (f1 < 0.0F)
-        {
-            f1 += 360.0F;
-        }
-        else if (f1 > 360.0F)
-        {
-            f1 -= 360.0F;
-        }
-
-        return f1;
-    }
+//    public float limitAngle(float sourceAngle, float targetAngle, float maximumChange)
+//    {
+//        float f = MathHelper.wrapDegrees(targetAngle - sourceAngle);
+//
+//        if (f > maximumChange)
+//        {
+//            f = maximumChange;
+//        }
+//
+//        if (f < -maximumChange)
+//        {
+//            f = -maximumChange;
+//        }
+//
+//        float f1 = sourceAngle + f;
+//
+//        if (f1 < 0.0F)
+//        {
+//            f1 += 360.0F;
+//        }
+//        else if (f1 > 360.0F)
+//        {
+//            f1 -= 360.0F;
+//        }
+//
+//        return f1;
+//    }
 
     public boolean isDone()
     {

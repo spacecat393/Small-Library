@@ -18,11 +18,13 @@ public interface SkinningEntitiesBytes
 //    int AFTER_STATE();
 //ACTION
     int SIT();
-    int REVIVE();
+    int LOCATION();
     int FOLLOW();
+    int REVIVE();
     int PLAY();
     int HEAL();
     int PROTECT();
+    int CARE_OWNER();
     int ATTACK();
     int MINE();
     int PLANT();

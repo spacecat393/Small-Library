@@ -4,6 +4,8 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumHand;
 
+import java.util.ArrayList;
+
 import static com.nali.small.entities.EntitiesMathHelper.isTooClose;
 
 public class SkinningEntitiesAttack extends SkinningEntitiesAI
@@ -26,115 +28,53 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
-        if (this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.ATTACK()) && !this.skinningentities.skinningentitiesarea.all_entity_arraylist.isEmpty())
+        boolean should_work = false;
+        if (this.skinningentities.main_server_work_byte_array[this.skinningentities.skinningentitiesbytes.CARE_OWNER()] == 1)
+        {
+            this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.CARE_OWNER()] = 1;
+            should_work = this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.CARE_OWNER());
+            this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.CARE_OWNER()] = 0;
+        }
+
+        boolean work = this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.ATTACK());
+        if ((!work && should_work && !this.skinningentities.skinningentitiescareowner.target_entity_arraylist.isEmpty()) || (work && !this.skinningentities.skinningentitiesarea.all_entity_arraylist.isEmpty()))
         {
             this.attack = true;
 //            boolean attack = false;
-            double[] far = new double[this.skinningentities.skinningentitiesarea.all_entity_arraylist.size()];
 
-            int index = 0;
-            for (Entity entity : this.skinningentities.skinningentitiesarea.all_entity_arraylist)
+            Entity target_entity;
+            if (!this.skinningentities.skinningentitiescareowner.target_entity_arraylist.isEmpty())
             {
-                far[index++] = this.skinningentities.getDistanceSq(entity);
+                target_entity = this.attackAndFind(this.skinningentities.skinningentitiescareowner.target_entity_arraylist);
+            }
+            else
+            {
+                target_entity = this.attackAndFind(this.skinningentities.skinningentitiesarea.all_entity_arraylist);
+            }
 
-                if (this.state == -1)
+            if (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.getDistanceSq(target_entity) <= this.skinningentities.skinningentitiessetlocation.far)
+            {
+                if (this.state == 0 || this.state == 1)
+                {
+                    this.skinningentities.skinningentitieslook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
+                }
+                else if (!this.skinningentities.skinningentitiesfindmove.try_move)
                 {
                     this.state = 0;
+                    this.skinningentities.skinningentitieslook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
                 }
 
-                if (this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance))
+                if (!(this.skinningentities.canEntityBeSeen(target_entity) && isTooClose(this.skinningentities, target_entity, this.minimum_distance)))
                 {
-//                    attack = true;
-
-                    if (this.state == 1)
-                    {
-                        this.skinningentities.swingArm(EnumHand.MAIN_HAND);
-                        this.skinningentities.attackEntityAsMob(entity);
-                    }
-
-//                    if (MixMath.isTooClose(this.skinningentities, entity, this.minimum_away_distance))
-//                    {
-//                        if (++this.out_tick == 60)
-//                        {
-//                            this.out_tick = 0;
-//                            Vec3d a_pos = this.skinningentities.getPositionVector();
-//                            Vec3d direction = a_pos.subtract(entity.getPositionVector()).normalize();
-//                            Vec3d targetPos = a_pos.add(direction);
-//                            this.skinningentities.skinningentitiesfindmove.setGoal(targetPos.x, targetPos.y, targetPos.z);
-//                            this.state = 2;
-//                        }
-//                    }
-//                    else
-//                    {
-                    this.skinningentities.skinningentitiesfindmove.endGoal();
-//                    }
+                    this.skinningentities.skinningentitiesfindmove.setGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
+                    this.state = 3;
                 }
-//                else// if (++this.wait_tick == 60)
-//                {
-////                    this.wait_tick = 0;
-//                    this.skinningentities.skinningentitiesfindmove.setGoal(entity.posX, entity.posY, entity.posZ);
-//                    this.state = 3;
-//                }
-            }
-
-            index = 0;
-
-            double max_dis = Double.MAX_VALUE;
-
-            for (int i = 0; i < far.length; ++i)
-            {
-                if (far[i] < max_dis)
-                {
-                    index = i;
-                    max_dis = far[i];
-                }
-            }
-
-            Entity entity = this.skinningentities.skinningentitiesarea.all_entity_arraylist.get(index);
-
-            if (this.state == 0 || this.state == 1)
-            {
-                this.skinningentities.skinningentitieslook.set(entity.posX, entity.posY, entity.posZ, 20.0F);
-            }
-            else if (!this.skinningentities.skinningentitiesfindmove.try_move)
-            {
-                this.state = 0;
-                this.skinningentities.skinningentitieslook.set(entity.posX, entity.posY, entity.posZ, 20.0F);
-            }
-
-//            if (this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance))
-//            {
-//////                if (MixMath.isTooClose(this.skinningentities, entity, this.minimum_away_distance))
-//////                {
-//////                    Vec3d a_pos = this.skinningentities.getPositionVector();
-//////                    Vec3d direction = a_pos.subtract(entity.getPositionVector()).normalize();
-//////                    Vec3d targetPos = a_pos.add(direction);
-//////                    this.skinningentities.skinningentitiesfindmove.setGoal(targetPos.x, targetPos.y, targetPos.z);
-//////                    this.state = 2;
-////                    if (entity instanceof EntityLivingBase)
-////                    {
-////                        ((EntityLivingBase)entity).moveForward = 0;
-////                        ((EntityLivingBase)entity).moveVertical = 0;
-////                        ((EntityLivingBase)entity).moveStrafing = 0;
-////                    }
-//////                }
-//            }
-//            else
-            if (!(this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance)))
-            {
-                this.skinningentities.skinningentitiesfindmove.setGoal(entity.posX, entity.posY, entity.posZ);
-                this.state = 3;
             }
 
             if (this.state == 1)
             {
                 this.state = 0;
             }
-
-//            if (attack && this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.ON_ATTACK()] != 1)
-//            {
-//                this.skinningentities.getDataManager().set(this.skinningentities.getByteDataParameterArray()[this.skinningentities.skinningentitiesbytes.ON_ATTACK()], (byte)1);
-//            }
         }
         else
         {
@@ -147,5 +87,48 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
 
             this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.ATTACK()] = 0;
         }
+    }
+
+    public Entity attackAndFind(ArrayList<Entity> entity_arraylist)
+    {
+        double[] far = new double[entity_arraylist.size()];
+        int index = 0;
+        for (Entity entity : entity_arraylist)
+        {
+            far[index++] = this.skinningentities.getDistanceSq(entity);
+            if (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.getDistanceSq(entity) <= this.skinningentities.skinningentitiessetlocation.far)
+            {
+                if (this.state == -1)
+                {
+                    this.state = 0;
+                }
+
+                if (this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance))
+                {
+                    if (this.state == 1)
+                    {
+                        this.skinningentities.swingArm(EnumHand.MAIN_HAND);
+                        this.skinningentities.attackEntityAsMob(entity);
+                    }
+
+                    this.skinningentities.skinningentitiesfindmove.endGoal();
+                }
+            }
+        }
+
+        index = 0;
+
+        double max_dis = Double.MAX_VALUE;
+
+        for (int i = 0; i < far.length; ++i)
+        {
+            if (far[i] < max_dis)
+            {
+                index = i;
+                max_dis = far[i];
+            }
+        }
+
+        return entity_arraylist.get(index);
     }
 }

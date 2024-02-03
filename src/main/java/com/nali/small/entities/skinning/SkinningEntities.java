@@ -82,6 +82,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     public SkinningEntitiesBody skinningentitiesbody = new SkinningEntitiesBody(this);
     public SkinningEntitiesPat skinningentitiespat;
     public SkinningEntitiesArea skinningentitiesarea;
+    public SkinningEntitiesSetLocation skinningentitiessetlocation;
     public SkinningEntitiesFindMove skinningentitiesfindmove;
     public SkinningEntitiesLook skinningentitieslook;
     public SkinningEntitiesMove skinningentitiesmove;
@@ -92,6 +93,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     public SkinningEntitiesRandomLook skinningentitiesrandomlook;
     public SkinningEntitiesHeal skinningentitiesheal;
     public SkinningEntitiesProtect skinningentitiesprotect;
+    public SkinningEntitiesCareOwner skinningentitiescareowner;
     public SkinningEntitiesAttack skinningentitiesattack;
     public SkinningEntitiesRevive skinningentitiesrevive;
     public SkinningEntitiesPlayWith skinningentitiesplaywith;
@@ -146,6 +148,10 @@ public abstract class SkinningEntities extends EntityLivingBase
 
             ChunkLoader.updateChunk(this);
             this.skinningentitiesarea = new SkinningEntitiesArea(this);
+            if (this.skinningentitiesbytes.LOCATION() != -1)
+            {
+                this.skinningentitiessetlocation = new SkinningEntitiesSetLocation(this);
+            }
             this.skinningentitiesfindmove = new SkinningEntitiesFindMove(this);
             this.skinningentitieslook = new SkinningEntitiesLook(this);
             this.skinningentitiesmove = new SkinningEntitiesMove(this);
@@ -175,6 +181,10 @@ public abstract class SkinningEntities extends EntityLivingBase
             if (this.skinningentitiesbytes.PLAY() != -1)
             {
                 this.skinningentitiesplaywith = new SkinningEntitiesPlayWith(this);
+            }
+            if (this.skinningentitiesbytes.CARE_OWNER() != -1)
+            {
+                this.skinningentitiescareowner = new SkinningEntitiesCareOwner(this);
             }
             if (this.skinningentitiesbytes.ATTACK() != -1)
             {
@@ -294,8 +304,6 @@ public abstract class SkinningEntities extends EntityLivingBase
         //
 //        if (!this.world.isRemote)
 //        {
-        nbttagcompound.setIntArray("target", this.skinningentitiesarea.target_arraylist.stream().mapToInt(Integer::intValue).toArray());
-        nbttagcompound.setIntArray("troublemaker", this.skinningentitiesarea.troublemaker_arraylist.stream().mapToInt(Integer::intValue).toArray());
 //        }
 
         //write inv
@@ -305,6 +313,15 @@ public abstract class SkinningEntities extends EntityLivingBase
 
         if (!this.world.isRemote)
         {
+            nbttagcompound.setIntArray("target", this.skinningentitiesarea.target_arraylist.stream().mapToInt(Integer::intValue).toArray());
+            nbttagcompound.setIntArray("troublemaker", this.skinningentitiesarea.troublemaker_arraylist.stream().mapToInt(Integer::intValue).toArray());
+
+            if (this.skinningentitiessetlocation != null)
+            {
+                nbttagcompound.setLong("blockpos_long", this.skinningentitiessetlocation.blockpos_long);
+                nbttagcompound.setFloat("far_float", this.skinningentitiessetlocation.far);
+            }
+
             if (this.main_server_work_byte_array == null)
             {
                 this.main_server_work_byte_array = new byte[this.skinningentitiesbytes.MAX_WORKS()];
@@ -319,6 +336,10 @@ public abstract class SkinningEntities extends EntityLivingBase
                 if (this.skinningentitiesbytes.RANDOM_LOOK() != -1)
                 {
                     this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] = 1;
+                }
+                if (this.skinningentitiesbytes.CARE_OWNER() != -1)
+                {
+                    this.main_server_work_byte_array[this.skinningentitiesbytes.CARE_OWNER()] = 1;
                 }
                 nbttagcompound.setByteArray("work_bytes", this.main_server_work_byte_array);
     //            nbttagcompound.setByte("byte_" + this.skinningentitiesbytes.RANDOM_WALK(), (byte)1);
@@ -493,10 +514,13 @@ public abstract class SkinningEntities extends EntityLivingBase
             {
                 this.skinningentitiesarea.troublemaker_arraylist.add(x);
             }
-        }
 
-        if (!this.world.isRemote)
-        {
+            if (this.skinningentitiessetlocation != null)
+            {
+                this.skinningentitiessetlocation.blockpos_long = nbttagcompound.getLong("blockpos_long");
+                this.skinningentitiessetlocation.far = nbttagcompound.getFloat("far_float");
+            }
+
             this.server_sus_init = nbttagcompound.hasKey("sus_init");
 
             if (!this.server_sus_init)
@@ -508,6 +532,10 @@ public abstract class SkinningEntities extends EntityLivingBase
                 if (this.skinningentitiesbytes.RANDOM_LOOK() != -1)
                 {
                     this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_LOOK()] = 1;
+                }
+                if (this.skinningentitiesbytes.CARE_OWNER() != -1)
+                {
+                    this.main_server_work_byte_array[this.skinningentitiesbytes.CARE_OWNER()] = 1;
                 }
     //            entitydatamanager.set(byte_dataparameter_array[this.skinningentitiesbytes.RANDOM_WALK()], (byte)1);
     //            entitydatamanager.set(byte_dataparameter_array[this.skinningentitiesbytes.RANDOM_LOOK()], (byte)1);
@@ -773,13 +801,17 @@ public abstract class SkinningEntities extends EntityLivingBase
                 this.skinningentitiesarea.onUpdate();
 //                }
 
-                if (this.skinningentitiesrevive != null)
+                if (this.skinningentitiessetlocation != null)
                 {
-                    this.skinningentitiesrevive.onUpdate();
+                    this.skinningentitiessetlocation.onUpdate();
                 }
                 if (this.skinningentitiesfollow != null)
                 {
                     this.skinningentitiesfollow.onUpdate();
+                }
+                if (this.skinningentitiesrevive != null)
+                {
+                    this.skinningentitiesrevive.onUpdate();
                 }
 
                 if (this.skinningentitiesplaywith != null)
@@ -793,6 +825,10 @@ public abstract class SkinningEntities extends EntityLivingBase
                 if (this.skinningentitiesprotect != null)
                 {
                     this.skinningentitiesprotect.onUpdate();
+                }
+                if (this.skinningentitiescareowner != null)
+                {
+                    this.skinningentitiescareowner.onUpdate();
                 }
                 if (this.skinningentitiesattack != null)
                 {

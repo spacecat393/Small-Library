@@ -6,6 +6,7 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.OpenGUIHelper;
 import com.nali.small.gui.features.messages.EffectsGUIFeatures;
+import com.nali.small.gui.features.messages.inventory.SetLocationGUIFeatures;
 import com.nali.small.gui.features.messages.inventory.TargetGUIFeatures;
 import com.nali.small.gui.features.messages.inventory.TroublemakerGUIFeatures;
 import com.nali.system.bytes.BytesReader;
@@ -13,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -183,6 +185,12 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
 //                    skinningentities.rotationYawHead = BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 4 + 4 + 4);
 //                    skinningentities.renderYawOffset = BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 4 + 4 + 4 + 4);
 //                }
+                break;
+            }
+            case 8://get location
+            {
+                SetLocationGUIFeatures.BLOCKPOS = BlockPos.fromLong(BytesReader.getLong(skinningentitiesclientmessage.data, 1));
+                SetLocationGUIFeatures.FAR = BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 8);
                 break;
             }
             default:

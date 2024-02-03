@@ -29,6 +29,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -873,6 +874,56 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                             //
                             //                        skinningentities.setPositionAndRotation(entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, skinningentities.rotationYaw, skinningentities.rotationPitch);
                         }
+                    }
+
+                    break;
+                }
+                case 25://set location
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                    if (skinningentities != null)
+                    {
+                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
+                        {
+                            Entity entity = skinningentities.getOwner();
+                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
+                            {
+                                break;
+                            }
+                        }
+
+                        int id = (int)BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16);
+                        if (id == 1)
+                        {
+                            skinningentities.skinningentitiessetlocation.far = BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4);
+                        }
+                        else
+                        {
+                            skinningentities.skinningentitiessetlocation.blockpos_long = new BlockPos(BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4), BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4 + 4), BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4 + 4 + 4)).toLong();
+                        }
+                    }
+
+                    break;
+                }
+                case 26://send location
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+                    if (skinningentities != null)
+                    {
+                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
+                        {
+                            Entity entity = skinningentities.getOwner();
+                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
+                            {
+                                break;
+                            }
+                        }
+
+                        byte[] byte_array = new byte[1 + 8 + 4];
+                        byte_array[0] = 8;
+                        BytesWriter.set(byte_array, skinningentities.skinningentitiessetlocation.blockpos_long, 1);
+                        BytesWriter.set(byte_array, skinningentities.skinningentitiessetlocation.far, 1 + 8);
+                        NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), entityplayermp);
                     }
 
                     break;

@@ -668,10 +668,10 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 
     public SNode nextSNode(SNode start_snode)
     {
-//        if (start_snode.children_snode_array == null)
-//        {
-//            return null;
-//        }
+        if (start_snode.children_snode_array == null)
+        {
+            return null;
+        }
 
         World world = this.skinningentities.world;
 //        byte index = 0;
@@ -701,6 +701,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 //        {
 //            index = getIndex(new_x, new_y, new_z);
 //        }
+
         pre_snode = this.setChild(start_snode, new_x, new_y, new_z);
         if (pre_snode != null)
         {

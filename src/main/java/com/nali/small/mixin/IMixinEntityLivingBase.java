@@ -1,6 +1,7 @@
 package com.nali.small.mixin;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,6 +11,9 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(EntityLivingBase.class)
 public interface IMixinEntityLivingBase
 {
+    @Accessor("attackingPlayer")
+    EntityPlayer attackingPlayer();
+
     @Accessor("idleTime")
     void idleTime(int i);
     @Accessor("lastDamage")
