@@ -14,6 +14,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
 //    public int main_integer_index;
     public int integer_index;
     public int[][] int_2d_array; // start end
+    public boolean lock;
     public Supplier<Boolean>[] condition_boolean_supplier_array;
 
     public SkinningEntitiesLiveFrame(SkinningEntities skinningentities/*, int main_integer_index*/, int integer_index, int[][] int_2d_array)
@@ -29,12 +30,15 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
     {
 //        Small.LOGGER.info("FRAME " + this.skinningentities.server_frame_int_array[this.integer_index]);
 
-        for (Supplier<Boolean> boolean_supplier : this.condition_boolean_supplier_array)
+        if (!this.lock)
         {
-            if (boolean_supplier.get())
+            for (Supplier<Boolean> boolean_supplier : this.condition_boolean_supplier_array)
             {
-                this.skinningentities.getDataManager().set(this.skinningentities.getIntegerDataParameterArray()[/*this.main_integer_index*/this.integer_index], this.skinningentities.server_frame_int_array[this.integer_index] + this.step);
-                return;
+                if (boolean_supplier.get())
+                {
+                    this.skinningentities.getDataManager().set(this.skinningentities.getIntegerDataParameterArray()[/*this.main_integer_index*/this.integer_index], this.skinningentities.server_frame_int_array[this.integer_index] + this.step);
+                    return;
+                }
             }
         }
     }
@@ -57,54 +61,43 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         return this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][1];
     }
 
-    public boolean setFLoop(int id0, boolean result)
+    public boolean setFLoop(int id0)
     {
-        if (result)
+        if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1])
         {
-            if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1])
-            {
-                this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][1];
-                this.step = 0;
-                return true;
-            }
-            else if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1])
-            {
-                this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
-                this.step = 0;
-                return true;
-            }
-
-            this.step = 1;
-            return this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][1];
+            this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][1];
+            this.step = 0;
+            return true;
+        }
+        else if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1])
+        {
+            this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
+            this.step = 0;
+            return true;
         }
 
-        return result;
+        this.step = 1;
+        return this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][1];
     }
 
-    public boolean setFLoopFree(int id0, int byte_id, boolean result)
+    public boolean setFLoopFree(int id0, int byte_id)
     {
-        if (result)
+        if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1] - 1)
         {
-            if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1] - 1)
-            {
-//                this.skinningentities.getDataManager().set(this.skinningentities.getByteDataParameterArray()[byte_id], (byte)0);
-                this.skinningentities.main_server_work_byte_array[byte_id] = 0;
-                this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][1] - 1;
-                this.step = 0;
-                return true;
-            }
-            else if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1])
-            {
-                this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
-                this.step = 0;
-                return true;
-            }
-
-            this.step = 1;
-            return this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][1];
+            this.skinningentities.main_server_work_byte_array[byte_id] = 0;
+            this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][1] - 1;
+            this.step = 0;
+            return true;
+        }
+        else if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1])
+        {
+            this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
+            this.step = 0;
+            return true;
         }
 
-        return result;
+        this.step = 1;
+        return this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][1];
     }
 
     public boolean setFLoopOffSet(int id0, int id1)
@@ -139,16 +132,6 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         return result;
     }
 
-    public boolean setTLoop(int id0, boolean result)
-    {
-        if (result)
-        {
-            return this.setTLoop(id0);
-        }
-
-        return result;
-    }
-
     public boolean setTLoopInSet(int id0, int id1)
     {
         boolean result = this.skinningentities.server_frame_int_array[this.integer_index] >= this.int_2d_array[id0][1] && this.skinningentities.server_frame_int_array[this.integer_index] <= this.int_2d_array[id1][1];
@@ -169,24 +152,23 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         return result;
     }
 
-    public boolean setTLoopFB(int id0, boolean result)
+    public boolean setTLoopFB(int id0)
     {
-        if (result)
+        if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] || this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1])
         {
-            if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id0][0] + 1)
-            {
-                this.step = 1;
-                this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
-            }
-
-            if (this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id0][1] - 1)
-            {
-                this.step = -1;
-                this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][1];
-            }
+            this.step = 0;
+            this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id0][0];
+        }
+        else if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][0])
+        {
+            this.step = 1;
+        }
+        else if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id0][1])
+        {
+            this.step = -1;
         }
 
-        return result;
+        return true;
     }
 
     public boolean setShoot(int id0, int id1, int id2, int id3, boolean bf, SkinningEntitiesAttack skinningentitiesattack)
@@ -231,24 +213,14 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
             {
                 if (bf)
                 {
-//                    if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][0])
-//                    {
-//                        this.step = 1;
-//                    }
-//                    else
-//                    {
-                    if (this.skinningentities.server_frame_int_array[this.integer_index] < this.int_2d_array[id1][0] + 1)
+                    if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id1][0])
                     {
                         this.step = 1;
-                        this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][0];
                     }
-
-                    if (this.skinningentities.server_frame_int_array[this.integer_index] > this.int_2d_array[id1][1] - 1)
+                    else if (this.skinningentities.server_frame_int_array[this.integer_index] == this.int_2d_array[id1][1])
                     {
                         this.step = -1;
-                        this.skinningentities.server_frame_int_array[this.integer_index] = this.int_2d_array[id1][1];
                     }
-//                    }
                 }
                 else
                 {
