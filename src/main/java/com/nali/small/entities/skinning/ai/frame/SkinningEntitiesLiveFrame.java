@@ -39,6 +39,11 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         }
     }
 
+    public void stepFrame()
+    {
+        this.skinningentities.getDataManager().set(this.skinningentities.getIntegerDataParameterArray()[this.integer_index], this.skinningentities.server_frame_int_array[this.integer_index] + this.step);
+    }
+
     public boolean setTLoop(int id0)
     {
         this.step = 1;

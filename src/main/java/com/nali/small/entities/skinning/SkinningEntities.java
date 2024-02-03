@@ -1099,16 +1099,6 @@ public abstract class SkinningEntities extends EntityLivingBase
 //        return super.processInitialInteract(entityplayer, enumhand);
     }
 
-    public boolean canPat()
-    {
-        return true;
-    }
-
-    public boolean canEat()
-    {
-        return true;
-    }
-
 //    @Override
 //    public void damageEntity(DamageSource damageSrc, float damageAmount)
 //    {
@@ -1246,6 +1236,25 @@ public abstract class SkinningEntities extends EntityLivingBase
     public float getSoundPitch()
     {
         return super.getSoundPitch();
+    }
+
+    public boolean canPat()
+    {
+        return true;
+    }
+
+    public boolean canEat()
+    {
+        return true;
+    }
+
+    public void onShouldPlayWith()
+    {
+        SkinningEntities playwith_skinningentities = this.skinningentitiesplaywith.playwith_skinningentities;
+        this.setPositionAndUpdate(playwith_skinningentities.posX, playwith_skinningentities.posY, playwith_skinningentities.posZ);
+        this.rotationYaw = playwith_skinningentities.rotationYaw;
+        this.rotationPitch = playwith_skinningentities.rotationPitch;
+        this.renderYawOffset = playwith_skinningentities.renderYawOffset;
     }
 
 //    @Override

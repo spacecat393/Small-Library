@@ -11,6 +11,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
     public Class clasz;
     public int tick;
     public boolean should_play;
+    public boolean first_playwith;
     public SkinningEntities playwith_skinningentities;
 
     public SkinningEntitiesPlayWith(SkinningEntities skinningentities)
@@ -30,6 +31,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
             {
                 this.playwith_skinningentities = null;
                 this.should_play = false;
+                this.first_playwith = false;
                 this.tick = 1200 + this.skinningentities.getRNG().nextInt(5000);
             }
 
@@ -40,6 +42,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
                     this.playwith_skinningentities.server_skinningentities = null;
                     this.playwith_skinningentities = null;
                     this.should_play = false;
+                    this.first_playwith = false;
                     this.tick = 1200 + this.skinningentities.getRNG().nextInt(5000);
                 }
                 else if (this.skinningentities.ticksExisted % 200 == 0)
@@ -85,6 +88,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
                             {
                                 this.playwith_skinningentities.server_skinningentities = this.skinningentities;
                                 this.should_play = true;
+                                this.first_playwith = true;
                             }
                             else
                             {
@@ -99,11 +103,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
                     }
                     else
                     {
-                        this.skinningentities.setPositionAndUpdate(this.playwith_skinningentities.posX, this.playwith_skinningentities.posY, this.playwith_skinningentities.posZ);
-                        this.skinningentities.rotationYaw = this.playwith_skinningentities.rotationYaw;
-//                        this.skinningentities.rotationYawHead = this.playwith_skinningentities.rotationYawHead;
-                        this.skinningentities.rotationPitch = this.playwith_skinningentities.rotationPitch;
-                        this.skinningentities.renderYawOffset = this.playwith_skinningentities.renderYawOffset;
+                        this.skinningentities.onShouldPlayWith();
                     }
                 }
 
@@ -119,6 +119,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
             }
 
             this.should_play = false;
+            this.first_playwith = false;
         }
 
         if (!play)
