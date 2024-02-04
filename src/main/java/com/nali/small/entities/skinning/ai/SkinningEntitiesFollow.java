@@ -6,7 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 
-import static com.nali.small.entities.EntitiesMathHelper.getClose;
+import static com.nali.small.entities.EntitiesMathHelper.*;
 import static com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove.PATH_BYTE_ARRAY;
 
 public class SkinningEntitiesFollow extends SkinningEntitiesAI
@@ -33,7 +33,10 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
             }
         }
 
-        if (owner_entity != null && this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.FOLLOW()) && (this.skinningentities.getDistanceSq(owner_entity) > this.min_distance || this.follow))
+        if (owner_entity != null &&
+            this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.FOLLOW()) &&
+            (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null || isInArea(owner_entity, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far)) &&
+            (this.skinningentities.getDistanceSq(owner_entity) > this.min_distance || this.follow))
         {
             if ((owner_entity.world).provider.getDimension() != ((this.skinningentities.world).provider.getDimension()))
             {

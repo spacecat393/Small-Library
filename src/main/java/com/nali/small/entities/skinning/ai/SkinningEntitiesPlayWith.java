@@ -4,6 +4,7 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.WorldServer;
 
+import static com.nali.small.entities.EntitiesMathHelper.isInArea;
 import static com.nali.small.entities.EntitiesMathHelper.isTooClose;
 
 public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
@@ -53,7 +54,9 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
                         if (entity.getClass() == this.clasz)
                         {
                             playwith_skinningentities = (SkinningEntities)entity;
-                            if (playwith_skinningentities.server_skinningentities == null && this.skinningentities.getDataManager().get(this.skinningentities.getFloatDataParameterArray()[0]) <= playwith_skinningentities.getDataManager().get(playwith_skinningentities.getFloatDataParameterArray()[0]))
+                            if (playwith_skinningentities.server_skinningentities == null &&
+                                this.skinningentities.getDataManager().get(this.skinningentities.getFloatDataParameterArray()[0]) <= playwith_skinningentities.getDataManager().get(playwith_skinningentities.getFloatDataParameterArray()[0]) &&
+                                (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null || isInArea(playwith_skinningentities, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far)))
                             {
                                 break;
                             }
@@ -77,7 +80,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
             }
             else
             {
-                if (this.playwith_skinningentities != null)
+                if (this.playwith_skinningentities != null && (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null || isInArea(this.playwith_skinningentities, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far)))
                 {
                     play = true;
                     if (!this.should_play)

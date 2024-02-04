@@ -15,6 +15,7 @@ import com.nali.small.entities.skinning.ai.frame.SkinningEntitiesLiveFrame;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesMove;
 import com.nali.small.mixin.IMixinEntityCreeper;
+import com.nali.small.mixin.IMixinEntityLivingBase;
 import com.nali.small.networks.NetworksRegistry;
 import com.nali.small.world.ChunkLoader;
 import com.nali.system.bytes.BytesReader;
@@ -1150,6 +1151,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         if (entity instanceof EntityLivingBase)
         {
             EntityLivingBase entitylivingbase = (EntityLivingBase)entity;
+            ((IMixinEntityLivingBase)entitylivingbase).recentlyHit(20);
             entitylivingbase.maxHurtTime = 0;
             entitylivingbase.hurtTime = 0;
         }

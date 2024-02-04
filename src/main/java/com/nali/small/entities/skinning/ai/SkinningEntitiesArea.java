@@ -80,11 +80,11 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
 
             if (this.isTarget(entity))
             {
-                if (entity.isEntityAlive())
-                {
-                    this.all_entity_arraylist.add(entity);
+//                if (entity.isEntityAlive())
+//                {
+                this.all_entity_arraylist.add(entity);
 //                this.setTarget(entity, 0);
-                }
+//                }
             }
             else
             {

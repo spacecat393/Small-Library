@@ -14,6 +14,9 @@ public interface IMixinEntityLivingBase
     @Accessor("attackingPlayer")
     EntityPlayer attackingPlayer();
 
+    @Accessor("recentlyHit")
+    void recentlyHit(int i);
+
     @Accessor("idleTime")
     void idleTime(int i);
     @Accessor("lastDamage")

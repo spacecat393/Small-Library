@@ -161,8 +161,9 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                                 ItemStack itemstack = SmallBox.I.getDefaultInstance();
                                 int id = random.nextInt(EntitiesRegistryHelper.ENTITIES_CLASS_LIST.size());
                                 Constructor constructor = EntitiesRegistryHelper.ENTITIES_CLASS_LIST.get(id).getConstructor(World.class);
-                                Entity entity = (Entity)constructor.newInstance(entityplayermp.world);
-                                SmallBox.putToBox(entity, itemstack);
+                                SkinningEntities skinningentities = (SkinningEntities)constructor.newInstance(entityplayermp.world);
+                                skinningentities.owner_uuid = entityplayermp.getUniqueID();
+                                SmallBox.putToBox(skinningentities, itemstack);
                                 entityplayermp.entityDropItem(itemstack, 0.0F);
                             }
                             catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)

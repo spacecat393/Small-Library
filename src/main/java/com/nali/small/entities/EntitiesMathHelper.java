@@ -3,6 +3,7 @@ package com.nali.small.entities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -11,6 +12,11 @@ import java.awt.*;
 
 public class EntitiesMathHelper
 {
+    public static boolean isTooClose(Entity entity0, Entity entity1, double minimum_distance)
+    {
+        return entity0.getDistanceSq(entity1) < getClose(entity0, entity1, minimum_distance);
+    }
+
     public static double getClose(Entity entity0, Entity entity1, double minimum_distance)
     {
         double width = (entity0.width + entity1.width) / 2.0D;
@@ -18,10 +24,23 @@ public class EntitiesMathHelper
         return (width + height + minimum_distance) * (width + height + minimum_distance);
     }
 
-    public static boolean isTooClose(Entity entity0, Entity entity1, double minimum_distance)
+    public static boolean isInArea(Entity entity, BlockPos blockpos, double minimum_distance)
     {
-        return entity0.getDistanceSq(entity1) < getClose(entity0, entity1, minimum_distance);
+        return entity.getDistanceSq(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5) < minimum_distance;
+//        return entity.getDistanceSq(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5) < getClose(entity, minimum_distance);
     }
+
+//    public static boolean isTooClose(Entity entity, BlockPos blockpos, double minimum_distance)
+//    {
+//        return entity.getDistanceSq(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5) < getClose(entity, minimum_distance);
+//    }
+//
+//    public static double getClose(Entity entity, double minimum_distance)
+//    {
+//        double width = entity.width / 2.0D;
+//        double height = entity.height / 2.0D;
+//        return (width + height + minimum_distance) * (width + height + minimum_distance);
+//    }
 
     public static float interpolateRotation(float prevYawOffset, float yawOffset, float partialTicks)
     {

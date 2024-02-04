@@ -6,6 +6,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 
+import static com.nali.small.entities.EntitiesMathHelper.isInArea;
+
 public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 {
     public boolean pickup;
@@ -23,9 +25,10 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
         EntityItem entityitem = (EntityItem)entity_array[1];
         SkinningEntitiesFindMove skinningentitiesfindmove = this.skinningentities.skinningentitiesfindmove;
 
-        if (entityitem != null && entityitem.isEntityAlive())
+        if (entityitem != null && entityitem.isEntityAlive() && (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null || isInArea(entityitem, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far)))
         {
-            if (this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.FIND_ITEM()))
+            boolean should_run = this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.FIND_ITEM());
+            if (should_run)
             {
                 this.pickup = true;
                 // this.getLookControl().setLookAt(this.target_itementity, 10.0F, this.getMaxHeadXRot());
@@ -37,7 +40,7 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 
             ItemStack itemstack = entityitem.getItem();
 
-            if (this.skinningentities.getDistanceSq(entityitem) < 4.0D/* || --this.pickup_tick <= 0*/ || ++this.time_out >= 600)
+            if (this.skinningentities.getDistanceSq(entityitem) < 4.0D/* || --this.pickup_tick <= 0*/ || (should_run && ++this.time_out >= 600))
             {
                 this.time_out = 0;
 

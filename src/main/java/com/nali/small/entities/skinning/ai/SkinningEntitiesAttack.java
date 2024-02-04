@@ -6,6 +6,7 @@ import net.minecraft.util.EnumHand;
 
 import java.util.ArrayList;
 
+import static com.nali.small.entities.EntitiesMathHelper.isInArea;
 import static com.nali.small.entities.EntitiesMathHelper.isTooClose;
 
 public class SkinningEntitiesAttack extends SkinningEntitiesAI
@@ -52,7 +53,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
                 target_entity = this.attackAndFind(this.skinningentities.skinningentitiesarea.all_entity_arraylist);
             }
 
-            if (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.getDistanceSq(target_entity) <= this.skinningentities.skinningentitiessetlocation.far)
+            if (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null || isInArea(target_entity, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far))
             {
                 if (this.state == 0 || this.state == 1)
                 {
@@ -96,7 +97,8 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
         for (Entity entity : entity_arraylist)
         {
             far[index++] = this.skinningentities.getDistanceSq(entity);
-            if (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.getDistanceSq(entity) <= this.skinningentities.skinningentitiessetlocation.far)
+            if (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null ||
+                isInArea(entity, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far))
             {
                 if (this.state == -1)
                 {
