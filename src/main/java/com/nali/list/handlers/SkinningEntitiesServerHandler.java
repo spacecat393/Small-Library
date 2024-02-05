@@ -42,6 +42,8 @@ import java.util.*;
 
 public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEntitiesServerMessage, IMessage>
 {
+    public static int GUARANTEE = 0;
+
     @Override
     public IMessage onMessage(SkinningEntitiesServerMessage skinningentitiesservermessage, MessageContext messagecontext)
     {
@@ -154,22 +156,20 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     if (value >= 12)
                     {
                         smallsakuratypes.set(value - 12);
+
+                        if (GUARANTEE >= 10)
+                        {
+                            spawnX12(random, entityplayermp);
+                            GUARANTEE = 0;
+                        }
+                        else
+                        {
+                            ++GUARANTEE;
+                        }
+
                         if (random.nextInt(7) == 0)
                         {
-                            try
-                            {
-                                ItemStack itemstack = SmallBox.I.getDefaultInstance();
-                                int id = random.nextInt(EntitiesRegistryHelper.ENTITIES_CLASS_LIST.size());
-                                Constructor constructor = EntitiesRegistryHelper.ENTITIES_CLASS_LIST.get(id).getConstructor(World.class);
-                                SkinningEntities skinningentities = (SkinningEntities)constructor.newInstance(entityplayermp.world);
-                                skinningentities.owner_uuid = entityplayermp.getUniqueID();
-                                SmallBox.putToBox(skinningentities, itemstack);
-                                entityplayermp.entityDropItem(itemstack, 0.0F);
-                            }
-                            catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
-                            {
-                                Small.error(e);
-                            }
+                            spawnX12(random, entityplayermp);
                         }
                         else
                         {
@@ -188,30 +188,24 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                     if (value >= 64)
                     {
                         smallsakuratypes.set(value - 64);
+
+                        if (GUARANTEE >= 10)
+                        {
+                            spawnX64(entityplayermp);
+                            GUARANTEE = 0;
+                        }
+                        else
+                        {
+                            ++GUARANTEE;
+                        }
+
                         if (random.nextBoolean())
                         {
                             entityplayermp.dropItem(Item.getItemById(entityplayermp.getRNG().nextInt(Item.REGISTRY.getKeys().size())), 1);
                         }
                         else
                         {
-                            try
-                            {
-                                ItemStack itemstack = SmallBox.I.getDefaultInstance();
-                                int id = entityplayermp.getRNG().nextInt(EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length);
-                                Constructor constructor = ((Class)EntitiesRegistryHelper.ENTITY_KEY_ARRAY[id]).getConstructor(World.class);
-                                Entity entity = (Entity)constructor.newInstance(entityplayermp.world);
-
-                                if (!(entity instanceof EntityPlayer))
-                                {
-                                    SmallBox.putToBox(entity, itemstack);
-                                }
-
-                                entityplayermp.entityDropItem(itemstack, 0.0F);
-                            }
-                            catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
-                            {
-                                Small.error(e);
-                            }
+                            spawnX64(entityplayermp);
                         }
                     }
 
@@ -937,5 +931,44 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
         });
 
         return null;
+    }
+
+    public static void spawnX12(Random random, EntityPlayerMP entityplayermp)
+    {
+        try
+        {
+            ItemStack itemstack = new ItemStack(SmallBox.I);
+            int id = random.nextInt(EntitiesRegistryHelper.ENTITIES_CLASS_LIST.size());
+            SkinningEntities skinningentities = (SkinningEntities)EntitiesRegistryHelper.ENTITIES_CLASS_LIST.get(id).getConstructor(World.class).newInstance(entityplayermp.world);
+            skinningentities.owner_uuid = entityplayermp.getUniqueID();
+            SmallBox.putToBox(skinningentities, itemstack);
+            entityplayermp.entityDropItem(itemstack, 0.0F);
+        }
+        catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
+        {
+            Small.error(e);
+        }
+    }
+
+    public static void spawnX64(EntityPlayerMP entityplayermp)
+    {
+        try
+        {
+            ItemStack itemstack = new ItemStack(SmallBox.I);
+            int id = entityplayermp.getRNG().nextInt(EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length);
+            Constructor constructor = ((Class)EntitiesRegistryHelper.ENTITY_KEY_ARRAY[id]).getConstructor(World.class);
+            Entity entity = (Entity)constructor.newInstance(entityplayermp.world);
+
+            if (!(entity instanceof EntityPlayer))
+            {
+                SmallBox.putToBox(entity, itemstack);
+            }
+
+            entityplayermp.entityDropItem(itemstack, 0.0F);
+        }
+        catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e)
+        {
+            Small.error(e);
+        }
     }
 }
