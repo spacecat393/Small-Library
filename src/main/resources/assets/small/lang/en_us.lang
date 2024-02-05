@@ -103,7 +103,6 @@ gui.info.c4=Can't Follow
 gui.info.c5=Can't Random Walk
 gui.info.c6=Can't Random Look
 gui.info.c7=Can't Play
-gui.info.c8=Can't Set Location
 gui.info.c9=Can't Care Owner
 gui.info.s0=Scale
 gui.info.s00=Enter [float] or [1.0]

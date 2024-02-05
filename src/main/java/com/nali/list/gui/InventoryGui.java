@@ -471,28 +471,28 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 3)
                 {
-                    int id = skinningentities.skinningentitiesbytes.LOCATION();
-                    if (id != -1)
-                    {
-                        this.message_state = 9;
+//                    int id = skinningentities.skinningentitiesbytes.LOCATION();
+//                    if (id != -1)
+//                    {
+                    this.message_state = 9;
 
-                        if (this.mouse_released == 0)
-                        {
-                            this.sendPacketUUID((byte)26);
-                        }
-
-                        if (!(GUIFEATURESLOADER instanceof SetLocationGUIFeatures))
-                        {
-                            GUIFEATURESLOADER = new SetLocationGUIFeatures(this);
-                        }
-                    }
-                    else
+                    if (this.mouse_released == 0)
                     {
-                        if (!(GUIFEATURESLOADER instanceof CantSetLocationGUIFeatures))
-                        {
-                            GUIFEATURESLOADER = new CantSetLocationGUIFeatures(this);
-                        }
+                        this.sendPacketUUID((byte)26);
                     }
+
+                    if (!(GUIFEATURESLOADER instanceof SetLocationGUIFeatures))
+                    {
+                        GUIFEATURESLOADER = new SetLocationGUIFeatures(this);
+                    }
+//                    }
+//                    else
+//                    {
+//                        if (!(GUIFEATURESLOADER instanceof CantSetLocationGUIFeatures))
+//                        {
+//                            GUIFEATURESLOADER = new CantSetLocationGUIFeatures(this);
+//                        }
+//                    }
 
                     this.render_text = true;
                 }
@@ -965,14 +965,14 @@ public class InventoryGui extends MixGui
                 this.drawTexturedModalRect(this.guiLeft + 67 + 18, this.guiTop + 94, 38, 14, 14, 8);
                 this.drawTexturedModalRect(this.guiLeft + 67 + 18 + 18, this.guiTop + 90, 44, 0, 14, 14);
 
-                if (skinningentities.skinningentitiesbytes.LOCATION() == -1)
-                {
-                    this.drawTexturedModalRect(this.guiLeft + 67 + 18 + 18 + 18, this.guiTop + 90, 134, 14, 14, 14);
-                }
-                else
-                {
-                    this.drawTexturedModalRect(this.guiLeft + 67 + 18 + 18 + 18, this.guiTop + 90, 128, 0, 14, 14);
-                }
+//                if (skinningentities.skinningentitiesbytes.LOCATION() == -1)
+//                {
+//                    this.drawTexturedModalRect(this.guiLeft + 67 + 18 + 18 + 18, this.guiTop + 90, 134, 14, 14, 14);
+//                }
+//                else
+//                {
+                this.drawTexturedModalRect(this.guiLeft + 67 + 18 + 18 + 18, this.guiTop + 90, 128, 0, 14, 14);
+//                }
 
                 break;
             }

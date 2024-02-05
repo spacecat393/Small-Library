@@ -149,10 +149,10 @@ public abstract class SkinningEntities extends EntityLivingBase
 
             ChunkLoader.updateChunk(this);
             this.skinningentitiesarea = new SkinningEntitiesArea(this);
-            if (this.skinningentitiesbytes.LOCATION() != -1)
-            {
-                this.skinningentitiessetlocation = new SkinningEntitiesSetLocation(this);
-            }
+//            if (this.skinningentitiesbytes.LOCATION() != -1)
+//            {
+            this.skinningentitiessetlocation = new SkinningEntitiesSetLocation(this);
+//            }
             this.skinningentitiesfindmove = new SkinningEntitiesFindMove(this);
             this.skinningentitieslook = new SkinningEntitiesLook(this);
             this.skinningentitiesmove = new SkinningEntitiesMove(this);
@@ -317,11 +317,11 @@ public abstract class SkinningEntities extends EntityLivingBase
             nbttagcompound.setIntArray("target", this.skinningentitiesarea.target_arraylist.stream().mapToInt(Integer::intValue).toArray());
             nbttagcompound.setIntArray("troublemaker", this.skinningentitiesarea.troublemaker_arraylist.stream().mapToInt(Integer::intValue).toArray());
 
-            if (this.skinningentitiessetlocation != null)
-            {
-                nbttagcompound.setLong("blockpos_long", this.skinningentitiessetlocation.blockpos_long);
-                nbttagcompound.setFloat("far_float", this.skinningentitiessetlocation.far);
-            }
+//            if (this.skinningentitiessetlocation != null)
+//            {
+            nbttagcompound.setLong("blockpos_long", this.skinningentitiessetlocation.blockpos_long);
+            nbttagcompound.setFloat("far_float", this.skinningentitiessetlocation.far);
+//            }
 
             if (this.main_server_work_byte_array == null)
             {
@@ -516,11 +516,11 @@ public abstract class SkinningEntities extends EntityLivingBase
                 this.skinningentitiesarea.troublemaker_arraylist.add(x);
             }
 
-            if (this.skinningentitiessetlocation != null)
-            {
-                this.skinningentitiessetlocation.blockpos_long = nbttagcompound.getLong("blockpos_long");
-                this.skinningentitiessetlocation.far = nbttagcompound.getFloat("far_float");
-            }
+//            if (this.skinningentitiessetlocation != null)
+//            {
+            this.skinningentitiessetlocation.blockpos_long = nbttagcompound.getLong("blockpos_long");
+            this.skinningentitiessetlocation.far = nbttagcompound.getFloat("far_float");
+//            }
 
             this.server_sus_init = nbttagcompound.hasKey("sus_init");
 
@@ -802,10 +802,10 @@ public abstract class SkinningEntities extends EntityLivingBase
                 this.skinningentitiesarea.onUpdate();
 //                }
 
-                if (this.skinningentitiessetlocation != null)
-                {
-                    this.skinningentitiessetlocation.onUpdate();
-                }
+//                if (this.skinningentitiessetlocation != null)
+//                {
+                this.skinningentitiessetlocation.onUpdate();
+//                }
                 if (this.skinningentitiesfollow != null)
                 {
                     this.skinningentitiesfollow.onUpdate();

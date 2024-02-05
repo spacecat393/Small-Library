@@ -26,7 +26,7 @@ public abstract class MixinEntityLivingBase
     {
         Entity entity = cause.getTrueSource();
 
-        if (entity instanceof EntityPlayerMP && (this.getCreatureAttribute() == EnumCreatureAttribute.UNDEAD || this.getCreatureAttribute() == EnumCreatureAttribute.ARTHROPOD))
+        if (entity instanceof EntityPlayerMP)
         {
             EntityPlayerMP entityplayermp = (EntityPlayerMP)entity;
             entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null).add(1);
