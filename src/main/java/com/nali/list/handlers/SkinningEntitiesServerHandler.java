@@ -22,7 +22,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -637,11 +636,14 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                         itemstack.shrink(1);
 
 //                        Vec3d view_vec3d = skinningentities.getLookVec().scale(0.25F);
-                        float x = BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16);
-                        float y = BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4);
-                        float z = BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4 + 4);
-                        ((WorldServer)skinningentities.world).spawnParticle(EnumParticleTypes.ITEM_CRACK, /*skinningentities.posX + view_vec3d.x*/x, /*skinningentities.posY + skinningentities.getEyeHeight() + view_vec3d.y + 0.5F*/y, /*skinningentities.posZ + view_vec3d.z*/z, 10, 0.0D, 0.0D, 0.0D, 0.0D, ItemArmor.getIdFromItem(itemfood));
                         skinningentities.playSound(SoundEvents.ENTITY_GENERIC_EAT, skinningentities.getSoundVolume(), skinningentities.getSoundPitch());
+                        byte[] byte_array = new byte[1 + 4 + 4 + 4 + 4];
+                        byte_array[0] = 9;
+                        BytesWriter.set(byte_array, BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16), 1);
+                        BytesWriter.set(byte_array, BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4), 1 + 4);
+                        BytesWriter.set(byte_array, BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4 + 4), 1 + 4 + 4);
+                        BytesWriter.set(byte_array, Item.getIdFromItem(itemfood), 1 + 4 + 4 + 4);
+                        NetworksRegistry.I.sendToAll(new SkinningEntitiesClientMessage(byte_array));
                     }
                     break;
                 }

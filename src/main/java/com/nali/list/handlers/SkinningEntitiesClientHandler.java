@@ -14,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -191,6 +192,11 @@ public class SkinningEntitiesClientHandler implements IMessageHandler<SkinningEn
             {
                 SetLocationGUIFeatures.BLOCKPOS = BlockPos.fromLong(BytesReader.getLong(skinningentitiesclientmessage.data, 1));
                 SetLocationGUIFeatures.FAR = BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 8);
+                break;
+            }
+            case 9://render food
+            {
+                Minecraft.getMinecraft().world.spawnParticle(EnumParticleTypes.ITEM_CRACK, BytesReader.getFloat(skinningentitiesclientmessage.data, 1), BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 4), BytesReader.getFloat(skinningentitiesclientmessage.data, 1 + 4 + 4), 0.0D, 0.0D, 0.0D, BytesReader.getInt(skinningentitiesclientmessage.data, 1 + 4 + 4 + 4));
                 break;
             }
             default:
