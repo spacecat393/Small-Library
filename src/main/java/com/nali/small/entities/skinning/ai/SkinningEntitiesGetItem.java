@@ -2,8 +2,10 @@ package com.nali.small.entities.skinning.ai;
 
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
-import net.minecraft.entity.Entity;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 
 import static com.nali.small.entities.EntitiesMathHelper.isInArea;
@@ -11,7 +13,7 @@ import static com.nali.small.entities.EntitiesMathHelper.isInArea;
 public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 {
     public boolean pickup;
-    public int time_out;
+    public int item_time_out, xp_time_out;
 
     public SkinningEntitiesGetItem(SkinningEntities skinningentities)
     {
@@ -21,89 +23,114 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
-        Entity[] entity_array = this.skinningentities.skinningentitiesarea.target_entity_array;
-        EntityItem entityitem = (EntityItem)entity_array[1];
         SkinningEntitiesFindMove skinningentitiesfindmove = this.skinningentities.skinningentitiesfindmove;
 
-        if (entityitem != null && entityitem.isEntityAlive() && (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null || isInArea(entityitem, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far)))
+        boolean should_run = this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.FIND_ITEM());
+        boolean keep_should_run = should_run;
+
+        if (!this.skinningentities.skinningentitiesarea.xp_entity_arraylist.isEmpty())
         {
-            boolean should_run = this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.FIND_ITEM());
-            if (should_run)
+            EntityXPOrb to_entityxporb = this.skinningentities.skinningentitiesarea.xp_entity_arraylist.get(this.skinningentities.skinningentitiesarea.xp_entity_arraylist.size() - 1);
+            ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, this.skinningentities);
+            boolean should_get_xp = !itemstack.isEmpty()/* && itemstack.isItemStackDamageable()*/ && itemstack.getItemDamage() > 0/* && EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, itemstack) > 0*/;
+            if (should_run && should_get_xp && (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null || isInArea(to_entityxporb, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far)))
             {
                 this.pickup = true;
-                // this.getLookControl().setLookAt(this.target_itementity, 10.0F, this.getMaxHeadXRot());
-                skinningentitiesfindmove.setGoal(entityitem.posX, entityitem.posY, entityitem.posZ);
-                // this.getNavigation().stop();
-                // this.getNavigation().moveTo(this.target_itementity, 4.0D);
-                // Main.LOGGER.info("setItemEntity Start");
+                should_run = false;
+                skinningentitiesfindmove.setGoal(to_entityxporb.posX, to_entityxporb.posY, to_entityxporb.posZ);
             }
 
-            ItemStack itemstack = entityitem.getItem();
-
-            if (this.skinningentities.getDistanceSq(entityitem) < 4.0D/* || --this.pickup_tick <= 0*/ || (should_run && ++this.time_out >= 600))
+            for (EntityXPOrb entityxporb : this.skinningentities.skinningentitiesarea.xp_entity_arraylist)
             {
-                this.time_out = 0;
-
-                if (this.pickup)
+                if (should_get_xp && (this.skinningentities.getDistanceSq(entityxporb) <= 4.0D || (keep_should_run && ++this.xp_time_out >= 600)))
                 {
-                    skinningentitiesfindmove.endGoal();
-                    this.pickup = false;
-                }
-//                entityitem.setDead();
-//                entity_array[1] = null;
-                // this.pickup_tick = 60;
-                for (int i = 0; i < this.skinningentities.skinninginventory.getSizeInventory(); ++i)
-                {
-                    ItemStack inventories_itemstack = this.skinningentities.skinninginventory.getStackInSlot(i);
+                    this.xp_time_out = 0;
 
-                    if (inventories_itemstack.isEmpty() || isSameItemSameTags(inventories_itemstack, itemstack) && inventories_itemstack.getCount() < inventories_itemstack.getMaxStackSize())//canAddItem
+                    if (this.pickup)
                     {
-                        int max_count = inventories_itemstack.getCount() + itemstack.getCount();
-                        int count = max_count - 64;
+                        skinningentitiesfindmove.endGoal();
+                        this.pickup = false;
+                    }
 
-                        if (inventories_itemstack.isEmpty() || isSameItemSameTags(inventories_itemstack, itemstack) && count <= 0)
+                    this.skinningentities.onItemPickup(entityxporb, 1);
+
+                    if (!itemstack.isEmpty() && itemstack.isItemDamaged())
+                    {
+                        float ratio = itemstack.getItem().getXpRepairRatio(itemstack);
+                        int i = Math.min(roundAverage(entityxporb.xpValue * ratio), itemstack.getItemDamage());
+                        entityxporb.xpValue -= roundAverage(i / ratio);
+                        itemstack.setItemDamage(itemstack.getItemDamage() - i);
+                    }
+
+                    entityxporb.setDead();
+                }
+            }
+        }
+
+        if (!this.skinningentities.skinningentitiesarea.item_entity_arraylist.isEmpty())
+        {
+            EntityItem to_entityitem = this.skinningentities.skinningentitiesarea.item_entity_arraylist.get(this.skinningentities.skinningentitiesarea.item_entity_arraylist.size() - 1);
+            if (should_run && (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null || isInArea(to_entityitem, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far)))
+            {
+                this.pickup = true;
+                skinningentitiesfindmove.setGoal(to_entityitem.posX, to_entityitem.posY, to_entityitem.posZ);
+            }
+
+            for (EntityItem entityitem : this.skinningentities.skinningentitiesarea.item_entity_arraylist)
+            {
+                ItemStack itemstack = entityitem.getItem();
+
+                if (this.skinningentities.getDistanceSq(entityitem) <= 4.0D || (should_run && ++this.item_time_out >= 600))
+                {
+                    this.item_time_out = 0;
+
+                    if (this.pickup)
+                    {
+                        skinningentitiesfindmove.endGoal();
+                        this.pickup = false;
+                    }
+
+                    for (int i = 0; i < this.skinningentities.skinninginventory.getSizeInventory(); ++i)
+                    {
+                        ItemStack inventories_itemstack = this.skinningentities.skinninginventory.getStackInSlot(i);
+
+                        if (inventories_itemstack.isEmpty() || isSameItemSameTags(inventories_itemstack, itemstack) && inventories_itemstack.getCount() < inventories_itemstack.getMaxStackSize())//canAddItem
                         {
-                            this.skinningentities.onItemPickup(entityitem, max_count);
+                            int max_count = inventories_itemstack.getCount() + itemstack.getCount();
+                            int count = max_count - 64;
 
-                            if (inventories_itemstack.isEmpty())
+                            if (inventories_itemstack.isEmpty() || isSameItemSameTags(inventories_itemstack, itemstack) && count <= 0)
                             {
-                                this.skinningentities.skinninginventory.setInventorySlotContents(i, itemstack);
+                                this.skinningentities.onItemPickup(entityitem, max_count);
+
+                                if (inventories_itemstack.isEmpty())
+                                {
+                                    this.skinningentities.skinninginventory.setInventorySlotContents(i, itemstack);
+                                }
+                                else
+                                {
+                                    inventories_itemstack.setCount(max_count);
+                                }
+
+                                entityitem.setDead();
                             }
                             else
                             {
-                                inventories_itemstack.setCount(max_count);
+                                inventories_itemstack.setCount(64);
+                                itemstack.setCount(count);
+                                entityitem.setItem(itemstack);
                             }
 
-                            entityitem.setDead();
+                            break;
                         }
-                        else
-                        {
-//                            this.skinningentities.onItemPickup(entityitem, inventories_itemstack.getMaxStackSize() - inventories_itemstack.getCount());
-                            inventories_itemstack.setCount(64);
-                            itemstack.setCount(count);
-                            entityitem.setItem(itemstack);
-                        }
-
-                        entity_array[1] = null;
-
-                        break;
                     }
                 }
             }
         }
-//        else if (this.pickup)
-//        {
-//            skinningentitiesfindmove.endGoal();
-//            entity_array[1] = null;
-//            this.pickup = false;
-//            // this.getNavigation().stop();
-//            // ((EntitiesNodeEvaluator)this.getNavigation().getNodeEvaluator()).x_step = 0;
-//            // Main.LOGGER.info("setItemEntity End");
-//        }
-        else if (this.pickup)
+
+        if (!keep_should_run && this.pickup)
         {
             skinningentitiesfindmove.endGoal();
-            entity_array[1] = null;
             this.pickup = false;
         }
 
@@ -116,5 +143,11 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
     public static boolean isSameItemSameTags(ItemStack itemstack_a, ItemStack itemstack_b)
     {
         return itemstack_a.getItem() == itemstack_b.getItem() && ItemStack.areItemStackTagsEqual(itemstack_a, itemstack_b);
+    }
+
+    public static int roundAverage(float value)
+    {
+        double floor = Math.floor(value);
+        return (int) floor + (Math.random() < value - floor ? 1 : 0);
     }
 }

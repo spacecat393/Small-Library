@@ -13,7 +13,9 @@ import java.util.*;
 
 public class SkinningEntitiesArea extends SkinningEntitiesAI
 {
-    public Entity[] target_entity_array = new Entity[2]; // xp item
+//    public Entity[] target_entity_array = new Entity[2]; // xp item
+    public ArrayList<EntityXPOrb> xp_entity_arraylist = new ArrayList<EntityXPOrb>();
+    public ArrayList<EntityItem> item_entity_arraylist = new ArrayList<EntityItem>();
     public ArrayList<Entity> all_entity_arraylist = new ArrayList<Entity>(); // target
     public ArrayList<Entity> out_entity_arraylist = new ArrayList<Entity>(); // not_target
 //    public double[] distance_to_target_array = new double[2];
@@ -29,6 +31,9 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
+//        Arrays.fill(this.target_entity_array, null);
+        this.xp_entity_arraylist.clear();
+        this.item_entity_arraylist.clear();
         this.all_entity_arraylist.clear();
         this.out_entity_arraylist.clear();
 //        byte target_level = -1;
@@ -69,13 +74,15 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
 
             if (entity instanceof EntityItem)
             {
-                this.target_entity_array[1] = entity;
+//                this.target_entity_array[1] = entity;
 //                this.setTarget(entity, 1);
+                this.item_entity_arraylist.add((EntityItem)entity);
             }
 
             if (entity instanceof EntityXPOrb)
             {
-                this.target_entity_array[0] = entity;
+//                this.target_entity_array[0] = entity;
+                this.xp_entity_arraylist.add((EntityXPOrb)entity);
             }
 
             if (this.isTarget(entity))

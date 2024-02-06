@@ -330,6 +330,13 @@ public abstract class SkinningEntities extends EntityLivingBase
 
             if (!this.server_sus_init)
             {
+                this.main_server_work_byte_array[this.skinningentitiesbytes.LOCK_INVENTORY()] = 1;
+                this.main_server_work_byte_array[this.skinningentitiesbytes.LOCK_DAMAGE()] = 1;
+
+                if (this.skinningentitiesbytes.FOLLOW() != -1)
+                {
+                    this.main_server_work_byte_array[this.skinningentitiesbytes.FOLLOW()] = 1;
+                }
                 if (this.skinningentitiesbytes.RANDOM_WALK() != -1)
                 {
                     this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_WALK()] = 1;
@@ -526,6 +533,13 @@ public abstract class SkinningEntities extends EntityLivingBase
 
             if (!this.server_sus_init)
             {
+                this.main_server_work_byte_array[this.skinningentitiesbytes.LOCK_INVENTORY()] = 1;
+                this.main_server_work_byte_array[this.skinningentitiesbytes.LOCK_DAMAGE()] = 1;
+
+                if (this.skinningentitiesbytes.FOLLOW() != -1)
+                {
+                    this.main_server_work_byte_array[this.skinningentitiesbytes.FOLLOW()] = 1;
+                }
                 if (this.skinningentitiesbytes.RANDOM_WALK() != -1)
                 {
                     this.main_server_work_byte_array[this.skinningentitiesbytes.RANDOM_WALK()] = 1;
@@ -1136,11 +1150,15 @@ public abstract class SkinningEntities extends EntityLivingBase
 //        return super.processInitialInteract(entityplayer, enumhand);
     }
 
-//    @Override
-//    public void damageEntity(DamageSource damageSrc, float damageAmount)
-//    {
-//        super.damageEntity(damageSrc, damageAmount);
-//    }
+    @Override
+    public void damageEntity(DamageSource damagesource, float damageAmount)
+    {
+        Entity owner_entity = this.getOwner();
+        if (this.main_server_work_byte_array[this.skinningentitiesbytes.LOCK_DAMAGE()] == 0 || !owner_entity.equals(damagesource.getTrueSource()))
+        {
+            super.damageEntity(damagesource, damageAmount);
+        }
+    }
 
     @Override
     public boolean attackEntityAsMob(Entity entity)
