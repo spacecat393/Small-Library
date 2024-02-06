@@ -1154,7 +1154,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     public void damageEntity(DamageSource damagesource, float damageAmount)
     {
         Entity owner_entity = this.getOwner();
-        if (this.main_server_work_byte_array[this.skinningentitiesbytes.LOCK_DAMAGE()] == 0 || !owner_entity.equals(damagesource.getTrueSource()))
+        if (this.main_server_work_byte_array[this.skinningentitiesbytes.LOCK_DAMAGE()] == 0 || (owner_entity != null && !owner_entity.equals(damagesource.getTrueSource())))
         {
             super.damageEntity(damagesource, damageAmount);
         }
