@@ -1150,13 +1150,27 @@ public abstract class SkinningEntities extends EntityLivingBase
 //        return super.processInitialInteract(entityplayer, enumhand);
     }
 
+//    @Override
+//    public void damageEntity(DamageSource damagesource, float damageAmount)
+//    {
+//        Entity owner_entity = this.getOwner();
+//        if (this.main_server_work_byte_array == null || this.main_server_work_byte_array[this.skinningentitiesbytes.LOCK_DAMAGE()] == 0 || (owner_entity != null && !owner_entity.equals(damagesource.getTrueSource())))
+//        {
+//            super.damageEntity(damagesource, damageAmount);
+//        }
+//    }
+
     @Override
-    public void damageEntity(DamageSource damagesource, float damageAmount)
+    public boolean attackEntityFrom(DamageSource damagesource, float amount)
     {
         Entity owner_entity = this.getOwner();
-        if (this.main_server_work_byte_array[this.skinningentitiesbytes.LOCK_DAMAGE()] == 0 || (owner_entity != null && !owner_entity.equals(damagesource.getTrueSource())))
+        if (this.main_server_work_byte_array == null || this.main_server_work_byte_array[this.skinningentitiesbytes.LOCK_DAMAGE()] == 0 || (owner_entity != null && !owner_entity.equals(damagesource.getTrueSource())))
         {
-            super.damageEntity(damagesource, damageAmount);
+            return super.attackEntityFrom(damagesource, amount);
+        }
+        else
+        {
+            return false;
         }
     }
 

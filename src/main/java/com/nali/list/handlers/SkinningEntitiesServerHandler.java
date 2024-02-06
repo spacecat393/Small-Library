@@ -77,17 +77,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
     //                }
 
     //                SkinningEntitiesHelper skinningentitieshelper = (SkinningEntitiesHelper)temp_entity;
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
 //                        EntityDataManager entitydatamanager = skinningentities.getDataManager();
                         int id = BytesReader.getInt(skinningentitiesservermessage.data, 17);
 
@@ -129,17 +120,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
     //                }
     //
     //                SkinningEntitiesHelper skinningentitieshelper = (SkinningEntitiesHelper)temp_entity;
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
                         skinningentities.owner_uuid = entityplayermp.getUniqueID();
 //                        EntityDataManager entitydatamanager = skinningentities.getDataManager();
 //                        entitydatamanager.set(SkinningEntities.UUID_OPTIONAL_DATAPARAMETER_ARRAY[BytesReader.getInt(skinningentitiesservermessage.data, 17)], Optional.fromNullable(entityplayermp.getUniqueID()));
@@ -248,17 +230,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 6:
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
                         entityplayermp.openGui(Small.I, 0, skinningentities.world, skinningentities.getEntityId(), 0, 0);
 
                         byte[] byte_array = new byte[1 + 4 + skinningentities.main_server_work_byte_array.length];
@@ -268,6 +241,7 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                         NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), entityplayermp);
 //                        EntitiesContainerHelper.setContainer(skinningentities, messagecontext.getServerHandler().player, InventoryContainer.ID);
                     }
+
                     break;
                 }
                 case 7:
@@ -356,17 +330,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 8:
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
                         ItemStack itemstack = entityplayermp.getHeldItemMainhand();
 
                         if (itemstack.getItem() == SmallBox.I && itemstack.getTagCompound() == null)
@@ -387,17 +352,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 10://add t
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
 //                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
 //                        String[] string_array = string.split(" ");
 
@@ -435,17 +391,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
 
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
                         int size = skinningentities.skinningentitiesarea.target_arraylist.size() * 4;
                         byte[] byte_array = new byte[1 + size];
                         byte_array[0] = 3;
@@ -463,17 +410,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 12://remove t
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
 //                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
 //                        String[] string_array = string.split(" ");
 
@@ -501,17 +439,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 13://add tm
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
 //                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
 //                        String[] string_array = string.split(" ");
 
@@ -549,17 +478,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
 
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
                         int size = skinningentities.skinningentitiesarea.troublemaker_arraylist.size() * 4;
                         byte[] byte_array = new byte[1 + size];
                         byte_array[0] = 4;
@@ -577,17 +497,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 15://remove tm
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
 //                        String string = new String(skinningentitiesservermessage.data, 1 + 16, skinningentitiesservermessage.data.length - (1 + 16));
 //                        String[] string_array = string.split(" ");
 
@@ -621,6 +532,7 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                         ((WorldServer)skinningentities.world).spawnParticle(EnumParticleTypes.HEART, skinningentities.posX, BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16), skinningentities.posZ, 1, 0.0D, 0.0D, 0.0D, 0.0D);
 //                        skinningentities.world.spawnEntity(new EntityXPOrb(skinningentities.world, skinningentities.posX, skinningentities.posY, skinningentities.posZ, 10));
                     }
+
                     break;
                 }
                 case 17://eat
@@ -650,17 +562,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 18://get effect
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
                         Collection<PotionEffect> potioneffect_collection = skinningentities.getActivePotionEffects();
                         byte[] byte_array = new byte[1 + 4 + (potioneffect_collection.size() * 3 * 4)];
                         byte_array[0] = 7;
@@ -714,17 +617,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
                     float s = BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16);
-                    if (skinningentities != null && s >= 0.5F)
+                    if (skinningentities != null && s >= 0.5F && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
                         int need = (int)s;
 
                         SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
@@ -742,17 +636,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 21://att stat
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
                         int id = (int)BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16);
                         float f = BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4);
                         int need = (int)f;
@@ -784,17 +669,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 22://set yaw pitch
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
                         int id = (int)BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16);
                         float f = BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4);
 
@@ -813,17 +689,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 23://set xyz
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
                         skinningentities.setPositionAndUpdate(BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16), BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4), BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16 + 4 + 4));
                     }
 
@@ -832,17 +699,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 24://tp
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
                         SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
                         int value = smallsakuratypes.get();
 
@@ -878,17 +736,8 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 25://set location
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
                         int id = (int)BytesReader.getFloat(skinningentitiesservermessage.data, 1 + 16);
                         if (id == 1)
                         {
@@ -905,22 +754,35 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
                 case 26://send location
                 {
                     SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
-                    if (skinningentities != null)
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
                     {
-                        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
-                        {
-                            Entity entity = skinningentities.getOwner();
-                            if (skinningentities.owner_uuid != null && (entity == null || !entity.equals(entityplayermp)))
-                            {
-                                break;
-                            }
-                        }
-
                         byte[] byte_array = new byte[1 + 8 + 4];
                         byte_array[0] = 8;
                         BytesWriter.set(byte_array, skinningentities.skinningentitiessetlocation.blockpos_long, 1);
                         BytesWriter.set(byte_array, skinningentities.skinningentitiessetlocation.far, 1 + 8);
                         NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), entityplayermp);
+                    }
+
+                    break;
+                }
+                case 27://clear t
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
+                    {
+                        skinningentities.skinningentitiesarea.target_arraylist.clear();
+                    }
+
+                    break;
+                }
+                case 28://clear t2
+                {
+                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(skinningentitiesservermessage.data, 1));
+
+                    if (skinningentities != null && canPass(skinningentities, entityplayermp))
+                    {
+                        skinningentities.skinningentitiesarea.troublemaker_arraylist.clear();
                     }
 
                     break;
@@ -972,5 +834,16 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
         {
             Small.error(e);
         }
+    }
+
+    public static boolean canPass(SkinningEntities skinningentities, EntityPlayerMP entityplayermp)
+    {
+        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
+        {
+            Entity entity = skinningentities.getOwner();
+            return skinningentities.owner_uuid == null || (entity != null && entity.equals(entityplayermp));
+        }
+
+        return true;
     }
 }

@@ -34,7 +34,7 @@ public class MessagesFeatures
     {
         if (int_array != null && int_array.length != 0)
         {
-            guifeaturesloader.string_array = new String[int_array.length + 2];
+            guifeaturesloader.string_array = new String[int_array.length + 3];
 
             int index = 1;
             for (int i : int_array)
@@ -55,7 +55,8 @@ public class MessagesFeatures
         }
 
         guifeaturesloader.string_array[0] = I18n.translateToLocal(key);
-        guifeaturesloader.string_array[guifeaturesloader.string_array.length - 1] = I18n.translateToLocal("gui.info.st2");
+        guifeaturesloader.string_array[guifeaturesloader.string_array.length - 2] = I18n.translateToLocal("gui.info.st2");
+        guifeaturesloader.string_array[guifeaturesloader.string_array.length - 1] = I18n.translateToLocal("gui.info.st3");
 
         guifeaturesloader.createColor();
     }

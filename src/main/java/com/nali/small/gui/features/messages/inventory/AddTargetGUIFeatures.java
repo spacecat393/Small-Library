@@ -15,11 +15,13 @@ public class AddTargetGUIFeatures extends GUIFeaturesLoader
         {
             I18n.translateToLocal("gui.info.t0"),
             I18n.translateToLocal("gui.info.st0"),
-            I18n.translateToLocal("gui.info.st1")
+            I18n.translateToLocal("gui.info.st1"),
+            I18n.translateToLocal("gui.info.st4"),
+            I18n.translateToLocal("gui.info.st5")
         };
-        this.int_array = new int[4];
+        this.int_array = new int[6];
         this.loadColor();
-        this.int_array[3] = 0xFFFFFFFF;
+        this.int_array[5] = 0xFFFFFFFF;
     }
 
     @Override
@@ -31,6 +33,8 @@ public class AddTargetGUIFeatures extends GUIFeaturesLoader
             this.string_array[0],
             this.string_array[1],
             this.string_array[2],
+            this.string_array[3],
+            this.string_array[4]
         }, this.int_array, mouseX, mouseY, this.have_head);
     }
 }

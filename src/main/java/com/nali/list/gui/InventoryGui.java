@@ -306,6 +306,8 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 2)
                 {
+                    this.copyOrPaste();
+
                     this.message_state = 0;
 
                     if (!(GUIFEATURESLOADER instanceof AddTargetGUIFeatures))
@@ -344,6 +346,8 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 2)
                 {
+                    this.copyOrPaste();
+
                     this.message_state = 1;
 
                     if (!(GUIFEATURESLOADER instanceof AddTroublemakerGUIFeatures))
@@ -404,6 +408,8 @@ public class InventoryGui extends MixGui
                 }
                 else if (PAGE == 2)
                 {
+                    this.copyOrPaste();
+
                     this.message_state = 4;
 
                     if (!(GUIFEATURESLOADER instanceof EntityListGUIFeatures))
@@ -668,6 +674,8 @@ public class InventoryGui extends MixGui
                 }
                 else if (PAGE == 2)
                 {
+                    this.copyOrPaste();
+
                     this.message_state = 2;
 
                     if (!(GUIFEATURESLOADER instanceof RemoveTargetGUIFeatures))
@@ -686,6 +694,10 @@ public class InventoryGui extends MixGui
                     if (this.mouse_released == 0)
                     {
                         this.sendPacketUUID((byte)11);
+                    }
+                    else if (this.mouse_released == 1)
+                    {
+                        this.sendPacketUUID((byte)27);
                     }
 
                     if (!(GUIFEATURESLOADER instanceof TargetGUIFeatures))
@@ -726,6 +738,8 @@ public class InventoryGui extends MixGui
                 }
                 else if (PAGE == 2)
                 {
+                    this.copyOrPaste();
+
                     this.message_state = 3;
 
                     if (!(GUIFEATURESLOADER instanceof RemoveTroublemakerGUIFeatures))
@@ -744,6 +758,10 @@ public class InventoryGui extends MixGui
                     if (this.mouse_released == 0)
                     {
                         this.sendPacketUUID((byte)14);
+                    }
+                    else if (this.mouse_released == 1)
+                    {
+                        this.sendPacketUUID((byte)28);
                     }
 
                     if (!(GUIFEATURESLOADER instanceof TroublemakerGUIFeatures))

@@ -250,6 +250,18 @@ public abstract class MixGui extends GuiContainer
         tessellator.draw();
     }
 
+    public void copyOrPaste()
+    {
+        if (this.mouse_released == 0)
+        {
+            copyToClipboard(MESSAGE_STRINGBUILDER.toString());
+        }
+        else if (this.mouse_released == 1)
+        {
+            MESSAGE_STRINGBUILDER = new StringBuilder(getTextFromClipboard());
+        }
+    }
+
     public static void copyToClipboard(String text)
     {
         StringSelection stringSelection = new StringSelection(text);
