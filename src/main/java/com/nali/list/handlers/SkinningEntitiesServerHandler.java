@@ -840,8 +840,7 @@ public class SkinningEntitiesServerHandler implements IMessageHandler<SkinningEn
     {
         if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
         {
-            Entity entity = skinningentities.getOwner();
-            return skinningentities.owner_uuid == null || (entity != null && entity.equals(entityplayermp));
+            return skinningentities.owner_uuid == null || entityplayermp.getUniqueID().equals(skinningentities.owner_uuid);
         }
 
         return true;
