@@ -1,24 +1,18 @@
 #version 120
-//precision highp float;
 
 attribute vec3 vertices;
 attribute vec2 texcoord;
 attribute vec3 normals;
 
-uniform vec2 ligcoord;
+uniform mat4 ProjectionMatrix;
+uniform mat4 ModelViewMatrix;
 
 varying vec2 fragment_texcoord;
-varying vec4 fragment_light_color;
 varying vec3 fragment_normals;
-varying vec2 fragment_ligmapcoord;
-
-//invariant gl_Position;
 
 void main()
 {
-    gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * vec4(vertices, 1.0);
+    gl_Position = ProjectionMatrix * ModelViewMatrix * vec4(vertices, 1.0);
     fragment_texcoord = texcoord;
-    fragment_light_color = gl_Color;
-    fragment_normals = normals;//(gl_ModelViewMatrix * vec4(normals, 0.0)).xyz;
-    fragment_ligmapcoord = vec2(ligcoord.x / 255.0, ligcoord.y / 255.0);//gl_MultiTexCoord0.xy;
+    fragment_normals = normals;
 }

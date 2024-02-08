@@ -1,3 +1,7 @@
+ProjectionMatrix
+ModelViewMatrix
+LightSourcePosition
+Color
 texture_sampler
 lightmap_sampler
 ligcoord
