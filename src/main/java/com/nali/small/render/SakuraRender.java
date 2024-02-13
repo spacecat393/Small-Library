@@ -4,7 +4,10 @@ import com.nali.data.BothData;
 import com.nali.render.ObjectRender;
 import com.nali.system.DataLoader;
 import com.nali.system.opengl.memory.OpenGLObjectShaderMemory;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class SakuraRender extends ObjectRender
 {
     public SakuraRender(BothData bothdata, DataLoader dataloader)
