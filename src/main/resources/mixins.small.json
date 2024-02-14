@@ -17,6 +17,7 @@
     "MixinWorldProvider"
   ],
   "client": [
+    "IMixinLayerArmorBase",
     "MixinItemRenderer",
     "MixinMinecraft",
     "MixinRenderEntityItem",

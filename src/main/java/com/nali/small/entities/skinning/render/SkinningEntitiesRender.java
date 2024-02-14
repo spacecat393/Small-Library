@@ -1,18 +1,17 @@
-package com.nali.small.entities.skinning;
+package com.nali.small.entities.skinning.render;
 
 import com.nali.math.M4x4;
 import com.nali.render.SkinningRender;
+import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.system.opengl.memory.OpenGLCurrentMemory;
 import com.nali.system.opengl.memory.OpenGLSkinningMemory;
 import com.nali.system.opengl.memory.OpenGLSkinningShaderMemory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,7 +29,6 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
     {
         super(rendermanager);
 //        new LayerBipedArmor(this);
-//        new LayerHeldItem(this);
 //        new LayerDeadmau5Head(this);
 //        new LayerCustomHead(this.getMainModel().bipedHead);
 //        new LayerElytra(this);
@@ -88,9 +86,8 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
         this.updateData(skinningentities, partialTicks);
 
-        ArrowEntitiesRender.layer(this, skinningentities, partialTicks);
-        this.renderHeldItem(skinningentities, skinningentities.getHeldItemMainhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND);
-        this.renderHeldItem(skinningentities, skinningentities.getHeldItemOffhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND);
+        skinningentities.itementitiesrender.layer(this, partialTicks);
+        skinningentities.arrowentitiesrender.layer(this, partialTicks);
 
         skinningrender.objectworlddraw.renderWorld();
 
@@ -117,20 +114,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         skinningrender.setSkinning();
     }
 
-    public void renderHeldItem(T skinningentities, ItemStack itemstack, ItemCameraTransforms.TransformType transformtype)
-    {
-        if (!itemstack.isEmpty())
-        {
-//            this.doModel(skinningentities, hand_i, hand_v, () ->
-//            {
-//                Minecraft.getMinecraft().getItemRenderer().renderItemSide(skinningentities, itemstack, transformtype, transformtype == ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND);
-//            });
-        }
-    }
-
     public abstract void multiplyAnimation(T skinningentities);
-//    public abstract int leftHand();
-//    public abstract int rightHand();
 
     public void doModel(T skinningentities, int i, int v, Runnable runnable)
     {
@@ -205,6 +189,11 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 //        GL11.glEnd();
 
         GL11.glPopMatrix();
+    }
+
+    public float handleRotationFloat(T skinningentities, float partialTicks)
+    {
+        return(float)skinningentities.ticksExisted + partialTicks;
     }
 
     public static float[] multiplyVec4Mat4(float[] vec4, float[] mat4)

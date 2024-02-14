@@ -6,7 +6,7 @@ import com.nali.list.messages.SkinningEntitiesServerMessage;
 import com.nali.render.SkinningRender;
 import com.nali.small.data.BoxData;
 import com.nali.small.entities.skinning.SkinningEntities;
-import com.nali.small.entities.skinning.SkinningEntitiesRender;
+import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.*;
 import com.nali.small.gui.features.messages.inventory.*;
@@ -1026,7 +1026,7 @@ public class InventoryGui extends MixGui
 //        this.type_char = typedChar;
 //        this.key_code = keyCode;
 //        CutePomi.LOGGER.info((int)typedChar);
-        if (this.message_state != -1)
+        if (this.message_state != -1 && keyCode != Keyboard.KEY_ESCAPE)
         {
             int index = MESSAGE_STRINGBUILDER.length() - 1;
             char end = MESSAGE_STRINGBUILDER.charAt(index);

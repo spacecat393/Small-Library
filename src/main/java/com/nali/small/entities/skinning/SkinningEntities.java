@@ -14,6 +14,8 @@ import com.nali.small.entities.skinning.ai.eyes.SkinningEntitiesLook;
 import com.nali.small.entities.skinning.ai.frame.SkinningEntitiesLiveFrame;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesMove;
+import com.nali.small.entities.skinning.render.ArrowEntitiesRender;
+import com.nali.small.entities.skinning.render.ItemEntitiesRender;
 import com.nali.small.mixin.IMixinEntityCreeper;
 import com.nali.small.mixin.IMixinEntityLivingBase;
 import com.nali.small.networks.NetworksRegistry;
@@ -64,6 +66,11 @@ public abstract class SkinningEntities extends EntityLivingBase
 {
     @SideOnly(Side.CLIENT)
     public Object client_object;
+
+    @SideOnly(Side.CLIENT)
+    public ArrowEntitiesRender arrowentitiesrender;
+    @SideOnly(Side.CLIENT)
+    public ItemEntitiesRender itementitiesrender;
 
     public UUID owner_uuid;
 //    public final static DataParameter<Optional<UUID>>[] UUID_OPTIONAL_DATAPARAMETER_ARRAY = new DataParameter[2];
@@ -137,6 +144,8 @@ public abstract class SkinningEntities extends EntityLivingBase
             this.width = this.bothdata.Width() * scale;
             this.height = this.bothdata.Height() * scale;
 
+            this.arrowentitiesrender = new ArrowEntitiesRender(this);
+            this.itementitiesrender = new ItemEntitiesRender(this);
             this.client_object = this.createClientObject();
 //            this.client_work_byte_array = new byte[this.getByteDataParameterArray().length];
 //            this.client_state_byte_array = new byte[max_states];

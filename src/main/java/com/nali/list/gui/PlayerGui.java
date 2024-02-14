@@ -7,7 +7,8 @@ import com.nali.small.capabilities.CapabilitiesRegistryHelper;
 import com.nali.small.data.BoxData;
 import com.nali.small.data.SakuraData;
 import com.nali.small.entities.skinning.SkinningEntities;
-import com.nali.small.entities.skinning.SkinningEntitiesRender;
+import com.nali.small.entities.skinning.render.ItemEntitiesRender;
+import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.player.*;
 import com.nali.small.networks.NetworksRegistry;
@@ -19,6 +20,7 @@ import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.inventory.Container;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
@@ -65,6 +67,18 @@ public class PlayerGui extends MixGui
     {
         this.message_state = -1;
         this.render_text = false;
+        //
+        this.message_state = 1;
+        if (this.mouse_clicked == 0)
+        {
+            ++ItemEntitiesRender.DEBUG_V;
+        }
+        if (!(GUIFEATURESLOADER instanceof DebugGUIFeatures))
+        {
+            GUIFEATURESLOADER = new DebugGUIFeatures(this);
+        }
+        this.render_text = true;
+        //
 
         super.drawScreen(mouseX, mouseY, partialTicks);
         if (PAGE == 0)
@@ -341,7 +355,7 @@ public class PlayerGui extends MixGui
     @Override
     public void keyTyped(char typedChar, int keyCode) throws IOException
     {
-        if (this.message_state != -1)
+        if (this.message_state != -1 && keyCode != Keyboard.KEY_ESCAPE)
         {
             int index = MESSAGE_STRINGBUILDER.length() - 1;
             char end = MESSAGE_STRINGBUILDER.charAt(index);
@@ -359,6 +373,33 @@ public class PlayerGui extends MixGui
                 }
                 case '\r':
                 {
+                    if (this.message_state == 1)
+                    {
+                        String[] string_array = MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString().split(" ");
+                        int o = 0;
+                        for (String new_string : string_array)
+                        {
+                            try
+                            {
+                                int v = Integer.parseInt(new_string);
+                                if (o == 0)
+                                {
+                                    ItemEntitiesRender.DEBUG_V = v;
+                                }
+                                else if (o == 1)
+                                {
+                                    ItemEntitiesRender.DEBUG_I = v;
+                                }
+                                ++o;
+                            }
+                            catch (Exception ignored)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
 //                    switch (this.message_state)
 //                    {
 //                        case 0:
@@ -383,8 +424,6 @@ public class PlayerGui extends MixGui
                     }
 //                    System.arraycopy(string_byte_array, 0, byte_array, 1, string_byte_array_size);
                     NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
-                    MESSAGE_STRINGBUILDER.setLength(0);
-                    MESSAGE_STRINGBUILDER.append("!");
 //                            break;
 //                        }
 //                        default:
@@ -393,6 +432,9 @@ public class PlayerGui extends MixGui
 //                        }
 //                    }
 //
+                    }
+                    MESSAGE_STRINGBUILDER.setLength(0);
+                    MESSAGE_STRINGBUILDER.append("!");
                     break;
                 }
 //                case 0:// if ((typedChar >= 'a' && typedChar <= 'z') || (typedChar >= 'A' && typedChar <= 'Z'))
