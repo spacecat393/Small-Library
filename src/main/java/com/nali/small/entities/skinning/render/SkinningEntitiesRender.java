@@ -30,11 +30,6 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
     public SkinningEntitiesRender(RenderManager rendermanager)
     {
         super(rendermanager);
-//        new LayerBipedArmor(this);
-//        new LayerDeadmau5Head(this);
-//        new LayerCustomHead(this.getMainModel().bipedHead);
-//        new LayerElytra(this);
-//        new LayerEntityOnShoulder(renderManager);
     }
 
     @Override
@@ -91,7 +86,10 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         skinningentities.itemlayerrender.layer(this, partialTicks);
         skinningentities.arrowlayerrender.layer(this, partialTicks);
 
-        skinningrender.objectworlddraw.renderWorld();
+        if (!(this.renderManager.isDebugBoundingBox() && !skinningentities.isInvisible() && !Minecraft.getMinecraft().isReducedDebug()))
+        {
+            skinningrender.objectworlddraw.renderWorld();
+        }
 
         GL11.glPopMatrix();
         super.doRender(skinningentities, ox, oy, oz, entityYaw, partialTicks);

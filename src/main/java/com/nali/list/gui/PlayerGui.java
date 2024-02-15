@@ -73,6 +73,10 @@ public class PlayerGui extends MixGui
         {
             ++ItemLayerRender.DEBUG_V;
         }
+        else if (this.mouse_clicked == 1)
+        {
+            --ItemLayerRender.DEBUG_V;
+        }
         if (!(GUIFEATURESLOADER instanceof DebugGUIFeatures))
         {
             GUIFEATURESLOADER = new DebugGUIFeatures(this);
