@@ -1,9 +1,9 @@
 package com.nali.small.entities.skinning.render;
 
 import com.nali.math.M4x4;
+import com.nali.math.Quaternion;
 import com.nali.render.SkinningRender;
 import com.nali.small.entities.skinning.SkinningEntities;
-import com.nali.system.opengl.memory.OpenGLCurrentMemory;
 import com.nali.system.opengl.memory.OpenGLSkinningMemory;
 import com.nali.system.opengl.memory.OpenGLSkinningShaderMemory;
 import net.minecraft.client.Minecraft;
@@ -13,14 +13,16 @@ import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
-import static com.nali.small.entities.EntitiesMathHelper.generateRainbowColor;
-import static com.nali.small.entities.EntitiesMathHelper.interpolateRotation;
+import static com.nali.small.entities.EntitiesMath.interpolateRotation;
+import static com.nali.small.entities.skinning.render.SkinningEntitiesRenderMath.generateRainbowColor;
+import static com.nali.small.entities.skinning.render.SkinningEntitiesRenderMath.multiplyVec4Mat4;
 
 @SideOnly(Side.CLIENT)
 public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends Render<T>
@@ -86,8 +88,8 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
         this.updateData(skinningentities, partialTicks);
 
-        skinningentities.itementitiesrender.layer(this, partialTicks);
-        skinningentities.arrowentitiesrender.layer(this, partialTicks);
+        skinningentities.itemlayerrender.layer(this, partialTicks);
+        skinningentities.arrowlayerrender.layer(this, partialTicks);
 
         skinningrender.objectworlddraw.renderWorld();
 
@@ -112,16 +114,28 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         }
 
         skinningrender.setSkinning();
+
+//        GL11.glColor4f(1.0F, 0.0F, 0.0F, 1.0F);
+//        GL11.glPointSize(10.0F);
+//        for (int i = 0; i < skinningrender.memory_object_array.length; ++i)
+//        {
+//            OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[i];
+//            for (int v = 0; v < openglskinningmemory.index_int_array.length; ++v)
+//            {
+//                doModel(skinningentities, i, v, () ->
+//                {
+//                    GL11.glBegin(GL11.GL_POINTS);
+//                    GL11.glVertex3f(0.0F, 0.0F, 0.0F);
+//                    GL11.glEnd();
+//                });
+//            }
+//        }
     }
 
     public abstract void multiplyAnimation(T skinningentities);
 
-    public void doModel(T skinningentities, int i, int v, Runnable runnable)
+    public Vec3d doModel(T skinningentities, int i, int v)
     {
-//        GL11.glColor4f(1.0F, 0.0F, 0.0F, 1.0F);
-//        GL11.glPointSize(10.0F);
-        GL11.glPushMatrix();
-        GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
         SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
         OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[i];
 
@@ -138,11 +152,12 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
             if (joints != -1)
             {
-                OpenGLSkinningShaderMemory openglskinningshadermemory = (OpenGLSkinningShaderMemory)openglskinningmemory.shader;
                 temp_vec4_float_array[0] = openglskinningmemory.vertices_float_array[vi];
                 temp_vec4_float_array[1] = openglskinningmemory.vertices_float_array[vi + 1];
                 temp_vec4_float_array[2] = openglskinningmemory.vertices_float_array[vi + 2];
                 temp_vec4_float_array[3] = 1.0F;
+
+                OpenGLSkinningShaderMemory openglskinningshadermemory = (OpenGLSkinningShaderMemory)openglskinningmemory.shader;
 
                 for (int b = 0; b < openglskinningshadermemory.back_bones_2d_int_array[joints].length; ++b)
                 {
@@ -155,6 +170,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
                     temp_vec4_float_array = multiplyVec4Mat4(temp_vec4_float_array, bindpose_mat4);
 
                     temp_vec4_float_array = multiplyVec4Mat4(temp_vec4_float_array, skinning_mat4);
+
                     M4x4.inverse(bindpose_mat4, 0);
                     temp_vec4_float_array = multiplyVec4Mat4(temp_vec4_float_array, bindpose_mat4);
                 }
@@ -173,41 +189,10 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
             }
         }
 
-        float[] final_mat4 = new float[]
-        {
-            1.0F, 0.0F, 0.0F, 0.0F,
-            0.0F, 1.0F, 0.0F, 0.0F,
-            0.0F, 0.0F, 1.0F, 0.0F,
-            main_vec4_float_array[0], main_vec4_float_array[1], main_vec4_float_array[2], main_vec4_float_array[3]
-        };
-        OpenGLCurrentMemory.setFloatBuffer(final_mat4);
-        GL11.glMultMatrix(OpenGLCurrentMemory.OPENGL_FLOATBUFFER);
+        main_vec4_float_array = multiplyVec4Mat4(temp_vec4_float_array, new Quaternion(-1.571F, 0.0F, 0.0F).getM4x4().mat);
 
-        runnable.run();
-//        GL11.glBegin(GL11.GL_POINTS);
-//        GL11.glVertex3f(0.0F, 0.0F, 0.0F);
-//        GL11.glEnd();
+        Vec3d vec3d = new Vec3d(main_vec4_float_array[0] / main_vec4_float_array[3], main_vec4_float_array[1] / main_vec4_float_array[3], main_vec4_float_array[2] / main_vec4_float_array[3]);
 
-        GL11.glPopMatrix();
-    }
-
-    public float handleRotationFloat(T skinningentities, float partialTicks)
-    {
-        return(float)skinningentities.ticksExisted + partialTicks;
-    }
-
-    public static float[] multiplyVec4Mat4(float[] vec4, float[] mat4)
-    {
-        float[] result = new float[4];
-        for (int i = 0; i < 4; i++)
-        {
-            float sum = 0.0F;
-            for (int j = 0; j < 4; j++)
-            {
-                sum += vec4[j] * mat4[i * 4 + j];
-            }
-            result[i] = sum;
-        }
-        return result;
+        return vec3d;
     }
 }

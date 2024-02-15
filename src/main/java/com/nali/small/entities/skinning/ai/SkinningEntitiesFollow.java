@@ -6,8 +6,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 
-import static com.nali.small.entities.EntitiesMathHelper.*;
-import static com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove.PATH_BYTE_ARRAY;
+import static com.nali.small.entities.EntitiesMath.*;
+import static com.nali.small.entities.skinning.ai.path.PathMath.PATH_BYTE_ARRAY;
 
 public class SkinningEntitiesFollow extends SkinningEntitiesAI
 {

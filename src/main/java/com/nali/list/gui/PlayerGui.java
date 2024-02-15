@@ -7,7 +7,7 @@ import com.nali.small.capabilities.CapabilitiesRegistryHelper;
 import com.nali.small.data.BoxData;
 import com.nali.small.data.SakuraData;
 import com.nali.small.entities.skinning.SkinningEntities;
-import com.nali.small.entities.skinning.render.ItemEntitiesRender;
+import com.nali.small.entities.skinning.render.layer.ItemLayerRender;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.player.*;
@@ -71,7 +71,7 @@ public class PlayerGui extends MixGui
         this.message_state = 1;
         if (this.mouse_clicked == 0)
         {
-            ++ItemEntitiesRender.DEBUG_V;
+            ++ItemLayerRender.DEBUG_V;
         }
         if (!(GUIFEATURESLOADER instanceof DebugGUIFeatures))
         {
@@ -384,11 +384,11 @@ public class PlayerGui extends MixGui
                                 int v = Integer.parseInt(new_string);
                                 if (o == 0)
                                 {
-                                    ItemEntitiesRender.DEBUG_V = v;
+                                    ItemLayerRender.DEBUG_V = v;
                                 }
                                 else if (o == 1)
                                 {
-                                    ItemEntitiesRender.DEBUG_I = v;
+                                    ItemLayerRender.DEBUG_I = v;
                                 }
                                 ++o;
                             }

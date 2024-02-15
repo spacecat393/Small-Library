@@ -14,8 +14,8 @@ import com.nali.small.entities.skinning.ai.eyes.SkinningEntitiesLook;
 import com.nali.small.entities.skinning.ai.frame.SkinningEntitiesLiveFrame;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesMove;
-import com.nali.small.entities.skinning.render.ArrowEntitiesRender;
-import com.nali.small.entities.skinning.render.ItemEntitiesRender;
+import com.nali.small.entities.skinning.render.layer.ArrowLayerRender;
+import com.nali.small.entities.skinning.render.layer.ItemLayerRender;
 import com.nali.small.mixin.IMixinEntityCreeper;
 import com.nali.small.mixin.IMixinEntityLivingBase;
 import com.nali.small.networks.NetworksRegistry;
@@ -59,7 +59,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static com.nali.list.handlers.SkinningEntitiesServerHandler.canPass;
-import static com.nali.small.entities.EntitiesMathHelper.rayAllTargetsView;
+import static com.nali.small.entities.EntitiesMath.rayAllTargetsView;
 import static com.nali.small.world.ChunkCallBack.CHUNK_MAP;
 
 public abstract class SkinningEntities extends EntityLivingBase
@@ -68,9 +68,9 @@ public abstract class SkinningEntities extends EntityLivingBase
     public Object client_object;
 
     @SideOnly(Side.CLIENT)
-    public ArrowEntitiesRender arrowentitiesrender;
+    public ArrowLayerRender arrowlayerrender;
     @SideOnly(Side.CLIENT)
-    public ItemEntitiesRender itementitiesrender;
+    public ItemLayerRender itemlayerrender;
 
     public UUID owner_uuid;
 //    public final static DataParameter<Optional<UUID>>[] UUID_OPTIONAL_DATAPARAMETER_ARRAY = new DataParameter[2];
@@ -144,8 +144,8 @@ public abstract class SkinningEntities extends EntityLivingBase
             this.width = this.bothdata.Width() * scale;
             this.height = this.bothdata.Height() * scale;
 
-            this.arrowentitiesrender = new ArrowEntitiesRender(this);
-            this.itementitiesrender = new ItemEntitiesRender(this);
+            this.arrowlayerrender = new ArrowLayerRender(this);
+            this.itemlayerrender = new ItemLayerRender(this);
             this.client_object = this.createClientObject();
 //            this.client_work_byte_array = new byte[this.getByteDataParameterArray().length];
 //            this.client_state_byte_array = new byte[max_states];

@@ -1,6 +1,5 @@
 package com.nali.small.entities.skinning.ai.path;
 
-import com.nali.math.MixMath;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
 import net.minecraft.block.material.Material;
@@ -11,9 +10,10 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
+import static com.nali.small.entities.skinning.ai.path.PathMath.*;
+
 public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 {
-    public static byte[] PATH_BYTE_ARRAY = { -1, 0, 1 };
     public static int MAX_G = 64; //block
 //    public int max_run = 50;
 
@@ -687,9 +687,9 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
         if (length != 0)
         {
             length = Math.sqrt(length);
-            new_x = MixMath.signum(to_x / length);
-            new_y = MixMath.signum(to_y / length);
-            new_z = MixMath.signum(to_z / length);
+            new_x = signum(to_x / length);
+            new_y = signum(to_y / length);
+            new_z = signum(to_z / length);
         }
 //        byte index = getIndex(new_x, (byte)0, (byte)0);
 //        byte index = getIndex(new_x, new_y, new_z);
@@ -1559,32 +1559,6 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
     {
         return material == Material.AIR;
 //        return !material.blocksMovement();
-    }
-
-    public static byte getIndex(byte x, byte y, byte z)
-    {
-        byte index = 0;
-
-        for (byte xi : PATH_BYTE_ARRAY)
-        {
-            for (byte yi : PATH_BYTE_ARRAY)
-            {
-                for (byte zi : PATH_BYTE_ARRAY)
-                {
-                    if (!(xi == 0 && yi == 0 && zi == 0))
-                    {
-                        if (xi == x && yi == y && zi == z)
-                        {
-                            return index;
-                        }
-
-                        ++index;
-                    }
-                }
-            }
-        }
-
-        return -1;
     }
 
     public static boolean isSame(SNode snode)

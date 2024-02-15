@@ -1,4 +1,4 @@
-package com.nali.small.entities.skinning.render;
+package com.nali.small.entities.skinning.render.layer;
 
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraftforge.fml.relauncher.Side;

@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 
-import static com.nali.small.entities.EntitiesMathHelper.isTooClose;
+import static com.nali.small.entities.EntitiesMath.isTooClose;
 
 public class SkinningEntitiesRevive extends SkinningEntitiesAI
 {

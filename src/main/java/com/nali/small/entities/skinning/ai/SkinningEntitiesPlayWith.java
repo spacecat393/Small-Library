@@ -4,8 +4,8 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.WorldServer;
 
-import static com.nali.small.entities.EntitiesMathHelper.isInArea;
-import static com.nali.small.entities.EntitiesMathHelper.isTooClose;
+import static com.nali.small.entities.EntitiesMath.isInArea;
+import static com.nali.small.entities.EntitiesMath.isTooClose;
 
 public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
 {

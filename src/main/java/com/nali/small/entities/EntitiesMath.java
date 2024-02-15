@@ -1,6 +1,5 @@
 package com.nali.small.entities;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -8,9 +7,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.awt.*;
-
-public class EntitiesMathHelper
+public class EntitiesMath
 {
     public static boolean isTooClose(Entity entity0, Entity entity1, double minimum_distance)
     {
@@ -80,11 +77,5 @@ public class EntitiesMathHelper
         }
 
         return -1;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public static Color generateRainbowColor()
-    {
-        return Color.getHSBColor(Minecraft.getSystemTime()/*System.currentTimeMillis()*/ % 3600 / 3600.0F, 1.0F, 1.0F);
     }
 }

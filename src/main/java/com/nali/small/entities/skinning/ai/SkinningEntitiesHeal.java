@@ -4,7 +4,7 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 
-import static com.nali.small.entities.EntitiesMathHelper.isTooClose;
+import static com.nali.small.entities.EntitiesMath.isTooClose;
 
 public class SkinningEntitiesHeal extends SkinningEntitiesAI
 {

@@ -6,8 +6,8 @@ import net.minecraft.util.EnumHand;
 
 import java.util.ArrayList;
 
-import static com.nali.small.entities.EntitiesMathHelper.isInArea;
-import static com.nali.small.entities.EntitiesMathHelper.isTooClose;
+import static com.nali.small.entities.EntitiesMath.isInArea;
+import static com.nali.small.entities.EntitiesMath.isTooClose;
 
 public class SkinningEntitiesAttack extends SkinningEntitiesAI
 {

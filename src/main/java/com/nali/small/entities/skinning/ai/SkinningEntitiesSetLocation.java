@@ -3,7 +3,7 @@ package com.nali.small.entities.skinning.ai;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.util.math.BlockPos;
 
-import static com.nali.small.entities.EntitiesMathHelper.isInArea;
+import static com.nali.small.entities.EntitiesMath.isInArea;
 
 public class SkinningEntitiesSetLocation extends SkinningEntitiesAI
 {

@@ -8,7 +8,7 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 
-import static com.nali.small.entities.EntitiesMathHelper.isInArea;
+import static com.nali.small.entities.EntitiesMath.isInArea;
 
 public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 {
