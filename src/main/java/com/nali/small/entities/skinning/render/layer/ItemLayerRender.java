@@ -118,8 +118,8 @@ public class ItemLayerRender extends LayerRender
         if (!itemstack.isEmpty())
         {
             GL11.glPushMatrix();
-            Vec3d c_vec3d = skinningentitiesrender.doModel(this.skinningentities, c_i, c_v);
-            Vec3d t_vec3d = skinningentitiesrender.doModel(this.skinningentities, t_i, t_v);
+            Vec3d c_vec3d = skinningentitiesrender.get3DSkinning(this.skinningentities, c_i, c_v);
+            Vec3d t_vec3d = skinningentitiesrender.get3DSkinning(this.skinningentities, t_i, t_v);
             Vec3d l_vec3d = lookAt(c_vec3d, t_vec3d);
             GL11.glTranslatef((float)c_vec3d.x, (float)c_vec3d.y, (float)c_vec3d.z);
             GL11.glScalef(0.25F, 0.25F, 0.25F);
@@ -136,8 +136,8 @@ public class ItemLayerRender extends LayerRender
         GL_CULL_FACE = GL11.glIsEnabled(GL11.GL_CULL_FACE);
         GL11.glDisable(GL11.GL_CULL_FACE);
 
-        Vec3d c_vec3d = skinningentitiesrender.doModel(this.skinningentities, c_i, c_v);
-        Vec3d t_vec3d = skinningentitiesrender.doModel(this.skinningentities, t_i, t_v);
+        Vec3d c_vec3d = skinningentitiesrender.get3DSkinning(this.skinningentities, c_i, c_v);
+        Vec3d t_vec3d = skinningentitiesrender.get3DSkinning(this.skinningentities, t_i, t_v);
         Vec3d l_vec3d = lookAt(c_vec3d, t_vec3d);
         GL11.glPushMatrix();
         GL11.glTranslatef((float)c_vec3d.x, (float)c_vec3d.y, (float)c_vec3d.z);

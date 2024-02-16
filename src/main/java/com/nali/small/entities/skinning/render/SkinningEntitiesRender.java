@@ -132,7 +132,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
     public abstract void multiplyAnimation(T skinningentities);
 
-    public Vec3d doModel(T skinningentities, int i, int v)
+    public Vec3d get3DSkinning(T skinningentities, int i, int v)
     {
         SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
         OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[i];
@@ -189,8 +189,6 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
         main_vec4_float_array = multiplyVec4Mat4(temp_vec4_float_array, new Quaternion(-1.571F, 0.0F, 0.0F).getM4x4().mat);
 
-        Vec3d vec3d = new Vec3d(main_vec4_float_array[0] / main_vec4_float_array[3], main_vec4_float_array[1] / main_vec4_float_array[3], main_vec4_float_array[2] / main_vec4_float_array[3]);
-
-        return vec3d;
+        return new Vec3d(main_vec4_float_array[0] / main_vec4_float_array[3], main_vec4_float_array[1] / main_vec4_float_array[3], main_vec4_float_array[2] / main_vec4_float_array[3]);
     }
 }

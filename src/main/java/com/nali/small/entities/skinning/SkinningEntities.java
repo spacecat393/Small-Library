@@ -66,6 +66,10 @@ public abstract class SkinningEntities extends EntityLivingBase
 {
     @SideOnly(Side.CLIENT)
     public Object client_object;
+//    @SideOnly(Side.CLIENT)
+//    public long client_last_time = Minecraft.getSystemTime();
+//    @SideOnly(Side.CLIENT)
+//    public long client_m_last_time = System.currentTimeMillis();
 
     @SideOnly(Side.CLIENT)
     public ArrowLayerRender arrowlayerrender;
@@ -108,6 +112,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     public SkinningEntitiesPlayWith skinningentitiesplaywith;
     public SkinningEntitiesLiveFrame[] server_skinningentitiesliveframe_array;
     public boolean server_sus_init;
+//    public long server_current_time = Minecraft.getSystemTime();
 
     public SkinningEntitiesBytes skinningentitiesbytes;
     public BothData bothdata;
@@ -759,7 +764,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 //                this.current_client_uuid = uuid;
 //            }
         }
-        else
+        else// if (this.ticksExisted % 20 == 0)//1 sec per tick
         {
             EntityDataManager entitydatamanager = this.getDataManager();
 //            entitydatamanager.set(float_dataparameter, this.rotationYawHead);
@@ -783,6 +788,9 @@ public abstract class SkinningEntities extends EntityLivingBase
 //            System.arraycopy(this.server_work_byte_array, 0, this.current_server_work_byte_array, 0, this.server_work_byte_array.length);
 
 //            int max_part = this.bothdata.MaxPart();
+//            long time = Minecraft.getSystemTime();
+//            entitydatamanager.set(this.getFloatDataParameterArray()[1], Math.min(((this.server_current_time - time) / 1_000_000.0F) / 1000.0F, 1.0F));
+//            this.server_current_time = time;
             for (int i = 0; i < this.server_frame_int_array.length; ++i)
             {
                 this.server_frame_int_array[i] = entitydatamanager.get(integer_dataparameter[i]);
@@ -1373,10 +1381,22 @@ public abstract class SkinningEntities extends EntityLivingBase
 //        {
 //            skinningrender.frame_int_array[x] = entitydatamanager.get(integer_dataparameter[i++]);
 //        }
+//        long current_time = Minecraft.getSystemTime();
+//        skinningrender.timeline = Math.min((current_time - this.client_last_time) / 1000.0F, 1.0F);
+//        Small.LOGGER.info("MC TIME " + skinningrender.timeline);
+//        long m_current_time =  System.currentTimeMillis();
+//        skinningrender.timeline = Math.min((m_current_time - this.client_m_last_time) / 1000.0F, 1.0F);
+//        Small.LOGGER.info("M TIME " + skinningrender.timeline);
+//        this.client_last_time = current_time;
+//        this.client_m_last_time = m_current_time;
+//        skinningrender.timeline = entitydatamanager.get(this.getFloatDataParameterArray()[1]);
+//        if (this.ticksExisted % 20 == 0)
+//        {
         for (int x = 0; x < skinningrender.frame_int_array.length; ++x)
         {
             skinningrender.frame_int_array[x] = entitydatamanager.get(integer_dataparameter[x++]);
         }
+//        }
     }
 
     public boolean isMove()
