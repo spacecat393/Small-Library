@@ -6,7 +6,7 @@ import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.features.messages.NameGUIFeatures;
 import com.nali.small.networks.NetworksRegistry;
 import com.nali.list.container.InventoryContainer;
-import com.nali.list.messages.SkinningEntitiesServerMessage;
+import com.nali.list.messages.ServerMessage;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -76,7 +76,7 @@ public abstract class MixGui extends GuiContainer
     {
         byte[] byte_array = new byte[1];
         byte_array[0] = id;
-        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+        NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 
     public void sendPacketUUID(byte id)
@@ -89,7 +89,7 @@ public abstract class MixGui extends GuiContainer
         byte[] byte_array = new byte[17];
         byte_array[0] = id;
         BytesWriter.set(byte_array, uuid, 1);
-        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+        NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 
 //    public void sendPacketUUIDInt(byte id, UUID uuid, int i)
@@ -109,7 +109,7 @@ public abstract class MixGui extends GuiContainer
         BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
         BytesWriter.set(byte_array, i, 17);
         byte_array[21] = skinningentities.client_work_byte_array[i] == 1 ? (byte)0 : (byte)1;
-        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+        NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 
     public void renderEntitiesName(SkinningEntities skinningentities, float x, float y, int width, int height, int mouseX, int mouseY)

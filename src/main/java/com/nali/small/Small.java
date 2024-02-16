@@ -10,7 +10,6 @@ import com.nali.small.render.RenderHelper;
 import com.nali.small.system.Reference;
 import com.nali.small.world.ChunkCallBack;
 import com.nali.system.DataLoader;
-import com.nali.system.Reflect;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -23,7 +22,6 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.WeakHashMap;
 
@@ -44,9 +42,8 @@ public class Small
         {
             DataLoader.setModels(RenderHelper.DATALOADER, Reference.MOD_ID);
 
-            CapabilitiesRegistryHelper.update();
-            OpenGUIHelper.GUI_CLASS_LIST = Reflect.getClasses("com.nali.list.gui");
-            OpenGUIHelper.GUI_CLASS_LIST.sort(Comparator.comparing(Class::getName));
+//            CapabilitiesRegistryHelper.update();
+            OpenGUIHelper.set();
             SkinningEntities.CLIENT_ENTITIES_MAP = new WeakHashMap<>();
             SkinningEntities.FAKE_CLIENT_ENTITIES_MAP = new WeakHashMap<>();
         }

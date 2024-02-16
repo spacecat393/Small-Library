@@ -1,14 +1,12 @@
 package com.nali.list.gui;
 
-import com.nali.list.messages.CapabilitiesServerMessage;
-import com.nali.list.messages.SkinningEntitiesServerMessage;
+import com.nali.list.messages.ServerMessage;
 import com.nali.render.SkinningRender;
-import com.nali.small.capabilities.CapabilitiesRegistryHelper;
 import com.nali.small.data.BoxData;
 import com.nali.small.data.SakuraData;
 import com.nali.small.entities.skinning.SkinningEntities;
-import com.nali.small.entities.skinning.render.layer.ItemLayerRender;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
+import com.nali.small.entities.skinning.render.layer.ItemLayerRender;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.player.*;
 import com.nali.small.networks.NetworksRegistry;
@@ -51,7 +49,7 @@ public class PlayerGui extends MixGui
 //        byte[] byte_array = new byte[4];
 //        BytesWriter.set(byte_array, 0, 0);
 //        NetworksRegistry.I.sendToServer(new CapabilitiesServerMessage(byte_array));
-        NetworksRegistry.I.sendToServer(new CapabilitiesServerMessage(new byte[4]));
+//        NetworksRegistry.I.sendToServer(new CapabilitiesServerMessage(new byte[4]));
         this.xSize = 256;
         this.ySize = 256;
 
@@ -69,14 +67,14 @@ public class PlayerGui extends MixGui
         this.render_text = false;
         //
         this.message_state = 1;
-        if (this.mouse_clicked == 0)
-        {
-            ++ItemLayerRender.DEBUG_V;
-        }
-        else if (this.mouse_clicked == 1)
-        {
-            --ItemLayerRender.DEBUG_V;
-        }
+//        if (this.mouse_clicked == 0)
+//        {
+//            ++ItemLayerRender.DEBUG_V;
+//        }
+//        else if (this.mouse_clicked == 1)
+//        {
+//            --ItemLayerRender.DEBUG_V;
+//        }
         if (!(GUIFEATURESLOADER instanceof DebugGUIFeatures))
         {
             GUIFEATURESLOADER = new DebugGUIFeatures(this);
@@ -352,7 +350,7 @@ public class PlayerGui extends MixGui
 
 //        if (CapabilitiesRegistryHelper.CLIENT_CAPABILITY_OBJECT_ARRAYLIST.size() > 0)
 //        {
-        Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("" + CapabilitiesRegistryHelper.CLIENT_CAPABILITY_OBJECT_ARRAYLIST.get(0), 25, 11, generateRainbowColor());
+        Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("" + this.mc.player.getEntityData().getInteger("sakura_nali"), 25, 11, generateRainbowColor());
 //        }
     }
 
@@ -427,7 +425,7 @@ public class PlayerGui extends MixGui
                         new_index += 4;
                     }
 //                    System.arraycopy(string_byte_array, 0, byte_array, 1, string_byte_array_size);
-                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                    NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
 //                            break;
 //                        }
 //                        default:
@@ -540,7 +538,7 @@ public class PlayerGui extends MixGui
                     byte_array[0] = 6;
                     BytesWriter.set(byte_array, this.uuid, 1);
                     BytesWriter.set(byte_array, 1, 17);
-                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                    NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
                 }
             }
         }

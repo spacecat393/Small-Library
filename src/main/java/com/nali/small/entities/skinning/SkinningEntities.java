@@ -1,8 +1,8 @@
 package com.nali.small.entities.skinning;
 
 import com.nali.data.BothData;
-import com.nali.list.messages.SkinningEntitiesClientMessage;
-import com.nali.list.messages.SkinningEntitiesServerMessage;
+import com.nali.list.messages.ClientMessage;
+import com.nali.list.messages.ServerMessage;
 import com.nali.render.ObjectRender;
 import com.nali.render.SkinningRender;
 import com.nali.small.Small;
@@ -58,7 +58,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.nali.list.handlers.SkinningEntitiesServerHandler.canPass;
+import static com.nali.list.handlers.ServerHandler.canPass;
 import static com.nali.small.entities.EntitiesMath.rayAllTargetsView;
 import static com.nali.small.world.ChunkCallBack.CHUNK_MAP;
 
@@ -1042,7 +1042,7 @@ public abstract class SkinningEntities extends EntityLivingBase
                 byte_array[0] = 6;
                 BytesWriter.set(byte_array, this.getEntityId(), 1);
                 System.arraycopy(this.main_server_work_byte_array, 0, byte_array, 1 + 4, this.main_server_work_byte_array.length);
-                NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(byte_array), (EntityPlayerMP)entityplayer);
+                NetworksRegistry.I.sendTo(new ClientMessage(byte_array), (EntityPlayerMP)entityplayer);
 //                EntitiesContainerHelper.setContainer(this, entityplayer, InventoryContainer.ID);
             }
         }
@@ -1144,7 +1144,7 @@ public abstract class SkinningEntities extends EntityLivingBase
                     }
 
                     BytesWriter.set(byte_array, this.client_uuid, 1);
-                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                    NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
                 }
                 else
                 {
@@ -1154,7 +1154,7 @@ public abstract class SkinningEntities extends EntityLivingBase
                     BytesWriter.set(byte_array, this.client_uuid, 1);
                     BytesWriter.set(byte_array, i, 17);
                     byte_array[21] = this.client_work_byte_array[i] == 1 ? (byte)0 : (byte)1;
-                    NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                    NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
                 }
             }
         }
@@ -1358,7 +1358,7 @@ public abstract class SkinningEntities extends EntityLivingBase
             byte[] byte_array = new byte[5];
             byte_array[0] = 0;
             BytesWriter.set(byte_array, this.getEntityId(), 1);
-            NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+            NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
 //            byte_array = new byte[5];
 //            byte_array[0] = 18;
 //            BytesWriter.set(byte_array, this.getEntityId(), 1);

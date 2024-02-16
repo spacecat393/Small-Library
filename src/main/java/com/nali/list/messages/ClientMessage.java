@@ -3,15 +3,15 @@ package com.nali.list.messages;
 import com.nali.small.networks.NetworksMessage;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class SkinningEntitiesClientMessage extends NetworksMessage
+public class ClientMessage extends NetworksMessage
 {
     public static Side SIDE = Side.CLIENT;
-    public SkinningEntitiesClientMessage()
+    public ClientMessage()
     {
 
     }
 
-    public SkinningEntitiesClientMessage(byte[] data)
+    public ClientMessage(byte[] data)
     {
         this.data = data;
     }

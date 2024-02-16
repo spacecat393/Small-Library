@@ -1,6 +1,6 @@
 package com.nali.small.entities.skinning.ai;
 
-import com.nali.list.messages.SkinningEntitiesClientMessage;
+import com.nali.list.messages.ClientMessage;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.mixin.IMixinEntityPlayer;
 import com.nali.small.networks.NetworksRegistry;
@@ -111,7 +111,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
                                 entityplayermp.dimension = dimension;
                                 entityplayermp.getEntityData().setBoolean("revive_nali", true);
                                 ChunkLoader.updateChunk(this.skinningentities);
-                                NetworksRegistry.I.sendTo(new SkinningEntitiesClientMessage(new byte[]{1}), entityplayermp);
+                                NetworksRegistry.I.sendTo(new ClientMessage(new byte[]{1}), entityplayermp);
 //                                entityplayermp.setPositionAndUpdate(x, y, z);
 
 //                                GameType gametype = entityplayermp.interactionManager.getGameType();

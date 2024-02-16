@@ -2,13 +2,24 @@ package com.nali.small.gui;
 
 import com.nali.list.container.PlayerContainer;
 import com.nali.list.gui.PlayerGui;
+import com.nali.system.Reflect;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Comparator;
 import java.util.List;
 
+@SideOnly(Side.CLIENT)
 public class OpenGUIHelper
 {
     public static List<Class> GUI_CLASS_LIST;
+
+    public static void set()
+    {
+        GUI_CLASS_LIST = Reflect.getClasses("com.nali.list.gui");
+        GUI_CLASS_LIST.sort(Comparator.comparing(Class::getName));
+    }
 
     public static void callPlayerGUI()
     {

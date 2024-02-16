@@ -1,8 +1,8 @@
 package com.nali.small.gui.features.messages.inventory;
 
-import com.nali.small.capabilities.CapabilitiesRegistryHelper;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.translation.I18n;
 
 public class TPGUIFeatures extends GUIFeaturesLoader
@@ -26,7 +26,8 @@ public class TPGUIFeatures extends GUIFeaturesLoader
         {
             this.string_array[0],
             this.string_array[1],
-            this.string_array[2] + CapabilitiesRegistryHelper.CLIENT_CAPABILITY_OBJECT_ARRAYLIST.get(0),
+//                this.string_array[2] + CapabilitiesRegistryHelper.CLIENT_CAPABILITY_OBJECT_ARRAYLIST.get(0)
+            this.string_array[2] + Minecraft.getMinecraft().player.getEntityData().getInteger("sakura_nali")
         }, this.int_array, mouseX, mouseY, this.have_head);
     }
 }

@@ -13,6 +13,7 @@
     "IMixinWorldServer",
     "MixinCommandSummon",
     "MixinEntityLivingBase",
+    "MixinEntityPlayer",
     "MixinItemMonsterPlacer",
     "MixinWorldProvider"
   ],

@@ -12,7 +12,6 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -38,17 +37,17 @@ public class CapabilitiesRegistryHelper
             RESOURCELOCATION_ARRAY[index++] = new ResourceLocation(Reference.MOD_ID, clasz.getSimpleName().toLowerCase());
         }
     }
-    public static ArrayList<Object> CLIENT_CAPABILITY_OBJECT_ARRAYLIST;
+//    public static ArrayList<Object> CLIENT_CAPABILITY_OBJECT_ARRAYLIST;
 
-    public static void update()
-    {
-        CLIENT_CAPABILITY_OBJECT_ARRAYLIST = new ArrayList();
-
-        while (CLIENT_CAPABILITY_OBJECT_ARRAYLIST.size() != RESOURCELOCATION_ARRAY.length)
-        {
-            CLIENT_CAPABILITY_OBJECT_ARRAYLIST.add(new Object());
-        }
-    }
+//    public static void update()
+//    {
+//        CLIENT_CAPABILITY_OBJECT_ARRAYLIST = new ArrayList();
+//
+//        while (CLIENT_CAPABILITY_OBJECT_ARRAYLIST.size() != RESOURCELOCATION_ARRAY.length)
+//        {
+//            CLIENT_CAPABILITY_OBJECT_ARRAYLIST.add(new Object());
+//        }
+//    }
 
     public static void register()
     {

@@ -1,8 +1,7 @@
 package com.nali.list.gui;
 
 import com.nali.list.container.InventoryContainer;
-import com.nali.list.messages.CapabilitiesServerMessage;
-import com.nali.list.messages.SkinningEntitiesServerMessage;
+import com.nali.list.messages.ServerMessage;
 import com.nali.render.SkinningRender;
 import com.nali.small.data.BoxData;
 import com.nali.small.entities.skinning.SkinningEntities;
@@ -46,7 +45,7 @@ public class InventoryGui extends MixGui
         this.mc = Minecraft.getMinecraft();
         ScaledResolution scaledresolution = new ScaledResolution(this.mc);
         this.setWorldAndResolution(Minecraft.getMinecraft(), scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
-        NetworksRegistry.I.sendToServer(new CapabilitiesServerMessage(new byte[4]));
+//        NetworksRegistry.I.sendToServer(new CapabilitiesServerMessage(new byte[4]));
 
 //        if (skinningentities != null)
 //        {
@@ -1125,7 +1124,7 @@ public class InventoryGui extends MixGui
                         }
 
                         BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
-                        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
+                        NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
                         MESSAGE_STRINGBUILDER.setLength(0);
                         MESSAGE_STRINGBUILDER.append("!");
                     }
