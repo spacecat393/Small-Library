@@ -14,7 +14,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class SetWorkByte
 {
-    public static int ID = 1;
+    public static byte ID = 1;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

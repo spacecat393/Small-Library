@@ -11,7 +11,7 @@ import net.minecraft.util.EnumHand;
 
 public class DrinkMilk
 {
-    public static int ID = 19;
+    public static byte ID = 19;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

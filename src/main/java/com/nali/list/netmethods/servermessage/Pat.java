@@ -9,7 +9,7 @@ import net.minecraft.world.WorldServer;
 
 public class Pat
 {
-    public static int ID = 16;
+    public static byte ID = 16;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

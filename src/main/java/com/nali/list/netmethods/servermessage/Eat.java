@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 
 public class Eat
 {
-    public static int ID = 17;
+    public static byte ID = 17;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

@@ -26,7 +26,7 @@ public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
         {
             try
             {
-                METHOD_ARRAY[(int)servermessage_class.getDeclaredField("ID").get(null)] = servermessage_class.getDeclaredMethod("run", EntityPlayerMP.class, ServerMessage.class);
+                METHOD_ARRAY[(byte)servermessage_class.getDeclaredField("ID").get(null)] = servermessage_class.getDeclaredMethod("run", EntityPlayerMP.class, ServerMessage.class);
             }
             catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException e)
             {

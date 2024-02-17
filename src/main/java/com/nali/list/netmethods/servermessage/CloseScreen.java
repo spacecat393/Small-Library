@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 
 public class CloseScreen
 {
-    public static int ID = 9;
+    public static byte ID = 9;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

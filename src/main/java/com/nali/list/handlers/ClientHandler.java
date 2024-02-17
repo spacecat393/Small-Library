@@ -23,7 +23,7 @@ public class ClientHandler implements IMessageHandler<ClientMessage, IMessage>
         {
             try
             {
-                METHOD_ARRAY[(int)servermessage_class.getDeclaredField("ID").get(null)] = servermessage_class.getDeclaredMethod("run", ClientMessage.class);
+                METHOD_ARRAY[(byte)servermessage_class.getDeclaredField("ID").get(null)] = servermessage_class.getDeclaredMethod("run", ClientMessage.class);
             }
             catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException e)
             {

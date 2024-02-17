@@ -12,7 +12,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class SendLocation
 {
-    public static int ID = 26;
+    public static byte ID = 26;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

@@ -19,9 +19,9 @@ import java.util.Random;
 
 public class X64
 {
-    public static int ID = 4;
+    public static byte ID = 4;
 
-    public static int GUARANTEE = 0;
+    public static byte GUARANTEE = 0;
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
         Random random = entityplayermp.getRNG();

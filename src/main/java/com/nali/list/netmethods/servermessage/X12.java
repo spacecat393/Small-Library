@@ -17,9 +17,9 @@ import java.util.Random;
 
 public class X12
 {
-    public static int ID = 3;
+    public static byte ID = 3;
 
-    public static int GUARANTEE = 0;
+    public static byte GUARANTEE = 0;
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
         Random random = entityplayermp.getRNG();

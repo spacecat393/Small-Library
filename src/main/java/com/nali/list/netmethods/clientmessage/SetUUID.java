@@ -8,7 +8,7 @@ import net.minecraft.entity.Entity;
 
 public class SetUUID
 {
-    public static int ID = 5;
+    public static byte ID = 5;
 
     public static void run(ClientMessage clientmessage)
     {

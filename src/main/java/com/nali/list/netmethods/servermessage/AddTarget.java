@@ -10,7 +10,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class AddTarget
 {
-    public static int ID = 10;
+    public static byte ID = 10;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

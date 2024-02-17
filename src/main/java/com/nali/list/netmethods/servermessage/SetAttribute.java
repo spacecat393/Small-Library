@@ -12,7 +12,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class SetAttribute
 {
-    public static int ID = 21;
+    public static byte ID = 21;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

@@ -12,7 +12,7 @@ import static com.nali.small.gui.features.messages.EffectsGUIFeatures.EFFECTS_IN
 
 public class SetEffects
 {
-    public static int ID = 7;
+    public static byte ID = 7;
 
     public static void run(ClientMessage clientmessage)
     {

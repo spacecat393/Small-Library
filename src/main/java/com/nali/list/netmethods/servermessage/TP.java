@@ -11,7 +11,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class TP
 {
-    public static int ID = 24;
+    public static byte ID = 24;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

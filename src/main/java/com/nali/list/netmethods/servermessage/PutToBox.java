@@ -11,7 +11,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class PutToBox
 {
-    public static int ID = 8;
+    public static byte ID = 8;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

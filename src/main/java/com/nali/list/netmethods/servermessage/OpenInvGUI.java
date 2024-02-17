@@ -13,7 +13,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class OpenInvGUI
 {
-    public static int ID = 6;
+    public static byte ID = 6;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

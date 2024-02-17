@@ -9,7 +9,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class RemoveTarget
 {
-    public static int ID = 12;
+    public static byte ID = 12;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

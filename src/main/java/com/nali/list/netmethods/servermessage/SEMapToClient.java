@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class SEMapToClient
 {
-    public static int ID = 5;
+    public static byte ID = 5;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

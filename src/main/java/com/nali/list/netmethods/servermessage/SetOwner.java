@@ -9,7 +9,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class SetOwner
 {
-    public static int ID = 2;
+    public static byte ID = 2;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

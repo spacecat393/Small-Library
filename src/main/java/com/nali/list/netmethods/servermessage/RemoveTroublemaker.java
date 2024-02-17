@@ -9,7 +9,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class RemoveTroublemaker
 {
-    public static int ID = 15;
+    public static byte ID = 15;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

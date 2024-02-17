@@ -10,7 +10,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class AddTroublemaker
 {
-    public static int ID = 13;
+    public static byte ID = 13;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

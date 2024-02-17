@@ -6,7 +6,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 
 public class RespawnPlayer
 {
-    public static int ID = 1;
+    public static byte ID = 1;
 
     public static void run(ClientMessage clientmessage)
     {

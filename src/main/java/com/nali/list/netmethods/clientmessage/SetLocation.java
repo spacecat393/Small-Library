@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class SetLocation
 {
-    public static int ID = 8;
+    public static byte ID = 8;
 
     public static void run(ClientMessage clientmessage)
     {

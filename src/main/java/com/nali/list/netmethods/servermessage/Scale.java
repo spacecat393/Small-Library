@@ -11,7 +11,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class Scale
 {
-    public static int ID = 20;
+    public static byte ID = 20;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

@@ -7,7 +7,7 @@ import net.minecraft.util.EnumParticleTypes;
 
 public class RenderFood
 {
-    public static int ID = 9;
+    public static byte ID = 9;
 
     public static void run(ClientMessage clientmessage)
     {

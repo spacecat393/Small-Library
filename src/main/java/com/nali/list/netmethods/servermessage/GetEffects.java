@@ -16,7 +16,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class GetEffects
 {
-    public static int ID = 18;
+    public static byte ID = 18;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

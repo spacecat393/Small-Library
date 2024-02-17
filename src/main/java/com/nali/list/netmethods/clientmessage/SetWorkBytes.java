@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class SetWorkBytes
 {
-    public static int ID = 6;
+    public static byte ID = 6;
 
     public static void run(ClientMessage clientmessage)
     {

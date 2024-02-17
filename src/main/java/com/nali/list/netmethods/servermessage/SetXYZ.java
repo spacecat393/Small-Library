@@ -9,7 +9,7 @@ import static com.nali.list.handlers.ServerHandler.canPass;
 
 public class SetXYZ
 {
-    public static int ID = 23;
+    public static byte ID = 23;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
