@@ -63,7 +63,7 @@ public class InventoryContainer extends Container
         this.addSlotToContainer(new Slot(skinninginventory, 30, 186, 48));
         this.addSlotToContainer(new Slot(skinninginventory, 29, 186, 68));
 
-//        this.addSlotToContainer(new Slot(skinninginventory, 33, 64, 26));
+        this.addSlotToContainer(new Slot(skinninginventory, 33, 64, 26));
     }
 
     @Override

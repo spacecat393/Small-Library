@@ -167,7 +167,8 @@ public class InventoryGui extends MixGui
 
         this.renderEntitiesName(skinningentities, this.guiLeft + 100, this.guiTop + 75, 56, 11, mouseX, mouseY);
 
-        x = this.guiLeft + 63; y = this.guiTop + 25; width = 18; height = 19;
+//        x = this.guiLeft + 63; y = this.guiTop + 25; width = 18; height = 19;
+        x = this.guiLeft + 102; y = this.guiTop + 28; width = 14; height = 14;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
             if (this.mouse_released == 0)
@@ -837,7 +838,8 @@ public class InventoryGui extends MixGui
 
         SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
 
-        this.drawTexturedModalRect(this.guiLeft + 64 + 1, this.guiTop + 26 + 1, 30, 0, 14, 14);
+        this.drawTexturedModalRect(this.guiLeft + 159, this.guiTop + 51, 16, 42, 22, 21);
+        this.drawTexturedModalRect(this.guiLeft + 102, this.guiTop + 28, 30, 0, 14, 14);
         switch (PAGE)
         {
             case 0:
@@ -871,6 +873,11 @@ public class InventoryGui extends MixGui
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 90, 14, 14);
+                }
+                slot = this.inventorySlots.inventorySlots.get(69);
+                if (slot.getStack().isEmpty())
+                {
+                    this.drawTexturedModalRect(this.guiLeft + 1 + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 132, 12, 14);
                 }
 
                 break;

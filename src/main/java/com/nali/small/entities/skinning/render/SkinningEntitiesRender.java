@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -46,12 +45,39 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         GL11.glPushMatrix();
 
         SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
+
+        this.updateData(skinningentities, partialTicks);
+
+//        if (this.renderManager.isDebugBoundingBox() && !skinningentities.isInvisible() && !Minecraft.getMinecraft().isReducedDebug())
+//        {
+//            for (int i = 0; i < skinningrender.memory_object_array.length; ++i)
+//            {
+//                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[i];
+//                for (int v = 0; v < openglskinningmemory.index_int_array.length; ++v)
+//                {
+//                    GL11.glPushMatrix();
+//                    this.apply3DSkinningVec4(this.get3DSkinning(skinningentities, (float)ox, (float)oy, (float)oz, i, v));
+//                    GL11.glScalef(0.01F, 0.01F, 0.01F);
+//                    Minecraft.getMinecraft().getItemRenderer().renderItemSide(skinningentities, SmallBox.I.getDefaultInstance(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, false);
+//                    GL11.glPopMatrix();
+//                }
+//            }
+//        }
+//
+        skinningentities.itemlayerrender.x = (float)ox;
+        skinningentities.itemlayerrender.y = (float)oy;
+        skinningentities.itemlayerrender.z = (float)oz;
+        skinningentities.itemlayerrender.layer(this, partialTicks);
+        skinningentities.arrowlayerrender.layer(this, (float)ox, (float)oy, (float)oz, partialTicks);
+
+//        if (!(this.renderManager.isDebugBoundingBox() && !skinningentities.isInvisible() && !Minecraft.getMinecraft().isReducedDebug()))
+//        {
         GL11.glTranslated(ox, oy, oz);
 
         //
         if (this.renderManager.isDebugBoundingBox() && !skinningentities.isInvisible() && !Minecraft.getMinecraft().isReducedDebug())
         {
-            GlStateManager.pushMatrix();
+            GL11.glPushMatrix();
             GlStateManager.disableTexture2D();
             GlStateManager.enableBlend();
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -73,23 +99,17 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
             GlStateManager.glLineWidth(1.0F);
             GlStateManager.enableTexture2D();
             GlStateManager.disableBlend();
-            GlStateManager.popMatrix();
+            GL11.glPopMatrix();
         }
         //
+
         GL11.glScalef(skinningrender.scale, skinningrender.scale, skinningrender.scale);
         float scale = (skinningrender.scale == 0 ? 1.0F : skinningrender.scale);
         this.shadowOpaque *= scale;
         this.shadowSize *= scale;
 
-        this.updateData(skinningentities, partialTicks);
-
-        skinningentities.itemlayerrender.layer(this, partialTicks);
-        skinningentities.arrowlayerrender.layer(this, partialTicks);
-
-        if (!(this.renderManager.isDebugBoundingBox() && !skinningentities.isInvisible() && !Minecraft.getMinecraft().isReducedDebug()))
-        {
-            skinningrender.objectworlddraw.renderWorld();
-        }
+        skinningrender.objectworlddraw.renderWorld();
+//        }
 
         GL11.glPopMatrix();
         super.doRender(skinningentities, ox, oy, oz, entityYaw, partialTicks);
@@ -113,27 +133,11 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         }
 
         skinningrender.setSkinning();
-
-//        GL11.glColor4f(1.0F, 0.0F, 0.0F, 1.0F);
-//        GL11.glPointSize(10.0F);
-//        for (int i = 0; i < skinningrender.memory_object_array.length; ++i)
-//        {
-//            OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[i];
-//            for (int v = 0; v < openglskinningmemory.index_int_array.length; ++v)
-//            {
-//                doModel(skinningentities, i, v, () ->
-//                {
-//                    GL11.glBegin(GL11.GL_POINTS);
-//                    GL11.glVertex3f(0.0F, 0.0F, 0.0F);
-//                    GL11.glEnd();
-//                });
-//            }
-//        }
     }
 
     public abstract void multiplyAnimation(T skinningentities);
 
-    public Vec3d get3DSkinning(T skinningentities, int i, int v)
+    public float[] get3DSkinning(T skinningentities, float x, float y, float z, int i, int v)
     {
         SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
         OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[i];
@@ -188,8 +192,41 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
             }
         }
 
-        main_vec4_float_array = multiplyVec4Mat4(temp_vec4_float_array, new Quaternion(-1.571F, 0.0F, 0.0F).getM4x4().mat);
+        float scale = (skinningrender.scale == 0 ? 1.0F : skinningrender.scale);
+        main_vec4_float_array = multiplyVec4Mat4(main_vec4_float_array, new float[]
+        {
+            scale, 0.0F, 0.0F, 0.0F,
+            0.0F, scale, 0.0F, 0.0F,
+            0.0F, 0.0F, scale, 0.0F,
+            0.0F, 0.0F, 0.0F, 1.0F,
+        });
+        main_vec4_float_array = multiplyVec4Mat4(main_vec4_float_array, new Quaternion(-1.571F, 0.0F, 0.0F).getM4x4().mat);
+        main_vec4_float_array[0] += x;
+        main_vec4_float_array[1] += y;
+        main_vec4_float_array[2] += z;
+//        main_vec4_float_array = multiplyVec4Mat4(temp_vec4_float_array, new Quaternion(-1.571F, 0.0F, 0.0F).getM4x4().mat);
 
-        return new Vec3d(main_vec4_float_array[0] / main_vec4_float_array[3], main_vec4_float_array[1] / main_vec4_float_array[3], main_vec4_float_array[2] / main_vec4_float_array[3]);
+        return main_vec4_float_array;
+    }
+
+    public void apply3DSkinningVec4(float[] vec4)
+    {
+        if (vec4[3] == 0.0F)
+        {
+            vec4[3] = 1.0F;
+        }
+
+//        GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
+        GL11.glTranslatef(vec4[0] / vec4[3], vec4[1] / vec4[3], vec4[2] / vec4[3]);
+//        GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+//        float[] mat4 = new float[]
+//        {
+//            1, 0, 0, 0,
+//            0, 1, 0, 0,
+//            0, 0, 1, 0,
+//            vec4[0], vec4[1], vec4[2], vec4[3]
+//        };
+//        OpenGLCurrentMemory.setFloatBuffer(mat4);
+//        GL11.glMultMatrix(OpenGLCurrentMemory.OPENGL_FLOATBUFFER);
     }
 }

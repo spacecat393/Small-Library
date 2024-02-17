@@ -16,7 +16,7 @@ public class SkinningInventory implements IInventory
 {
     public int slotsCount = 27;
     public NonNullList<ItemStack> hands_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(2, ItemStack.EMPTY);
-    public NonNullList<ItemStack> armor_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(4, ItemStack.EMPTY);
+    public NonNullList<ItemStack> armor_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(5, ItemStack.EMPTY);
     public NonNullList<ItemStack> inventoryContents;
     public List<IInventoryChangedListener> changeListeners;
 

@@ -23,7 +23,6 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.StringUtils;
@@ -45,15 +44,18 @@ public class ItemLayerRender extends LayerRender
             c_head_i, c_head_v, t_head_i, t_head_v,
             c_chest_i, c_chest_v, t_chest_i, t_chest_v,
             c_legs_i, c_legs_v, t_legs_i, t_legs_v,
-            c_feet_i, c_feet_v, t_feet_i, t_feet_v;
+            c_feet_i, c_feet_v, t_feet_i, t_feet_v,
+            c_mouth_i, c_mouth_v, t_mouth_i, t_mouth_v;
 
-    public float hand_y, hand_p,
+    public float left_hand_y, left_hand_p,
+            right_hand_y, right_hand_p,
             head_y, head_p,
             chest_y, chest_p,
             legs_y, legs_p,
             feet_y, feet_p;
 
     public static int DEBUG_I, DEBUG_V;
+    public float x, y, z;
 
     public ItemLayerRender(SkinningEntities skinningentities)
     {
@@ -62,8 +64,8 @@ public class ItemLayerRender extends LayerRender
 
     public void layer(SkinningEntitiesRender skinningentitiesrender, float partialTicks)
     {
-//        this.c_legs_i = DEBUG_I;
-//        this.t_feet_v = DEBUG_V;
+        this.c_chest_v = DEBUG_V;
+        this.t_chest_v = DEBUG_I;
         if (this.layerbipedarmor == null)
         {
             this.layerbipedarmor = new LayerBipedArmor(new RenderLivingBase(skinningentitiesrender.getRenderManager(), new ModelBase()
@@ -106,6 +108,7 @@ public class ItemLayerRender extends LayerRender
 
         this.renderHeldItem(skinningentitiesrender, this.skinningentities.getHeldItemMainhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, this.c_right_hand_i, this.c_right_hand_v, this.t_right_hand_i, this.t_right_hand_v);
         this.renderHeldItem(skinningentitiesrender, this.skinningentities.getHeldItemOffhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, this.c_left_hand_i, this.c_left_hand_v, this.t_left_hand_i, this.t_left_hand_v);
+        this.renderHeldItem(skinningentitiesrender, this.skinningentities.skinninginventory.armor_itemstack_nonnulllist.get(4), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, this.c_mouth_i, this.c_mouth_v, this.t_mouth_i, this.t_mouth_v);
 
         this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.HEAD, this.c_head_i, this.c_head_v, this.t_head_i, this.t_head_v, partialTicks);
         this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.CHEST, this.c_chest_i, this.c_chest_v, this.t_chest_i, this.t_chest_v, partialTicks);
@@ -117,15 +120,45 @@ public class ItemLayerRender extends LayerRender
     {
         if (!itemstack.isEmpty())
         {
+            float[] c_vec4 = skinningentitiesrender.get3DSkinning(this.skinningentities, this.x, this.y, this.z, c_i, c_v);
+            float[] t_vec4 = skinningentitiesrender.get3DSkinning(this.skinningentities, this.x, this.y, this.z, t_i, t_v);
+            float[] l_vec2 = lookAt(c_vec4, t_vec4);
             GL11.glPushMatrix();
-            Vec3d c_vec3d = skinningentitiesrender.get3DSkinning(this.skinningentities, c_i, c_v);
-            Vec3d t_vec3d = skinningentitiesrender.get3DSkinning(this.skinningentities, t_i, t_v);
-            Vec3d l_vec3d = lookAt(c_vec3d, t_vec3d);
-            GL11.glTranslatef((float)c_vec3d.x, (float)c_vec3d.y, (float)c_vec3d.z);
+            skinningentitiesrender.apply3DSkinningVec4(c_vec4);
+
+            //
+            GL11.glPushMatrix();
+            GL11.glScalef(0.05F, 0.05F, 0.05F);
+//            GL11.glPointSize(10.0F);
+//            GL11.glColor4f(1.0F, 0.0F, 0.0F, 1.0F);
+//            GL11.glBegin(GL11.GL_POINTS);
+//            GL11.glVertex3f(0.0F, 0.0F, 0.0F);
+//            GL11.glEnd();
+            Minecraft.getMinecraft().getItemRenderer().renderItemSide(this.skinningentities, SmallBox.I.getDefaultInstance(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, false);
+            GL11.glPopMatrix();
+
             GL11.glScalef(0.25F, 0.25F, 0.25F);
-            GL11.glRotatef((float)-l_vec3d.x + this.hand_y, 0.0F, 1.0F, 0.0F);
-            GL11.glRotatef((float)-l_vec3d.y + this.hand_p, 1.0F, 0.0F, 0.0F);
-            Minecraft.getMinecraft().getItemRenderer().renderItemSide(this.skinningentities, itemstack, transformtype, transformtype == ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND);
+            boolean left_hand = transformtype == ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND;
+            if (left_hand)
+            {
+                GL11.glRotatef(-l_vec2[0] + this.left_hand_y, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(-l_vec2[1] + this.left_hand_p, 1.0F, 0.0F, 0.0F);
+            }
+            else
+            {
+                GL11.glRotatef(-l_vec2[0] + this.right_hand_y, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(-l_vec2[1] + this.right_hand_p, 1.0F, 0.0F, 0.0F);
+            }
+
+            GL11.glScalef(1.0F, -1.0F, -1.0F);
+            Minecraft.getMinecraft().getItemRenderer().renderItemSide(this.skinningentities, itemstack, transformtype, left_hand);
+            GL11.glPopMatrix();
+
+            //
+            GL11.glPushMatrix();
+            skinningentitiesrender.apply3DSkinningVec4(t_vec4);
+            GL11.glScalef(0.01F, 0.01F, 0.01F);
+            Minecraft.getMinecraft().getItemRenderer().renderItemSide(this.skinningentities, SmallBox.I.getDefaultInstance(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, false);
             GL11.glPopMatrix();
         }
     }
@@ -136,11 +169,11 @@ public class ItemLayerRender extends LayerRender
         GL_CULL_FACE = GL11.glIsEnabled(GL11.GL_CULL_FACE);
         GL11.glDisable(GL11.GL_CULL_FACE);
 
-        Vec3d c_vec3d = skinningentitiesrender.get3DSkinning(this.skinningentities, c_i, c_v);
-        Vec3d t_vec3d = skinningentitiesrender.get3DSkinning(this.skinningentities, t_i, t_v);
-        Vec3d l_vec3d = lookAt(c_vec3d, t_vec3d);
+        float[] c_vec4 = skinningentitiesrender.get3DSkinning(this.skinningentities, this.x, this.y, this.z, c_i, c_v);
+        float[] t_vec4 = skinningentitiesrender.get3DSkinning(this.skinningentities, this.x, this.y, this.z, t_i, t_v);
+        float[] l_vec2 = lookAt(c_vec4, t_vec4);
         GL11.glPushMatrix();
-        GL11.glTranslatef((float)c_vec3d.x, (float)c_vec3d.y, (float)c_vec3d.z);
+        skinningentitiesrender.apply3DSkinningVec4(c_vec4);
 
         //
         if (!itemstack.isEmpty())
@@ -155,26 +188,26 @@ public class ItemLayerRender extends LayerRender
         {
             case 0:
             {
-                GL11.glRotatef((float)-l_vec3d.x + this.feet_y, 0.0F, 1.0F, 0.0F);
-                GL11.glRotatef((float)-l_vec3d.y + this.feet_p, 1.0F, 0.0F, 0.0F);
+                GL11.glRotatef(-l_vec2[0] + this.feet_y, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(-l_vec2[1] + this.feet_p, 1.0F, 0.0F, 0.0F);
                 break;
             }
             case 1:
             {
-                GL11.glRotatef((float)-l_vec3d.x + this.legs_y, 0.0F, 1.0F, 0.0F);
-                GL11.glRotatef((float)-l_vec3d.y + this.legs_p, 1.0F, 0.0F, 0.0F);
+                GL11.glRotatef(-l_vec2[0] + this.legs_y, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(-l_vec2[1] + this.legs_p, 1.0F, 0.0F, 0.0F);
                 break;
             }
             case 2:
             {
-                GL11.glRotatef((float)-l_vec3d.x + this.chest_y, 0.0F, 1.0F, 0.0F);
-                GL11.glRotatef((float)-l_vec3d.y + this.chest_p, 1.0F, 0.0F, 0.0F);
+                GL11.glRotatef(-l_vec2[0] + this.chest_y, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(-l_vec2[1] + this.chest_p, 1.0F, 0.0F, 0.0F);
                 break;
             }
             case 3:
             {
-                GL11.glRotatef((float)-l_vec3d.x + this.head_y, 0.0F, 1.0F, 0.0F);
-                GL11.glRotatef((float)-l_vec3d.y + this.head_p, 1.0F, 0.0F, 0.0F);
+                GL11.glRotatef(-l_vec2[0] + this.head_y, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(-l_vec2[1] + this.head_p, 1.0F, 0.0F, 0.0F);
                 break;
             }
             default:
@@ -265,7 +298,7 @@ public class ItemLayerRender extends LayerRender
         if (!itemstack.isEmpty())
         {
             GL11.glPushMatrix();
-            GL11.glTranslatef((float)t_vec3d.x, (float)t_vec3d.y, (float)t_vec3d.z);
+            skinningentitiesrender.apply3DSkinningVec4(t_vec4);
             GL11.glScalef(0.01F, 0.01F, 0.01F);
             Minecraft.getMinecraft().getItemRenderer().renderItemSide(this.skinningentities, SmallBox.I.getDefaultInstance(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, false);
             GL11.glPopMatrix();

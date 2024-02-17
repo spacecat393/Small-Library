@@ -2,7 +2,6 @@ package com.nali.small.entities.skinning.render;
 
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -36,14 +35,14 @@ public class SkinningEntitiesRenderMath
         return Color.getHSBColor(Minecraft.getSystemTime()/*System.currentTimeMillis()*/ % 3600 / 3600.0F, 1.0F, 1.0F);
     }
 
-    public static Vec3d lookAt(Vec3d source, Vec3d target)
+    public static float[] lookAt(float[] source, float[] target)
     {
-        double dX = target.x - source.x;
-        double dY = target.y - source.y;
-        double dZ = target.z - source.z;
-        double distance = Math.sqrt(dX * dX + dY * dY + dZ * dZ);
-        double pitch = Math.asin(dY / distance);
-        double yaw = Math.atan2(dZ, dX);
-        return new Vec3d(Math.toDegrees(yaw), Math.toDegrees(pitch), 0);
+        double dx = target[0] - source[0];
+        double dy = target[1] - source[1];
+        double dz = target[2] - source[2];
+        double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        double pitch = Math.asin(dy / distance);
+        double yaw = Math.atan2(dz, dx);
+        return new float[]{(float)Math.toDegrees(yaw), (float)Math.toDegrees(pitch)};
     }
 }

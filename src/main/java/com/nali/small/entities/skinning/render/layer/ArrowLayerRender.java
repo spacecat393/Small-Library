@@ -7,7 +7,6 @@ import com.nali.system.opengl.memory.OpenGLSkinningMemory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -26,7 +25,7 @@ public class ArrowLayerRender extends LayerRender
         super(skinningentities);
     }
 
-    public void layer(SkinningEntitiesRender skinningentitiesrender, float partialTicks)
+    public void layer(SkinningEntitiesRender skinningentitiesrender, float x, float y, float z, float partialTicks)
     {
         int i = this.skinningentities.getArrowCountInEntity();
 
@@ -53,9 +52,8 @@ public class ArrowLayerRender extends LayerRender
             {
                 int[] int_array = this.index_int_array_arraylist.get(j);
                 float[] float_array = this.float_array_arraylist.get(j);
-                Vec3d c_vec3d = skinningentitiesrender.get3DSkinning(this.skinningentities, int_array[0], int_array[1]);
                 GL11.glPushMatrix();
-                GL11.glTranslatef((float)c_vec3d.x, (float)c_vec3d.y, (float)c_vec3d.z);
+                skinningentitiesrender.apply3DSkinningVec4(skinningentitiesrender.get3DSkinning(this.skinningentities, x, y, z, int_array[0], int_array[1]));
                 GL11.glScalef(0.5F, 0.5F, 0.5F);
 //                    RenderHelper.disableStandardItemLighting();
                 float f = float_array[0];
