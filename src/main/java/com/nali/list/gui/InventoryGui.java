@@ -29,6 +29,8 @@ import java.io.IOException;
 
 import static com.nali.small.render.RenderHelper.DATALOADER;
 import static com.nali.system.Timing.TD;
+import static com.nali.system.opengl.memory.OpenGLCurrentMemory.GL_CURRENT_COLOR;
+import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
 public class InventoryGui extends MixGui
@@ -72,6 +74,7 @@ public class InventoryGui extends MixGui
         this.boxrender.sx = s;
         this.boxrender.sy = s;
         this.boxrender.sz = s;
+//        this.boxrender.sa = 0.9F;
     }
 
     @Override
@@ -99,11 +102,22 @@ public class InventoryGui extends MixGui
 //        skinningrender.sz = s;
         skinningrender.lig_b = 208.0F;
         skinningrender.lig_s = 240.0F;
-        skinningrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
+        skinningrender.objectscreendraw.renderScreen();
 
         this.boxrender.x = this.guiLeft + 84 + 6.5F + 0.5F;
         this.boxrender.y = this.guiTop + 33 + 18 + 18 + 6.5F + 2.5F;
-        this.boxrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 0.9F);
+
+//        GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT);
+        OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
+        GL11.glGetFloat(GL11.GL_CURRENT_COLOR, OPENGL_FIXED_PIPE_FLOATBUFFER);
+        GL_CURRENT_COLOR[0] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
+        GL_CURRENT_COLOR[1] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(1);
+        GL_CURRENT_COLOR[2] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(2);
+        GL_CURRENT_COLOR[3] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(3);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.9F);
+        this.boxrender.objectscreendraw.renderScreen();
+        GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
+//        GL11.glPopAttrib();
 
         if (PAGE == 0)
         {

@@ -24,7 +24,6 @@ import com.nali.system.bytes.BytesReader;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -748,7 +747,7 @@ public abstract class SkinningEntities extends EntityLivingBase
 
             this.updateClient();
 
-            this.setInvisibility(this.client_object);
+//            this.setInvisibility(this.client_object);
 
 //            UUID uuid = this.getUUID(0);
 //
@@ -993,21 +992,21 @@ public abstract class SkinningEntities extends EntityLivingBase
 //        return super.applyArmorCalculations(source, damage);
 //    }
 
-    @SideOnly(Side.CLIENT)
-    public void setInvisibility(Object object)
-    {
-        SkinningRender skinningrender = (SkinningRender)object;
-        if (this.isInvisible() || this.isInvisibleToPlayer(Minecraft.getMinecraft().player))
-        {
-            skinningrender.a = 0.25F;
-//            Arrays.fill(skinningrender.model_boolean_array, false);
-        }
-        else
-        {
-            skinningrender.a = 1.0F;
-//        ((SkinningRender)this.client_object).setModel();
-        }
-    }
+//    @SideOnly(Side.CLIENT)
+//    public void setInvisibility(Object object)
+//    {
+//        SkinningRender skinningrender = (SkinningRender)object;
+//        if (this.isInvisible() || this.isInvisibleToPlayer(Minecraft.getMinecraft().player))
+//        {
+//            skinningrender.a = 0.25F;
+////            Arrays.fill(skinningrender.model_boolean_array, false);
+//        }
+//        else
+//        {
+//            skinningrender.a = 1.0F;
+////        ((SkinningRender)this.client_object).setModel();
+//        }
+//    }
 
     @Override
     public boolean isPushedByWater()

@@ -27,6 +27,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import static com.nali.small.render.RenderHelper.DATALOADER;
+import static com.nali.system.opengl.memory.OpenGLCurrentMemory.GL_CURRENT_COLOR;
+import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 public class PlayerGui extends MixGui
 {
@@ -58,6 +60,7 @@ public class PlayerGui extends MixGui
         this.boxrender.sx = s;
         this.boxrender.sy = s;
         this.boxrender.sz = s;
+//        this.boxrender.sa = 0.9F;
     }
 
     @Override
@@ -294,7 +297,17 @@ public class PlayerGui extends MixGui
             this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3, this.guiTop + 256/2.0F - 19/2.0F, 106, 50, 18, 19);
             this.boxrender.x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3 + (18 + 1)/2.0F - 0.5F;
             this.boxrender.y = this.guiTop + 256/2.0F - 19/2.0F + 19/2.0F + 2.5F/2.0F;
-            this.boxrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 0.9F);
+//            GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT);
+            OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
+            GL11.glGetFloat(GL11.GL_CURRENT_COLOR, OPENGL_FIXED_PIPE_FLOATBUFFER);
+            GL_CURRENT_COLOR[0] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
+            GL_CURRENT_COLOR[1] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(1);
+            GL_CURRENT_COLOR[2] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(2);
+            GL_CURRENT_COLOR[3] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(3);
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.9F);
+            this.boxrender.objectscreendraw.renderScreen();
+            GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
+//            GL11.glPopAttrib();
         }
         else
         {
@@ -346,7 +359,7 @@ public class PlayerGui extends MixGui
 //        this.pyroxene_objectrender.z = -1.0F;
 //        this.pyroxene_objectdata.screen_float_array[2] = this.width / 2.0F;
 //        this.pyroxene_objectdata.screen_float_array[3] = this.guiTop + 72.0F;
-        this.sakurarender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
+        this.sakurarender.objectscreendraw.renderScreen();
 
 //        if (CapabilitiesRegistryHelper.CLIENT_CAPABILITY_OBJECT_ARRAYLIST.size() > 0)
 //        {
@@ -515,7 +528,7 @@ public class PlayerGui extends MixGui
 //                skinningrender.sx = s;
 //                skinningrender.sy = s;
 //                skinningrender.sz = s;
-                skinningrender.objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
+                skinningrender.objectscreendraw.renderScreen();
             }
         }
 

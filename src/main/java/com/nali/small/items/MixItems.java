@@ -21,6 +21,6 @@ public interface MixItems
     @SideOnly(Side.CLIENT)
     default void render()
     {
-        this.getObjectRender().objectscreendraw.renderScreen(1.0F, 1.0F, 1.0F, 1.0F);
+        this.getObjectRender().objectscreendraw.renderScreen();
     }
 }

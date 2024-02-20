@@ -35,14 +35,14 @@ public class SkinningEntitiesRenderMath
         return Color.getHSBColor(Minecraft.getSystemTime()/*System.currentTimeMillis()*/ % 3600 / 3600.0F, 1.0F, 1.0F);
     }
 
-    public static float[] lookAt(float[] source, float[] target)
-    {
-        double dx = target[0] - source[0];
-        double dy = target[1] - source[1];
-        double dz = target[2] - source[2];
-        double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-        double pitch = Math.asin(dy / distance);
-        double yaw = Math.atan2(dz, dx);
-        return new float[]{(float)Math.toDegrees(yaw), (float)Math.toDegrees(pitch)};
-    }
+//    public static float[] lookAt(float[] source, float[] target)
+//    {
+//        double d0 = target[0] - source[0];
+//        double d1 = target[1] - source[1];
+//        double d2 = target[2] - source[2];
+//        double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
+//        float f = (float)(MathHelper.atan2(d2, d0) * (180.0D / Math.PI)) - 90.0F;
+//        float f1 = (float)(-(MathHelper.atan2(d1, d3) * (180.0D / Math.PI)));
+//        return new float[]{f, f1};
+//    }
 }

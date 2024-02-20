@@ -22,6 +22,8 @@ import java.awt.*;
 import static com.nali.small.entities.EntitiesMath.interpolateRotation;
 import static com.nali.small.entities.skinning.render.SkinningEntitiesRenderMath.generateRainbowColor;
 import static com.nali.small.entities.skinning.render.SkinningEntitiesRenderMath.multiplyVec4Mat4;
+import static com.nali.system.opengl.memory.OpenGLCurrentMemory.GL_CURRENT_COLOR;
+import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
 public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends Render<T>
@@ -108,7 +110,24 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         this.shadowOpaque *= scale;
         this.shadowSize *= scale;
 
+//        GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT);
+        boolean invisible = skinningentities.isInvisible() || skinningentities.isInvisibleToPlayer(Minecraft.getMinecraft().player);
+        if (invisible)
+        {
+            OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
+            GL11.glGetFloat(GL11.GL_CURRENT_COLOR, OPENGL_FIXED_PIPE_FLOATBUFFER);
+            GL_CURRENT_COLOR[0] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
+            GL_CURRENT_COLOR[1] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(1);
+            GL_CURRENT_COLOR[2] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(2);
+            GL_CURRENT_COLOR[3] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(3);
+            GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], 0.25F);
+        }
         skinningrender.objectworlddraw.renderWorld();
+//        GL11.glPopAttrib();
+        if (invisible)
+        {
+            GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
+        }
 //        }
 
         GL11.glPopMatrix();
@@ -209,12 +228,41 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         return main_vec4_float_array;
     }
 
+    public float[] getMat43DSkinning(T skinningentities, int i, int v)
+    {
+        SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
+        OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[i];
+
+        byte max_joints = openglskinningmemory.max_joints;
+        float[] mat4_float_array = new float[16];
+        System.arraycopy(M4x4.IDENTITY, 0, mat4_float_array, 0, 16);
+
+        for (int j = 0; j < max_joints; ++j)
+        {
+            int ji = openglskinningmemory.index_int_array[v] * max_joints + j;
+            int joints = (int)openglskinningmemory.joints_float_array[ji];
+
+            if (joints != -1)
+            {
+                OpenGLSkinningShaderMemory openglskinningshadermemory = (OpenGLSkinningShaderMemory)openglskinningmemory.shader;
+
+                for (int b = 0; b < openglskinningshadermemory.back_bones_2d_int_array[joints].length; ++b)
+                {
+                    M4x4.multiply(skinningrender.skinning_float_array, mat4_float_array, openglskinningshadermemory.back_bones_2d_int_array[joints][b] * 16, 0);
+                }
+            }
+        }
+
+        M4x4.multiply(new Quaternion(-1.571F, 0.0F, 0.0F).getM4x4().mat, mat4_float_array, 0, 0);
+        return mat4_float_array;
+    }
+
     public void apply3DSkinningVec4(float[] vec4)
     {
-        if (vec4[3] == 0.0F)
-        {
-            vec4[3] = 1.0F;
-        }
+//        if (vec4[3] == 0.0F)
+//        {
+//            vec4[3] = 1.0F;
+//        }
 
 //        GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
         GL11.glTranslatef(vec4[0] / vec4[3], vec4[1] / vec4[3], vec4[2] / vec4[3]);
