@@ -1,6 +1,5 @@
 package com.nali.small.entities.skinning.render;
 
-import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -25,10 +24,10 @@ public class SkinningEntitiesRenderMath
         return result;
     }
 
-    public static float handleRotationFloat(SkinningEntities skinningentities, float partialTicks)
-    {
-        return (float)skinningentities.ticksExisted + partialTicks;
-    }
+//    public static float handleRotationFloat(SkinningEntities skinningentities, float partialTicks)
+//    {
+//        return (float)skinningentities.ticksExisted + partialTicks;
+//    }
 
     public static Color generateRainbowColor()
     {

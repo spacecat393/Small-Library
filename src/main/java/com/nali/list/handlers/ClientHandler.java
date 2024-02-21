@@ -41,7 +41,8 @@ public class ClientHandler implements IMessageHandler<ClientMessage, IMessage>
         }
         catch (IllegalAccessException | InvocationTargetException e)
         {
-            Small.error(e);
+            Small.LOGGER.error(e);
+//            Small.error(e);
         }
 
         return null;
