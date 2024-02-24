@@ -740,6 +740,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     {
         if (canPass(this, entityplayermp))
         {
+            entityplayermp.getEntityData().setUniqueId("loli_nali", this.getUniqueID());
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
             entityplayermp.openGui(Small.I, 0, entityplayermp.world, this.getEntityId(), 0, 0);
 

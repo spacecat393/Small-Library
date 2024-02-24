@@ -48,7 +48,7 @@ public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
             }
             catch (IllegalAccessException | InvocationTargetException e)
             {
-                Small.LOGGER.error(e);
+                Small.LOGGER.error(e, e);
 //                Small.error(e);
             }
         });
