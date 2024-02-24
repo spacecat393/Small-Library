@@ -2,6 +2,7 @@ package com.nali.list.netmethods.clientmessage;
 
 import com.nali.list.messages.ClientMessage;
 import com.nali.small.Small;
+import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.client.Minecraft;
@@ -12,14 +13,17 @@ import net.minecraft.world.World;
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
+import static com.nali.small.entities.memory.ClientEntitiesMemory.ENTITIES_MAP;
+import static com.nali.small.entities.memory.ClientEntitiesMemory.FAKE_ENTITIES_MAP;
+
 public class SetSEMap
 {
     public static byte ID = 0;
 
     public static void run(ClientMessage clientmessage)
     {
-        SkinningEntities.CLIENT_ENTITIES_MAP.clear();
-        SkinningEntities.FAKE_CLIENT_ENTITIES_MAP.clear();
+        ENTITIES_MAP.clear();
+        FAKE_ENTITIES_MAP.clear();
 
         for (int i = 1; i < clientmessage.data.length; i += 4)
         {
@@ -34,14 +38,15 @@ public class SetSEMap
             if (!(entity instanceof SkinningEntities))
             {
                 int entity_id = BytesReader.getInt(clientmessage.data, i);
-                SkinningEntities.FAKE_CLIENT_ENTITIES_MAP.put(list_id, uuid);
+                FAKE_ENTITIES_MAP.put(list_id, uuid);
 
                 try
                 {
                     entity = EntityList.getClassFromID(entity_id).getConstructor(World.class).newInstance(world);
                     SkinningEntities skinningentities = (SkinningEntities)entity;
-                    skinningentities.fake = true;
-                    skinningentities.client_uuid = uuid;
+                    ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+                    cliententitiesmemory.fake = true;
+                    cliententitiesmemory.uuid = uuid;
 //                            NBTTagCompound nbttagcompound = new NBTTagCompound();
 //                            skinningentities.initWriteEntityToNBT(nbttagcompound);
 //                            for (int ii = 0; ii < skinningentities.bothdata.MaxPart(); ++ii)
@@ -56,7 +61,7 @@ public class SetSEMap
                     Small.error(e);
                 }
             }
-            SkinningEntities.CLIENT_ENTITIES_MAP.put(uuid, (SkinningEntities)entity);
+            ENTITIES_MAP.put(uuid, (SkinningEntities)entity);
         }
     }
 }

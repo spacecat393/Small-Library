@@ -3,12 +3,14 @@ package com.nali.list.netmethods.servermessage;
 import com.nali.list.capabilitiesserializations.SmallSakuraSerializations;
 import com.nali.list.capabilitiestypes.SmallSakuraTypes;
 import com.nali.list.messages.ServerMessage;
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import static com.nali.list.handlers.ServerHandler.canPass;
+import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
 
 public class SetAttribute
 {
@@ -16,7 +18,7 @@ public class SetAttribute
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
-        SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
+        SkinningEntities skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
         if (skinningentities != null && canPass(skinningentities, entityplayermp))
         {
             int id = (int)BytesReader.getFloat(servermessage.data, 1 + 16);

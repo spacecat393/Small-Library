@@ -6,6 +6,7 @@ import com.nali.list.items.SmallBox;
 import com.nali.list.messages.ServerMessage;
 import com.nali.small.Small;
 import com.nali.small.entities.EntitiesRegistryHelper;
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
@@ -57,7 +58,8 @@ public class X12
             ItemStack itemstack = new ItemStack(SmallBox.I);
             int id = random.nextInt(EntitiesRegistryHelper.ENTITIES_CLASS_LIST.size());
             SkinningEntities skinningentities = (SkinningEntities)EntitiesRegistryHelper.ENTITIES_CLASS_LIST.get(id).getConstructor(World.class).newInstance(entityplayermp.world);
-            skinningentities.owner_uuid = entityplayermp.getUniqueID();
+            ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
+            serverentitiesmemory.owner_uuid = entityplayermp.getUniqueID();
             SmallBox.putToBox(skinningentities, itemstack);
             entityplayermp.entityDropItem(itemstack, 0.0F);
         }

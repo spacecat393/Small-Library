@@ -1,6 +1,7 @@
 package com.nali.small.gui;
 
 import com.nali.small.Small;
+import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.features.messages.NameGUIFeatures;
@@ -81,7 +82,8 @@ public abstract class MixGui extends GuiContainer
 
     public void sendPacketUUID(byte id)
     {
-        this.sendPacketUUID(id, ((InventoryContainer)this.inventorySlots).skinningentities.client_uuid);
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
+        this.sendPacketUUID(id, cliententitiesmemory.uuid);
     }
 
     public void sendPacketUUID(byte id, UUID uuid)
@@ -103,12 +105,12 @@ public abstract class MixGui extends GuiContainer
 
     public void sendPacketUUIDInt(int i)
     {
-        SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
         byte[] byte_array = new byte[22];
         byte_array[0] = 1;
-        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
+        BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
         BytesWriter.set(byte_array, i, 17);
-        byte_array[21] = skinningentities.client_work_byte_array[i] == 1 ? (byte)0 : (byte)1;
+        byte_array[21] = cliententitiesmemory.work_byte_array[i] == 1 ? (byte)0 : (byte)1;
         NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 
@@ -123,7 +125,8 @@ public abstract class MixGui extends GuiContainer
 
             if (this.mouse_released == 0)
             {
-                copyToClipboard(skinningentities.client_uuid.toString());
+                ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+                copyToClipboard(cliententitiesmemory.uuid.toString());
             }
 
             this.render_text = true;

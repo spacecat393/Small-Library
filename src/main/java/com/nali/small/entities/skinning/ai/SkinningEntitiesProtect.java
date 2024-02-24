@@ -1,5 +1,6 @@
 package com.nali.small.entities.skinning.ai;
 
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,6 +27,7 @@ public class SkinningEntitiesProtect extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         if (this.main_state != -1)
         {
             this.state = this.main_state;
@@ -43,17 +45,17 @@ public class SkinningEntitiesProtect extends SkinningEntitiesAI
             }
         }
 
-        if (this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.PROTECT()) && !this.skinningentities.skinningentitiesarea.out_entity_arraylist.isEmpty())
+        if (this.skinningentities.isWork(serverentitiesmemory.workbytes.PROTECT()) && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist.isEmpty())
         {
             this.protect = true;
-            this.skinningentities.skinningentitiesfindmove.endGoal();
+            serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
 
             if (this.state < 0)
             {
                 this.state = 0;
             }
 
-            for (Entity entity : this.skinningentities.skinningentitiesarea.out_entity_arraylist)
+            for (Entity entity : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist)
             {
                 if (isTooClose(this.skinningentities, entity, this.minimum_distance))
                 {
@@ -91,11 +93,11 @@ public class SkinningEntitiesProtect extends SkinningEntitiesAI
 
             if (this.state == 3)
             {
-                this.skinningentities.skinningentitiesfindmove.endGoal();
+                serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
             }
             else
             {
-                this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.PROTECT()] = 0;
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.PROTECT()] = 0;
             }
         }
     }

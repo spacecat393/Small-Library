@@ -20,7 +20,7 @@ public class MessagesFeatures
 //        }
 //
 //        guifeaturesloader.string_array = new String[sub_key_string_array.length + 1];
-//        guifeaturesloader.string_array[0] = I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.client_work_byte_array[id] == 1 ? main_key_string_array[0] : main_key_string_array[1]);
+//        guifeaturesloader.string_array[0] = I18n.translateToLocal("gui.info.cv") + " : " + (skinningentities.work_byte_array[id] == 1 ? main_key_string_array[0] : main_key_string_array[1]);
 //
 //        for (int i = 0; i < sub_key_string_array.length; ++i)
 //        {

@@ -1,6 +1,7 @@
 package com.nali.small.entities.skinning.ai;
 
 import com.nali.list.messages.ClientMessage;
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.mixin.IMixinEntityPlayer;
 import com.nali.small.networks.NetworksRegistry;
@@ -29,6 +30,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         if (this.skinningentities.getEntityData().getBoolean("revive_nali"))
         {
             Entity owner = this.skinningentities.getOwner();
@@ -53,7 +55,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
             }
         }
 
-        if (this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.REVIVE()))
+        if (this.skinningentities.isWork(serverentitiesmemory.workbytes.REVIVE()))
         {
             if (this.entity == null)
             {
@@ -73,19 +75,19 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
             {
                 if ((this.entity.world).provider.getDimension() != ((this.skinningentities.world).provider.getDimension()))
                 {
-                    this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.REVIVE()] = 0;
+                    serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.REVIVE()] = 0;
                     return;
                 }
                 else
                 {
                     if (isTooClose(this.skinningentities, entity, 1.0D))
                     {
-                        if (this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.ON_REVIVE()] != 1)
+                        if (serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ON_REVIVE()] != 1)
                         {
-                            this.skinningentities.main_server_work_byte_array[this.skinningentities.skinningentitiesbytes.ON_REVIVE()] = 1;
+                            serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.ON_REVIVE()] = 1;
                         }
 
-                        this.skinningentities.skinningentitieslook.set(this.entity.posX, this.entity.posY, this.entity.posZ, 90.0F);
+                        serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(this.entity.posX, this.entity.posY, this.entity.posZ, 90.0F);
 //                        ++this.tick;
                         if (++this.tick >= 60)
     //                if (this.entity != null)
@@ -147,7 +149,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
                     }
                     else
                     {
-                        this.skinningentities.skinningentitiesfindmove.setGoal(this.entity.posX, this.entity.posY, this.entity.posZ);
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(this.entity.posX, this.entity.posY, this.entity.posZ);
                     }
                 }
             }
@@ -159,7 +161,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
 //            }
             else
             {
-                this.skinningentities.skinningentitiesfindmove.endGoal();
+                serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
                 this.entity = null;
                 this.die = false;
                 this.current_entity = null;
@@ -167,7 +169,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
 
             if (!this.die)
             {
-                this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.REVIVE()] = 0;
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.REVIVE()] = 0;
             }
 
             this.die = false;

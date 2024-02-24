@@ -2,7 +2,7 @@ package com.nali.small;
 
 import com.nali.small.capabilities.CapabilitiesRegistryHelper;
 import com.nali.small.entities.EntitiesRegistryHelper;
-import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.gui.GuiHandler;
 import com.nali.small.gui.OpenGUIHelper;
 import com.nali.small.networks.NetworksRegistry;
@@ -44,8 +44,6 @@ public class Small
 
 //            CapabilitiesRegistryHelper.update();
             OpenGUIHelper.set();
-            SkinningEntities.CLIENT_ENTITIES_MAP = new WeakHashMap<>();
-            SkinningEntities.FAKE_CLIENT_ENTITIES_MAP = new WeakHashMap<>();
         }
     }
 
@@ -72,7 +70,7 @@ public class Small
     @EventHandler
     public void onFMLServerStartedEvent(FMLServerStartedEvent event)
     {
-        SkinningEntities.SERVER_ENTITIES_MAP = new WeakHashMap<>();
+        ServerEntitiesMemory.ENTITIES_MAP = new WeakHashMap<>();
         ChunkCallBack.set();
     }
 

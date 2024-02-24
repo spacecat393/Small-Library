@@ -1,5 +1,6 @@
 package com.nali.small.entities.skinning.ai;
 
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,15 +25,16 @@ public class SkinningEntitiesHeal extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
-        if (this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.HEAL()) && !this.skinningentities.skinningentitiesarea.out_entity_arraylist.isEmpty() && ++this.cooldown >= 200)
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
+        if (this.skinningentities.isWork(serverentitiesmemory.workbytes.HEAL()) && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist.isEmpty() && ++this.cooldown >= 200)
         {
             this.heal = true;
-            double[] far = new double[this.skinningentities.skinningentitiesarea.out_entity_arraylist.size()];
+            double[] far = new double[serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist.size()];
             boolean should_move = false;
             boolean should_move2 = true;
 
             int index = 0;
-            for (Entity entity : this.skinningentities.skinningentitiesarea.out_entity_arraylist)
+            for (Entity entity : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist)
             {
                 if (!(entity instanceof EntityLivingBase) || ((EntityLivingBase)entity).getMaxHealth() - ((EntityLivingBase)entity).getHealth() < 1.0F)
                 {
@@ -59,7 +61,7 @@ public class SkinningEntitiesHeal extends SkinningEntitiesAI
                             ((EntityLivingBase)entity).heal(this.how_heal);
                         }
 
-                        this.skinningentities.skinningentitiesfindmove.endGoal();
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
                     }
                     else
                     {
@@ -84,21 +86,21 @@ public class SkinningEntitiesHeal extends SkinningEntitiesAI
                     }
                 }
 
-                Entity entity = this.skinningentities.skinningentitiesarea.out_entity_arraylist.get(index);
+                Entity entity = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist.get(index);
 
 //            /*if (this.state == 0 || this.state == 1)
 //            {
-////                this.skinningentities.skinningentitieslook.set(entity.posX, entity.posY, entity.posZ, 20.0F);
+////                serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(entity.posX, entity.posY, entity.posZ, 20.0F);
 //            }
-//            else */if (!this.skinningentities.skinningentitiesfindmove.try_move)
+//            else */if (!serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.try_move)
 //            {
 //                this.state = 0;
-////                this.skinningentities.skinningentitieslook.set(entity.posX, entity.posY, entity.posZ, 20.0F);
+////                serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(entity.posX, entity.posY, entity.posZ, 20.0F);
 //            }
 
 //                if (!isTooClose(this.skinningentities, entity, this.minimum_distance))
 //                {
-                this.skinningentities.skinningentitiesfindmove.setGoal(entity.posX, entity.posY, entity.posZ);
+                serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(entity.posX, entity.posY, entity.posZ);
 //                this.state = -1;
 //                }
             }
@@ -111,7 +113,7 @@ public class SkinningEntitiesHeal extends SkinningEntitiesAI
 
             if (!should_move && should_move2)
             {
-                this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.HEAL()] = 0;
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.HEAL()] = 0;
             }
         }
         else
@@ -120,11 +122,11 @@ public class SkinningEntitiesHeal extends SkinningEntitiesAI
             {
                 this.cooldown = 0;
                 this.state = -1;
-                this.skinningentities.skinningentitiesfindmove.endGoal();
+                serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
                 this.heal = false;
             }
 
-            this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.HEAL()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.HEAL()] = 0;
         }
     }
 }

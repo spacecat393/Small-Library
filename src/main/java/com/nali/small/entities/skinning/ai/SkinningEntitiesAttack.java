@@ -1,5 +1,6 @@
 package com.nali.small.entities.skinning.ai;
 
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumHand;
@@ -29,45 +30,46 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         boolean should_work = false;
-        if (this.skinningentities.main_server_work_byte_array[this.skinningentities.skinningentitiesbytes.CARE_OWNER()] == 1)
+        if (serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER()] == 1)
         {
-            this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.CARE_OWNER()] = 1;
-            should_work = this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.CARE_OWNER());
-            this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.CARE_OWNER()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER()] = 1;
+            should_work = this.skinningentities.isWork(serverentitiesmemory.workbytes.CARE_OWNER());
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER()] = 0;
         }
 
-        boolean work = this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.ATTACK());
-        if ((!work && should_work && !this.skinningentities.skinningentitiescareowner.target_entity_arraylist.isEmpty()) || (work && !this.skinningentities.skinningentitiesarea.all_entity_arraylist.isEmpty()))
+        boolean work = this.skinningentities.isWork(serverentitiesmemory.workbytes.ATTACK());
+        if ((!work && should_work && !serverentitiesmemory.entitiesaimemory.skinningentitiescareowner.target_entity_arraylist.isEmpty()) || (work && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist.isEmpty()))
         {
             this.attack = true;
 //            boolean attack = false;
 
             Entity target_entity;
-            if (!this.skinningentities.skinningentitiescareowner.target_entity_arraylist.isEmpty())
+            if (!serverentitiesmemory.entitiesaimemory.skinningentitiescareowner.target_entity_arraylist.isEmpty())
             {
-                target_entity = this.attackAndFind(this.skinningentities.skinningentitiescareowner.target_entity_arraylist);
+                target_entity = this.attackAndFind(serverentitiesmemory.entitiesaimemory.skinningentitiescareowner.target_entity_arraylist);
             }
             else
             {
-                target_entity = this.attackAndFind(this.skinningentities.skinningentitiesarea.all_entity_arraylist);
+                target_entity = this.attackAndFind(serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist);
             }
 
-            if (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null || isInArea(target_entity, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far))
+            if (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(target_entity, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far))
             {
                 if (this.state == 0 || this.state == 1)
                 {
-                    this.skinningentities.skinningentitieslook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
+                    serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
                 }
-                else if (!this.skinningentities.skinningentitiesfindmove.try_move)
+                else if (!serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.try_move)
                 {
                     this.state = 0;
-                    this.skinningentities.skinningentitieslook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
+                    serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
                 }
 
                 if (!(this.skinningentities.canEntityBeSeen(target_entity) && isTooClose(this.skinningentities, target_entity, this.minimum_distance)))
                 {
-                    this.skinningentities.skinningentitiesfindmove.setGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
                     this.state = 3;
                 }
             }
@@ -82,23 +84,24 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
             if (this.attack)
             {
                 this.state = -1;
-                this.skinningentities.skinningentitiesfindmove.endGoal();
+                serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
                 this.attack = false;
             }
 
-            this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.ATTACK()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ATTACK()] = 0;
         }
     }
 
     public Entity attackAndFind(ArrayList<Entity> entity_arraylist)
     {
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         double[] far = new double[entity_arraylist.size()];
         int index = 0;
         for (Entity entity : entity_arraylist)
         {
             far[index++] = this.skinningentities.getDistanceSq(entity);
-            if (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null ||
-                isInArea(entity, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far))
+            if (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null ||
+                isInArea(entity, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far))
             {
                 if (this.state == -1)
                 {
@@ -113,7 +116,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
                         this.skinningentities.attackEntityAsMob(entity);
                     }
 
-                    this.skinningentities.skinningentitiesfindmove.endGoal();
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
                 }
             }
         }

@@ -1,11 +1,13 @@
 package com.nali.list.netmethods.servermessage;
 
 import com.nali.list.messages.ServerMessage;
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import static com.nali.list.handlers.ServerHandler.canPass;
+import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
 
 public class RemoveTarget
 {
@@ -13,9 +15,10 @@ public class RemoveTarget
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
-        SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
+        SkinningEntities skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
         if (skinningentities != null && canPass(skinningentities, entityplayermp))
         {
+            ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
 //                        String string = new String(servermessage.data, 1 + 16, servermessage.data.length - (1 + 16));
 //                        String[] string_array = string.split(" ");
 
@@ -26,11 +29,11 @@ public class RemoveTarget
 //                            int id = Integer.parseInt(new_string);
 
                 int index = 0;
-                for (int i : skinningentities.skinningentitiesarea.target_arraylist)
+                for (int i : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_arraylist)
                 {
                     if (i == id)
                     {
-                        skinningentities.skinningentitiesarea.target_arraylist.remove(index);
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_arraylist.remove(index);
                         break;
                     }
                     ++index;

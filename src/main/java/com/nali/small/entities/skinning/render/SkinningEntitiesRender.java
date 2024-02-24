@@ -3,6 +3,7 @@ package com.nali.small.entities.skinning.render;
 import com.nali.math.M4x4;
 import com.nali.math.Quaternion;
 import com.nali.render.SkinningRender;
+import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.system.opengl.memory.OpenGLSkinningMemory;
 import com.nali.system.opengl.memory.OpenGLSkinningShaderMemory;
@@ -35,7 +36,8 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
     @Override
     public boolean shouldRender(T skinningentities, ICamera camera, double camX, double camY, double camZ)
     {
-        SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
         skinningrender.should_render = super.shouldRender(skinningentities, camera, camX, camY, camZ);
         return skinningrender.should_render;
     }
@@ -43,9 +45,10 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
     @Override
     public void doRender(T skinningentities, double ox, double oy, double oz, float entityYaw, float partialTicks)
     {
-        GL11.glPushMatrix();
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
 
-        SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
+        GL11.glPushMatrix();
 
         this.updateData(skinningentities, partialTicks);
 
@@ -127,18 +130,19 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
         GL11.glPopMatrix();
 
-        skinningentities.itemlayerrender.x = (float)ox;
-        skinningentities.itemlayerrender.y = (float)oy;
-        skinningentities.itemlayerrender.z = (float)oz;
-        skinningentities.itemlayerrender.layer(this, partialTicks);
-        skinningentities.arrowlayerrender.layer(this, (float)ox, (float)oy, (float)oz, partialTicks);
+        cliententitiesmemory.itemlayerrender.x = (float)ox;
+        cliententitiesmemory.itemlayerrender.y = (float)oy;
+        cliententitiesmemory.itemlayerrender.z = (float)oz;
+        cliententitiesmemory.itemlayerrender.layer(this, partialTicks);
+        cliententitiesmemory.arrowlayerrender.layer(this, (float)ox, (float)oy, (float)oz, partialTicks);
 
         super.doRender(skinningentities, ox, oy, oz, entityYaw, partialTicks);
     }
 
     public void updateData(T skinningentities, float partialTicks)
     {
-        SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
 
         skinningrender.body_rot = (float)Math.toRadians(interpolateRotation(skinningentities.prevRenderYawOffset, skinningentities.renderYawOffset, partialTicks));
         skinningrender.head_rot = (float)Math.toRadians(interpolateRotation(skinningentities.prevRotationYaw, skinningentities.rotationYaw, partialTicks));
@@ -148,7 +152,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
         skinningrender.initSkinning();
 
-        if (!skinningentities.fake)
+        if (!cliententitiesmemory.fake)
         {
             this.multiplyAnimation(skinningentities);
         }
@@ -160,7 +164,8 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
     public float[] get3DSkinning(T skinningentities, float x, float y, float z, int i, int v)
     {
-        SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
         OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[i];
 
         int vi = openglskinningmemory.index_int_array[v] * 3;
@@ -231,7 +236,8 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
     public float[] getMat43DSkinning(T skinningentities, int i, int v)
     {
-        SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
         OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[i];
 
         byte max_joints = openglskinningmemory.max_joints;

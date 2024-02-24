@@ -1,6 +1,6 @@
 package com.nali.small.entities.bytes;
 
-public interface SkinningEntitiesBytes
+public interface WorkBytes
 {
 //    int MAX_STATES();
 //STATE

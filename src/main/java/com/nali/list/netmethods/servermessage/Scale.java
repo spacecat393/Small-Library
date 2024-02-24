@@ -8,6 +8,7 @@ import com.nali.system.bytes.BytesReader;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import static com.nali.list.handlers.ServerHandler.canPass;
+import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
 
 public class Scale
 {
@@ -15,7 +16,7 @@ public class Scale
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
-        SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
+        SkinningEntities skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
         float s = BytesReader.getFloat(servermessage.data, 1 + 16);
         if (skinningentities != null && s >= 0.5F && canPass(skinningentities, entityplayermp))
         {

@@ -1,5 +1,6 @@
 package com.nali.small.entities.skinning.ai.path;
 
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
 import net.minecraft.entity.Entity;
@@ -22,6 +23,7 @@ public class SkinningEntitiesMove extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         double wy = this.y - this.skinningentities.posY;
         // ((FriendsEntities)this.mob).entitiespath.tick();
 
@@ -134,7 +136,7 @@ public class SkinningEntitiesMove extends SkinningEntitiesAI
 //            float f9 = (float)(MathHelper.atan2(d1, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
 //            this.skinningentities.rotationYaw = this.limitAngle(this.skinningentities.rotationYaw, f9, 90.0F);
 //            this.skinningentities.rotationYawHead = this.skinningentities.rotationYaw;
-            if (this.skinningentities.skinningentitieslook.done)
+            if (serverentitiesmemory.entitiesaimemory.skinningentitieslook.done/* || d1 != 0*/)
             {
                 Entity riding_entity = this.skinningentities.getRidingEntity();
                 if (riding_entity != null)
@@ -148,10 +150,10 @@ public class SkinningEntitiesMove extends SkinningEntitiesAI
                 }
             }
 
-            this.skinningentities.skinningentitieslook.set(this.x, this.y, this.z, 4.5F);
+            serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(this.x, this.y, this.z, 4.5F);
 //            if (this.ox == this.x && this.oy == this.y && this.oz == this.z)
 //            {
-//            this.skinningentities.skinningentitieslook.done = true;
+//            serverentitiesmemory.entitiesaimemory.skinningentitieslook.done = true;
 //            }
 //
 //            this.ox = this.x;
@@ -164,7 +166,7 @@ public class SkinningEntitiesMove extends SkinningEntitiesAI
             //if (d2 > (double)this.mob.getStepHeight() && d0 * d0 + d1 * d1 < (double)Math.max(1.0F, this.mob.getBbWidth()) || !voxelshape.isEmpty() && this.mob.getY() < voxelshape.max(Direction.Axis.Y) + (double)blockpos.getY() && !blockstate.is(BlockTags.DOORS) && !blockstate.is(BlockTags.FENCES))
             if (wy > 0.0D)
             {
-                this.skinningentities.skinningentitiesjump.setJumping();
+                serverentitiesmemory.entitiesaimemory.skinningentitiesjump.setJumping();
                 // this.operation = MoveControl.Operation.JUMPING;
             }
         }

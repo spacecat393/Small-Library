@@ -2,6 +2,7 @@ package com.nali.list.netmethods.servermessage;
 
 import com.nali.list.messages.ClientMessage;
 import com.nali.list.messages.ServerMessage;
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.networks.NetworksRegistry;
 import com.nali.system.bytes.BytesReader;
@@ -13,6 +14,7 @@ import net.minecraft.potion.PotionEffect;
 import java.util.Collection;
 
 import static com.nali.list.handlers.ServerHandler.canPass;
+import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
 
 public class GetEffects
 {
@@ -20,7 +22,7 @@ public class GetEffects
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
-        SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
+        SkinningEntities skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
         if (skinningentities != null && canPass(skinningentities, entityplayermp))
         {
             Collection<PotionEffect> potioneffect_collection = skinningentities.getActivePotionEffects();
@@ -42,7 +44,7 @@ public class GetEffects
 
         //sync looking
 //                    Entity entity = Minecraft.getMinecraft().world.getEntityByID(BytesReader.getInt(servermessage.data, 1));
-////                    SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
+////                    SkinningEntities skinningentities = SkinningEntities.ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
 //                    if (entity instanceof SkinningEntities)
 //                    {
 //                        SkinningEntities skinningentities = (SkinningEntities)entity;

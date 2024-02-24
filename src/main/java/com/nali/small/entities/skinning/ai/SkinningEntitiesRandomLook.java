@@ -1,5 +1,6 @@
 package com.nali.small.entities.skinning.ai;
 
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 
 public class SkinningEntitiesRandomLook extends SkinningEntitiesAI
@@ -7,7 +8,7 @@ public class SkinningEntitiesRandomLook extends SkinningEntitiesAI
     public int tick;
     public boolean look;
     public double x, y, z;
-    public int[] bypass_int_array = {this.skinningentities.skinningentitiesbytes.SIT(), this.skinningentities.skinningentitiesbytes.PROTECT()};
+    public int[] bypass_int_array = {this.skinningentities.bothentitiesmemory.workbytes.SIT(), this.skinningentities.bothentitiesmemory.workbytes.PROTECT()};
 
     public SkinningEntitiesRandomLook(SkinningEntities skinningentities)
     {
@@ -17,7 +18,8 @@ public class SkinningEntitiesRandomLook extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
-        if (this.skinningentities.isWorkBypass(this.skinningentities.skinningentitiesbytes.RANDOM_LOOK(), this.bypass_int_array))
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
+        if (this.skinningentities.isWorkBypass(serverentitiesmemory.workbytes.RANDOM_LOOK(), this.bypass_int_array))
         {
             if (--this.tick <= 0)
             {
@@ -30,14 +32,14 @@ public class SkinningEntitiesRandomLook extends SkinningEntitiesAI
 
             if (this.look)
             {
-                this.skinningentities.skinningentitieslook.set(this.x, this.y, this.z, 1.0F);
+                serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(this.x, this.y, this.z, 1.0F);
             }
 //            this.look = false;
         }
 
 //        if (!this.look)
 //        {
-        this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.RANDOM_LOOK()] = 0;
+        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.RANDOM_LOOK()] = 0;
 //        }
     }
 }

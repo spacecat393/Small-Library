@@ -1,12 +1,12 @@
 package com.nali.small.entities.skinning.ai;
 
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.mixin.IMixinEntityLivingBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.WorldServer;
 
 import java.util.ArrayList;
 
@@ -23,13 +23,14 @@ public class SkinningEntitiesCareOwner extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
-        Entity owner_entity = ((WorldServer)this.skinningentities.world).getEntityFromUuid(this.skinningentities.owner_uuid);
-        if (this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.CARE_OWNER()) && owner_entity != null && !this.skinningentities.skinningentitiesarea.all_entity_arraylist.isEmpty())
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
+        Entity owner_entity = this.skinningentities.getOwner();
+        if (this.skinningentities.isWork(serverentitiesmemory.workbytes.CARE_OWNER()) && owner_entity != null && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist.isEmpty())
         {
             ArrayList<Entity> target_entity_arraylist = (ArrayList<Entity>)this.target_entity_arraylist.clone();
             this.target_entity_arraylist.clear();
             this.far_double_arraylist.clear();
-            for (Entity entity : this.skinningentities.skinningentitiesarea.all_entity_arraylist)
+            for (Entity entity : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist)
             {
                 boolean should_attack = false;
                 for (Entity old_entity : target_entity_arraylist)
@@ -61,7 +62,7 @@ public class SkinningEntitiesCareOwner extends SkinningEntitiesAI
 //                    }
 //                }
 //
-//                this.target_entity = this.skinningentities.skinningentitiesarea.all_entity_arraylist.get(index);
+//                this.target_entity = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist.get(index);
 //            }
 //            else
 //            {
@@ -74,7 +75,7 @@ public class SkinningEntitiesCareOwner extends SkinningEntitiesAI
             this.far_double_arraylist.clear();
         }
 
-        this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.CARE_OWNER()] = 0;
+        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER()] = 0;
     }
 
     public static boolean ourTarget(Entity entity, Entity us_entity)

@@ -1,5 +1,6 @@
 package com.nali.small.entities.skinning.ai;
 
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.WorldServer;
@@ -23,8 +24,9 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         boolean play = false;
-        if (this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.PLAY()))
+        if (this.skinningentities.isWork(serverentitiesmemory.workbytes.PLAY()))
         {
             boolean result = this.tick <= 0;
 
@@ -40,7 +42,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
             {
                 if (this.playwith_skinningentities != null)
                 {
-                    this.playwith_skinningentities.server_skinningentities = null;
+                    ((ServerEntitiesMemory)this.playwith_skinningentities.bothentitiesmemory).skinningentities = null;
                     this.playwith_skinningentities = null;
                     this.should_play = false;
                     this.first_playwith = false;
@@ -49,14 +51,14 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
                 else if (this.skinningentities.ticksExisted % 200 == 0)
                 {
                     SkinningEntities playwith_skinningentities = null;
-                    for (Entity entity : this.skinningentities.skinningentitiesarea.out_entity_arraylist)
+                    for (Entity entity : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist)
                     {
                         if (entity.getClass() == this.clasz)
                         {
                             playwith_skinningentities = (SkinningEntities)entity;
-                            if (playwith_skinningentities.server_skinningentities == null &&
+                            if (((ServerEntitiesMemory)playwith_skinningentities.bothentitiesmemory).skinningentities == null &&
                                 this.skinningentities.getDataManager().get(this.skinningentities.getFloatDataParameterArray()[0]) <= playwith_skinningentities.getDataManager().get(playwith_skinningentities.getFloatDataParameterArray()[0]) &&
-                                (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null || isInArea(playwith_skinningentities, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far)))
+                                (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(playwith_skinningentities, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far)))
                             {
                                 break;
                             }
@@ -80,16 +82,16 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
             }
             else
             {
-                if (this.playwith_skinningentities != null && (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null || isInArea(this.playwith_skinningentities, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far)))
+                if (this.playwith_skinningentities != null && (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(this.playwith_skinningentities, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far)))
                 {
                     play = true;
                     if (!this.should_play)
                     {
                         if (isTooClose(this.skinningentities, this.playwith_skinningentities, 0.0F))
                         {
-                            if (this.playwith_skinningentities.server_skinningentities == null)
+                            if (((ServerEntitiesMemory)this.playwith_skinningentities.bothentitiesmemory).skinningentities == null)
                             {
-                                this.playwith_skinningentities.server_skinningentities = this.skinningentities;
+                                ((ServerEntitiesMemory)this.playwith_skinningentities.bothentitiesmemory).skinningentities = this.skinningentities;
                                 this.should_play = true;
                                 this.first_playwith = true;
                             }
@@ -101,7 +103,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
                         }
                         else
                         {
-                            this.skinningentities.skinningentitiesfindmove.setGoal(this.playwith_skinningentities.posX, this.playwith_skinningentities.posY, this.playwith_skinningentities.posZ);
+                            serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(this.playwith_skinningentities.posX, this.playwith_skinningentities.posY, this.playwith_skinningentities.posZ);
                         }
                     }
                     else
@@ -117,7 +119,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
         {
             if (this.playwith_skinningentities != null)
             {
-                this.playwith_skinningentities.server_skinningentities = null;
+                ((ServerEntitiesMemory)this.playwith_skinningentities.bothentitiesmemory).skinningentities = null;
                 this.playwith_skinningentities = null;
             }
 
@@ -127,7 +129,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
 
         if (!play)
         {
-            this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.PLAY()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.PLAY()] = 0;
         }
     }
 }

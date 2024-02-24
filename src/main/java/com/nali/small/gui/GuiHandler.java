@@ -11,6 +11,9 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
+import static com.nali.small.entities.memory.ClientEntitiesMemory.ENTITIES_MAP;
+import static com.nali.small.entities.memory.ClientEntitiesMemory.FAKE_ENTITIES_MAP;
+
 public class GuiHandler implements IGuiHandler
 {
     @Nullable
@@ -35,8 +38,8 @@ public class GuiHandler implements IGuiHandler
             Entity entity = world.getEntityByID(x);
             if (!(entity instanceof SkinningEntities))
             {
-                UUID uuid = SkinningEntities.FAKE_CLIENT_ENTITIES_MAP.get(x);
-                entity = SkinningEntities.CLIENT_ENTITIES_MAP.get(uuid);
+                UUID uuid = FAKE_ENTITIES_MAP.get(x);
+                entity = ENTITIES_MAP.get(uuid);
             }
             return new InventoryGui(player.inventory, (SkinningEntities)entity);
         }

@@ -72,7 +72,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
 //
         if (this.looking)
         {
-            float yaw, pitch;
+            float yaw/*, pitch*/;
 
             this.looking = false;
             double d0 = this.x - this.skinningentities.posX;
@@ -89,7 +89,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
 //        for (Entity entity : this.skinningentities.getPassengers())
             {
                 yaw = riding_entity.rotationYaw;
-                pitch = riding_entity.rotationPitch;
+//                pitch = riding_entity.rotationPitch;
                 riding_entity.rotationYaw = this.limitAngle(riding_entity.rotationYaw, f, this.max);
                 riding_entity.rotationPitch = this.limitAngle(riding_entity.rotationPitch, f1, this.max);
 //            entity.rotationYaw = this.skinningentities.rotationYaw;
@@ -98,7 +98,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
 //                this.skinningentities.rotationYawHead = riding_entity.rotationYaw;
 
 //                if (yaw * yaw - riding_entity.rotationYaw * riding_entity.rotationYaw < 0.000001F && pitch * pitch - riding_entity.rotationPitch * riding_entity.rotationPitch < 0.000001F)
-                if (yaw == riding_entity.rotationYaw && pitch == riding_entity.rotationPitch)
+                if (yaw == riding_entity.rotationYaw/* && pitch == riding_entity.rotationPitch*/)
 //                if (Math.abs(yaw - riding_entity.rotationYaw) < EPSILON && Math.abs(pitch - riding_entity.rotationPitch) < EPSILON)
                 {
                     this.done = true;
@@ -107,7 +107,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
             else
             {
                 yaw = this.skinningentities.rotationYaw;
-                pitch = this.skinningentities.rotationPitch;
+//                pitch = this.skinningentities.rotationPitch;
                 this.skinningentities.rotationYaw = this.limitAngle(this.skinningentities.rotationYaw, f, this.max);
                 this.skinningentities.rotationPitch = this.limitAngle(this.skinningentities.rotationPitch, f1, this.max);
     //        this.skinningentities.prevRotationYaw = this.skinningentities.rotationYaw;
@@ -118,7 +118,7 @@ public class SkinningEntitiesLook extends SkinningEntitiesAI
     //        this.skinningentities.prevRenderYawOffset = this.skinningentities.rotationYaw;
 
 //                if (yaw * yaw - this.skinningentities.renderYawOffset * this.skinningentities.renderYawOffset < 0.000001F && pitch * pitch - this.skinningentities.rotationPitch * this.skinningentities.rotationPitch < 0.000001F)
-                if (yaw == this.skinningentities.rotationYaw && pitch == this.skinningentities.rotationPitch)
+                if (yaw == this.skinningentities.rotationYaw/* && pitch == this.skinningentities.rotationPitch*/)
 //                if (Math.abs(yaw - this.skinningentities.rotationYaw) < EPSILON && Math.abs(pitch - this.skinningentities.rotationPitch) < EPSILON)
                 {
                     this.done = true;

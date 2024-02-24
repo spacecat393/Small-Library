@@ -1,6 +1,7 @@
 package com.nali.list.netmethods.clientmessage;
 
 import com.nali.list.messages.ClientMessage;
+import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.client.Minecraft;
@@ -15,7 +16,8 @@ public class SetUUID
         Entity entity = Minecraft.getMinecraft().world.getEntityByID(BytesReader.getInt(clientmessage.data, 1 + 16));
         if (entity instanceof SkinningEntities)
         {
-            ((SkinningEntities)entity).client_uuid = BytesReader.getUUID(clientmessage.data, 1);
+            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)((SkinningEntities)entity).bothentitiesmemory;
+            cliententitiesmemory.uuid = BytesReader.getUUID(clientmessage.data, 1);
         }
     }
 }

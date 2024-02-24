@@ -2,6 +2,7 @@ package com.nali.list.netmethods.servermessage;
 
 import com.nali.list.messages.ClientMessage;
 import com.nali.list.messages.ServerMessage;
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.networks.NetworksRegistry;
 import com.nali.system.bytes.BytesReader;
@@ -13,18 +14,21 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 
+import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
+
 public class Eat
 {
     public static byte ID = 17;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
-        SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
+        SkinningEntities skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
         ItemStack itemstack = entityplayermp.getHeldItemMainhand();
         if (skinningentities != null && skinningentities.canEat() && itemstack.getItem() instanceof ItemFood)
         {
+            ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
             ItemFood itemfood = (ItemFood)itemstack.getItem();
-            skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.ON_EAT()] = 1;
+            serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.ON_EAT()] = 1;
             skinningentities.world.spawnEntity(new EntityXPOrb(skinningentities.world, skinningentities.posX, skinningentities.posY, skinningentities.posZ, 10));
             skinningentities.heal(itemfood.getHealAmount(itemstack) + itemfood.getSaturationModifier(itemstack));
             itemstack.shrink(1);

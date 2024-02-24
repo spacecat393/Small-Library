@@ -1,5 +1,6 @@
 package com.nali.small.entities.skinning.ai;
 
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import net.minecraft.entity.Entity;
@@ -23,6 +24,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         Entity owner_entity = this.skinningentities.getOwner();
 
         if (owner_entity instanceof EntityPlayerMP)
@@ -34,19 +36,19 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
         }
 
         if (owner_entity != null &&
-            this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.FOLLOW()) &&
-            (this.skinningentities.skinningentitiessetlocation.far == 0 || this.skinningentities.skinningentitiessetlocation.blockpos == null || isInArea(owner_entity, this.skinningentities.skinningentitiessetlocation.blockpos, this.skinningentities.skinningentitiessetlocation.far)) &&
+            this.skinningentities.isWork(serverentitiesmemory.workbytes.FOLLOW()) &&
+            (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(owner_entity, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far)) &&
             (this.skinningentities.getDistanceSq(owner_entity) > this.min_distance || this.follow))
         {
             if ((owner_entity.world).provider.getDimension() != ((this.skinningentities.world).provider.getDimension()))
             {
                 if (this.follow)
                 {
-                    this.skinningentities.skinningentitiesfindmove.endGoal();
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
                     this.follow = false;
                 }
 
-                this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.FOLLOW()] = 0;
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW()] = 0;
                 return;
             }
 
@@ -66,24 +68,24 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
             {
                 if (step <= getClose(this.skinningentities, owner_entity, 1.0D))
                 {
-                    this.skinningentities.skinningentitiesfindmove.endGoal();
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
                     this.follow = false;
                 }
                 else
                 {
-                    this.skinningentities.skinningentitiesfindmove.setGoal(owner_entity.posX, owner_entity.posY, owner_entity.posZ);
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(owner_entity.posX, owner_entity.posY, owner_entity.posZ);
                 }
             }
         }
         else if (this.follow)
         {
-            this.skinningentities.skinningentitiesfindmove.endGoal();
+            serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
             this.follow = false;
         }
 
         if (!this.follow)
         {
-            this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.FOLLOW()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW()] = 0;
         }
     }
 
@@ -113,6 +115,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
 
     public boolean tryTeleportTo(Entity owner_entity, int x, int y, int z)
     {
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         BlockPos to_blockpos = new BlockPos(x, y, z);
         BlockPos down_blockpos = to_blockpos.down();
 
@@ -122,8 +125,8 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
         }
 
         this.skinningentities.setPositionAndRotation(x + 0.5D, y, z + 0.5D, owner_entity.rotationYaw, owner_entity.rotationPitch);
-        this.skinningentities.server_work_byte_array[3] = 0;
-        this.skinningentities.skinningentitiesfindmove.endGoal();
+        serverentitiesmemory.current_work_byte_array[3] = 0;
+        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
 
         return true;
     }

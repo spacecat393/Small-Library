@@ -6,6 +6,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.IInventoryChangedListener;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
@@ -276,5 +278,47 @@ public class SkinningInventory implements IInventory
         this.inventoryContents.clear();
         this.hands_itemstack_nonnulllist.clear();
         this.armor_itemstack_nonnulllist.clear();
+    }
+
+    public void writeNBT(NBTTagCompound nbttagcompound)
+    {
+        NBTTagList nbttaglist = new NBTTagList();
+        for (ItemStack itemstack : this.armor_itemstack_nonnulllist)
+        {
+            NBTTagCompound new_nbttagcompound = new NBTTagCompound();
+
+            if (!itemstack.isEmpty())
+            {
+                itemstack.writeToNBT(new_nbttagcompound);
+            }
+
+            nbttaglist.appendTag(new_nbttagcompound);
+        }
+
+        nbttagcompound.setTag("ArmorItems", nbttaglist);
+        nbttaglist = new NBTTagList();
+
+        for (ItemStack itemstack1 : this.hands_itemstack_nonnulllist)
+        {
+            NBTTagCompound new_nbttagcompound = new NBTTagCompound();
+
+            if (!itemstack1.isEmpty())
+            {
+                itemstack1.writeToNBT(new_nbttagcompound);
+            }
+
+            nbttaglist.appendTag(new_nbttagcompound);
+        }
+
+        nbttagcompound.setTag("HandItems", nbttaglist);
+
+        for (int l = 0; l < this.getSizeInventory(); ++l)
+        {
+            ItemStack itemstack = this.getStackInSlot(l);
+            if (!itemstack.isEmpty())
+            {
+                nbttagcompound.setTag("ib" + l, itemstack.writeToNBT(new NBTTagCompound()));
+            }
+        }
     }
 }

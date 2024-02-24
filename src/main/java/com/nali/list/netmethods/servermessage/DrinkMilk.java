@@ -9,13 +9,15 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
+import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
+
 public class DrinkMilk
 {
     public static byte ID = 19;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
-        SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
+        SkinningEntities skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
         ItemStack itemstack = entityplayermp.getHeldItemMainhand();
         if (skinningentities != null && skinningentities.canEat() && itemstack.getItem() == Items.MILK_BUCKET)
         {

@@ -18,7 +18,7 @@ public class InventoryContainer extends Container
     {
         this.entityplayer = entityplayer;
         this.skinningentities = skinningentities;
-        SkinningInventory skinninginventory = this.skinningentities.skinninginventory;
+        SkinningInventory skinninginventory = this.skinningentities.bothentitiesmemory.skinninginventory;
 //        SkinningInventory skinninginventory = null;
 
 //        if (skinningentities == null)

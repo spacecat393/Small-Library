@@ -2,6 +2,7 @@ package com.nali.list.handlers;
 
 import com.nali.list.messages.ServerMessage;
 import com.nali.small.Small;
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.system.Reflect;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -57,9 +58,10 @@ public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
 
     public static boolean canPass(SkinningEntities skinningentities, EntityPlayerMP entityplayermp)
     {
-        if (skinningentities.main_server_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1)
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
+        if (serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.LOCK_INVENTORY()] == 1)
         {
-            return skinningentities.owner_uuid == null || entityplayermp.getUniqueID().equals(skinningentities.owner_uuid);
+            return serverentitiesmemory.owner_uuid == null || entityplayermp.getUniqueID().equals(serverentitiesmemory.owner_uuid);
         }
 
         return true;

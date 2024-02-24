@@ -1,0 +1,51 @@
+package com.nali.small.entities.memory;
+
+import com.nali.data.BothData;
+import com.nali.render.ObjectRender;
+import com.nali.small.entities.bytes.WorkBytes;
+import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entities.skinning.render.layer.ArrowLayerRender;
+import com.nali.small.entities.skinning.render.layer.ItemLayerRender;
+import com.nali.small.entities.skinning.works.SkinningEntitiesPat;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Map;
+import java.util.UUID;
+import java.util.WeakHashMap;
+
+public class ClientEntitiesMemory extends BothEntitiesMemory
+{
+    @SideOnly(Side.CLIENT)
+    public static Map<UUID, SkinningEntities> ENTITIES_MAP = new WeakHashMap<>();
+    @SideOnly(Side.CLIENT)
+    public static Map<Integer, UUID> FAKE_ENTITIES_MAP = new WeakHashMap<>();
+    @SideOnly(Side.CLIENT)
+    public ObjectRender objectrender;
+//    @SideOnly(Side.CLIENT)
+//    public long client_last_time = Minecraft.getSystemTime();
+//    @SideOnly(Side.CLIENT)
+//    public long client_m_last_time = System.currentTimeMillis();
+
+    @SideOnly(Side.CLIENT)
+    public ArrowLayerRender arrowlayerrender;
+    @SideOnly(Side.CLIENT)
+    public ItemLayerRender itemlayerrender;
+
+    @SideOnly(Side.CLIENT)
+    public UUID uuid;
+    @SideOnly(Side.CLIENT)
+    public boolean fake;
+
+    @SideOnly(Side.CLIENT)
+    public byte[] work_byte_array;
+//    public byte[] client_state_byte_array;
+    //    public UUID current_client_uuid;
+    @SideOnly(Side.CLIENT)
+    public SkinningEntitiesPat skinningentitiespat;
+
+    public ClientEntitiesMemory(BothData bothdata, WorkBytes workbytes)
+    {
+        super(bothdata, workbytes);
+    }
+}

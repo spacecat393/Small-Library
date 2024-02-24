@@ -83,7 +83,7 @@
 //            nbttagcompound.setFloat("float_" + i++, entitydatamanager.get(float_dataparameter));
 //        }
 //
-//        if (!this.server_sus_init)
+//        if (!this.sus_init)
 //        {
 //            this.initWriteEntityToNBT(nbttagcompound);
 //        }
@@ -116,12 +116,12 @@
 //            entitydatamanager.set(float_dataparameter, nbttagcompound.getFloat("float_" + i++));
 //        }
 //
-//        this.server_sus_init = nbttagcompound.hasKey("sus_init");
+//        this.sus_init = nbttagcompound.hasKey("sus_init");
 //
-//        if (!this.server_sus_init)
+//        if (!this.sus_init)
 //        {
 //            this.initReadEntityFromNBT();
-//            this.server_sus_init = true;
+//            this.sus_init = true;
 //        }
 //    }
 //

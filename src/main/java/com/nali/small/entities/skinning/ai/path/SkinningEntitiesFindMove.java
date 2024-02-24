@@ -1,5 +1,6 @@
 package com.nali.small.entities.skinning.ai.path;
 
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
 import net.minecraft.block.material.Material;
@@ -52,6 +53,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         // {
         //     Vec3 motion = new Vec3(1, 1, 1);
         //     this.setDeltaMovement(motion);
@@ -290,8 +292,8 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 //                        }
 //                    }
 
-//                    this.skinningentities.skinningentitiesmove.setWanted(move_x + 0.5D, move_y, move_z + 0.5D);
-                    this.skinningentities.skinningentitiesmove.setWanted(current_blockpos.getX() + 0.5D, current_blockpos.getY(), current_blockpos.getZ() + 0.5D);
+//                    serverentitiesmemory.entitiesaimemory.skinningentitiesmove.setWanted(move_x + 0.5D, move_y, move_z + 0.5D);
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesmove.setWanted(current_blockpos.getX() + 0.5D, current_blockpos.getY(), current_blockpos.getZ() + 0.5D);
 
                     double far = this.skinningentities.getDistanceSq(this.goal_x + 0.5D, this.goal_y, this.goal_z + 0.5D);
                     if ((!this.is_goal && far >= this.far) || (this.is_goal && this.skinningentities.posX == this.old_x && this.skinningentities.posY == this.old_y && this.skinningentities.posZ == this.old_z))
@@ -314,7 +316,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                         this.far = this.path_blockpos_arraylist.get(new_index).getDistance(this.goal_x, this.goal_y, this.goal_z);
                     }
 
-                    if (this.skinningentities.skinningentitiesmove.isDone())
+                    if (serverentitiesmemory.entitiesaimemory.skinningentitiesmove.isDone())
                     {
 //                        --this.path_index;
 //                        if (this.path_index == 1)
@@ -337,7 +339,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                         }
                     }
 
-////                            SkinningEntitiesMoveHelper skinningentitiesmovehelper = (SkinningEntitiesMoveHelper)this.skinningentities.skinningentitiesmovehelper;
+////                            SkinningEntitiesMoveHelper skinningentitiesmovehelper = (SkinningEntitiesMoveHelper)serverentitiesmemory.entitiesaimemory.skinningentitiesmovehelper;
 ////                            skinningentitiesmovehelper.setWantedX(move_x + 0.5D);
 ////                            skinningentitiesmovehelper.setWantedY(move_y);
 ////                            skinningentitiesmovehelper.setWantedZ(move_z + 0.5D);

@@ -1,5 +1,6 @@
 package com.nali.small.entities.skinning.ai;
 
+import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.util.math.BlockPos;
 
@@ -21,13 +22,14 @@ public class SkinningEntitiesSetLocation extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         boolean run = false;
         if (this.blockpos_long != -1 && this.far != 0)
         {
-            this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.LOCATION()] = 1;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.LOCATION()] = 1;
         }
 
-        if (this.skinningentities.isWork(this.skinningentities.skinningentitiesbytes.LOCATION()))
+        if (this.skinningentities.isWork(serverentitiesmemory.workbytes.LOCATION()))
         {
             if (this.temp_blockpos == null || this.blockpos != this.temp_blockpos)
             {
@@ -38,7 +40,7 @@ public class SkinningEntitiesSetLocation extends SkinningEntitiesAI
             {
                 if (!isInArea(this.skinningentities, this.blockpos, this.far))
                 {
-                    this.skinningentities.skinningentitiesfindmove.setGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
                     run = true;
                     this.set_location = true;
 //                    Small.LOGGER.info("WALK");
@@ -46,7 +48,7 @@ public class SkinningEntitiesSetLocation extends SkinningEntitiesAI
                 }
                 else if (this.set_location)
                 {
-                    this.skinningentities.skinningentitiesfindmove.endGoal();
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
                     this.set_location = false;
 //                    Small.LOGGER.info("END");
                 }
@@ -56,7 +58,7 @@ public class SkinningEntitiesSetLocation extends SkinningEntitiesAI
         {
             if (this.set_location)
             {
-                this.skinningentities.skinningentitiesfindmove.endGoal();
+                serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
                 this.set_location = false;
 //                Small.LOGGER.info("END 2");
             }
@@ -67,7 +69,7 @@ public class SkinningEntitiesSetLocation extends SkinningEntitiesAI
 
         if (!run)
         {
-            this.skinningentities.server_work_byte_array[this.skinningentities.skinningentitiesbytes.LOCATION()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.LOCATION()] = 0;
         }
 
 //        Small.LOGGER.info("BLOCKPOS " + this.blockpos.toString());

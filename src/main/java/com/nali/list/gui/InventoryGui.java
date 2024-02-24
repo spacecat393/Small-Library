@@ -4,6 +4,7 @@ import com.nali.list.container.InventoryContainer;
 import com.nali.list.messages.ServerMessage;
 import com.nali.render.SkinningRender;
 import com.nali.small.data.BoxData;
+import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;
@@ -87,7 +88,8 @@ public class InventoryGui extends MixGui
 //        this.setWorldAndResolution(Minecraft.getMinecraft(), scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
 
         SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
-        SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
         if (!skinningrender.should_render)
         {
             this.skinningentitiesrender.updateData(skinningentities, this.mc.getRenderPartialTicks());
@@ -238,7 +240,7 @@ public class InventoryGui extends MixGui
             if (this.mouse_released == 0)
             {
                 this.sendPacketUUID((byte)2);
-                this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.LOCK_INVENTORY());
+                this.sendPacketUUIDInt(cliententitiesmemory.workbytes.LOCK_INVENTORY());
             }
 
             if (!(GUIFEATURESLOADER instanceof LockInventoryGUIFeatures))
@@ -254,7 +256,7 @@ public class InventoryGui extends MixGui
             if (this.mouse_released == 0)
             {
                 this.sendPacketUUID((byte)2);
-                this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.LOCK_DAMAGE());
+                this.sendPacketUUIDInt(cliententitiesmemory.workbytes.LOCK_DAMAGE());
             }
 
             if (!(GUIFEATURESLOADER instanceof LockDamageGUIFeatures))
@@ -344,7 +346,7 @@ public class InventoryGui extends MixGui
                 {
                     if (this.mouse_released == 0)
                     {
-                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.SIT());
+                        this.sendPacketUUIDInt(cliententitiesmemory.workbytes.SIT());
                     }
 
                     if (!(GUIFEATURESLOADER instanceof SitGUIFeatures))
@@ -382,7 +384,7 @@ public class InventoryGui extends MixGui
                 }
                 else
                 {
-                    int id = skinningentities.skinningentitiesbytes.FOLLOW();
+                    int id = cliententitiesmemory.workbytes.FOLLOW();
                     if (id != -1)
                     {
                         if (this.mouse_released == 0)
@@ -436,7 +438,7 @@ public class InventoryGui extends MixGui
                 {
                     if (this.mouse_released == 0)
                     {
-                        this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.FIND_ITEM());
+                        this.sendPacketUUIDInt(cliententitiesmemory.workbytes.FIND_ITEM());
                     }
 
                     if (!(GUIFEATURESLOADER instanceof FindItemGUIFeatures))
@@ -462,12 +464,12 @@ public class InventoryGui extends MixGui
                 }
                 else if (PAGE == 1)
                 {
-                    int id = skinningentities.skinningentitiesbytes.RANDOM_WALK();
+                    int id = cliententitiesmemory.workbytes.RANDOM_WALK();
                     if (id != -1)
                     {
                         if (this.mouse_released == 0)
                         {
-                            this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.RANDOM_WALK());
+                            this.sendPacketUUIDInt(cliententitiesmemory.workbytes.RANDOM_WALK());
                         }
 
                         if (!(GUIFEATURESLOADER instanceof RandomWalkGUIFeatures))
@@ -491,7 +493,7 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 3)
                 {
-//                    int id = skinningentities.skinningentitiesbytes.LOCATION();
+//                    int id = cliententitiesmemory.workbytes.LOCATION();
 //                    if (id != -1)
 //                    {
                     this.message_state = 9;
@@ -518,12 +520,12 @@ public class InventoryGui extends MixGui
                 }
                 else if (PAGE == 1)
                 {
-                    int id = skinningentities.skinningentitiesbytes.RANDOM_LOOK();
+                    int id = cliententitiesmemory.workbytes.RANDOM_LOOK();
                     if (id != -1)
                     {
                         if (this.mouse_released == 0)
                         {
-                            this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.RANDOM_LOOK());
+                            this.sendPacketUUIDInt(cliententitiesmemory.workbytes.RANDOM_LOOK());
                         }
 
                         if (!(GUIFEATURESLOADER instanceof RandomLookGUIFeatures))
@@ -547,7 +549,7 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 1)
                 {
-                    int id = skinningentities.skinningentitiesbytes.ATTACK();
+                    int id = cliententitiesmemory.workbytes.ATTACK();
                     if (id != -1)
                     {
                         if (this.mouse_released == 0)
@@ -576,13 +578,13 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 1)
                 {
-                    int id = skinningentities.skinningentitiesbytes.REVIVE();
+                    int id = cliententitiesmemory.workbytes.REVIVE();
                     if (id != -1)
                     {
                         if (this.mouse_released == 0)
                         {
                             this.sendPacketUUID((byte)2);
-                            this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.REVIVE());
+                            this.sendPacketUUIDInt(cliententitiesmemory.workbytes.REVIVE());
                         }
 
                         if (!(GUIFEATURESLOADER instanceof ReviveGUIFeatures))
@@ -606,7 +608,7 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 1)
                 {
-                    int id = skinningentities.skinningentitiesbytes.HEAL();
+                    int id = cliententitiesmemory.workbytes.HEAL();
                     if (id != -1)
                     {
                         if (this.mouse_released == 0)
@@ -635,7 +637,7 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 1)
                 {
-                    int id = skinningentities.skinningentitiesbytes.PROTECT();
+                    int id = cliententitiesmemory.workbytes.PROTECT();
                     if (id != -1)
                     {
                         if (this.mouse_released == 0)
@@ -664,12 +666,12 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 1)
                 {
-                    int id = skinningentities.skinningentitiesbytes.PLAY();
+                    int id = cliententitiesmemory.workbytes.PLAY();
                     if (id != -1)
                     {
                         if (this.mouse_released == 0)
                         {
-                            this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.PLAY());
+                            this.sendPacketUUIDInt(cliententitiesmemory.workbytes.PLAY());
                         }
 
                         if (!(GUIFEATURESLOADER instanceof PlayGUIFeatures))
@@ -727,13 +729,13 @@ public class InventoryGui extends MixGui
             {
                 if (PAGE == 1)
                 {
-                    int id = skinningentities.skinningentitiesbytes.CARE_OWNER();
+                    int id = cliententitiesmemory.workbytes.CARE_OWNER();
                     if (id != -1)
                     {
                         if (this.mouse_released == 0)
                         {
                             this.sendPacketUUID((byte)2);
-                            this.sendPacketUUIDInt(skinningentities.skinningentitiesbytes.CARE_OWNER());
+                            this.sendPacketUUIDInt(cliententitiesmemory.workbytes.CARE_OWNER());
                         }
 
                         if (!(GUIFEATURESLOADER instanceof CareOwnerGUIFeatures))
@@ -851,6 +853,7 @@ public class InventoryGui extends MixGui
         }
 
         SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
 
         this.drawTexturedModalRect(this.guiLeft + 159, this.guiTop + 51, 16, 42, 22, 21);
         this.drawTexturedModalRect(this.guiLeft + 102, this.guiTop + 28, 30, 0, 14, 14);
@@ -900,7 +903,7 @@ public class InventoryGui extends MixGui
             {
                 this.drawTexturedModalRect(this.guiLeft + 49, this.guiTop + 90, 86, 0, 14, 14);
 
-                if (skinningentities.skinningentitiesbytes.FOLLOW() == -1)
+                if (cliententitiesmemory.workbytes.FOLLOW() == -1)
                 {
                     this.drawTexturedModalRect(this.guiLeft + 67, this.guiTop + 90, 134, 14, 14, 14);
                 }
@@ -911,7 +914,7 @@ public class InventoryGui extends MixGui
 
                 this.drawTexturedModalRect(this.guiLeft + 85, this.guiTop + 90, 142, 0, 14, 14);
 
-                if (skinningentities.skinningentitiesbytes.RANDOM_WALK() == -1)
+                if (cliententitiesmemory.workbytes.RANDOM_WALK() == -1)
                 {
                     this.drawTexturedModalRect(this.guiLeft + 103, this.guiTop + 90, 134, 14, 14, 14);
                 }
@@ -920,7 +923,7 @@ public class InventoryGui extends MixGui
                     this.drawTexturedModalRect(this.guiLeft + 105, this.guiTop + 92, 52, 14, 12, 12);
                 }
 
-                if (skinningentities.skinningentitiesbytes.RANDOM_LOOK() == -1)
+                if (cliententitiesmemory.workbytes.RANDOM_LOOK() == -1)
                 {
                     this.drawTexturedModalRect(this.guiLeft + 121, this.guiTop + 90, 134, 14, 14, 14);
                 }
@@ -929,7 +932,7 @@ public class InventoryGui extends MixGui
                     this.drawTexturedModalRect(this.guiLeft + 121, this.guiTop + 94, 38, 14, 14, 8);
                 }
 
-                if (skinningentities.skinningentitiesbytes.ATTACK() == -1)
+                if (cliententitiesmemory.workbytes.ATTACK() == -1)
                 {
                     this.drawTexturedModalRect(this.guiLeft + 139, this.guiTop + 90, 134, 14, 14, 14);
                 }
@@ -938,7 +941,7 @@ public class InventoryGui extends MixGui
                     this.drawTexturedModalRect(this.guiLeft + 139, this.guiTop + 90, 58, 0, 14, 14);
                 }
 
-                if (skinningentities.skinningentitiesbytes.REVIVE() == -1)
+                if (cliententitiesmemory.workbytes.REVIVE() == -1)
                 {
                     this.drawTexturedModalRect(this.guiLeft + 157, this.guiTop + 90, 134, 14, 14, 14);
                 }
@@ -947,7 +950,7 @@ public class InventoryGui extends MixGui
                     this.drawTexturedModalRect(this.guiLeft + 157, this.guiTop + 90, 64, 14, 14, 14);
                 }
 
-                if (skinningentities.skinningentitiesbytes.HEAL() == -1)
+                if (cliententitiesmemory.workbytes.HEAL() == -1)
                 {
                     this.drawTexturedModalRect(this.guiLeft + 157 + 18, this.guiTop + 90, 134, 14, 14, 14);
                 }
@@ -956,7 +959,7 @@ public class InventoryGui extends MixGui
                     this.drawTexturedModalRect(this.guiLeft + 157 + 18, this.guiTop + 90, 114, 0, 14, 14);
                 }
 
-                if (skinningentities.skinningentitiesbytes.PROTECT() == -1)
+                if (cliententitiesmemory.workbytes.PROTECT() == -1)
                 {
                     this.drawTexturedModalRect(this.guiLeft + 157 + 18 + 18, this.guiTop + 90, 134, 14, 14, 14);
                 }
@@ -965,7 +968,7 @@ public class InventoryGui extends MixGui
                     this.drawTexturedModalRect(this.guiLeft + 157 + 18 + 18, this.guiTop + 90, 148, 14, 14, 14);
                 }
 
-                if (skinningentities.skinningentitiesbytes.PLAY() == -1)
+                if (cliententitiesmemory.workbytes.PLAY() == -1)
                 {
                     this.drawTexturedModalRect(this.guiLeft + 49, this.guiTop + 90 + 18, 134, 14, 14, 14);
                 }
@@ -974,7 +977,7 @@ public class InventoryGui extends MixGui
                     this.drawTexturedModalRect(this.guiLeft + 49, this.guiTop + 90 + 18, 182, 0, 14, 14);
                 }
 
-                if (skinningentities.skinningentitiesbytes.CARE_OWNER() == -1)
+                if (cliententitiesmemory.workbytes.CARE_OWNER() == -1)
                 {
                     this.drawTexturedModalRect(this.guiLeft + 49 + 18, this.guiTop + 90 + 18, 134, 14, 14, 14);
                 }
@@ -1003,7 +1006,7 @@ public class InventoryGui extends MixGui
                 this.drawTexturedModalRect(this.guiLeft + 67 + 18, this.guiTop + 94, 38, 14, 14, 8);
                 this.drawTexturedModalRect(this.guiLeft + 67 + 18 + 18, this.guiTop + 90, 44, 0, 14, 14);
 
-//                if (skinningentities.skinningentitiesbytes.LOCATION() == -1)
+//                if (cliententitiesmemory.workbytes.LOCATION() == -1)
 //                {
 //                    this.drawTexturedModalRect(this.guiLeft + 67 + 18 + 18 + 18, this.guiTop + 90, 134, 14, 14, 14);
 //                }
@@ -1027,8 +1030,8 @@ public class InventoryGui extends MixGui
             this.drawTexturedModalRect(this.guiLeft + 48, this.guiTop + 84 - i, 0, 0, 3, 1);
         }
 
-        this.drawTexturedModalRect(this.guiLeft + 57, this.guiTop + 27, 30, skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_INVENTORY()] == 1 ? 20 : 26, 5, 6);
-        this.drawTexturedModalRect(this.guiLeft + 57, this.guiTop + 35, 30, skinningentities.client_work_byte_array[skinningentities.skinningentitiesbytes.LOCK_DAMAGE()] == 1 ? 20 : 26, 5, 6);
+        this.drawTexturedModalRect(this.guiLeft + 57, this.guiTop + 27, 30, cliententitiesmemory.work_byte_array[cliententitiesmemory.workbytes.LOCK_INVENTORY()] == 1 ? 20 : 26, 5, 6);
+        this.drawTexturedModalRect(this.guiLeft + 57, this.guiTop + 35, 30, cliententitiesmemory.work_byte_array[cliententitiesmemory.workbytes.LOCK_DAMAGE()] == 1 ? 20 : 26, 5, 6);
 
         if (gl_blend)
         {
@@ -1067,6 +1070,7 @@ public class InventoryGui extends MixGui
                     if (this.message_state != 4)
                     {
                         SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
+                        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
 
                         String[] string_array = MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString().split(" ");
                         byte[] byte_array = new byte[string_array.length * 4 + 1 + 16];
@@ -1144,7 +1148,7 @@ public class InventoryGui extends MixGui
                             }
                         }
 
-                        BytesWriter.set(byte_array, skinningentities.client_uuid, 1);
+                        BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
                         NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
                         MESSAGE_STRINGBUILDER.setLength(0);
                         MESSAGE_STRINGBUILDER.append("!");

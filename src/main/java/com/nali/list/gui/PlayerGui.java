@@ -4,6 +4,7 @@ import com.nali.list.messages.ServerMessage;
 import com.nali.render.SkinningRender;
 import com.nali.small.data.BoxData;
 import com.nali.small.data.SakuraData;
+import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
 import com.nali.small.entities.skinning.render.layer.ItemLayerRender;
@@ -26,6 +27,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import static com.nali.small.entities.memory.ClientEntitiesMemory.ENTITIES_MAP;
 import static com.nali.small.render.RenderHelper.DATALOADER;
 import static com.nali.system.opengl.memory.OpenGLCurrentMemory.GL_CURRENT_COLOR;
 import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_FIXED_PIPE_FLOATBUFFER;
@@ -507,7 +509,8 @@ public class PlayerGui extends MixGui
             if (this.skinningentities != null)
             {
                 Minecraft mc = Minecraft.getMinecraft();
-                SkinningRender skinningrender = (SkinningRender)this.skinningentities.client_object;
+                ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.skinningentities.bothentitiesmemory;
+                SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
                 if (!skinningrender.should_render)
                 {
                     this.skinningentitiesrender.updateData(skinningentities, mc.getRenderPartialTicks());
@@ -560,11 +563,11 @@ public class PlayerGui extends MixGui
     public void initEntities()
     {
         int index = 0;//, x = 10, y = 10;
-        Set<UUID> keys_set = new HashSet<>(SkinningEntities.CLIENT_ENTITIES_MAP.keySet());
+        Set<UUID> keys_set = new HashSet<>(ENTITIES_MAP.keySet());
         MIXBUTTON_ARRAY = new MixButton[keys_set.size()];
         for (UUID uuid : keys_set)
         {
-            SkinningEntities skinningentities = SkinningEntities.CLIENT_ENTITIES_MAP.get(uuid);
+            SkinningEntities skinningentities = ENTITIES_MAP.get(uuid);
 //                    if (skinningentities == null)
 //                    {
 //                        this.mixbutton_array = null;
@@ -572,7 +575,7 @@ public class PlayerGui extends MixGui
 //                    }
             MIXBUTTON_ARRAY[index++] = new MixButton(skinningentities, uuid/*, 0, 0*/, 143, 51, 56, 60);
 //            this.mixbutton_array[index++] = new MixButton(skinningentities, uuid, x, y, 143, 51, 56, 60);
-//                    this.mixbutton_array[index++] = new MixButton(SkinningEntities.CLIENT_ENTITIES_MAP.get(uuid), this.guiLeft + x, this.guiTop + y, 143, 51, 56, 60);
+//                    this.mixbutton_array[index++] = new MixButton(SkinningEntities.ENTITIES_MAP.get(uuid), this.guiLeft + x, this.guiTop + y, 143, 51, 56, 60);
 
 //            if (x >= this.width)
 //            {

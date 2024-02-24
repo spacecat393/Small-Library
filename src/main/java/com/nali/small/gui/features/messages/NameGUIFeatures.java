@@ -1,5 +1,6 @@
 package com.nali.small.gui.features.messages;
 
+import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
@@ -12,7 +13,8 @@ public class NameGUIFeatures extends GUIFeaturesLoader
     {
         super(mixgui);
 
-        String uuid_string = skinningentities.client_uuid.toString();
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        String uuid_string = cliententitiesmemory.uuid.toString();
 
         String custom_name_string = "-";
         if (skinningentities.hasCustomName())

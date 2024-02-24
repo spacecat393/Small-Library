@@ -1,21 +1,19 @@
-package com.nali.small.entities.skinning.ai.eyes;
+package com.nali.small.entities.skinning.works;
 
 import com.nali.small.entities.skinning.SkinningEntities;
-import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
 import net.minecraft.util.math.MathHelper;
 
-public class SkinningEntitiesBody extends SkinningEntitiesAI
+public class SkinningEntitiesBodyYaw extends SkinningEntitiesWork
 {
     public int rotationTickCounter;
     public float prevRenderYaw;
 
-    public SkinningEntitiesBody(SkinningEntities skinningentities)
+    public SkinningEntitiesBodyYaw(SkinningEntities skinningentities)
     {
         super(skinningentities);
     }
 
-    @Override
-    public void onUpdate()
+    public void run()
 //    public void updateRenderAngles()
     {
 //        double d0 = this.skinningentities.posX - this.skinningentities.prevPosX;

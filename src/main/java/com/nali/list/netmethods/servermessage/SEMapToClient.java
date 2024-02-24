@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
+
 public class SEMapToClient
 {
     public static byte ID = 5;
@@ -22,17 +24,17 @@ public class SEMapToClient
         //                WorldServer worldserver = (WorldServer)entityplayermp.world;
         //                Map<UUID, Entity> entity_map = ((IMixinWorldServer)worldserver).entitiesByUuid();
         //                if (!entity_map.isEmpty())
-        if (!SkinningEntities.SERVER_ENTITIES_MAP.isEmpty())
+        if (!ENTITIES_MAP.isEmpty())
         {
             int index = 1;
             //                    Set<UUID> keys_set = new HashSet<>(entity_map.keySet());
-            Set<UUID> keys_set = new HashSet<>(SkinningEntities.SERVER_ENTITIES_MAP.keySet());
+            Set<UUID> keys_set = new HashSet<>(ENTITIES_MAP.keySet());
             byte[] byte_array = new byte[keys_set.size() * 16 + 1 + keys_set.size() * 8];
             //                    byte_array[0] = 0;
 
             for (UUID uuid : keys_set)
             {
-                SkinningEntities skinningentities = SkinningEntities.SERVER_ENTITIES_MAP.get(uuid);
+                SkinningEntities skinningentities = ENTITIES_MAP.get(uuid);
 //                            entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, EntityList.getID(skinningentities.getClass())));
                 //should check long with uuid
                 ChunkLoader.updateChunk(skinningentities);

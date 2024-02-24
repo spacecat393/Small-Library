@@ -1,6 +1,7 @@
 package com.nali.small.entities.skinning.render.layer;
 
 import com.nali.render.SkinningRender;
+import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
 import com.nali.system.opengl.memory.OpenGLSkinningMemory;
@@ -35,7 +36,8 @@ public class ArrowLayerRender extends LayerRender
 
             if (this.index_int_array_arraylist.size() < i)
             {
-                SkinningRender skinningrender = (SkinningRender)this.skinningentities.client_object;
+                ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+                SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
                 Random random = entity.world.rand;
                 int model_i = random.nextInt(skinningrender.memory_object_array.length);
                 OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[model_i];

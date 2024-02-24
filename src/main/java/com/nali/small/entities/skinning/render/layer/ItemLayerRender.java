@@ -31,9 +31,13 @@ import static com.nali.system.opengl.memory.OpenGLCurrentMemory.*;
 @SideOnly(Side.CLIENT)
 public class ItemLayerRender extends LayerRender
 {
-    public RenderLivingBaseObject renderlivingbaseobject = new RenderLivingBaseObject();
-    public LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this.renderlivingbaseobject);
-    public LayerElytra layerelytra = new LayerElytra(this.renderlivingbaseobject);
+    public static RenderLivingBaseObject RENDERLIVINGBASEOBJECT = new RenderLivingBaseObject();
+    public static LayerBipedArmor LAYERBIPEDARMOR = new LayerBipedArmor(RENDERLIVINGBASEOBJECT);
+    public static LayerElytra LAYERELYTRA = new LayerElytra(RENDERLIVINGBASEOBJECT);
+
+    public int[] iv_int_array;
+    public float[] rotation_float_array;
+    public float[] transform_float_array;
 
     public int left_hand_i, left_hand_v,
             right_hand_i, right_hand_v,
@@ -67,7 +71,7 @@ public class ItemLayerRender extends LayerRender
 
         this.renderHeldItem(skinningentitiesrender, this.skinningentities.getHeldItemMainhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, this.right_hand_i, this.right_hand_v);
         this.renderHeldItem(skinningentitiesrender, this.skinningentities.getHeldItemOffhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, this.left_hand_i, this.left_hand_v);
-        this.renderHeldItem(skinningentitiesrender, this.skinningentities.skinninginventory.armor_itemstack_nonnulllist.get(4), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, this.mouth_i, this.mouth_v);
+        this.renderHeldItem(skinningentitiesrender, this.skinningentities.bothentitiesmemory.skinninginventory.armor_itemstack_nonnulllist.get(4), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, this.mouth_i, this.mouth_v);
 
         this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.HEAD, this.head_i, this.head_v, partialTicks);
         this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.CHEST, this.chest_i, this.chest_v, partialTicks);
@@ -254,14 +258,14 @@ public class ItemLayerRender extends LayerRender
             GL11.glTranslatef(0.0F, -1.0F, 0.0F);
             GL11.glScalef(0.08F, 0.08F, 0.08F);
 
-            ((IMixinLayerArmorBase)this.layerbipedarmor).GOrenderArmorLayer(this.skinningentities, this.skinningentities.limbSwing, this.skinningentities.limbSwingAmount, partialTicks, this.renderlivingbaseobject.handleRotationFloat(this.skinningentities, partialTicks), 0.0F, 0.0F, 1.0F, entityequipmentslot);
+            ((IMixinLayerArmorBase)LAYERBIPEDARMOR).GOrenderArmorLayer(this.skinningentities, this.skinningentities.limbSwing, this.skinningentities.limbSwingAmount, partialTicks, RENDERLIVINGBASEOBJECT.handleRotationFloat(this.skinningentities, partialTicks), 0.0F, 0.0F, 1.0F, entityequipmentslot);
         }
         else if (itemstack.getItem() == Items.ELYTRA)
         {
 //            GL11.glTranslatef(0.0F, 0.0F, -0.1F);
             GL11.glScalef(0.0225F, 0.0225F, 0.0225F);
 //            GL11.glScalef(1.0F, -1.0F, -1.0F);
-            this.layerelytra.doRenderLayer(this.skinningentities, this.skinningentities.limbSwing, this.skinningentities.limbSwingAmount, partialTicks, this.renderlivingbaseobject.handleRotationFloat(this.skinningentities, partialTicks), 0.0F, 0.0F, 1.0F);
+            LAYERELYTRA.doRenderLayer(this.skinningentities, this.skinningentities.limbSwing, this.skinningentities.limbSwingAmount, partialTicks, RENDERLIVINGBASEOBJECT.handleRotationFloat(this.skinningentities, partialTicks), 0.0F, 0.0F, 1.0F);
         }
         else if (item == Items.SKULL)
         {
