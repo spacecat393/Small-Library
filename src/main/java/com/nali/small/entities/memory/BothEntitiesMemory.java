@@ -9,7 +9,7 @@ public abstract class BothEntitiesMemory
 {
     public WorkBytes workbytes;
     public BothData bothdata;
-    public SkinningInventory skinninginventory = new SkinningInventory();
+    public SkinningInventory skinninginventory = new SkinningInventory(1);
     public SkinningEntitiesBodyYaw skinningentitiesbody;
 
     public BothEntitiesMemory(BothData bothdata, WorkBytes workbytes)

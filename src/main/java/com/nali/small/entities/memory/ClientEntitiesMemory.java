@@ -7,6 +7,7 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.layer.ArrowLayerRender;
 import com.nali.small.entities.skinning.render.layer.ItemLayerRender;
 import com.nali.small.entities.skinning.works.SkinningEntitiesPat;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -43,6 +44,9 @@ public class ClientEntitiesMemory extends BothEntitiesMemory
     //    public UUID current_client_uuid;
     @SideOnly(Side.CLIENT)
     public SkinningEntitiesPat skinningentitiespat;
+
+    @SideOnly(Side.CLIENT)
+    public ItemStack mouth_itemstack;
 
     public ClientEntitiesMemory(BothData bothdata, WorkBytes workbytes)
     {

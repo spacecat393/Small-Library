@@ -1,6 +1,7 @@
 package com.nali.small.entities.skinning.render.layer;
 
 import com.mojang.authlib.GameProfile;
+import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.RenderLivingBaseObject;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
@@ -11,6 +12,7 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
 import net.minecraft.client.renderer.entity.layers.LayerElytra;
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -62,6 +64,7 @@ public class ItemLayerRender extends LayerRender
 
     public void layer(SkinningEntitiesRender skinningentitiesrender, float partialTicks)
     {
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.skinningentities.bothentitiesmemory;
 //        OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)((ClientEntitiesMemory)this.skinningentities.bothentitiesmemory).objectrender.memory_object_array[14];
 //        for (int v = 0; v < openglskinningmemory.index_int_array.length; ++v)
 //        {
@@ -81,7 +84,7 @@ public class ItemLayerRender extends LayerRender
         this.renderHeldItem(skinningentitiesrender, this.skinningentities.getHeldItemMainhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, this.iv_int_array[2], this.iv_int_array[3]);
         this.renderHeldItem(skinningentitiesrender, this.skinningentities.getHeldItemOffhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, this.iv_int_array[0], this.iv_int_array[1]);
 //        this.renderHeldItem(skinningentitiesrender, this.skinningentities.bothentitiesmemory.skinninginventory.armor_itemstack_nonnulllist.get(4), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, this.iv_int_array[12], this.iv_int_array[13]);
-        this.renderHeldItem(skinningentitiesrender, this.skinningentities.bothentitiesmemory.skinninginventory.armor_itemstack_nonnulllist.get(4), ItemCameraTransforms.TransformType.GROUND, this.iv_int_array[10], this.iv_int_array[11]);
+        this.renderHeldItem(skinningentitiesrender, cliententitiesmemory.mouth_itemstack, ItemCameraTransforms.TransformType.GROUND, this.iv_int_array[10], this.iv_int_array[11]);
 
         this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.HEAD, this.iv_int_array[4], this.iv_int_array[5], partialTicks);
         this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.CHEST, this.iv_int_array[6], this.iv_int_array[7], partialTicks);
@@ -200,7 +203,7 @@ public class ItemLayerRender extends LayerRender
             }
             else
             {
-                GL11.glTranslatef(0.0F, 0.25F, 0.0F);
+                GL11.glTranslatef(this.transform_float_array[-(entityequipmentslot.getIndex() - 3) * 3], 0.25F, 0.0F);
             }
 
             GL11.glScalef(0.25F, 0.25F, 0.25F);
@@ -208,16 +211,27 @@ public class ItemLayerRender extends LayerRender
         }
         else
         {
-            if (entityequipmentslot == EntityEquipmentSlot.HEAD)
+            GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+            if (item == Items.BONE)
             {
-                GL11.glTranslatef(0.0F, -0.1F, -0.34F);
+                GL11.glTranslatef(0.0F, -0.36F, 0.275F);
+            }
+
+            if (item == Item.getItemFromBlock(Blocks.GLASS))
+            {
+                GL11.glScalef(0.55F, 0.55F, 0.55F);
+                GL11.glTranslatef(0.0F, -0.4F, 0.0F);
             }
             else
             {
-                GL11.glTranslatef(0.0F, 0.1F, 0.0F);
+                GL11.glScalef(0.25F, 0.25F, 0.25F);
             }
+//            if (entityequipmentslot != EntityEquipmentSlot.HEAD)
+//            {
+//                GL11.glTranslatef(0.0F, 0.0F, 0.1F);
+//            }
+            GL11.glTranslatef(this.transform_float_array[-(entityequipmentslot.getIndex() - 3) * 3], 0.0F, 0.0F);
 
-            GL11.glScalef(0.25F, 0.25F, 0.25F);
             Minecraft.getMinecraft().getItemRenderer().renderItem(this.skinningentities, itemstack, ItemCameraTransforms.TransformType.HEAD);
         }
 

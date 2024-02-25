@@ -41,6 +41,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
@@ -64,6 +65,8 @@ import static com.nali.small.world.ChunkCallBack.CHUNK_MAP;
 public abstract class SkinningEntities extends EntityLivingBase
 {
     public BothEntitiesMemory bothentitiesmemory;
+
+    public static DataParameter<ItemStack> MOUTH_ITEMSTACK_DATAPARAMETER = EntityDataManager.<ItemStack>createKey(SkinningEntities.class, DataSerializers.ITEM_STACK);
 
     public SkinningEntities(World world)
     {
@@ -123,6 +126,8 @@ public abstract class SkinningEntities extends EntityLivingBase
         {
             this.dataManager.register(float_dataparameter, 0.0F);
         }
+
+        this.dataManager.register(MOUTH_ITEMSTACK_DATAPARAMETER, ItemStack.EMPTY);
     }
 
     @Override
@@ -372,6 +377,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     {
         super.onUpdate();
 
+        EntityDataManager entitydatamanager = this.getDataManager();
         if (this.world.isRemote)
         {
             ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
@@ -379,6 +385,7 @@ public abstract class SkinningEntities extends EntityLivingBase
             if (!cliententitiesmemory.fake)
             {
                 this.updateClientObject();
+                cliententitiesmemory.mouth_itemstack = entitydatamanager.get(MOUTH_ITEMSTACK_DATAPARAMETER);
             }
 
             this.updateClient();
@@ -386,8 +393,14 @@ public abstract class SkinningEntities extends EntityLivingBase
         else
         {
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
-            EntityDataManager entitydatamanager = this.getDataManager();
             DataParameter<Integer>[] integer_dataparameter = this.getIntegerDataParameterArray();
+
+            ItemStack mouth_itemstack = serverentitiesmemory.skinninginventory.offset_itemstack_nonnulllist.get(0);
+            if (mouth_itemstack != serverentitiesmemory.current_mouth_itemstack)
+            {
+                serverentitiesmemory.current_mouth_itemstack = mouth_itemstack;
+                entitydatamanager.set(MOUTH_ITEMSTACK_DATAPARAMETER, mouth_itemstack);
+            }
 
             if (!CHUNK_MAP.containsKey(this))
             {

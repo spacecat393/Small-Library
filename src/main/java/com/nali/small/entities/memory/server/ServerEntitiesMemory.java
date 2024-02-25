@@ -4,6 +4,7 @@ import com.nali.data.BothData;
 import com.nali.small.entities.bytes.WorkBytes;
 import com.nali.small.entities.memory.BothEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
+import net.minecraft.item.ItemStack;
 
 import java.util.Map;
 import java.util.UUID;
@@ -22,6 +23,7 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
     public SkinningEntities skinningentities;
 
     public EntitiesAIMemory entitiesaimemory;
+    public ItemStack current_mouth_itemstack;
 
     public ServerEntitiesMemory(BothData bothdata, WorkBytes workbytes)
     {
