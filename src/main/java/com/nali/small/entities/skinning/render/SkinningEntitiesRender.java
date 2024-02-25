@@ -19,9 +19,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
-import static com.nali.small.entities.EntitiesMath.interpolateRotation;
-import static com.nali.small.entities.skinning.render.SkinningEntitiesRenderMath.generateRainbowColor;
-import static com.nali.small.entities.skinning.render.SkinningEntitiesRenderMath.multiplyVec4Mat4;
+import static com.nali.small.entities.skinning.render.SkinningEntitiesRenderMath.*;
 import static com.nali.system.opengl.memory.OpenGLCurrentMemory.GL_CURRENT_COLOR;
 import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_FIXED_PIPE_FLOATBUFFER;
 

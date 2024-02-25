@@ -7,7 +7,6 @@ import com.nali.small.data.SakuraData;
 import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
-import com.nali.small.entities.skinning.render.layer.ItemLayerRender;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.player.*;
 import com.nali.small.networks.NetworksRegistry;
@@ -71,7 +70,7 @@ public class PlayerGui extends MixGui
         this.message_state = -1;
         this.render_text = false;
         //
-        this.message_state = 1;
+//        this.message_state = 1;
 //        if (this.mouse_clicked == 0)
 //        {
 //            ++ItemLayerRender.DEBUG_V;
@@ -80,11 +79,11 @@ public class PlayerGui extends MixGui
 //        {
 //            --ItemLayerRender.DEBUG_V;
 //        }
-        if (!(GUIFEATURESLOADER instanceof DebugGUIFeatures))
-        {
-            GUIFEATURESLOADER = new DebugGUIFeatures(this);
-        }
-        this.render_text = true;
+//        if (!(GUIFEATURESLOADER instanceof DebugGUIFeatures))
+//        {
+//            GUIFEATURESLOADER = new DebugGUIFeatures(this);
+//        }
+//        this.render_text = true;
         //
 
         super.drawScreen(mouseX, mouseY, partialTicks);
@@ -390,33 +389,33 @@ public class PlayerGui extends MixGui
                 }
                 case '\r':
                 {
-                    if (this.message_state == 1)
-                    {
-                        String[] string_array = MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString().split(" ");
-                        int o = 0;
-                        for (String new_string : string_array)
-                        {
-                            try
-                            {
-                                int v = Integer.parseInt(new_string);
-                                if (o == 0)
-                                {
-                                    ItemLayerRender.DEBUG_V = v;
-                                }
-                                else if (o == 1)
-                                {
-                                    ItemLayerRender.DEBUG_I = v;
-                                }
-                                ++o;
-                            }
-                            catch (Exception ignored)
-                            {
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
+//                    if (this.message_state == 1)
+//                    {
+//                        String[] string_array = MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString().split(" ");
+//                        int o = 0;
+//                        for (String new_string : string_array)
+//                        {
+//                            try
+//                            {
+//                                int v = Integer.parseInt(new_string);
+//                                if (o == 0)
+//                                {
+//                                    ItemLayerRender.DEBUG_V = v;
+//                                }
+//                                else if (o == 1)
+//                                {
+//                                    ItemLayerRender.DEBUG_I = v;
+//                                }
+//                                ++o;
+//                            }
+//                            catch (Exception ignored)
+//                            {
+//                                break;
+//                            }
+//                        }
+//                    }
+//                    else
+//                    {
 //                    switch (this.message_state)
 //                    {
 //                        case 0:
@@ -449,7 +448,7 @@ public class PlayerGui extends MixGui
 //                        }
 //                    }
 //
-                    }
+//                    }
                     MESSAGE_STRINGBUILDER.setLength(0);
                     MESSAGE_STRINGBUILDER.append("!");
                     break;

@@ -4,6 +4,7 @@ import com.nali.render.SkinningRender;
 import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
+import com.nali.system.opengl.memory.OpenGLCurrentMemory;
 import com.nali.system.opengl.memory.OpenGLSkinningMemory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityTippedArrow;
@@ -56,6 +57,18 @@ public class ArrowLayerRender extends LayerRender
                 float[] float_array = this.float_array_arraylist.get(j);
                 GL11.glPushMatrix();
                 skinningentitiesrender.apply3DSkinningVec4(skinningentitiesrender.get3DSkinning(this.skinningentities, x, y, z, int_array[0], int_array[1]));
+
+                float[] c_mat4 = skinningentitiesrender.getMat43DSkinning(this.skinningentities, int_array[0], int_array[1]);
+                float[] mat4 = new float[]
+                {
+                    c_mat4[0], c_mat4[4], c_mat4[8], 0,
+                    c_mat4[1], c_mat4[5], c_mat4[9], 0,
+                    c_mat4[2], c_mat4[6], c_mat4[10], 0,
+                    0, 0, 0, 1.0F
+                };
+                OpenGLCurrentMemory.setFloatBuffer(mat4);
+                GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
+                GL11.glMultMatrix(OpenGLCurrentMemory.OPENGL_FLOATBUFFER);
                 GL11.glScalef(0.5F, 0.5F, 0.5F);
 //                    RenderHelper.disableStandardItemLighting();
                 float f = float_array[0];

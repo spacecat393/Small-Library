@@ -9,6 +9,23 @@ import java.awt.*;
 @SideOnly(Side.CLIENT)
 public class SkinningEntitiesRenderMath
 {
+    public static float interpolateRotation(float prevYawOffset, float yawOffset, float partialTicks)
+    {
+        float f;
+
+        for (f = yawOffset - prevYawOffset; f < -180.0F; f += 360.0F)
+        {
+            ;
+        }
+
+        while (f >= 180.0F)
+        {
+            f -= 360.0F;
+        }
+
+        return prevYawOffset + partialTicks * f;
+    }
+
     public static float[] multiplyVec4Mat4(float[] vec4, float[] mat4)
     {
         float[] result = new float[4];

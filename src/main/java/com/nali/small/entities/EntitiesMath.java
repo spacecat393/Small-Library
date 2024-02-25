@@ -39,23 +39,6 @@ public class EntitiesMath
 //        return (width + height + minimum_distance) * (width + height + minimum_distance);
 //    }
 
-    public static float interpolateRotation(float prevYawOffset, float yawOffset, float partialTicks)
-    {
-        float f;
-
-        for (f = yawOffset - prevYawOffset; f < -180.0F; f += 360.0F)
-        {
-            ;
-        }
-
-        while (f >= 180.0F)
-        {
-            f -= 360.0F;
-        }
-
-        return prevYawOffset + partialTicks * f;
-    }
-
     @SideOnly(Side.CLIENT)
     public static int rayAllTargetsView(Entity player, AxisAlignedBB[] axisalignedbb_array, byte max)
     {
