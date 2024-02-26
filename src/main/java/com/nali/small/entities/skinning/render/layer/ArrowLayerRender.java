@@ -51,7 +51,8 @@ public class ArrowLayerRender extends LayerRender
                 this.float_array_arraylist.subList(i, this.float_array_arraylist.size()).clear();
             }
 
-//            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.skinningentities.bothentitiesmemory;
+            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.skinningentities.bothentitiesmemory;
+            SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
 //            cliententitiesmemory.objectrender.takeDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
 //            cliententitiesmemory.objectrender.setDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
 
@@ -60,9 +61,9 @@ public class ArrowLayerRender extends LayerRender
                 int[] int_array = this.index_int_array_arraylist.get(j);
                 float[] float_array = this.float_array_arraylist.get(j);
                 GL11.glPushMatrix();
-                skinningentitiesrender.apply3DSkinningVec4(skinningentitiesrender.get3DSkinning(this.skinningentities, x, y, z, int_array[0], int_array[1]));
+                skinningentitiesrender.apply3DSkinningVec4(skinningentitiesrender.get3DSkinning(skinningrender, x, y, z, int_array[0], int_array[1]));
 
-                float[] c_mat4 = skinningentitiesrender.getMat43DSkinning(this.skinningentities, int_array[0], int_array[1]);
+                float[] c_mat4 = skinningentitiesrender.getMat43DSkinning(skinningrender, int_array[0], int_array[1]);
                 float[] mat4 = new float[]
                 {
                     c_mat4[0], c_mat4[4], c_mat4[8], 0,

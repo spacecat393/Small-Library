@@ -1,6 +1,7 @@
 package com.nali.small.entities.skinning.render.layer;
 
 import com.mojang.authlib.GameProfile;
+import com.nali.render.SkinningRender;
 import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.RenderLivingBaseObject;
@@ -109,13 +110,14 @@ public class ItemLayerRender extends LayerRender
         if (!itemstack.isEmpty())
         {
             ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.skinningentities.bothentitiesmemory;
+            SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
             if (((cliententitiesmemory.sync_byte_array[0] >> this.index) & 1) == 0)
             {
-                float[] c_vec4 = skinningentitiesrender.get3DSkinning(this.skinningentities, this.x, this.y, this.z, i, v);
+                float[] c_vec4 = skinningentitiesrender.get3DSkinning(skinningrender, this.x, this.y, this.z, i, v);
                 GL11.glPushMatrix();
                 skinningentitiesrender.apply3DSkinningVec4(c_vec4);
 
-                float[] c_mat4 = skinningentitiesrender.getMat43DSkinning(this.skinningentities, i, v);
+                float[] c_mat4 = skinningentitiesrender.getMat43DSkinning(skinningrender, i, v);
                 float[] mat4 = new float[]
                 {
                     c_mat4[0], c_mat4[4], c_mat4[8], 0,
@@ -140,12 +142,12 @@ public class ItemLayerRender extends LayerRender
                 }
                 else
                 {
-                    GL11.glTranslatef(0.0F, -0.1F, 0.01F);
+                    GL11.glTranslatef(0.0F, -0.1F * 0.5F, 0.01F * 0.5F);
     //                GL11.glRotatef(this.rotation_float_array[10], 0.0F, 1.0F, 0.0F);
     //                GL11.glRotatef(this.rotation_float_array[11], 1.0F, 0.0F, 0.0F);
                 }
 
-                GL11.glScalef(0.4F, 0.4F, 0.4F);
+                GL11.glScalef(0.4F * 0.5F, 0.4F * 0.5F, 0.4F * 0.5F);
                 Minecraft.getMinecraft().getItemRenderer().renderItemSide(this.skinningentities, itemstack, transformtype, left_hand);
                 GL11.glPopMatrix();
             }
@@ -157,17 +159,18 @@ public class ItemLayerRender extends LayerRender
     public void renderArmor(SkinningEntitiesRender skinningentitiesrender, EntityEquipmentSlot entityequipmentslot, int i, int v, float partialTicks)
     {
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.skinningentities.bothentitiesmemory;
+        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
         if (((cliententitiesmemory.sync_byte_array[0] >> this.index) & 1) == 0)
         {
             ItemStack itemstack = this.skinningentities.getItemStackFromSlot(entityequipmentslot);
             GL_CULL_FACE = GL11.glIsEnabled(GL11.GL_CULL_FACE);
             GL11.glDisable(GL11.GL_CULL_FACE);
 
-            float[] c_vec4 = skinningentitiesrender.get3DSkinning(this.skinningentities, this.x, this.y, this.z, i, v);
+            float[] c_vec4 = skinningentitiesrender.get3DSkinning(skinningrender, this.x, this.y, this.z, i, v);
             GL11.glPushMatrix();
             skinningentitiesrender.apply3DSkinningVec4(c_vec4);
 
-            float[] c_mat4 = skinningentitiesrender.getMat43DSkinning(this.skinningentities, i, v);
+            float[] c_mat4 = skinningentitiesrender.getMat43DSkinning(skinningrender, i, v);
             float[] mat4 = new float[]
             {
                 c_mat4[0], c_mat4[4], c_mat4[8], 0,
@@ -183,14 +186,14 @@ public class ItemLayerRender extends LayerRender
             if (item instanceof ItemArmor)
             {
                 this.setArmor(entityequipmentslot.getIndex());
-                GL11.glScalef(0.08F, 0.08F, 0.08F);
+                GL11.glScalef(0.08F * 0.5F, 0.08F * 0.5F, 0.08F * 0.5F);
                 ((IMixinLayerArmorBase)LAYERBIPEDARMOR).GOrenderArmorLayer(this.skinningentities, this.skinningentities.limbSwing, this.skinningentities.limbSwingAmount, partialTicks, RENDERLIVINGBASEOBJECT.handleRotationFloat(this.skinningentities, partialTicks), 0.0F, 0.0F, 1.0F, entityequipmentslot);
             }
             else if (itemstack.getItem() == Items.ELYTRA)
             {
                 this.setArmor(entityequipmentslot.getIndex());
-                GL11.glTranslatef(0.0F, 1.0F, 0.0F);
-                GL11.glScalef(0.035F, 0.035F, 0.035F);
+                GL11.glTranslatef(0.0F, 1.0F * 0.5F, 0.0F);
+                GL11.glScalef(0.035F * 0.5F, 0.035F * 0.5F, 0.035F * 0.5F);
                 LAYERELYTRA.doRenderLayer(this.skinningentities, this.skinningentities.limbSwing, this.skinningentities.limbSwingAmount, partialTicks, RENDERLIVINGBASEOBJECT.handleRotationFloat(this.skinningentities, partialTicks), 0.0F, 0.0F, 1.0F);
             }
             else if (item == Items.SKULL)
@@ -226,7 +229,7 @@ public class ItemLayerRender extends LayerRender
                     GL11.glTranslatef(this.transform_float_array[-(entityequipmentslot.getIndex() - 3) * 3], 0.25F, 0.0F);
                 }
 
-                GL11.glScalef(0.25F, 0.25F, 0.25F);
+                GL11.glScalef(0.25F * 0.5F, 0.25F * 0.5F, 0.25F * 0.5F);
                 TileEntitySkullRenderer.instance.renderSkull(-0.5F, 0.0F, -0.5F, EnumFacing.UP, 180.0F, itemstack.getMetadata(), gameprofile, -1, this.skinningentities.limbSwing);
             }
             else
@@ -234,17 +237,17 @@ public class ItemLayerRender extends LayerRender
                 GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
                 if (item == Items.BONE)
                 {
-                    GL11.glTranslatef(0.0F, -0.36F, 0.275F);
+                    GL11.glTranslatef(0.0F, -0.36F * 0.5F, 0.275F * 0.5F);
                 }
 
                 if (item == Item.getItemFromBlock(Blocks.GLASS))
                 {
-                    GL11.glScalef(0.55F, 0.55F, 0.55F);
-                    GL11.glTranslatef(0.0F, -0.4F, 0.0F);
+                    GL11.glScalef(0.55F * 0.5F, 0.55F * 0.5F, 0.55F * 0.5F);
+                    GL11.glTranslatef(0.0F, -0.4F * 0.5F, 0.0F);
                 }
                 else
                 {
-                    GL11.glScalef(0.25F, 0.25F, 0.25F);
+                    GL11.glScalef(0.25F * 0.5F, 0.25F * 0.5F, 0.25F * 0.5F);
                 }
     //            if (entityequipmentslot != EntityEquipmentSlot.HEAD)
     //            {

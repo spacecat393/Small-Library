@@ -158,11 +158,18 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
         GL11.glPopMatrix();
 
+        GL11.glPushMatrix();
+
+        GL11.glTranslated(ox, oy, oz);
+        GL11.glScalef(skinningrender.scale, skinningrender.scale, skinningrender.scale);
+        GL11.glTranslated(-ox, -oy, -oz);
         cliententitiesmemory.itemlayerrender.x = (float)ox;
         cliententitiesmemory.itemlayerrender.y = (float)oy;
         cliententitiesmemory.itemlayerrender.z = (float)oz;
         cliententitiesmemory.itemlayerrender.layer(this, partialTicks);
         cliententitiesmemory.arrowlayerrender.layer(this, (float)ox, (float)oy, (float)oz, partialTicks);
+
+        GL11.glPopMatrix();
 
         super.doRender(skinningentities, ox, oy, oz, entityYaw, partialTicks);
     }
@@ -190,10 +197,8 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
     public abstract void multiplyAnimation(T skinningentities);
 
-    public float[] get3DSkinning(T skinningentities, float x, float y, float z, int i, int v)
+    public float[] get3DSkinning(SkinningRender skinningrender, float x, float y, float z, int i, int v)
     {
-        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
-        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
         OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[i];
 
         int vi = openglskinningmemory.index_int_array[v] * 3;
@@ -246,13 +251,13 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
             }
         }
 
-        main_vec4_float_array = multiplyVec4Mat4(main_vec4_float_array, new float[]
-        {
-            skinningrender.scale, 0.0F, 0.0F, 0.0F,
-            0.0F, skinningrender.scale, 0.0F, 0.0F,
-            0.0F, 0.0F, skinningrender.scale, 0.0F,
-            0.0F, 0.0F, 0.0F, 1.0F,
-        });
+//        main_vec4_float_array = multiplyVec4Mat4(main_vec4_float_array, new float[]
+//        {
+//            skinningrender.scale, 0.0F, 0.0F, 0.0F,
+//            0.0F, skinningrender.scale, 0.0F, 0.0F,
+//            0.0F, 0.0F, skinningrender.scale, 0.0F,
+//            0.0F, 0.0F, 0.0F, 1.0F,
+//        });
         main_vec4_float_array = multiplyVec4Mat4(main_vec4_float_array, new Quaternion(-1.571F, 0.0F, 0.0F).getM4x4().mat);
         main_vec4_float_array[0] += x;
         main_vec4_float_array[1] += y;
@@ -262,10 +267,8 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         return main_vec4_float_array;
     }
 
-    public float[] getMat43DSkinning(T skinningentities, int i, int v)
+    public float[] getMat43DSkinning(SkinningRender skinningrender, int i, int v)
     {
-        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
-        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
         OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[i];
 
         byte max_joints = openglskinningmemory.max_joints;

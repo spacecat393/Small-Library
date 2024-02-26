@@ -811,6 +811,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         this.rotationYaw = playwith_skinningentities.rotationYaw;
         this.rotationPitch = playwith_skinningentities.rotationPitch;
         this.renderYawOffset = playwith_skinningentities.renderYawOffset;
+        this.fallDistance = 0;
     }
 
     public void updateClientObject()
