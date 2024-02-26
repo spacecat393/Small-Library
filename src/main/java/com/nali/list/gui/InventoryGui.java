@@ -26,6 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.io.IOException;
 
 import static com.nali.small.render.RenderHelper.DATALOADER;
@@ -841,13 +842,37 @@ public class InventoryGui extends MixGui
 
         if (PAGE == 0)
         {
+            OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
+            GL11.glGetFloat(GL11.GL_CURRENT_COLOR, OPENGL_FIXED_PIPE_FLOATBUFFER);
+            GL_CURRENT_COLOR[0] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
+            GL_CURRENT_COLOR[1] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(1);
+            GL_CURRENT_COLOR[2] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(2);
+            GL_CURRENT_COLOR[3] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(3);
+            Color color = generateRainbowColor();
+            float red = color.getRed() / 255.0F;
+            float green = color.getGreen() / 255.0F;
+            float blue = color.getBlue() / 255.0F;
+            float alpha = 1.0F;
             for (int i = 36; i < 63; ++i)
             {
                 Slot slot = this.inventorySlots.inventorySlots.get(i);
 
                 if (slot.getStack().isEmpty())
                 {
+                    boolean crafting = i == 36 + 6 || i == 36 + 7 || i == 36 + 8 ||
+                    i == 36 + 15 || i == 36 + 16 || i == 36 + 17 ||
+                    i == 36 + 24 || i == 36 + 25 || i == 36 + 26;
+                    if (crafting)
+                    {
+                        GL11.glColor4f(red, green, blue, alpha);
+                    }
+
                     this.drawTexturedModalRect(this.guiLeft + 4 + slot.xPos, this.guiTop + 5 + slot.yPos, 30, 14, 8, 6);
+
+                    if (crafting)
+                    {
+                        GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
+                    }
                 }
             }
         }
@@ -861,9 +886,17 @@ public class InventoryGui extends MixGui
         {
             case 0:
             {
+//                int i = 0;
                 Slot slot = this.inventorySlots.inventorySlots.get(63);
                 if (slot.getStack().isEmpty())
                 {
+//                    int x = this.guiLeft + slot.xPos;
+//                    int y = this.guiTop + slot.yPos;
+//                    if (mouseX >= x && mouseY >= y && mouseX <= x + 16 && mouseY <= y + 16)
+//                    {
+//                        this.drawTexturedModalRect(x + 13, y + 13, 252, 0, 3, 3);
+//                        i++;
+//                    }
                     this.drawTexturedModalRect(this.guiLeft + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 104, 14, 14);
                 }
                 slot = this.inventorySlots.inventorySlots.get(64);

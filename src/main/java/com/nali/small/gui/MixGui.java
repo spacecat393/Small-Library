@@ -299,15 +299,18 @@ public abstract class MixGui extends GuiContainer
         return uuid_string.length() == 36 && pattern.matcher(uuid_string).matches();
     }
 
-    public static int generateRainbowColor()
+    public static Color generateRainbowColor()
     {
-        Color color = Color.getHSBColor((Minecraft.getSystemTime()/*System.currentTimeMillis()*/ % 3600) / 3600.0F, 1.0F, 1.0F);
+        return Color.getHSBColor((Minecraft.getSystemTime()/*System.currentTimeMillis()*/ % 3600) / 3600.0F, 1.0F, 1.0F);
+    }
 
+    public static int getRainbowColor4()
+    {
+        Color color = generateRainbowColor();
         int red = color.getRed();
         int green = color.getGreen();
         int blue = color.getBlue();
         int alpha = 255;
-
         return (alpha << 24) | (red << 16) | (green << 8) | blue;
     }
 }

@@ -46,7 +46,7 @@ public class ClientEntitiesMemory extends BothEntitiesMemory
     public SkinningEntitiesPat skinningentitiespat;
 
     @SideOnly(Side.CLIENT)
-    public ItemStack mouth_itemstack;
+    public ItemStack mouth_itemstack = ItemStack.EMPTY;
 
     public ClientEntitiesMemory(BothData bothdata, WorkBytes workbytes)
     {
