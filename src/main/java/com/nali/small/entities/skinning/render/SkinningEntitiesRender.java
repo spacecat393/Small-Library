@@ -16,12 +16,14 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL14;
+import org.lwjgl.opengl.GL20;
 
 import java.awt.*;
 
 import static com.nali.small.entities.skinning.render.SkinningEntitiesRenderMath.*;
-import static com.nali.system.opengl.memory.OpenGLCurrentMemory.GL_CURRENT_COLOR;
-import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_FIXED_PIPE_FLOATBUFFER;
+import static com.nali.system.opengl.memory.OpenGLCurrentMemory.*;
+import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_INTBUFFER;
 
 @SideOnly(Side.CLIENT)
 public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends Render<T>
@@ -75,8 +77,25 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         {
             GL11.glPushMatrix();
 //            GlStateManager.disableTexture2D();
-//            GlStateManager.enableBlend();
-//            GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GL_BLEND = GL11.glIsEnabled(GL11.GL_BLEND);
+            GL11.glEnable(GL11.GL_BLEND);
+
+            GL11.glGetInteger(GL20.GL_BLEND_EQUATION_RGB, OPENGL_INTBUFFER);
+            GL_BLEND_EQUATION_RGB = OPENGL_INTBUFFER.get(0);
+            GL11.glGetInteger(GL20.GL_BLEND_EQUATION_ALPHA, OPENGL_INTBUFFER);
+            GL_BLEND_EQUATION_ALPHA = OPENGL_INTBUFFER.get(0);
+            GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
+
+            GL11.glGetInteger(GL14.GL_BLEND_SRC_RGB, OPENGL_INTBUFFER);
+            GL_BLEND_SRC_RGB = OPENGL_INTBUFFER.get(0);
+            GL11.glGetInteger(GL14.GL_BLEND_SRC_ALPHA, OPENGL_INTBUFFER);
+            GL_BLEND_SRC_ALPHA = OPENGL_INTBUFFER.get(0);
+            GL11.glGetInteger(GL14.GL_BLEND_DST_RGB, OPENGL_INTBUFFER);
+            GL_BLEND_DST_RGB = OPENGL_INTBUFFER.get(0);
+            GL11.glGetInteger(GL14.GL_BLEND_DST_ALPHA, OPENGL_INTBUFFER);
+            GL_BLEND_DST_ALPHA = OPENGL_INTBUFFER.get(0);
+            GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+
             GL11.glTranslated(-skinningentities.posX, -skinningentities.posY, -skinningentities.posZ);
             Color color = generateRainbowColor();
             float r = color.getRed() / 255.0F, g = color.getGreen() / 255.0F, b = color.getBlue() / 255.0F;
@@ -92,9 +111,20 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
                 RenderGlobal.drawSelectionBoundingBox(axisalignedbb, r, g, b, 1.0F);
             }
 
+            if (GL_BLEND)
+            {
+                GL11.glEnable(GL11.GL_BLEND);
+            }
+            else
+            {
+                GL11.glDisable(GL11.GL_BLEND);
+            }
+
+            GL20.glBlendEquationSeparate(GL_BLEND_EQUATION_RGB, GL_BLEND_EQUATION_ALPHA);
+            GL14.glBlendFuncSeparate(GL_BLEND_SRC_RGB, GL_BLEND_DST_RGB, GL_BLEND_SRC_ALPHA, GL_BLEND_DST_ALPHA);
+
 //            GlStateManager.glLineWidth(1.0F);
 //            GlStateManager.enableTexture2D();
-//            GlStateManager.disableBlend();
             GL11.glPopMatrix();
         }
         //

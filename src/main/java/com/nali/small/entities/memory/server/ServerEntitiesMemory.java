@@ -24,6 +24,7 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
 
     public EntitiesAIMemory entitiesaimemory;
     public ItemStack current_mouth_itemstack;
+    public byte[] sync_byte_array;
 
     public ServerEntitiesMemory(BothData bothdata, WorkBytes workbytes)
     {

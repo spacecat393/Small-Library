@@ -82,6 +82,7 @@ public class InventoryGui extends MixGui
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+        this.block_mouse_clicked = false;
         this.message_state = -1;
         this.render_text = false;
 
@@ -886,49 +887,48 @@ public class InventoryGui extends MixGui
         {
             case 0:
             {
-//                int i = 0;
                 Slot slot = this.inventorySlots.inventorySlots.get(63);
                 if (slot.getStack().isEmpty())
                 {
-//                    int x = this.guiLeft + slot.xPos;
-//                    int y = this.guiTop + slot.yPos;
-//                    if (mouseX >= x && mouseY >= y && mouseX <= x + 16 && mouseY <= y + 16)
-//                    {
-//                        this.drawTexturedModalRect(x + 13, y + 13, 252, 0, 3, 3);
-//                        i++;
-//                    }
                     this.drawTexturedModalRect(this.guiLeft + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 104, 14, 14);
                 }
+                this.drawHideIcon(slot, (byte)0, mouseX, mouseY);
                 slot = this.inventorySlots.inventorySlots.get(64);
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 118, 14, 14);
                 }
+                this.drawHideIcon(slot, (byte)1, mouseX, mouseY);
                 slot = this.inventorySlots.inventorySlots.get(65);
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 48, 14, 14);
                 }
+                this.drawHideIcon(slot, (byte)2, mouseX, mouseY);
                 slot = this.inventorySlots.inventorySlots.get(66);
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 62, 14, 14);
                 }
+                this.drawHideIcon(slot, (byte)3, mouseX, mouseY);
                 slot = this.inventorySlots.inventorySlots.get(67);
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 3 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 76, 10, 14);
                 }
+                this.drawHideIcon(slot, (byte)4, mouseX, mouseY);
                 slot = this.inventorySlots.inventorySlots.get(68);
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 90, 14, 14);
                 }
+                this.drawHideIcon(slot, (byte)5, mouseX, mouseY);
                 slot = this.inventorySlots.inventorySlots.get(69);
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 1 + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 132, 12, 14);
                 }
+                this.drawHideIcon(slot, (byte)6, mouseX, mouseY);
 
                 break;
             }
@@ -1236,6 +1236,35 @@ public class InventoryGui extends MixGui
         {
             this.mouse_clicked = -1;
             this.mouse_released = state;
+        }
+    }
+
+    public void drawHideIcon(Slot slot, byte index, int mouseX, int mouseY)
+    {
+        int x = this.guiLeft + slot.xPos;
+        int y = this.guiTop + slot.yPos;
+        if (mouseX >= x && mouseY >= y && mouseX <= x + 16 && mouseY <= y + 16)
+        {
+            x += 12;
+            y += 12;
+            this.drawTexturedModalRect(x, y, 252, 0, 4, 4);
+
+            SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
+            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+            byte bit = cliententitiesmemory.sync_byte_array[0];
+            if (((bit >> index) & 1) == 1)
+            {
+                this.drawTexturedModalRect(x + 1, y + 1, 253, 4, 3, 3);
+            }
+
+            if (mouseX >= x && mouseY >= y && mouseX <= x + 4 && mouseY <= y + 4)
+            {
+                this.block_mouse_clicked = true;
+                if (this.mouse_released == 0)
+                {
+                    this.sendPacketUUIDByte(0, index);
+                }
+            }
         }
     }
 

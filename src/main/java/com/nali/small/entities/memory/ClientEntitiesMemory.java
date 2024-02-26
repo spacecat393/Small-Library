@@ -48,6 +48,9 @@ public class ClientEntitiesMemory extends BothEntitiesMemory
     @SideOnly(Side.CLIENT)
     public ItemStack mouth_itemstack = ItemStack.EMPTY;
 
+    @SideOnly(Side.CLIENT)
+    public byte[] sync_byte_array;
+
     public ClientEntitiesMemory(BothData bothdata, WorkBytes workbytes)
     {
         super(bothdata, workbytes);

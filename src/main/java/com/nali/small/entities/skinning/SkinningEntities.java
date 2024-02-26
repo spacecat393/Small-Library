@@ -89,6 +89,7 @@ public abstract class SkinningEntities extends EntityLivingBase
             cliententitiesmemory.objectrender = (ObjectRender)this.createObjectRender();
             cliententitiesmemory.work_byte_array = new byte[max_works];
             cliententitiesmemory.skinningentitiespat = new SkinningEntitiesPat(this);
+            cliententitiesmemory.sync_byte_array = new byte[bothdata.MaxSync()];
         }
         else
         {
@@ -102,6 +103,7 @@ public abstract class SkinningEntities extends EntityLivingBase
             serverentitiesmemory.main_work_byte_array = new byte[max_works];
             serverentitiesmemory.current_work_byte_array = new byte[max_works];
             serverentitiesmemory.frame_int_array = new int[this.getIntegerDataParameterArray().length];
+            serverentitiesmemory.sync_byte_array = new byte[bothdata.MaxSync()];
 
             this.createServer();
             this.getDataManager().set(this.getFloatDataParameterArray()[0], scale);
@@ -114,6 +116,12 @@ public abstract class SkinningEntities extends EntityLivingBase
     public void entityInit()
     {
         super.entityInit();
+
+        DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
+        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
+        {
+            this.dataManager.register(byte_dataparameter, (byte)0);
+        }
 
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
         for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
@@ -138,6 +146,13 @@ public abstract class SkinningEntities extends EntityLivingBase
         EntityDataManager entitydatamanager = this.getDataManager();
 
         int i = 0;
+
+        DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
+        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
+        {
+            nbttagcompound.setInteger("byte_" + i++, entitydatamanager.get(byte_dataparameter));
+        }
+        i = 0;
 
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
         for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
@@ -227,6 +242,13 @@ public abstract class SkinningEntities extends EntityLivingBase
             this.initFakeFrame();
             cliententitiesmemory.objectrender.scale = cliententitiesmemory.bothdata.Scale();
         }
+
+        DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
+        for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
+        {
+            entitydatamanager.set(byte_dataparameter, nbttagcompound.getByte("byte_" + i++));
+        }
+        i = 0;
 
         DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
         for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
@@ -384,6 +406,12 @@ public abstract class SkinningEntities extends EntityLivingBase
 
             if (!cliententitiesmemory.fake)
             {
+                DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
+                for (int i = 0; i < byte_dataparameter_array.length; ++i)
+                {
+                    cliententitiesmemory.sync_byte_array[i] = this.getDataManager().get(byte_dataparameter_array[i]);
+                }
+
                 this.updateClientObject();
                 cliententitiesmemory.mouth_itemstack = entitydatamanager.get(MOUTH_ITEMSTACK_DATAPARAMETER);
             }
@@ -958,6 +986,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     public abstract BothData createBothData();
     public abstract WorkBytes createWorkBytes();
     public abstract void createServer();
+    public abstract DataParameter<Byte>[] getByteDataParameterArray();
     public abstract DataParameter<Integer>[] getIntegerDataParameterArray();
     public abstract DataParameter<Float>[] getFloatDataParameterArray();
     @SideOnly(Side.CLIENT)

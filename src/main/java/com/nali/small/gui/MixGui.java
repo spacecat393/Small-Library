@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 public abstract class MixGui extends GuiContainer
 {
     public int mouse_released = -1, mouse_clicked = -1;
+    public boolean block_mouse_clicked;
 
     public static MixGui I;
     public static GUIFeaturesLoader GUIFEATURESLOADER;
@@ -50,7 +51,10 @@ public abstract class MixGui extends GuiContainer
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         this.mouse_clicked = mouseButton;
-        super.mouseClicked(mouseX, mouseY, mouseButton);
+        if (!this.block_mouse_clicked)
+        {
+            super.mouseClicked(mouseX, mouseY, mouseButton);
+        }
     }
 
     @Override
@@ -111,6 +115,17 @@ public abstract class MixGui extends GuiContainer
         BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
         BytesWriter.set(byte_array, i, 17);
         byte_array[21] = cliententitiesmemory.work_byte_array[i] == 1 ? (byte)0 : (byte)1;
+        NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
+    }
+
+    public void sendPacketUUIDByte(int i, byte bit)
+    {
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
+        byte[] byte_array = new byte[22];
+        byte_array[0] = 29;
+        BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
+        BytesWriter.set(byte_array, i, 17);
+        byte_array[21] = (byte)Math.pow(2, bit);
         NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 

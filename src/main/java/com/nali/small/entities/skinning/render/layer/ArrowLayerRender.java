@@ -51,6 +51,10 @@ public class ArrowLayerRender extends LayerRender
                 this.float_array_arraylist.subList(i, this.float_array_arraylist.size()).clear();
             }
 
+//            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.skinningentities.bothentitiesmemory;
+//            cliententitiesmemory.objectrender.takeDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
+//            cliententitiesmemory.objectrender.setDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
+
             for (int j = 0; j < i; ++j)
             {
                 int[] int_array = this.index_int_array_arraylist.get(j);
@@ -88,6 +92,7 @@ public class ArrowLayerRender extends LayerRender
                 skinningentitiesrender.getRenderManager().renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, partialTicks, false);
 //                    RenderHelper.enableStandardItemLighting();
                 GL11.glPopMatrix();
+//                cliententitiesmemory.objectrender.setDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
             }
         }
     }
