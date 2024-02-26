@@ -10,6 +10,7 @@
     "IMixinEntityCreeper",
     "IMixinEntityLivingBase",
     "IMixinEntityPlayer",
+    "IMixinItemFood",
     "IMixinWorldServer",
     "MixinCommandSummon",
     "MixinEntityLivingBase",
