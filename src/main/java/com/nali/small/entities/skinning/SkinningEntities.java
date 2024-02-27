@@ -240,7 +240,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         {
             ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
             this.initFakeFrame();
-            cliententitiesmemory.objectrender.scale = cliententitiesmemory.bothdata.Scale();
+            cliententitiesmemory.objectrender.entitiesrendermemory.scale = cliententitiesmemory.bothdata.Scale();
         }
 
         DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
@@ -400,13 +400,13 @@ public abstract class SkinningEntities extends EntityLivingBase
         super.onUpdate();
 
         EntityDataManager entitydatamanager = this.getDataManager();
+        DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
         if (this.world.isRemote)
         {
             ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
 
             if (!cliententitiesmemory.fake)
             {
-                DataParameter<Byte>[] byte_dataparameter_array = this.getByteDataParameterArray();
                 for (int i = 0; i < byte_dataparameter_array.length; ++i)
                 {
                     cliententitiesmemory.sync_byte_array[i] = this.getDataManager().get(byte_dataparameter_array[i]);
@@ -422,6 +422,11 @@ public abstract class SkinningEntities extends EntityLivingBase
         {
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
             DataParameter<Integer>[] integer_dataparameter = this.getIntegerDataParameterArray();
+
+            for (int i = 0; i < byte_dataparameter_array.length; ++i)
+            {
+                serverentitiesmemory.sync_byte_array[i] = this.getDataManager().get(byte_dataparameter_array[i]);
+            }
 
             ItemStack mouth_itemstack = serverentitiesmemory.skinninginventory.offset_itemstack_nonnulllist.get(0);
             if (mouth_itemstack != serverentitiesmemory.current_mouth_itemstack)
@@ -827,7 +832,7 @@ public abstract class SkinningEntities extends EntityLivingBase
             NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
         }
 
-        cliententitiesmemory.objectrender.scale = entitydatamanager.get(this.getFloatDataParameterArray()[0]);
+        cliententitiesmemory.objectrender.entitiesrendermemory.scale = entitydatamanager.get(this.getFloatDataParameterArray()[0]);
         this.updateRendering(entitydatamanager);
     }
 

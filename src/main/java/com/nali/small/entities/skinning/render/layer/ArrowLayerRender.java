@@ -61,7 +61,7 @@ public class ArrowLayerRender extends LayerRender
                 int[] int_array = this.index_int_array_arraylist.get(j);
                 float[] float_array = this.float_array_arraylist.get(j);
                 GL11.glPushMatrix();
-                skinningentitiesrender.apply3DSkinningVec4(skinningentitiesrender.get3DSkinning(skinningrender, x, y, z, int_array[0], int_array[1]));
+                skinningentitiesrender.apply3DSkinningVec4(skinningentitiesrender.get3DSkinning(skinningrender, x, y, z, 0, 0, 0, int_array[0], int_array[1]));
 
                 float[] c_mat4 = skinningentitiesrender.getMat43DSkinning(skinningrender, int_array[0], int_array[1]);
                 float[] mat4 = new float[]
@@ -74,7 +74,7 @@ public class ArrowLayerRender extends LayerRender
                 OpenGLCurrentMemory.setFloatBuffer(mat4);
                 GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
                 GL11.glMultMatrix(OpenGLCurrentMemory.OPENGL_FLOATBUFFER);
-                GL11.glScalef(0.5F, 0.5F, 0.5F);
+                GL11.glScalef(0.5F * 0.5F, 0.5F * 0.5F, 0.5F * 0.5F);
 //                    RenderHelper.disableStandardItemLighting();
                 float f = float_array[0];
                 float f1 = float_array[1];

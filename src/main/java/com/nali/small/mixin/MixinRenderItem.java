@@ -30,12 +30,24 @@ public abstract class MixinRenderItem
             MixItems mixitems = ((MixItems)stack.getItem());
             mixitems.render();
             ObjectRender objectrender = mixitems.getObjectRender();
-            objectrender.lig_b = 208.0F;
-            objectrender.lig_s = 240.0F;
+            objectrender.objectworlddraw.lig_b = -1.0F;
+//            objectrender.objectworlddraw.lig_b = 208.0F;
+//            objectrender.objectworlddraw.lig_s = 240.0F;
             GL11.glPopMatrix();
             ci.cancel();
         }
     }
+
+//    @Inject(method = "renderItemModelIntoGUI", at = @At("HEAD"))
+//    private void renderItemModelIntoGUI(ItemStack stack, int x, int y, IBakedModel bakedmodel, CallbackInfo ci)
+//    {
+//        if (stack.getItem() instanceof MixItems)
+//        {
+//            MixItems mixitems = ((MixItems)stack.getItem());
+//            ObjectRender objectrender = mixitems.getObjectRender();
+//            objectrender.objectworlddraw.lig_b = -1;
+//        }
+//    }
 
 //    @Inject(method = "renderItemIntoGUI", at = @At("HEAD"))
 //    private void renderItemIntoGUI(ItemStack stack, int x, int y, CallbackInfo ci)

@@ -38,8 +38,8 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
     {
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
         SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
-        skinningrender.should_render = super.shouldRender(skinningentities, camera, camX, camY, camZ);
-        return skinningrender.should_render;
+        skinningrender.entitiesrendermemory.should_render = super.shouldRender(skinningentities, camera, camX, camY, camZ);
+        return skinningrender.entitiesrendermemory.should_render;
     }
 
     @Override
@@ -129,12 +129,12 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         }
         //
 
-        GL11.glScalef(skinningrender.scale, skinningrender.scale, skinningrender.scale);
+        GL11.glScalef(skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale);
 //        float scale = (skinningrender.scale == 0 ? 1.0F : skinningrender.scale);
 //        this.shadowOpaque *= scale;
 //        this.shadowSize *= scale;
-        this.shadowOpaque *= skinningrender.scale;
-        this.shadowSize *= skinningrender.scale;
+        this.shadowOpaque *= skinningrender.entitiesrendermemory.scale;
+        this.shadowSize *= skinningrender.entitiesrendermemory.scale;
 
 //        GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT);
         boolean invisible = skinningentities.isInvisible() || skinningentities.isInvisibleToPlayer(Minecraft.getMinecraft().player);
@@ -161,7 +161,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         GL11.glPushMatrix();
 
         GL11.glTranslated(ox, oy, oz);
-        GL11.glScalef(skinningrender.scale, skinningrender.scale, skinningrender.scale);
+        GL11.glScalef(skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale);
         GL11.glTranslated(-ox, -oy, -oz);
         cliententitiesmemory.itemlayerrender.x = (float)ox;
         cliententitiesmemory.itemlayerrender.y = (float)oy;
@@ -179,10 +179,10 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
         SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
 
-        skinningrender.body_rot = (float)Math.toRadians(interpolateRotation(skinningentities.prevRenderYawOffset, skinningentities.renderYawOffset, partialTicks));
-        skinningrender.head_rot = (float)Math.toRadians(interpolateRotation(skinningentities.prevRotationYaw, skinningentities.rotationYaw, partialTicks));
-        skinningrender.net_head_yaw = skinningrender.head_rot - skinningrender.body_rot;
-        skinningrender.head_pitch = (float)Math.toRadians(skinningentities.prevRotationPitch + (skinningentities.rotationPitch - skinningentities.prevRotationPitch) * partialTicks);
+        skinningrender.entitiesrendermemory.body_rot = (float)Math.toRadians(interpolateRotation(skinningentities.prevRenderYawOffset, skinningentities.renderYawOffset, partialTicks));
+        skinningrender.entitiesrendermemory.head_rot = (float)Math.toRadians(interpolateRotation(skinningentities.prevRotationYaw, skinningentities.rotationYaw, partialTicks));
+        skinningrender.entitiesrendermemory.net_head_yaw = skinningrender.entitiesrendermemory.head_rot - skinningrender.entitiesrendermemory.body_rot;
+        skinningrender.entitiesrendermemory.head_pitch = (float)Math.toRadians(skinningentities.prevRotationPitch + (skinningentities.rotationPitch - skinningentities.prevRotationPitch) * partialTicks);
         skinningrender.timeline = partialTicks;
 
         skinningrender.initSkinning();
@@ -197,7 +197,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
     public abstract void multiplyAnimation(T skinningentities);
 
-    public float[] get3DSkinning(SkinningRender skinningrender, float x, float y, float z, int i, int v)
+    public float[] get3DSkinning(SkinningRender skinningrender, float x, float y, float z, float x0, float y0, float z0, int i, int v)
     {
         OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[i];
 
@@ -214,9 +214,9 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
             if (joints != -1)
             {
-                temp_vec4_float_array[0] = openglskinningmemory.vertices_float_array[vi];
-                temp_vec4_float_array[1] = openglskinningmemory.vertices_float_array[vi + 1];
-                temp_vec4_float_array[2] = openglskinningmemory.vertices_float_array[vi + 2];
+                temp_vec4_float_array[0] = openglskinningmemory.vertices_float_array[vi] + x0;
+                temp_vec4_float_array[1] = openglskinningmemory.vertices_float_array[vi + 1] + y0;
+                temp_vec4_float_array[2] = openglskinningmemory.vertices_float_array[vi + 2] + z0;
                 temp_vec4_float_array[3] = 1.0F;
 
                 OpenGLSkinningShaderMemory openglskinningshadermemory = (OpenGLSkinningShaderMemory)openglskinningmemory.shader;

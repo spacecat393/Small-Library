@@ -113,7 +113,7 @@ public class ItemLayerRender extends LayerRender
             SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
             if (((cliententitiesmemory.sync_byte_array[0] >> this.index) & 1) == 0)
             {
-                float[] c_vec4 = skinningentitiesrender.get3DSkinning(skinningrender, this.x, this.y, this.z, i, v);
+                float[] c_vec4 = skinningentitiesrender.get3DSkinning(skinningrender, this.x, this.y, this.z, 0, 0, 0, i, v);
                 GL11.glPushMatrix();
                 skinningentitiesrender.apply3DSkinningVec4(c_vec4);
 
@@ -166,7 +166,7 @@ public class ItemLayerRender extends LayerRender
             GL_CULL_FACE = GL11.glIsEnabled(GL11.GL_CULL_FACE);
             GL11.glDisable(GL11.GL_CULL_FACE);
 
-            float[] c_vec4 = skinningentitiesrender.get3DSkinning(skinningrender, this.x, this.y, this.z, i, v);
+            float[] c_vec4 = skinningentitiesrender.get3DSkinning(skinningrender, this.x, this.y, this.z, 0, 0, 0, i, v);
             GL11.glPushMatrix();
             skinningentitiesrender.apply3DSkinningVec4(c_vec4);
 

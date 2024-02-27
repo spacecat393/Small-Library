@@ -41,7 +41,7 @@ public class InventoryGui extends MixGui
     public static byte PAGE;
     public SkinningEntitiesRender skinningentitiesrender;
     public float px, py/*, rx, ry*/;
-    public BoxRender boxrender = new BoxRender(new BoxData(), DATALOADER);
+    public BoxRender boxrender = new BoxRender(null, new BoxData(), DATALOADER);
 
     public InventoryGui(IInventory iinventory, SkinningEntities skinningentities)
     {
@@ -71,11 +71,11 @@ public class InventoryGui extends MixGui
         this.ySize = 256;//206;
 //        this.boxrender.rx = 90.0F;
 //        this.boxrender.ry = 45.0F;
-        this.boxrender.rz = 45.0F * 3.0F;
+        this.boxrender.objectscreendraw.rz = 45.0F * 3.0F;
         float s = -3.5F;
-        this.boxrender.sx = s;
-        this.boxrender.sy = s;
-        this.boxrender.sz = s;
+        this.boxrender.objectscreendraw.sx = s;
+        this.boxrender.objectscreendraw.sy = s;
+        this.boxrender.objectscreendraw.sz = s;
 //        this.boxrender.sa = 0.9F;
     }
 
@@ -92,35 +92,36 @@ public class InventoryGui extends MixGui
         SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
         SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
-        if (!skinningrender.should_render)
+        if (!skinningrender.entitiesrendermemory.should_render)
         {
             this.skinningentitiesrender.updateData(skinningentities, this.mc.getRenderPartialTicks());
         }
 
 //        skinningrender.width = this.width;
 //        skinningrender.height = this.height;
-        skinningrender.x = this.guiLeft + 127.5F;
-        skinningrender.y = this.guiTop + 72;
+        skinningrender.objectscreendraw.x = this.guiLeft + 127.5F;
+        skinningrender.objectscreendraw.y = this.guiTop + 72;
 //        skinningrender.sx = s;
 //        skinningrender.sy = s;
 //        skinningrender.sz = s;
-        skinningrender.lig_b = 208.0F;
-        skinningrender.lig_s = 240.0F;
+//        skinningrender.objectworlddraw.lig_b = 208.0F;
+//        skinningrender.objectworlddraw.lig_s = 240.0F;
+        skinningrender.objectworlddraw.lig_b = -1.0F;
         skinningrender.objectscreendraw.renderScreen();
 
-        this.boxrender.x = this.guiLeft + 84 + 6.5F + 0.5F;
-        this.boxrender.y = this.guiTop + 33 + 18 + 18 + 6.5F + 2.5F;
+        this.boxrender.objectscreendraw.x = this.guiLeft + 84 + 6.5F + 0.5F;
+        this.boxrender.objectscreendraw.y = this.guiTop + 33 + 18 + 18 + 6.5F + 2.5F;
 
 //        GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT);
-        OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
-        GL11.glGetFloat(GL11.GL_CURRENT_COLOR, OPENGL_FIXED_PIPE_FLOATBUFFER);
-        GL_CURRENT_COLOR[0] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
-        GL_CURRENT_COLOR[1] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(1);
-        GL_CURRENT_COLOR[2] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(2);
-        GL_CURRENT_COLOR[3] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(3);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.9F);
+//        OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
+//        GL11.glGetFloat(GL11.GL_CURRENT_COLOR, OPENGL_FIXED_PIPE_FLOATBUFFER);
+//        GL_CURRENT_COLOR[0] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
+//        GL_CURRENT_COLOR[1] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(1);
+//        GL_CURRENT_COLOR[2] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(2);
+//        GL_CURRENT_COLOR[3] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(3);
+//        GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.9F);
         this.boxrender.objectscreendraw.renderScreen();
-        GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
+//        GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
 //        GL11.glPopAttrib();
 
         if (PAGE == 0)
@@ -147,7 +148,7 @@ public class InventoryGui extends MixGui
             {
 //                if (skinningentities != null)
 //                {
-                skinningrender.rz += ((mouseX - this.px) * 10.0F) * TD;
+                skinningrender.objectscreendraw.rz += ((mouseX - this.px) * 10.0F) * TD;
     //                skinningdata.screen_float_array[5] += ((mouseY - this.py) / 20.0F) * DataLoader.TD;
     //                ty = ;
     //                skinningdata.screen_float_array[12] = 0.476175F;

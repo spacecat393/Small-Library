@@ -12,18 +12,13 @@ public class SakuraRender extends ObjectRender
 {
     public SakuraRender(BothData bothdata, DataLoader dataloader)
     {
-        super(bothdata, dataloader);
+        super(null, bothdata, dataloader);
         this.texture_index_int_array[0] = 2;
         this.texture_index_int_array[1] = 3;
         float s = -5.0F;
-        this.sx = s;
-        this.sy = s;
-        this.sz = s;
-    }
-
-    @Override
-    public void setLightMapUniform(OpenGLObjectShaderMemory openglobjectshadermemory)
-    {
+        this.objectscreendraw.sx = s;
+        this.objectscreendraw.sy = s;
+        this.objectscreendraw.sz = s;
     }
 
     @Override
