@@ -26,8 +26,13 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
     public ItemStack current_mouth_itemstack;
     public byte[] sync_byte_array;
 
-    public ServerEntitiesMemory(BothData bothdata, WorkBytes workbytes)
+    public ServerEntitiesMemory(SkinningEntities skinningentities, BothData bothdata, WorkBytes workbytes)
     {
-        super(bothdata, workbytes);
+        super(skinningentities, bothdata, workbytes);
+        this.entitiesaimemory = new EntitiesAIMemory(skinningentities);
+        this.main_work_byte_array = new byte[workbytes.MAX_WORKS()];
+        this.current_work_byte_array = new byte[workbytes.MAX_WORKS()];
+        this.frame_int_array = new int[skinningentities.getIntegerDataParameterArray().length];
+        this.sync_byte_array = new byte[bothdata.MaxSync()];
     }
 }

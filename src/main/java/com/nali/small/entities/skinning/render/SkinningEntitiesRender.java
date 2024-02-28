@@ -50,6 +50,19 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
         GL11.glPushMatrix();
 
+        GL11.glTranslated(ox, oy, oz);
+        GL11.glScalef(skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale);
+        GL11.glTranslated(-ox, -oy, -oz);
+        cliententitiesmemory.itemlayerrender.x = (float)ox;
+        cliententitiesmemory.itemlayerrender.y = (float)oy;
+        cliententitiesmemory.itemlayerrender.z = (float)oz;
+        cliententitiesmemory.itemlayerrender.layer(this, partialTicks);
+        cliententitiesmemory.arrowlayerrender.layer(this, (float)ox, (float)oy, (float)oz, partialTicks);
+
+        GL11.glPopMatrix();
+
+        GL11.glPushMatrix();
+
         this.updateData(skinningentities, partialTicks);
 
 //        if (this.renderManager.isDebugBoundingBox() && !skinningentities.isInvisible() && !Minecraft.getMinecraft().isReducedDebug())
@@ -163,9 +176,9 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         GL11.glTranslated(ox, oy, oz);
         GL11.glScalef(skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale);
         GL11.glTranslated(-ox, -oy, -oz);
-        cliententitiesmemory.itemlayerrender.x = (float)ox;
-        cliententitiesmemory.itemlayerrender.y = (float)oy;
-        cliententitiesmemory.itemlayerrender.z = (float)oz;
+//        cliententitiesmemory.itemlayerrender.x = (float)ox;
+//        cliententitiesmemory.itemlayerrender.y = (float)oy;
+//        cliententitiesmemory.itemlayerrender.z = (float)oz;
         cliententitiesmemory.itemlayerrender.layer(this, partialTicks);
         cliententitiesmemory.arrowlayerrender.layer(this, (float)ox, (float)oy, (float)oz, partialTicks);
 

@@ -3,19 +3,14 @@ package com.nali.small.entities.skinning;
 import com.nali.data.BothData;
 import com.nali.list.messages.ClientMessage;
 import com.nali.list.messages.ServerMessage;
-import com.nali.render.ObjectRender;
 import com.nali.render.SkinningRender;
 import com.nali.small.Small;
 import com.nali.small.entities.EntitiesAttackHelper;
 import com.nali.small.entities.bytes.WorkBytes;
 import com.nali.small.entities.memory.BothEntitiesMemory;
 import com.nali.small.entities.memory.ClientEntitiesMemory;
-import com.nali.small.entities.memory.server.EntitiesAIMemory;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
-import com.nali.small.entities.skinning.render.layer.ArrowLayerRender;
-import com.nali.small.entities.skinning.render.layer.ItemLayerRender;
 import com.nali.small.entities.skinning.works.SkinningEntitiesBodyYaw;
-import com.nali.small.entities.skinning.works.SkinningEntitiesPat;
 import com.nali.small.mixin.IMixinEntityCreeper;
 import com.nali.small.mixin.IMixinEntityLivingBase;
 import com.nali.small.networks.NetworksRegistry;
@@ -75,35 +70,20 @@ public abstract class SkinningEntities extends EntityLivingBase
         BothData bothdata = this.createBothData();
         WorkBytes workbytes = this.createWorkBytes();
         float scale = bothdata.Scale();
-        int max_works = workbytes.MAX_WORKS();
 
         if (world.isRemote)
         {
-            ClientEntitiesMemory cliententitiesmemory = this.createClientEntitiesMemory(bothdata, workbytes);
-            this.bothentitiesmemory = cliententitiesmemory;
+            this.createClientEntitiesMemory(this, bothdata, workbytes);
             this.width = bothdata.Width() * scale;
             this.height = bothdata.Height() * scale;
-
-            cliententitiesmemory.arrowlayerrender = new ArrowLayerRender(this);
-            cliententitiesmemory.itemlayerrender = new ItemLayerRender(this);
-            cliententitiesmemory.objectrender = (ObjectRender)this.createObjectRender();
-            cliententitiesmemory.work_byte_array = new byte[max_works];
-            cliententitiesmemory.skinningentitiespat = new SkinningEntitiesPat(this);
-            cliententitiesmemory.sync_byte_array = new byte[bothdata.MaxSync()];
         }
         else
         {
-            ServerEntitiesMemory serverentitiesmemory = this.createServerEntitiesMemory(bothdata, workbytes);
-            this.bothentitiesmemory = serverentitiesmemory;
+            this.createServerEntitiesMemory(this, bothdata, workbytes);
             this.width = 0.5F;
             this.height = 0.5F;
 
             ChunkLoader.updateChunk(this);
-            serverentitiesmemory.entitiesaimemory = new EntitiesAIMemory(this);
-            serverentitiesmemory.main_work_byte_array = new byte[max_works];
-            serverentitiesmemory.current_work_byte_array = new byte[max_works];
-            serverentitiesmemory.frame_int_array = new int[this.getIntegerDataParameterArray().length];
-            serverentitiesmemory.sync_byte_array = new byte[bothdata.MaxSync()];
 
             this.createServer();
             this.getDataManager().set(this.getFloatDataParameterArray()[0], scale);
@@ -975,14 +955,14 @@ public abstract class SkinningEntities extends EntityLivingBase
     }
 
     @SideOnly(Side.CLIENT)
-    public ClientEntitiesMemory createClientEntitiesMemory(BothData bothdata, WorkBytes workbytes)
+    public void createClientEntitiesMemory(SkinningEntities skinningentities, BothData bothdata, WorkBytes workbytes)
     {
-        return new ClientEntitiesMemory(bothdata, workbytes);
+        new ClientEntitiesMemory(skinningentities, bothdata, workbytes);
     }
 
-    public ServerEntitiesMemory createServerEntitiesMemory(BothData bothdata, WorkBytes workbytes)
+    public void createServerEntitiesMemory(SkinningEntities skinningentities, BothData bothdata, WorkBytes workbytes)
     {
-        return new ServerEntitiesMemory(bothdata, workbytes);
+        new ServerEntitiesMemory(skinningentities, bothdata, workbytes);
     }
 
     public void initFakeFrame(){}

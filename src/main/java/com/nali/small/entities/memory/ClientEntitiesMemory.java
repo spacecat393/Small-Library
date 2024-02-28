@@ -51,8 +51,14 @@ public class ClientEntitiesMemory extends BothEntitiesMemory
     @SideOnly(Side.CLIENT)
     public byte[] sync_byte_array;
 
-    public ClientEntitiesMemory(BothData bothdata, WorkBytes workbytes)
+    public ClientEntitiesMemory(SkinningEntities skinningentities, BothData bothdata, WorkBytes workbytes)
     {
-        super(bothdata, workbytes);
+        super(skinningentities, bothdata, workbytes);
+        this.arrowlayerrender = new ArrowLayerRender(skinningentities);
+        this.itemlayerrender = new ItemLayerRender(skinningentities);
+        this.objectrender = (ObjectRender)skinningentities.createObjectRender();
+        this.work_byte_array = new byte[workbytes.MAX_WORKS()];
+        this.skinningentitiespat = new SkinningEntitiesPat(skinningentities);
+        this.sync_byte_array = new byte[bothdata.MaxSync()];
     }
 }
