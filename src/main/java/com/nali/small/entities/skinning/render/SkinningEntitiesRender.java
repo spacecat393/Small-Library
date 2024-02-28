@@ -196,7 +196,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         skinningrender.entitiesrendermemory.head_rot = (float)Math.toRadians(interpolateRotation(skinningentities.prevRotationYaw, skinningentities.rotationYaw, partialTicks));
         skinningrender.entitiesrendermemory.net_head_yaw = skinningrender.entitiesrendermemory.head_rot - skinningrender.entitiesrendermemory.body_rot;
         skinningrender.entitiesrendermemory.head_pitch = (float)Math.toRadians(skinningentities.prevRotationPitch + (skinningentities.rotationPitch - skinningentities.prevRotationPitch) * partialTicks);
-        skinningrender.timeline = partialTicks;
+//        skinningrender.timeline = partialTicks;
 
         skinningrender.initSkinning();
 
