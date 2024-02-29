@@ -23,7 +23,6 @@ import java.awt.*;
 
 import static com.nali.small.entities.skinning.render.SkinningEntitiesRenderMath.*;
 import static com.nali.system.opengl.memory.OpenGLCurrentMemory.*;
-import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_INTBUFFER;
 
 @SideOnly(Side.CLIENT)
 public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends Render<T>
@@ -48,108 +47,20 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
         SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
 
-        GL11.glPushMatrix();
-
-        GL11.glTranslated(ox, oy, oz);
-        GL11.glScalef(skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale);
-        GL11.glTranslated(-ox, -oy, -oz);
-        cliententitiesmemory.itemlayerrender.x = (float)ox;
-        cliententitiesmemory.itemlayerrender.y = (float)oy;
-        cliententitiesmemory.itemlayerrender.z = (float)oz;
-        cliententitiesmemory.itemlayerrender.layer(this, partialTicks);
-        cliententitiesmemory.arrowlayerrender.layer(this, (float)ox, (float)oy, (float)oz, partialTicks);
-
-        GL11.glPopMatrix();
+        this.renderLayer(skinningentities, ox, oy, oz, partialTicks);
 
         GL11.glPushMatrix();
 
         this.updateData(skinningentities, partialTicks);
 
-//        if (this.renderManager.isDebugBoundingBox() && !skinningentities.isInvisible() && !Minecraft.getMinecraft().isReducedDebug())
-//        {
-//            for (int i = 0; i < skinningrender.memory_object_array.length; ++i)
-//            {
-//                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[i];
-//                for (int v = 0; v < openglskinningmemory.index_int_array.length; ++v)
-//                {
-//                    GL11.glPushMatrix();
-//                    this.apply3DSkinningVec4(this.get3DSkinning(skinningentities, (float)ox, (float)oy, (float)oz, i, v));
-//                    GL11.glScalef(0.01F, 0.01F, 0.01F);
-//                    Minecraft.getMinecraft().getItemRenderer().renderItemSide(skinningentities, SmallBox.I.getDefaultInstance(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, false);
-//                    GL11.glPopMatrix();
-//                }
-//            }
-//        }
-
-//        if (!(this.renderManager.isDebugBoundingBox() && !skinningentities.isInvisible() && !Minecraft.getMinecraft().isReducedDebug()))
-//        {
         GL11.glTranslated(ox, oy, oz);
 
-        //
-        if (this.renderManager.isDebugBoundingBox() && !skinningentities.isInvisible() && !Minecraft.getMinecraft().isReducedDebug())
-        {
-            GL11.glPushMatrix();
-//            GlStateManager.disableTexture2D();
-            GL_BLEND = GL11.glIsEnabled(GL11.GL_BLEND);
-            GL11.glEnable(GL11.GL_BLEND);
-
-            GL11.glGetInteger(GL20.GL_BLEND_EQUATION_RGB, OPENGL_INTBUFFER);
-            GL_BLEND_EQUATION_RGB = OPENGL_INTBUFFER.get(0);
-            GL11.glGetInteger(GL20.GL_BLEND_EQUATION_ALPHA, OPENGL_INTBUFFER);
-            GL_BLEND_EQUATION_ALPHA = OPENGL_INTBUFFER.get(0);
-            GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
-
-            GL11.glGetInteger(GL14.GL_BLEND_SRC_RGB, OPENGL_INTBUFFER);
-            GL_BLEND_SRC_RGB = OPENGL_INTBUFFER.get(0);
-            GL11.glGetInteger(GL14.GL_BLEND_SRC_ALPHA, OPENGL_INTBUFFER);
-            GL_BLEND_SRC_ALPHA = OPENGL_INTBUFFER.get(0);
-            GL11.glGetInteger(GL14.GL_BLEND_DST_RGB, OPENGL_INTBUFFER);
-            GL_BLEND_DST_RGB = OPENGL_INTBUFFER.get(0);
-            GL11.glGetInteger(GL14.GL_BLEND_DST_ALPHA, OPENGL_INTBUFFER);
-            GL_BLEND_DST_ALPHA = OPENGL_INTBUFFER.get(0);
-            GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
-
-            GL11.glTranslated(-skinningentities.posX, -skinningentities.posY, -skinningentities.posZ);
-            Color color = generateRainbowColor();
-            float r = color.getRed() / 255.0F, g = color.getGreen() / 255.0F, b = color.getBlue() / 255.0F;
-//            GlStateManager.glLineWidth(5.0F);
-
-            AxisAlignedBB[] axisalignedbb_array = new AxisAlignedBB[]
-            {
-                skinningentities.getHeadAxisAlignedBB(),
-                skinningentities.getMouthAxisAlignedBB()
-            };
-            for (AxisAlignedBB axisalignedbb : axisalignedbb_array)
-            {
-                RenderGlobal.drawSelectionBoundingBox(axisalignedbb, r, g, b, 1.0F);
-            }
-
-            if (GL_BLEND)
-            {
-                GL11.glEnable(GL11.GL_BLEND);
-            }
-            else
-            {
-                GL11.glDisable(GL11.GL_BLEND);
-            }
-
-            GL20.glBlendEquationSeparate(GL_BLEND_EQUATION_RGB, GL_BLEND_EQUATION_ALPHA);
-            GL14.glBlendFuncSeparate(GL_BLEND_SRC_RGB, GL_BLEND_DST_RGB, GL_BLEND_SRC_ALPHA, GL_BLEND_DST_ALPHA);
-
-//            GlStateManager.glLineWidth(1.0F);
-//            GlStateManager.enableTexture2D();
-            GL11.glPopMatrix();
-        }
-        //
+        this.renderHitBox(skinningentities);
 
         GL11.glScalef(skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale);
-//        float scale = (skinningrender.scale == 0 ? 1.0F : skinningrender.scale);
-//        this.shadowOpaque *= scale;
-//        this.shadowSize *= scale;
         this.shadowOpaque *= skinningrender.entitiesrendermemory.scale;
         this.shadowSize *= skinningrender.entitiesrendermemory.scale;
 
-//        GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT);
         boolean invisible = skinningentities.isInvisible() || skinningentities.isInvisibleToPlayer(Minecraft.getMinecraft().player);
         if (invisible)
         {
@@ -162,27 +73,14 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
             GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], 0.25F);
         }
         skinningrender.objectworlddraw.renderWorld();
-//        GL11.glPopAttrib();
         if (invisible)
         {
             GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
         }
-//        }
 
         GL11.glPopMatrix();
 
-        GL11.glPushMatrix();
-
-        GL11.glTranslated(ox, oy, oz);
-        GL11.glScalef(skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale);
-        GL11.glTranslated(-ox, -oy, -oz);
-//        cliententitiesmemory.itemlayerrender.x = (float)ox;
-//        cliententitiesmemory.itemlayerrender.y = (float)oy;
-//        cliententitiesmemory.itemlayerrender.z = (float)oz;
-        cliententitiesmemory.itemlayerrender.layer(this, partialTicks);
-        cliententitiesmemory.arrowlayerrender.layer(this, (float)ox, (float)oy, (float)oz, partialTicks);
-
-        GL11.glPopMatrix();
+        this.renderLayer(skinningentities, ox, oy, oz, partialTicks);
 
         super.doRender(skinningentities, ox, oy, oz, entityYaw, partialTicks);
     }
@@ -208,7 +106,97 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         skinningrender.setSkinning();
     }
 
-    public abstract void multiplyAnimation(T skinningentities);
+    public void renderLayer(T skinningentities, double ox, double oy, double oz, float partialTicks)
+    {
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
+        GL11.glPushMatrix();
+
+        GL11.glTranslated(ox, oy, oz);
+        GL11.glScalef(skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale, skinningrender.entitiesrendermemory.scale);
+        GL11.glTranslated(-ox, -oy, -oz);
+        cliententitiesmemory.itemlayerrender.x = (float)ox;
+        cliententitiesmemory.itemlayerrender.y = (float)oy;
+        cliententitiesmemory.itemlayerrender.z = (float)oz;
+        cliententitiesmemory.itemlayerrender.layer(this, partialTicks);
+        cliententitiesmemory.arrowlayerrender.layer(this, (float)ox, (float)oy, (float)oz, partialTicks);
+
+        GL11.glPopMatrix();
+    }
+
+    public void renderHitBox(T skinningentities)
+    {
+        if (this.renderManager.isDebugBoundingBox() && !skinningentities.isInvisible() && !Minecraft.getMinecraft().isReducedDebug())
+        {
+            GL11.glPushMatrix();
+
+            GL_TEXTURE_2D = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
+
+            GL_BLEND = GL11.glIsEnabled(GL11.GL_BLEND);
+            GL11.glEnable(GL11.GL_BLEND);
+
+            GL11.glGetInteger(GL20.GL_BLEND_EQUATION_RGB, OPENGL_INTBUFFER);
+            GL_BLEND_EQUATION_RGB = OPENGL_INTBUFFER.get(0);
+            GL11.glGetInteger(GL20.GL_BLEND_EQUATION_ALPHA, OPENGL_INTBUFFER);
+            GL_BLEND_EQUATION_ALPHA = OPENGL_INTBUFFER.get(0);
+            GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
+
+            GL11.glGetInteger(GL14.GL_BLEND_SRC_RGB, OPENGL_INTBUFFER);
+            GL_BLEND_SRC_RGB = OPENGL_INTBUFFER.get(0);
+            GL11.glGetInteger(GL14.GL_BLEND_SRC_ALPHA, OPENGL_INTBUFFER);
+            GL_BLEND_SRC_ALPHA = OPENGL_INTBUFFER.get(0);
+            GL11.glGetInteger(GL14.GL_BLEND_DST_RGB, OPENGL_INTBUFFER);
+            GL_BLEND_DST_RGB = OPENGL_INTBUFFER.get(0);
+            GL11.glGetInteger(GL14.GL_BLEND_DST_ALPHA, OPENGL_INTBUFFER);
+            GL_BLEND_DST_ALPHA = OPENGL_INTBUFFER.get(0);
+            GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+
+            GL11.glTranslated(-skinningentities.posX, -skinningentities.posY, -skinningentities.posZ);
+            Color color = generateRainbowColor();
+            float r = color.getRed() / 255.0F, g = color.getGreen() / 255.0F, b = color.getBlue() / 255.0F;
+
+            OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
+            GL11.glGetFloat(GL11.GL_LINE_WIDTH, OPENGL_FIXED_PIPE_FLOATBUFFER);
+            GL_LINE_WIDTH = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
+            GL11.glLineWidth(5.0F);
+
+            AxisAlignedBB[] axisalignedbb_array = new AxisAlignedBB[]
+            {
+                skinningentities.getHeadAxisAlignedBB(),
+                skinningentities.getMouthAxisAlignedBB()
+            };
+            for (AxisAlignedBB axisalignedbb : axisalignedbb_array)
+            {
+                RenderGlobal.drawSelectionBoundingBox(axisalignedbb, r, g, b, 1.0F);
+            }
+
+            if (GL_BLEND)
+            {
+                GL11.glEnable(GL11.GL_BLEND);
+            }
+            else
+            {
+                GL11.glDisable(GL11.GL_BLEND);
+            }
+
+            GL20.glBlendEquationSeparate(GL_BLEND_EQUATION_RGB, GL_BLEND_EQUATION_ALPHA);
+            GL14.glBlendFuncSeparate(GL_BLEND_SRC_RGB, GL_BLEND_DST_RGB, GL_BLEND_SRC_ALPHA, GL_BLEND_DST_ALPHA);
+
+            GL11.glLineWidth(GL_LINE_WIDTH);
+
+            if (GL_TEXTURE_2D)
+            {
+                GL11.glEnable(GL11.GL_TEXTURE_2D);
+            }
+            else
+            {
+                GL11.glDisable(GL11.GL_TEXTURE_2D);
+            }
+
+            GL11.glPopMatrix();
+        }
+    }
 
     public float[] get3DSkinning(SkinningRender skinningrender, float x, float y, float z, float x0, float y0, float z0, int i, int v)
     {
@@ -328,4 +316,6 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 //        OpenGLCurrentMemory.setFloatBuffer(mat4);
 //        GL11.glMultMatrix(OpenGLCurrentMemory.OPENGL_FLOATBUFFER);
     }
+
+    public abstract void multiplyAnimation(T skinningentities);
 }

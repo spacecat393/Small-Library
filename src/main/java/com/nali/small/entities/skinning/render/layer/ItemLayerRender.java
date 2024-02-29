@@ -87,22 +87,13 @@ public class ItemLayerRender extends LayerRender
 
         this.index = 0;
         this.renderHeldItem(skinningentitiesrender, this.skinningentities.getHeldItemMainhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, this.iv_int_array[2], this.iv_int_array[3]);
-//        cliententitiesmemory.objectrender.setDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
         this.renderHeldItem(skinningentitiesrender, this.skinningentities.getHeldItemOffhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, this.iv_int_array[0], this.iv_int_array[1]);
-//        cliententitiesmemory.objectrender.setDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
-//        this.renderHeldItem(skinningentitiesrender, this.skinningentities.bothentitiesmemory.skinninginventory.armor_itemstack_nonnulllist.get(4), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, this.iv_int_array[12], this.iv_int_array[13]);
 
         this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.HEAD, this.iv_int_array[4], this.iv_int_array[5], partialTicks);
-//        cliententitiesmemory.objectrender.setDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
         this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.CHEST, this.iv_int_array[6], this.iv_int_array[7], partialTicks);
-//        cliententitiesmemory.objectrender.setDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
         this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.LEGS, this.iv_int_array[8], this.iv_int_array[9], partialTicks);
-//        cliententitiesmemory.objectrender.setDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
         this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.FEET, this.iv_int_array[8], this.iv_int_array[9], partialTicks);
-//        cliententitiesmemory.objectrender.setDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
         this.renderHeldItem(skinningentitiesrender, cliententitiesmemory.mouth_itemstack, ItemCameraTransforms.TransformType.GROUND, this.iv_int_array[10], this.iv_int_array[11]);
-//        cliententitiesmemory.objectrender.setDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
-//        this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.FEET, this.iv_int_array[10], this.iv_int_array[11], partialTicks);
     }
 
     public void renderHeldItem(SkinningEntitiesRender skinningentitiesrender, ItemStack itemstack, ItemCameraTransforms.TransformType transformtype, int i, int v)
