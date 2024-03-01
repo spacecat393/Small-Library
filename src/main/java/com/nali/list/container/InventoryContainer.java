@@ -3,13 +3,8 @@ package com.nali.list.container;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.SkinningInventory;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.network.play.server.SPacketSetSlot;
-import net.minecraft.world.World;
 
 public class InventoryContainer extends Container
 {
@@ -38,6 +33,8 @@ public class InventoryContainer extends Container
 //        }
 
         int i = 48;
+
+        this.addSlotToContainer(new SlotCrafting(entityplayer, this.inventorycrafting, this.inventorycraftresult, 0, 138, 58));
 
         for (int k = 0; k < 3; ++k)
         {
@@ -71,7 +68,6 @@ public class InventoryContainer extends Container
 
         this.addSlotToContainer(new Slot(skinninginventory, 33, 64, 26));
 
-        this.addSlotToContainer(new SlotCrafting(entityplayer, this.inventorycrafting, this.inventorycraftresult, 0, 138, 58));
 //        for (int l = 0; l < 3; ++l)
 //        {
 //            for (int j = 0; j < 3; ++j)
@@ -83,30 +79,42 @@ public class InventoryContainer extends Container
     }
 
     @Override
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
+    {
+        if (slotId != 0)
+        {
+            this.syncToCrafting();
+        }
+
+        return super.slotClick(slotId, dragType, clickTypeIn, player);
+    }
+
+    @Override
     public ItemStack transferStackInSlot(EntityPlayer entityplayer, int index)
     {
         ItemStack out_itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
-        int cr = 36;
+        int cr = 36 + 1;
 
+//        Small.LOGGER.info("I " + index);
         if (slot != null && slot.getHasStack())
         {
             ItemStack itemstack = slot.getStack();
             out_itemstack = itemstack.copy();
 
-            if (index == this.inventorySlots.size() - 1)
+            if (index == this.inventorySlots.size())
             {
                 this.inventorycraftresult.clear();
             }
             if (index < cr)
             {
-                if (!this.mergeItemStack(itemstack, cr, this.inventorySlots.size() - 1, true))
+                if (!this.mergeItemStack(itemstack, cr, this.inventorySlots.size(), true))
                 {
                     return ItemStack.EMPTY;
                 }
             }
-            else if (!this.mergeItemStack(itemstack, 0, cr, false))
+            else if (!this.mergeItemStack(itemstack, 1, cr, false))
             {
                 return ItemStack.EMPTY;
             }
@@ -137,14 +145,13 @@ public class InventoryContainer extends Container
         return true;
     }
 
-    @Override
-    public void detectAndSendChanges()
-    {
-        super.detectAndSendChanges();
-        this.syncToCrafting();
-//        SkinningInventory skinninginventory = this.skinningentities.bothentitiesmemory.skinninginventory;
-//        skinninginventory.markDirty();
-    }
+//    @Override
+//    public void detectAndSendChanges()
+//    {
+//        super.detectAndSendChanges();
+////        SkinningInventory skinninginventory = this.skinningentities.bothentitiesmemory.skinninginventory;
+////        skinninginventory.markDirty();
+//    }
 
     @Override
     public void onCraftMatrixChanged(IInventory iinventory)
@@ -152,43 +159,36 @@ public class InventoryContainer extends Container
         this.slotChangedCraftingGrid(this.entityplayer.world, this.entityplayer, this.inventorycrafting, this.inventorycraftresult);
     }
 
-    @Override
-    public void slotChangedCraftingGrid(World world, EntityPlayer entityplayer, InventoryCrafting inventorycrafting, InventoryCraftResult inventorycraftresult)
-    {
-        if (!world.isRemote)
-        {
-            EntityPlayerMP entityplayermp = (EntityPlayerMP)entityplayer;
-            ItemStack itemstack = ItemStack.EMPTY;
-            IRecipe irecipe = CraftingManager.findMatchingRecipe(inventorycrafting, world);
-
-            if (irecipe != null && (irecipe.isDynamic() || !world.getGameRules().getBoolean("doLimitedCrafting") || entityplayermp.getRecipeBook().isUnlocked(irecipe)))
-            {
-                inventorycraftresult.setRecipeUsed(irecipe);
-                itemstack = irecipe.getCraftingResult(inventorycrafting);
-            }
-
-            inventorycraftresult.setInventorySlotContents(0, itemstack);
-            entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, this.inventorySlots.size() - 1, itemstack));
-        }
-    }
-
     public void syncToCrafting()
     {
-        if (!this.skinningentities.world.isRemote)
-        {
-            SkinningInventory skinninginventory = this.skinningentities.bothentitiesmemory.skinninginventory;
-            this.inventorycrafting.setInventorySlotContents(0, skinninginventory.inventory_itemstack_nonnulllist.get(6));
-            this.inventorycrafting.setInventorySlotContents(1, skinninginventory.inventory_itemstack_nonnulllist.get(7));
-            this.inventorycrafting.setInventorySlotContents(2, skinninginventory.inventory_itemstack_nonnulllist.get(8));
+        SkinningInventory skinninginventory = this.skinningentities.bothentitiesmemory.skinninginventory;
+        this.inventorycrafting.setInventorySlotContents(0, skinninginventory.inventory_itemstack_nonnulllist.get(6));
+        this.inventorycrafting.setInventorySlotContents(1, skinninginventory.inventory_itemstack_nonnulllist.get(7));
+        this.inventorycrafting.setInventorySlotContents(2, skinninginventory.inventory_itemstack_nonnulllist.get(8));
 
-            this.inventorycrafting.setInventorySlotContents(3, skinninginventory.inventory_itemstack_nonnulllist.get(15));
-            this.inventorycrafting.setInventorySlotContents(4, skinninginventory.inventory_itemstack_nonnulllist.get(16));
-            this.inventorycrafting.setInventorySlotContents(5, skinninginventory.inventory_itemstack_nonnulllist.get(17));
+        this.inventorycrafting.setInventorySlotContents(3, skinninginventory.inventory_itemstack_nonnulllist.get(15));
+        this.inventorycrafting.setInventorySlotContents(4, skinninginventory.inventory_itemstack_nonnulllist.get(16));
+        this.inventorycrafting.setInventorySlotContents(5, skinninginventory.inventory_itemstack_nonnulllist.get(17));
 
-            this.inventorycrafting.setInventorySlotContents(6, skinninginventory.inventory_itemstack_nonnulllist.get(24));
-            this.inventorycrafting.setInventorySlotContents(7, skinninginventory.inventory_itemstack_nonnulllist.get(25));
-            this.inventorycrafting.setInventorySlotContents(8, skinninginventory.inventory_itemstack_nonnulllist.get(26));
-//            skinninginventory.inventory_itemstack_nonnulllist.set(15, this.inventorycraftresult.getStackInSlot(0));
-        }
+        this.inventorycrafting.setInventorySlotContents(6, skinninginventory.inventory_itemstack_nonnulllist.get(24));
+        this.inventorycrafting.setInventorySlotContents(7, skinninginventory.inventory_itemstack_nonnulllist.get(25));
+        this.inventorycrafting.setInventorySlotContents(8, skinninginventory.inventory_itemstack_nonnulllist.get(26));
+//        if (!this.skinningentities.world.isRemote)
+//        {
+//            SkinningInventory skinninginventory = this.skinningentities.bothentitiesmemory.skinninginventory;
+//            this.inventorycrafting.setInventorySlotContents(0, skinninginventory.inventory_itemstack_nonnulllist.get(6));
+//            this.inventorycrafting.setInventorySlotContents(1, skinninginventory.inventory_itemstack_nonnulllist.get(7));
+//            this.inventorycrafting.setInventorySlotContents(2, skinninginventory.inventory_itemstack_nonnulllist.get(8));
+//
+//            this.inventorycrafting.setInventorySlotContents(3, skinninginventory.inventory_itemstack_nonnulllist.get(15));
+//            this.inventorycrafting.setInventorySlotContents(4, skinninginventory.inventory_itemstack_nonnulllist.get(16));
+//            this.inventorycrafting.setInventorySlotContents(5, skinninginventory.inventory_itemstack_nonnulllist.get(17));
+//
+//            this.inventorycrafting.setInventorySlotContents(6, skinninginventory.inventory_itemstack_nonnulllist.get(24));
+//            this.inventorycrafting.setInventorySlotContents(7, skinninginventory.inventory_itemstack_nonnulllist.get(25));
+//            this.inventorycrafting.setInventorySlotContents(8, skinninginventory.inventory_itemstack_nonnulllist.get(26));
+//            this.inventorycrafting.markDirty();
+////            skinninginventory.inventory_itemstack_nonnulllist.set(15, this.inventorycraftresult.getStackInSlot(0));
+//        }
     }
 }

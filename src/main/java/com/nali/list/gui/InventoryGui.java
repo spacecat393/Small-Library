@@ -833,7 +833,7 @@ public class InventoryGui extends MixGui
 
         this.drawTexturedModalRect(tx, this.guiTop + 53/*33 + 18 + 2*/, 224, 0, 14, 11);
 
-        for (int i = 0; i < 36; ++i)
+        for (int i = 0 + 1; i < 36 + 1; ++i)
         {
             Slot slot = this.inventorySlots.inventorySlots.get(i);
             if (slot.getStack().isEmpty())
@@ -855,15 +855,15 @@ public class InventoryGui extends MixGui
             float green = color.getGreen() / 255.0F;
             float blue = color.getBlue() / 255.0F;
             float alpha = 1.0F;
-            for (int i = 36; i < 63; ++i)
+            for (int i = 36 + 1; i < 63 + 1; ++i)
             {
                 Slot slot = this.inventorySlots.inventorySlots.get(i);
 
                 if (slot.getStack().isEmpty())
                 {
-                    boolean crafting = i == 36 + 6 || i == 36 + 7 || i == 36 + 8 ||
-                    i == 36 + 15 || i == 36 + 16 || i == 36 + 17 ||
-                    i == 36 + 24 || i == 36 + 25 || i == 36 + 26;
+                    boolean crafting = i == 36 + 6 + 1 || i == 36 + 7 + 1 || i == 36 + 8 + 1 ||
+                    i == 36 + 15 + 1 || i == 36 + 16 + 1 || i == 36 + 17 + 1 ||
+                    i == 36 + 24 + 1 || i == 36 + 25 + 1 || i == 36 + 26 + 1;
                     if (crafting)
                     {
                         GL11.glColor4f(red, green, blue, alpha);
@@ -888,43 +888,43 @@ public class InventoryGui extends MixGui
         {
             case 0:
             {
-                Slot slot = this.inventorySlots.inventorySlots.get(63);
+                Slot slot = this.inventorySlots.inventorySlots.get(63 + 1);
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 104, 14, 14);
                 }
                 this.drawHideIcon(slot, (byte)0, mouseX, mouseY);
-                slot = this.inventorySlots.inventorySlots.get(64);
+                slot = this.inventorySlots.inventorySlots.get(64 + 1);
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 118, 14, 14);
                 }
                 this.drawHideIcon(slot, (byte)1, mouseX, mouseY);
-                slot = this.inventorySlots.inventorySlots.get(65);
+                slot = this.inventorySlots.inventorySlots.get(65 + 1);
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 48, 14, 14);
                 }
                 this.drawHideIcon(slot, (byte)2, mouseX, mouseY);
-                slot = this.inventorySlots.inventorySlots.get(66);
+                slot = this.inventorySlots.inventorySlots.get(66 + 1);
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 62, 14, 14);
                 }
                 this.drawHideIcon(slot, (byte)3, mouseX, mouseY);
-                slot = this.inventorySlots.inventorySlots.get(67);
+                slot = this.inventorySlots.inventorySlots.get(67 + 1);
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 3 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 76, 10, 14);
                 }
                 this.drawHideIcon(slot, (byte)4, mouseX, mouseY);
-                slot = this.inventorySlots.inventorySlots.get(68);
+                slot = this.inventorySlots.inventorySlots.get(68 + 1);
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 90, 14, 14);
                 }
                 this.drawHideIcon(slot, (byte)5, mouseX, mouseY);
-                slot = this.inventorySlots.inventorySlots.get(69);
+                slot = this.inventorySlots.inventorySlots.get(69 + 1);
                 if (slot.getStack().isEmpty())
                 {
                     this.drawTexturedModalRect(this.guiLeft + 1 + 1 + slot.xPos, this.guiTop + 1 + slot.yPos, 0, 132, 12, 14);
