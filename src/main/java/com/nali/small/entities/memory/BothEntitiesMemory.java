@@ -8,6 +8,7 @@ import com.nali.small.entities.skinning.works.SkinningEntitiesBodyYaw;
 
 public abstract class BothEntitiesMemory
 {
+    public SkinningEntities main_skinningentities;
     public WorkBytes workbytes;
     public BothData bothdata;
     public SkinningInventory skinninginventory = new SkinningInventory(1);
@@ -18,5 +19,6 @@ public abstract class BothEntitiesMemory
         this.bothdata = bothdata;
         this.workbytes = workbytes;
         skinningentities.bothentitiesmemory = this;
+        this.main_skinningentities = skinningentities;
     }
 }

@@ -1,7 +1,8 @@
-package com.nali.small.entities.skinning.ai;
+package com.nali.small.entities.skinning.ai.eyes;
 
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
 
 public class SkinningEntitiesRandomLook extends SkinningEntitiesAI
 {
@@ -19,7 +20,7 @@ public class SkinningEntitiesRandomLook extends SkinningEntitiesAI
     public void onUpdate()
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        if (this.skinningentities.isWorkBypass(serverentitiesmemory.workbytes.RANDOM_LOOK(), this.bypass_int_array))
+        if (serverentitiesmemory.isWorkBypass(serverentitiesmemory.workbytes.RANDOM_LOOK(), this.bypass_int_array))
         {
             if (--this.tick <= 0)
             {

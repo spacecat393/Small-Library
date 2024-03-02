@@ -26,6 +26,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.List;
 
+import static com.nali.small.entities.memory.server.ServerEntitiesMemory.removeFromMap;
+
 public class SmallBox extends Item implements MixItems
 {
     public static SmallBox I;
@@ -176,7 +178,7 @@ public class SmallBox extends Item implements MixItems
 
         if (entity instanceof SkinningEntities)
         {
-            ((SkinningEntities)entity).removeFromMap();
+            removeFromMap((SkinningEntities)entity);
         }
 
         entity.world.removeEntity(entity);

@@ -334,4 +334,37 @@ public class SkinningInventory implements IInventory
             }
         }
     }
+
+    public void readNBT(NBTTagCompound nbttagcompound)
+    {
+        if (nbttagcompound.hasKey("ArmorItems", 9))
+        {
+            NBTTagList nbttaglist = nbttagcompound.getTagList("ArmorItems", 10);
+
+            for (int l = 0; l < this.armor_itemstack_nonnulllist.size(); ++l)
+            {
+                this.armor_itemstack_nonnulllist.set(l, new ItemStack(nbttaglist.getCompoundTagAt(l)));
+            }
+        }
+
+        if (nbttagcompound.hasKey("HandItems", 9))
+        {
+            NBTTagList nbttaglist1 = nbttagcompound.getTagList("HandItems", 10);
+
+            for (int j = 0; j < this.hands_itemstack_nonnulllist.size(); ++j)
+            {
+                this.hands_itemstack_nonnulllist.set(j, new ItemStack(nbttaglist1.getCompoundTagAt(j)));
+            }
+        }
+
+        for (int k = 0; k < this.getSizeInventory(); ++k)
+        {
+            String key = "ib" + k;
+
+            if (nbttagcompound.hasKey(key, 10))
+            {
+                this.setInventorySlotContents(k, new ItemStack(nbttagcompound.getCompoundTag(key)));
+            }
+        }
+    }
 }

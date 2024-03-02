@@ -26,7 +26,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         boolean play = false;
-        if (this.skinningentities.isWork(serverentitiesmemory.workbytes.PLAY()))
+        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.PLAY()))
         {
             boolean result = this.tick <= 0;
 

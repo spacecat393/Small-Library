@@ -4,9 +4,13 @@ import com.nali.small.entities.bytes.WorkBytes;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.ai.*;
 import com.nali.small.entities.skinning.ai.eyes.SkinningEntitiesLook;
+import com.nali.small.entities.skinning.ai.eyes.SkinningEntitiesLookTo;
+import com.nali.small.entities.skinning.ai.eyes.SkinningEntitiesRandomLook;
 import com.nali.small.entities.skinning.ai.frame.SkinningEntitiesLiveFrame;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesMove;
+import com.nali.small.entities.skinning.ai.path.SkinningEntitiesPassTo;
+import com.nali.small.entities.skinning.ai.path.SkinningEntitiesRandomWalk;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class EntitiesAIMemory
@@ -29,6 +33,8 @@ public class EntitiesAIMemory
     public SkinningEntitiesAttack skinningentitiesattack;
     public SkinningEntitiesRevive skinningentitiesrevive;
     public SkinningEntitiesPlayWith skinningentitiesplaywith;
+    public SkinningEntitiesPassTo skinningentitiespassto;
+    public SkinningEntitiesLookTo skinningentitieslookto;
 
     public EntitiesAIMemory(SkinningEntities skinningentities)
     {
@@ -51,9 +57,17 @@ public class EntitiesAIMemory
         {
             this.skinningentitiesrandomwalk = new SkinningEntitiesRandomWalk(skinningentities);
         }
+        if (workbytes.LOOK_TO() != -1)
+        {
+            this.skinningentitieslookto = new SkinningEntitiesLookTo(skinningentities);
+        }
         if (workbytes.RANDOM_LOOK() != -1)
         {
             this.skinningentitiesrandomlook = new SkinningEntitiesRandomLook(skinningentities);
+        }
+        if (workbytes.WALK_TO() != -1)
+        {
+            this.skinningentitiespassto = new SkinningEntitiesPassTo(skinningentities);
         }
 
         if (workbytes.HEAL() != -1)
@@ -154,6 +168,10 @@ public class EntitiesAIMemory
             {
                 this.skinningentitiesrandomwalk.onUpdate();
             }
+            if (this.skinningentitieslookto != null)
+            {
+                this.skinningentitieslookto.onUpdate();
+            }
             if (this.skinningentitiesrandomlook != null)
             {
                 this.skinningentitiesrandomlook.onUpdate();
@@ -174,6 +192,10 @@ public class EntitiesAIMemory
             }
 
             this.skinningentitieslook.onUpdate();
+            if (this.skinningentitiespassto != null)
+            {
+                this.skinningentitiespassto.onUpdate();
+            }
         }
 
         if (!is_move)

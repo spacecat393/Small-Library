@@ -24,8 +24,8 @@ public class SkinningEntitiesCareOwner extends SkinningEntitiesAI
     public void onUpdate()
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        Entity owner_entity = this.skinningentities.getOwner();
-        if (this.skinningentities.isWork(serverentitiesmemory.workbytes.CARE_OWNER()) && owner_entity != null && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist.isEmpty())
+        Entity owner_entity = serverentitiesmemory.getOwner();
+        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.CARE_OWNER()) && owner_entity != null && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist.isEmpty())
         {
             ArrayList<Entity> target_entity_arraylist = (ArrayList<Entity>)this.target_entity_arraylist.clone();
             this.target_entity_arraylist.clear();

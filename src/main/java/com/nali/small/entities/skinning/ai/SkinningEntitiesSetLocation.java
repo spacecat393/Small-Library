@@ -29,7 +29,7 @@ public class SkinningEntitiesSetLocation extends SkinningEntitiesAI
             serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.LOCATION()] = 1;
         }
 
-        if (this.skinningentities.isWork(serverentitiesmemory.workbytes.LOCATION()))
+        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.LOCATION()))
         {
             if (this.temp_blockpos == null || this.blockpos != this.temp_blockpos)
             {

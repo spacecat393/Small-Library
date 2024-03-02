@@ -27,7 +27,7 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         SkinningEntitiesFindMove skinningentitiesfindmove = serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove;
 
-        boolean should_run = this.skinningentities.isWork(serverentitiesmemory.workbytes.FIND_ITEM());
+        boolean should_run = serverentitiesmemory.isWork(serverentitiesmemory.workbytes.FIND_ITEM());
         boolean keep_should_run = should_run;
 
         if (!serverentitiesmemory.entitiesaimemory.skinningentitiesarea.xp_entity_arraylist.isEmpty())

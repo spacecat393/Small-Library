@@ -25,7 +25,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
     public void onUpdate()
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        Entity owner_entity = this.skinningentities.getOwner();
+        Entity owner_entity = serverentitiesmemory.getOwner();
 
         if (owner_entity instanceof EntityPlayerMP)
         {
@@ -36,7 +36,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
         }
 
         if (owner_entity != null &&
-            this.skinningentities.isWork(serverentitiesmemory.workbytes.FOLLOW()) &&
+            serverentitiesmemory.isWork(serverentitiesmemory.workbytes.FOLLOW()) &&
             (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(owner_entity, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far)) &&
             (this.skinningentities.getDistanceSq(owner_entity) > this.min_distance || this.follow))
         {
@@ -119,7 +119,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
         BlockPos to_blockpos = new BlockPos(x, y, z);
         BlockPos down_blockpos = to_blockpos.down();
 
-        if (SkinningEntitiesFindMove.fallBlock(this.skinningentities.getMaterial(down_blockpos)) || SkinningEntitiesFindMove.isBlock(this.skinningentities.getMaterial(to_blockpos)))
+        if (SkinningEntitiesFindMove.fallBlock(serverentitiesmemory.getMaterial(down_blockpos)) || SkinningEntitiesFindMove.isBlock(serverentitiesmemory.getMaterial(to_blockpos)))
         {
             return false;
         }

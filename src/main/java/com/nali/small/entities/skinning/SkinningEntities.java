@@ -15,10 +15,7 @@ import com.nali.small.mixin.IMixinEntityCreeper;
 import com.nali.small.mixin.IMixinEntityLivingBase;
 import com.nali.small.networks.NetworksRegistry;
 import com.nali.small.world.ChunkLoader;
-import com.nali.system.bytes.BytesReader;
 import com.nali.system.bytes.BytesWriter;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,7 +31,6 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -42,11 +38,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -150,50 +144,8 @@ public abstract class SkinningEntities extends EntityLivingBase
         if (!this.world.isRemote)
         {
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
-            if (serverentitiesmemory.owner_uuid != null)
-            {
-                byte[] byte_array = new byte[16];
-                BytesWriter.set(byte_array, serverentitiesmemory.owner_uuid, 0);
-                nbttagcompound.setByteArray("owner_uuid", byte_array);
-            }
-
-            serverentitiesmemory.entitiesaimemory.writeNBT(nbttagcompound);
-
-            if (serverentitiesmemory.main_work_byte_array == null)
-            {
-                serverentitiesmemory.main_work_byte_array = new byte[serverentitiesmemory.workbytes.MAX_WORKS()];
-            }
-
-            if (!serverentitiesmemory.sus_init)
-            {
-                serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.LOCK_INVENTORY()] = 1;
-                serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.LOCK_DAMAGE()] = 1;
-
-                if (serverentitiesmemory.workbytes.FOLLOW() != -1)
-                {
-                    serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.FOLLOW()] = 1;
-                }
-                if (serverentitiesmemory.workbytes.RANDOM_WALK() != -1)
-                {
-                    serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.RANDOM_WALK()] = 1;
-                }
-                if (serverentitiesmemory.workbytes.RANDOM_LOOK() != -1)
-                {
-                    serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.RANDOM_LOOK()] = 1;
-                }
-                if (serverentitiesmemory.workbytes.CARE_OWNER() != -1)
-                {
-                    serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER()] = 1;
-                }
-                nbttagcompound.setByteArray("work_bytes", serverentitiesmemory.main_work_byte_array);
-                nbttagcompound.setFloat("float_0", serverentitiesmemory.bothdata.Scale());
-                this.initWriteEntityToNBT(nbttagcompound);
-            }
-
-            nbttagcompound.setByteArray("work_bytes", serverentitiesmemory.main_work_byte_array);
+            serverentitiesmemory.writeNBT(nbttagcompound);
         }
-
-        nbttagcompound.setBoolean("sus_init", true);
 
         this.bothentitiesmemory.skinninginventory.writeNBT(nbttagcompound);
     }
@@ -243,73 +195,12 @@ public abstract class SkinningEntities extends EntityLivingBase
             entitydatamanager.set(float_dataparameter, nbttagcompound.getFloat("float_" + i++));
         }
 
-        if (nbttagcompound.hasKey("ArmorItems", 9))
-        {
-            NBTTagList nbttaglist = nbttagcompound.getTagList("ArmorItems", 10);
-
-            for (int l = 0; l < this.bothentitiesmemory.skinninginventory.armor_itemstack_nonnulllist.size(); ++l)
-            {
-                this.bothentitiesmemory.skinninginventory.armor_itemstack_nonnulllist.set(l, new ItemStack(nbttaglist.getCompoundTagAt(l)));
-            }
-        }
-
-        if (nbttagcompound.hasKey("HandItems", 9))
-        {
-            NBTTagList nbttaglist1 = nbttagcompound.getTagList("HandItems", 10);
-
-            for (int j = 0; j < this.bothentitiesmemory.skinninginventory.hands_itemstack_nonnulllist.size(); ++j)
-            {
-                this.bothentitiesmemory.skinninginventory.hands_itemstack_nonnulllist.set(j, new ItemStack(nbttaglist1.getCompoundTagAt(j)));
-            }
-        }
-
-        for (int k = 0; k < this.bothentitiesmemory.skinninginventory.getSizeInventory(); ++k)
-        {
-            String key = "ib" + k;
-
-            if (nbttagcompound.hasKey(key, 10))
-            {
-                this.bothentitiesmemory.skinninginventory.setInventorySlotContents(k, new ItemStack(nbttagcompound.getCompoundTag(key)));
-            }
-        }
+        this.bothentitiesmemory.skinninginventory.readNBT(nbttagcompound);
 
         if (!this.world.isRemote)
         {
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
-            if (nbttagcompound.hasKey("owner_uuid", 7))
-            {
-                serverentitiesmemory.owner_uuid = BytesReader.getUUID(nbttagcompound.getByteArray("owner_uuid"), 0);
-            }
-
-            serverentitiesmemory.entitiesaimemory.readNBT(nbttagcompound);
-
-            serverentitiesmemory.sus_init = nbttagcompound.hasKey("sus_init");
-
-            if (!serverentitiesmemory.sus_init)
-            {
-                serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.LOCK_INVENTORY()] = 1;
-                serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.LOCK_DAMAGE()] = 1;
-
-                if (serverentitiesmemory.workbytes.FOLLOW() != -1)
-                {
-                    serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.FOLLOW()] = 1;
-                }
-                if (serverentitiesmemory.workbytes.RANDOM_WALK() != -1)
-                {
-                    serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.RANDOM_WALK()] = 1;
-                }
-                if (serverentitiesmemory.workbytes.RANDOM_LOOK() != -1)
-                {
-                    serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.RANDOM_LOOK()] = 1;
-                }
-                if (serverentitiesmemory.workbytes.CARE_OWNER() != -1)
-                {
-                    serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER()] = 1;
-                }
-                entitydatamanager.set(float_dataparameter_array[0], this.bothentitiesmemory.bothdata.Scale());
-                this.initReadEntityFromNBT();
-                serverentitiesmemory.sus_init = true;
-            }
+            serverentitiesmemory.readNBT(nbttagcompound);
         }
     }
 
@@ -627,7 +518,7 @@ public abstract class SkinningEntities extends EntityLivingBase
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
             if (serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.LOCK_DAMAGE()] == 1)
             {
-                Entity owner_entity = this.getOwner();
+                Entity owner_entity = serverentitiesmemory.getOwner();
                 if (owner_entity != null && owner_entity.equals(damagesource.getTrueSource()))
                 {
                     return false;
@@ -661,7 +552,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         if (!this.world.isRemote)
         {
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
-            Entity owner_entity = this.getOwner();
+            Entity owner_entity = serverentitiesmemory.getOwner();
             if (serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.LOCK_DAMAGE()] == 1 && owner_entity instanceof EntityLivingBase)
             {
                 by_entitylivingbase = (EntityLivingBase)owner_entity;
@@ -762,22 +653,6 @@ public abstract class SkinningEntities extends EntityLivingBase
         return super.getSoundPitch();
     }
 
-    public void sendInventoryGUI(EntityPlayerMP entityplayermp)
-    {
-        if (canPass(this, entityplayermp))
-        {
-            entityplayermp.getEntityData().setUniqueId("loli_nali", this.getUniqueID());
-            ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
-            entityplayermp.openGui(Small.I, 0, entityplayermp.world, this.getEntityId(), 0, 0);
-
-            byte[] byte_array = new byte[1 + 4 + serverentitiesmemory.main_work_byte_array.length];
-            byte_array[0] = 6;
-            BytesWriter.set(byte_array, this.getEntityId(), 1);
-            System.arraycopy(serverentitiesmemory.main_work_byte_array, 0, byte_array, 1 + 4, serverentitiesmemory.main_work_byte_array.length);
-            NetworksRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
-        }
-    }
-
     public boolean canPat()
     {
         return true;
@@ -838,61 +713,6 @@ public abstract class SkinningEntities extends EntityLivingBase
         return this.getHealth() <= 0.0F;
     }
 
-    public boolean isWork(int index)
-    {
-        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
-        for (int i = serverentitiesmemory.workbytes.SIT(); i < index; ++i)
-        {
-            if (serverentitiesmemory.current_work_byte_array[i] > 0)
-            {
-                return false;
-            }
-        }
-
-        return serverentitiesmemory.current_work_byte_array[index] != 0;
-    }
-
-    public boolean isWorkBypass(int index, int[] bypass_int_array)
-    {
-        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
-        for (int i = serverentitiesmemory.workbytes.SIT(); i < index; ++i)
-        {
-            boolean on_bypass = false;
-            for (int bypass : bypass_int_array)
-            {
-                if (i == bypass)
-                {
-                    on_bypass = true;
-                    break;
-                }
-            }
-
-            if (!on_bypass && serverentitiesmemory.current_work_byte_array[i] > 0)
-            {
-                return false;
-            }
-        }
-
-        return serverentitiesmemory.current_work_byte_array[index] != 0;
-    }
-
-    public Entity getOwner()
-    {
-        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
-        if (serverentitiesmemory.owner_uuid == null)
-        {
-            return null;
-        }
-
-        return ((WorldServer)this.world).getEntityFromUuid(serverentitiesmemory.owner_uuid);
-    }
-
-    public Material getMaterial(BlockPos blockpos)
-    {
-        IBlockState temp_iblockstate = this.world.getBlockState(blockpos);
-        return temp_iblockstate.getMaterial();
-    }
-
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getHeadAxisAlignedBB()
     {
@@ -931,17 +751,6 @@ public abstract class SkinningEntities extends EntityLivingBase
         }
     }
 
-
-    public void removeFromMap()
-    {
-        if (!this.world.isRemote)
-        {
-            ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
-            ChunkLoader.removeChunk(this);
-            ENTITIES_MAP.remove(serverentitiesmemory.uuid);
-        }
-    }
-
     public void updateClient()
     {
         float scale = this.getDataManager().get(this.getFloatDataParameterArray()[0]);
@@ -952,6 +761,22 @@ public abstract class SkinningEntities extends EntityLivingBase
     public void updateServer()
     {
 
+    }
+
+    public void sendInventoryGUI(EntityPlayerMP entityplayermp)
+    {
+        if (canPass(this, entityplayermp))
+        {
+            entityplayermp.getEntityData().setUniqueId("loli_nali", this.getUniqueID());
+            ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
+            entityplayermp.openGui(Small.I, 0, entityplayermp.world, this.getEntityId(), 0, 0);
+
+            byte[] byte_array = new byte[1 + 4 + serverentitiesmemory.main_work_byte_array.length];
+            byte_array[0] = 6;
+            BytesWriter.set(byte_array, this.getEntityId(), 1);
+            System.arraycopy(serverentitiesmemory.main_work_byte_array, 0, byte_array, 1 + 4, serverentitiesmemory.main_work_byte_array.length);
+            NetworksRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
+        }
     }
 
     @SideOnly(Side.CLIENT)

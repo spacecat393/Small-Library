@@ -35,11 +35,11 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
         if (serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER()] == 1)
         {
             serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER()] = 1;
-            should_work = this.skinningentities.isWork(serverentitiesmemory.workbytes.CARE_OWNER());
+            should_work = serverentitiesmemory.isWork(serverentitiesmemory.workbytes.CARE_OWNER());
             serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER()] = 0;
         }
 
-        boolean work = this.skinningentities.isWork(serverentitiesmemory.workbytes.ATTACK());
+        boolean work = serverentitiesmemory.isWork(serverentitiesmemory.workbytes.ATTACK());
         if ((!work && should_work && !serverentitiesmemory.entitiesaimemory.skinningentitiescareowner.target_entity_arraylist.isEmpty()) || (work && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist.isEmpty()))
         {
             this.attack = true;

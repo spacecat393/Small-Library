@@ -1,7 +1,8 @@
-package com.nali.small.entities.skinning.ai;
+package com.nali.small.entities.skinning.ai.path;
 
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
 
 public class SkinningEntitiesRandomWalk extends SkinningEntitiesAI
 {
@@ -18,7 +19,7 @@ public class SkinningEntitiesRandomWalk extends SkinningEntitiesAI
     public void onUpdate()
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        if (this.skinningentities.isWork(serverentitiesmemory.workbytes.RANDOM_WALK()))
+        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.RANDOM_WALK()))
         {
             ++this.end_tick;
             if (this.end_tick == 100)

@@ -4,7 +4,16 @@ import com.nali.data.BothData;
 import com.nali.small.entities.bytes.WorkBytes;
 import com.nali.small.entities.memory.BothEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.world.ChunkLoader;
+import com.nali.system.bytes.BytesReader;
+import com.nali.system.bytes.BytesWriter;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
 
 import java.util.Map;
 import java.util.UUID;
@@ -34,5 +43,168 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
         this.current_work_byte_array = new byte[workbytes.MAX_WORKS()];
         this.frame_int_array = new int[skinningentities.getIntegerDataParameterArray().length];
         this.sync_byte_array = new byte[bothdata.MaxSync()];
+    }
+
+    public void writeNBT(NBTTagCompound nbttagcompound)
+    {
+        if (this.owner_uuid != null)
+        {
+            byte[] byte_array = new byte[16];
+            BytesWriter.set(byte_array, this.owner_uuid, 0);
+            nbttagcompound.setByteArray("owner_uuid", byte_array);
+        }
+
+        this.entitiesaimemory.writeNBT(nbttagcompound);
+
+        if (this.main_work_byte_array == null)
+        {
+            this.main_work_byte_array = new byte[this.workbytes.MAX_WORKS()];
+        }
+
+        if (!this.sus_init)
+        {
+            this.main_work_byte_array[this.workbytes.LOCK_INVENTORY()] = 1;
+            this.main_work_byte_array[this.workbytes.LOCK_DAMAGE()] = 1;
+
+            if (this.workbytes.FOLLOW() != -1)
+            {
+                this.main_work_byte_array[this.workbytes.FOLLOW()] = 1;
+            }
+            if (this.workbytes.RANDOM_WALK() != -1)
+            {
+                this.main_work_byte_array[this.workbytes.RANDOM_WALK()] = 1;
+            }
+            if (this.workbytes.RANDOM_LOOK() != -1)
+            {
+                this.main_work_byte_array[this.workbytes.RANDOM_LOOK()] = 1;
+            }
+            if (this.workbytes.CARE_OWNER() != -1)
+            {
+                this.main_work_byte_array[this.workbytes.CARE_OWNER()] = 1;
+            }
+            if (this.workbytes.WALK_TO() != -1)
+            {
+                this.main_work_byte_array[this.workbytes.WALK_TO()] = 1;
+            }
+            if (this.workbytes.LOOK_TO() != -1)
+            {
+                this.main_work_byte_array[this.workbytes.LOOK_TO()] = 1;
+            }
+
+            nbttagcompound.setByteArray("work_bytes", this.main_work_byte_array);
+            nbttagcompound.setFloat("float_0", this.bothdata.Scale());
+            this.main_skinningentities.initWriteEntityToNBT(nbttagcompound);
+        }
+
+        nbttagcompound.setByteArray("work_bytes", this.main_work_byte_array);
+
+        nbttagcompound.setBoolean("sus_init", true);
+    }
+
+    public void readNBT(NBTTagCompound nbttagcompound)
+    {
+        if (nbttagcompound.hasKey("owner_uuid", 7))
+        {
+            this.owner_uuid = BytesReader.getUUID(nbttagcompound.getByteArray("owner_uuid"), 0);
+        }
+
+        this.entitiesaimemory.readNBT(nbttagcompound);
+
+        this.sus_init = nbttagcompound.hasKey("sus_init");
+
+        if (!this.sus_init)
+        {
+            this.main_work_byte_array[this.workbytes.LOCK_INVENTORY()] = 1;
+            this.main_work_byte_array[this.workbytes.LOCK_DAMAGE()] = 1;
+
+            if (this.workbytes.FOLLOW() != -1)
+            {
+                this.main_work_byte_array[this.workbytes.FOLLOW()] = 1;
+            }
+            if (this.workbytes.RANDOM_WALK() != -1)
+            {
+                this.main_work_byte_array[this.workbytes.RANDOM_WALK()] = 1;
+            }
+            if (this.workbytes.RANDOM_LOOK() != -1)
+            {
+                this.main_work_byte_array[this.workbytes.RANDOM_LOOK()] = 1;
+            }
+            if (this.workbytes.CARE_OWNER() != -1)
+            {
+                this.main_work_byte_array[this.workbytes.CARE_OWNER()] = 1;
+            }
+            if (this.workbytes.WALK_TO() != -1)
+            {
+                this.main_work_byte_array[this.workbytes.WALK_TO()] = 1;
+            }
+            if (this.workbytes.LOOK_TO() != -1)
+            {
+                this.main_work_byte_array[this.workbytes.LOOK_TO()] = 1;
+            }
+
+            this.main_skinningentities.getDataManager().set(this.main_skinningentities.getFloatDataParameterArray()[0], this.bothdata.Scale());
+            this.main_skinningentities.initReadEntityFromNBT();
+
+            this.sus_init = true;
+        }
+    }
+
+    public Entity getOwner()
+    {
+        if (this.owner_uuid == null)
+        {
+            return null;
+        }
+
+        return ((WorldServer)this.main_skinningentities.world).getEntityFromUuid(this.owner_uuid);
+    }
+
+    public Material getMaterial(BlockPos blockpos)
+    {
+        IBlockState temp_iblockstate = this.main_skinningentities.world.getBlockState(blockpos);
+        return temp_iblockstate.getMaterial();
+    }
+
+    public boolean isWork(int index)
+    {
+        for (int i = this.workbytes.SIT(); i < index; ++i)
+        {
+            if (this.current_work_byte_array[i] > 0)
+            {
+                return false;
+            }
+        }
+
+        return this.current_work_byte_array[index] != 0;
+    }
+
+    public boolean isWorkBypass(int index, int[] bypass_int_array)
+    {
+        for (int i = this.workbytes.SIT(); i < index; ++i)
+        {
+            boolean on_bypass = false;
+            for (int bypass : bypass_int_array)
+            {
+                if (i == bypass)
+                {
+                    on_bypass = true;
+                    break;
+                }
+            }
+
+            if (!on_bypass && this.current_work_byte_array[i] > 0)
+            {
+                return false;
+            }
+        }
+
+        return this.current_work_byte_array[index] != 0;
+    }
+
+    public static void removeFromMap(SkinningEntities skinningentities)
+    {
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
+        ChunkLoader.removeChunk(skinningentities);
+        ENTITIES_MAP.remove(serverentitiesmemory.uuid);
     }
 }

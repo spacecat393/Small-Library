@@ -45,7 +45,7 @@ public class SkinningEntitiesProtect extends SkinningEntitiesAI
             }
         }
 
-        if (this.skinningentities.isWork(serverentitiesmemory.workbytes.PROTECT()) && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist.isEmpty())
+        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.PROTECT()) && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist.isEmpty())
         {
             this.protect = true;
             serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();

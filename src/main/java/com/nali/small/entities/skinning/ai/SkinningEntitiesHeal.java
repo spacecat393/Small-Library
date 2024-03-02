@@ -26,7 +26,7 @@ public class SkinningEntitiesHeal extends SkinningEntitiesAI
     public void onUpdate()
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        if (this.skinningentities.isWork(serverentitiesmemory.workbytes.HEAL()) && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist.isEmpty() && ++this.cooldown >= 200)
+        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.HEAL()) && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist.isEmpty() && ++this.cooldown >= 200)
         {
             this.heal = true;
             double[] far = new double[serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist.size()];

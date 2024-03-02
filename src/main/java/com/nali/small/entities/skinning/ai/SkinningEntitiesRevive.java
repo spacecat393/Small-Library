@@ -33,7 +33,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         if (this.skinningentities.getEntityData().getBoolean("revive_nali"))
         {
-            Entity owner = this.skinningentities.getOwner();
+            Entity owner = serverentitiesmemory.getOwner();
             if (owner instanceof EntityPlayerMP && ((EntityPlayerMP)owner).getHealth() > 0.0F)
             {
                 if (this.need_blockpos != null)
@@ -55,11 +55,11 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
             }
         }
 
-        if (this.skinningentities.isWork(serverentitiesmemory.workbytes.REVIVE()))
+        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.REVIVE()))
         {
             if (this.entity == null)
             {
-                this.entity = this.skinningentities.getOwner();
+                this.entity = serverentitiesmemory.getOwner();
 //                this.tick = 0;
             }
 
@@ -67,7 +67,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
             {
 //                this.entity.isDead = false;
 //                this.current_entity = ((WorldServer)this.entity.world).getEntityFromUuid(this.entity.getUniqueID());
-                this.current_entity = this.skinningentities.getOwner();
+                this.current_entity = serverentitiesmemory.getOwner();
                 this.die = true;
             }
 

@@ -13,6 +13,7 @@ public interface WorkBytes
     int ON_REVIVE();
     int ON_PAT();
     int ON_EAT();
+    int WALK_TO();
 //    int ON_HEAL();
 //    int ON_PROTECT();
 //    int AFTER_STATE();
@@ -30,6 +31,7 @@ public interface WorkBytes
     int PLANT();
     int FIND_ITEM();
     int RANDOM_WALK();
+    int LOOK_TO();
     int RANDOM_LOOK();
     int MAX_WORKS();
 }
