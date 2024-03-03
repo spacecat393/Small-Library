@@ -75,6 +75,8 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
                 {
                     serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(this.entity.posX, this.entity.posY + this.entity.getEyeHeight(), this.entity.posZ, 5.0F);
                 }
+
+                --this.time;
             }
             else
             {
