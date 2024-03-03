@@ -24,7 +24,7 @@ public class SkinningEntitiesPassTo extends SkinningEntitiesAI
     public void onUpdate()
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        if (serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ON_PASS_TO()] == 1)
+        if (serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.WALK_TO()] == 1)
         {
             for (int i = 0; i < this.blockpos_arraylist.size(); ++i)
             {

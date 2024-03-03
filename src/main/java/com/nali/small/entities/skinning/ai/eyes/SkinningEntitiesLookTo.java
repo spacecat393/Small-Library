@@ -17,6 +17,8 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
     public Entity entity;
     public double far;
     public BlockPos blockpos;
+    public int time;
+    public int[] bypass_int_array = {this.skinningentities.bothentitiesmemory.workbytes.SIT(), this.skinningentities.bothentitiesmemory.workbytes.PROTECT()};
 
     public SkinningEntitiesLookTo(SkinningEntities skinningentities)
     {
@@ -27,7 +29,7 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
     public void onUpdate()
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.LOOK_TO()))
+        if (serverentitiesmemory.isWorkBypass(serverentitiesmemory.workbytes.LOOK_TO(), this.bypass_int_array))
         {
             this.far = Double.MAX_VALUE;
 
@@ -35,51 +37,65 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
             Map<UUID, Entity> entity_map = ((IMixinWorldServer)this.skinningentities.world).entitiesByUuid();
             Set<UUID> keys_set = new HashSet<>(entity_map.keySet());
 
+            Entity current_entity = this.entity;
+
             for (UUID id : keys_set)
             {
                 Entity entity = entity_map.get(id);
-                if (this.entity == null)
+                if (entity.equals(this.skinningentities))
+                {
+                    continue;
+                }
+
+                double far = this.skinningentities.getDistanceSq(entity);
+                if (far < this.far)
                 {
                     this.entity = entity;
-                }
-                else
-                {
-                    double far = this.entity.getDistanceSq(entity);
-                    if (far < this.far)
-                    {
-                        this.entity = entity;
-                        this.far = far;
-                    }
+                    this.far = far;
+                    this.setTime(current_entity);
                 }
             }
 
             if (owner_entity != null)
             {
-                if (this.entity == null)
+                if (this.skinningentities.getDistanceSq(owner_entity) < this.far)
                 {
                     this.entity = owner_entity;
-                }
-                else
-                {
-                    if (this.entity.getDistanceSq(owner_entity) < this.far)
-                    {
-                        this.entity = owner_entity;
-                    }
+                    this.setTime(current_entity);
                 }
             }
 
-            if (this.blockpos != null)
+            if (this.time > 300)
             {
-                serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(this.blockpos.getX(), this.blockpos.getY(), this.blockpos.getZ(), 5.0F);
-            }
-            else if (this.entity != null)
-            {
-                serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(this.entity.posX, this.entity.posY + this.entity.getEyeHeight(), this.entity.posZ, 5.0F);
+                if (this.blockpos != null)
+                {
+                    serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(this.blockpos.getX(), this.blockpos.getY(), this.blockpos.getZ(), 5.0F);
+                    if (--this.time == 0)
+                    {
+                        this.blockpos = null;
+                    }
+                }
+                else if (this.entity != null)
+                {
+                    serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(this.entity.posX, this.entity.posY + this.entity.getEyeHeight(), this.entity.posZ, 5.0F);
+                    if (--this.time == 0)
+                    {
+                        this.entity = null;
+                    }
+                }
             }
             else
             {
                 serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.LOOK_TO()] = 0;
             }
+        }
+    }
+
+    public void setTime(Entity current_entity)
+    {
+        if (this.time == 0 && current_entity != this.entity)
+        {
+            this.time = this.entity.world.rand.nextInt(600) + 300;
         }
     }
 }
