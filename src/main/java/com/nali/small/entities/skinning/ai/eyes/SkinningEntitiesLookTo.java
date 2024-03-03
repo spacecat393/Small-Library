@@ -70,18 +70,16 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
                 if (this.blockpos != null)
                 {
                     serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(this.blockpos.getX(), this.blockpos.getY(), this.blockpos.getZ(), 5.0F);
-                    if (--this.time == 0)
-                    {
-                        this.blockpos = null;
-                    }
                 }
                 else if (this.entity != null)
                 {
                     serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(this.entity.posX, this.entity.posY + this.entity.getEyeHeight(), this.entity.posZ, 5.0F);
-                    if (--this.time == 0)
-                    {
-                        this.entity = null;
-                    }
+                }
+
+                if (--this.time <= 0)
+                {
+                    this.entity = null;
+                    this.blockpos = null;
                 }
             }
             else
@@ -93,7 +91,7 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
 
     public void setTime(Entity current_entity)
     {
-        if (this.time == 0 && current_entity != this.entity)
+        if (this.time <= 0 && current_entity != this.entity)
         {
             this.time = this.entity.world.rand.nextInt(600) + 300;
         }
