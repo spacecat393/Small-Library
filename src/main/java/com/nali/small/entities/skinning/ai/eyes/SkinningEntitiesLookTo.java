@@ -17,7 +17,7 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
     public Entity entity;
     public double far;
     public BlockPos blockpos;
-    public int time;
+    public int tick;
     public int[] bypass_int_array = {this.skinningentities.bothentitiesmemory.workbytes.SIT(), this.skinningentities.bothentitiesmemory.workbytes.PROTECT()};
 
     public SkinningEntitiesLookTo(SkinningEntities skinningentities)
@@ -65,7 +65,7 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
                 }
             }
 
-            if (this.time > 300)
+            if (--this.tick > 300)
             {
                 if (this.blockpos != null)
                 {
@@ -75,12 +75,10 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
                 {
                     serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(this.entity.posX, this.entity.posY + this.entity.getEyeHeight(), this.entity.posZ, 5.0F);
                 }
-
-                --this.time;
             }
             else
             {
-                if (--this.time <= 0)
+                if (this.tick <= 0)
                 {
                     this.entity = null;
                     this.blockpos = null;
@@ -93,9 +91,9 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
 
     public void setTime(Entity current_entity)
     {
-        if (this.time <= 0 && current_entity != this.entity)
+        if (this.tick <= 0 && current_entity != this.entity)
         {
-            this.time = this.entity.world.rand.nextInt(600) + 300;
+            this.tick = this.entity.world.rand.nextInt(700) + 200;
         }
     }
 }

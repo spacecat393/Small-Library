@@ -9,7 +9,7 @@ import com.nali.small.entities.skinning.ai.eyes.SkinningEntitiesRandomLook;
 import com.nali.small.entities.skinning.ai.frame.SkinningEntitiesLiveFrame;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesMove;
-import com.nali.small.entities.skinning.ai.path.SkinningEntitiesPassTo;
+import com.nali.small.entities.skinning.ai.path.SkinningEntitiesWalkTo;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesRandomWalk;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -33,7 +33,7 @@ public class EntitiesAIMemory
     public SkinningEntitiesAttack skinningentitiesattack;
     public SkinningEntitiesRevive skinningentitiesrevive;
     public SkinningEntitiesPlayWith skinningentitiesplaywith;
-    public SkinningEntitiesPassTo skinningentitiespassto;
+    public SkinningEntitiesWalkTo skinningentitieswalkto;
     public SkinningEntitiesLookTo skinningentitieslookto;
 
     public EntitiesAIMemory(SkinningEntities skinningentities)
@@ -67,7 +67,7 @@ public class EntitiesAIMemory
         }
         if (workbytes.WALK_TO() != -1)
         {
-            this.skinningentitiespassto = new SkinningEntitiesPassTo(skinningentities);
+            this.skinningentitieswalkto = new SkinningEntitiesWalkTo(skinningentities);
         }
 
         if (workbytes.HEAL() != -1)
@@ -192,9 +192,9 @@ public class EntitiesAIMemory
             }
 
             this.skinningentitieslook.onUpdate();
-            if (this.skinningentitiespassto != null)
+            if (this.skinningentitieswalkto != null)
             {
-                this.skinningentitiespassto.onUpdate();
+                this.skinningentitieswalkto.onUpdate();
             }
         }
 

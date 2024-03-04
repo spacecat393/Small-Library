@@ -5,6 +5,8 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockFenceGate;
+import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -137,8 +139,8 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
             }
             else
             {
-                serverentitiesmemory.entitiesaimemory.skinningentitiespassto.blockpos_arraylist.clear();
-                serverentitiesmemory.entitiesaimemory.skinningentitiespassto.block_arraylist.clear();
+                serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.blockpos_arraylist.clear();
+//                serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.block_arraylist.clear();
                 this.old_x = this.skinningentities.posX;
                 this.old_y = this.skinningentities.posY;
                 this.old_z = this.skinningentities.posZ;
@@ -717,13 +719,19 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 
     public boolean isPassWithAct(BlockPos blockpos)
     {
-        World world = this.skinningentities.world;
-        Block block = world.getBlockState(blockpos).getBlock();
-        if (block instanceof BlockDoor)
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
+        if (serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.WALK_TO()] == 0)
         {
-            ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-            serverentitiesmemory.entitiesaimemory.skinningentitiespassto.blockpos_arraylist.add(blockpos);
-            serverentitiesmemory.entitiesaimemory.skinningentitiespassto.block_arraylist.add(block);
+            return false;
+        }
+
+        World world = this.skinningentities.world;
+        IBlockState iblockstate = world.getBlockState(blockpos);
+        Block block = iblockstate.getBlock();
+        if (iblockstate.getMaterial() != Material.IRON && block instanceof BlockDoor || block instanceof BlockFenceGate || block instanceof BlockTrapDoor)
+        {
+            serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.blockpos_arraylist.add(blockpos);
+//            serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.block_arraylist.add(block);
             return true;
         }
 
