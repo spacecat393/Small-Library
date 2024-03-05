@@ -48,27 +48,12 @@ public class EntitiesAIMemory
         this.skinningentitiesmove = new SkinningEntitiesMove(skinningentities);
         this.skinningentitiesjump = new SkinningEntitiesJump(skinningentities);
         this.skinningentitiesgetitem = new SkinningEntitiesGetItem(skinningentities);
-
-        if (workbytes.FOLLOW() != -1)
-        {
-            this.skinningentitiesfollow = new SkinningEntitiesFollow(skinningentities);
-        }
-        if (workbytes.RANDOM_WALK() != -1)
-        {
-            this.skinningentitiesrandomwalk = new SkinningEntitiesRandomWalk(skinningentities);
-        }
-        if (workbytes.LOOK_TO() != -1)
-        {
-            this.skinningentitieslookto = new SkinningEntitiesLookTo(skinningentities);
-        }
-        if (workbytes.RANDOM_LOOK() != -1)
-        {
-            this.skinningentitiesrandomlook = new SkinningEntitiesRandomLook(skinningentities);
-        }
-        if (workbytes.WALK_TO() != -1)
-        {
-            this.skinningentitieswalkto = new SkinningEntitiesWalkTo(skinningentities);
-        }
+        this.skinningentitiesrandomwalk = new SkinningEntitiesRandomWalk(skinningentities);
+        this.skinningentitieslookto = new SkinningEntitiesLookTo(skinningentities);
+        this.skinningentitiesrandomlook = new SkinningEntitiesRandomLook(skinningentities);
+        this.skinningentitieswalkto = new SkinningEntitiesWalkTo(skinningentities);
+        this.skinningentitiesfollow = new SkinningEntitiesFollow(skinningentities);
+        this.skinningentitiesrevive = new SkinningEntitiesRevive(skinningentities);
 
         if (workbytes.HEAL() != -1)
         {
@@ -89,10 +74,6 @@ public class EntitiesAIMemory
         if (workbytes.ATTACK() != -1)
         {
             this.skinningentitiesattack = new SkinningEntitiesAttack(skinningentities);
-        }
-        if (workbytes.REVIVE() != -1)
-        {
-            this.skinningentitiesrevive = new SkinningEntitiesRevive(skinningentities);
         }
     }
 
@@ -130,17 +111,9 @@ public class EntitiesAIMemory
         if (is_move)
         {
             this.skinningentitiesarea.onUpdate();
-
             this.skinningentitiessetlocation.onUpdate();
-
-            if (this.skinningentitiesfollow != null)
-            {
-                this.skinningentitiesfollow.onUpdate();
-            }
-            if (this.skinningentitiesrevive != null)
-            {
-                this.skinningentitiesrevive.onUpdate();
-            }
+            this.skinningentitiesfollow.onUpdate();
+            this.skinningentitiesrevive.onUpdate();
 
             if (this.skinningentitiesplaywith != null)
             {
@@ -164,18 +137,9 @@ public class EntitiesAIMemory
             }
 
             this.skinningentitiesgetitem.onUpdate();
-            if (this.skinningentitiesrandomwalk != null)
-            {
-                this.skinningentitiesrandomwalk.onUpdate();
-            }
-            if (this.skinningentitieslookto != null)
-            {
-                this.skinningentitieslookto.onUpdate();
-            }
-            if (this.skinningentitiesrandomlook != null)
-            {
-                this.skinningentitiesrandomlook.onUpdate();
-            }
+            this.skinningentitiesrandomwalk.onUpdate();
+            this.skinningentitieslookto.onUpdate();
+            this.skinningentitiesrandomlook.onUpdate();
         }
 
         for (SkinningEntitiesLiveFrame skinningentitiesliveframe : this.skinningentitiesliveframe_array)
@@ -189,13 +153,10 @@ public class EntitiesAIMemory
             {
                 this.skinningentitiesfindmove.onUpdate();
                 this.skinningentitiesmove.onUpdate();
+                this.skinningentitieswalkto.onUpdate();
             }
 
             this.skinningentitieslook.onUpdate();
-            if (this.skinningentitieswalkto != null)
-            {
-                this.skinningentitieswalkto.onUpdate();
-            }
         }
 
         if (!is_move)

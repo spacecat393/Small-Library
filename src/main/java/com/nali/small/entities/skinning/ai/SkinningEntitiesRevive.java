@@ -82,10 +82,10 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
                 {
                     if (isTooClose(this.skinningentities, entity, 1.0D))
                     {
-                        if (serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ON_REVIVE()] != 1)
-                        {
-                            serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.ON_REVIVE()] = 1;
-                        }
+//                        if (serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ON_REVIVE()] != 1)
+//                        {
+//                            serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.ON_REVIVE()] = 1;
+//                        }
 
                         serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(this.entity.posX, this.entity.posY, this.entity.posZ, 90.0F);
 //                        ++this.tick;

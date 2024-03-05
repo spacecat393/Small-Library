@@ -85,12 +85,16 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         return serverentitiesmemory.frame_int_array[this.integer_index] < this.int_2d_array[id0][1];
     }
 
-    public boolean setFLoopFree(int id0, int byte_id)
+    public boolean setFLoopFree(int id0, byte byte_id)
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         if (serverentitiesmemory.frame_int_array[this.integer_index] == this.int_2d_array[id0][1] - 1)
         {
-            serverentitiesmemory.main_work_byte_array[byte_id] = 0;
+            if ((serverentitiesmemory.statentitiesmemory.stat & byte_id) == byte_id)
+            {
+                serverentitiesmemory.statentitiesmemory.stat ^= byte_id;
+            }
+
             serverentitiesmemory.frame_int_array[this.integer_index] = this.int_2d_array[id0][1] - 1;
             this.step = 0;
             return true;
@@ -185,7 +189,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
 //        Small.LOGGER.info("STATE " + skinningentitiesattack.state);
-        if (serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.AMMO()] <= 0)
+        if (serverentitiesmemory.statentitiesmemory.magic_point <= 0)
         {
             this.step = 1;
             if (this.checkShoot(id0, id1, id2, true))
@@ -207,7 +211,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
                     if (serverentitiesmemory.frame_int_array[this.integer_index] == this.int_2d_array[id3][1])
                     {
                         this.step = 0;
-                        serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.AMMO()] = skinningentitiesattack.max_ammo;
+                        serverentitiesmemory.statentitiesmemory.magic_point = skinningentitiesattack.max_ammo;
 //                        if (skinningentitiesattack.state == 0 || skinningentitiesattack.state == 1)
 //                        {
 //                            serverentitiesmemory.frame_int_array[this.integer_index] = this.int_2d_array[id0][1];
@@ -250,7 +254,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
                 {
                     if (serverentitiesmemory.frame_int_array[this.integer_index] == attack_frame)
                     {
-                        serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.AMMO()] -= 1;
+                        serverentitiesmemory.statentitiesmemory.magic_point -= 1;
                         skinningentitiesattack.state = 1;
                         break;
                     }

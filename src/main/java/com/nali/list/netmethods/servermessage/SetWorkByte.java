@@ -38,17 +38,27 @@ public class SetWorkByte
 //                        DataParameter<Byte>[] byte_dataparameter_array = skinningentities.getByteDataParameterArray();
             if (servermessage.data[21] == 0)
             {
-                serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.SOFT_READY()] = 1;
-                serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.HARD_READY()] = 0;
-//                            entitydatamanager.set(byte_dataparameter_array[serverentitiesmemory.workbytes.SOFT_READY()], (byte)1);
-//                            entitydatamanager.set(byte_dataparameter_array[serverentitiesmemory.workbytes.HARD_READY()], (byte)0);
+                if ((serverentitiesmemory.statentitiesmemory.stat & 2) != 2)
+                {
+                    serverentitiesmemory.statentitiesmemory.stat ^= 2;
+                }
+
+                if ((serverentitiesmemory.statentitiesmemory.stat & 4) == 4)
+                {
+                    serverentitiesmemory.statentitiesmemory.stat ^= 4;
+                }
             }
             else
             {
-                serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.SOFT_READY()] = 0;
-                serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.HARD_READY()] = 1;
-//                            entitydatamanager.set(byte_dataparameter_array[serverentitiesmemory.workbytes.HARD_READY()], (byte)1);
-//                            entitydatamanager.set(byte_dataparameter_array[serverentitiesmemory.workbytes.SOFT_READY()], (byte)0);
+                if ((serverentitiesmemory.statentitiesmemory.stat & 2) == 2)
+                {
+                    serverentitiesmemory.statentitiesmemory.stat ^= 2;
+                }
+
+                if ((serverentitiesmemory.statentitiesmemory.stat & 4) != 4)
+                {
+                    serverentitiesmemory.statentitiesmemory.stat ^= 4;
+                }
             }
 
             serverentitiesmemory.main_work_byte_array[id] = servermessage.data[21];

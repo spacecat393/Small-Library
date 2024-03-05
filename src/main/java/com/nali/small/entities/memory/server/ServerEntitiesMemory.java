@@ -32,6 +32,7 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
     public SkinningEntities skinningentities;
 
     public EntitiesAIMemory entitiesaimemory;
+    public StatEntitiesMemory statentitiesmemory;
     public ItemStack current_mouth_itemstack;
     public byte[] sync_byte_array;
 
@@ -66,39 +67,21 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
             this.main_work_byte_array[this.workbytes.LOCK_INVENTORY()] = 1;
             this.main_work_byte_array[this.workbytes.LOCK_DAMAGE()] = 1;
 
-            if (this.workbytes.FOLLOW() != -1)
-            {
-                this.main_work_byte_array[this.workbytes.FOLLOW()] = 1;
-            }
-            if (this.workbytes.RANDOM_WALK() != -1)
-            {
-                this.main_work_byte_array[this.workbytes.RANDOM_WALK()] = 1;
-            }
-            if (this.workbytes.RANDOM_LOOK() != -1)
-            {
-                this.main_work_byte_array[this.workbytes.RANDOM_LOOK()] = 1;
-            }
             if (this.workbytes.CARE_OWNER() != -1)
             {
                 this.main_work_byte_array[this.workbytes.CARE_OWNER()] = 1;
             }
-            if (this.workbytes.WALK_TO() != -1)
-            {
-                this.main_work_byte_array[this.workbytes.WALK_TO()] = 1;
-            }
-            if (this.workbytes.LOOK_TO() != -1)
-            {
-                this.main_work_byte_array[this.workbytes.LOOK_TO()] = 1;
-            }
 
-            nbttagcompound.setByteArray("work_bytes", this.main_work_byte_array);
             nbttagcompound.setFloat("float_0", this.bothdata.Scale());
             this.main_skinningentities.initWriteEntityToNBT(nbttagcompound);
+            nbttagcompound.setByteArray("work_bytes", this.main_work_byte_array);
         }
 
         nbttagcompound.setByteArray("work_bytes", this.main_work_byte_array);
 
         nbttagcompound.setBoolean("sus_init", true);
+
+        this.statentitiesmemory.writeNBT(nbttagcompound);
     }
 
     public void readNBT(NBTTagCompound nbttagcompound)
@@ -117,36 +100,18 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
             this.main_work_byte_array[this.workbytes.LOCK_INVENTORY()] = 1;
             this.main_work_byte_array[this.workbytes.LOCK_DAMAGE()] = 1;
 
-            if (this.workbytes.FOLLOW() != -1)
-            {
-                this.main_work_byte_array[this.workbytes.FOLLOW()] = 1;
-            }
-            if (this.workbytes.RANDOM_WALK() != -1)
-            {
-                this.main_work_byte_array[this.workbytes.RANDOM_WALK()] = 1;
-            }
-            if (this.workbytes.RANDOM_LOOK() != -1)
-            {
-                this.main_work_byte_array[this.workbytes.RANDOM_LOOK()] = 1;
-            }
             if (this.workbytes.CARE_OWNER() != -1)
             {
                 this.main_work_byte_array[this.workbytes.CARE_OWNER()] = 1;
             }
-            if (this.workbytes.WALK_TO() != -1)
-            {
-                this.main_work_byte_array[this.workbytes.WALK_TO()] = 1;
-            }
-            if (this.workbytes.LOOK_TO() != -1)
-            {
-                this.main_work_byte_array[this.workbytes.LOOK_TO()] = 1;
-            }
 
             this.main_skinningentities.getDataManager().set(this.main_skinningentities.getFloatDataParameterArray()[0], this.bothdata.Scale());
-            this.main_skinningentities.initReadEntityFromNBT();
+            this.main_skinningentities.initReadEntityFromNBT(nbttagcompound);
 
             this.sus_init = true;
         }
+
+        this.statentitiesmemory.readNBT(nbttagcompound);
     }
 
     public Entity getOwner()

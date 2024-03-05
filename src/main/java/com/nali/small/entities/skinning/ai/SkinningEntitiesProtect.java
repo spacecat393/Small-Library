@@ -4,8 +4,6 @@ import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 
 import java.util.ArrayList;
 
@@ -77,7 +75,8 @@ public class SkinningEntitiesProtect extends SkinningEntitiesAI
 
                         if (entity instanceof EntityLivingBase)
                         {
-                            ((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1200, 10));
+//                            ((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1200, 10));
+                            entity.getEntityData().setByte("protect_nali", (byte)3);
                         }
                     }
                 }

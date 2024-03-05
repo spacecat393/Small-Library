@@ -43,7 +43,10 @@ public class Eat
             {
                 skinningentities.addPotionEffect(potioneffect);
             }
-            serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.ON_EAT()] = 1;
+            if ((serverentitiesmemory.statentitiesmemory.stat & 8) != 8)
+            {
+                serverentitiesmemory.statentitiesmemory.stat ^= 8;
+            }
             skinningentities.world.spawnEntity(new EntityXPOrb(skinningentities.world, skinningentities.posX, skinningentities.posY, skinningentities.posZ, 10));
             skinningentities.heal(itemfood.getHealAmount(itemstack) + itemfood.getSaturationModifier(itemstack));
             itemstack.shrink(1);

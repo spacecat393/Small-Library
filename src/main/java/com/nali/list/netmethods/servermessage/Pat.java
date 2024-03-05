@@ -20,7 +20,10 @@ public class Pat
         if (skinningentities != null)
         {
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
-            serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.ON_PAT()] = 1;
+            if ((serverentitiesmemory.statentitiesmemory.stat & 1) != 1)
+            {
+                serverentitiesmemory.statentitiesmemory.stat ^= 1;
+            }
             ((WorldServer)skinningentities.world).spawnParticle(EnumParticleTypes.HEART, skinningentities.posX, BytesReader.getFloat(servermessage.data, 1 + 16), skinningentities.posZ, 1, 0.0D, 0.0D, 0.0D, 0.0D);
 //                        skinningentities.world.spawnEntity(new EntityXPOrb(skinningentities.world, skinningentities.posX, skinningentities.posY, skinningentities.posZ, 10));
         }

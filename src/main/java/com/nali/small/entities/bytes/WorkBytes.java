@@ -6,13 +6,13 @@ public interface WorkBytes
 //STATE
     int LOCK_INVENTORY();
     int LOCK_DAMAGE();
-    int HARD_READY();
-    int SOFT_READY();
+//    int HARD_READY();
+//    int SOFT_READY();
 //    int ON_ATTACK();
-    int AMMO();
-    int ON_REVIVE();
-    int ON_PAT();
-    int ON_EAT();
+//    int AMMO();
+//    int ON_REVIVE();
+//    int ON_PAT();
+//    int ON_EAT();
     int WALK_TO();
 //    int ON_HEAL();
 //    int ON_PROTECT();
@@ -29,6 +29,7 @@ public interface WorkBytes
     int ATTACK();
     int MINE();
     int PLANT();
+    int FISHING();
     int FIND_ITEM();
     int RANDOM_WALK();
     int LOOK_TO();

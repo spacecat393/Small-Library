@@ -33,7 +33,6 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
         {
             this.far = Double.MAX_VALUE;
 
-            Entity owner_entity = serverentitiesmemory.getOwner();
             Map<UUID, Entity> entity_map = ((IMixinWorldServer)this.skinningentities.world).entitiesByUuid();
             Set<UUID> keys_set = new HashSet<>(entity_map.keySet());
 
@@ -56,14 +55,15 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
                 }
             }
 
-            if (owner_entity != null)
-            {
-                if (this.skinningentities.getDistanceSq(owner_entity) < this.far)
-                {
-                    this.entity = owner_entity;
-                    this.setTime(current_entity);
-                }
-            }
+//            Entity owner_entity = serverentitiesmemory.getOwner();
+//            if (owner_entity != null)
+//            {
+//                if (this.skinningentities.getDistanceSq(owner_entity) < this.far)
+//                {
+//                    this.entity = owner_entity;
+//                    this.setTime(current_entity);
+//                }
+//            }
 
             if (--this.tick > 300)
             {

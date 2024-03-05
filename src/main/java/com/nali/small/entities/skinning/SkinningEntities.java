@@ -790,9 +790,28 @@ public abstract class SkinningEntities extends EntityLivingBase
         new ServerEntitiesMemory(skinningentities, bothdata, workbytes);
     }
 
+    public void initWriteEntityToNBT(NBTTagCompound nbttagcompound)
+    {
+        this.initWorkBytes();
+    }
+
+    public void initReadEntityFromNBT(NBTTagCompound nbttagcompound)
+    {
+        this.initWorkBytes();
+    }
+
+    public void initWorkBytes()
+    {
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
+        serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.FOLLOW()] = 1;
+        serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.RANDOM_WALK()] = 1;
+        serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.RANDOM_LOOK()] = 1;
+        serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.WALK_TO()] = 1;
+        serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.LOOK_TO()] = 1;
+        serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.REVIVE()] = 1;
+    }
+
     public void initFakeFrame(){}
-    public void initWriteEntityToNBT(NBTTagCompound nbttagcompound){}
-    public void initReadEntityFromNBT(){}
 
     public abstract BothData createBothData();
     public abstract WorkBytes createWorkBytes();
