@@ -90,10 +90,8 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         if (serverentitiesmemory.frame_int_array[this.integer_index] == this.int_2d_array[id0][1] - 1)
         {
-            if ((serverentitiesmemory.statentitiesmemory.stat & byte_id) == byte_id)
-            {
-                serverentitiesmemory.statentitiesmemory.stat ^= byte_id;
-            }
+            byte on = (byte)(serverentitiesmemory.statentitiesmemory.stat & byte_id);
+            serverentitiesmemory.statentitiesmemory.stat ^= on;
 
             serverentitiesmemory.frame_int_array[this.integer_index] = this.int_2d_array[id0][1] - 1;
             this.step = 0;
