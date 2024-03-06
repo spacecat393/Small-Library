@@ -32,7 +32,7 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
     public SkinningEntities skinningentities;
 
     public EntitiesAIMemory entitiesaimemory;
-    public StatEntitiesMemory statentitiesmemory;
+    public StatEntitiesMemory statentitiesmemory = new StatEntitiesMemory();
     public ItemStack current_mouth_itemstack;
     public byte[] sync_byte_array;
 

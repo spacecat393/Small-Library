@@ -159,7 +159,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
 ////                this.current_entity.setDead();
 //                this.entity = null;
 //            }
-            else
+            else if (this.die)
             {
                 serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
                 this.entity = null;

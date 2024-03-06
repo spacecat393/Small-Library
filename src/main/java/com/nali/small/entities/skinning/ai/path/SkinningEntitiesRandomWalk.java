@@ -7,7 +7,6 @@ import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
 public class SkinningEntitiesRandomWalk extends SkinningEntitiesAI
 {
     public int tick;
-    public int end_tick;
     public boolean walk;
 
     public SkinningEntitiesRandomWalk(SkinningEntities skinningentities)
@@ -21,10 +20,8 @@ public class SkinningEntitiesRandomWalk extends SkinningEntitiesAI
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.RANDOM_WALK()))
         {
-            ++this.end_tick;
-            if (this.end_tick == 100)
+            if (this.skinningentities.ticksExisted % 100 == 0)
             {
-                this.end_tick = 0;
                 serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
                 this.walk = false;
             }
