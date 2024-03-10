@@ -80,7 +80,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 
         GL11.glPopMatrix();
 
-        this.renderLayer(skinningentities, ox, oy, oz, partialTicks);
+//        this.renderLayer(skinningentities, ox, oy, oz, partialTicks);
 
         super.doRender(skinningentities, ox, oy, oz, entityYaw, partialTicks);
     }

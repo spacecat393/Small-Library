@@ -20,17 +20,6 @@ public class InventoryContainer extends Container
         this.entityplayer = entityplayer;
         this.skinningentities = skinningentities;
         SkinningInventory skinninginventory = this.skinningentities.bothentitiesmemory.skinninginventory;
-//        SkinningInventory skinninginventory = null;
-
-//        if (skinningentities == null)
-//        {
-//            skinninginventory = new SkinningInventory();
-//        }
-//        else
-//        {
-//            skinninginventory = skinningentities.skinninginventory;
-//            this.skinningentities = skinningentities;
-//        }
 
         int i = 48;
 
@@ -53,7 +42,22 @@ public class InventoryContainer extends Container
         {
             for (int l = 0; l < 9; ++l)
             {
-                this.addSlotToContainer(new Slot(skinninginventory, l + k * 9, i + l * 18, 89 + k * 18));
+                this.addSlotToContainer(new Slot(skinninginventory, l + k * 9, i + l * 18, 89 + k * 18)
+                {
+                    @Override
+                    public void onSlotChanged()
+                    {
+                        syncToCrafting();
+                        super.onSlotChanged();
+                    }
+
+                    @Override
+                    public void onSlotChange(ItemStack itemstack_0, ItemStack itemstack_1)
+                    {
+                        syncToCrafting();
+                        super.onSlotChange(itemstack_0, itemstack_1);
+                    }
+                });
             }
         }
 
@@ -72,22 +76,22 @@ public class InventoryContainer extends Container
 //        {
 //            for (int j = 0; j < 3; ++j)
 //            {
-//                this.addSlotToContainer(new Slot(this.inventorycrafting, j + l * 3, 98 + j * 18, 18 + l * 18));
+//                this.addSlotToContainer(new Slot(this.inventorycrafting, j + l * 3, i + j * 18, 89 + (l + 6) * 18));
 //            }
 //        }
-//        this.syncToCrafting();
+        this.syncToCrafting();
     }
 
-    @Override
-    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
-    {
-        if (slotId != 0)
-        {
-            this.syncToCrafting();
-        }
-
-        return super.slotClick(slotId, dragType, clickTypeIn, player);
-    }
+//    @Override
+//    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
+//    {
+//        if (slotId != 0)
+//        {
+//            this.syncToCrafting();
+//        }
+//
+//        return super.slotClick(slotId, dragType, clickTypeIn, player);
+//    }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer entityplayer, int index)

@@ -45,28 +45,36 @@ public class SkinningInventory implements IInventory
 
     public ItemStack getStackInSlot(int index)
     {
+        int inv = this.inventory_itemstack_nonnulllist.size();
+        int hands = this.hands_itemstack_nonnulllist.size();
+        int armor = this.armor_itemstack_nonnulllist.size();
+
         return index > -1 &&
-        index < 27 ? this.inventory_itemstack_nonnulllist.get(index) :
-        index < 27 + 2 ? this.hands_itemstack_nonnulllist.get(index - 27) :
-        index < 27 + 2 + 4 ? this.armor_itemstack_nonnulllist.get(index - 27 - 2) :
-        index < 27 + 2 + 4 + this.offset_itemstack_nonnulllist.size() ? this.offset_itemstack_nonnulllist.get(index - 27 - 2 - 4) : ItemStack.EMPTY;
+        index < inv ? this.inventory_itemstack_nonnulllist.get(index) :
+        index < inv + hands ? this.hands_itemstack_nonnulllist.get(index - inv) :
+        index < inv + hands + armor ? this.armor_itemstack_nonnulllist.get(index - inv - hands) :
+        index < inv + hands + armor + this.offset_itemstack_nonnulllist.size() ? this.offset_itemstack_nonnulllist.get(index - inv - hands - armor) : ItemStack.EMPTY;
     }
 
     public ItemStack decrStackSize(int index, int count)
     {
+        int inv = this.inventory_itemstack_nonnulllist.size();
+        int hands = this.hands_itemstack_nonnulllist.size();
+        int armor = this.armor_itemstack_nonnulllist.size();
+
         ItemStack itemstack;
 
-        if (index >= 27 + 2 + 4)
+        if (index >= inv + hands + armor)
         {
-            itemstack = ItemStackHelper.getAndSplit(this.offset_itemstack_nonnulllist, index - 27 - 2 - 4, count);
+            itemstack = ItemStackHelper.getAndSplit(this.offset_itemstack_nonnulllist, index - inv - hands - armor, count);
         }
-        else if (index >= 27 + 2)
+        else if (index >= inv + hands)
         {
-            itemstack = ItemStackHelper.getAndSplit(this.armor_itemstack_nonnulllist, index - 27 - 2, count);
+            itemstack = ItemStackHelper.getAndSplit(this.armor_itemstack_nonnulllist, index - inv - hands, count);
         }
-        else if (index >= 27)
+        else if (index >= inv)
         {
-            itemstack = ItemStackHelper.getAndSplit(this.hands_itemstack_nonnulllist, index - 27, count);
+            itemstack = ItemStackHelper.getAndSplit(this.hands_itemstack_nonnulllist, index - inv, count);
         }
         else
         {
@@ -125,6 +133,10 @@ public class SkinningInventory implements IInventory
 
     public ItemStack removeStackFromSlot(int index)
     {
+        int inv = this.inventory_itemstack_nonnulllist.size();
+        int hands = this.hands_itemstack_nonnulllist.size();
+        int armor = this.armor_itemstack_nonnulllist.size();
+
         ItemStack itemstack = this.inventory_itemstack_nonnulllist.get(index);
 
         if (itemstack.isEmpty())
@@ -133,17 +145,17 @@ public class SkinningInventory implements IInventory
         }
         else
         {
-            if (index >= 27 + 2 + 4)
+            if (index >= inv + hands + armor)
             {
-                this.offset_itemstack_nonnulllist.set(index - 27 - 2 - 4, ItemStack.EMPTY);
+                this.offset_itemstack_nonnulllist.set(index - inv - hands - armor, ItemStack.EMPTY);
             }
-            else if (index >= 27 + 2)
+            else if (index >= inv + hands)
             {
-                this.armor_itemstack_nonnulllist.set(index - 27 - 2, ItemStack.EMPTY);
+                this.armor_itemstack_nonnulllist.set(index - inv - hands, ItemStack.EMPTY);
             }
-            else if (index >= 27)
+            else if (index >= inv)
             {
-                this.hands_itemstack_nonnulllist.set(index - 27, ItemStack.EMPTY);
+                this.hands_itemstack_nonnulllist.set(index - inv, ItemStack.EMPTY);
             }
             else
             {
@@ -155,17 +167,21 @@ public class SkinningInventory implements IInventory
 
     public void setInventorySlotContents(int index, ItemStack stack)
     {
-        if (index >= 27 + 2 + 4)
+        int inv = this.inventory_itemstack_nonnulllist.size();
+        int hands = this.hands_itemstack_nonnulllist.size();
+        int armor = this.armor_itemstack_nonnulllist.size();
+
+        if (index >= inv + hands + armor)
         {
-            this.offset_itemstack_nonnulllist.set(index - 27 - 2 - 4, stack);
+            this.offset_itemstack_nonnulllist.set(index - inv - hands - armor, stack);
         }
-        else if (index >= 27 + 2)
+        else if (index >= inv + hands)
         {
-            this.armor_itemstack_nonnulllist.set(index - 27 - 2, stack);
+            this.armor_itemstack_nonnulllist.set(index - inv - hands, stack);
         }
-        else if (index >= 27)
+        else if (index >= inv)
         {
-            this.hands_itemstack_nonnulllist.set(index - 27, stack);
+            this.hands_itemstack_nonnulllist.set(index - inv, stack);
         }
         else
         {
@@ -182,7 +198,7 @@ public class SkinningInventory implements IInventory
 
     public int getSizeInventory()
     {
-        return 27 + 2 + 4 + this.offset_itemstack_nonnulllist.size();
+        return this.inventory_itemstack_nonnulllist.size() + this.hands_itemstack_nonnulllist.size() + this.armor_itemstack_nonnulllist.size() + this.offset_itemstack_nonnulllist.size();
     }
 
     public boolean isEmpty()
@@ -295,6 +311,10 @@ public class SkinningInventory implements IInventory
 
     public void writeNBT(NBTTagCompound nbttagcompound)
     {
+        int inv = this.inventory_itemstack_nonnulllist.size();
+        int hands = this.hands_itemstack_nonnulllist.size();
+        int armor = this.armor_itemstack_nonnulllist.size();
+
         NBTTagList nbttaglist = new NBTTagList();
         for (ItemStack itemstack : this.armor_itemstack_nonnulllist)
         {
@@ -328,7 +348,7 @@ public class SkinningInventory implements IInventory
         for (int l = 0; l < this.getSizeInventory(); ++l)
         {
             ItemStack itemstack = this.getStackInSlot(l);
-            if (!itemstack.isEmpty() && !(l > 27 && l < 27 + 2 + 4))
+            if (!itemstack.isEmpty() && !(l > inv && l < inv + hands + armor))
             {
                 nbttagcompound.setTag("ib" + l, itemstack.writeToNBT(new NBTTagCompound()));
             }
