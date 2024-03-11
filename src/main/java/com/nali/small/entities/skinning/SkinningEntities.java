@@ -735,17 +735,26 @@ public abstract class SkinningEntities extends EntityLivingBase
         }
         else
         {
-            double hw = this.width / 2.0F;
-            double hh = 0.5F;
+            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
+            SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
+            int[] iv_int_array = this.getIVIntArray();
 
-            Vec3d view_vec3d = this.getLookVec().scale(0.25F);
-            double x = this.posX + view_vec3d.x;
-            double y = (this.posY + this.height / 2.0F) + view_vec3d.y;
-            double z = this.posZ + view_vec3d.z;
+            float[] pos_vec4 = skinningrender.getScale3DSkinning((float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
+//            for (int i = 0; i < pos_vec4.length; ++i)
+//            {
+//                pos_vec4[i] *= skinningrender.entitiesrendermemory.scale;
+//            }
+
+            double x = pos_vec4[0] / pos_vec4[3];
+            double y = pos_vec4[1] / pos_vec4[3];
+            double z = pos_vec4[2] / pos_vec4[3];
+
+            double hw = this.width / 1.5F;
+            double hh = this.height / 4.0F;
 
             return new AxisAlignedBB
             (
-            x - hw, y, z - hw,
+            x - hw, y - hh, z - hw,
             x + hw, y + hh, z + hw
             );
         }
@@ -821,4 +830,6 @@ public abstract class SkinningEntities extends EntityLivingBase
     public abstract DataParameter<Float>[] getFloatDataParameterArray();
     @SideOnly(Side.CLIENT)
     public abstract Object createObjectRender();
+    @SideOnly(Side.CLIENT)
+    public abstract int[] getIVIntArray();
 }

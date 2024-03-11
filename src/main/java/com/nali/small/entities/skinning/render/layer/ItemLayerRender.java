@@ -5,7 +5,6 @@ import com.nali.render.SkinningRender;
 import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.RenderLivingBaseObject;
-import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
 import com.nali.small.mixin.IMixinLayerArmorBase;
 import com.nali.system.opengl.memory.OpenGLCurrentMemory;
 import net.minecraft.client.Minecraft;
@@ -64,7 +63,7 @@ public class ItemLayerRender extends LayerRender
         super(skinningentities);
     }
 
-    public void layer(SkinningEntitiesRender skinningentitiesrender, float partialTicks)
+    public void layer(float partialTicks)
     {
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.skinningentities.bothentitiesmemory;
 //        cliententitiesmemory.objectrender.takeDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
@@ -86,29 +85,30 @@ public class ItemLayerRender extends LayerRender
 //        }
 
         this.index = 0;
-        this.renderHeldItem(skinningentitiesrender, this.skinningentities.getHeldItemMainhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, this.iv_int_array[2], this.iv_int_array[3]);
-        this.renderHeldItem(skinningentitiesrender, this.skinningentities.getHeldItemOffhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, this.iv_int_array[0], this.iv_int_array[1]);
+        this.renderHeldItem(this.skinningentities.getHeldItemMainhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, this.iv_int_array[2], this.iv_int_array[3]);
+        this.renderHeldItem(this.skinningentities.getHeldItemOffhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, this.iv_int_array[0], this.iv_int_array[1]);
 
-        this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.HEAD, this.iv_int_array[4], this.iv_int_array[5], partialTicks);
-        this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.CHEST, this.iv_int_array[6], this.iv_int_array[7], partialTicks);
-        this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.LEGS, this.iv_int_array[8], this.iv_int_array[9], partialTicks);
-        this.renderArmor(skinningentitiesrender, EntityEquipmentSlot.FEET, this.iv_int_array[8], this.iv_int_array[9], partialTicks);
-        this.renderHeldItem(skinningentitiesrender, cliententitiesmemory.mouth_itemstack, ItemCameraTransforms.TransformType.GROUND, this.iv_int_array[10], this.iv_int_array[11]);
+        this.renderArmor(EntityEquipmentSlot.HEAD, this.iv_int_array[4], this.iv_int_array[5], partialTicks);
+        this.renderArmor(EntityEquipmentSlot.CHEST, this.iv_int_array[6], this.iv_int_array[7], partialTicks);
+        this.renderArmor(EntityEquipmentSlot.LEGS, this.iv_int_array[8], this.iv_int_array[9], partialTicks);
+        this.renderArmor(EntityEquipmentSlot.FEET, this.iv_int_array[8], this.iv_int_array[9], partialTicks);
+        this.renderHeldItem(cliententitiesmemory.mouth_itemstack, ItemCameraTransforms.TransformType.GROUND, this.iv_int_array[10], this.iv_int_array[11]);
     }
 
-    public void renderHeldItem(SkinningEntitiesRender skinningentitiesrender, ItemStack itemstack, ItemCameraTransforms.TransformType transformtype, int i, int v)
+    public void renderHeldItem(ItemStack itemstack, ItemCameraTransforms.TransformType transformtype, int i, int v)
     {
         if (!itemstack.isEmpty())
         {
             ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.skinningentities.bothentitiesmemory;
-            SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
+
             if (((cliententitiesmemory.sync_byte_array[0] >> this.index) & 1) == 0)
             {
-                float[] c_vec4 = skinningentitiesrender.get3DSkinning(skinningrender, this.x, this.y, this.z, 0, 0, 0, i, v);
+                SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
+                float[] c_vec4 = skinningrender.get3DSkinning(this.x, this.y, this.z, 0, 0, 0, i, v);
                 GL11.glPushMatrix();
-                skinningentitiesrender.apply3DSkinningVec4(c_vec4);
+                skinningrender.apply3DSkinningVec4(c_vec4);
 
-                float[] c_mat4 = skinningentitiesrender.getMat43DSkinning(skinningrender, i, v);
+                float[] c_mat4 = skinningrender.getMat43DSkinning(i, v);
                 float[] mat4 = new float[]
                 {
                     c_mat4[0], c_mat4[4], c_mat4[8], 0,
@@ -147,21 +147,23 @@ public class ItemLayerRender extends LayerRender
         ++this.index;
     }
 
-    public void renderArmor(SkinningEntitiesRender skinningentitiesrender, EntityEquipmentSlot entityequipmentslot, int i, int v, float partialTicks)
+    public void renderArmor(EntityEquipmentSlot entityequipmentslot, int i, int v, float partialTicks)
     {
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
+
         if (((cliententitiesmemory.sync_byte_array[0] >> this.index) & 1) == 0)
         {
+            SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
+
             ItemStack itemstack = this.skinningentities.getItemStackFromSlot(entityequipmentslot);
             GL_CULL_FACE = GL11.glIsEnabled(GL11.GL_CULL_FACE);
             GL11.glDisable(GL11.GL_CULL_FACE);
 
-            float[] c_vec4 = skinningentitiesrender.get3DSkinning(skinningrender, this.x, this.y, this.z, 0, 0, 0, i, v);
+            float[] c_vec4 = skinningrender.get3DSkinning(this.x, this.y, this.z, 0, 0, 0, i, v);
             GL11.glPushMatrix();
-            skinningentitiesrender.apply3DSkinningVec4(c_vec4);
+            skinningrender.apply3DSkinningVec4(c_vec4);
 
-            float[] c_mat4 = skinningentitiesrender.getMat43DSkinning(skinningrender, i, v);
+            float[] c_mat4 = skinningrender.getMat43DSkinning(i, v);
             float[] mat4 = new float[]
             {
                 c_mat4[0], c_mat4[4], c_mat4[8], 0,

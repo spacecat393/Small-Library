@@ -59,9 +59,9 @@ public class ArrowLayerRender extends LayerRender
                 int[] int_array = this.index_int_array_arraylist.get(j);
                 float[] float_array = this.float_array_arraylist.get(j);
                 GL11.glPushMatrix();
-                skinningentitiesrender.apply3DSkinningVec4(skinningentitiesrender.get3DSkinning(skinningrender, x, y, z, 0, 0, 0, int_array[0], int_array[1]));
+                skinningrender.apply3DSkinningVec4(skinningrender.get3DSkinning(x, y, z, 0, 0, 0, int_array[0], int_array[1]));
 
-                float[] c_mat4 = skinningentitiesrender.getMat43DSkinning(skinningrender, int_array[0], int_array[1]);
+                float[] c_mat4 = skinningrender.getMat43DSkinning(int_array[0], int_array[1]);
                 float[] mat4 = new float[]
                 {
                     c_mat4[0], c_mat4[4], c_mat4[8], 0,

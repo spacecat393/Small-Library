@@ -26,21 +26,6 @@ public class SkinningEntitiesRenderMath
         return prevYawOffset + partialTicks * f;
     }
 
-    public static float[] multiplyVec4Mat4(float[] vec4, float[] mat4)
-    {
-        float[] result = new float[4];
-        for (int i = 0; i < 4; i++)
-        {
-            float sum = 0.0F;
-            for (int j = 0; j < 4; j++)
-            {
-                sum += vec4[j] * mat4[i * 4 + j];
-            }
-            result[i] = sum;
-        }
-        return result;
-    }
-
 //    public static float handleRotationFloat(SkinningEntities skinningentities, float partialTicks)
 //    {
 //        return (float)skinningentities.ticksExisted + partialTicks;
