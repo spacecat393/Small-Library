@@ -26,7 +26,7 @@ public class SkinningEntitiesSetLocation extends SkinningEntitiesAI
         boolean run = false;
         if (this.blockpos_long != -1 && this.far != 0)
         {
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.LOCATION()] = 1;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.LOCATION() / 8] |= (byte)Math.pow(2, serverentitiesmemory.workbytes.LOCATION() % 8);//1
         }
 
         if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.LOCATION()))
@@ -69,7 +69,7 @@ public class SkinningEntitiesSetLocation extends SkinningEntitiesAI
 
         if (!run)
         {
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.LOCATION()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.LOCATION() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.LOCATION() % 8));//0
         }
 
 //        Small.LOGGER.info("BLOCKPOS " + this.blockpos.toString());

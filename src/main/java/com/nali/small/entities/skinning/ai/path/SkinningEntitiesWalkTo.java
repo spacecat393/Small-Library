@@ -36,7 +36,7 @@ public class SkinningEntitiesWalkTo extends SkinningEntitiesAI
     public void onUpdate()
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        if (serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.WALK_TO()] == 1)
+        if ((serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.WALK_TO() / 8] >> serverentitiesmemory.workbytes.WALK_TO() % 8 & 1) == 1)
         {
             if (this.skinningentities.ticksExisted % 20 == 0)
             {

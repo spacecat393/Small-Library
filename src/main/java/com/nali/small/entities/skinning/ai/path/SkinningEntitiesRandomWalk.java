@@ -41,7 +41,7 @@ public class SkinningEntitiesRandomWalk extends SkinningEntitiesAI
 
         if (!this.walk)
         {
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.RANDOM_WALK()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.RANDOM_WALK() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.RANDOM_WALK() % 8));//0
         }
     }
 }

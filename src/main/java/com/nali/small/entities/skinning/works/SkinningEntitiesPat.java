@@ -5,7 +5,10 @@ import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.networks.NetworksRegistry;
 import com.nali.system.bytes.BytesWriter;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class SkinningEntitiesPat extends SkinningEntitiesWork
 {
     public byte pat_time;

@@ -31,6 +31,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
         {
             if (((EntityPlayerMP)owner_entity).isSpectator())
             {
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));//0
                 return;
             }
         }
@@ -48,7 +49,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
                     this.follow = false;
                 }
 
-                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW()] = 0;
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));//0
                 return;
             }
 
@@ -85,7 +86,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
 
         if (!this.follow)
         {
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));//0
         }
     }
 
@@ -125,7 +126,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
         }
 
         this.skinningentities.setPositionAndRotation(x + 0.5D, y, z + 0.5D, owner_entity.rotationYaw, owner_entity.rotationPitch);
-        serverentitiesmemory.current_work_byte_array[3] = 0;
+        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));//0
         serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
 
         return true;

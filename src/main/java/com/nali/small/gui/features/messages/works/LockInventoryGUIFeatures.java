@@ -31,7 +31,7 @@ public class LockInventoryGUIFeatures extends GUIFeaturesLoader
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
         this.mixgui.drawHoveringText(new String[]
         {
-            this.string_array[0] + (cliententitiesmemory.work_byte_array[cliententitiesmemory.workbytes.LOCK_INVENTORY()] == 1 ? this.lock : this.unlock),
+            this.string_array[0] + ((cliententitiesmemory.work_byte_array[cliententitiesmemory.workbytes.LOCK_INVENTORY() / 8] >> cliententitiesmemory.workbytes.LOCK_INVENTORY() % 8 & 1) == 1 ? this.lock : this.unlock),
             this.string_array[1],
             this.string_array[2],
         }, this.int_array, mouseX, mouseY, this.have_head);

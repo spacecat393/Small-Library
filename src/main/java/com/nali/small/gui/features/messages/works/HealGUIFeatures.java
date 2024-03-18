@@ -31,7 +31,7 @@ public class HealGUIFeatures extends GUIFeaturesLoader
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
         this.mixgui.drawHoveringText(new String[]
         {
-            this.string_array[0] + (cliententitiesmemory.work_byte_array[cliententitiesmemory.workbytes.HEAL()] == 1 ? this.b1 : this.b0),
+            this.string_array[0] + ((cliententitiesmemory.work_byte_array[cliententitiesmemory.workbytes.HEAL() / 8] >> cliententitiesmemory.workbytes.HEAL() % 8 & 1) == 1 ? this.b1 : this.b0),
             this.string_array[1],
             this.string_array[2],
         }, this.int_array, mouseX, mouseY, this.have_head);

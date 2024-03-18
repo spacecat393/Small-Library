@@ -31,7 +31,7 @@ public class Eat
     {
         SkinningEntities skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
         ItemStack itemstack = entityplayermp.getHeldItemMainhand();
-        if (skinningentities != null && skinningentities.canEat() && itemstack.getItem() instanceof ItemFood)
+        if (skinningentities != null && itemstack.getItem() instanceof ItemFood)
         {
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
             ItemFood itemfood = (ItemFood)itemstack.getItem();

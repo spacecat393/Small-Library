@@ -96,7 +96,7 @@ public class SkinningEntitiesProtect extends SkinningEntitiesAI
             }
             else
             {
-                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.PROTECT()] = 0;
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.PROTECT() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.PROTECT() % 8));//0
             }
         }
     }

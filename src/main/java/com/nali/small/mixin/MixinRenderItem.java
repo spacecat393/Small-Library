@@ -30,7 +30,7 @@ public abstract class MixinRenderItem
             MixItems mixitems = ((MixItems)stack.getItem());
             mixitems.render();
             ObjectRender objectrender = mixitems.getObjectRender();
-            objectrender.objectworlddraw.lig_b = -1.0F;
+            objectrender.lig_b = -1.0F;
 //            objectrender.objectworlddraw.lig_b = 208.0F;
 //            objectrender.objectworlddraw.lig_s = 240.0F;
             GL11.glPopMatrix();

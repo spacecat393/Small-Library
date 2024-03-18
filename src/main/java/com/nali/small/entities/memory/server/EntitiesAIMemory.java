@@ -35,6 +35,7 @@ public class EntitiesAIMemory
     public SkinningEntitiesPlayWith skinningentitiesplaywith;
     public SkinningEntitiesWalkTo skinningentitieswalkto;
     public SkinningEntitiesLookTo skinningentitieslookto;
+    public SkinningEntitiesBreak skinningentitiesbreak;
 
     public EntitiesAIMemory(SkinningEntities skinningentities)
     {
@@ -54,6 +55,7 @@ public class EntitiesAIMemory
         this.skinningentitieswalkto = new SkinningEntitiesWalkTo(skinningentities);
         this.skinningentitiesfollow = new SkinningEntitiesFollow(skinningentities);
         this.skinningentitiesrevive = new SkinningEntitiesRevive(skinningentities);
+        this.skinningentitiesbreak = new SkinningEntitiesBreak(skinningentities);
 
         if (workbytes.HEAL() != -1)
         {
@@ -136,6 +138,7 @@ public class EntitiesAIMemory
                 this.skinningentitiesattack.onUpdate();
             }
 
+            this.skinningentitiesbreak.onUpdate();
             this.skinningentitiesgetitem.onUpdate();
             this.skinningentitiesrandomwalk.onUpdate();
             this.skinningentitieslookto.onUpdate();
@@ -149,7 +152,7 @@ public class EntitiesAIMemory
 
         if (is_move)
         {
-            if (serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.SIT()] == 0)
+            if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.SIT() / 8] >> serverentitiesmemory.workbytes.SIT() % 8 & 1) == 0)
             {
                 this.skinningentitiesfindmove.onUpdate();
                 this.skinningentitiesmove.onUpdate();

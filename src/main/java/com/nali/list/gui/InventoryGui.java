@@ -81,7 +81,7 @@ public class InventoryGui extends MixGui
 
         skinningrender.objectscreendraw.x = this.guiLeft + 127.5F;
         skinningrender.objectscreendraw.y = this.guiTop + 72;
-        skinningrender.objectworlddraw.lig_b = -1.0F;
+        skinningrender.lig_b = -1.0F;
         skinningrender.objectscreendraw.renderScreen();
 
         this.boxrender.objectscreendraw.x = this.guiLeft + 84 + 6.5F + 0.5F;
@@ -462,8 +462,8 @@ public class InventoryGui extends MixGui
             this.drawTexturedModalRect(this.guiLeft + 48, this.guiTop + 84 - i, 0, 0, 3, 1);
         }
 
-        this.drawTexturedModalRect(this.guiLeft + 57, this.guiTop + 27, 30, cliententitiesmemory.work_byte_array[cliententitiesmemory.workbytes.LOCK_INVENTORY()] == 1 ? 20 : 26, 5, 6);
-        this.drawTexturedModalRect(this.guiLeft + 57, this.guiTop + 35, 30, cliententitiesmemory.work_byte_array[cliententitiesmemory.workbytes.LOCK_DAMAGE()] == 1 ? 20 : 26, 5, 6);
+        this.drawTexturedModalRect(this.guiLeft + 57, this.guiTop + 27, 30, (cliententitiesmemory.work_byte_array[cliententitiesmemory.workbytes.LOCK_INVENTORY() / 8] >> cliententitiesmemory.workbytes.LOCK_INVENTORY() % 8 & 1) == 1 ? 20 : 26, 5, 6);
+        this.drawTexturedModalRect(this.guiLeft + 57, this.guiTop + 35, 30, (cliententitiesmemory.work_byte_array[cliententitiesmemory.workbytes.LOCK_DAMAGE() / 8] >> cliententitiesmemory.workbytes.LOCK_DAMAGE() % 8 & 1) == 1 ? 20 : 26, 5, 6);
 
         if (gl_blend)
         {
@@ -661,7 +661,7 @@ public class InventoryGui extends MixGui
                 this.block_mouse_clicked = true;
                 if (this.mouse_released == 0)
                 {
-                    this.sendPacketUUIDByte(0, index);
+                    this.sendPacketUUIDByte(index);
                 }
             }
         }

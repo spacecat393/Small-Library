@@ -40,7 +40,7 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
     {
         super(skinningentities, bothdata, workbytes);
         this.entitiesaimemory = new EntitiesAIMemory(skinningentities);
-        this.main_work_byte_array = new byte[workbytes.MAX_WORKS()];
+        this.main_work_byte_array = new byte[workbytes.MAX_WORKS()];// /8
         this.current_work_byte_array = new byte[workbytes.MAX_WORKS()];
         this.frame_int_array = new int[skinningentities.getIntegerDataParameterArray().length];
         this.sync_byte_array = new byte[bothdata.MaxSync()];
@@ -60,16 +60,17 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
         if (this.main_work_byte_array == null)
         {
             this.main_work_byte_array = new byte[this.workbytes.MAX_WORKS()];
+            this.skinningentities.initWorkBytes();
         }
 
         if (!this.sus_init)
         {
-            this.main_work_byte_array[this.workbytes.LOCK_INVENTORY()] = 1;
-            this.main_work_byte_array[this.workbytes.LOCK_DAMAGE()] = 1;
+            this.main_work_byte_array[this.workbytes.LOCK_INVENTORY() / 8] ^= (byte)Math.pow(2, this.workbytes.LOCK_INVENTORY() % 8);
+            this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] ^= (byte)Math.pow(2, this.workbytes.LOCK_DAMAGE() % 8);
 
             if (this.workbytes.CARE_OWNER() != -1)
             {
-                this.main_work_byte_array[this.workbytes.CARE_OWNER()] = 1;
+                this.main_work_byte_array[this.workbytes.CARE_OWNER() / 8] ^= (byte)Math.pow(2, this.workbytes.CARE_OWNER() % 8);
             }
 
             nbttagcompound.setFloat("float_0", this.bothdata.Scale());
@@ -86,6 +87,12 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
 
     public void readNBT(NBTTagCompound nbttagcompound)
     {
+        byte[] work_bytes = nbttagcompound.getByteArray("work_bytes");
+        if (work_bytes.length == this.main_work_byte_array.length)
+        {
+            this.main_work_byte_array = work_bytes;
+        }
+
         if (nbttagcompound.hasKey("owner_uuid", 7))
         {
             this.owner_uuid = BytesReader.getUUID(nbttagcompound.getByteArray("owner_uuid"), 0);
@@ -94,15 +101,14 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
         this.entitiesaimemory.readNBT(nbttagcompound);
 
         this.sus_init = nbttagcompound.hasKey("sus_init");
-
         if (!this.sus_init)
         {
-            this.main_work_byte_array[this.workbytes.LOCK_INVENTORY()] = 1;
-            this.main_work_byte_array[this.workbytes.LOCK_DAMAGE()] = 1;
+            this.main_work_byte_array[this.workbytes.LOCK_INVENTORY() / 8] ^= (byte)Math.pow(2, this.workbytes.LOCK_INVENTORY() % 8);
+            this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] ^= (byte)Math.pow(2, this.workbytes.LOCK_DAMAGE() % 8);
 
             if (this.workbytes.CARE_OWNER() != -1)
             {
-                this.main_work_byte_array[this.workbytes.CARE_OWNER()] = 1;
+                this.main_work_byte_array[this.workbytes.CARE_OWNER() / 8] ^= (byte)Math.pow(2, this.workbytes.CARE_OWNER() % 8);
             }
 
             this.main_skinningentities.getDataManager().set(this.main_skinningentities.getFloatDataParameterArray()[0], this.bothdata.Scale());
@@ -130,25 +136,25 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
         return temp_iblockstate.getMaterial();
     }
 
-    public boolean isWork(int index)
+    public boolean isWork(byte index)
     {
-        for (int i = this.workbytes.SIT(); i < index; ++i)
+        for (byte i = this.workbytes.SIT(); i < index; ++i)
         {
-            if (this.current_work_byte_array[i] > 0)
+            if ((this.current_work_byte_array[i / 8] >> i % 8 & 1) == 1)
             {
                 return false;
             }
         }
 
-        return this.current_work_byte_array[index] != 0;
+        return (this.current_work_byte_array[index / 8] >> index % 8 & 1) == 1;
     }
 
-    public boolean isWorkBypass(int index, int[] bypass_int_array)
+    public boolean isWorkBypass(byte index, byte[] bypass_byte_array)
     {
-        for (int i = this.workbytes.SIT(); i < index; ++i)
+        for (byte i = this.workbytes.SIT(); i < index; ++i)
         {
             boolean on_bypass = false;
-            for (int bypass : bypass_int_array)
+            for (byte bypass : bypass_byte_array)
             {
                 if (i == bypass)
                 {
@@ -157,13 +163,13 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
                 }
             }
 
-            if (!on_bypass && this.current_work_byte_array[i] > 0)
+            if (!on_bypass && (this.current_work_byte_array[i / 8] >> i % 8 & 1) == 1)
             {
                 return false;
             }
         }
 
-        return this.current_work_byte_array[index] != 0;
+        return (this.current_work_byte_array[index / 8] >> index % 8 & 1) == 1;
     }
 
     public static void removeFromMap(SkinningEntities skinningentities)

@@ -28,7 +28,7 @@ public class SetWorkBytes
 
         if (entity instanceof SkinningEntities)
         {
-            SkinningEntities skinningentities = (SkinningEntities)entity;
+//            SkinningEntities skinningentities = (SkinningEntities)entity;
             ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)((SkinningEntities)entity).bothentitiesmemory;
             System.arraycopy(clientmessage.data, 1 + 4, cliententitiesmemory.work_byte_array, 0, cliententitiesmemory.work_byte_array.length);
         }

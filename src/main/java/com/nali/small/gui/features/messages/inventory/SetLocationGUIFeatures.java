@@ -9,7 +9,7 @@ import static com.nali.small.gui.MixGui.MESSAGE_STRINGBUILDER;
 
 public class SetLocationGUIFeatures extends GUIFeaturesLoader
 {
-    public static BlockPos BLOCKPOS = new BlockPos(0, 0, 0);
+    public static BlockPos BLOCKPOS = BlockPos.ORIGIN;
     public static float FAR;
 
     public SetLocationGUIFeatures(MixGui mixgui)

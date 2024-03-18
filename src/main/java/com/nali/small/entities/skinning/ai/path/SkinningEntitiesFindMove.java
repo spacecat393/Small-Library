@@ -720,7 +720,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
     public boolean isPassWithAct(BlockPos blockpos)
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        if (serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.WALK_TO()] == 0)
+        if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.WALK_TO() / 8] >> serverentitiesmemory.workbytes.WALK_TO() % 8 & 1) == 0)
         {
             return false;
         }
@@ -732,6 +732,13 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
         {
             serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.blockpos_arraylist.add(blockpos);
 //            serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.block_arraylist.add(block);
+            return true;
+        }
+
+        if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1)
+        {
+            serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.blockpos = blockpos;
+            this.endGoal();
             return true;
         }
 

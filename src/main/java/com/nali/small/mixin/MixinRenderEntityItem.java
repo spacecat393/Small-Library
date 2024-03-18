@@ -1,11 +1,12 @@
 package com.nali.small.mixin;
 
-import com.nali.small.items.MixItems;
 import com.nali.render.ObjectRender;
-import net.minecraft.client.Minecraft;
+import com.nali.small.items.MixItems;
 import net.minecraft.client.renderer.entity.RenderEntityItem;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumSkyBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,15 +16,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinRenderEntityItem
 {
     @Inject(method = "doRender(Lnet/minecraft/entity/item/EntityItem;DDDFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderItem;renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/renderer/block/model/IBakedModel;)V", shift = At.Shift.BEFORE))
-    private void beforeRenderItem(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci)
+    private void doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci)
     {
         ItemStack itemstack = entity.getItem();
         if (itemstack.getItem() instanceof MixItems)
         {
-            int lig_coord = Minecraft.getMinecraft().world.getCombinedLight(entity.getPosition(), 0);
+            BlockPos blockpos = entity.getPosition();
             ObjectRender objectrender = ((MixItems)itemstack.getItem()).getObjectRender();
-            objectrender.objectworlddraw.lig_b = lig_coord & 0xFFFF;
-            objectrender.objectworlddraw.lig_s = (lig_coord >> 16) & 0xFFFF;
+            objectrender.lig_b = entity.world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
+            objectrender.lig_s = entity.world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
         }
     }
 

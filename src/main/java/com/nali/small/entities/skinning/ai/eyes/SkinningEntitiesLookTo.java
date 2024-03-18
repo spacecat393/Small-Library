@@ -18,7 +18,7 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
     public double far;
     public BlockPos blockpos;
     public int tick;
-    public int[] bypass_int_array = {this.skinningentities.bothentitiesmemory.workbytes.SIT(), this.skinningentities.bothentitiesmemory.workbytes.PROTECT()};
+    public byte[] bypass_int_array = {this.skinningentities.bothentitiesmemory.workbytes.SIT(), this.skinningentities.bothentitiesmemory.workbytes.PROTECT()};
 
     public SkinningEntitiesLookTo(SkinningEntities skinningentities)
     {
@@ -84,7 +84,7 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
                     this.blockpos = null;
                 }
 
-                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.LOOK_TO()] = 0;
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.LOOK_TO() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.LOOK_TO() % 8));//0
             }
         }
     }

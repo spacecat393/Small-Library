@@ -32,11 +32,11 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         boolean should_work = false;
-        if (serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER()] == 1)
+        if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER() / 8] >> serverentitiesmemory.workbytes.CARE_OWNER() % 8 & 1) == 1)
         {
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER()] = 1;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER() / 8] |= (byte)Math.pow(2, serverentitiesmemory.workbytes.CARE_OWNER() % 8);//1
             should_work = serverentitiesmemory.isWork(serverentitiesmemory.workbytes.CARE_OWNER());
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.CARE_OWNER() % 8));//0
         }
 
         boolean work = serverentitiesmemory.isWork(serverentitiesmemory.workbytes.ATTACK());
@@ -88,7 +88,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
                 this.attack = false;
             }
 
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ATTACK()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ATTACK() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));//0
         }
     }
 

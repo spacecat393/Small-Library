@@ -19,7 +19,7 @@ public class DrinkMilk
     {
         SkinningEntities skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
         ItemStack itemstack = entityplayermp.getHeldItemMainhand();
-        if (skinningentities != null && skinningentities.canEat() && itemstack.getItem() == Items.MILK_BUCKET)
+        if (skinningentities != null && itemstack.getItem() == Items.MILK_BUCKET)
         {
             skinningentities.clearActivePotions();
             entityplayermp.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.BUCKET));

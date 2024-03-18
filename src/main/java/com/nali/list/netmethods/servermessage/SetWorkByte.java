@@ -22,47 +22,46 @@ public class SetWorkByte
     {
         UUID uuid = BytesReader.getUUID(servermessage.data, 1);
         SkinningEntities skinningentities = ENTITIES_MAP.get(uuid);
-        //                Entity temp_entity = ((WorldServer)entityplayermp.world).getEntityFromUuid(BytesReader.getUUID(servermessage.data, 1));
-        //                if (!(temp_entity instanceof SkinningEntitiesHelper))
-        //                {
-        //                    break;
-        //                }
 
-        //                SkinningEntitiesHelper skinningentitieshelper = (SkinningEntitiesHelper)temp_entity;
         if (skinningentities != null && canPass(skinningentities, entityplayermp))
         {
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
-//                        EntityDataManager entitydatamanager = skinningentities.getDataManager();
-            int id = BytesReader.getInt(servermessage.data, 17);
+//            int id = BytesReader.getInt(servermessage.data, 17);
 
-//                        DataParameter<Byte>[] byte_dataparameter_array = skinningentities.getByteDataParameterArray();
-            if (servermessage.data[21] == 0)
+            byte id = servermessage.data[17];
+            byte index = (byte)(id / 8);
+            byte bit = (byte)(id % 8);
+
+            if (((serverentitiesmemory.main_work_byte_array[index] >> bit) & 1) == 1)
             {
-                if ((serverentitiesmemory.statentitiesmemory.stat & 2) != 2)
-                {
-                    serverentitiesmemory.statentitiesmemory.stat ^= 2;
-                }
-
-                if ((serverentitiesmemory.statentitiesmemory.stat & 4) == 4)
-                {
-                    serverentitiesmemory.statentitiesmemory.stat ^= 4;
-                }
+                serverentitiesmemory.statentitiesmemory.stat |= 4;//Math.pow(2, 2)
+                serverentitiesmemory.statentitiesmemory.stat &= 239;//255 - Math.pow(2, 4)
+//                if ((serverentitiesmemory.statentitiesmemory.stat & 2) != 2)
+//                {
+//                    serverentitiesmemory.statentitiesmemory.stat ^= 2;
+//                }
+//
+//                if ((serverentitiesmemory.statentitiesmemory.stat & 4) == 4)
+//                {
+//                    serverentitiesmemory.statentitiesmemory.stat ^= 4;
+//                }
             }
             else
             {
-                if ((serverentitiesmemory.statentitiesmemory.stat & 2) == 2)
-                {
-                    serverentitiesmemory.statentitiesmemory.stat ^= 2;
-                }
-
-                if ((serverentitiesmemory.statentitiesmemory.stat & 4) != 4)
-                {
-                    serverentitiesmemory.statentitiesmemory.stat ^= 4;
-                }
+                serverentitiesmemory.statentitiesmemory.stat &= 251;//255 - Math.pow(2, 2)
+                serverentitiesmemory.statentitiesmemory.stat |= 16;//Math.pow(2, 4)
+//                if ((serverentitiesmemory.statentitiesmemory.stat & 2) == 2)
+//                {
+//                    serverentitiesmemory.statentitiesmemory.stat ^= 2;
+//                }
+//
+//                if ((serverentitiesmemory.statentitiesmemory.stat & 4) != 4)
+//                {
+//                    serverentitiesmemory.statentitiesmemory.stat ^= 4;
+//                }
             }
 
-            serverentitiesmemory.main_work_byte_array[id] = servermessage.data[21];
-//                        entitydatamanager.set(byte_dataparameter_array[id], servermessage.data[21]);
+            serverentitiesmemory.main_work_byte_array[index] ^= (byte)Math.pow(2, bit);
 
             byte[] byte_array = new byte[1 + 4 + serverentitiesmemory.main_work_byte_array.length];
             byte_array[0] = 6;

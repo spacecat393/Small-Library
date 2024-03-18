@@ -125,6 +125,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
     {
         if (this.renderManager.isDebugBoundingBox() && !skinningentities.isInvisible() && !Minecraft.getMinecraft().isReducedDebug())
         {
+//            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
             GL11.glPushMatrix();
 
             GL_TEXTURE_2D = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
@@ -196,4 +197,16 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
     }
 
     public abstract void multiplyAnimation(T skinningentities);
+
+//    @Override
+//    public void renderMultipass(T skinningentities, double ox, double oy, double oz, float entityYaw, float partialTicks)
+//    {
+//        super.renderMultipass(skinningentities, ox, oy, oz, entityYaw, partialTicks);
+//    }
+//
+//    @Override
+//    public boolean isMultipass()
+//    {
+//        return true;
+//    }
 }

@@ -195,7 +195,7 @@ public class ProfileGUI
         x = left + 138;// y = top + 89; width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            int id = cliententitiesmemory.workbytes.ATTACK();
+            byte id = cliententitiesmemory.workbytes.ATTACK();
             if (id != -1)
             {
                 if (gui.mouse_released == 0)
@@ -248,7 +248,7 @@ public class ProfileGUI
         x = left + 156 + 18;// y = top + 89; width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            int id = cliententitiesmemory.workbytes.HEAL();
+            byte id = cliententitiesmemory.workbytes.HEAL();
             if (id != -1)
             {
                 if (gui.mouse_released == 0)
@@ -274,7 +274,7 @@ public class ProfileGUI
         x = left + 156 + 18 + 18;// y = top + 89; width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            int id = cliententitiesmemory.workbytes.PROTECT();
+            byte id = cliententitiesmemory.workbytes.PROTECT();
             if (id != -1)
             {
                 if (gui.mouse_released == 0)
@@ -300,7 +300,7 @@ public class ProfileGUI
         x = left + 48; y = top + 107;// width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            int id = cliententitiesmemory.workbytes.PLAY();
+            byte id = cliententitiesmemory.workbytes.PLAY();
             if (id != -1)
             {
                 if (gui.mouse_released == 0)
@@ -323,10 +323,10 @@ public class ProfileGUI
             gui.render_text = true;
         }
 
-        x = left + 66; y = top + 107;// width = 16; height = 16;
+        x = left + 66;// y = top + 107;// width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            int id = cliententitiesmemory.workbytes.CARE_OWNER();
+            byte id = cliententitiesmemory.workbytes.CARE_OWNER();
             if (id != -1)
             {
                 if (gui.mouse_released == 0)
@@ -350,7 +350,7 @@ public class ProfileGUI
             gui.render_text = true;
         }
 
-        x = left + 66 + 18; y = top + 107;// width = 16; height = 16;
+        x = left + 66 + 18;// y = top + 107;// width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
             if (gui.mouse_released == 0)
@@ -365,7 +365,7 @@ public class ProfileGUI
             gui.render_text = true;
         }
 
-        x = left + 66 + 18 + 18; y = top + 107;// width = 16; height = 16;
+        x = left + 66 + 18 + 18;// y = top + 107;// width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
             if (gui.mouse_released == 0)
@@ -376,6 +376,21 @@ public class ProfileGUI
             if (!(GUIFEATURESLOADER instanceof LookToGUIFeatures))
             {
                 GUIFEATURESLOADER = new LookToGUIFeatures(gui);
+            }
+            gui.render_text = true;
+        }
+
+        x = left + 66 + 18 + 18 + 18;// y = top + 107;// width = 16; height = 16;
+        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+        {
+            if (gui.mouse_released == 0)
+            {
+                gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.MINE());
+            }
+
+            if (!(GUIFEATURESLOADER instanceof MineToGUIFeatures))
+            {
+                GUIFEATURESLOADER = new MineToGUIFeatures(gui);
             }
             gui.render_text = true;
         }

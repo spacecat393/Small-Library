@@ -75,7 +75,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
             {
                 if ((this.entity.world).provider.getDimension() != ((this.skinningentities.world).provider.getDimension()))
                 {
-                    serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.REVIVE()] = 0;
+                    serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.REVIVE() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.REVIVE() % 8));//0
                     return;
                 }
                 else
@@ -169,7 +169,7 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
 
             if (!this.die)
             {
-                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.REVIVE()] = 0;
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.REVIVE() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.REVIVE() % 8));//0
             }
 
             this.die = false;

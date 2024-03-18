@@ -525,7 +525,7 @@ public class PlayerGui extends MixGui
                 skinningrender.objectscreendraw.y = y + 47;
 //                skinningrender.objectworlddraw.lig_b = 208.0F;
 //                skinningrender.objectworlddraw.lig_s = 240.0F;
-                skinningrender.objectworlddraw.lig_b = -1.0F;
+                skinningrender.lig_b = -1.0F;
 //                skinningrender.sx = s;
 //                skinningrender.sy = s;
 //                skinningrender.sz = s;
@@ -544,7 +544,7 @@ public class PlayerGui extends MixGui
 //                mixgui.renderEntitiesUUID(this.uuid, x, y + 49, 56, 11, mouseX, mouseY);
 //            }
 
-            if (mouseX >= x && mouseY >= y && mouseX < x + this.width && mouseY < y + this.height)
+            if (mouseX >= x && mouseY >= y && mouseX < x + this.width && mouseY < y + 49)
             {
                 if (mixgui.mouse_released == 0)
                 {

@@ -75,7 +75,7 @@ public class SkinningEntitiesCareOwner extends SkinningEntitiesAI
             this.far_double_arraylist.clear();
         }
 
-        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER()] = 0;
+        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.CARE_OWNER() % 8));//0
     }
 
     public static boolean ourTarget(Entity entity, Entity us_entity)

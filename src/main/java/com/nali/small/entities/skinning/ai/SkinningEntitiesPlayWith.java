@@ -129,7 +129,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
 
         if (!play)
         {
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.PLAY()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.PLAY() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.PLAY() % 8));//0
         }
     }
 }

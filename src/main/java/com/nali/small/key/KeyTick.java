@@ -34,38 +34,35 @@ public class KeyTick
 //        {
 //            com.nali.key.KeyTick.addKey(key);
 //        }
+        Minecraft minecraft = Minecraft.getMinecraft();
         if (Keyboard.isKeyDown(SmallQuickInventoryGUI.I.getKeyCode()))
         {
-            if (Minecraft.getMinecraft().currentScreen == null)
+            if (minecraft.currentScreen == null)
             {
-                Minecraft minecraft = Minecraft.getMinecraft();
-                minecraft.addScheduledTask(() ->
+                String uuid_string = getTextFromClipboard();
+                if (isValidUUIDString(uuid_string))
                 {
-                    String uuid_string = getTextFromClipboard();
-                    if (isValidUUIDString(uuid_string))
+                    minecraft.addScheduledTask(() ->
                     {
                         byte[] byte_array = new byte[21];
                         byte_array[0] = 6;
                         BytesWriter.set(byte_array, UUID.fromString(uuid_string), 1);
                         BytesWriter.set(byte_array, 1, 17);
                         NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
-                    }
-                });
+                    });
+                }
             }
         }
         else if (Keyboard.isKeyDown(SmallPlayerGui.I.getKeyCode()))
         {
             PlayerGui.PAGE = 0;
-            if (Minecraft.getMinecraft().currentScreen == null)
+            if (minecraft.currentScreen == null)
             {
-                Minecraft minecraft = Minecraft.getMinecraft();
                 minecraft.addScheduledTask(() ->
                 {
-                    Minecraft.getMinecraft().displayGuiScreen(new PlayerGui(new PlayerContainer()));
+                    minecraft.displayGuiScreen(new PlayerGui(new PlayerContainer()));
                 });
             }
-//            Minecraft minecraft = Minecraft.getMinecraft();
-//            minecraft.addScheduledTask(() -> minecraft.displayGuiScreen(new PlayerGui(new PlayerContainer())));
         }
 
         return null;

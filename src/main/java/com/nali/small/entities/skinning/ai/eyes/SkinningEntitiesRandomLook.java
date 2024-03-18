@@ -9,7 +9,7 @@ public class SkinningEntitiesRandomLook extends SkinningEntitiesAI
     public int tick;
     public boolean look;
     public double x, y, z;
-    public int[] bypass_int_array = {this.skinningentities.bothentitiesmemory.workbytes.SIT(), this.skinningentities.bothentitiesmemory.workbytes.PROTECT()};
+    public byte[] bypass_int_array = {this.skinningentities.bothentitiesmemory.workbytes.SIT(), this.skinningentities.bothentitiesmemory.workbytes.PROTECT()};
 
     public SkinningEntitiesRandomLook(SkinningEntities skinningentities)
     {
@@ -40,7 +40,7 @@ public class SkinningEntitiesRandomLook extends SkinningEntitiesAI
 
 //        if (!this.look)
 //        {
-        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.RANDOM_LOOK()] = 0;
+        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.RANDOM_LOOK() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.RANDOM_LOOK() % 8));//0
 //        }
     }
 }

@@ -113,7 +113,7 @@ public class SkinningEntitiesHeal extends SkinningEntitiesAI
 
             if (!should_move && should_move2)
             {
-                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.HEAL()] = 0;
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.HEAL() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.HEAL() % 8));//0
             }
         }
         else
@@ -126,7 +126,7 @@ public class SkinningEntitiesHeal extends SkinningEntitiesAI
                 this.heal = false;
             }
 
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.HEAL()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.HEAL() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.HEAL() % 8));//0
         }
     }
 }

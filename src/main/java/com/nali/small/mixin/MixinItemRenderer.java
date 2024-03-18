@@ -1,8 +1,7 @@
 package com.nali.small.mixin;
 
-import com.nali.small.items.MixItems;
 import com.nali.render.ObjectRender;
-import net.minecraft.client.Minecraft;
+import com.nali.small.items.MixItems;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -10,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumSkyBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,10 +23,10 @@ public abstract class MixinItemRenderer
     {
         if (stack.getItem() instanceof MixItems)
         {
-            int lig_coord = Minecraft.getMinecraft().world.getCombinedLight(new BlockPos(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ), 0);
+            BlockPos blockpos = new BlockPos(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ);
             ObjectRender objectrender = ((MixItems)stack.getItem()).getObjectRender();
-            objectrender.objectworlddraw.lig_b = lig_coord & 0xFFFF;
-            objectrender.objectworlddraw.lig_s = (lig_coord >> 16) & 0xFFFF;
+            objectrender.lig_b = player.world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
+            objectrender.lig_s = player.world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
         }
     }
 
@@ -35,10 +35,10 @@ public abstract class MixinItemRenderer
     {
         if (heldStack.getItem() instanceof MixItems)
         {
-            int lig_coord = Minecraft.getMinecraft().world.getCombinedLight(new BlockPos(entitylivingbaseIn.posX, entitylivingbaseIn.posY + (double)entitylivingbaseIn.getEyeHeight(), entitylivingbaseIn.posZ), 0);
+            BlockPos blockpos = new BlockPos(entitylivingbaseIn.posX, entitylivingbaseIn.posY + (double)entitylivingbaseIn.getEyeHeight(), entitylivingbaseIn.posZ);
             ObjectRender objectrender = ((MixItems)heldStack.getItem()).getObjectRender();
-            objectrender.objectworlddraw.lig_b = lig_coord & 0xFFFF;
-            objectrender.objectworlddraw.lig_s = (lig_coord >> 16) & 0xFFFF;
+            objectrender.lig_b = entitylivingbaseIn.world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
+            objectrender.lig_s = entitylivingbaseIn.world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
         }
     }
 }

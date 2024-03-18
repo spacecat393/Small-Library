@@ -59,7 +59,7 @@ public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
     public static boolean canPass(SkinningEntities skinningentities, EntityPlayerMP entityplayermp)
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
-        if (serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.LOCK_INVENTORY()] == 1)
+        if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.LOCK_INVENTORY() / 8] >> serverentitiesmemory.workbytes.LOCK_INVENTORY() % 8 & 1) == 1)
         {
             return serverentitiesmemory.owner_uuid == null || entityplayermp.getUniqueID().equals(serverentitiesmemory.owner_uuid);
         }

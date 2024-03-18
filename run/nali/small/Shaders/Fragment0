@@ -27,7 +27,7 @@ void main()
     }
     else
     {
-        lightmap_color = texture2D(lightmap_sampler, vec2(ligcoord.x / 255.0, ligcoord.y / 255.0)).rgb;
+        lightmap_color = texture2D(lightmap_sampler, vec2(ligcoord.x, ligcoord.y)).rgb;
     }
 
     vec3 light_dir = normalize(LightSourcePosition.xyz);

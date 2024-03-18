@@ -107,25 +107,25 @@ public abstract class MixGui extends GuiContainer
 //        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
 //    }
 
-    public void sendPacketUUIDInt(int i)
+    public void sendPacketUUIDInt(byte i)
     {
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
-        byte[] byte_array = new byte[22];
+        byte[] byte_array = new byte[18];
         byte_array[0] = 1;
         BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
-        BytesWriter.set(byte_array, i, 17);
-        byte_array[21] = cliententitiesmemory.work_byte_array[i] == 1 ? (byte)0 : (byte)1;
+        byte_array[17] = i;
+//        BytesWriter.set(byte_array, i, 17);
         NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 
-    public void sendPacketUUIDByte(int i, byte bit)
+    public void sendPacketUUIDByte(byte i)
     {
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
-        byte[] byte_array = new byte[22];
+        byte[] byte_array = new byte[18];
         byte_array[0] = 29;
         BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
-        BytesWriter.set(byte_array, i, 17);
-        byte_array[21] = (byte)Math.pow(2, bit);
+        byte_array[17] = i;
+//        BytesWriter.set(byte_array, i, 17);
         NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 

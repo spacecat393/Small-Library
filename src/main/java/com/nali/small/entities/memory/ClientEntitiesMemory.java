@@ -42,6 +42,7 @@ public class ClientEntitiesMemory extends BothEntitiesMemory
     public byte[] work_byte_array;
 //    public byte[] client_state_byte_array;
     //    public UUID current_client_uuid;
+
     @SideOnly(Side.CLIENT)
     public SkinningEntitiesPat skinningentitiespat;
 

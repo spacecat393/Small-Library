@@ -138,7 +138,7 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 
         if (!this.pickup)
         {
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FIND_ITEM()] = 0;
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FIND_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FIND_ITEM() % 8));//0
         }
     }
 
