@@ -35,6 +35,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -617,6 +618,18 @@ public abstract class SkinningEntities extends EntityLivingBase
         if (value <= 0) return;
         float health = this.getHealth();
         this.setHealth(health + value);
+    }
+
+    @Override
+    public boolean canEntityBeSeen(Entity entityIn)
+    {
+        return this.world.rayTraceBlocks(new Vec3d(this.posX, this.posY, this.posZ), new Vec3d(entityIn.posX, entityIn.posY, entityIn.posZ), false, true, false) == null;
+    }
+
+    @Override
+    public BlockPos getPosition()
+    {
+        return new BlockPos(this.posX, this.posY, this.posZ);
     }
 
     @Override

@@ -42,6 +42,18 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
         boolean work = serverentitiesmemory.isWork(serverentitiesmemory.workbytes.ATTACK());
         if ((!work && should_work && !serverentitiesmemory.entitiesaimemory.skinningentitiescareowner.target_entity_arraylist.isEmpty()) || (work && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist.isEmpty()))
         {
+            if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.blockpos != null)
+            {
+//                if (this.attack)
+//                {
+//                    this.state = -1;
+////                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
+//                    this.attack = false;
+//                }
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ATTACK() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));//0
+            }
+//            else
+//            {
             this.attack = true;
 //            boolean attack = false;
 
@@ -78,6 +90,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
             {
                 this.state = 0;
             }
+//            }
         }
         else
         {

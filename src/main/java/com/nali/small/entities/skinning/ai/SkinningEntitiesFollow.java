@@ -53,6 +53,11 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
                 return;
             }
 
+            if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.blockpos != null)
+            {
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));//0
+            }
+
             this.follow = true;
             if (this.skinningentities.isRiding())
             {

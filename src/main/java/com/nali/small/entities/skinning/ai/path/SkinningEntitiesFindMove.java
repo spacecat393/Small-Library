@@ -218,11 +218,12 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
     public void endGoal()
     {
         this.try_move = false;
+        this.path_blockpos_arraylist.clear();
     }
 
     public boolean endGoalT()
     {
-        this.try_move = false;
+        this.endGoal();
         return true;
     }
 
@@ -737,8 +738,12 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 
         if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1)
         {
-            serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.blockpos = blockpos;
-            this.endGoal();
+            if (serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.blockpos == null)
+            {
+                serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.blockpos = blockpos;
+            }
+
+//            this.endGoal();
             return true;
         }
 
