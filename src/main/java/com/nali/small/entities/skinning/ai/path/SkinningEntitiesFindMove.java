@@ -21,13 +21,8 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 {
     public static int MAX_G = 64;
 
-    public int goal_x;
-    public int goal_y;
-    public int goal_z;
-
-    public int temp_goal_x;
-    public int temp_goal_y;
-    public int temp_goal_z;
+    public int goal_x, goal_y, goal_z;
+    public int temp_goal_x, temp_goal_y, temp_goal_z;
     public double far;
 
     public ArrayList<BlockPos> path_blockpos_arraylist = new ArrayList<BlockPos>();
@@ -35,11 +30,9 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
     public boolean is_goal;
     public int path_index;
     public int path_tick;
-    public boolean try_move = false;
+    public boolean try_move;
 
-    public double old_x;
-    public double old_y;
-    public double old_z;
+    public double old_x, old_y, old_z;
 
     public SkinningEntitiesFindMove(SkinningEntities skinningentities)
     {
@@ -139,6 +132,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
             }
             else
             {
+//                serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.blockpos = null;
                 serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.blockpos_arraylist.clear();
 //                serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.block_arraylist.clear();
                 this.old_x = this.skinningentities.posX;

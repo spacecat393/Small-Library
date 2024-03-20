@@ -3,6 +3,7 @@ package com.nali.small.entities.skinning.ai;
 import com.mojang.authlib.GameProfile;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -17,6 +18,7 @@ public class SkinningEntitiesBreak extends SkinningEntitiesAI
 {
     public BlockPos blockpos;
     public float hardness;
+    public float goal_x, goal_y, goal_z;
 
     public SkinningEntitiesBreak(SkinningEntities skinningentities)
     {
@@ -29,19 +31,25 @@ public class SkinningEntitiesBreak extends SkinningEntitiesAI
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.MINE()))
         {
+            SkinningEntitiesFindMove skinningentitiesfindmove = serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove;
+
             if (this.blockpos == null)
             {
                 serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MINE() % 8));//0
+                this.hardness = 0;
             }
             else
             {
                 if (this.skinningentities.getDistanceSq(this.blockpos) > 4.0D)
                 {
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(this.blockpos.getX(), this.blockpos.getY(), this.blockpos.getZ());
+//                    BlockPos blockpos = this.blockpos;
+                    skinningentitiesfindmove.setGoal(this.blockpos.getX(), this.blockpos.getY(), this.blockpos.getZ());
+//                    this.blockpos = blockpos;
                 }
                 else
                 {
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
+                    serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(this.blockpos.getX() + 0.5D, this.blockpos.getY(), this.blockpos.getZ() + 0.5D, 5.0F);
+                    skinningentitiesfindmove.endGoal();
 
                     WorldServer worldserver = (WorldServer)this.skinningentities.world;
                     IBlockState iblockstate = worldserver.getBlockState(this.blockpos);
@@ -49,9 +57,9 @@ public class SkinningEntitiesBreak extends SkinningEntitiesAI
 
                     if (block == Blocks.AIR)
                     {
-                        this.hardness = 0;
-                        this.blockpos = null;
+                        this.clear();
 //                    worldserver.sendBlockBreakProgress(this.skinningentities.getEntityId(), this.blockpos, -1);
+                        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MINE() % 8));//0
                     }
                     else
                     {
@@ -88,8 +96,8 @@ public class SkinningEntitiesBreak extends SkinningEntitiesAI
                             }
 
 //                        worldserver.sendBlockBreakProgress(this.skinningentities.getEntityId(), this.blockpos, -1);
-                            this.hardness = 0;
-                            this.blockpos = null;
+                            this.clear();
+                            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MINE() % 8));//0
                         }
                     }
                 }
@@ -97,7 +105,13 @@ public class SkinningEntitiesBreak extends SkinningEntitiesAI
         }
         else
         {
-            this.blockpos = null;
+            this.clear();
         }
+    }
+
+    public void clear()
+    {
+        this.blockpos = null;
+        this.hardness = 0;
     }
 }

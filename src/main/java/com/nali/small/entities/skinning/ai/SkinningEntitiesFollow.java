@@ -6,6 +6,7 @@ import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
 import static com.nali.small.entities.EntitiesMath.*;
 import static com.nali.small.entities.skinning.ai.path.PathMath.PATH_BYTE_ARRAY;
@@ -55,6 +56,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
 
             if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.blockpos != null)
             {
+//                serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.walk();
                 serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));//0
             }
 
@@ -79,7 +81,17 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
                 }
                 else
                 {
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(owner_entity.posX, owner_entity.posY, owner_entity.posZ);
+                    int x = MathHelper.floor(owner_entity.posX);
+                    int y = MathHelper.floor(owner_entity.posY);
+                    int z = MathHelper.floor(owner_entity.posZ);
+                    if (serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_x != x || serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_y != y || serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_z != z)
+                    {
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.clear();
+                    }
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(x, y, z);
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_x = x;
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_y = y;
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_z = z;
                 }
             }
         }
