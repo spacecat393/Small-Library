@@ -27,6 +27,11 @@ public abstract class MixinItemRenderer
             ObjectRender objectrender = ((MixItems)stack.getItem()).getObjectRender();
             objectrender.lig_b = player.world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
             objectrender.lig_s = player.world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
+
+            if (objectrender.lig_b < 0.1875F)
+            {
+                objectrender.lig_b = 0.1875F;
+            }
         }
     }
 
@@ -39,6 +44,11 @@ public abstract class MixinItemRenderer
             ObjectRender objectrender = ((MixItems)heldStack.getItem()).getObjectRender();
             objectrender.lig_b = entitylivingbaseIn.world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
             objectrender.lig_s = entitylivingbaseIn.world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
+
+            if (objectrender.lig_b < 0.1875F)
+            {
+                objectrender.lig_b = 0.1875F;
+            }
         }
     }
 }

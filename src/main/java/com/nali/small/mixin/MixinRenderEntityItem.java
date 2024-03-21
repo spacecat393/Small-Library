@@ -25,6 +25,11 @@ public class MixinRenderEntityItem
             ObjectRender objectrender = ((MixItems)itemstack.getItem()).getObjectRender();
             objectrender.lig_b = entity.world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
             objectrender.lig_s = entity.world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
+
+            if (objectrender.lig_b < 0.1875F)
+            {
+                objectrender.lig_b = 0.1875F;
+            }
         }
     }
 
