@@ -28,3 +28,5 @@ mods
 resourcepacks
 Results
 logs
+gradle.properties
+*.gradle
