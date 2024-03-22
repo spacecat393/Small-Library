@@ -30,3 +30,7 @@ Results
 logs
 gradle.properties
 *.gradle
+gradlew
+gradlew.bat
+LICENSE
+gradle

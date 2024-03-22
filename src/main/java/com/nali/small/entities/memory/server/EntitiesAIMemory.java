@@ -12,6 +12,7 @@ import com.nali.small.entities.skinning.ai.path.SkinningEntitiesMove;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesWalkTo;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesRandomWalk;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 
 public class EntitiesAIMemory
 {
@@ -35,7 +36,8 @@ public class EntitiesAIMemory
     public SkinningEntitiesPlayWith skinningentitiesplaywith;
     public SkinningEntitiesWalkTo skinningentitieswalkto;
     public SkinningEntitiesLookTo skinningentitieslookto;
-    public SkinningEntitiesBreak skinningentitiesbreak;
+    public SkinningEntitiesMine skinningentitiesmine;
+    public SkinningEntitiesManageItem skinningentitiesmanageitem;
 
     public EntitiesAIMemory(SkinningEntities skinningentities)
     {
@@ -55,7 +57,8 @@ public class EntitiesAIMemory
         this.skinningentitieswalkto = new SkinningEntitiesWalkTo(skinningentities);
         this.skinningentitiesfollow = new SkinningEntitiesFollow(skinningentities);
         this.skinningentitiesrevive = new SkinningEntitiesRevive(skinningentities);
-        this.skinningentitiesbreak = new SkinningEntitiesBreak(skinningentities);
+        this.skinningentitiesmine = new SkinningEntitiesMine(skinningentities);
+        this.skinningentitiesmanageitem = new SkinningEntitiesManageItem(skinningentities);
 
         if (workbytes.HEAL() != -1)
         {
@@ -86,6 +89,16 @@ public class EntitiesAIMemory
 
         nbttagcompound.setLong("blockpos_long", this.skinningentitiessetlocation.blockpos_long);
         nbttagcompound.setFloat("far_float", this.skinningentitiessetlocation.far);
+
+        if (this.skinningentitiesmanageitem.in_blockpos != null)
+        {
+            nbttagcompound.setLong("in_manageitem", this.skinningentitiesmanageitem.in_blockpos.toLong());
+        }
+        if (this.skinningentitiesmanageitem.out_blockpos != null)
+        {
+            nbttagcompound.setLong("out_manageitem", this.skinningentitiesmanageitem.out_blockpos.toLong());
+        }
+        nbttagcompound.setByte("state_manageitem", this.skinningentitiesmanageitem.state);
     }
 
     public void readNBT(NBTTagCompound nbttagcompound)
@@ -104,6 +117,16 @@ public class EntitiesAIMemory
 
         this.skinningentitiessetlocation.blockpos_long = nbttagcompound.getLong("blockpos_long");
         this.skinningentitiessetlocation.far = nbttagcompound.getFloat("far_float");
+
+        if (nbttagcompound.hasKey("in_manageitem"))
+        {
+            this.skinningentitiesmanageitem.in_blockpos = BlockPos.fromLong(nbttagcompound.getLong("in_manageitem"));
+        }
+        if (nbttagcompound.hasKey("out_manageitem"))
+        {
+            this.skinningentitiesmanageitem.out_blockpos = BlockPos.fromLong(nbttagcompound.getLong("out_manageitem"));
+        }
+        this.skinningentitiesmanageitem.state = nbttagcompound.getByte("state_manageitem");
     }
 
     public void update()
@@ -138,8 +161,9 @@ public class EntitiesAIMemory
                 this.skinningentitiesattack.onUpdate();
             }
 
-            this.skinningentitiesbreak.onUpdate();
+            this.skinningentitiesmanageitem.onUpdate();
             this.skinningentitiesgetitem.onUpdate();
+            this.skinningentitiesmine.onUpdate();
             this.skinningentitiesrandomwalk.onUpdate();
             this.skinningentitieslookto.onUpdate();
             this.skinningentitiesrandomlook.onUpdate();

@@ -54,9 +54,9 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
                 return;
             }
 
-            if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.blockpos != null)
+            if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos != null)
             {
-//                serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.walk();
+//                serverentitiesmemory.entitiesaimemory.skinningentitiesmine.walk();
                 serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));//0
             }
 
@@ -84,14 +84,14 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
                     int x = MathHelper.floor(owner_entity.posX);
                     int y = MathHelper.floor(owner_entity.posY);
                     int z = MathHelper.floor(owner_entity.posZ);
-                    if (serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_x != x || serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_y != y || serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_z != z)
+                    if (serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_x != x || serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_y != y || serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_z != z)
                     {
-                        serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.clear();
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesmine.clear();
                     }
                     serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(x, y, z);
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_x = x;
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_y = y;
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_z = z;
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_x = x;
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_y = y;
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_z = z;
                 }
             }
         }

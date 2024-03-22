@@ -132,7 +132,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
             }
             else
             {
-//                serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.blockpos = null;
+//                serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos = null;
                 serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.blockpos_arraylist.clear();
 //                serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.block_arraylist.clear();
                 this.old_x = this.skinningentities.posX;
@@ -732,9 +732,9 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 
         if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1)
         {
-            if (serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.blockpos == null)
+            if (serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos == null)
             {
-                serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.blockpos = blockpos;
+                serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos = blockpos;
             }
 
 //            this.endGoal();

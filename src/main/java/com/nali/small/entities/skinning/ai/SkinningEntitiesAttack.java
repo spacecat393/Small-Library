@@ -43,7 +43,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
         boolean work = serverentitiesmemory.isWork(serverentitiesmemory.workbytes.ATTACK());
         if ((!work && should_work && !serverentitiesmemory.entitiesaimemory.skinningentitiescareowner.target_entity_arraylist.isEmpty()) || (work && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist.isEmpty()))
         {
-            if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.blockpos != null)
+            if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos != null)
             {
 //                if (this.attack)
 //                {
@@ -51,7 +51,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
 ////                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
 //                    this.attack = false;
 //                }
-//                serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.walk();
+//                serverentitiesmemory.entitiesaimemory.skinningentitiesmine.walk();
                 serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ATTACK() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));//0
             }
 //            else
@@ -86,14 +86,14 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
                     int x = MathHelper.floor(target_entity.posX);
                     int y = MathHelper.floor(target_entity.posY);
                     int z = MathHelper.floor(target_entity.posZ);
-                    if (serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_x != x || serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_y != y || serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_z != z)
+                    if (serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_x != x || serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_y != y || serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_z != z)
                     {
-                        serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.clear();
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesmine.clear();
                     }
                     serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(x, y, z);
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_x = x;
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_y = y;
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesbreak.goal_z = z;
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_x = x;
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_y = y;
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_z = z;
                     this.state = 3;
                 }
             }
