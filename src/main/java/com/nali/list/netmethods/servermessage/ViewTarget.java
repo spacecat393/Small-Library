@@ -2,6 +2,7 @@ package com.nali.list.netmethods.servermessage;
 
 import com.nali.list.messages.ClientMessage;
 import com.nali.list.messages.ServerMessage;
+import com.nali.list.netmethods.clientmessage.SetTarget;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.networks.NetworksRegistry;
@@ -25,7 +26,7 @@ public class ViewTarget
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
             int size = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_arraylist.size() * 4;
             byte[] byte_array = new byte[1 + size];
-            byte_array[0] = 3;
+            byte_array[0] = SetTarget.ID;
             int index = 0;
             for (int i = 1; i < size; i += 4)
             {

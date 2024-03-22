@@ -2,7 +2,7 @@ package com.nali.list.netmethods.servermessage;
 
 import com.nali.list.messages.ClientMessage;
 import com.nali.list.messages.ServerMessage;
-import com.nali.small.entities.memory.server.ServerEntitiesMemory;
+import com.nali.list.netmethods.clientmessage.SetEffects;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.networks.NetworksRegistry;
 import com.nali.system.bytes.BytesReader;
@@ -27,7 +27,7 @@ public class GetEffects
         {
             Collection<PotionEffect> potioneffect_collection = skinningentities.getActivePotionEffects();
             byte[] byte_array = new byte[1 + 4 + (potioneffect_collection.size() * 3 * 4)];
-            byte_array[0] = 7;
+            byte_array[0] = SetEffects.ID;
             BytesWriter.set(byte_array, skinningentities.getEntityId(), 1);
             int index = 1 + 4;
             for (PotionEffect potioneffect : potioneffect_collection)

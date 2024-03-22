@@ -2,6 +2,7 @@ package com.nali.small.entities.skinning;
 
 import com.nali.data.BothData;
 import com.nali.list.messages.ServerMessage;
+import com.nali.list.netmethods.servermessage.*;
 import com.nali.render.SkinningRender;
 import com.nali.small.entities.EntitiesAttackHelper;
 import com.nali.small.entities.bytes.WorkBytes;
@@ -430,10 +431,9 @@ public abstract class SkinningEntities extends EntityLivingBase
             {
                 if (cliententitiesmemory.uuid != null)
                 {
-                    byte[] byte_array = new byte[21];
-                    byte_array[0] = 6;
+                    byte[] byte_array = new byte[17];
+                    byte_array[0] = OpenInvGUI.ID;
                     BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
-                    BytesWriter.set(byte_array, 1, 17);
                     NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
                 }
             }
@@ -471,12 +471,12 @@ public abstract class SkinningEntities extends EntityLivingBase
                     if (milk_bucket)
                     {
                         byte_array = new byte[1 + 16];
-                        byte_array[0] = 19;
+                        byte_array[0] = DrinkMilk.ID;
                     }
                     else
                     {
                         byte_array = new byte[1 + 16 + 4 + 4 + 4];
-                        byte_array[0] = 17;
+                        byte_array[0] = Eat.ID;
                         BytesWriter.set(byte_array, (float)(axisalignedbb_array[1].maxX + (axisalignedbb_array[1].minX - axisalignedbb_array[1].maxX) / 2.0D), 1 + 16);
                         BytesWriter.set(byte_array, (float)(axisalignedbb_array[1].maxY + (axisalignedbb_array[1].minY - axisalignedbb_array[1].maxY) / 2.0D), 1 + 16 + 4);
                         BytesWriter.set(byte_array, (float)(axisalignedbb_array[1].maxZ + (axisalignedbb_array[1].minZ - axisalignedbb_array[1].maxZ) / 2.0D), 1 + 16 + 4 + 4);
@@ -489,7 +489,7 @@ public abstract class SkinningEntities extends EntityLivingBase
                 {
                     byte i = cliententitiesmemory.workbytes.SIT();
                     byte[] byte_array = new byte[21];
-                    byte_array[0] = 1;
+                    byte_array[0] = SetWorkByte.ID;
                     BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
                     BytesWriter.set(byte_array, i, 17);
                     NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
@@ -675,7 +675,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         if (cliententitiesmemory.uuid == null)
         {
             byte[] byte_array = new byte[5];
-            byte_array[0] = 0;
+            byte_array[0] = SyncUUIDToClient.ID;
             BytesWriter.set(byte_array, this.getEntityId(), 1);
             NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
         }

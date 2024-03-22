@@ -1,7 +1,9 @@
 package com.nali.small.gui;
 
 import com.nali.list.container.InventoryContainer;
+import com.nali.list.container.PlayerContainer;
 import com.nali.list.gui.InventoryGui;
+import com.nali.list.gui.PlayerGui;
 import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
@@ -25,8 +27,10 @@ public class GuiHandler implements IGuiHandler
         {
             return new InventoryContainer(entityplayer.inventory, ServerEntitiesMemory.ENTITIES_MAP.get(entityplayer.getEntityData().getUniqueId("loli_nali")), entityplayer);
         }
-
-        return null;
+        else
+        {
+            return new PlayerContainer();
+        }
     }
 
     @Nullable
@@ -43,7 +47,9 @@ public class GuiHandler implements IGuiHandler
             }
             return new InventoryGui(entityplayer.inventory, (SkinningEntities)entity);
         }
-
-        return null;
+        else
+        {
+            return new PlayerGui(new PlayerContainer());
+        }
     }
 }

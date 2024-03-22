@@ -3,6 +3,7 @@ package com.nali.list.netmethods.servermessage;
 import com.mojang.authlib.GameProfile;
 import com.nali.list.messages.ClientMessage;
 import com.nali.list.messages.ServerMessage;
+import com.nali.list.netmethods.clientmessage.RenderFood;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.mixin.IMixinItemFood;
@@ -54,7 +55,7 @@ public class Eat
 //                        Vec3d view_vec3d = skinningentities.getLookVec().scale(0.25F);
             skinningentities.playSound(SoundEvents.ENTITY_GENERIC_EAT, skinningentities.getSoundVolume(), skinningentities.getSoundPitch());
             byte[] byte_array = new byte[1 + 4 + 4 + 4 + 4];
-            byte_array[0] = 9;
+            byte_array[0] = RenderFood.ID;
             BytesWriter.set(byte_array, BytesReader.getFloat(servermessage.data, 1 + 16), 1);
             BytesWriter.set(byte_array, BytesReader.getFloat(servermessage.data, 1 + 16 + 4), 1 + 4);
             BytesWriter.set(byte_array, BytesReader.getFloat(servermessage.data, 1 + 16 + 4 + 4), 1 + 4 + 4);

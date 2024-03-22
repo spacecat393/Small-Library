@@ -1,10 +1,11 @@
 package com.nali.small.key;
 
-import com.nali.list.container.PlayerContainer;
 import com.nali.list.gui.PlayerGui;
-import com.nali.list.key.SmallQuickInventoryGUI;
 import com.nali.list.key.SmallPlayerGui;
+import com.nali.list.key.SmallQuickInventoryGUI;
 import com.nali.list.messages.ServerMessage;
+import com.nali.list.netmethods.servermessage.OpenInvGUI;
+import com.nali.list.netmethods.servermessage.OpenPlayerGUI;
 import com.nali.small.networks.NetworksRegistry;
 import com.nali.small.system.Reference;
 import com.nali.system.bytes.BytesWriter;
@@ -45,7 +46,7 @@ public class KeyTick
                     minecraft.addScheduledTask(() ->
                     {
                         byte[] byte_array = new byte[21];
-                        byte_array[0] = 6;
+                        byte_array[0] = OpenInvGUI.ID;
                         BytesWriter.set(byte_array, UUID.fromString(uuid_string), 1);
                         BytesWriter.set(byte_array, 1, 17);
                         NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
@@ -55,13 +56,16 @@ public class KeyTick
         }
         else if (Keyboard.isKeyDown(SmallPlayerGui.I.getKeyCode()))
         {
-            PlayerGui.PAGE = 0;
             if (minecraft.currentScreen == null)
             {
-                minecraft.addScheduledTask(() ->
-                {
-                    minecraft.displayGuiScreen(new PlayerGui(new PlayerContainer()));
-                });
+                PlayerGui.PAGE = 0;
+
+                NetworksRegistry.I.sendToServer(new ServerMessage(new byte[]{OpenPlayerGUI.ID}));
+
+//                minecraft.addScheduledTask(() ->
+//                {
+//                    minecraft.displayGuiScreen(new PlayerGui(new PlayerContainer()));
+//                });
             }
         }
 

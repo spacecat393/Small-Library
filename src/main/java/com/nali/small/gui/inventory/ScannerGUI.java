@@ -1,5 +1,9 @@
 package com.nali.small.gui.inventory;
 
+import com.nali.list.netmethods.servermessage.ClearTarget;
+import com.nali.list.netmethods.servermessage.ClearTroublemaker;
+import com.nali.list.netmethods.servermessage.ViewTarget;
+import com.nali.list.netmethods.servermessage.ViewTroublemaker;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.inventory.*;
 
@@ -86,11 +90,11 @@ public class ScannerGUI
         {
             if (gui.mouse_released == 0)
             {
-                gui.sendPacketUUID((byte)11);
+                gui.sendPacketUUID(ViewTarget.ID);
             }
             else if (gui.mouse_released == 1)
             {
-                gui.sendPacketUUID((byte)27);
+                gui.sendPacketUUID(ClearTarget.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof TargetGUIFeatures))
@@ -119,11 +123,11 @@ public class ScannerGUI
         {
             if (gui.mouse_released == 0)
             {
-                gui.sendPacketUUID((byte)14);
+                gui.sendPacketUUID(ViewTroublemaker.ID);
             }
             else if (gui.mouse_released == 1)
             {
-                gui.sendPacketUUID((byte)28);
+                gui.sendPacketUUID(ClearTroublemaker.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof TroublemakerGUIFeatures))

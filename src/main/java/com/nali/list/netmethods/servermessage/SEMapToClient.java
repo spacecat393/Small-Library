@@ -2,6 +2,7 @@ package com.nali.list.netmethods.servermessage;
 
 import com.nali.list.messages.ClientMessage;
 import com.nali.list.messages.ServerMessage;
+import com.nali.list.netmethods.clientmessage.SetSEMap;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.networks.NetworksRegistry;
 import com.nali.small.world.ChunkLoader;
@@ -30,7 +31,7 @@ public class SEMapToClient
             //                    Set<UUID> keys_set = new HashSet<>(entity_map.keySet());
             Set<UUID> keys_set = new HashSet<>(ENTITIES_MAP.keySet());
             byte[] byte_array = new byte[keys_set.size() * 16 + 1 + keys_set.size() * 8];
-            //                    byte_array[0] = 0;
+            byte_array[0] = SetSEMap.ID;
 
             for (UUID uuid : keys_set)
             {

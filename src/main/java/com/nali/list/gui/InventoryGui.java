@@ -2,16 +2,23 @@ package com.nali.list.gui;
 
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.messages.ServerMessage;
+import com.nali.list.netmethods.servermessage.*;
 import com.nali.render.SkinningRender;
 import com.nali.small.data.BoxData;
 import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;
-import com.nali.small.gui.features.messages.*;
-import com.nali.small.gui.features.messages.inventory.*;
+import com.nali.small.gui.features.messages.AttributesGUIFeatures;
+import com.nali.small.gui.features.messages.EffectsGUIFeatures;
+import com.nali.small.gui.features.messages.HPGUIFeatures;
+import com.nali.small.gui.features.messages.inventory.BoxGUIFeatures;
+import com.nali.small.gui.features.messages.inventory.MenuGUIFeatures;
+import com.nali.small.gui.features.messages.inventory.TPGUIFeatures;
+import com.nali.small.gui.features.messages.inventory.WorkGUIFeatures;
 import com.nali.small.gui.features.messages.player.MimiTalkGUIFeatures;
-import com.nali.small.gui.features.messages.works.*;
+import com.nali.small.gui.features.messages.works.LockDamageGUIFeatures;
+import com.nali.small.gui.features.messages.works.LockInventoryGUIFeatures;
 import com.nali.small.gui.inventory.ProfileGUI;
 import com.nali.small.gui.inventory.ScannerGUI;
 import com.nali.small.gui.inventory.SpecialStatGUI;
@@ -128,7 +135,7 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                this.sendPacketUUID((byte)24);
+                this.sendPacketUUID(TP.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof TPGUIFeatures))
@@ -163,7 +170,7 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                this.sendPacketUUID((byte)18);
+                this.sendPacketUUID(GetEffects.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof EffectsGUIFeatures))
@@ -178,7 +185,7 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                this.sendPacketUUID((byte)2);
+                this.sendPacketUUID(SetOwner.ID);
                 this.sendPacketUUIDInt(cliententitiesmemory.workbytes.LOCK_INVENTORY());
             }
 
@@ -194,7 +201,7 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                this.sendPacketUUID((byte)2);
+                this.sendPacketUUID(SetOwner.ID);
                 this.sendPacketUUIDInt(cliententitiesmemory.workbytes.LOCK_DAMAGE());
             }
 
@@ -229,7 +236,7 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                this.sendPacket1((byte)9);
+                this.sendPacket1(OpenPlayerGUI.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof MimiTalkGUIFeatures))
@@ -244,12 +251,27 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                this.sendPacketUUID((byte)8);
+                this.sendPacketUUID(PutToBox.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof BoxGUIFeatures))
             {
                 GUIFEATURESLOADER = new BoxGUIFeatures(this);
+            }
+            this.render_text = true;
+        }
+
+        x = this.guiLeft + 156; y = this.guiTop + 47; width = 28; height = 39;
+        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+        {
+            if (this.mouse_released == 1)
+            {
+                this.sendPacketUUID(ResetBytes.ID);
+            }
+
+            if (!(GUIFEATURESLOADER instanceof WorkGUIFeatures))
+            {
+                GUIFEATURESLOADER = new WorkGUIFeatures(this);
             }
             this.render_text = true;
         }
@@ -531,47 +553,47 @@ public class InventoryGui extends MixGui
                         {
                             case 0:
                             {
-                                byte_array[0] = 10;
+                                byte_array[0] = AddTarget.ID;
                                 break;
                             }
                             case 1:
                             {
-                                byte_array[0] = 13;
+                                byte_array[0] = AddTroublemaker.ID;
                                 break;
                             }
                             case 2:
                             {
-                                byte_array[0] = 12;
+                                byte_array[0] = RemoveTarget.ID;
                                 break;
                             }
                             case 3:
                             {
-                                byte_array[0] = 15;
+                                byte_array[0] = RemoveTroublemaker.ID;
                                 break;
                             }
                             case 5:
                             {
-                                byte_array[0] = 20;
+                                byte_array[0] = Scale.ID;
                                 break;
                             }
                             case 6:
                             {
-                                byte_array[0] = 21;
+                                byte_array[0] = SetAttribute.ID;
                                 break;
                             }
                             case 7:
                             {
-                                byte_array[0] = 22;
+                                byte_array[0] = SetLook.ID;
                                 break;
                             }
                             case 8:
                             {
-                                byte_array[0] = 23;
+                                byte_array[0] = SetXYZ.ID;
                                 break;
                             }
                             case 9:
                             {
-                                byte_array[0] = 25;
+                                byte_array[0] = SetLocation.ID;
                                 break;
                             }
                             default:

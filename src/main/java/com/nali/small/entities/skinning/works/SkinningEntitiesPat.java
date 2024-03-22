@@ -1,6 +1,7 @@
 package com.nali.small.entities.skinning.works;
 
 import com.nali.list.messages.ServerMessage;
+import com.nali.list.netmethods.servermessage.Pat;
 import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.networks.NetworksRegistry;
@@ -33,7 +34,7 @@ public class SkinningEntitiesPat extends SkinningEntitiesWork
             this.pat_time = (byte)this.skinningentities.getRNG().nextInt(16);
 
             byte[] byte_array = new byte[1 + 16 + 4];
-            byte_array[0] = 16;
+            byte_array[0] = Pat.ID;
             BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
             BytesWriter.set(byte_array, (float)this.skinningentities.getEntityBoundingBox().maxY, 1 + 16);
             NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));

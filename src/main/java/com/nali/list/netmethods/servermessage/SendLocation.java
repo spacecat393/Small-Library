@@ -2,6 +2,7 @@ package com.nali.list.netmethods.servermessage;
 
 import com.nali.list.messages.ClientMessage;
 import com.nali.list.messages.ServerMessage;
+import com.nali.list.netmethods.clientmessage.SetLocation;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.networks.NetworksRegistry;
@@ -23,7 +24,7 @@ public class SendLocation
         {
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
             byte[] byte_array = new byte[1 + 8 + 4];
-            byte_array[0] = 8;
+            byte_array[0] = SetLocation.ID;
             BytesWriter.set(byte_array, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos_long, 1);
             BytesWriter.set(byte_array, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far, 1 + 8);
             NetworksRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);

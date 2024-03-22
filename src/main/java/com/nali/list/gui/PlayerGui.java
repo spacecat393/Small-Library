@@ -1,6 +1,7 @@
 package com.nali.list.gui;
 
 import com.nali.list.messages.ServerMessage;
+import com.nali.list.netmethods.servermessage.*;
 import com.nali.render.SkinningRender;
 import com.nali.small.data.BoxData;
 import com.nali.small.data.SakuraData;
@@ -94,7 +95,7 @@ public class PlayerGui extends MixGui
             {
                 if (this.mouse_released == 0)
                 {
-                    this.sendPacket1((byte) 3);
+                    this.sendPacket1(X12.ID);
                 }
 
                 if (!(GUIFEATURESLOADER instanceof RandomAGUIFeatures))
@@ -109,7 +110,7 @@ public class PlayerGui extends MixGui
             {
                 if (this.mouse_released == 0)
                 {
-                    this.sendPacket1((byte)4);
+                    this.sendPacket1(X64.ID);
                 }
 
                 if (!(GUIFEATURESLOADER instanceof RandomBGUIFeatures))
@@ -221,7 +222,7 @@ public class PlayerGui extends MixGui
                 }
                 else if (this.mouse_released == 1)
                 {
-                    this.sendPacket1((byte)5);
+                    this.sendPacket1(SEMapToClient.ID);
                 }
 
                 if (!(GUIFEATURESLOADER instanceof FetchGUIFeatures))
@@ -257,7 +258,7 @@ public class PlayerGui extends MixGui
                     String uuid_string = getTextFromClipboard();
                     if (isValidUUIDString(uuid_string))
                     {
-                        this.sendPacketUUID((byte)6, UUID.fromString(uuid_string));
+                        this.sendPacketUUID(OpenInvGUI.ID, UUID.fromString(uuid_string));
                     }
                 }
 
@@ -422,7 +423,7 @@ public class PlayerGui extends MixGui
 //                    int string_byte_array_size = string_byte_array.length - 1;
                     String[] string_array = MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString().split(" ");
                     byte[] byte_array = new byte[/*string_byte_array_size*/string_array.length * 4 + 1];
-                    byte_array[0] = 7;
+                    byte_array[0] = DropToSakura.ID;
                     int new_index = 1;
                     for (String new_string : string_array)
                     {
@@ -548,10 +549,9 @@ public class PlayerGui extends MixGui
             {
                 if (mixgui.mouse_released == 0)
                 {
-                    byte[] byte_array = new byte[21];
-                    byte_array[0] = 6;
+                    byte[] byte_array = new byte[17];
+                    byte_array[0] = OpenInvGUI.ID;
                     BytesWriter.set(byte_array, this.uuid, 1);
-                    BytesWriter.set(byte_array, 1, 17);
                     NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
                 }
             }

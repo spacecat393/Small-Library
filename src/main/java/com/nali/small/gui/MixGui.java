@@ -1,5 +1,7 @@
 package com.nali.small.gui;
 
+import com.nali.list.netmethods.servermessage.SetWorkByte;
+import com.nali.list.netmethods.servermessage.SyncBitByte;
 import com.nali.small.Small;
 import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
@@ -111,7 +113,7 @@ public abstract class MixGui extends GuiContainer
     {
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
         byte[] byte_array = new byte[18];
-        byte_array[0] = 1;
+        byte_array[0] = SetWorkByte.ID;
         BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
         byte_array[17] = i;
 //        BytesWriter.set(byte_array, i, 17);
@@ -122,7 +124,7 @@ public abstract class MixGui extends GuiContainer
     {
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
         byte[] byte_array = new byte[18];
-        byte_array[0] = 29;
+        byte_array[0] = SyncBitByte.ID;
         BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
         byte_array[17] = i;
 //        BytesWriter.set(byte_array, i, 17);
@@ -296,7 +298,7 @@ public abstract class MixGui extends GuiContainer
         {
             try
             {
-                return (String) transferable.getTransferData(DataFlavor.stringFlavor);
+                return (String)transferable.getTransferData(DataFlavor.stringFlavor);
             }
             catch (Exception e)
             {

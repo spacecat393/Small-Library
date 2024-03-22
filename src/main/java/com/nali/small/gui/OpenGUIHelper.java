@@ -1,9 +1,6 @@
 package com.nali.small.gui;
 
-import com.nali.list.container.PlayerContainer;
-import com.nali.list.gui.PlayerGui;
 import com.nali.system.Reflect;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -21,12 +18,12 @@ public class OpenGUIHelper
         GUI_CLASS_LIST.sort(Comparator.comparing(Class::getName));
     }
 
-    public static void callPlayerGUI()
-    {
-        Minecraft minecraft = Minecraft.getMinecraft();
-        minecraft.addScheduledTask(() ->
-        {
-            minecraft.displayGuiScreen(new PlayerGui(new PlayerContainer()));
-        });
-    }
+//    public static void callPlayerGUI()
+//    {
+//        Minecraft minecraft = Minecraft.getMinecraft();
+//        minecraft.addScheduledTask(() ->
+//        {
+//            minecraft.displayGuiScreen(new PlayerGui(new PlayerContainer()));
+//        });
+//    }
 }

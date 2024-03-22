@@ -1,6 +1,7 @@
 package com.nali.small.gui.inventory;
 
 import com.nali.list.container.InventoryContainer;
+import com.nali.list.netmethods.servermessage.SetOwner;
 import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
@@ -74,6 +75,8 @@ public class ProfileGUI
         gui.drawTexturedModalRect(left + 49 + 18 + 18 + 18 + 18, top + 90 + 18, 100, 0, 14, 14);
         gui.drawTexturedModalRect(left + 49 + 18 + 18 + 18 + 18 + 18, top + 90 + 18, 156, 0, 14, 14);
         gui.drawTexturedModalRect(left + 49 + 18 + 18 + 18 + 18 + 18 + 18, top + 90 + 18, 162, 14, 14, 14);
+        gui.drawTexturedModalRect(left + 49 + 18 + 18 + 18 + 18 + 18 + 18 + 18 + 1, top + 90 + 18, 170, 0, 12, 14);
+        gui.drawTexturedModalRect(left + 49 + 18 + 18 + 18 + 18 + 18 + 18 + 18 + 18, top + 90 + 18, 238, 0, 14, 14);
     }
 
     public static void drawScreen(MixGui gui, int mouseX, int mouseY)
@@ -106,7 +109,7 @@ public class ProfileGUI
 //            {
             if (gui.mouse_released == 0)
             {
-                gui.sendPacketUUID((byte)2);
+                gui.sendPacketUUID(SetOwner.ID);
                 gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.FOLLOW());
             }
 
@@ -226,7 +229,7 @@ public class ProfileGUI
 //            {
             if (gui.mouse_released == 0)
             {
-                gui.sendPacketUUID((byte)2);
+                gui.sendPacketUUID(SetOwner.ID);
                 gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.REVIVE());
             }
 
@@ -331,7 +334,7 @@ public class ProfileGUI
             {
                 if (gui.mouse_released == 0)
                 {
-                    gui.sendPacketUUID((byte)2);
+                    gui.sendPacketUUID(SetOwner.ID);
                     gui.sendPacketUUIDInt(id);
                 }
 
@@ -388,9 +391,69 @@ public class ProfileGUI
                 gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.MINE());
             }
 
-            if (!(GUIFEATURESLOADER instanceof MineToGUIFeatures))
+            if (!(GUIFEATURESLOADER instanceof MineGUIFeatures))
             {
-                GUIFEATURESLOADER = new MineToGUIFeatures(gui);
+                GUIFEATURESLOADER = new MineGUIFeatures(gui);
+            }
+            gui.render_text = true;
+        }
+
+        x = left + 66 + 18 + 18 + 18 + 18;// y = top + 107;// width = 16; height = 16;
+        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+        {
+            if (gui.mouse_released == 0)
+            {
+                gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.PLANT());
+            }
+
+            if (!(GUIFEATURESLOADER instanceof PlantGUIFeatures))
+            {
+                GUIFEATURESLOADER = new PlantGUIFeatures(gui);
+            }
+            gui.render_text = true;
+        }
+
+        x = left + 66 + 18 + 18 + 18 + 18 + 18;// y = top + 107;// width = 16; height = 16;
+        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+        {
+            if (gui.mouse_released == 0)
+            {
+                gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.FISHING());
+            }
+
+            if (!(GUIFEATURESLOADER instanceof FishingGUIFeatures))
+            {
+                GUIFEATURESLOADER = new FishingGUIFeatures(gui);
+            }
+            gui.render_text = true;
+        }
+
+        x = left + 66 + 18 + 18 + 18 + 18 + 18 + 18;// y = top + 107;// width = 16; height = 16;
+        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+        {
+            if (gui.mouse_released == 0)
+            {
+                gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.USE_TO());
+            }
+
+            if (!(GUIFEATURESLOADER instanceof UseToGUIFeatures))
+            {
+                GUIFEATURESLOADER = new UseToGUIFeatures(gui);
+            }
+            gui.render_text = true;
+        }
+
+        x = left + 66 + 18 + 18 + 18 + 18 + 18 + 18 + 18;// y = top + 107;// width = 16; height = 16;
+        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+        {
+            if (gui.mouse_released == 0)
+            {
+                gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.MANAGE_ITEM());
+            }
+
+            if (!(GUIFEATURESLOADER instanceof ManageItemGUIFeatures))
+            {
+                GUIFEATURESLOADER = new ManageItemGUIFeatures(gui);
             }
             gui.render_text = true;
         }

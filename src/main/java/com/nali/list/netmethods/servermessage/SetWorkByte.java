@@ -2,6 +2,7 @@ package com.nali.list.netmethods.servermessage;
 
 import com.nali.list.messages.ClientMessage;
 import com.nali.list.messages.ServerMessage;
+import com.nali.list.netmethods.clientmessage.SetWorkBytes;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.networks.NetworksRegistry;
@@ -64,7 +65,7 @@ public class SetWorkByte
             serverentitiesmemory.main_work_byte_array[index] ^= (byte)Math.pow(2, bit);
 
             byte[] byte_array = new byte[1 + 4 + serverentitiesmemory.main_work_byte_array.length];
-            byte_array[0] = 6;
+            byte_array[0] = SetWorkBytes.ID;
             BytesWriter.set(byte_array, skinningentities.getEntityId(), 1);
             System.arraycopy(serverentitiesmemory.main_work_byte_array, 0, byte_array, 1 + 4, serverentitiesmemory.main_work_byte_array.length);
             NetworksRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
