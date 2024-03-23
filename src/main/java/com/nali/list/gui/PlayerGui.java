@@ -2,18 +2,15 @@ package com.nali.list.gui;
 
 import com.nali.list.messages.ServerMessage;
 import com.nali.list.netmethods.servermessage.*;
+import com.nali.list.render.BoxRender;
+import com.nali.list.render.SakuraRender;
 import com.nali.render.SkinningRender;
-import com.nali.small.data.BoxData;
-import com.nali.small.data.SakuraData;
 import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.player.*;
 import com.nali.small.networks.NetworksRegistry;
-import com.nali.small.render.BoxRender;
-import com.nali.small.render.RenderHelper;
-import com.nali.small.render.SakuraRender;
 import com.nali.system.Timing;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
@@ -28,14 +25,13 @@ import java.util.Set;
 import java.util.UUID;
 
 import static com.nali.small.entities.memory.ClientEntitiesMemory.ENTITIES_MAP;
-import static com.nali.small.render.RenderHelper.DATALOADER;
 
 public class PlayerGui extends MixGui
 {
     public static MixButton[] MIXBUTTON_ARRAY;
     public static int CURRENT_INDEX;
-    public SakuraRender sakurarender = new SakuraRender(new SakuraData(), RenderHelper.DATALOADER);
-    public BoxRender boxrender = new BoxRender(null, new BoxData(), DATALOADER);
+    public SakuraRender sakurarender = new SakuraRender();
+    public BoxRender boxrender = new BoxRender();
     public static byte PAGE;
 
     public static int MAX_NEXT;

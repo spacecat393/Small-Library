@@ -1,8 +1,9 @@
-package com.nali.small.render;
+package com.nali.list.render;
 
 import com.nali.data.BothData;
-import com.nali.render.EntitiesRenderMemory;
 import com.nali.render.ObjectRender;
+import com.nali.small.data.BoxData;
+import com.nali.small.render.RenderHelper;
 import com.nali.system.DataLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -10,9 +11,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class BoxRender extends ObjectRender
 {
-    public BoxRender(EntitiesRenderMemory entitiesrendermemory, BothData bothdata, DataLoader dataloader)
+    public static int ID;
+    public static DataLoader DATALOADER = RenderHelper.DATALOADER;
+    public static BothData BOTHDATA = new BoxData();
+
+    public BoxRender()
     {
-        super(entitiesrendermemory, bothdata, dataloader);
+        super(null, BOTHDATA, DATALOADER, ID);
         this.texture_index_int_array[0] = 0;
         this.texture_index_int_array[1] = 1;
         this.texture_index_int_array[2] = 1;

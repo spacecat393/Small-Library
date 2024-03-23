@@ -54,17 +54,17 @@ public class Small
         NetworksRegistry.register();
         CapabilitiesRegistryHelper.register();
         NetworkRegistry.INSTANCE.registerGuiHandler(I, new GuiHandler());
-
-        if (event.getSide().isClient())
-        {
-            RenderHelper.init();
-        }
     }
 
     @EventHandler
     public void onFMLPostInitializationEvent(FMLPostInitializationEvent event)
     {
         EntitiesRegistryHelper.ENTITY_KEY_ARRAY = new HashSet<>(ENTITY_CLASS_ENTRIES.keySet()).toArray();
+
+        if (event.getSide().isClient())
+        {
+            RenderHelper.init();
+        }
     }
 
     @EventHandler

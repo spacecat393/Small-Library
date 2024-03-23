@@ -16,9 +16,9 @@ public class SkinningEntitiesRender extends SkinningRender
 {
     public Entity entity;
 
-    public SkinningEntitiesRender(EntitiesRenderMemory entitiesrendermemory, BothData bothdata, DataLoader dataloader, Entity entity)
+    public SkinningEntitiesRender(EntitiesRenderMemory entitiesrendermemory, BothData bothdata, DataLoader dataloader, Entity entity, int i)
     {
-        super(entitiesrendermemory, bothdata, dataloader);
+        super(entitiesrendermemory, bothdata, dataloader, i);
         this.entity = entity;
     }
 

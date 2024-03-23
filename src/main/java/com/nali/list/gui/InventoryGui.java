@@ -3,8 +3,8 @@ package com.nali.list.gui;
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.messages.ServerMessage;
 import com.nali.list.netmethods.servermessage.*;
+import com.nali.list.render.BoxRender;
 import com.nali.render.SkinningRender;
-import com.nali.small.data.BoxData;
 import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
@@ -23,7 +23,6 @@ import com.nali.small.gui.inventory.ProfileGUI;
 import com.nali.small.gui.inventory.ScannerGUI;
 import com.nali.small.gui.inventory.SpecialStatGUI;
 import com.nali.small.networks.NetworksRegistry;
-import com.nali.small.render.BoxRender;
 import com.nali.small.system.Reference;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
@@ -39,7 +38,6 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.io.IOException;
 
-import static com.nali.small.render.RenderHelper.DATALOADER;
 import static com.nali.system.Timing.TD;
 import static com.nali.system.opengl.memory.OpenGLCurrentMemory.GL_CURRENT_COLOR;
 import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_FIXED_PIPE_FLOATBUFFER;
@@ -51,7 +49,7 @@ public class InventoryGui extends MixGui
     public static byte PAGE;
     public SkinningEntitiesRender skinningentitiesrender;
     public float px/*, py*/;
-    public BoxRender boxrender = new BoxRender(null, new BoxData(), DATALOADER);
+    public BoxRender boxrender = new BoxRender();
 
     public InventoryGui(IInventory iinventory, SkinningEntities skinningentities)
     {
