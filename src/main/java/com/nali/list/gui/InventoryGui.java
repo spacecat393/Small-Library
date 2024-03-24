@@ -19,6 +19,7 @@ import com.nali.small.gui.features.messages.inventory.WorkGUIFeatures;
 import com.nali.small.gui.features.messages.player.MimiTalkGUIFeatures;
 import com.nali.small.gui.features.messages.works.LockDamageGUIFeatures;
 import com.nali.small.gui.features.messages.works.LockInventoryGUIFeatures;
+import com.nali.small.gui.features.messages.works.ManageItemGUIFeatures;
 import com.nali.small.gui.inventory.ProfileGUI;
 import com.nali.small.gui.inventory.ScannerGUI;
 import com.nali.small.gui.inventory.SpecialStatGUI;
@@ -120,7 +121,7 @@ public class InventoryGui extends MixGui
         {
             this.renderHoveredToolTip(mouseX, mouseY);
         }
-        else if (PAGE == 2 || PAGE == 3)
+        else if (PAGE == 1 || PAGE == 2 || PAGE == 3)
         {
             this.setMessage();
         }
@@ -519,6 +520,11 @@ public class InventoryGui extends MixGui
                 }
                 case '\r':
                 {
+                    if (this.message_state == 10 && MESSAGE_STRINGBUILDER.length() == 2)
+                    {
+                        ManageItemGUIFeatures.PAGE = Byte.parseByte(MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString());
+                    }
+
                     if (this.message_state != 4)
                     {
                         SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
@@ -531,7 +537,7 @@ public class InventoryGui extends MixGui
                         {
                             try
                             {
-                                if (this.message_state == 5 || this.message_state == 6 || this.message_state == 7 || this.message_state == 8 || this.message_state == 9)
+                                if (this.message_state == 5 || this.message_state == 6 || this.message_state == 7 || this.message_state == 8 || this.message_state == 9 || this.message_state == 10)
                                 {
                                     BytesWriter.set(byte_array, Float.parseFloat(new_string), new_index);
                                 }
@@ -593,6 +599,10 @@ public class InventoryGui extends MixGui
                             {
                                 byte_array[0] = SetLocation.ID;
                                 break;
+                            }
+                            case 10:
+                            {
+                                byte_array[0] = SetManageItem.ID;
                             }
                             default:
                             {

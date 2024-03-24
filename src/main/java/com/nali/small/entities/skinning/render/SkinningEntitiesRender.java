@@ -69,7 +69,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
             GL_CURRENT_COLOR[3] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(3);
             GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], 0.25F);
         }
-        skinningrender.objectworlddraw.renderWorld();
+        skinningrender.objectworlddraw.renderWorld(/*ox, oy, oz*/);
         if (invisible)
         {
             GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);

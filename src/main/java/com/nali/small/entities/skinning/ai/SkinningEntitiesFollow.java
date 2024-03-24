@@ -6,9 +6,9 @@ import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 
-import static com.nali.small.entities.EntitiesMath.*;
+import static com.nali.small.entities.EntitiesMath.getClose;
+import static com.nali.small.entities.EntitiesMath.isInArea;
 import static com.nali.small.entities.skinning.ai.path.PathMath.PATH_BYTE_ARRAY;
 
 public class SkinningEntitiesFollow extends SkinningEntitiesAI
@@ -58,6 +58,10 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
             {
 //                serverentitiesmemory.entitiesaimemory.skinningentitiesmine.walk();
                 serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));//0
+                //disable
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ATTACK() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MANAGE_ITEM() % 8));
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FIND_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));
             }
 
             this.follow = true;
@@ -81,17 +85,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
                 }
                 else
                 {
-                    int x = MathHelper.floor(owner_entity.posX);
-                    int y = MathHelper.floor(owner_entity.posY);
-                    int z = MathHelper.floor(owner_entity.posZ);
-                    if (serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_x != x || serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_y != y || serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_z != z)
-                    {
-                        serverentitiesmemory.entitiesaimemory.skinningentitiesmine.clear();
-                    }
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(x, y, z);
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_x = x;
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_y = y;
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesmine.goal_z = z;
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(owner_entity.posX, owner_entity.posY, owner_entity.posZ);
                 }
             }
         }

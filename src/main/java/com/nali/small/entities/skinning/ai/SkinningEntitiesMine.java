@@ -33,6 +33,11 @@ public class SkinningEntitiesMine extends SkinningEntitiesAI
         {
             SkinningEntitiesFindMove skinningentitiesfindmove = serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove;
 
+            if (this.skinningentities.isEntityInsideOpaqueBlock())
+            {
+                this.blockpos = this.skinningentities.getPosition().up();
+            }
+
             if (this.blockpos == null)
             {
                 serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MINE() % 8));//0

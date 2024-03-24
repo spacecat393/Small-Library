@@ -3,6 +3,7 @@ package com.nali.small.entities.skinning.ai.path;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.ai.SkinningEntitiesAI;
+import com.nali.small.entities.skinning.ai.SkinningEntitiesMine;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockFenceGate;
@@ -207,6 +208,24 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
         this.goal_y = y;
         this.goal_z = z;
         this.try_move = true;
+    }
+
+    public void setBreakGoal(double px, double py, double pz)
+    {
+        this.setBreakGoal(MathHelper.floor(px), MathHelper.floor(py), MathHelper.floor(pz));
+    }
+
+    public void setBreakGoal(int x, int y, int z)
+    {
+        SkinningEntitiesMine skinningentitiesmine = ((ServerEntitiesMemory)this.skinningentities.bothentitiesmemory).entitiesaimemory.skinningentitiesmine;
+        if (skinningentitiesmine.goal_x != x || skinningentitiesmine.goal_y != y || skinningentitiesmine.goal_z != z)
+        {
+            skinningentitiesmine.clear();
+        }
+        this.setGoal(x, y, z);
+        skinningentitiesmine.goal_x = x;
+        skinningentitiesmine.goal_y = y;
+        skinningentitiesmine.goal_z = z;
     }
 
     public void endGoal()

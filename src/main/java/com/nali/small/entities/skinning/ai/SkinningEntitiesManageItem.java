@@ -11,12 +11,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 import static com.nali.small.entities.skinning.ai.SkinningEntitiesGetItem.isSameItemSameTags;
 
 public class SkinningEntitiesManageItem extends SkinningEntitiesAI
 {
     public BlockPos in_blockpos, out_blockpos;
-    public byte state;//put take remote_put random_find
+    public byte state;//remote_in remote_out random_in random_out
+    public int random_area_in = 1, random_area_out = 1;
 
     public SkinningEntitiesManageItem(SkinningEntities skinningentities)
     {
@@ -26,73 +29,104 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
     @Override
     public void onUpdate()
     {
-        //walk to
-        if (this.skinningentities.ticksExisted % 20 == 0)
-        {
-            ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
 
-            if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.MANAGE_ITEM()))
+        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.MANAGE_ITEM()))
+        {
+            if (this.skinningentities.ticksExisted % 20 == 0)
             {
+                Random random = this.skinningentities.getRNG();
                 World world = this.skinningentities.world;
                 SkinningInventory skinninginventory = serverentitiesmemory.skinninginventory;
                 ItemStack itemstack = ItemStack.EMPTY;
 
+                if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos != null)
+                {
+                    serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MANAGE_ITEM() % 8));
+
+                    serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FIND_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));
+                }
+
+                //random
+                if ((this.state & 4) == 4)
+                {
+                    this.in_blockpos = new BlockPos(this.skinningentities.posX + random.nextInt(this.random_area_in) - random.nextInt(this.random_area_in), this.skinningentities.posY + random.nextInt(this.random_area_in) - random.nextInt(this.random_area_in), this.skinningentities.posZ + random.nextInt(this.random_area_in) - random.nextInt(this.random_area_in));
+                }
+                if ((this.state & 8) == 8)
+                {
+                    this.out_blockpos = new BlockPos(this.skinningentities.posX + random.nextInt(this.random_area_out) - random.nextInt(this.random_area_out), this.skinningentities.posY + random.nextInt(this.random_area_out) - random.nextInt(this.random_area_out), this.skinningentities.posZ + random.nextInt(this.random_area_out) - random.nextInt(this.random_area_out));
+                }
+
                 if (this.in_blockpos != null)
                 {
-                    IBlockState iblockstate = world.getBlockState(this.in_blockpos);
-                    Block block = iblockstate.getBlock();
-
-                    if (block.hasTileEntity(iblockstate))
+                    //walk to
+                    if ((this.state & 1) == 1 || this.skinningentities.getDistanceSq(this.in_blockpos) < 4.0D)
                     {
-                        TileEntity tileentity = world.getTileEntity(this.in_blockpos);
+                        IBlockState iblockstate = world.getBlockState(this.in_blockpos);
+                        Block block = iblockstate.getBlock();
 
-                        if (tileentity instanceof IInventory)
+                        if (block.hasTileEntity(iblockstate))
                         {
-                            IInventory iinventory = (IInventory)tileentity;
+                            TileEntity tileentity = world.getTileEntity(this.in_blockpos);
 
-                            for (int i = 0; i < skinninginventory.getSizeInventory(); ++i)
+                            if (tileentity instanceof IInventory)
                             {
-                                itemstack = skinninginventory.getStackInSlot(i);
-                                if (!itemstack.isEmpty())
-                                {
-                                    break;
-                                }
-                            }
+                                IInventory iinventory = (IInventory)tileentity;
 
-                            this.manage(iinventory, itemstack);
+                                for (int i = 0; i < skinninginventory.getSizeInventory(); ++i)
+                                {
+                                    itemstack = skinninginventory.getStackInSlot(i);
+                                    if (!itemstack.isEmpty())
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                this.manage(iinventory, itemstack);
+                            }
                         }
                     }
+                    else
+                    {
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(this.in_blockpos.getX(), this.in_blockpos.getY(), this.in_blockpos.getZ());
+                    }
                 }
-
                 if (this.out_blockpos != null)
                 {
-                    IBlockState iblockstate = world.getBlockState(this.out_blockpos);
-                    Block block = iblockstate.getBlock();
-
-                    if (block.hasTileEntity(iblockstate))
+                    if ((this.state & 2) == 2 || this.skinningentities.getDistanceSq(this.out_blockpos) < 4.0D)
                     {
-                        TileEntity tileentity = world.getTileEntity(this.out_blockpos);
+                        IBlockState iblockstate = world.getBlockState(this.out_blockpos);
+                        Block block = iblockstate.getBlock();
 
-                        if (tileentity instanceof IInventory)
+                        if (block.hasTileEntity(iblockstate))
                         {
-                            IInventory iinventory = (IInventory)tileentity;
+                            TileEntity tileentity = world.getTileEntity(this.out_blockpos);
 
-                            for (int i = 0; i < iinventory.getSizeInventory(); ++i)
+                            if (tileentity instanceof IInventory)
                             {
-                                itemstack = iinventory.getStackInSlot(i);
-                                if (!itemstack.isEmpty())
-                                {
-                                    break;
-                                }
-                            }
+                                IInventory iinventory = (IInventory)tileentity;
 
-                            this.manage(skinninginventory, itemstack);
+                                for (int i = 0; i < iinventory.getSizeInventory(); ++i)
+                                {
+                                    itemstack = iinventory.getStackInSlot(i);
+                                    if (!itemstack.isEmpty())
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                this.manage(skinninginventory, itemstack);
+                            }
                         }
                     }
+                    else
+                    {
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(this.out_blockpos.getX(), this.out_blockpos.getY(), this.out_blockpos.getZ());
+                    }
                 }
-
-                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MANAGE_ITEM() % 8));
             }
+
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MANAGE_ITEM() % 8));
         }
     }
 

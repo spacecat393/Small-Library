@@ -99,6 +99,8 @@ public class EntitiesAIMemory
             nbttagcompound.setLong("out_manageitem", this.skinningentitiesmanageitem.out_blockpos.toLong());
         }
         nbttagcompound.setByte("state_manageitem", this.skinningentitiesmanageitem.state);
+        nbttagcompound.setInteger("rng_a_in_manageitem", this.skinningentitiesmanageitem.random_area_in);
+        nbttagcompound.setInteger("rng_a_out_manageitem", this.skinningentitiesmanageitem.random_area_out);
     }
 
     public void readNBT(NBTTagCompound nbttagcompound)
@@ -127,6 +129,8 @@ public class EntitiesAIMemory
             this.skinningentitiesmanageitem.out_blockpos = BlockPos.fromLong(nbttagcompound.getLong("out_manageitem"));
         }
         this.skinningentitiesmanageitem.state = nbttagcompound.getByte("state_manageitem");
+        this.skinningentitiesmanageitem.random_area_in = nbttagcompound.getInteger("rng_a_in_manageitem");
+        this.skinningentitiesmanageitem.random_area_out = nbttagcompound.getInteger("rng_a_out_manageitem");
     }
 
     public void update()

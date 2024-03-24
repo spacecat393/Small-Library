@@ -446,6 +446,7 @@ public class ProfileGUI
         x = left + 66 + 18 + 18 + 18 + 18 + 18 + 18 + 18;// y = top + 107;// width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
+            gui.message_state = 10;
             if (gui.mouse_released == 0)
             {
                 gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.MANAGE_ITEM());
