@@ -67,6 +67,8 @@ public class InventoryContainer extends Container
                 this.addSlotToContainer(new Slot(skinninginventory.inventorycrafting, j + l * 3, i + (j + (9-3)) * 18, 89 + l * 18));
             }
         }
+
+        this.onCraftMatrixChanged(skinninginventory.inventorycrafting);
     }
 
     @Override
@@ -83,11 +85,12 @@ public class InventoryContainer extends Container
             ItemStack itemstack = slot.getStack();
             out_itemstack = itemstack.copy();
 
-            if (index == this.inventorySlots.size())
-            {
-                this.skinningentities.bothentitiesmemory.skinninginventory.inventorycraftresult.clear();
-            }
-            if (index < cr)
+//            if (index == this.inventorySlots.size())
+//            {
+//                this.skinningentities.bothentitiesmemory.skinninginventory.inventorycraftresult.clear();
+//            }
+
+            if (index < cr && index != 0)
             {
                 if (!this.mergeItemStack(itemstack, cr, this.inventorySlots.size(), true))
                 {
@@ -99,7 +102,12 @@ public class InventoryContainer extends Container
                 return ItemStack.EMPTY;
             }
 
-            if (itemstack.isEmpty())
+            if (index == 0)
+            {
+                slot.onSlotChange(itemstack, out_itemstack);
+            }
+
+            if (out_itemstack.isEmpty())
             {
                 slot.putStack(ItemStack.EMPTY);
             }
@@ -108,11 +116,21 @@ public class InventoryContainer extends Container
                 slot.onSlotChanged();
             }
 
+            if (itemstack.getCount() == out_itemstack.getCount())
+            {
+                return ItemStack.EMPTY;
+            }
+
             ItemStack itemstack2 = slot.onTake(entityplayer, itemstack);
 
             if (index == 0)
             {
                 entityplayer.dropItem(itemstack2, false);
+            }
+
+            if (index > this.inventorySlots.size() - 3*3 - 1 && index < this.inventorySlots.size() + 3*3 - 1)
+            {
+                this.onCraftMatrixChanged(this.skinningentities.bothentitiesmemory.skinninginventory.inventorycrafting);
             }
         }
 

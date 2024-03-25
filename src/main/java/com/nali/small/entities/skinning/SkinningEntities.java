@@ -289,9 +289,17 @@ public abstract class SkinningEntities extends EntityLivingBase
             }
 
             ItemStack mouth_itemstack = serverentitiesmemory.skinninginventory.offset_itemstack_nonnulllist.get(0);
-            if (mouth_itemstack != serverentitiesmemory.current_mouth_itemstack)
+//            if (mouth_itemstack != serverentitiesmemory.current_mouth_itemstack)
+//            {
+//            serverentitiesmemory.current_mouth_itemstack = mouth_itemstack;
+//            entitydatamanager.set(MOUTH_ITEMSTACK_DATAPARAMETER, mouth_itemstack);
+//            }
+            if (mouth_itemstack.isEmpty())
             {
-                serverentitiesmemory.current_mouth_itemstack = mouth_itemstack;
+                entitydatamanager.set(MOUTH_ITEMSTACK_DATAPARAMETER, ItemStack.EMPTY);
+            }
+            else
+            {
                 entitydatamanager.set(MOUTH_ITEMSTACK_DATAPARAMETER, mouth_itemstack);
             }
 

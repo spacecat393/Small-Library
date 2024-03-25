@@ -10,7 +10,6 @@ import com.nali.system.bytes.BytesWriter;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
@@ -33,7 +32,7 @@ public class ServerEntitiesMemory extends BothEntitiesMemory
 
     public EntitiesAIMemory entitiesaimemory;
     public StatEntitiesMemory statentitiesmemory = new StatEntitiesMemory();
-    public ItemStack current_mouth_itemstack;
+//    public ItemStack current_mouth_itemstack;
     public byte[] sync_byte_array;
 
     public ServerEntitiesMemory(SkinningEntities skinningentities, BothData bothdata, WorkBytes workbytes)

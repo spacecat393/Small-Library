@@ -3,10 +3,12 @@ package com.nali.small.entities.skinning.ai;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.ai.path.SkinningEntitiesFindMove;
+import com.nali.small.mixin.MixinInventoryCrafting;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.init.Enchantments;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 
 import static com.nali.small.entities.EntitiesMath.isInArea;
@@ -121,6 +123,12 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
                                 inventories_itemstack.setCount(64);
                                 itemstack.setCount(count);
                                 entityitem.setItem(itemstack);
+                            }
+
+                            Container container = ((MixinInventoryCrafting)serverentitiesmemory.skinninginventory.inventorycrafting).eventHandler();
+                            if (container != null)
+                            {
+                                container.onCraftMatrixChanged(serverentitiesmemory.skinninginventory.inventorycrafting);
                             }
 
                             break;

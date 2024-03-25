@@ -77,27 +77,19 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
                             IInventory iinventory = (IInventory)tileentity;
 
                             ItemStack itemstack = null;
-                            int slot = -1;
                             for (int i = 1; i < skinninginventory.getSizeInventory(); ++i)
                             {
                                 ItemStack is = skinninginventory.getStackInSlot(i);
                                 if (!is.isEmpty())
                                 {
                                     itemstack = is;
-                                    slot = i;
                                     break;
                                 }
                             }
 
                             if (itemstack != null)
                             {
-                                this.manage(iinventory, skinninginventory, itemstack, (byte)0, slot);
-
-                                Container container = ((MixinInventoryCrafting)skinninginventory.inventorycrafting).eventHandler();
-                                if (container != null)
-                                {
-                                    container.onCraftMatrixChanged(skinninginventory.inventorycrafting);
-                                }
+                                this.manage(iinventory, itemstack, (byte)0);
                             }
                         }
                     }
@@ -127,11 +119,9 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
                             IInventory iinventory = (IInventory)tileentity;
 
                             ItemStack itemstack = null;
-                            int slot = -1;
                             for (int i = 0; i < iinventory.getSizeInventory(); ++i)
                             {
                                 ItemStack is = iinventory.getStackInSlot(i);
-                                slot = i;
                                 if (!is.isEmpty())
                                 {
                                     itemstack = is;
@@ -141,7 +131,7 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
 
                             if (itemstack != null)
                             {
-                                this.manage(skinninginventory, iinventory, itemstack, (byte)1, slot);
+                                this.manage(skinninginventory, itemstack, (byte)1);
                             }
                         }
                     }
@@ -160,7 +150,7 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
         }
     }
 
-    public void manage(IInventory in_iinventory, IInventory out_iinventory, ItemStack itemstack, byte index, int is)
+    public void manage(IInventory in_iinventory, ItemStack itemstack, byte index)
     {
         for (int i = index; i < in_iinventory.getSizeInventory(); ++i)
         {
@@ -202,6 +192,12 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
 
                 break;
             }
+        }
+
+        Container container = ((MixinInventoryCrafting)this.skinningentities.bothentitiesmemory.skinninginventory.inventorycrafting).eventHandler();
+        if (container != null)
+        {
+            container.onCraftMatrixChanged(this.skinningentities.bothentitiesmemory.skinninginventory.inventorycrafting);
         }
     }
 }
