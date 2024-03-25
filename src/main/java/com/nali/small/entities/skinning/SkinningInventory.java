@@ -1,9 +1,10 @@
 package com.nali.small.entities.skinning;
 
-import com.google.common.collect.Lists;
+import com.nali.small.mixin.MixinInventoryCrafting;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.IInventoryChangedListener;
+import net.minecraft.inventory.InventoryCraftResult;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,61 +13,73 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
-import java.util.List;
-
 public class SkinningInventory implements IInventory
 {
     public NonNullList<ItemStack> hands_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(2, ItemStack.EMPTY);
     public NonNullList<ItemStack> armor_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(4, ItemStack.EMPTY);
     public NonNullList<ItemStack> inventory_itemstack_nonnulllist;
     public NonNullList<ItemStack> offset_itemstack_nonnulllist;
-    public List<IInventoryChangedListener> changeListeners;
+//    public List<IInventoryChangedListener> change_listeners;
+
+    public InventoryCrafting inventorycrafting = new InventoryCrafting(null, 3, 3);
+    public InventoryCraftResult inventorycraftresult = new InventoryCraftResult();
 
     public SkinningInventory(int offset)
     {
-        this.inventory_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
+        this.inventory_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(27-(3*3), ItemStack.EMPTY);
         this.offset_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(offset, ItemStack.EMPTY);
     }
 
-    public void addInventoryChangeListener(IInventoryChangedListener listener)
-    {
-        if (this.changeListeners == null)
-        {
-            this.changeListeners = Lists.<IInventoryChangedListener>newArrayList();
-        }
+//    public void addInventoryChangeListener(IInventoryChangedListener listener)
+//    {
+//        if (this.change_listeners == null)
+//        {
+//            this.change_listeners = Lists.<IInventoryChangedListener>newArrayList();
+//        }
+//
+//        this.change_listeners.add(listener);
+//    }
+//
+//    public void removeInventoryChangeListener(IInventoryChangedListener listener)
+//    {
+//        this.change_listeners.remove(listener);
+//    }
 
-        this.changeListeners.add(listener);
-    }
-
-    public void removeInventoryChangeListener(IInventoryChangedListener listener)
-    {
-        this.changeListeners.remove(listener);
-    }
-
+    @Override
     public ItemStack getStackInSlot(int index)
     {
         int inv = this.inventory_itemstack_nonnulllist.size();
         int hands = this.hands_itemstack_nonnulllist.size();
         int armor = this.armor_itemstack_nonnulllist.size();
+        NonNullList<ItemStack> itemstack_nonnulllist = ((MixinInventoryCrafting)this.inventorycrafting).stackList();
+        int craft = itemstack_nonnulllist.size();
 
         return index > -1 &&
         index < inv ? this.inventory_itemstack_nonnulllist.get(index) :
         index < inv + hands ? this.hands_itemstack_nonnulllist.get(index - inv) :
         index < inv + hands + armor ? this.armor_itemstack_nonnulllist.get(index - inv - hands) :
-        index < inv + hands + armor + this.offset_itemstack_nonnulllist.size() ? this.offset_itemstack_nonnulllist.get(index - inv - hands - armor) : ItemStack.EMPTY;
+        index < inv + hands + armor + craft ? itemstack_nonnulllist.get(index - inv - hands - armor) :
+        index < inv + hands + armor + craft + this.offset_itemstack_nonnulllist.size() ? this.offset_itemstack_nonnulllist.get(index - inv - hands - armor - craft) : ItemStack.EMPTY;
     }
 
+    @Override
     public ItemStack decrStackSize(int index, int count)
     {
         int inv = this.inventory_itemstack_nonnulllist.size();
         int hands = this.hands_itemstack_nonnulllist.size();
         int armor = this.armor_itemstack_nonnulllist.size();
+        NonNullList<ItemStack> itemstack_nonnulllist = ((MixinInventoryCrafting)this.inventorycrafting).stackList();
+        int craft = itemstack_nonnulllist.size();
 
         ItemStack itemstack;
 
-        if (index >= inv + hands + armor)
+        if (index >= inv + hands + armor + craft)
         {
-            itemstack = ItemStackHelper.getAndSplit(this.offset_itemstack_nonnulllist, index - inv - hands - armor, count);
+            itemstack = ItemStackHelper.getAndSplit(this.offset_itemstack_nonnulllist, index - inv - hands - armor - craft, count);
+        }
+        else if (index >= inv + hands + armor)
+        {
+            itemstack = ItemStackHelper.getAndSplit(itemstack_nonnulllist, index - inv - hands - armor, count);
         }
         else if (index >= inv + hands)
         {
@@ -89,53 +102,56 @@ public class SkinningInventory implements IInventory
         return itemstack;
     }
 
-    public ItemStack addItem(ItemStack stack)
-    {
-        ItemStack itemstack = stack.copy();
+//    public ItemStack addItem(ItemStack stack)
+//    {
+//        ItemStack itemstack = stack.copy();
+//
+//        for (int i = 0; i < this.getSizeInventory(); ++i)
+//        {
+//            ItemStack itemstack1 = this.getStackInSlot(i);
+//
+//            if (itemstack1.isEmpty())
+//            {
+//                this.setInventorySlotContents(i, itemstack);
+//                this.markDirty();
+//                return ItemStack.EMPTY;
+//            }
+//
+//            if (ItemStack.areItemsEqual(itemstack1, itemstack))
+//            {
+//                int j = Math.min(this.getInventoryStackLimit(), itemstack1.getMaxStackSize());
+//                int k = Math.min(itemstack.getCount(), j - itemstack1.getCount());
+//
+//                if (k > 0)
+//                {
+//                    itemstack1.grow(k);
+//                    itemstack.shrink(k);
+//
+//                    if (itemstack.isEmpty())
+//                    {
+//                        this.markDirty();
+//                        return ItemStack.EMPTY;
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (itemstack.getCount() != stack.getCount())
+//        {
+//            this.markDirty();
+//        }
+//
+//        return itemstack;
+//    }
 
-        for (int i = 0; i < this.getSizeInventory(); ++i)
-        {
-            ItemStack itemstack1 = this.getStackInSlot(i);
-
-            if (itemstack1.isEmpty())
-            {
-                this.setInventorySlotContents(i, itemstack);
-                this.markDirty();
-                return ItemStack.EMPTY;
-            }
-
-            if (ItemStack.areItemsEqual(itemstack1, itemstack))
-            {
-                int j = Math.min(this.getInventoryStackLimit(), itemstack1.getMaxStackSize());
-                int k = Math.min(itemstack.getCount(), j - itemstack1.getCount());
-
-                if (k > 0)
-                {
-                    itemstack1.grow(k);
-                    itemstack.shrink(k);
-
-                    if (itemstack.isEmpty())
-                    {
-                        this.markDirty();
-                        return ItemStack.EMPTY;
-                    }
-                }
-            }
-        }
-
-        if (itemstack.getCount() != stack.getCount())
-        {
-            this.markDirty();
-        }
-
-        return itemstack;
-    }
-
+    @Override
     public ItemStack removeStackFromSlot(int index)
     {
         int inv = this.inventory_itemstack_nonnulllist.size();
         int hands = this.hands_itemstack_nonnulllist.size();
         int armor = this.armor_itemstack_nonnulllist.size();
+        NonNullList<ItemStack> itemstack_nonnulllist = ((MixinInventoryCrafting)this.inventorycrafting).stackList();
+        int craft = itemstack_nonnulllist.size();
 
         ItemStack itemstack = this.inventory_itemstack_nonnulllist.get(index);
 
@@ -145,9 +161,13 @@ public class SkinningInventory implements IInventory
         }
         else
         {
-            if (index >= inv + hands + armor)
+            if (index >= inv + hands + armor + craft)
             {
-                this.offset_itemstack_nonnulllist.set(index - inv - hands - armor, ItemStack.EMPTY);
+                this.offset_itemstack_nonnulllist.set(index - inv - hands - armor - craft, ItemStack.EMPTY);
+            }
+            else if (index >= inv + hands + armor)
+            {
+                itemstack_nonnulllist.set(index - inv - hands - armor, ItemStack.EMPTY);
             }
             else if (index >= inv + hands)
             {
@@ -165,15 +185,22 @@ public class SkinningInventory implements IInventory
         }
     }
 
+    @Override
     public void setInventorySlotContents(int index, ItemStack stack)
     {
         int inv = this.inventory_itemstack_nonnulllist.size();
         int hands = this.hands_itemstack_nonnulllist.size();
         int armor = this.armor_itemstack_nonnulllist.size();
+        NonNullList<ItemStack> itemstack_nonnulllist = ((MixinInventoryCrafting)this.inventorycrafting).stackList();
+        int craft = itemstack_nonnulllist.size();
 
-        if (index >= inv + hands + armor)
+        if (index >= inv + hands + armor + craft)
         {
-            this.offset_itemstack_nonnulllist.set(index - inv - hands - armor, stack);
+            this.offset_itemstack_nonnulllist.set(index - inv - hands - armor - craft, stack);
+        }
+        else if (index >= inv + hands + armor)
+        {
+            itemstack_nonnulllist.set(index - inv - hands - armor, stack);
         }
         else if (index >= inv + hands)
         {
@@ -196,11 +223,13 @@ public class SkinningInventory implements IInventory
         this.markDirty();
     }
 
+    @Override
     public int getSizeInventory()
     {
-        return this.inventory_itemstack_nonnulllist.size() + this.hands_itemstack_nonnulllist.size() + this.armor_itemstack_nonnulllist.size() + this.offset_itemstack_nonnulllist.size();
+        return this.inventory_itemstack_nonnulllist.size() + this.hands_itemstack_nonnulllist.size() + this.armor_itemstack_nonnulllist.size() + ((MixinInventoryCrafting)this.inventorycrafting).stackList().size() + this.offset_itemstack_nonnulllist.size();
     }
 
+    @Override
     public boolean isEmpty()
     {
         for (ItemStack itemstack : this.inventory_itemstack_nonnulllist)
@@ -227,6 +256,14 @@ public class SkinningInventory implements IInventory
             }
         }
 
+        for (ItemStack itemstack : ((MixinInventoryCrafting)this.inventorycrafting).stackList())
+        {
+            if (!itemstack.isEmpty())
+            {
+                return false;
+            }
+        }
+
         for (ItemStack itemstack : this.offset_itemstack_nonnulllist)
         {
             if (!itemstack.isEmpty())
@@ -238,74 +275,88 @@ public class SkinningInventory implements IInventory
         return true;
     }
 
+    @Override
     public String getName()
     {
         return "";
     }
 
+    @Override
     public boolean hasCustomName()
     {
         return false;
     }
 
+    @Override
     public ITextComponent getDisplayName()
     {
         return new TextComponentString(this.getName());
     }
 
+    @Override
     public int getInventoryStackLimit()
     {
         return Integer.MAX_VALUE;
     }
 
+    @Override
     public void markDirty()
     {
-        if (this.changeListeners != null)
-        {
-            for (IInventoryChangedListener changeListener : this.changeListeners)
-            {
-                changeListener.onInventoryChanged(this);
-            }
-        }
+//        if (this.change_listeners != null)
+//        {
+//            for (IInventoryChangedListener changeListener : this.change_listeners)
+//            {
+//                changeListener.onInventoryChanged(this);
+//            }
+//        }
     }
 
+    @Override
     public boolean isUsableByPlayer(EntityPlayer entityplayer)
     {
         return true;
     }
 
+    @Override
     public void openInventory(EntityPlayer entityplayer)
     {
     }
 
+    @Override
     public void closeInventory(EntityPlayer entityplayer)
     {
     }
 
+    @Override
     public boolean isItemValidForSlot(int index, ItemStack itemstack)
     {
         return true;
     }
 
+    @Override
     public int getField(int id)
     {
         return 0;
     }
 
+    @Override
     public void setField(int id, int value)
     {
     }
 
+    @Override
     public int getFieldCount()
     {
         return 0;
     }
 
+    @Override
     public void clear()
     {
         this.inventory_itemstack_nonnulllist.clear();
         this.hands_itemstack_nonnulllist.clear();
         this.armor_itemstack_nonnulllist.clear();
+        ((MixinInventoryCrafting)this.inventorycrafting).stackList().clear();
         this.offset_itemstack_nonnulllist.clear();
     }
 
@@ -314,6 +365,7 @@ public class SkinningInventory implements IInventory
         int inv = this.inventory_itemstack_nonnulllist.size();
         int hands = this.hands_itemstack_nonnulllist.size();
         int armor = this.armor_itemstack_nonnulllist.size();
+        int craft = ((MixinInventoryCrafting)this.inventorycrafting).stackList().size();
 
         NBTTagList nbttaglist = new NBTTagList();
         for (ItemStack itemstack : this.armor_itemstack_nonnulllist)
@@ -345,7 +397,7 @@ public class SkinningInventory implements IInventory
 
         nbttagcompound.setTag("HandItems", nbttaglist);
 
-        for (int l = 0; l < this.getSizeInventory(); ++l)
+        for (int l = 0; l < this.getSizeInventory() + craft; ++l)
         {
             ItemStack itemstack = this.getStackInSlot(l);
             if (!itemstack.isEmpty() && !(l > inv && l < inv + hands + armor))
@@ -387,4 +439,33 @@ public class SkinningInventory implements IInventory
             }
         }
     }
+
+//    public void reflectFinal(Container eventHandler)
+//    {
+//        Field[] field_array = this.inventorycrafting.getClass().getDeclaredFields();
+//
+//        for (Field field : field_array)
+//        {
+//            if (field.getType() == Container.class)
+//            {
+//                try
+//                {
+//                    field.setAccessible(true);
+//
+//                    // Remove the final modifier
+//                    Field modifiers_field = Field.class.getDeclaredField("modifiers");
+//
+//                    modifiers_field.setAccessible(true);
+//                    modifiers_field.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+//
+//                    // Set a new value for the field
+//                    field.set(this, eventHandler);
+//                }
+//                catch (NoSuchFieldException | IllegalAccessException e)
+//                {
+//                    Small.error(e);
+//                }
+//            }
+//        }
+//    }
 }

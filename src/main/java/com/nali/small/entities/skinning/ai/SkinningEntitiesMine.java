@@ -57,7 +57,7 @@ public class SkinningEntitiesMine extends SkinningEntitiesAI
                     return;
                 }
 
-                if (this.skinningentities.getDistanceSq(this.blockpos) > 4.0D)
+                if (this.skinningentities.getDistanceSq(this.blockpos) > 8.0D)
                 {
 //                    BlockPos blockpos = this.blockpos;
                     skinningentitiesfindmove.setGoal(this.blockpos.getX(), this.blockpos.getY(), this.blockpos.getZ());

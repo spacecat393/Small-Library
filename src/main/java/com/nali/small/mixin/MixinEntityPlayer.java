@@ -8,6 +8,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -23,12 +24,14 @@ public abstract class MixinEntityPlayer extends EntityLivingBase
     }
 
     @Inject(method = "entityInit", at = @At("HEAD"))
+    @Mutable
     private void mixinEntityInit(CallbackInfo ci)
     {
         this.dataManager.register(SAKURA_INTEGER_DATAPARAMETER, 0);
     }
 
     @Inject(method = "onUpdate", at = @At("HEAD"))
+    @Mutable
     private void mixinOnUpdate(CallbackInfo ci)
     {
         if (!this.world.isRemote)

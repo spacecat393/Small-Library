@@ -5,11 +5,13 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(ItemFood.class)
 public interface IMixinItemFood
 {
     @Invoker("onFoodEaten")
+    @Mutable
     void GOonFoodEaten(ItemStack stack, World worldIn, EntityPlayer player);
 }
