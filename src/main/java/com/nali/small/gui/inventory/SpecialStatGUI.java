@@ -4,8 +4,8 @@ import com.nali.list.netmethods.servermessage.SendLocation;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.AttributeStatGUIFeatures;
 import com.nali.small.gui.features.messages.ScaleGUIFeatures;
-import com.nali.small.gui.features.messages.inventory.LookGUIFeatures;
-import com.nali.small.gui.features.messages.inventory.MoveGUIFeatures;
+import com.nali.small.gui.features.messages.inventory.SetLookGUIFeatures;
+import com.nali.small.gui.features.messages.inventory.SetXYZGUIFeatures;
 import com.nali.small.gui.features.messages.inventory.SetLocationGUIFeatures;
 
 import static com.nali.small.gui.MixGui.GUIFEATURESLOADER;
@@ -66,9 +66,9 @@ public class SpecialStatGUI
         {
             gui.message_state = 7;
 
-            if (!(GUIFEATURESLOADER instanceof LookGUIFeatures))
+            if (!(GUIFEATURESLOADER instanceof SetLookGUIFeatures))
             {
-                GUIFEATURESLOADER = new LookGUIFeatures(gui);
+                GUIFEATURESLOADER = new SetLookGUIFeatures(gui);
             }
             gui.render_text = true;
         }
@@ -78,9 +78,9 @@ public class SpecialStatGUI
         {
             gui.message_state = 8;
 
-            if (!(GUIFEATURESLOADER instanceof MoveGUIFeatures))
+            if (!(GUIFEATURESLOADER instanceof SetXYZGUIFeatures))
             {
-                GUIFEATURESLOADER = new MoveGUIFeatures(gui);
+                GUIFEATURESLOADER = new SetXYZGUIFeatures(gui);
             }
             gui.render_text = true;
         }

@@ -23,7 +23,7 @@ public class SyncBitByte
 //            int id = BytesReader.getInt(servermessage.data, 17);
             byte id = servermessage.data[17];
             int i = id / 8;
-            serverentitiesmemory.sync_byte_array[i] ^= (byte)Math.pow(2, id % 8);// % 8 ? % 8 if != 0 +1
+            serverentitiesmemory.sync_byte_array[i] ^= (byte)Math.pow(2, id % 8);
             skinningentities.getDataManager().set(skinningentities.getByteDataParameterArray()[i], serverentitiesmemory.sync_byte_array[i]);
         }
     }

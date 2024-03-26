@@ -1,7 +1,10 @@
 package com.nali.list.gui;
 
 import com.nali.list.messages.ServerMessage;
-import com.nali.list.netmethods.servermessage.*;
+import com.nali.list.netmethods.servermessage.OpenInvGUI;
+import com.nali.list.netmethods.servermessage.SEMapToClient;
+import com.nali.list.netmethods.servermessage.X12;
+import com.nali.list.netmethods.servermessage.X64;
 import com.nali.list.render.BoxRender;
 import com.nali.list.render.SakuraRender;
 import com.nali.render.SkinningRender;
@@ -16,10 +19,8 @@ import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.inventory.Container;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -142,9 +143,9 @@ public class PlayerGui extends MixGui
             {
                 this.message_state = 0;
 
-                if (!(GUIFEATURESLOADER instanceof DropGUIFeatures))
+                if (!(GUIFEATURESLOADER instanceof DropToSakuraGUIFeatures))
                 {
-                    GUIFEATURESLOADER = new DropGUIFeatures(this);
+                    GUIFEATURESLOADER = new DropToSakuraGUIFeatures(this);
                 }
                 this.render_text = true;
             }
@@ -361,108 +362,6 @@ public class PlayerGui extends MixGui
 //        {
         Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("" + this.mc.player.getEntityData().getInteger("sakura_nali"), 25, 11, getRainbowColor4());
 //        }
-    }
-
-    @Override
-    public void keyTyped(char typedChar, int keyCode) throws IOException
-    {
-        if (this.message_state != -1 && keyCode != Keyboard.KEY_ESCAPE)
-        {
-            int index = MESSAGE_STRINGBUILDER.length() - 1;
-            char end = MESSAGE_STRINGBUILDER.charAt(index);
-
-            switch (typedChar)
-            {
-                case '\b':
-                {
-                    if (MESSAGE_STRINGBUILDER.length() > 1)
-                    {
-                        MESSAGE_STRINGBUILDER.deleteCharAt(index - 1);
-                    }
-
-                    break;
-                }
-                case '\r':
-                {
-//                    if (this.message_state == 1)
-//                    {
-//                        String[] string_array = MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString().split(" ");
-//                        int o = 0;
-//                        for (String new_string : string_array)
-//                        {
-//                            try
-//                            {
-//                                int v = Integer.parseInt(new_string);
-//                                if (o == 0)
-//                                {
-//                                    ItemLayerRender.DEBUG_V = v;
-//                                }
-//                                else if (o == 1)
-//                                {
-//                                    ItemLayerRender.DEBUG_I = v;
-//                                }
-//                                ++o;
-//                            }
-//                            catch (Exception ignored)
-//                            {
-//                                break;
-//                            }
-//                        }
-//                    }
-//                    else
-//                    {
-//                    switch (this.message_state)
-//                    {
-//                        case 0:
-//                        {
-//                    byte[] string_byte_array = MESSAGE_STRINGBUILDER.toString().getBytes();
-//                    int string_byte_array_size = string_byte_array.length - 1;
-                    String[] string_array = MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString().split(" ");
-                    byte[] byte_array = new byte[/*string_byte_array_size*/string_array.length * 4 + 1];
-                    byte_array[0] = DropToSakura.ID;
-                    int new_index = 1;
-                    for (String new_string : string_array)
-                    {
-                        try
-                        {
-                            BytesWriter.set(byte_array, Integer.parseInt(new_string), new_index);
-                        }
-                        catch (Exception ignored)
-                        {
-                            break;
-                        }
-                        new_index += 4;
-                    }
-//                    System.arraycopy(string_byte_array, 0, byte_array, 1, string_byte_array_size);
-                    NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
-//                            break;
-//                        }
-//                        default:
-//                        {
-//                            break;
-//                        }
-//                    }
-//
-//                    }
-                    MESSAGE_STRINGBUILDER.setLength(0);
-                    MESSAGE_STRINGBUILDER.append("!");
-                    break;
-                }
-//                case 0:// if ((typedChar >= 'a' && typedChar <= 'z') || (typedChar >= 'A' && typedChar <= 'Z'))
-//                {
-//                    break;
-//                }
-                default:
-                {
-                    MESSAGE_STRINGBUILDER.deleteCharAt(index).append(typedChar).append(end);
-                    break;
-                }
-            }
-        }
-        else
-        {
-            super.keyTyped(typedChar, keyCode);
-        }
     }
 
     public static class MixButton

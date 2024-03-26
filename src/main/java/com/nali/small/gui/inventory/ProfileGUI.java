@@ -1,6 +1,7 @@
 package com.nali.small.gui.inventory;
 
 import com.nali.list.container.InventoryContainer;
+import com.nali.list.netmethods.servermessage.FetchManageItem;
 import com.nali.list.netmethods.servermessage.SetOwner;
 import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
@@ -450,6 +451,10 @@ public class ProfileGUI
             if (gui.mouse_released == 0)
             {
                 gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.MANAGE_ITEM());
+            }
+            else if (gui.mouse_released == 1)
+            {
+                gui.sendPacketUUID(FetchManageItem.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof ManageItemGUIFeatures))

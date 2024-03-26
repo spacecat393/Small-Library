@@ -8,8 +8,7 @@ import net.minecraft.util.text.translation.I18n;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.nali.small.gui.MixGui.GUIFEATURESLOADER;
-import static com.nali.small.gui.MixGui.MESSAGE_STRINGBUILDER;
+import static com.nali.small.gui.MixGui.*;
 
 public class EntityListGUIFeatures extends GUIFeaturesLoader
 {
@@ -50,6 +49,7 @@ public class EntityListGUIFeatures extends GUIFeaturesLoader
         this.int_array = new int[index];
         this.loadColor();
         this.int_array[this.string_array.length] = (index) % 2 == 0 ? 0xFFFFFFFF : 0xFFF85A52;
+        GUINETLOADER = null;
     }
 
     @Override

@@ -4,8 +4,10 @@ import com.nali.list.container.InventoryContainer;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
+import com.nali.small.gui.net.messages.inventory.ScaleGUINet;
 import net.minecraft.util.text.translation.I18n;
 
+import static com.nali.small.gui.MixGui.GUINETLOADER;
 import static com.nali.small.gui.MixGui.MESSAGE_STRINGBUILDER;
 
 public class ScaleGUIFeatures extends GUIFeaturesLoader
@@ -22,6 +24,7 @@ public class ScaleGUIFeatures extends GUIFeaturesLoader
         this.int_array = new int[4];
         this.loadColor();
         this.int_array[3] = 0xFFFFFFFF;
+        GUINETLOADER = new ScaleGUINet(mixgui);
     }
 
     @Override

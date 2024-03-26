@@ -85,4 +85,9 @@ public class Small
         LOGGER.error(s);
         FMLCommonHandler.instance().exitJava(-1, true);
     }
+
+    public static void warn(Throwable t)
+    {
+        LOGGER.warn(t, t);
+    }
 }

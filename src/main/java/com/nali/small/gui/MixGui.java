@@ -1,5 +1,7 @@
 package com.nali.small.gui;
 
+import com.nali.list.container.InventoryContainer;
+import com.nali.list.messages.ServerMessage;
 import com.nali.list.netmethods.servermessage.SetWorkByte;
 import com.nali.list.netmethods.servermessage.SyncBitByte;
 import com.nali.small.Small;
@@ -7,9 +9,8 @@ import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.features.messages.NameGUIFeatures;
+import com.nali.small.gui.net.GUINetLoader;
 import com.nali.small.networks.NetworksRegistry;
-import com.nali.list.container.InventoryContainer;
-import com.nali.list.messages.ServerMessage;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -19,6 +20,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.inventory.Container;
+import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -36,6 +38,7 @@ public abstract class MixGui extends GuiContainer
 
     public static MixGui I;
     public static GUIFeaturesLoader GUIFEATURESLOADER;
+    public static GUINetLoader GUINETLOADER;
     public static StringBuilder MESSAGE_STRINGBUILDER = new StringBuilder("_");
     public long last_time = Minecraft.getSystemTime();//System.currentTimeMillis();
     public int limit_time = 1000;
@@ -65,6 +68,53 @@ public abstract class MixGui extends GuiContainer
         this.mouse_clicked = -1;
         this.mouse_released = state;
         super.mouseReleased(mouseX, mouseY, state);
+    }
+
+    @Override
+    public void keyTyped(char typedChar, int keyCode) throws IOException
+    {
+        if (this.message_state != -1 && keyCode != Keyboard.KEY_ESCAPE)
+        {
+            int index = MESSAGE_STRINGBUILDER.length() - 1;
+            char end = MESSAGE_STRINGBUILDER.charAt(index);
+
+            switch (typedChar)
+            {
+                case '\b':
+                {
+                    if (MESSAGE_STRINGBUILDER.length() > 1)
+                    {
+                        MESSAGE_STRINGBUILDER.deleteCharAt(index - 1);
+                    }
+
+                    break;
+                }
+                case '\r':
+                {
+                    if (GUINETLOADER != null)
+                    {
+                        GUINETLOADER.run();
+                    }
+
+                    break;
+                }
+                default:
+                {
+                    boolean isShiftKeyDown = (keyCode == Keyboard.KEY_LSHIFT || keyCode == Keyboard.KEY_RSHIFT);
+
+                    if (!(isShiftKeyDown && (typedChar == ' ' || typedChar == '\0')))
+                    {
+                        MESSAGE_STRINGBUILDER.deleteCharAt(index).append(typedChar).append(end);
+                    }
+
+                    break;
+                }
+            }
+        }
+        else
+        {
+            super.keyTyped(typedChar, keyCode);
+        }
     }
 
     public void setMessage()

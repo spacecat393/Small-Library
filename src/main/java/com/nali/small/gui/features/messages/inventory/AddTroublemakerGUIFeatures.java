@@ -2,8 +2,10 @@ package com.nali.small.gui.features.messages.inventory;
 
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
+import com.nali.small.gui.net.messages.inventory.AddTroublemakerGUINet;
 import net.minecraft.util.text.translation.I18n;
 
+import static com.nali.small.gui.MixGui.GUINETLOADER;
 import static com.nali.small.gui.MixGui.MESSAGE_STRINGBUILDER;
 
 public class AddTroublemakerGUIFeatures extends GUIFeaturesLoader
@@ -22,6 +24,7 @@ public class AddTroublemakerGUIFeatures extends GUIFeaturesLoader
         this.int_array = new int[6];
         this.loadColor();
         this.int_array[5] = 0xFFFFFFFF;
+        GUINETLOADER = new AddTroublemakerGUINet(mixgui);
     }
 
     @Override

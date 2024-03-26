@@ -1,6 +1,5 @@
 package com.nali.small.entities.skinning.ai;
 
-import com.nali.small.Small;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.SkinningInventory;
@@ -21,7 +20,7 @@ import static com.nali.small.entities.skinning.ai.SkinningEntitiesGetItem.isSame
 public class SkinningEntitiesManageItem extends SkinningEntitiesAI
 {
     public BlockPos in_blockpos, out_blockpos;
-    public byte state;//remote_in remote_out random_in random_out
+    public byte state;//remote_in remote_out random_in random_out in out
     public int random_area_in = 1, random_area_out = 1;
 
     public SkinningEntitiesManageItem(SkinningEntities skinningentities)
@@ -49,99 +48,108 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
                 serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FIND_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));
             }
 
-            //random
-            if ((this.state & 4) == 4)
-            {
-                this.in_blockpos = new BlockPos(this.skinningentities.posX + random.nextInt(this.random_area_in) - random.nextInt(this.random_area_in), this.skinningentities.posY + random.nextInt(this.random_area_in) - random.nextInt(this.random_area_in), this.skinningentities.posZ + random.nextInt(this.random_area_in) - random.nextInt(this.random_area_in));
-            }
-            if ((this.state & 8) == 8)
-            {
-                this.out_blockpos = new BlockPos(this.skinningentities.posX + random.nextInt(this.random_area_out) - random.nextInt(this.random_area_out), this.skinningentities.posY + random.nextInt(this.random_area_out) - random.nextInt(this.random_area_out), this.skinningentities.posZ + random.nextInt(this.random_area_out) - random.nextInt(this.random_area_out));
-            }
+            boolean in = (this.state & 16) == 16,
+            out = (this.state & 32) == 32;
 
-            if (this.in_blockpos != null)
+            if (in)
             {
+                if ((this.state & 4) == 4)
+                {
+                    this.in_blockpos = new BlockPos(this.skinningentities.posX + random.nextInt(this.random_area_in) - random.nextInt(this.random_area_in), this.skinningentities.posY + random.nextInt(this.random_area_in) - random.nextInt(this.random_area_in), this.skinningentities.posZ + random.nextInt(this.random_area_in) - random.nextInt(this.random_area_in));
+                }
+
+                if (this.in_blockpos != null)
+                {
 //                Small.LOGGER.info("IN!");
-                //walk to
-                if ((this.state & 1) == 1 || this.skinningentities.getDistanceSq(this.in_blockpos) < 4.0D)
-                {
-                    IBlockState iblockstate = world.getBlockState(this.in_blockpos);
-                    Block block = iblockstate.getBlock();
-
-                    if (block.hasTileEntity(iblockstate))
+                    //walk to
+                    if ((this.state & 1) == 1 || this.skinningentities.getDistanceSq(this.in_blockpos) < 4.0D)
                     {
-                        TileEntity tileentity = world.getTileEntity(this.in_blockpos);
+                        IBlockState iblockstate = world.getBlockState(this.in_blockpos);
+                        Block block = iblockstate.getBlock();
 
-                        if (tileentity instanceof IInventory)
+                        if (block.hasTileEntity(iblockstate))
                         {
-                            IInventory iinventory = (IInventory)tileentity;
+                            TileEntity tileentity = world.getTileEntity(this.in_blockpos);
 
-                            ItemStack itemstack = null;
-                            for (int i = 1; i < skinninginventory.getSizeInventory(); ++i)
+                            if (tileentity instanceof IInventory)
                             {
-                                ItemStack is = skinninginventory.getStackInSlot(i);
-                                if (!is.isEmpty())
+                                IInventory iinventory = (IInventory)tileentity;
+
+                                ItemStack itemstack = null;
+                                for (int i = 1; i < skinninginventory.getSizeInventory(); ++i)
                                 {
-                                    itemstack = is;
-                                    break;
+                                    ItemStack is = skinninginventory.getStackInSlot(i);
+                                    if (!is.isEmpty())
+                                    {
+                                        itemstack = is;
+                                        break;
+                                    }
+                                }
+
+                                if (itemstack != null)
+                                {
+                                    this.manage(iinventory, itemstack);
                                 }
                             }
-
-                            if (itemstack != null)
-                            {
-                                this.manage(iinventory, itemstack, (byte)0);
-                            }
                         }
-                    }
 
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
-                    serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MANAGE_ITEM() % 8));
-                }
-                else
-                {
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(this.in_blockpos.getX(), this.in_blockpos.getY(), this.in_blockpos.getZ());
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
+                        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MANAGE_ITEM() % 8));
+                    }
+                    else
+                    {
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(this.in_blockpos.getX(), this.in_blockpos.getY(), this.in_blockpos.getZ());
+                    }
                 }
             }
-            if (this.out_blockpos != null)
+            if (out)
             {
-//                Small.LOGGER.info("OUT!");
-                if ((this.state & 2) == 2 || this.skinningentities.getDistanceSq(this.out_blockpos) < 4.0D)
+                if ((this.state & 8) == 8)
                 {
-                    IBlockState iblockstate = world.getBlockState(this.out_blockpos);
-                    Block block = iblockstate.getBlock();
+                    this.out_blockpos = new BlockPos(this.skinningentities.posX + random.nextInt(this.random_area_out) - random.nextInt(this.random_area_out), this.skinningentities.posY + random.nextInt(this.random_area_out) - random.nextInt(this.random_area_out), this.skinningentities.posZ + random.nextInt(this.random_area_out) - random.nextInt(this.random_area_out));
+                }
 
-                    if (block.hasTileEntity(iblockstate))
+                if (this.out_blockpos != null)
+                {
+//                Small.LOGGER.info("OUT!");
+                    if ((this.state & 2) == 2 || this.skinningentities.getDistanceSq(this.out_blockpos) < 4.0D)
                     {
-                        TileEntity tileentity = world.getTileEntity(this.out_blockpos);
+                        IBlockState iblockstate = world.getBlockState(this.out_blockpos);
+                        Block block = iblockstate.getBlock();
 
-                        if (tileentity instanceof IInventory)
+                        if (block.hasTileEntity(iblockstate))
                         {
-                            IInventory iinventory = (IInventory)tileentity;
+                            TileEntity tileentity = world.getTileEntity(this.out_blockpos);
 
-                            ItemStack itemstack = null;
-                            for (int i = 0; i < iinventory.getSizeInventory(); ++i)
+                            if (tileentity instanceof IInventory)
                             {
-                                ItemStack is = iinventory.getStackInSlot(i);
-                                if (!is.isEmpty())
+                                IInventory iinventory = (IInventory)tileentity;
+
+                                ItemStack itemstack = null;
+                                for (int i = 0; i < iinventory.getSizeInventory(); ++i)
                                 {
-                                    itemstack = is;
-                                    break;
+                                    ItemStack is = iinventory.getStackInSlot(i);
+                                    if (!is.isEmpty())
+                                    {
+                                        itemstack = is;
+                                        break;
+                                    }
+                                }
+
+                                if (itemstack != null)
+                                {
+                                    this.manage(skinninginventory, itemstack);
                                 }
                             }
-
-                            if (itemstack != null)
-                            {
-                                this.manage(skinninginventory, itemstack, (byte)1);
-                            }
                         }
-                    }
 
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
-                    serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MANAGE_ITEM() % 8));
-                }
-                else
-                {
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(this.out_blockpos.getX(), this.out_blockpos.getY(), this.out_blockpos.getZ());
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
+                        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MANAGE_ITEM() % 8));
+                    }
+                    else
+                    {
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(this.out_blockpos.getX(), this.out_blockpos.getY(), this.out_blockpos.getZ());
+                    }
                 }
             }
 //            }
@@ -150,9 +158,9 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
         }
     }
 
-    public void manage(IInventory in_iinventory, ItemStack itemstack, byte index)
+    public void manage(IInventory in_iinventory, ItemStack itemstack)
     {
-        for (int i = index; i < in_iinventory.getSizeInventory(); ++i)
+        for (int i = 0; i < in_iinventory.getSizeInventory(); ++i)
         {
 //            iinventory.setInventorySlotContents(i, itemstack.copy());
 //            itemstack.setCount(0);
@@ -183,7 +191,7 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
                 }
                 else
                 {
-                    Small.LOGGER.info("On State!");
+//                    Small.LOGGER.info("On State!");
                     inventories_itemstack.setCount(64);
                     itemstack.setCount(count);
 //                    out_iinventory.setInventorySlotContents(is, itemstack);

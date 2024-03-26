@@ -1,7 +1,6 @@
 package com.nali.list.gui;
 
 import com.nali.list.container.InventoryContainer;
-import com.nali.list.messages.ServerMessage;
 import com.nali.list.netmethods.servermessage.*;
 import com.nali.list.render.BoxRender;
 import com.nali.render.SkinningRender;
@@ -9,7 +8,7 @@ import com.nali.small.entities.memory.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;
-import com.nali.small.gui.features.messages.AttributesGUIFeatures;
+import com.nali.small.gui.features.messages.SetAttributesGUIFeatures;
 import com.nali.small.gui.features.messages.EffectsGUIFeatures;
 import com.nali.small.gui.features.messages.HPGUIFeatures;
 import com.nali.small.gui.features.messages.inventory.BoxGUIFeatures;
@@ -19,13 +18,10 @@ import com.nali.small.gui.features.messages.inventory.WorkGUIFeatures;
 import com.nali.small.gui.features.messages.player.MimiTalkGUIFeatures;
 import com.nali.small.gui.features.messages.works.LockDamageGUIFeatures;
 import com.nali.small.gui.features.messages.works.LockInventoryGUIFeatures;
-import com.nali.small.gui.features.messages.works.ManageItemGUIFeatures;
 import com.nali.small.gui.inventory.ProfileGUI;
 import com.nali.small.gui.inventory.ScannerGUI;
 import com.nali.small.gui.inventory.SpecialStatGUI;
-import com.nali.small.networks.NetworksRegistry;
 import com.nali.small.system.Reference;
-import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.inventory.IInventory;
@@ -33,7 +29,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -157,9 +152,9 @@ public class InventoryGui extends MixGui
         x = this.guiLeft + 158;/* y = this.guiTop + 25;*/ width = 9; height = 19;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            if (!(GUIFEATURESLOADER instanceof AttributesGUIFeatures))
+            if (!(GUIFEATURESLOADER instanceof SetAttributesGUIFeatures))
             {
-                GUIFEATURESLOADER = new AttributesGUIFeatures(this);
+                GUIFEATURESLOADER = new SetAttributesGUIFeatures(this);
             }
             this.render_text = true;
         }
@@ -494,151 +489,6 @@ public class InventoryGui extends MixGui
         else
         {
             GL11.glDisable(GL11.GL_BLEND);
-        }
-    }
-
-    @Override
-    public void keyTyped(char typedChar, int keyCode) throws IOException
-    {
-//        this.type_char = typedChar;
-//        this.key_code = keyCode;
-//        CutePomi.LOGGER.info((int)typedChar);
-        if (this.message_state != -1 && keyCode != Keyboard.KEY_ESCAPE)
-        {
-            int index = MESSAGE_STRINGBUILDER.length() - 1;
-            char end = MESSAGE_STRINGBUILDER.charAt(index);
-
-            switch (typedChar)
-            {
-                case '\b':
-                {
-                    if (MESSAGE_STRINGBUILDER.length() > 1)
-                    {
-                        MESSAGE_STRINGBUILDER.deleteCharAt(index - 1);
-                    }
-
-                    break;
-                }
-                case '\r':
-                {
-                    if (this.message_state == 10 && MESSAGE_STRINGBUILDER.length() == 2)
-                    {
-                        ManageItemGUIFeatures.PAGE = Byte.parseByte(MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString());
-                    }
-
-                    if (this.message_state != 4)
-                    {
-                        SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
-                        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
-
-                        String[] string_array = MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString().split(" ");
-                        byte[] byte_array = new byte[string_array.length * 4 + 1 + 16];
-                        int new_index = 1 + 16;
-                        for (String new_string : string_array)
-                        {
-                            try
-                            {
-                                if (this.message_state == 5 || this.message_state == 6 || this.message_state == 7 || this.message_state == 8 || this.message_state == 9 || this.message_state == 10)
-                                {
-                                    BytesWriter.set(byte_array, Float.parseFloat(new_string), new_index);
-                                }
-                                else
-                                {
-                                    BytesWriter.set(byte_array, Integer.parseInt(new_string), new_index);
-                                }
-                            }
-                            catch (Exception ignored)
-                            {
-                                break;
-                            }
-                            new_index += 4;
-                        }
-
-                        switch (this.message_state)
-                        {
-                            case 0:
-                            {
-                                byte_array[0] = AddTarget.ID;
-                                break;
-                            }
-                            case 1:
-                            {
-                                byte_array[0] = AddTroublemaker.ID;
-                                break;
-                            }
-                            case 2:
-                            {
-                                byte_array[0] = RemoveTarget.ID;
-                                break;
-                            }
-                            case 3:
-                            {
-                                byte_array[0] = RemoveTroublemaker.ID;
-                                break;
-                            }
-                            case 5:
-                            {
-                                byte_array[0] = Scale.ID;
-                                break;
-                            }
-                            case 6:
-                            {
-                                byte_array[0] = SetAttribute.ID;
-                                break;
-                            }
-                            case 7:
-                            {
-                                byte_array[0] = SetLook.ID;
-                                break;
-                            }
-                            case 8:
-                            {
-                                byte_array[0] = SetXYZ.ID;
-                                break;
-                            }
-                            case 9:
-                            {
-                                byte_array[0] = SetLocation.ID;
-                                break;
-                            }
-                            case 10:
-                            {
-                                byte_array[0] = SetManageItem.ID;
-                            }
-                            default:
-                            {
-                                break;
-                            }
-                        }
-
-                        BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
-                        NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
-                        MESSAGE_STRINGBUILDER.setLength(0);
-                        MESSAGE_STRINGBUILDER.append("!");
-                    }
-
-                    break;
-                }
-//                case 0:// if ((typedChar >= 'a' && typedChar <= 'z') || (typedChar >= 'A' && typedChar <= 'Z'))
-//                {
-//                    break;
-//                }
-                default:
-                {
-                    boolean isShiftKeyDown = (keyCode == Keyboard.KEY_LSHIFT || keyCode == Keyboard.KEY_RSHIFT);
-
-                    if (!(isShiftKeyDown && (typedChar == ' ' || typedChar == '\0')))
-                    {
-                        MESSAGE_STRINGBUILDER.deleteCharAt(index).append(typedChar).append(end);
-                    }
-
-                    break;
-                }
-            }
-        }
-        else
-        {
-            super.keyTyped(typedChar, keyCode);
         }
     }
 
