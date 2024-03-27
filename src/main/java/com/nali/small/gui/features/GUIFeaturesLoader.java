@@ -36,6 +36,15 @@ public class GUIFeaturesLoader
         }
     }
 
+    public void loadColor(int s)
+    {
+        this.int_array = new int[s];
+        for (int i = 0; i < this.int_array.length; ++i)
+        {
+            this.int_array[i] = (i + 1) % 2 == 0 ? 0xFFFFFFFF : 0xFFF85A52;
+        }
+    }
+
     public void drawText(int mouseX, int mouseY)
     {
         this.mixgui.drawHoveringText(this.string_array, this.int_array, mouseX, mouseY, this.have_head);

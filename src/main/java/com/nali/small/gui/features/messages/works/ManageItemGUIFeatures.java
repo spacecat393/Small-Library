@@ -30,7 +30,7 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
             I18n.translateToLocal("gui.info.cv") + " : ",
             this.b0 + " : " + I18n.translateToLocal("gui.info.mi00"),
             this.b1 + " : " + I18n.translateToLocal("gui.info.mi10"),
-            I18n.translateToLocal("gui.info.mi20"),
+            I18n.translateToLocal("gui.info.mi20") + " <",
             I18n.translateToLocal("gui.info.mi21"),
             "1 " + I18n.translateToLocal("gui.info.mi22"),
             "2 " + I18n.translateToLocal("gui.info.mi23"),
@@ -48,8 +48,7 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
             "2.2 " + I18n.translateToLocal("gui.info.mi29") + " : ",
             "2.3 " + I18n.translateToLocal("gui.info.mi30") + " : "
         };
-        this.int_array = new int[8];
-        this.loadColor();
+        this.loadColor(9);
         GUINETLOADER = new SetManageItemGUINet(mixgui);
     }
 
@@ -70,7 +69,7 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
                 this.string_array[19] + RANDOM_AREA_OUT,
                 this.string_array[12],
                 this.string_array[13],
-                this.string_array[3]
+                this.string_array[3] + PAGE + "/4>"
             }, this.int_array, mouseX, mouseY, this.have_head);
         }
         else if ((PAGE & 3) == 3)
@@ -84,7 +83,7 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
                 this.string_array[16] + RANDOM_AREA_IN,
                 this.string_array[12],
                 this.string_array[13],
-                this.string_array[3]
+                this.string_array[3] + PAGE + "/4>"
             }, this.int_array, mouseX, mouseY, this.have_head);
         }
         else if ((PAGE & 2) == 2)
@@ -98,7 +97,7 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
                 this.string_array[9] + (OUT_BLOCKPOS == null ? "Null" : OUT_BLOCKPOS.getZ()),
                 this.string_array[4],
                 this.string_array[13],
-                this.string_array[3]
+                this.string_array[3] + PAGE + "/4>"
             }, this.int_array, mouseX, mouseY, this.have_head);
         }
         else if ((PAGE & 1) == 1)
@@ -112,7 +111,7 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
                 this.string_array[9] + (IN_BLOCKPOS == null ? "Null" : IN_BLOCKPOS.getZ()),
                 this.string_array[4],
                 this.string_array[13],
-                this.string_array[3]
+                this.string_array[3] + PAGE + "/4>"
             }, this.int_array, mouseX, mouseY, this.have_head);
         }
         else
@@ -123,7 +122,7 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
                 this.string_array[0] + ((cliententitiesmemory.work_byte_array[cliententitiesmemory.workbytes.MANAGE_ITEM() / 8] >> cliententitiesmemory.workbytes.MANAGE_ITEM() % 8 & 1) == 1 ? this.b1 : this.b0),
                 this.string_array[1],
                 this.string_array[2],
-                this.string_array[3] + " <" + PAGE + "/4>"
+                this.string_array[3] + PAGE + "/4>"
             }, this.int_array, mouseX, mouseY, this.have_head);
         }
     }

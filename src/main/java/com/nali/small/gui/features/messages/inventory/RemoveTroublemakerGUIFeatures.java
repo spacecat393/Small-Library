@@ -21,9 +21,10 @@ public class RemoveTroublemakerGUIFeatures extends GUIFeaturesLoader
             I18n.translateToLocal("gui.info.st4"),
             I18n.translateToLocal("gui.info.st5")
         };
-        this.int_array = new int[6];
-        this.loadColor();
-        this.int_array[5] = 0xFFFFFFFF;
+        this.loadColor(6);
+//        this.int_array = new int[6];
+//        this.loadColor();
+//        this.int_array[5] = 0xFFFFFFFF;
         GUINETLOADER = new RemoveTroublemakerGUINet(mixgui);
     }
 

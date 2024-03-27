@@ -27,9 +27,10 @@ public class SetLocationGUIFeatures extends GUIFeaturesLoader
             I18n.translateToLocal("gui.info.slm2"),
             I18n.translateToLocal("gui.info.st2")
         };
-        this.int_array = new int[8];
-        this.loadColor();
-        this.int_array[7] = 0xFFFFFFFF;
+        this.loadColor(8);
+//        this.int_array = new int[8];
+//        this.loadColor();
+//        this.int_array[7] = 0xFFFFFFFF;
         GUINETLOADER = new SetLocationGUINet(mixgui);
     }
 

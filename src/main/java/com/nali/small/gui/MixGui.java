@@ -96,6 +96,9 @@ public abstract class MixGui extends GuiContainer
                         GUINETLOADER.run();
                     }
 
+                    MESSAGE_STRINGBUILDER.setLength(0);
+                    MESSAGE_STRINGBUILDER.append("!");
+
                     break;
                 }
                 default:

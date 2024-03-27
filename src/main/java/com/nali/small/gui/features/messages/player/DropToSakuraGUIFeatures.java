@@ -19,9 +19,10 @@ public class DropToSakuraGUIFeatures extends GUIFeaturesLoader
             I18n.translateToLocal("gui.info.a30"),
             I18n.translateToLocal("gui.info.a31")
         };
-        this.int_array = new int[4];
-        this.loadColor();
-        this.int_array[3] = 0xFFFFFFFF;
+        this.loadColor(4);
+//        this.int_array = new int[4];
+//        this.loadColor();
+//        this.int_array[3] = 0xFFFFFFFF;
         GUINETLOADER = new DropToSakuraGUINet(mixgui);
     }
 

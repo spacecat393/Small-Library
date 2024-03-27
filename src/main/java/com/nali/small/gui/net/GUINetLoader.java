@@ -41,9 +41,6 @@ public abstract class GUINetLoader
             ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
             BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
             NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
-
-            MESSAGE_STRINGBUILDER.setLength(0);
-            MESSAGE_STRINGBUILDER.append("!");
         }
         catch (Exception e)
         {
@@ -78,9 +75,6 @@ public abstract class GUINetLoader
             ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
             BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
             NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
-
-            MESSAGE_STRINGBUILDER.setLength(0);
-            MESSAGE_STRINGBUILDER.append("!");
         }
         catch (Exception e)
         {
@@ -104,9 +98,6 @@ public abstract class GUINetLoader
             }
 
             NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
-
-            MESSAGE_STRINGBUILDER.setLength(0);
-            MESSAGE_STRINGBUILDER.append("!");
         }
         catch (Exception e)
         {

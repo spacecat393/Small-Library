@@ -23,9 +23,10 @@ public class SetXYZGUIFeatures extends GUIFeaturesLoader
             "Z : ",
             I18n.translateToLocal("gui.info.sm1")
         };
-        this.int_array = new int[6];
-        this.loadColor();
-        this.int_array[5] = 0xFFFFFFFF;
+        this.loadColor(6);
+//        this.int_array = new int[6];
+//        this.loadColor();
+//        this.int_array[5] = 0xFFFFFFFF;
         GUINETLOADER = new SetXYZGUINet(mixgui);
     }
 

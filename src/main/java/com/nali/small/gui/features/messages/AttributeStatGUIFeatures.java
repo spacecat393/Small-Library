@@ -17,9 +17,10 @@ public class AttributeStatGUIFeatures extends GUIFeaturesLoader
             I18n.translateToLocal("gui.info.s10"),
             I18n.translateToLocal("gui.info.s11"),
         };
-        this.int_array = new int[4];
-        this.loadColor();
-        this.int_array[3] = 0xFFFFFFFF;
+        this.loadColor(4);
+//        this.int_array = new int[4];
+//        this.loadColor();
+//        this.int_array[3] = 0xFFFFFFFF;
     }
 
     @Override

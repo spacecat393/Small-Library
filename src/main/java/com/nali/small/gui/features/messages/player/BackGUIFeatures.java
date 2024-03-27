@@ -16,9 +16,10 @@ public class BackGUIFeatures extends GUIFeaturesLoader
         {
             I18n.translateToLocal("gui.info.a4")
         };
-        this.int_array = new int[2];
-        this.loadColor();
-        this.int_array[1] = 0xFFFFFFFF;
+        this.loadColor(2);
+//        this.int_array = new int[2];
+//        this.loadColor();
+//        this.int_array[1] = 0xFFFFFFFF;
     }
 
     @Override

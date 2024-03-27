@@ -21,9 +21,10 @@ public class SetLookGUIFeatures extends GUIFeaturesLoader
             "1 " + I18n.translateToLocal("gui.info.sl1") + " : ",
             I18n.translateToLocal("gui.info.sl2"),
         };
-        this.int_array = new int[4];
-        this.loadColor();
-        this.int_array[3] = 0xFFFFFFFF;
+        this.loadColor(4);
+//        this.int_array = new int[4];
+//        this.loadColor();
+//        this.int_array[3] = 0xFFFFFFFF;
         GUINETLOADER = new SetLookGUINet(mixgui);
     }
 
