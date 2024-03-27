@@ -1,5 +1,7 @@
 package com.nali.list.netmethods.servermessage;
 
+import com.nali.list.capabilitiesserializations.SmallSakuraSerializations;
+import com.nali.list.capabilitiestypes.SmallSakuraTypes;
 import com.nali.list.messages.ServerMessage;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
@@ -34,33 +36,52 @@ public class SetManageItem
                 blockpos = new BlockPos(x, y, z);
             }
 
-            if (id > 1)
+//            Small.LOGGER.info("ID " + id);
+//            Small.LOGGER.info("X " + x);
+
+            SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
+            int value = smallsakuratypes.get();
+
+            if (id >= 2)
             {
-                if (id == 2.1)
+                if (id == 2.1F)
                 {
                     if (x == 1)
                     {
-                        skinningentitiesmanageitem.state |= 32;
+                        if (value >= 1)
+                        {
+                            smallsakuratypes.set(value - 1);
+                            skinningentitiesmanageitem.state |= 32;
+                        }
                     }
                     else
                     {
                         skinningentitiesmanageitem.state &= 255 - 32;
                     }
                 }
-                else if (id == 2.2)
+                else if (id == 2.2F)
                 {
                     if (x == 1)
                     {
-                        skinningentitiesmanageitem.state |= 2;
+                        if (value >= 1)
+                        {
+                            smallsakuratypes.set(value - 1);
+                            skinningentitiesmanageitem.state |= 2;
+                        }
                     }
                     else
                     {
                         skinningentitiesmanageitem.state &= 255 - 2;
                     }
                 }
-                else if (id == 2.3)
+                else if (id == 2.3F)
                 {
-                    skinningentitiesmanageitem.random_area_out = (int)x;
+                    int v = (int)x;
+                    if (value >= v)
+                    {
+                        smallsakuratypes.set(value - v);
+                        skinningentitiesmanageitem.random_area_out = v;
+                    }
                 }
                 else
                 {
@@ -75,33 +96,50 @@ public class SetManageItem
                     }
                 }
             }
-            else
+            else if (id >= 1)
             {
-                if (id == 1.1)
+//                Small.LOGGER.info("ID >= 1");
+                if (id == 1.1F)
                 {
+//                    Small.LOGGER.info("ID == 1.1");
                     if (x == 1)
                     {
-                        skinningentitiesmanageitem.state |= 16;
+//                        Small.LOGGER.info("X == 1");
+                        if (value >= 1)
+                        {
+//                            Small.LOGGER.info("Sakura >= 1");
+                            smallsakuratypes.set(value - 1);
+                            skinningentitiesmanageitem.state |= 16;
+                        }
                     }
                     else
                     {
                         skinningentitiesmanageitem.state &= 255 - 16;
                     }
                 }
-                else if (id == 1.2)
+                else if (id == 1.2F)
                 {
                     if (x == 1)
                     {
-                        skinningentitiesmanageitem.state |= 1;
+                        if (value >= 1)
+                        {
+                            smallsakuratypes.set(value - 1);
+                            skinningentitiesmanageitem.state |= 1;
+                        }
                     }
                     else
                     {
                         skinningentitiesmanageitem.state &= 255 - 1;
                     }
                 }
-                else if (id == 1.3)
+                else if (id == 1.3F)
                 {
-                    skinningentitiesmanageitem.random_area_in = (int)x;
+                    int v = (int)x;
+                    if (value >= v)
+                    {
+                        smallsakuratypes.set(value - v);
+                        skinningentitiesmanageitem.random_area_in = v;
+                    }
                 }
                 else
                 {

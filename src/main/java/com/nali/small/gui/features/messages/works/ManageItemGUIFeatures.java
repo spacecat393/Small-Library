@@ -64,7 +64,7 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
             {
                 MESSAGE_STRINGBUILDER.toString(),
                 this.string_array[11],
-                this.string_array[17] + ((STATE & 32) == 32 ? "ON" : (STATE & 8) == 8 ? "Random" : "OFF"),
+                this.string_array[17] + ((STATE & 32) == 32 ? (STATE & 8) == 8 ? "Random" : "ON" : "OFF"),
                 this.string_array[18] + ((STATE & 2) == 2 ? "ON" : "OFF"),
                 this.string_array[19] + RANDOM_AREA_OUT,
                 this.string_array[12],
@@ -78,7 +78,7 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
             {
                 MESSAGE_STRINGBUILDER.toString(),
                 this.string_array[10],
-                this.string_array[14] + ((STATE & 16) == 16 ? "ON" : (STATE & 4) == 4 ? "Random" : "OFF"),
+                this.string_array[14] + ((STATE & 16) == 16 ? (STATE & 4) == 4 ? "Random" : "ON" : "OFF"),
                 this.string_array[15] + ((STATE & 1) == 1 ? "ON" : "OFF"),
                 this.string_array[16] + RANDOM_AREA_IN,
                 this.string_array[12],

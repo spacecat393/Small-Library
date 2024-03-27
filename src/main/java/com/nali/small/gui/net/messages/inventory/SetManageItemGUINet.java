@@ -20,16 +20,25 @@ public class SetManageItemGUINet extends GUINetLoader
     {
         try
         {
-            ManageItemGUIFeatures.PAGE = Byte.parseByte(MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString());
-
             String[] string_array = MESSAGE_STRINGBUILDER.deleteCharAt(MESSAGE_STRINGBUILDER.length() - 1).toString().split(" ");
-            byte size = (byte)string_array.length;
-
-            boolean pos = size == 4;
-
-            if (pos || size == 2)
+            if (string_array.length == 1)
             {
-                this.sendUUIDFloatBytes(SetManageItem.ID, size, string_array);
+                byte page = Byte.parseByte(string_array[0]);
+                if (page > -1 && page < 5)
+                {
+                    ManageItemGUIFeatures.PAGE = Byte.parseByte(string_array[0]);
+                }
+            }
+            else
+            {
+                byte size = (byte)string_array.length;
+
+                boolean pos = size == 4;
+
+                if (pos || size == 2)
+                {
+                    this.sendUUIDFloatBytes(SetManageItem.ID, size, string_array);
+                }
             }
         }
         catch (Exception e)

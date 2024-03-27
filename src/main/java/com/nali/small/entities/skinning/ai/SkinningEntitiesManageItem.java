@@ -21,7 +21,7 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
 {
     public BlockPos in_blockpos, out_blockpos;
     public byte state;//remote_in remote_out random_in random_out in out
-    public int random_area_in = 1, random_area_out = 1;
+    public int random_area_in = 2, random_area_out = 2;
 
     public SkinningEntitiesManageItem(SkinningEntities skinningentities)
     {
@@ -55,28 +55,33 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
             {
                 if ((this.state & 4) == 4)
                 {
+//                    Small.LOGGER.info("RNG");
                     this.in_blockpos = new BlockPos(this.skinningentities.posX + random.nextInt(this.random_area_in) - random.nextInt(this.random_area_in), this.skinningentities.posY + random.nextInt(this.random_area_in) - random.nextInt(this.random_area_in), this.skinningentities.posZ + random.nextInt(this.random_area_in) - random.nextInt(this.random_area_in));
+//                    Small.LOGGER.info(this.in_blockpos.toString());
                 }
 
                 if (this.in_blockpos != null)
                 {
-//                Small.LOGGER.info("IN!");
+//                    Small.LOGGER.info("IN");
                     //walk to
                     if ((this.state & 1) == 1 || this.skinningentities.getDistanceSq(this.in_blockpos) < 4.0D)
                     {
+//                        Small.LOGGER.info("DO");
                         IBlockState iblockstate = world.getBlockState(this.in_blockpos);
                         Block block = iblockstate.getBlock();
 
                         if (block.hasTileEntity(iblockstate))
                         {
+//                            Small.LOGGER.info("hasTileEntity");
                             TileEntity tileentity = world.getTileEntity(this.in_blockpos);
 
                             if (tileentity instanceof IInventory)
                             {
+//                                Small.LOGGER.info("IInventory");
                                 IInventory iinventory = (IInventory)tileentity;
 
                                 ItemStack itemstack = null;
-                                for (int i = 1; i < skinninginventory.getSizeInventory(); ++i)
+                                for (int i = 0; i < skinninginventory.getSizeInventory(); ++i)
                                 {
                                     ItemStack is = skinninginventory.getStackInSlot(i);
                                     if (!is.isEmpty())
@@ -88,6 +93,7 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
 
                                 if (itemstack != null)
                                 {
+//                                    Small.LOGGER.info("itemstack");
                                     this.manage(iinventory, itemstack);
                                 }
                             }
