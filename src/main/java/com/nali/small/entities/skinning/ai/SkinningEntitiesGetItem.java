@@ -15,7 +15,8 @@ import static com.nali.small.entities.EntitiesMath.isInArea;
 
 public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 {
-    public byte state;//remote_xp remote_item can_take_xp can_take_item walk_to_xp walk_to_item
+    //-8
+    public byte state = 8;//remote_xp remote_item can_take_xp can_take_item walk_to_xp walk_to_item
     public boolean pickup;
 //    public int item_time_out, xp_time_out;
 
@@ -114,45 +115,49 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
                             this.pickup = false;
                         }
 
-                        for (int i = 0; i < serverentitiesmemory.skinninginventory.getSizeInventory(); ++i)
+                        for (byte i = 0; i < serverentitiesmemory.skinninginventory.getSizeInventory(); ++i)
                         {
-                            ItemStack inventories_itemstack = serverentitiesmemory.skinninginventory.getStackInSlot(i);
+                            ItemStack inv_itemstack = serverentitiesmemory.skinninginventory.getStackInSlot(i);
 
-                            if (inventories_itemstack.isEmpty() || isSameItemSameTags(inventories_itemstack, itemstack) && inventories_itemstack.getCount() < inventories_itemstack.getMaxStackSize())//canAddItem
+                            int max_stack = inv_itemstack.getMaxStackSize();
+                            int e_count = itemstack.getCount();
+
+                            if (inv_itemstack.isEmpty())
                             {
-                                int max_count = inventories_itemstack.getCount() + itemstack.getCount();
-                                int count = max_count - 64;
+                                this.skinningentities.onItemPickup(entityitem, e_count);
+                                serverentitiesmemory.skinninginventory.setInventorySlotContents(i, itemstack);
+                                entityitem.setDead();
 
-                                if (inventories_itemstack.isEmpty() || isSameItemSameTags(inventories_itemstack, itemstack) && count <= 0)
+                                if (i >= 27-3*3+2+4 && i <= 27-3*3+2+4+3*3)
                                 {
-                                    this.skinningentities.onItemPickup(entityitem, max_count);
-
-                                    if (inventories_itemstack.isEmpty())
+                                    Container container = ((MixinInventoryCrafting)this.skinningentities.bothentitiesmemory.skinninginventory.inventorycrafting).eventHandler();
+                                    if (container != null)
                                     {
-                                        serverentitiesmemory.skinninginventory.setInventorySlotContents(i, itemstack);
+                                        container.onCraftMatrixChanged(this.skinningentities.bothentitiesmemory.skinninginventory.inventorycrafting);
                                     }
-                                    else
-                                    {
-                                        inventories_itemstack.setCount(max_count);
-                                    }
-
-                                    entityitem.setDead();
-                                }
-                                else
-                                {
-//                                Small.LOGGER.info("WORK");
-                                    inventories_itemstack.setCount(64);
-                                    itemstack.setCount(count);
-                                    entityitem.setItem(itemstack);
-                                }
-
-                                Container container = ((MixinInventoryCrafting)serverentitiesmemory.skinninginventory.inventorycrafting).eventHandler();
-                                if (container != null)
-                                {
-                                    container.onCraftMatrixChanged(serverentitiesmemory.skinninginventory.inventorycrafting);
                                 }
 
                                 break;
+                            }
+
+                            int max_count = inv_itemstack.getCount() + e_count;
+                            int count = max_count - max_stack;
+                            if (isSameItemSameTags(inv_itemstack, itemstack))
+                            {
+                                if (count <= 0)
+                                {
+                                    this.skinningentities.onItemPickup(entityitem, max_count);
+                                    inv_itemstack.setCount(max_count);
+                                    entityitem.setDead();
+
+                                    break;
+                                }
+                                else
+                                {
+                                    inv_itemstack.setCount(max_stack);
+                                    itemstack.setCount(count);
+                                    entityitem.setItem(itemstack);
+                                }
                             }
                         }
                     }

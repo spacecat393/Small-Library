@@ -26,7 +26,7 @@ public class SkinningInventory implements IInventory
 
     public SkinningInventory(int offset)
     {
-        this.inventory_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(27-(3*3), ItemStack.EMPTY);
+        this.inventory_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(27-3*3, ItemStack.EMPTY);
         this.offset_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(offset, ItemStack.EMPTY);
     }
 
@@ -215,10 +215,10 @@ public class SkinningInventory implements IInventory
             this.inventory_itemstack_nonnulllist.set(index, stack);
         }
 
-        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit())
-        {
-            stack.setCount(this.getInventoryStackLimit());
-        }
+//        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit())
+//        {
+//            stack.setCount(this.getInventoryStackLimit());
+//        }
 
         this.markDirty();
     }

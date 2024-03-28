@@ -82,7 +82,8 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
                                 IInventory iinventory = (IInventory)tileentity;
 
                                 ItemStack itemstack = null;
-                                for (int i = 0; i < skinninginventory.getSizeInventory(); ++i)
+                                int i = 0;
+                                for (; i < skinninginventory.getSizeInventory(); ++i)
                                 {
                                     ItemStack is = skinninginventory.getStackInSlot(i);
                                     if (!is.isEmpty())
@@ -96,6 +97,15 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
                                 {
 //                                    Small.LOGGER.info("itemstack");
                                     this.manage(iinventory, itemstack);
+
+                                    if (i >= 27-3*3+2+4 && i <= 27-3*3+2+4+3*3)
+                                    {
+                                        Container container = ((MixinInventoryCrafting)this.skinningentities.bothentitiesmemory.skinninginventory.inventorycrafting).eventHandler();
+                                        if (container != null)
+                                        {
+                                            container.onCraftMatrixChanged(this.skinningentities.bothentitiesmemory.skinninginventory.inventorycrafting);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -145,7 +155,16 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
 
                                 if (itemstack != null)
                                 {
-                                    this.manage(skinninginventory, itemstack);
+                                    int i = this.manage(skinninginventory, itemstack);
+
+                                    if (i >= 27-3*3+2+4 && i <= 27-3*3+2+4+3*3)
+                                    {
+                                        Container container = ((MixinInventoryCrafting)this.skinningentities.bothentitiesmemory.skinninginventory.inventorycrafting).eventHandler();
+                                        if (container != null)
+                                        {
+                                            container.onCraftMatrixChanged(this.skinningentities.bothentitiesmemory.skinninginventory.inventorycrafting);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -165,54 +184,42 @@ public class SkinningEntitiesManageItem extends SkinningEntitiesAI
         }
     }
 
-    public void manage(IInventory in_iinventory, ItemStack itemstack)
+    public int manage(IInventory in_iinventory, ItemStack itemstack)
     {
         for (int i = 0; i < in_iinventory.getSizeInventory(); ++i)
         {
-//            iinventory.setInventorySlotContents(i, itemstack.copy());
-//            itemstack.setCount(0);
-//            break;
-            ItemStack inventories_itemstack = in_iinventory.getStackInSlot(i);
+            ItemStack inv_itemstack = in_iinventory.getStackInSlot(i);
 
-            if (inventories_itemstack.isEmpty() || isSameItemSameTags(inventories_itemstack, itemstack) && inventories_itemstack.getCount() < inventories_itemstack.getMaxStackSize())//canAddItem
+            int max_stack = inv_itemstack.getMaxStackSize();
+            int e_count = itemstack.getCount();
+
+            if (inv_itemstack.isEmpty())
             {
-                int max_count = inventories_itemstack.getCount() + itemstack.getCount();
-                int count = max_count - 64;
+                in_iinventory.setInventorySlotContents(i, itemstack.copy());
+                itemstack.setCount(0);
 
-                if (inventories_itemstack.isEmpty() || isSameItemSameTags(inventories_itemstack, itemstack) && count <= 0)
+                return i;
+            }
+
+            int max_count = inv_itemstack.getCount() + e_count;
+            int count = max_count - max_stack;
+            if (isSameItemSameTags(inv_itemstack, itemstack))
+            {
+                if (count <= 0)
                 {
-                    if (inventories_itemstack.isEmpty())
-                    {
-                        in_iinventory.setInventorySlotContents(i, itemstack.copy());
-                        itemstack.setCount(0);
-//                        out_iinventory.setInventorySlotContents(is, itemstack);
-//                        out_iinventory.markDirty();
-                    }
-                    else
-                    {
-                        inventories_itemstack.setCount(max_count);
-                        itemstack.setCount(0);
-//                        out_iinventory.setInventorySlotContents(is, itemstack);
-//                        out_iinventory.markDirty();
-                    }
+                    inv_itemstack.setCount(max_count);
+                    itemstack.setCount(0);
+
+                    return i;
                 }
                 else
                 {
-//                    Small.LOGGER.info("On State!");
-                    inventories_itemstack.setCount(64);
+                    inv_itemstack.setCount(max_stack);
                     itemstack.setCount(count);
-//                    out_iinventory.setInventorySlotContents(is, itemstack);
-//                    out_iinventory.markDirty();
                 }
-
-                break;
             }
         }
 
-        Container container = ((MixinInventoryCrafting)this.skinningentities.bothentitiesmemory.skinninginventory.inventorycrafting).eventHandler();
-        if (container != null)
-        {
-            container.onCraftMatrixChanged(this.skinningentities.bothentitiesmemory.skinninginventory.inventorycrafting);
-        }
+        return -1;
     }
 }
