@@ -9,6 +9,9 @@ import net.minecraft.util.text.translation.I18n;
 
 public class FollowGUIFeatures extends GUIFeaturesLoader
 {
+    public static byte STATE;//remote1 walk_to2
+    public static byte PAGE;//p0-1
+
     public String b0 = I18n.translateToLocal("gui.info.bf0");
     public String b1 = I18n.translateToLocal("gui.info.bf1");
 

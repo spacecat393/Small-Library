@@ -18,7 +18,7 @@ public interface WorkBytes
     byte CARE_OWNER();
     byte ATTACK();
     byte MANAGE_ITEM();
-    byte FIND_ITEM();
+    byte GET_ITEM();
     byte FISHING();
     byte PLANT();
     byte MINE();

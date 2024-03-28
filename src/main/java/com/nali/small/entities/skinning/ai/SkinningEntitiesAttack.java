@@ -44,17 +44,18 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
         {
             if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos != null)
             {
-//                if (this.attack)
-//                {
-//                    this.state = -1;
-////                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
-//                    this.attack = false;
-//                }
-//                serverentitiesmemory.entitiesaimemory.skinningentitiesmine.walk();
-                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ATTACK() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));//0
-
-                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MANAGE_ITEM() % 8));
-                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FIND_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));
+                serverentitiesmemory.entitiesaimemory.skinningentitiesmine.breakWork();
+////                if (this.attack)
+////                {
+////                    this.state = -1;
+//////                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
+////                    this.attack = false;
+////                }
+////                serverentitiesmemory.entitiesaimemory.skinningentitiesmine.walk();
+//                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ATTACK() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));//0
+//
+//                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MANAGE_ITEM() % 8));
+//                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));
             }
 //            else
 //            {

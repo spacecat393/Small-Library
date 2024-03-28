@@ -9,6 +9,10 @@ import net.minecraft.util.text.translation.I18n;
 
 public class MineGUIFeatures extends GUIFeaturesLoader
 {
+    public static byte STATE;//remote1 x2-4 y8-16 z32-64 +-
+    public static int SX, SY, SZ, EX, EY, EZ;
+    public static byte PAGE;//p0-2
+
     public String b0 = I18n.translateToLocal("gui.info.m0");
     public String b1 = I18n.translateToLocal("gui.info.m1");
 

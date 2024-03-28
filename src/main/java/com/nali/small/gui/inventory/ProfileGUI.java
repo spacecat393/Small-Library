@@ -134,12 +134,12 @@ public class ProfileGUI
         {
             if (gui.mouse_released == 0)
             {
-                gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.FIND_ITEM());
+                gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.GET_ITEM());
             }
 
-            if (!(GUIFEATURESLOADER instanceof FindItemGUIFeatures))
+            if (!(GUIFEATURESLOADER instanceof GetItemGUIFeatures))
             {
-                GUIFEATURESLOADER = new FindItemGUIFeatures(gui);
+                GUIFEATURESLOADER = new GetItemGUIFeatures(gui);
             }
             gui.render_text = true;
         }
