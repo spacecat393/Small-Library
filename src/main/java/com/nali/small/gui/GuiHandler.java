@@ -4,7 +4,7 @@ import com.nali.list.container.InventoryContainer;
 import com.nali.list.container.PlayerContainer;
 import com.nali.list.gui.InventoryGui;
 import com.nali.list.gui.PlayerGui;
-import com.nali.small.entities.memory.ClientEntitiesMemory;
+import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-import static com.nali.small.entities.memory.ClientEntitiesMemory.FAKE_ENTITIES_MAP;
+import static com.nali.small.entities.memory.client.ClientEntitiesMemory.FAKE_ENTITIES_MAP;
 
 public class GuiHandler implements IGuiHandler
 {

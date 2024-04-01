@@ -3,7 +3,7 @@ package com.nali.small.gui.inventory;
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.netmethods.servermessage.FetchManageItem;
 import com.nali.list.netmethods.servermessage.SetOwner;
-import com.nali.small.entities.memory.ClientEntitiesMemory;
+import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.works.*;

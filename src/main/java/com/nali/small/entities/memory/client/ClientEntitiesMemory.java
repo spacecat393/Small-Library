@@ -1,8 +1,10 @@
-package com.nali.small.entities.memory;
+package com.nali.small.entities.memory.client;
 
 import com.nali.data.BothData;
 import com.nali.render.ObjectRender;
+import com.nali.render.SoundRender;
 import com.nali.small.entities.bytes.WorkBytes;
+import com.nali.small.entities.memory.BothEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.layer.ArrowLayerRender;
 import com.nali.small.entities.skinning.render.layer.ItemLayerRender;
@@ -23,6 +25,8 @@ public class ClientEntitiesMemory extends BothEntitiesMemory
     public static Map<Integer, UUID> FAKE_ENTITIES_MAP = new WeakHashMap<>();
     @SideOnly(Side.CLIENT)
     public ObjectRender objectrender;
+    @SideOnly(Side.CLIENT)
+    public SoundRender soundrender;
 //    @SideOnly(Side.CLIENT)
 //    public long client_last_time = Minecraft.getSystemTime();
 //    @SideOnly(Side.CLIENT)
@@ -61,5 +65,6 @@ public class ClientEntitiesMemory extends BothEntitiesMemory
         this.work_byte_array = new byte[workbytes.MAX_WORKS()];
         this.skinningentitiespat = new SkinningEntitiesPat(skinningentities);
         this.sync_byte_array = new byte[bothdata.MaxSync()];
+        this.soundrender = (SoundRender)skinningentities.createSoundRender();
     }
 }

@@ -4,7 +4,7 @@ import com.nali.list.container.InventoryContainer;
 import com.nali.list.netmethods.servermessage.*;
 import com.nali.list.render.BoxRender;
 import com.nali.render.SkinningRender;
-import com.nali.small.entities.memory.ClientEntitiesMemory;
+import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;

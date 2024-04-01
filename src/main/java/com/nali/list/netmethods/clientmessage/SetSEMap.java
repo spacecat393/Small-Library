@@ -2,7 +2,7 @@ package com.nali.list.netmethods.clientmessage;
 
 import com.nali.list.messages.ClientMessage;
 import com.nali.small.Small;
-import com.nali.small.entities.memory.ClientEntitiesMemory;
+import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.client.Minecraft;
@@ -13,8 +13,8 @@ import net.minecraft.world.World;
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
-import static com.nali.small.entities.memory.ClientEntitiesMemory.ENTITIES_MAP;
-import static com.nali.small.entities.memory.ClientEntitiesMemory.FAKE_ENTITIES_MAP;
+import static com.nali.small.entities.memory.client.ClientEntitiesMemory.ENTITIES_MAP;
+import static com.nali.small.entities.memory.client.ClientEntitiesMemory.FAKE_ENTITIES_MAP;
 
 public class SetSEMap
 {

@@ -2,6 +2,7 @@ package com.nali.list.netmethods.servermessage;
 
 import com.nali.list.messages.ClientMessage;
 import com.nali.list.messages.ServerMessage;
+import com.nali.list.netmethods.clientmessage.PlaySound;
 import com.nali.list.netmethods.clientmessage.SetWorkBytes;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
@@ -46,6 +47,12 @@ public class SetWorkByte
 //                {
 //                    serverentitiesmemory.statentitiesmemory.stat ^= 4;
 //                }
+
+                byte[] byte_array = new byte[1 + 4 + 4];
+                byte_array[0] = PlaySound.ID;
+                BytesWriter.set(byte_array, skinningentities.getEntityId(), 1);
+                BytesWriter.set(byte_array, skinningentities.bothentitiesmemory.sounds.HARD_READY(), 1 + 4);
+                NetworksRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
             }
             else
             {
@@ -60,6 +67,12 @@ public class SetWorkByte
 //                {
 //                    serverentitiesmemory.statentitiesmemory.stat ^= 4;
 //                }
+
+                byte[] byte_array = new byte[1 + 4 + 4];
+                byte_array[0] = PlaySound.ID;
+                BytesWriter.set(byte_array, skinningentities.getEntityId(), 1);
+                BytesWriter.set(byte_array, skinningentities.bothentitiesmemory.sounds.SOFT_READY(), 1 + 4);
+                NetworksRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
             }
 
             serverentitiesmemory.main_work_byte_array[index] ^= (byte)Math.pow(2, bit);

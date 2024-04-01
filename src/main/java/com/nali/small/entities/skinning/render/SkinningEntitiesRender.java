@@ -1,7 +1,7 @@
 package com.nali.small.entities.skinning.render;
 
 import com.nali.render.SkinningRender;
-import com.nali.small.entities.memory.ClientEntitiesMemory;
+import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderGlobal;

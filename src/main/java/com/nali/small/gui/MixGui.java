@@ -5,7 +5,7 @@ import com.nali.list.messages.ServerMessage;
 import com.nali.list.netmethods.servermessage.SetWorkByte;
 import com.nali.list.netmethods.servermessage.SyncBitByte;
 import com.nali.small.Small;
-import com.nali.small.entities.memory.ClientEntitiesMemory;
+import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.features.messages.NameGUIFeatures;

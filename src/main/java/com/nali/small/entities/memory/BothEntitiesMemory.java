@@ -5,12 +5,14 @@ import com.nali.small.entities.bytes.WorkBytes;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.SkinningInventory;
 import com.nali.small.entities.skinning.works.SkinningEntitiesBodyYaw;
+import com.nali.small.entities.sounds.Sounds;
 
 public abstract class BothEntitiesMemory
 {
     public SkinningEntities main_skinningentities;
     public WorkBytes workbytes;
     public BothData bothdata;
+    public Sounds sounds;
     public SkinningInventory skinninginventory = new SkinningInventory(1);
     public SkinningEntitiesBodyYaw skinningentitiesbody;
 
@@ -20,5 +22,6 @@ public abstract class BothEntitiesMemory
         this.workbytes = workbytes;
         skinningentities.bothentitiesmemory = this;
         this.main_skinningentities = skinningentities;
+        this.sounds = skinningentities.createSounds();
     }
 }

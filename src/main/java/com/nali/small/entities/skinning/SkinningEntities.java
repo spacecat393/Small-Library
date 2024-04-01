@@ -7,9 +7,10 @@ import com.nali.render.SkinningRender;
 import com.nali.small.entities.EntitiesAttackHelper;
 import com.nali.small.entities.bytes.WorkBytes;
 import com.nali.small.entities.memory.BothEntitiesMemory;
-import com.nali.small.entities.memory.ClientEntitiesMemory;
+import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.works.SkinningEntitiesBodyYaw;
+import com.nali.small.entities.sounds.Sounds;
 import com.nali.small.mixin.IMixinEntityCreeper;
 import com.nali.small.mixin.IMixinEntityLivingBase;
 import com.nali.small.networks.NetworksRegistry;
@@ -35,6 +36,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -43,6 +45,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 import static com.nali.small.entities.EntitiesMath.rayAllTargetsView;
@@ -277,6 +280,8 @@ public abstract class SkinningEntities extends EntityLivingBase
             }
 
             this.updateClient();
+
+            cliententitiesmemory.soundrender.set((float)this.posX, (float)this.posY, (float)this.posZ);
         }
         else
         {
@@ -664,6 +669,28 @@ public abstract class SkinningEntities extends EntityLivingBase
         return super.getSoundPitch();
     }
 
+    @Nullable
+    @Override
+    public SoundEvent getHurtSound(DamageSource damageSourceIn)
+    {
+        if (this.world.isRemote)
+        {
+            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
+            cliententitiesmemory.soundrender.play(cliententitiesmemory.sounds.HURT());
+        }
+
+        return super.getHurtSound(damageSourceIn);
+    }
+
+    @Nullable
+    @Override
+    public SoundEvent getDeathSound()
+    {
+        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
+        cliententitiesmemory.soundrender.play(cliententitiesmemory.sounds.DEATH());
+        return super.getDeathSound();
+    }
+
     public void onShouldPlayWith()
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.bothentitiesmemory;
@@ -796,12 +823,15 @@ public abstract class SkinningEntities extends EntityLivingBase
 
     public abstract BothData createBothData();
     public abstract WorkBytes createWorkBytes();
+    public abstract Sounds createSounds();
     public abstract void createServer();
     public abstract DataParameter<Byte>[] getByteDataParameterArray();
     public abstract DataParameter<Integer>[] getIntegerDataParameterArray();
     public abstract DataParameter<Float>[] getFloatDataParameterArray();
     @SideOnly(Side.CLIENT)
     public abstract Object createObjectRender();
+    @SideOnly(Side.CLIENT)
+    public abstract Object createSoundRender();
     @SideOnly(Side.CLIENT)
     public abstract int[] getIVIntArray();
 }

@@ -7,17 +7,17 @@ import com.nali.system.bytes.BytesReader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 
-public class SetUUID
+public class PlaySound
 {
-    public static byte ID = 5;
+    public static byte ID = 10;
 
     public static void run(ClientMessage clientmessage)
     {
-        Entity entity = Minecraft.getMinecraft().world.getEntityByID(BytesReader.getInt(clientmessage.data, 1 + 16));
+        Entity entity = Minecraft.getMinecraft().world.getEntityByID(BytesReader.getInt(clientmessage.data, 1));
+
         if (entity instanceof SkinningEntities)
         {
-            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)((SkinningEntities)entity).bothentitiesmemory;
-            cliententitiesmemory.uuid = BytesReader.getUUID(clientmessage.data, 1);
+            ((ClientEntitiesMemory)((SkinningEntities)entity).bothentitiesmemory).soundrender.play(BytesReader.getInt(clientmessage.data, 1 + 4));
         }
     }
 }

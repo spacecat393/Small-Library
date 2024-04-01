@@ -8,7 +8,7 @@ import com.nali.list.netmethods.servermessage.X64;
 import com.nali.list.render.BoxRender;
 import com.nali.list.render.SakuraRender;
 import com.nali.render.SkinningRender;
-import com.nali.small.entities.memory.ClientEntitiesMemory;
+import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;
@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import static com.nali.small.entities.memory.ClientEntitiesMemory.ENTITIES_MAP;
+import static com.nali.small.entities.memory.client.ClientEntitiesMemory.ENTITIES_MAP;
 
 public class PlayerGui extends MixGui
 {
