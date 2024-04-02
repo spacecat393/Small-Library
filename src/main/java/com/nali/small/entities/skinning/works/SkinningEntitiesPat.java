@@ -2,9 +2,9 @@ package com.nali.small.entities.skinning.works;
 
 import com.nali.list.messages.ServerMessage;
 import com.nali.list.netmethods.servermessage.Pat;
+import com.nali.networks.NetworksRegistry;
 import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
-import com.nali.small.networks.NetworksRegistry;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

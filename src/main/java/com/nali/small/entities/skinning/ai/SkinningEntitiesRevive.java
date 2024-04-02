@@ -2,10 +2,10 @@ package com.nali.small.entities.skinning.ai;
 
 import com.nali.list.messages.ClientMessage;
 import com.nali.list.netmethods.clientmessage.RespawnPlayer;
+import com.nali.networks.NetworksRegistry;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.mixin.IMixinEntityPlayer;
-import com.nali.small.networks.NetworksRegistry;
 import com.nali.small.world.ChunkLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

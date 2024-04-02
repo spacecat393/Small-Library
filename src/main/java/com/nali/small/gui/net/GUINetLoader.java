@@ -2,11 +2,11 @@ package com.nali.small.gui.net;
 
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.messages.ServerMessage;
+import com.nali.networks.NetworksRegistry;
 import com.nali.small.Small;
 import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
-import com.nali.small.networks.NetworksRegistry;
 import com.nali.system.bytes.BytesWriter;
 
 import static com.nali.small.gui.MixGui.MESSAGE_STRINGBUILDER;

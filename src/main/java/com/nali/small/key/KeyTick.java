@@ -6,7 +6,7 @@ import com.nali.list.key.SmallQuickInventoryGUI;
 import com.nali.list.messages.ServerMessage;
 import com.nali.list.netmethods.servermessage.OpenInvGUI;
 import com.nali.list.netmethods.servermessage.OpenPlayerGUI;
-import com.nali.small.networks.NetworksRegistry;
+import com.nali.networks.NetworksRegistry;
 import com.nali.small.system.Reference;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;

@@ -5,7 +5,6 @@ import com.nali.small.entities.EntitiesRegistryHelper;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.gui.GuiHandler;
 import com.nali.small.gui.OpenGUIHelper;
-import com.nali.small.networks.NetworksRegistry;
 import com.nali.small.render.RenderHelper;
 import com.nali.small.system.Reference;
 import com.nali.small.world.ChunkCallBack;
@@ -51,7 +50,6 @@ public class Small
     public void onFMLInitializationEvent(FMLInitializationEvent event)
     {
         EntitiesRegistryHelper.set();
-        NetworksRegistry.register();
         CapabilitiesRegistryHelper.register();
         NetworkRegistry.INSTANCE.registerGuiHandler(I, new GuiHandler());
     }
