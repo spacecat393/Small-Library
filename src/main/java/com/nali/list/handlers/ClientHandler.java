@@ -16,14 +16,16 @@ public class ClientHandler implements IMessageHandler<ClientMessage, IMessage>
     public static Method[] METHOD_ARRAY;
     static
     {
-        List<Class> servermessage_class_list = Reflect.getClasses("com.nali.list.netmethods.clientmessage");
-        METHOD_ARRAY = new Method[servermessage_class_list.size()];
+        List<Class> clientmessage_class_list = Reflect.getClasses("com.nali.list.netmethods.clientmessage");
+        METHOD_ARRAY = new Method[clientmessage_class_list.size()];
 
-        for (Class servermessage_class : servermessage_class_list)
+        for (byte i = 0; i < clientmessage_class_list.size(); ++i)
         {
             try
             {
-                METHOD_ARRAY[(byte)servermessage_class.getDeclaredField("ID").get(null)] = servermessage_class.getDeclaredMethod("run", ClientMessage.class);
+                Class clientmessage_class = clientmessage_class_list.get(i);
+                METHOD_ARRAY[i] = clientmessage_class.getDeclaredMethod("run", ClientMessage.class);
+                clientmessage_class.getDeclaredField("ID").set(null, i);
             }
             catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException e)
             {

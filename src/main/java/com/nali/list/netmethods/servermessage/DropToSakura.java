@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class DropToSakura
 {
-    public static byte ID = 7;
+    public static byte ID;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

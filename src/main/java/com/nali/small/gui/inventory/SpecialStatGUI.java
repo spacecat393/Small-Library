@@ -40,7 +40,7 @@ public class SpecialStatGUI
         int x = left + 48, y = top + 89, width = 16, height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            gui.message_state = 5;
+            gui.message_state = true;
 
             if (!(GUIFEATURESLOADER instanceof ScaleGUIFeatures))
             {
@@ -52,7 +52,7 @@ public class SpecialStatGUI
         x = left + 66;// y = top + 89; width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            gui.message_state = 6;
+            gui.message_state = true;
 
             if (!(GUIFEATURESLOADER instanceof AttributeStatGUIFeatures))
             {
@@ -64,7 +64,7 @@ public class SpecialStatGUI
         x = left + 84;// y = top + 89; width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            gui.message_state = 7;
+            gui.message_state = true;
 
             if (!(GUIFEATURESLOADER instanceof SetLookGUIFeatures))
             {
@@ -76,7 +76,7 @@ public class SpecialStatGUI
         x = left + 102;// y = top + 89; width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            gui.message_state = 8;
+            gui.message_state = true;
 
             if (!(GUIFEATURESLOADER instanceof SetXYZGUIFeatures))
             {
@@ -91,7 +91,7 @@ public class SpecialStatGUI
             //                    int id = cliententitiesmemory.workbytes.LOCATION();
 //                    if (id != -1)
 //                    {
-            gui.message_state = 9;
+            gui.message_state = true;
 
             if (gui.mouse_released == 0)
             {

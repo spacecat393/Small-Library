@@ -9,7 +9,7 @@ import static com.nali.small.gui.features.messages.inventory.TargetGUIFeatures.T
 
 public class SetTarget
 {
-    public static byte ID = 3;
+    public static byte ID;
 
     public static void run(ClientMessage clientmessage)
     {

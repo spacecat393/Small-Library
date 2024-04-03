@@ -15,8 +15,7 @@ import static com.nali.small.entities.EntitiesMath.isInArea;
 
 public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 {
-    //-8
-    public byte state = 8;//remote_xp remote_item can_take_xp can_take_item walk_to_xp walk_to_item
+    public byte state;//remote_xp remote_item can_take_xp can_take_item walk_to_xp walk_to_item
     public boolean pickup;
 //    public int item_time_out, xp_time_out;
 
@@ -31,39 +30,64 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         SkinningEntitiesFindMove skinningentitiesfindmove = serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove;
 
-        boolean should_run = serverentitiesmemory.isWork(serverentitiesmemory.workbytes.GET_ITEM());
-        boolean keep_should_run = should_run;
-
-        if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos != null)
+        boolean xp = !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.xp_entity_arraylist.isEmpty();
+        EntityXPOrb to_entityxporb = null;
+        ItemStack xp_itemstack = null;
+        boolean should_get_xp = false;
+        if (xp)
         {
-            serverentitiesmemory.entitiesaimemory.skinningentitiesmine.breakWork();
+            to_entityxporb = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.xp_entity_arraylist.get(serverentitiesmemory.entitiesaimemory.skinningentitiesarea.xp_entity_arraylist.size() - 1);
+            xp_itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, this.skinningentities);
+            should_get_xp = !xp_itemstack.isEmpty()/* && itemstack.isItemStackDamageable()*/ && xp_itemstack.getItemDamage() > 0/* && EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, itemstack) > 0*/;
         }
 
-        if (!serverentitiesmemory.entitiesaimemory.skinningentitiesarea.xp_entity_arraylist.isEmpty())
-        {
-            EntityXPOrb to_entityxporb = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.xp_entity_arraylist.get(serverentitiesmemory.entitiesaimemory.skinningentitiesarea.xp_entity_arraylist.size() - 1);
-            ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, this.skinningentities);
-            boolean should_get_xp = !itemstack.isEmpty()/* && itemstack.isItemStackDamageable()*/ && itemstack.getItemDamage() > 0/* && EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, itemstack) > 0*/;
+        boolean item = !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_arraylist.isEmpty();
 
-            if ((this.state & 16) == 16)
+        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.GET_ITEM()))
+        {
+            if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos != null)
             {
-                if (should_run && should_get_xp && (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(to_entityxporb, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far)))
+                serverentitiesmemory.entitiesaimemory.skinningentitiesmine.breakWork();
+            }
+
+            if (xp)
+            {
+                if ((this.state & 16) == 16)
                 {
-                    this.pickup = true;
-                    should_run = false;
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(to_entityxporb.posX, to_entityxporb.posY, to_entityxporb.posZ);
-//                skinningentitiesfindmove.setGoal(to_entityxporb.posX, to_entityxporb.posY, to_entityxporb.posZ);
+                    if (should_get_xp && (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(to_entityxporb, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far)))
+                    {
+                        this.pickup = true;
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(to_entityxporb.posX, to_entityxporb.posY, to_entityxporb.posZ);
+                    }
                 }
             }
 
+            if (item)
+            {
+                EntityItem to_entityitem = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_arraylist.get(serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_arraylist.size() - 1);
+                if ((this.state & 32) == 32)
+                {
+                    if ((serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(to_entityitem, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far)))
+                    {
+                        this.pickup = true;
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(to_entityitem.posX, to_entityitem.posY, to_entityitem.posZ);
+                    }
+                }
+            }
+        }
+        else
+        {
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
+        }
+
+        if (xp)
+        {
             if ((this.state & 4) == 4)
             {
                 for (EntityXPOrb entityxporb : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.xp_entity_arraylist)
                 {
-                    if (should_get_xp && (this.skinningentities.getDistanceSq(entityxporb) <= 4.0D || (keep_should_run && (this.state & 1) == 1/*++this.xp_time_out >= 600*/)))
+                    if (should_get_xp && (this.skinningentities.getDistanceSq(entityxporb) <= 4.0D || (this.state & 1) == 1))
                     {
-//                    this.xp_time_out = 0;
-
                         if (this.pickup)
                         {
                             skinningentitiesfindmove.endGoal();
@@ -72,12 +96,12 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 
                         this.skinningentities.onItemPickup(entityxporb, 1);
 
-                        if (!itemstack.isEmpty() && itemstack.isItemDamaged())
+                        if (!xp_itemstack.isEmpty() && xp_itemstack.isItemDamaged())
                         {
-                            float ratio = itemstack.getItem().getXpRepairRatio(itemstack);
-                            int i = Math.min(roundAverage(entityxporb.xpValue * ratio), itemstack.getItemDamage());
+                            float ratio = xp_itemstack.getItem().getXpRepairRatio(xp_itemstack);
+                            int i = Math.min(roundAverage(entityxporb.xpValue * ratio), xp_itemstack.getItemDamage());
                             entityxporb.xpValue -= roundAverage(i / ratio);
-                            itemstack.setItemDamage(itemstack.getItemDamage() - i);
+                            xp_itemstack.setItemDamage(xp_itemstack.getItemDamage() - i);
                         }
 
                         entityxporb.setDead();
@@ -86,29 +110,16 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
             }
         }
 
-        if (!serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_arraylist.isEmpty())
+        if (item)
         {
-            EntityItem to_entityitem = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_arraylist.get(serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_arraylist.size() - 1);
-            if ((this.state & 32) == 32)
-            {
-                if (should_run && (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(to_entityitem, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far)))
-                {
-                    this.pickup = true;
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(to_entityitem.posX, to_entityitem.posY, to_entityitem.posZ);
-//                skinningentitiesfindmove.setGoal(to_entityitem.posX, to_entityitem.posY, to_entityitem.posZ);
-                }
-            }
-
             if ((this.state & 8) == 8)
             {
                 for (EntityItem entityitem : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_arraylist)
                 {
                     ItemStack itemstack = entityitem.getItem();
 
-                    if (this.skinningentities.getDistanceSq(entityitem) <= 4.0D || (should_run && (this.state & 2) == 2/*++this.item_time_out >= 600*/))
+                    if (this.skinningentities.getDistanceSq(entityitem) <= 4.0D || (this.state & 2) == 2)
                     {
-//                    this.item_time_out = 0;
-
                         if (this.pickup)
                         {
                             skinningentitiesfindmove.endGoal();
@@ -165,15 +176,11 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
             }
         }
 
-        if (!keep_should_run && this.pickup)
+        if (this.pickup)
         {
             skinningentitiesfindmove.endGoal();
             this.pickup = false;
-        }
-
-        if (!this.pickup)
-        {
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));//0
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
         }
     }
 

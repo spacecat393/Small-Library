@@ -12,7 +12,7 @@ import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIE
 
 public class PutToBox
 {
-    public static byte ID = 8;
+    public static byte ID;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

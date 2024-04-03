@@ -1,6 +1,7 @@
 package com.nali.small.gui.inventory;
 
 import com.nali.list.container.InventoryContainer;
+import com.nali.list.netmethods.servermessage.FetchGetItem;
 import com.nali.list.netmethods.servermessage.FetchManageItem;
 import com.nali.list.netmethods.servermessage.SetOwner;
 import com.nali.small.entities.memory.client.ClientEntitiesMemory;
@@ -132,9 +133,14 @@ public class ProfileGUI
         x = left + 84;// y = top + 89; width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
+            gui.message_state = true;
             if (gui.mouse_released == 0)
             {
                 gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.GET_ITEM());
+            }
+            else if (gui.mouse_released == 1)
+            {
+                gui.sendPacketUUID(FetchGetItem.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof GetItemGUIFeatures))
@@ -387,6 +393,7 @@ public class ProfileGUI
         x = left + 66 + 18 + 18 + 18;// y = top + 107;// width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
+            gui.message_state = true;
             if (gui.mouse_released == 0)
             {
                 gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.MINE());
@@ -447,7 +454,7 @@ public class ProfileGUI
         x = left + 66 + 18 + 18 + 18 + 18 + 18 + 18 + 18;// y = top + 107;// width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            gui.message_state = 10;
+            gui.message_state = true;
             if (gui.mouse_released == 0)
             {
                 gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.MANAGE_ITEM());

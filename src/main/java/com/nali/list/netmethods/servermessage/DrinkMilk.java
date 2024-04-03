@@ -13,7 +13,7 @@ import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIE
 
 public class DrinkMilk
 {
-    public static byte ID = 19;
+    public static byte ID;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

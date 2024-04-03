@@ -11,7 +11,7 @@ import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIE
 
 public class SyncBitByte
 {
-    public static byte ID = 29;
+    public static byte ID;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

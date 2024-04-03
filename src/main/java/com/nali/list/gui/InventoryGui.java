@@ -69,7 +69,7 @@ public class InventoryGui extends MixGui
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.block_mouse_clicked = false;
-        this.message_state = -1;
+        this.message_state = false;
         this.render_text = false;
 
         SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;

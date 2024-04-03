@@ -18,7 +18,7 @@ import static com.nali.small.entities.memory.client.ClientEntitiesMemory.FAKE_EN
 
 public class SetSEMap
 {
-    public static byte ID = 0;
+    public static byte ID;
 
     public static void run(ClientMessage clientmessage)
     {

@@ -12,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 
 public class SyncUUIDToClient
 {
-    public static byte ID = 0;
+    public static byte ID;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

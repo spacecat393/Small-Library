@@ -14,7 +14,7 @@ import static com.nali.small.entities.memory.client.ClientEntitiesMemory.FAKE_EN
 
 public class SetWorkBytes
 {
-    public static byte ID = 6;
+    public static byte ID;
 
     public static void run(ClientMessage clientmessage)
     {

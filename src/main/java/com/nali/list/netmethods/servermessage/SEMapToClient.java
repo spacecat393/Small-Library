@@ -18,7 +18,7 @@ import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIE
 
 public class SEMapToClient
 {
-    public static byte ID = 5;
+    public static byte ID;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

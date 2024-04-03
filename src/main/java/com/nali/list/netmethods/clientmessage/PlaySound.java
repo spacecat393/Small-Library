@@ -9,7 +9,7 @@ import net.minecraft.entity.Entity;
 
 public class PlaySound
 {
-    public static byte ID = 10;
+    public static byte ID;
 
     public static void run(ClientMessage clientmessage)
     {

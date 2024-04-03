@@ -17,8 +17,7 @@ import net.minecraftforge.common.util.FakePlayer;
 public class SkinningEntitiesMine extends SkinningEntitiesAI
 {
     public byte state;//remote1 x2-4 y8-16 z32-64 +-
-    public int sx, sy, sz, ex, ey, ez;
-    public BlockPos blockpos;
+    public BlockPos blockpos, start_blockpos, end_blockpos;
     public float hardness;
     public float goal_x, goal_y, goal_z;
 

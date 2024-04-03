@@ -9,7 +9,7 @@ import static com.nali.small.gui.features.messages.inventory.TroublemakerGUIFeat
 
 public class SetTroublemaker
 {
-    public static byte ID = 4;
+    public static byte ID;
 
     public static void run(ClientMessage clientmessage)
     {

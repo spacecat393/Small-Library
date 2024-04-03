@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 
 public class OpenPlayerGUI
 {
-    public static byte ID = 9;
+    public static byte ID;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {

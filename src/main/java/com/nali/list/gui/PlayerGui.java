@@ -63,7 +63,7 @@ public class PlayerGui extends MixGui
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        this.message_state = -1;
+        this.message_state = false;
         this.render_text = false;
         //
 //        this.message_state = 1;
@@ -141,7 +141,7 @@ public class PlayerGui extends MixGui
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3;// y = this.guiTop + 118; width = 18; height = 19;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                this.message_state = 0;
+                this.message_state = true;
 
                 if (!(GUIFEATURESLOADER instanceof DropToSakuraGUIFeatures))
                 {

@@ -34,7 +34,7 @@ public class ScannerGUI
         {
             gui.copyOrPaste();
 
-            gui.message_state = 0;
+            gui.message_state = true;
 
             if (!(GUIFEATURESLOADER instanceof AddTargetGUIFeatures))
             {
@@ -48,7 +48,7 @@ public class ScannerGUI
         {
             gui.copyOrPaste();
 
-            gui.message_state = 1;
+            gui.message_state = true;
 
             if (!(GUIFEATURESLOADER instanceof AddTroublemakerGUIFeatures))
             {
@@ -62,7 +62,7 @@ public class ScannerGUI
         {
             gui.copyOrPaste();
 
-            gui.message_state = 4;
+            gui.message_state = true;
 
             if (!(GUIFEATURESLOADER instanceof EntityListGUIFeatures))
             {
@@ -76,7 +76,7 @@ public class ScannerGUI
         {
             gui.copyOrPaste();
 
-            gui.message_state = 2;
+            gui.message_state = true;
 
             if (!(GUIFEATURESLOADER instanceof RemoveTargetGUIFeatures))
             {
@@ -109,7 +109,7 @@ public class ScannerGUI
         {
             gui.copyOrPaste();
 
-            gui.message_state = 3;
+            gui.message_state = true;
 
             if (!(GUIFEATURESLOADER instanceof RemoveTroublemakerGUIFeatures))
             {

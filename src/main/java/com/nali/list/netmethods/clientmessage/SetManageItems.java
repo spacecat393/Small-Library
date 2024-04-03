@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class SetManageItems
 {
-    public static byte ID = 2;
+    public static byte ID;
 
     public static void run(ClientMessage clientmessage)
     {

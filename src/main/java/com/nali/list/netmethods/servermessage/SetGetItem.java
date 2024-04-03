@@ -5,16 +5,15 @@ import com.nali.list.capabilitiestypes.SmallSakuraTypes;
 import com.nali.list.messages.ServerMessage;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
-import com.nali.small.entities.skinning.ai.SkinningEntitiesManageItem;
+import com.nali.small.entities.skinning.ai.SkinningEntitiesGetItem;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.math.BlockPos;
 
 import static com.nali.list.handlers.ServerHandler.canPass;
-import static com.nali.list.netmethods.servermessage.FetchManageItem.fetch;
+import static com.nali.list.netmethods.servermessage.FetchGetItem.fetch;
 import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
 
-public class SetManageItem
+public class SetGetItem
 {
     public static byte ID;
 
@@ -24,20 +23,9 @@ public class SetManageItem
         if (skinningentities != null && canPass(skinningentities, entityplayermp))
         {
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
-            SkinningEntitiesManageItem skinningentitiesmanageitem = serverentitiesmemory.entitiesaimemory.skinningentitiesmanageitem;
+            SkinningEntitiesGetItem skinningentitiesgetitem = serverentitiesmemory.entitiesaimemory.skinningentitiesgetitem;
             float id = BytesReader.getFloat(servermessage.data, 1 + 16);
-            BlockPos blockpos = null;
-
-            float x = BytesReader.getFloat(servermessage.data, 1 + 16 + 4);
-            if (servermessage.data.length > 1 + 16 + 4 + 4)
-            {
-                float y = BytesReader.getFloat(servermessage.data, 1 + 16 + 4 + 4);
-                float z = BytesReader.getFloat(servermessage.data, 1 + 16 + 4 + 4 + 4);
-                blockpos = new BlockPos(x, y, z);
-            }
-
-//            Small.LOGGER.info("ID " + id);
-//            Small.LOGGER.info("X " + x);
+            float f = BytesReader.getFloat(servermessage.data, 1 + 16 + 4);
 
             SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
             int value = smallsakuratypes.get();
@@ -46,116 +34,100 @@ public class SetManageItem
             {
                 if (id == 2.1F)
                 {
-                    if (x == 1)
+                    if (f == 1)
                     {
                         if (value >= 1)
                         {
                             smallsakuratypes.set(value - 1);
-                            skinningentitiesmanageitem.state |= 32;
+                            skinningentitiesgetitem.state |= 2;
                         }
                     }
                     else
                     {
-                        skinningentitiesmanageitem.state &= 255 - 32;
+                        skinningentitiesgetitem.state &= 255 - 2;
                     }
                 }
                 else if (id == 2.2F)
                 {
-                    if (x == 1)
+                    if (f == 1)
                     {
                         if (value >= 1)
                         {
                             smallsakuratypes.set(value - 1);
-                            skinningentitiesmanageitem.state |= 2;
+                            skinningentitiesgetitem.state |= 32;
                         }
                     }
                     else
                     {
-                        skinningentitiesmanageitem.state &= 255 - 2;
+                        skinningentitiesgetitem.state &= 255 - 32;
                     }
                 }
                 else if (id == 2.3F)
                 {
-                    int v = (int)x;
-                    if (value >= v)
+                    if (f == 1)
                     {
-                        smallsakuratypes.set(value - v);
-                        skinningentitiesmanageitem.random_area_out = v;
-                    }
-                }
-                else
-                {
-                    if (blockpos != null)
-                    {
-                        skinningentitiesmanageitem.out_blockpos = blockpos;
+                        if (value >= 1)
+                        {
+                            smallsakuratypes.set(value - 1);
+                            skinningentitiesgetitem.state |= 8;
+                        }
                     }
                     else
                     {
-                        skinningentitiesmanageitem.out_blockpos = null;
-                        skinningentitiesmanageitem.state ^= 8;
+                        skinningentitiesgetitem.state &= 255 - 8;
                     }
                 }
             }
             else if (id >= 1)
             {
-//                Small.LOGGER.info("ID >= 1");
                 if (id == 1.1F)
                 {
-//                    Small.LOGGER.info("ID == 1.1");
-                    if (x == 1)
+                    if (f == 1)
                     {
-//                        Small.LOGGER.info("X == 1");
                         if (value >= 1)
                         {
-//                            Small.LOGGER.info("Sakura >= 1");
                             smallsakuratypes.set(value - 1);
-                            skinningentitiesmanageitem.state |= 16;
+                            skinningentitiesgetitem.state |= 1;
                         }
                     }
                     else
                     {
-                        skinningentitiesmanageitem.state &= 255 - 16;
+                        skinningentitiesgetitem.state &= 255 - 1;
                     }
                 }
                 else if (id == 1.2F)
                 {
-                    if (x == 1)
+                    if (f == 1)
                     {
                         if (value >= 1)
                         {
                             smallsakuratypes.set(value - 1);
-                            skinningentitiesmanageitem.state |= 1;
+                            skinningentitiesgetitem.state |= 16;
                         }
                     }
                     else
                     {
-                        skinningentitiesmanageitem.state &= 255 - 1;
+                        skinningentitiesgetitem.state &= 255 - 16;
                     }
                 }
                 else if (id == 1.3F)
                 {
-                    int v = (int)x;
-                    if (value >= v)
+                    if (f == 1)
                     {
-                        smallsakuratypes.set(value - v);
-                        skinningentitiesmanageitem.random_area_in = v;
-                    }
-                }
-                else
-                {
-                    if (blockpos != null)
-                    {
-                        skinningentitiesmanageitem.in_blockpos = blockpos;
+                        if (value >= 1)
+                        {
+                            smallsakuratypes.set(value - 1);
+                            skinningentitiesgetitem.state |= 4;
+                        }
                     }
                     else
                     {
-                        skinningentitiesmanageitem.in_blockpos = null;
-                        skinningentitiesmanageitem.state ^= 4;
+                        skinningentitiesgetitem.state &= 255 - 4;
                     }
                 }
             }
 
-            fetch(entityplayermp, skinningentitiesmanageitem);
+            fetch(entityplayermp, skinningentitiesgetitem);
         }
     }
 }

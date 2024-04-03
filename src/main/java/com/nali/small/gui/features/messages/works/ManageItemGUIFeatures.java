@@ -58,7 +58,7 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
         SkinningEntities skinningentities = ((InventoryContainer)this.mixgui.inventorySlots).skinningentities;
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
 
-        if ((PAGE & 4) == 4)
+        if (PAGE == 4)
         {
             this.mixgui.drawHoveringText(new String[]
             {
@@ -72,7 +72,7 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
                 this.string_array[3] + PAGE + "/4>"
             }, this.int_array, mouseX, mouseY, this.have_head);
         }
-        else if ((PAGE & 3) == 3)
+        else if (PAGE == 3)
         {
             this.mixgui.drawHoveringText(new String[]
             {
@@ -86,7 +86,7 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
                 this.string_array[3] + PAGE + "/4>"
             }, this.int_array, mouseX, mouseY, this.have_head);
         }
-        else if ((PAGE & 2) == 2)
+        else if (PAGE == 2)
         {
             this.mixgui.drawHoveringText(new String[]
             {
@@ -100,7 +100,7 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
                 this.string_array[3] + PAGE + "/4>"
             }, this.int_array, mouseX, mouseY, this.have_head);
         }
-        else if ((PAGE & 1) == 1)
+        else if (PAGE == 1)
         {
             this.mixgui.drawHoveringText(new String[]
             {

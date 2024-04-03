@@ -3,7 +3,6 @@ package com.nali.list.netmethods.servermessage;
 import com.nali.list.capabilitiesserializations.SmallSakuraSerializations;
 import com.nali.list.capabilitiestypes.SmallSakuraTypes;
 import com.nali.list.messages.ServerMessage;
-import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.system.bytes.BytesReader;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
@@ -14,7 +13,7 @@ import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIE
 
 public class SetAttribute
 {
-    public static byte ID = 21;
+    public static byte ID;
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
