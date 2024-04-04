@@ -18,8 +18,8 @@ import org.lwjgl.input.Keyboard;
 import java.util.UUID;
 import java.util.function.Function;
 
-import static com.nali.small.gui.MixGui.getTextFromClipboard;
-import static com.nali.small.gui.MixGui.isValidUUIDString;
+import static com.nali.key.KeyHelper.getTextFromClipboard;
+import static com.nali.key.KeyHelper.isValidUUIDString;
 
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, value = Side.CLIENT)
 @SideOnly(Side.CLIENT)

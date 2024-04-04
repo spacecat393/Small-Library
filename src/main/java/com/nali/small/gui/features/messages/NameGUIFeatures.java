@@ -4,6 +4,7 @@ import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
+import com.nali.small.system.Reference;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.text.translation.I18n;
 
@@ -30,13 +31,13 @@ public class NameGUIFeatures extends GUIFeaturesLoader
 
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.n"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".n"),
             I18n.translateToLocal("entity." + entity_string + ".name"),
-            I18n.translateToLocal("gui.info.cn"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".cn"),
             custom_name_string,
-            I18n.translateToLocal("gui.info.un"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".un"),
             uuid_string,
-            I18n.translateToLocal("gui.info.unh")
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".unh")
         };
 
         this.createColor();

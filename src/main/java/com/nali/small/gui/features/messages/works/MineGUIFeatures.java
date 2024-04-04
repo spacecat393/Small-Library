@@ -5,6 +5,7 @@ import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
+import com.nali.small.system.Reference;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 
@@ -16,18 +17,18 @@ public class MineGUIFeatures extends GUIFeaturesLoader
     public static BlockPos START_BLOCKPOS, END_BLOCKPOS;
     public static byte PAGE;//p0-4
 
-    public String b0 = I18n.translateToLocal("gui.info.m0");
-    public String b1 = I18n.translateToLocal("gui.info.m1");
+    public String b0 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".m0");
+    public String b1 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".m1");
 
     public MineGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.cv") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("gui.info.m00"),
-            this.b1 + " : " + I18n.translateToLocal("gui.info.m10"),
-            I18n.translateToLocal("gui.info.mi20") + " <",
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".cv") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".m00"),
+            this.b1 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".m10"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".mi20") + " <",
         };
         this.loadColor(9);
     }

@@ -1,10 +1,11 @@
 package com.nali.small.gui.features.messages.works;
 
+import com.nali.list.container.InventoryContainer;
 import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
-import com.nali.list.container.InventoryContainer;
+import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 public class FollowGUIFeatures extends GUIFeaturesLoader
@@ -12,18 +13,18 @@ public class FollowGUIFeatures extends GUIFeaturesLoader
     public static byte STATE;//remote1 walk_to2
     public static byte PAGE;//p0-1
 
-    public String b0 = I18n.translateToLocal("gui.info.bf0");
-    public String b1 = I18n.translateToLocal("gui.info.bf1");
+    public String b0 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bf0");
+    public String b1 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bf1");
 
     public FollowGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.cv") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("gui.info.bf00"),
-            this.b1 + " : " + I18n.translateToLocal("gui.info.bf10"),
-//            I18n.translateToLocal("gui.info.bf000")
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".cv") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bf00"),
+            this.b1 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bf10"),
+//            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bf000")
         };
         this.createColor();
     }

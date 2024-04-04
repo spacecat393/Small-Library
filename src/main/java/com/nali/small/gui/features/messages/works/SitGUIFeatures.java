@@ -1,25 +1,26 @@
 package com.nali.small.gui.features.messages.works;
 
+import com.nali.list.container.InventoryContainer;
 import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
-import com.nali.list.container.InventoryContainer;
+import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 public class SitGUIFeatures extends GUIFeaturesLoader
 {
-    public String b0 = I18n.translateToLocal("gui.info.bs0");
-    public String b1 = I18n.translateToLocal("gui.info.bs1");
+    public String b0 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bs0");
+    public String b1 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bs1");
 
     public SitGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.cv") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("gui.info.bs00"),
-            this.b1 + " : " + I18n.translateToLocal("gui.info.bs10")
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".cv") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bs00"),
+            this.b1 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bs10")
         };
         this.createColor();
     }

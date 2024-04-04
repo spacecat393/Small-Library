@@ -15,7 +15,7 @@ public interface MixItems
     {
         item.setRegistryName(mod_id, name);
         item.setCreativeTab(creativetabs);
-        item.setTranslationKey(name);
+        item.setTranslationKey(mod_id + '.' + name);
     }
 
     @SideOnly(Side.CLIENT)

@@ -1,9 +1,10 @@
 package com.nali.small.gui.features.messages;
 
+import com.nali.list.container.InventoryContainer;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
-import com.nali.list.container.InventoryContainer;
+import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 public class HPGUIFeatures extends GUIFeaturesLoader
@@ -13,8 +14,8 @@ public class HPGUIFeatures extends GUIFeaturesLoader
         super(mixgui);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.hp") + " : ",
-            I18n.translateToLocal("gui.info.mhp") + " : "
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".hp") + " : ",
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".mhp") + " : "
         };
         this.createColor();
     }

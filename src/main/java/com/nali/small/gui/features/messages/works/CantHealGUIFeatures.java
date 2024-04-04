@@ -2,6 +2,7 @@ package com.nali.small.gui.features.messages.works;
 
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
+import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 public class CantHealGUIFeatures extends GUIFeaturesLoader
@@ -11,7 +12,7 @@ public class CantHealGUIFeatures extends GUIFeaturesLoader
         super(mixgui);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.c1")
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".c1")
         };
         this.createColor();
     }

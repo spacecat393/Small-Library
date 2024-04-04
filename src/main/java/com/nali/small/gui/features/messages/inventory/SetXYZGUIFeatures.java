@@ -5,6 +5,7 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.net.messages.inventory.SetXYZGUINet;
+import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 import static com.nali.small.gui.MixGui.GUINETLOADER;
@@ -17,11 +18,11 @@ public class SetXYZGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.sm0"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sm0"),
             "X : ",
             "Y : ",
             "Z : ",
-            I18n.translateToLocal("gui.info.sm1")
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sm1")
         };
         this.loadColor(6);
 //        this.int_array = new int[6];

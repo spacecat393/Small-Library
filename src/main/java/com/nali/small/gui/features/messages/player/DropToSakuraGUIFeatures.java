@@ -3,6 +3,7 @@ package com.nali.small.gui.features.messages.player;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.net.messages.player.DropToSakuraGUINet;
+import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 import static com.nali.small.gui.MixGui.GUINETLOADER;
@@ -15,9 +16,9 @@ public class DropToSakuraGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.a3"),
-            I18n.translateToLocal("gui.info.a30"),
-            I18n.translateToLocal("gui.info.a31")
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".a3"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".a30"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".a31")
         };
         this.loadColor(4);
 //        this.int_array = new int[4];

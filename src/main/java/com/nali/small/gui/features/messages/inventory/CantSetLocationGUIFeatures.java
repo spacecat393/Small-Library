@@ -11,7 +11,7 @@
 //        super(mixgui);
 //        this.string_array = new String[]
 //        {
-//            I18n.translateToLocal("gui.info.c8")//gui.info.c8=Can't Set Location
+//            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".c8")//gui.info.c8=Can't Set Location
 //        };
 //        this.createColor();
 //    }

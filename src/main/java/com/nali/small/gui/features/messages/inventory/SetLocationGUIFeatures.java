@@ -3,6 +3,7 @@ package com.nali.small.gui.features.messages.inventory;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.net.messages.inventory.SetLocationGUINet;
+import com.nali.small.system.Reference;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 
@@ -19,13 +20,13 @@ public class SetLocationGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            "0 " + I18n.translateToLocal("gui.info.slm0"),
+            "0 " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".slm0"),
             "X : ",
             "Y : ",
             "Z : ",
-            "1 " + I18n.translateToLocal("gui.info.slm1") + " : ",
-            I18n.translateToLocal("gui.info.slm2"),
-            I18n.translateToLocal("gui.info.st2")
+            "1 " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".slm1") + " : ",
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".slm2"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".st2")
         };
         this.loadColor(8);
 //        this.int_array = new int[8];

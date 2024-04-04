@@ -2,6 +2,7 @@ package com.nali.small.gui.features.messages.inventory;
 
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
+import com.nali.small.system.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.translation.I18n;
 
@@ -12,9 +13,9 @@ public class TPGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.tp0"),
-            I18n.translateToLocal("gui.info.tp1"),
-            I18n.translateToLocal("gui.info.tp2") + " : ",
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".tp0"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".tp1"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".tp2") + " : ",
         };
         this.createColor();
     }

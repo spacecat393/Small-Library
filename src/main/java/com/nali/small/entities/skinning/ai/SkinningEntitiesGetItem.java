@@ -61,8 +61,7 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
                     }
                 }
             }
-
-            if (item)
+            else if (item)
             {
                 EntityItem to_entityitem = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_arraylist.get(serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_arraylist.size() - 1);
                 if ((this.state & 32) == 32)

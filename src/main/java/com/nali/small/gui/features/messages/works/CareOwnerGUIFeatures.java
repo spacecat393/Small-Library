@@ -5,21 +5,22 @@ import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
+import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 public class CareOwnerGUIFeatures extends GUIFeaturesLoader
 {
-    public String b0 = I18n.translateToLocal("gui.info.co0");
-    public String b1 = I18n.translateToLocal("gui.info.co1");
+    public String b0 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".co0");
+    public String b1 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".co1");
 
     public CareOwnerGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.cv") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("gui.info.co00"),
-            this.b1 + " : " + I18n.translateToLocal("gui.info.co10")
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".cv") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".co00"),
+            this.b1 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".co10")
         };
         this.createColor();
     }

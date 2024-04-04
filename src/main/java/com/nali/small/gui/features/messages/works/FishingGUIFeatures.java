@@ -5,21 +5,22 @@ import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
+import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 public class FishingGUIFeatures extends GUIFeaturesLoader
 {
-    public String b0 = I18n.translateToLocal("gui.info.f0");
-    public String b1 = I18n.translateToLocal("gui.info.f1");
+    public String b0 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".f0");
+    public String b1 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".f1");
 
     public FishingGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.cv") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("gui.info.f00"),
-            this.b1 + " : " + I18n.translateToLocal("gui.info.f10")
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".cv") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".f00"),
+            this.b1 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".f10")
         };
         this.createColor();
     }

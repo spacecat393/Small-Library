@@ -6,6 +6,7 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.items.MixItems;
 import com.nali.small.items.Tabs;
 import com.nali.small.mixin.IMixinWorldServer;
+import com.nali.small.system.Reference;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -44,8 +45,8 @@ public class SmallBox extends Item implements MixItems
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-        tooltip.add(I18n.translateToLocal("gui.info.box0"));
-        tooltip.add(I18n.translateToLocal("gui.info.box1"));
+        tooltip.add(I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".box0"));
+        tooltip.add(I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".box1"));
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 

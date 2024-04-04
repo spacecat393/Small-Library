@@ -1,25 +1,26 @@
 package com.nali.small.gui.features.messages.works;
 
+import com.nali.list.container.InventoryContainer;
 import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
-import com.nali.list.container.InventoryContainer;
+import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 public class LockDamageGUIFeatures extends GUIFeaturesLoader
 {
-    public String lock = I18n.translateToLocal("gui.info.l");
-    public String unlock = I18n.translateToLocal("gui.info.ul");
+    public String lock = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".l");
+    public String unlock = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".ul");
 
     public LockDamageGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.cv") + " : ",
-            this.lock + " : " + I18n.translateToLocal("gui.info.l1"),
-            this.unlock + " : " + I18n.translateToLocal("gui.info.ul1")
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".cv") + " : ",
+            this.lock + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".l1"),
+            this.unlock + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".ul1")
         };
         this.createColor();
     }

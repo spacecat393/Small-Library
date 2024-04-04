@@ -11,7 +11,7 @@
 //        super(mixgui);
 //        this.string_array = new String[]
 //        {
-//            I18n.translateToLocal("gui.info.c3")
+//            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".c3")
 //        };
 //        this.createColor();
 //    }

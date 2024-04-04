@@ -3,6 +3,7 @@ package com.nali.small.gui.features.messages.inventory;
 import com.nali.small.entities.EntitiesRegistryHelper;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
+import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 import java.util.ArrayList;
@@ -35,15 +36,15 @@ public class EntityListGUIFeatures extends GUIFeaturesLoader
         }
 
         this.string_array = new String[string_arraylist.size() + 3];
-        this.string_array[0] = I18n.translateToLocal("gui.info.t3");
+        this.string_array[0] = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".t3");
 
         for (int i = 1; i < this.string_array.length - 2; ++i)
         {
             this.string_array[i] = string_arraylist.get(i - 1);
         }
 
-        this.string_array[this.string_array.length - 2] = I18n.translateToLocal("gui.info.st4");
-        this.string_array[this.string_array.length - 1] = I18n.translateToLocal("gui.info.st5");
+        this.string_array[this.string_array.length - 2] = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".st4");
+        this.string_array[this.string_array.length - 1] = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".st5");
 
         index = this.string_array.length + 1;
         this.int_array = new int[index];

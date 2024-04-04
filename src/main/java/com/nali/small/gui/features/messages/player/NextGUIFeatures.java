@@ -2,6 +2,7 @@ package com.nali.small.gui.features.messages.player;
 
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
+import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 import static com.nali.list.gui.PlayerGui.MAX_NEXT;
@@ -14,7 +15,7 @@ public class NextGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.a6")
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".a6")
         };
         this.loadColor(2);
 //        this.int_array = new int[2];

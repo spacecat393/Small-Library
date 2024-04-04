@@ -25,6 +25,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import static com.nali.key.KeyHelper.getTextFromClipboard;
+import static com.nali.key.KeyHelper.isValidUUIDString;
 import static com.nali.small.entities.memory.client.ClientEntitiesMemory.ENTITIES_MAP;
 
 public class PlayerGui extends MixGui

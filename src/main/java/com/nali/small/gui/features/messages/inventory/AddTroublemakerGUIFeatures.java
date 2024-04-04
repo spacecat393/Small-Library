@@ -3,6 +3,7 @@ package com.nali.small.gui.features.messages.inventory;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.net.messages.inventory.AddTroublemakerGUINet;
+import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 import static com.nali.small.gui.MixGui.GUINETLOADER;
@@ -15,11 +16,11 @@ public class AddTroublemakerGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info.t5"),
-            I18n.translateToLocal("gui.info.st0"),
-            I18n.translateToLocal("gui.info.st1"),
-            I18n.translateToLocal("gui.info.st4"),
-            I18n.translateToLocal("gui.info.st5")
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".t5"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".st0"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".st1"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".st4"),
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".st5")
         };
         this.loadColor(6);
 //        this.int_array = new int[6];

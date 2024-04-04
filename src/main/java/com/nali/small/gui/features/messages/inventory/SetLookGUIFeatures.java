@@ -5,6 +5,7 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.net.messages.inventory.SetLookGUINet;
+import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 import static com.nali.small.gui.MixGui.GUINETLOADER;
@@ -17,9 +18,9 @@ public class SetLookGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            "0 " + I18n.translateToLocal("gui.info.sl0") + " : ",
-            "1 " + I18n.translateToLocal("gui.info.sl1") + " : ",
-            I18n.translateToLocal("gui.info.sl2"),
+            "0 " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sl0") + " : ",
+            "1 " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sl1") + " : ",
+            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sl2"),
         };
         this.loadColor(4);
 //        this.int_array = new int[4];

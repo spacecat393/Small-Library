@@ -5,7 +5,6 @@ import com.nali.list.messages.ServerMessage;
 import com.nali.list.netmethods.servermessage.SetWorkByte;
 import com.nali.list.netmethods.servermessage.SyncBitByte;
 import com.nali.networks.NetworksRegistry;
-import com.nali.small.Small;
 import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.features.GUIFeaturesLoader;
@@ -23,13 +22,11 @@ import net.minecraft.inventory.Container;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
 import java.io.IOException;
 import java.util.UUID;
-import java.util.regex.Pattern;
+
+import static com.nali.key.KeyHelper.copyToClipboard;
+import static com.nali.key.KeyHelper.getTextFromClipboard;
 
 public abstract class MixGui extends GuiContainer
 {
@@ -215,9 +212,9 @@ public abstract class MixGui extends GuiContainer
 //
 //            this.drawHoveringText(new String[]
 //            {
-//                I18n.translateToLocal("gui.info.un"),
+//                I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".un"),
 //                uuid_string,
-//                I18n.translateToLocal("gui.info.unh")
+//                I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".unh")
 //            }, mouseX, mouseY, false);
 //        }
 //    }
@@ -333,40 +330,6 @@ public abstract class MixGui extends GuiContainer
         {
             MESSAGE_STRINGBUILDER = new StringBuilder(getTextFromClipboard());
         }
-    }
-
-    public static void copyToClipboard(String text)
-    {
-        StringSelection stringSelection = new StringSelection(text);
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(stringSelection, null);
-    }
-
-    public static String getTextFromClipboard()
-    {
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        Transferable transferable = clipboard.getContents(null);
-
-        if (transferable != null && transferable.isDataFlavorSupported(DataFlavor.stringFlavor))
-        {
-            try
-            {
-                return (String)transferable.getTransferData(DataFlavor.stringFlavor);
-            }
-            catch (Exception e)
-            {
-                Small.error(e);
-            }
-        }
-
-        return "";
-    }
-
-    public static boolean isValidUUIDString(String uuid_string)
-    {
-        String uuidRegex = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
-        Pattern pattern = Pattern.compile(uuidRegex);
-        return uuid_string.length() == 36 && pattern.matcher(uuid_string).matches();
     }
 
     public static Color generateRainbowColor()
