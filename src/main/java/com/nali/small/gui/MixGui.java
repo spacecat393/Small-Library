@@ -21,7 +21,6 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.inventory.Container;
 import org.lwjgl.input.Keyboard;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -330,20 +329,5 @@ public abstract class MixGui extends GuiContainer
         {
             MESSAGE_STRINGBUILDER = new StringBuilder(getTextFromClipboard());
         }
-    }
-
-    public static Color generateRainbowColor()
-    {
-        return Color.getHSBColor((Minecraft.getSystemTime()/*System.currentTimeMillis()*/ % 3600) / 3600.0F, 1.0F, 1.0F);
-    }
-
-    public static int getRainbowColor4()
-    {
-        Color color = generateRainbowColor();
-        int red = color.getRed();
-        int green = color.getGreen();
-        int blue = color.getBlue();
-        int alpha = 255;
-        return (alpha << 24) | (red << 16) | (green << 8) | blue;
     }
 }

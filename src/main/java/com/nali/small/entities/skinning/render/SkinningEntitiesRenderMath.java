@@ -31,11 +31,6 @@ public class SkinningEntitiesRenderMath
 //        return (float)skinningentities.ticksExisted + partialTicks;
 //    }
 
-    public static Color generateRainbowColor()
-    {
-        return Color.getHSBColor(Minecraft.getSystemTime()/*System.currentTimeMillis()*/ % 3600 / 3600.0F, 1.0F, 1.0F);
-    }
-
 //    public static float[] lookAt(float[] source, float[] target)
 //    {
 //        double d0 = target[0] - source[0];

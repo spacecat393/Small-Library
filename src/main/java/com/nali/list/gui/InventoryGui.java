@@ -34,6 +34,7 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.io.IOException;
 
+import static com.nali.key.KeyHelper.generateRainbowColor;
 import static com.nali.system.Timing.TD;
 import static com.nali.system.opengl.memory.OpenGLCurrentMemory.GL_CURRENT_COLOR;
 import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_FIXED_PIPE_FLOATBUFFER;

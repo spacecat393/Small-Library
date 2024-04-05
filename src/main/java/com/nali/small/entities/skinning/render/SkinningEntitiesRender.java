@@ -17,7 +17,7 @@ import org.lwjgl.opengl.GL20;
 
 import java.awt.*;
 
-import static com.nali.small.entities.skinning.render.SkinningEntitiesRenderMath.generateRainbowColor;
+import static com.nali.key.KeyHelper.generateRainbowColor;
 import static com.nali.small.entities.skinning.render.SkinningEntitiesRenderMath.interpolateRotation;
 import static com.nali.system.opengl.memory.OpenGLCurrentMemory.*;
 
