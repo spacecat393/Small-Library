@@ -4,11 +4,11 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class StatEntitiesMemory
 {
-    public byte stat;
     /*1 pat
     * 2 soft_ready
     * 4 hard_ready
     * 8 eat*/
+    public byte stat;
     public byte life_stack;
     public byte magic_point;
 

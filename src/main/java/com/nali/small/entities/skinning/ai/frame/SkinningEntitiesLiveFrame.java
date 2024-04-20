@@ -85,13 +85,12 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
         return serverentitiesmemory.frame_int_array[this.integer_index] < this.int_2d_array[id0][1];
     }
 
-    public boolean setFLoopFree(int id0, byte byte_id)
+    public boolean setFLoopFree(int id0, byte id_pack)
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         if (serverentitiesmemory.frame_int_array[this.integer_index] == this.int_2d_array[id0][1] - 1)
         {
-            byte on = (byte)(serverentitiesmemory.statentitiesmemory.stat & byte_id);
-            serverentitiesmemory.statentitiesmemory.stat ^= on;
+            serverentitiesmemory.statentitiesmemory.stat &= 255 - id_pack;
 
             serverentitiesmemory.frame_int_array[this.integer_index] = this.int_2d_array[id0][1] - 1;
             this.step = 0;

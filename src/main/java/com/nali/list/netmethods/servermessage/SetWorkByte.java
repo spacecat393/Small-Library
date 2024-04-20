@@ -34,44 +34,24 @@ public class SetWorkByte
             byte index = (byte)(id / 8);
             byte bit = (byte)(id % 8);
 
-            if (((serverentitiesmemory.main_work_byte_array[index] >> bit) & 1) == 1)
             {
-                serverentitiesmemory.statentitiesmemory.stat |= 4;//Math.pow(2, 2)
-                serverentitiesmemory.statentitiesmemory.stat &= 239;//255 - Math.pow(2, 4)
-//                if ((serverentitiesmemory.statentitiesmemory.stat & 2) != 2)
-//                {
-//                    serverentitiesmemory.statentitiesmemory.stat ^= 2;
-//                }
-//
-//                if ((serverentitiesmemory.statentitiesmemory.stat & 4) == 4)
-//                {
-//                    serverentitiesmemory.statentitiesmemory.stat ^= 4;
-//                }
-
                 byte[] byte_array = new byte[1 + 4 + 4];
                 byte_array[0] = PlaySound.ID;
                 BytesWriter.set(byte_array, skinningentities.getEntityId(), 1);
-                BytesWriter.set(byte_array, skinningentities.bothentitiesmemory.sounds.HARD_READY(), 1 + 4);
-                NetworksRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
-            }
-            else
-            {
-                serverentitiesmemory.statentitiesmemory.stat &= 251;//255 - Math.pow(2, 2)
-                serverentitiesmemory.statentitiesmemory.stat |= 16;//Math.pow(2, 4)
-//                if ((serverentitiesmemory.statentitiesmemory.stat & 2) == 2)
-//                {
-//                    serverentitiesmemory.statentitiesmemory.stat ^= 2;
-//                }
-//
-//                if ((serverentitiesmemory.statentitiesmemory.stat & 4) != 4)
-//                {
-//                    serverentitiesmemory.statentitiesmemory.stat ^= 4;
-//                }
+                if (((serverentitiesmemory.main_work_byte_array[index] >> bit) & 1) == 1)
+                {
+                    serverentitiesmemory.statentitiesmemory.stat &= 255-4;
+                    serverentitiesmemory.statentitiesmemory.stat |= 2;
 
-                byte[] byte_array = new byte[1 + 4 + 4];
-                byte_array[0] = PlaySound.ID;
-                BytesWriter.set(byte_array, skinningentities.getEntityId(), 1);
-                BytesWriter.set(byte_array, skinningentities.bothentitiesmemory.sounds.SOFT_READY(), 1 + 4);
+                    BytesWriter.set(byte_array, skinningentities.bothentitiesmemory.sounds.SOFT_READY(), 1 + 4);
+                }
+                else
+                {
+                    serverentitiesmemory.statentitiesmemory.stat |= 4;
+                    serverentitiesmemory.statentitiesmemory.stat &= 255-2;
+
+                    BytesWriter.set(byte_array, skinningentities.bothentitiesmemory.sounds.HARD_READY(), 1 + 4);
+                }
                 NetworksRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
             }
 
