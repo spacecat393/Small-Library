@@ -10,7 +10,7 @@ public class StatEntitiesMemory
     * 8 eat*/
     public byte stat;
     public byte life_stack;
-    public byte magic_point;
+    public byte magic_point, max_magic_point = 16;
 
     public void writeNBT(NBTTagCompound nbttagcompound)
     {

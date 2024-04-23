@@ -185,7 +185,6 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
     public boolean setShoot(int id0, int id1, int id2, int id3, boolean bf, SkinningEntitiesAttack skinningentitiesattack)
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-//        Small.LOGGER.info("STATE " + skinningentitiesattack.state);
         if (serverentitiesmemory.statentitiesmemory.magic_point <= 0)
         {
             this.step = 1;
@@ -208,18 +207,14 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
                     if (serverentitiesmemory.frame_int_array[this.integer_index] == this.int_2d_array[id3][1])
                     {
                         this.step = 0;
-                        serverentitiesmemory.statentitiesmemory.magic_point = skinningentitiesattack.max_ammo;
-//                        if (skinningentitiesattack.state == 0 || skinningentitiesattack.state == 1)
-//                        {
-//                            serverentitiesmemory.frame_int_array[this.integer_index] = this.int_2d_array[id0][1];
-//                        }
+                        serverentitiesmemory.statentitiesmemory.magic_point = serverentitiesmemory.statentitiesmemory.max_magic_point;
                         return true;
                     }
                 }
                 return true;
             }
         }
-        else if (skinningentitiesattack.state == 0 || skinningentitiesattack.state == 1)
+        else if ((skinningentitiesattack.flag & 2) == 2)
         {
             if (serverentitiesmemory.frame_int_array[this.integer_index] >= this.int_2d_array[id1][0] && serverentitiesmemory.frame_int_array[this.integer_index] <= this.int_2d_array[id1][1])
             {
@@ -252,7 +247,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
                     if (serverentitiesmemory.frame_int_array[this.integer_index] == attack_frame)
                     {
                         serverentitiesmemory.statentitiesmemory.magic_point -= 1;
-                        skinningentitiesattack.state = 1;
+                        skinningentitiesattack.flag |= 4;
                         break;
                     }
                 }

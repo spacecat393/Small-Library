@@ -14,13 +14,13 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
 {
     public int[] attack_frame_int_array;
 
-    public boolean attack = false;
+    public byte flag;//move_to prepare hit
     public double minimum_distance = 3.0D;
-    public byte max_ammo = 16;
+//    public byte max_ammo = 16;
 //    public double minimum_away_distance = 2.0D;
 //    public byte wait_tick = 0;
 //    public byte out_tick = 0;
-    public byte state = -1;
+    //public byte state = -1, work_state;//attack_player attack_owner remote walk_to
 
     public SkinningEntitiesAttack(SkinningEntities skinningentities)
     {
@@ -34,9 +34,9 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
         boolean should_work = false;
         if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER() / 8] >> serverentitiesmemory.workbytes.CARE_OWNER() % 8 & 1) == 1)
         {
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER() / 8] |= (byte)Math.pow(2, serverentitiesmemory.workbytes.CARE_OWNER() % 8);//1
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER() / 8] |= (byte)Math.pow(2, serverentitiesmemory.workbytes.CARE_OWNER() % 8);
             should_work = serverentitiesmemory.isWork(serverentitiesmemory.workbytes.CARE_OWNER());
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.CARE_OWNER() % 8));//0
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.CARE_OWNER() % 8));
         }
 
         boolean work = serverentitiesmemory.isWork(serverentitiesmemory.workbytes.ATTACK());
@@ -45,22 +45,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
             if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos != null)
             {
                 serverentitiesmemory.entitiesaimemory.skinningentitiesmine.breakWork();
-////                if (this.attack)
-////                {
-////                    this.state = -1;
-//////                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
-////                    this.attack = false;
-////                }
-////                serverentitiesmemory.entitiesaimemory.skinningentitiesmine.walk();
-//                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ATTACK() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));//0
-//
-//                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MANAGE_ITEM() % 8));
-//                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));
             }
-//            else
-//            {
-            this.attack = true;
-//            boolean attack = false;
 
             Entity target_entity;
             if (!serverentitiesmemory.entitiesaimemory.skinningentitiescareowner.target_entity_arraylist.isEmpty())
@@ -74,39 +59,33 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
 
             if (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(target_entity, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far))
             {
-                if (this.state == 0 || this.state == 1)
+                this.flag |= 2;
+
+                if (!serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.try_move)
                 {
-                    serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
-                }
-                else if (!serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.try_move)
-                {
-                    this.state = 0;
                     serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
                 }
 
                 if (!(this.skinningentities.canEntityBeSeen(target_entity) && isTooClose(this.skinningentities, target_entity, this.minimum_distance)))
                 {
                     serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
-                    this.state = 3;
+                    this.flag |= 1;
+                    this.flag &= 255-2;
                 }
             }
 
-            if (this.state == 1)
-            {
-                this.state = 0;
-            }
-//            }
+            this.flag &= 255-4;
         }
         else
         {
-            if (this.attack)
+            if ((this.flag & 1) == 1)
             {
-                this.state = -1;
                 serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
-                this.attack = false;
+//                this.flag &= 255-(1+2+4);
             }
+            this.flag = 0;
 
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ATTACK() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));//0
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ATTACK() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));
         }
     }
 
@@ -121,14 +100,9 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
             if (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null ||
                 isInArea(entity, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far))
             {
-                if (this.state == -1)
-                {
-                    this.state = 0;
-                }
-
                 if (this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance))
                 {
-                    if (this.state == 1)
+                    if ((this.flag & 4) == 4)
                     {
                         this.skinningentities.swingArm(EnumHand.MAIN_HAND);
                         this.skinningentities.attackEntityAsMob(entity);

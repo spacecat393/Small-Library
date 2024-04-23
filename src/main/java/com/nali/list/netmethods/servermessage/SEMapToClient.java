@@ -25,7 +25,11 @@ public class SEMapToClient
         //                WorldServer worldserver = (WorldServer)entityplayermp.world;
         //                Map<UUID, Entity> entity_map = ((IMixinWorldServer)worldserver).entitiesByUuid();
         //                if (!entity_map.isEmpty())
-        if (!ENTITIES_MAP.isEmpty())
+        if (ENTITIES_MAP.isEmpty())
+        {
+            NetworksRegistry.I.sendTo(new ClientMessage(new byte[]{SetSEMap.ID}), entityplayermp);
+        }
+        else
         {
             int index = 1;
             //                    Set<UUID> keys_set = new HashSet<>(entity_map.keySet());
