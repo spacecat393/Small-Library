@@ -37,15 +37,15 @@ public class CapabilitiesRegistryHelper
             RESOURCELOCATION_ARRAY[index++] = new ResourceLocation(Reference.MOD_ID, clasz.getSimpleName().toLowerCase());
         }
     }
-//    public static ArrayList<Object> CLIENT_CAPABILITY_OBJECT_ARRAYLIST;
+//    public static List<Object> CLIENT_CAPABILITY_OBJECT_LIST;
 
 //    public static void update()
 //    {
-//        CLIENT_CAPABILITY_OBJECT_ARRAYLIST = new ArrayList();
+//        CLIENT_CAPABILITY_OBJECT_LIST = new ArrayList();
 //
-//        while (CLIENT_CAPABILITY_OBJECT_ARRAYLIST.size() != RESOURCELOCATION_ARRAY.length)
+//        while (CLIENT_CAPABILITY_OBJECT_LIST.size() != RESOURCELOCATION_ARRAY.length)
 //        {
-//            CLIENT_CAPABILITY_OBJECT_ARRAYLIST.add(new Object());
+//            CLIENT_CAPABILITY_OBJECT_LIST.add(new Object());
 //        }
 //    }
 

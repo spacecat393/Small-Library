@@ -29,11 +29,11 @@ public class RemoveTroublemaker
 //                            int id = Integer.parseInt(new_string);
 
                 int index = 0;
-                for (int i : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.troublemaker_arraylist)
+                for (int i : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.troublemaker_list)
                 {
                     if (i == id)
                     {
-                        serverentitiesmemory.entitiesaimemory.skinningentitiesarea.troublemaker_arraylist.remove(index);
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesarea.troublemaker_list.remove(index);
                         break;
                     }
                     ++index;

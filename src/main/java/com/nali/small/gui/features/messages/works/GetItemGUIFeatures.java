@@ -17,28 +17,28 @@ public class GetItemGUIFeatures extends GUIFeaturesLoader
     public static byte STATE;//remote_xp remote_item can_take_xp can_take_item walk_to_xp walk_to_item
     public static byte PAGE;//p0-2
 
-    public String b0 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bfi0");
-    public String b1 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bfi1");
+    public String b0 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b30");
+    public String b1 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b31");
 
     public GetItemGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".cv") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bfi00"),
-            this.b1 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bfi10"),
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".mi20") + " <",
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bfi20"),
-            "1.1 " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".mi29") + " : ",
-            "1.2 " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bfi22") + " : ",
-            "1.3 " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bfi23") + " : ",
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bfi21"),
-            "2.1 " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".mi29") + " : ",
-            "2.2 " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bfi22") + " : ",
-            "2.3 " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".bfi23") + " : ",
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".mi26"),
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".mi27")
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".b0") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b32"),
+            this.b1 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b33"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".e0") + " <",
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".b1"),
+            "1.1 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b6") + " : ",
+            "1.2 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b3") + " : ",
+            "1.3 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b4") + " : ",
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".b2"),
+            "2.1 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b6") + " : ",
+            "2.2 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b3") + " : ",
+            "2.3 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b4") + " : ",
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".e2"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".c0")
         };
         this.loadColor(8);
         GUINETLOADER = new SetGetItemGUINet(mixgui);

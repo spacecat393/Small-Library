@@ -45,8 +45,8 @@ public class SmallBox extends Item implements MixItems
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-        tooltip.add(I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".box0"));
-        tooltip.add(I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".box1"));
+        tooltip.add(I18n.translateToLocal("info." + Reference.MOD_ID + ".box0"));
+        tooltip.add(I18n.translateToLocal("info." + Reference.MOD_ID + ".box1"));
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 
@@ -98,7 +98,7 @@ public class SmallBox extends Item implements MixItems
                 }
             }
 
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, entityplayer.getHeldItem(enumhand));
+            return new ActionResult(EnumActionResult.SUCCESS, entityplayer.getHeldItem(enumhand));
         }
 
         return super.onItemRightClick(world, entityplayer, enumhand);

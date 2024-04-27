@@ -20,7 +20,7 @@ public class ClearTarget
         if (skinningentities != null && canPass(skinningentities, entityplayermp))
         {
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
-            serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_arraylist.clear();
+            serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_list.clear();
         }
     }
 }

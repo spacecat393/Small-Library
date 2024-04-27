@@ -51,7 +51,7 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
                 else if (this.skinningentities.ticksExisted % 200 == 0)
                 {
                     SkinningEntities playwith_skinningentities = null;
-                    for (Entity entity : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist)
+                    for (Entity entity : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list)
                     {
                         if (entity.getClass() == this.clasz)
                         {

@@ -5,7 +5,7 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumHand;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static com.nali.small.entities.EntitiesMath.isInArea;
 import static com.nali.small.entities.EntitiesMath.isTooClose;
@@ -14,17 +14,14 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
 {
     public int[] attack_frame_int_array;
 
-    public byte flag;//move_to prepare hit
-    public double minimum_distance = 3.0D;
-//    public byte max_ammo = 16;
-//    public double minimum_away_distance = 2.0D;
-//    public byte wait_tick = 0;
-//    public byte out_tick = 0;
-    //public byte state = -1, work_state;//attack_player attack_owner remote walk_to
+    public byte flag = 16;//move_to prepare hit | remote walk_to
+    public float minimum_distance;// = 3.0D;
+    public int magic_point, max_magic_point = 16;
 
-    public SkinningEntitiesAttack(SkinningEntities skinningentities)
+    public SkinningEntitiesAttack(SkinningEntities skinningentities, float minimum_distance)
     {
         super(skinningentities);
+        this.minimum_distance = minimum_distance;
     }
 
     @Override
@@ -40,7 +37,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
         }
 
         boolean work = serverentitiesmemory.isWork(serverentitiesmemory.workbytes.ATTACK());
-        if ((!work && should_work && !serverentitiesmemory.entitiesaimemory.skinningentitiescareowner.target_entity_arraylist.isEmpty()) || (work && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist.isEmpty()))
+        if ((!work && should_work && !serverentitiesmemory.entitiesaimemory.skinningentitiescareowner.target_entity_list.isEmpty()) || (work && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_list.isEmpty()))
         {
             if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos != null)
             {
@@ -48,13 +45,13 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
             }
 
             Entity target_entity;
-            if (!serverentitiesmemory.entitiesaimemory.skinningentitiescareowner.target_entity_arraylist.isEmpty())
+            if (!serverentitiesmemory.entitiesaimemory.skinningentitiescareowner.target_entity_list.isEmpty())
             {
-                target_entity = this.attackAndFind(serverentitiesmemory.entitiesaimemory.skinningentitiescareowner.target_entity_arraylist);
+                target_entity = this.attackAndFind(serverentitiesmemory.entitiesaimemory.skinningentitiescareowner.target_entity_list);
             }
             else
             {
-                target_entity = this.attackAndFind(serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist);
+                target_entity = this.attackAndFind(serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_list);
             }
 
             if (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(target_entity, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far))
@@ -66,7 +63,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
                     serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
                 }
 
-                if (!(this.skinningentities.canEntityBeSeen(target_entity) && isTooClose(this.skinningentities, target_entity, this.minimum_distance)))
+                if ((this.flag & 16+8) == 16 && !(this.skinningentities.canEntityBeSeen(target_entity) && isTooClose(this.skinningentities, target_entity, this.minimum_distance)))
                 {
                     serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
                     this.flag |= 1;
@@ -83,24 +80,24 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
                 serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
 //                this.flag &= 255-(1+2+4);
             }
-            this.flag = 0;
+            this.flag &= 255-(1+2+4);
 
             serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ATTACK() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));
         }
     }
 
-    public Entity attackAndFind(ArrayList<Entity> entity_arraylist)
+    public Entity attackAndFind(List<Entity> entity_list)
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        double[] far = new double[entity_arraylist.size()];
+        double[] far = new double[entity_list.size()];
         int index = 0;
-        for (Entity entity : entity_arraylist)
+        for (Entity entity : entity_list)
         {
             far[index++] = this.skinningentities.getDistanceSq(entity);
             if (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null ||
                 isInArea(entity, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far))
             {
-                if (this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance))
+                if ((this.flag & 8) == 8 || (this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance)))
                 {
                     if ((this.flag & 4) == 4)
                     {
@@ -126,6 +123,6 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
             }
         }
 
-        return entity_arraylist.get(index);
+        return entity_list.get(index);
     }
 }

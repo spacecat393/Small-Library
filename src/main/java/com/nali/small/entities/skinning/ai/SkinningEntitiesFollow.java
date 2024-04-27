@@ -13,10 +13,9 @@ import static com.nali.small.entities.skinning.ai.path.PathMath.PATH_BYTE_ARRAY;
 
 public class SkinningEntitiesFollow extends SkinningEntitiesAI
 {
-    public byte state = 1 + 2;//remote1 walk_to2
     public float max_distance = 196.0F;
     public float min_distance = 96.0F;
-    public boolean follow;
+    public byte flag = 4;//move_to | tp_to walk_to
 
     public SkinningEntitiesFollow(SkinningEntities skinningentities)
     {
@@ -33,40 +32,35 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
         {
             if (((EntityPlayerMP)owner_entity).isSpectator())
             {
-                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));//0
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));
                 return;
             }
         }
 
+        boolean move_to = (this.flag & 1) == 1;
         if (owner_entity != null &&
             serverentitiesmemory.isWork(serverentitiesmemory.workbytes.FOLLOW()) &&
             (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(owner_entity, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far)) &&
-            (this.skinningentities.getDistanceSq(owner_entity) > this.min_distance || this.follow))
+            (this.skinningentities.getDistanceSq(owner_entity) > this.min_distance || move_to))
         {
             if ((owner_entity.world).provider.getDimension() != ((this.skinningentities.world).provider.getDimension()))
             {
-                if (this.follow)
+                if (move_to)
                 {
                     serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
-                    this.follow = false;
+                    this.flag ^= 1;
                 }
 
-                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));//0
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));
                 return;
             }
 
             if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.MINE() / 8] >> serverentitiesmemory.workbytes.MINE() % 8 & 1) == 1 && serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos != null)
             {
-////                serverentitiesmemory.entitiesaimemory.skinningentitiesmine.walk();
-//                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));//0
-//                //disable
-//                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ATTACK() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));
-//                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.MANAGE_ITEM() % 8));
-//                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.ATTACK() % 8));
                 serverentitiesmemory.entitiesaimemory.skinningentitiesmine.breakWork();
             }
 
-            this.follow = true;
+            this.flag |= 1;
             if (this.skinningentities.isRiding())
             {
                 this.skinningentities.dismountRidingEntity();
@@ -74,16 +68,16 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
 
             double step = this.skinningentities.getDistanceSq(owner_entity);
 
-            if ((this.state & 1) == 1 && step >= this.max_distance)
+            if ((this.flag & 2) == 2 && step >= this.max_distance)
             {
                 this.tryTeleport(owner_entity);
             }
-            else if ((this.state & 2) == 2)
+            else if ((this.flag & 4) == 4)
             {
                 if (step <= getClose(this.skinningentities, owner_entity, 1.0D))
                 {
                     serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
-                    this.follow = false;
+                    this.flag &= 255-1;
                 }
                 else
                 {
@@ -91,15 +85,15 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
                 }
             }
         }
-        else if (this.follow)
+        else if (move_to)
         {
             serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
-            this.follow = false;
+            this.flag ^= 1;
         }
 
-        if (!this.follow)
+        if ((this.flag & 1) == 0)
         {
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));//0
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));
         }
     }
 
@@ -139,7 +133,7 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
         }
 
         this.skinningentities.setPositionAndRotation(x + 0.5D, y, z + 0.5D, owner_entity.rotationYaw, owner_entity.rotationPitch);
-        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));//0
+        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.FOLLOW() % 8));
         serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
 
         return true;

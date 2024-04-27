@@ -4,6 +4,7 @@ import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.features.MessagesFeatures;
 import com.nali.small.system.Reference;
+import net.minecraft.util.text.translation.I18n;
 
 public class TargetGUIFeatures extends GUIFeaturesLoader
 {
@@ -12,6 +13,11 @@ public class TargetGUIFeatures extends GUIFeaturesLoader
     public TargetGUIFeatures(MixGui mixgui)
     {
         super(mixgui);
-        MessagesFeatures.initEntities(TARGET_INT_ARRAY, "gui.info." + Reference.MOD_ID + ".t2", this);
+        MessagesFeatures.initEntities
+        (
+            TARGET_INT_ARRAY,
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".bw") + " " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bx"),
+            this
+        );
     }
 }

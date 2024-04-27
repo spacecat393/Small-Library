@@ -20,7 +20,7 @@ public class ClearTroublemaker
         if (skinningentities != null && canPass(skinningentities, entityplayermp))
         {
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
-            serverentitiesmemory.entitiesaimemory.skinningentitiesarea.troublemaker_arraylist.clear();
+            serverentitiesmemory.entitiesaimemory.skinningentitiesarea.troublemaker_list.clear();
         }
     }
 }

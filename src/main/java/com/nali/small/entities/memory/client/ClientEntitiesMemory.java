@@ -20,9 +20,9 @@ import java.util.WeakHashMap;
 public class ClientEntitiesMemory extends BothEntitiesMemory
 {
     @SideOnly(Side.CLIENT)
-    public static Map<UUID, SkinningEntities> ENTITIES_MAP = new WeakHashMap<>();
+    public static Map<UUID, SkinningEntities> ENTITIES_MAP = new WeakHashMap();
     @SideOnly(Side.CLIENT)
-    public static Map<Integer, UUID> FAKE_ENTITIES_MAP = new WeakHashMap<>();
+    public static Map<Integer, UUID> FAKE_ENTITIES_MAP = new WeakHashMap();
     @SideOnly(Side.CLIENT)
     public ObjectRender objectrender;
     @SideOnly(Side.CLIENT)

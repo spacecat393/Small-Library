@@ -14,13 +14,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @SideOnly(Side.CLIENT)
 public class ArrowLayerRender extends LayerRender
 {
-    public ArrayList<int[]> index_int_array_arraylist = new ArrayList<int[]>();
-    public ArrayList<float[]> float_array_arraylist = new ArrayList<float[]>();
+    public List<int[]> index_int_array_list = new ArrayList();
+    public List<float[]> float_array_list = new ArrayList();
 
     public ArrowLayerRender(SkinningEntities skinningentities)
     {
@@ -35,20 +36,20 @@ public class ArrowLayerRender extends LayerRender
         {
             Entity entity = new EntityTippedArrow(this.skinningentities.world, this.skinningentities.posX, this.skinningentities.posY, this.skinningentities.posZ);
 
-            if (this.index_int_array_arraylist.size() < i)
+            if (this.index_int_array_list.size() < i)
             {
                 ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
                 SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
                 Random random = entity.world.rand;
                 int model_i = random.nextInt(skinningrender.memory_object_array.length);
                 OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[model_i];
-                this.index_int_array_arraylist.add(new int[]{model_i, random.nextInt(openglskinningmemory.index_int_array.length)});
-                this.float_array_arraylist.add(new float[]{random.nextFloat(), random.nextFloat(), random.nextFloat()});
+                this.index_int_array_list.add(new int[]{model_i, random.nextInt(openglskinningmemory.index_int_array.length)});
+                this.float_array_list.add(new float[]{random.nextFloat(), random.nextFloat(), random.nextFloat()});
             }
-            else if (this.index_int_array_arraylist.size() > i)
+            else if (this.index_int_array_list.size() > i)
             {
-                this.index_int_array_arraylist.subList(i, this.index_int_array_arraylist.size()).clear();
-                this.float_array_arraylist.subList(i, this.float_array_arraylist.size()).clear();
+                this.index_int_array_list.subList(i, this.index_int_array_list.size()).clear();
+                this.float_array_list.subList(i, this.float_array_list.size()).clear();
             }
 
             ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.skinningentities.bothentitiesmemory;
@@ -56,8 +57,8 @@ public class ArrowLayerRender extends LayerRender
 
             for (int j = 0; j < i; ++j)
             {
-                int[] int_array = this.index_int_array_arraylist.get(j);
-                float[] float_array = this.float_array_arraylist.get(j);
+                int[] int_array = this.index_int_array_list.get(j);
+                float[] float_array = this.float_array_list.get(j);
                 GL11.glPushMatrix();
                 skinningrender.apply3DSkinningVec4(skinningrender.get3DSkinning(x, y, z, 0, 0, 0, int_array[0], int_array[1]));
 

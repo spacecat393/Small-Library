@@ -15,20 +15,20 @@ public class MineGUIFeatures extends GUIFeaturesLoader
 {
     public static byte STATE;//remote1 x2-4 y8-16 z32-64 +-
     public static BlockPos START_BLOCKPOS, END_BLOCKPOS;
-    public static byte PAGE;//p0-4
+    public static byte PAGE;//p0-2
 
-    public String b0 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".m0");
-    public String b1 = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".m1");
+    public String b0 = I18n.translateToLocal("info." + Reference.MOD_ID + ".be0");
+    public String b1 = I18n.translateToLocal("info." + Reference.MOD_ID + ".be1");
 
     public MineGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".cv") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".m00"),
-            this.b1 + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".m10"),
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".mi20") + " <",
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".b0") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".be2"),
+            this.b1 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".be3"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".e0") + " <",
         };
         this.loadColor(9);
     }

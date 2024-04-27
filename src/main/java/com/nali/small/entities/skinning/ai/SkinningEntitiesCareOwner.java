@@ -9,11 +9,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SkinningEntitiesCareOwner extends SkinningEntitiesAI
 {
-    public ArrayList<Entity> target_entity_arraylist = new ArrayList<Entity>();
-    public ArrayList<Double> far_double_arraylist = new ArrayList<Double>();
+    public List<Entity> target_entity_list = new ArrayList();
+    public List<Double> far_double_list = new ArrayList();
 
     public SkinningEntitiesCareOwner(SkinningEntities skinningentities)
     {
@@ -25,15 +26,15 @@ public class SkinningEntitiesCareOwner extends SkinningEntitiesAI
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         Entity owner_entity = serverentitiesmemory.getOwner();
-        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.CARE_OWNER()) && owner_entity != null && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist.isEmpty())
+        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.CARE_OWNER()) && owner_entity != null && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_list.isEmpty())
         {
-            ArrayList<Entity> target_entity_arraylist = (ArrayList<Entity>)this.target_entity_arraylist.clone();
-            this.target_entity_arraylist.clear();
-            this.far_double_arraylist.clear();
-            for (Entity entity : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist)
+            List<Entity> target_entity_list = new ArrayList(this.target_entity_list);
+            this.target_entity_list.clear();
+            this.far_double_list.clear();
+            for (Entity entity : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_list)
             {
                 boolean should_attack = false;
-                for (Entity old_entity : target_entity_arraylist)
+                for (Entity old_entity : target_entity_list)
                 {
                     if (old_entity.equals(entity))
                     {
@@ -44,17 +45,17 @@ public class SkinningEntitiesCareOwner extends SkinningEntitiesAI
 
                 if (should_attack || ourTarget(entity, owner_entity) || ourTarget(entity, this.skinningentities))
                 {
-                    this.target_entity_arraylist.add(entity);
-                    this.far_double_arraylist.add(this.skinningentities.getDistanceSq(entity));
+                    this.target_entity_list.add(entity);
+                    this.far_double_list.add(this.skinningentities.getDistanceSq(entity));
                 }
             }
-//            if (!this.far_double_arraylist.isEmpty())
+//            if (!this.far_double_list.isEmpty())
 //            {
 //                int index = 0;
 //                double max_dis = Double.MAX_VALUE;
-//                for (int i = 0; i < this.far_double_arraylist.size(); ++i)
+//                for (int i = 0; i < this.far_double_list.size(); ++i)
 //                {
-//                    double far = this.far_double_arraylist.get(i);
+//                    double far = this.far_double_list.get(i);
 //                    if (far < max_dis)
 //                    {
 //                        index = i;
@@ -62,7 +63,7 @@ public class SkinningEntitiesCareOwner extends SkinningEntitiesAI
 //                    }
 //                }
 //
-//                this.target_entity = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_arraylist.get(index);
+//                this.target_entity = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.all_entity_list.get(index);
 //            }
 //            else
 //            {
@@ -71,8 +72,8 @@ public class SkinningEntitiesCareOwner extends SkinningEntitiesAI
         }
         else
         {
-            this.target_entity_arraylist.clear();
-            this.far_double_arraylist.clear();
+            this.target_entity_list.clear();
+            this.far_double_list.clear();
         }
 
         serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.CARE_OWNER() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.CARE_OWNER() % 8));//0

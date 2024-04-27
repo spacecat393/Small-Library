@@ -12,8 +12,8 @@ public class MimiTalkGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".a2"),
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".a20")
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".bk4"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".bk5")
         };
         this.createColor();
     }

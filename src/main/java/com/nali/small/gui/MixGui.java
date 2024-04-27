@@ -211,9 +211,9 @@ public abstract class MixGui extends GuiContainer
 //
 //            this.drawHoveringText(new String[]
 //            {
-//                I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".un"),
+//                I18n.translateToLocal("info." + Reference.MOD_ID + ".un"),
 //                uuid_string,
-//                I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".unh")
+//                I18n.translateToLocal("info." + Reference.MOD_ID + ".ba")
 //            }, mouseX, mouseY, false);
 //        }
 //    }

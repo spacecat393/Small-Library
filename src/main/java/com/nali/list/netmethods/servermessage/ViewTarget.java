@@ -24,13 +24,13 @@ public class ViewTarget
         if (skinningentities != null && canPass(skinningentities, entityplayermp))
         {
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
-            int size = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_arraylist.size() * 4;
+            int size = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_list.size() * 4;
             byte[] byte_array = new byte[1 + size];
             byte_array[0] = SetTarget.ID;
             int index = 0;
             for (int i = 1; i < size; i += 4)
             {
-                BytesWriter.set(byte_array, serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_arraylist.get(index++), i);
+                BytesWriter.set(byte_array, serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_list.get(index++), i);
             }
 
             NetworksRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);

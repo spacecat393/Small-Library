@@ -76,16 +76,16 @@ public class EntitiesAIMemory
         {
             this.skinningentitiescareowner = new SkinningEntitiesCareOwner(skinningentities);
         }
-        if (workbytes.ATTACK() != -1)
-        {
-            this.skinningentitiesattack = new SkinningEntitiesAttack(skinningentities);
-        }
+//        if (workbytes.ATTACK() != -1)
+//        {
+//            this.skinningentitiesattack = new SkinningEntitiesAttack(skinningentities);
+//        }
     }
 
     public void writeNBT(NBTTagCompound nbttagcompound)
     {
-        nbttagcompound.setIntArray("target", this.skinningentitiesarea.target_arraylist.stream().mapToInt(Integer::intValue).toArray());
-        nbttagcompound.setIntArray("troublemaker", this.skinningentitiesarea.troublemaker_arraylist.stream().mapToInt(Integer::intValue).toArray());
+        nbttagcompound.setIntArray("target", this.skinningentitiesarea.target_list.stream().mapToInt(Integer::intValue).toArray());
+        nbttagcompound.setIntArray("troublemaker", this.skinningentitiesarea.troublemaker_list.stream().mapToInt(Integer::intValue).toArray());
 
         nbttagcompound.setLong("blockpos_long", this.skinningentitiessetlocation.blockpos_long);
         nbttagcompound.setFloat("far_float", this.skinningentitiessetlocation.far);
@@ -102,16 +102,25 @@ public class EntitiesAIMemory
         nbttagcompound.setInteger("rng_a_in_manageitem", this.skinningentitiesmanageitem.random_area_in);
         nbttagcompound.setInteger("rng_a_out_manageitem", this.skinningentitiesmanageitem.random_area_out);
 
-        nbttagcompound.setByte("state_getitem", this.skinningentitiesgetitem.state);
+        nbttagcompound.setByte("flag_getitem", this.skinningentitiesgetitem.flag);
+
+        nbttagcompound.setByte("flag_attack", this.skinningentitiesattack.flag);
+        nbttagcompound.setFloat("min_dis_attack", this.skinningentitiesattack.minimum_distance);
+
+        nbttagcompound.setByte("flag_follow", this.skinningentitiesfollow.flag);
+        nbttagcompound.setFloat("min_dis_follow", this.skinningentitiesfollow.min_distance);
+        nbttagcompound.setFloat("max_dis_follow", this.skinningentitiesfollow.max_distance);
+
+        nbttagcompound.setByte("flag_area", this.skinningentitiesarea.flag);
 
         nbttagcompound.setByte("state_mine", this.skinningentitiesmine.state);
         if (this.skinningentitiesmine.start_blockpos != null)
         {
-            nbttagcompound.setLong("start_blockpos", this.skinningentitiesmine.start_blockpos.toLong());
+            nbttagcompound.setLong("start_blockpos_mine", this.skinningentitiesmine.start_blockpos.toLong());
         }
         if (this.skinningentitiesmine.end_blockpos != null)
         {
-            nbttagcompound.setLong("end_blockpos", this.skinningentitiesmine.end_blockpos.toLong());
+            nbttagcompound.setLong("end_blockpos_mine", this.skinningentitiesmine.end_blockpos.toLong());
         }
 
 //        if (this.skinningentitiesattack != null)
@@ -125,13 +134,13 @@ public class EntitiesAIMemory
         int[] int_array = nbttagcompound.getIntArray("target");
         for (int x : int_array)
         {
-            this.skinningentitiesarea.target_arraylist.add(x);
+            this.skinningentitiesarea.target_list.add(x);
         }
 
         int_array = nbttagcompound.getIntArray("troublemaker");
         for (int x : int_array)
         {
-            this.skinningentitiesarea.troublemaker_arraylist.add(x);
+            this.skinningentitiesarea.troublemaker_list.add(x);
         }
 
         this.skinningentitiessetlocation.blockpos_long = nbttagcompound.getLong("blockpos_long");
@@ -149,16 +158,25 @@ public class EntitiesAIMemory
         this.skinningentitiesmanageitem.random_area_in = nbttagcompound.getInteger("rng_a_in_manageitem");
         this.skinningentitiesmanageitem.random_area_out = nbttagcompound.getInteger("rng_a_out_manageitem");
 
-        this.skinningentitiesgetitem.state = nbttagcompound.getByte("state_getitem");
+        this.skinningentitiesgetitem.flag = nbttagcompound.getByte("flag_getitem");
+
+        this.skinningentitiesattack.flag = nbttagcompound.getByte("flag_attack");
+        this.skinningentitiesattack.minimum_distance = nbttagcompound.getFloat("min_dis_attack");
+
+        this.skinningentitiesfollow.flag = nbttagcompound.getByte("flag_follow");
+        this.skinningentitiesfollow.min_distance = nbttagcompound.getFloat("min_dis_follow");
+        this.skinningentitiesfollow.max_distance = nbttagcompound.getFloat("max_dis_follow");
+
+        this.skinningentitiesarea.flag = nbttagcompound.getByte("flag_area");
 
         this.skinningentitiesmine.state = nbttagcompound.getByte("state_mine");
-        if (nbttagcompound.hasKey("start_blockpos"))
+        if (nbttagcompound.hasKey("start_blockpos_mine"))
         {
-            this.skinningentitiesmine.start_blockpos = BlockPos.fromLong(nbttagcompound.getLong("start_blockpos"));
+            this.skinningentitiesmine.start_blockpos = BlockPos.fromLong(nbttagcompound.getLong("start_blockpos_mine"));
         }
-        if (nbttagcompound.hasKey("end_blockpos"))
+        if (nbttagcompound.hasKey("end_blockpos_mine"))
         {
-            this.skinningentitiesmine.end_blockpos = BlockPos.fromLong(nbttagcompound.getLong("end_blockpos"));
+            this.skinningentitiesmine.end_blockpos = BlockPos.fromLong(nbttagcompound.getLong("end_blockpos_mine"));
         }
     }
 
@@ -221,7 +239,7 @@ public class EntitiesAIMemory
 
         if (!is_move)
         {
-            this.skinningentitiesfindmove.path_blockpos_arraylist.clear();
+            this.skinningentitiesfindmove.path_blockpos_list.clear();
         }
 
         this.skinningentitiesjump.onUpdate();

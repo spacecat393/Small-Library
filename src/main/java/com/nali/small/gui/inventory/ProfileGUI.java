@@ -1,9 +1,7 @@
 package com.nali.small.gui.inventory;
 
 import com.nali.list.container.InventoryContainer;
-import com.nali.list.netmethods.servermessage.FetchGetItem;
-import com.nali.list.netmethods.servermessage.FetchManageItem;
-import com.nali.list.netmethods.servermessage.SetOwner;
+import com.nali.list.netmethods.servermessage.*;
 import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
@@ -114,6 +112,10 @@ public class ProfileGUI
                 gui.sendPacketUUID(SetOwner.ID);
                 gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.FOLLOW());
             }
+            else if (gui.mouse_released == 1)
+            {
+                gui.sendPacketUUID(FetchFollow.ID);
+            }
 
             if (!(GUIFEATURESLOADER instanceof FollowGUIFeatures))
             {
@@ -211,6 +213,10 @@ public class ProfileGUI
                 if (gui.mouse_released == 0)
                 {
                     gui.sendPacketUUIDInt(id);
+                }
+                else if (gui.mouse_released == 1)
+                {
+                    gui.sendPacketUUID(FetchAttack.ID);
                 }
 
                 if (!(GUIFEATURESLOADER instanceof AttackGUIFeatures))

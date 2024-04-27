@@ -18,11 +18,11 @@ public class SetXYZGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sm0"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".bq"),
             "X : ",
             "Y : ",
             "Z : ",
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sm1")
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".e9")
         };
         this.loadColor(6);
 //        this.int_array = new int[6];

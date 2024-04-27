@@ -29,11 +29,11 @@ public class RemoveTarget
 //                            int id = Integer.parseInt(new_string);
 
                 int index = 0;
-                for (int i : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_arraylist)
+                for (int i : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_list)
                 {
                     if (i == id)
                     {
-                        serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_arraylist.remove(index);
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_list.remove(index);
                         break;
                     }
                     ++index;

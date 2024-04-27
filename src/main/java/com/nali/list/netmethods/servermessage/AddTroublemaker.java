@@ -35,7 +35,7 @@ public class AddTroublemaker
                 }
 
                 boolean result = true;
-                for (int i : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.troublemaker_arraylist)
+                for (int i : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.troublemaker_list)
                 {
                     if (i == id)
                     {
@@ -46,7 +46,7 @@ public class AddTroublemaker
 
                 if (result)
                 {
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesarea.troublemaker_arraylist.add(id);
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesarea.troublemaker_list.add(id);
                 }
             }
         }

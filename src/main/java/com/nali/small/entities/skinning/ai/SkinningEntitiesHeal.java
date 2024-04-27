@@ -26,15 +26,15 @@ public class SkinningEntitiesHeal extends SkinningEntitiesAI
     public void onUpdate()
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.HEAL()) && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist.isEmpty() && ++this.cooldown >= 200)
+        if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.HEAL()) && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list.isEmpty() && ++this.cooldown >= 200)
         {
             this.heal = true;
-            double[] far = new double[serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist.size()];
+            double[] far = new double[serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list.size()];
             boolean should_move = false;
             boolean should_move2 = true;
 
             int index = 0;
-            for (Entity entity : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist)
+            for (Entity entity : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list)
             {
                 if (!(entity instanceof EntityLivingBase) || ((EntityLivingBase)entity).getMaxHealth() - ((EntityLivingBase)entity).getHealth() < 1.0F)
                 {
@@ -86,7 +86,7 @@ public class SkinningEntitiesHeal extends SkinningEntitiesAI
                     }
                 }
 
-                Entity entity = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_arraylist.get(index);
+                Entity entity = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list.get(index);
 
 //            /*if (this.state == 0 || this.state == 1)
 //            {

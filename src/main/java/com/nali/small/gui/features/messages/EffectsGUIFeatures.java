@@ -10,8 +10,8 @@ public class EffectsGUIFeatures extends GUIFeaturesLoader
 {
     public static int[] EFFECTS_INT_ARRAY;
 
-    public String ed = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".ed");
-    public String ea = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".ea");
+    public String ed = I18n.translateToLocal("info." + Reference.MOD_ID + ".bi");
+    public String ea = I18n.translateToLocal("info." + Reference.MOD_ID + ".bj");
 
     public EffectsGUIFeatures(MixGui mixgui)
     {
@@ -54,8 +54,8 @@ public class EffectsGUIFeatures extends GUIFeaturesLoader
             this.string_array = new String[2];
         }
 
-        this.string_array[0] = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".e");
-        this.string_array[this.string_array.length - 1] = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".st2");
+        this.string_array[0] = I18n.translateToLocal("info." + Reference.MOD_ID + ".bh");
+        this.string_array[this.string_array.length - 1] = I18n.translateToLocal("info." + Reference.MOD_ID + ".c1");
 
         this.createColor();
     }

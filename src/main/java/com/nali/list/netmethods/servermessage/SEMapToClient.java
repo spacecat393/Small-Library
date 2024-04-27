@@ -33,7 +33,7 @@ public class SEMapToClient
         {
             int index = 1;
             //                    Set<UUID> keys_set = new HashSet<>(entity_map.keySet());
-            Set<UUID> keys_set = new HashSet<>(ENTITIES_MAP.keySet());
+            Set<UUID> keys_set = new HashSet(ENTITIES_MAP.keySet());
             byte[] byte_array = new byte[keys_set.size() * 16 + 1 + keys_set.size() * 8];
             byte_array[0] = SetSEMap.ID;
 

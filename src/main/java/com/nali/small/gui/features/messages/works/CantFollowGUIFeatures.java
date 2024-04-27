@@ -11,7 +11,7 @@
 //        super(mixgui);
 //        this.string_array = new String[]
 //        {
-//            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".c4")gui.info.c4=Can't Follow
+//            I18n.translateToLocal("info." + Reference.MOD_ID + ".c4")info.c4=Can't Follow
 //        };
 //        this.createColor();
 //    }

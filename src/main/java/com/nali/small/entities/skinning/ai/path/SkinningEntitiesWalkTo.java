@@ -18,11 +18,12 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SkinningEntitiesWalkTo extends SkinningEntitiesAI
 {
-//    public ArrayList<Block> block_arraylist = new ArrayList<Block>();
-    public ArrayList<BlockPos> blockpos_arraylist = new ArrayList<BlockPos>();
+//    public List<Block> block_list = new List<Block>();
+    public List<BlockPos> blockpos_list = new ArrayList();
     public Vec3d vec3d;
 
 //    public int tick;
@@ -41,14 +42,14 @@ public class SkinningEntitiesWalkTo extends SkinningEntitiesAI
             if (this.skinningentities.ticksExisted % 20 == 0)
             {
                 Vec3d vec3d = this.skinningentities.getPositionVector();
-                for (BlockPos blockpos : this.blockpos_arraylist)
+                for (BlockPos blockpos : this.blockpos_list)
                 {
                     if (this.skinningentities.getDistanceSq(blockpos) < 8.0D && this.vec3d != null && this.vec3d.squareDistanceTo(vec3d) < 0.0001D)
                     {
                         World world = this.skinningentities.world;
                         IBlockState iblockstate = world.getBlockState(blockpos);
                         Block block = iblockstate.getBlock();
-//                    Block block = this.block_arraylist.get(i);
+//                    Block block = this.block_list.get(i);
                         if (block instanceof BlockDoor)
                         {
                             BlockDoor blockdoor = (BlockDoor)block;

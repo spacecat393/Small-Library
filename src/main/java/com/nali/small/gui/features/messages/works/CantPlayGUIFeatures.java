@@ -12,7 +12,7 @@ public class CantPlayGUIFeatures extends GUIFeaturesLoader
         super(mixgui);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".c7")
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".z4")
         };
         this.createColor();
     }

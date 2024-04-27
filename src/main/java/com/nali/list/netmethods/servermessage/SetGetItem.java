@@ -39,12 +39,12 @@ public class SetGetItem
                         if (value >= 1)
                         {
                             smallsakuratypes.set(value - 1);
-                            skinningentitiesgetitem.state |= 2;
+                            skinningentitiesgetitem.flag |= 4;
                         }
                     }
                     else
                     {
-                        skinningentitiesgetitem.state &= 255 - 2;
+                        skinningentitiesgetitem.flag &= 255-4;
                     }
                 }
                 else if (id == 2.2F)
@@ -54,12 +54,12 @@ public class SetGetItem
                         if (value >= 1)
                         {
                             smallsakuratypes.set(value - 1);
-                            skinningentitiesgetitem.state |= 32;
+                            skinningentitiesgetitem.flag |= 64;
                         }
                     }
                     else
                     {
-                        skinningentitiesgetitem.state &= 255 - 32;
+                        skinningentitiesgetitem.flag &= 255-64;
                     }
                 }
                 else if (id == 2.3F)
@@ -69,12 +69,12 @@ public class SetGetItem
                         if (value >= 1)
                         {
                             smallsakuratypes.set(value - 1);
-                            skinningentitiesgetitem.state |= 8;
+                            skinningentitiesgetitem.flag |= 16;
                         }
                     }
                     else
                     {
-                        skinningentitiesgetitem.state &= 255 - 8;
+                        skinningentitiesgetitem.flag &= 255-16;
                     }
                 }
             }
@@ -87,12 +87,12 @@ public class SetGetItem
                         if (value >= 1)
                         {
                             smallsakuratypes.set(value - 1);
-                            skinningentitiesgetitem.state |= 1;
+                            skinningentitiesgetitem.flag |= 2;
                         }
                     }
                     else
                     {
-                        skinningentitiesgetitem.state &= 255 - 1;
+                        skinningentitiesgetitem.flag &= 255-2;
                     }
                 }
                 else if (id == 1.2F)
@@ -102,12 +102,12 @@ public class SetGetItem
                         if (value >= 1)
                         {
                             smallsakuratypes.set(value - 1);
-                            skinningentitiesgetitem.state |= 16;
+                            skinningentitiesgetitem.flag |= 32;
                         }
                     }
                     else
                     {
-                        skinningentitiesgetitem.state &= 255 - 16;
+                        skinningentitiesgetitem.flag &= 255-32;
                     }
                 }
                 else if (id == 1.3F)
@@ -117,12 +117,12 @@ public class SetGetItem
                         if (value >= 1)
                         {
                             smallsakuratypes.set(value - 1);
-                            skinningentitiesgetitem.state |= 4;
+                            skinningentitiesgetitem.flag |= 8;
                         }
                     }
                     else
                     {
-                        skinningentitiesgetitem.state &= 255 - 4;
+                        skinningentitiesgetitem.flag &= 255-8;
                     }
                 }
             }

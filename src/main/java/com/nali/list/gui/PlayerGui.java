@@ -359,7 +359,7 @@ public class PlayerGui extends MixGui
 //        this.pyroxene_objectdata.screen_float_array[3] = this.guiTop + 72.0F;
         this.sakurarender.objectscreendraw.renderScreen();
 
-//        if (CapabilitiesRegistryHelper.CLIENT_CAPABILITY_OBJECT_ARRAYLIST.size() > 0)
+//        if (CapabilitiesRegistryHelper.CLIENT_CAPABILITY_OBJECT_LIST.size() > 0)
 //        {
         Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("" + this.mc.player.getEntityData().getInteger("sakura_nali"), 25, 11, getRainbowColor4());
 //        }
@@ -457,7 +457,7 @@ public class PlayerGui extends MixGui
     public void initEntities()
     {
         int index = 0;//, x = 10, y = 10;
-        Set<UUID> keys_set = new HashSet<>(ENTITIES_MAP.keySet());
+        Set<UUID> keys_set = new HashSet(ENTITIES_MAP.keySet());
         MIXBUTTON_ARRAY = new MixButton[keys_set.size()];
         for (UUID uuid : keys_set)
         {

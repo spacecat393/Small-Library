@@ -57,7 +57,7 @@ public class Small
     @EventHandler
     public void onFMLPostInitializationEvent(FMLPostInitializationEvent event)
     {
-        EntitiesRegistryHelper.ENTITY_KEY_ARRAY = new HashSet<>(ENTITY_CLASS_ENTRIES.keySet()).toArray();
+        EntitiesRegistryHelper.ENTITY_KEY_ARRAY = new HashSet(ENTITY_CLASS_ENTRIES.keySet()).toArray();
 
         if (event.getSide().isClient())
         {
@@ -68,7 +68,7 @@ public class Small
     @EventHandler
     public void onFMLServerStartedEvent(FMLServerStartedEvent event)
     {
-        ServerEntitiesMemory.ENTITIES_MAP = new WeakHashMap<>();
+        ServerEntitiesMemory.ENTITIES_MAP = new WeakHashMap();
         ChunkCallBack.set();
     }
 

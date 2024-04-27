@@ -18,9 +18,9 @@ public class SetLookGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            "0 " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sl0") + " : ",
-            "1 " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sl1") + " : ",
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sl2"),
+            "0 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bo") + " : ",
+            "1 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bp") + " : ",
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".e8"),
         };
         this.loadColor(4);
 //        this.int_array = new int[4];

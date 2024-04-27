@@ -34,7 +34,7 @@ public class SkinningEntitiesLookTo extends SkinningEntitiesAI
             this.far = Double.MAX_VALUE;
 
             Map<UUID, Entity> entity_map = ((IMixinWorldServer)this.skinningentities.world).entitiesByUuid();
-            Set<UUID> keys_set = new HashSet<>(entity_map.keySet());
+            Set<UUID> keys_set = new HashSet(entity_map.keySet());
 
             Entity current_entity = this.entity;
 

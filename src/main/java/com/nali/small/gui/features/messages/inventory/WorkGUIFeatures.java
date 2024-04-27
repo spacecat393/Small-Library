@@ -12,7 +12,7 @@ public class WorkGUIFeatures extends GUIFeaturesLoader
         super(mixgui);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".w0")
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".c8")
         };
         this.createColor();
     }

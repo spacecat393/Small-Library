@@ -18,9 +18,9 @@ public class ScaleGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".s0") + " : ",
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".s00"),
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".s01"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".bl0") + " : ",
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".e6"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".bl1"),
         };
         this.loadColor(4);
 //        this.int_array = new int[4];

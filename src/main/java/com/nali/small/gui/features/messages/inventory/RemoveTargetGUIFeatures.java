@@ -16,11 +16,11 @@ public class RemoveTargetGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".t1"),
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".st0"),
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".st1"),
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".st4"),
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".st5")
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".bv") + " " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bx"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".e3"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".eb"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".c3"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".c4")
         };
         this.loadColor(6);
 //        this.int_array = new int[6];

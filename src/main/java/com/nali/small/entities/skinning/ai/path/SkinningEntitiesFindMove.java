@@ -15,6 +15,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.nali.small.entities.skinning.ai.path.PathMath.*;
 
@@ -26,7 +27,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
     public int temp_goal_x, temp_goal_y, temp_goal_z;
     public double far;
 
-    public ArrayList<BlockPos> path_blockpos_arraylist = new ArrayList<BlockPos>();
+    public List<BlockPos> path_blockpos_list = new ArrayList();
     public SNode to_goal_snode;
     public boolean is_goal;
     public int path_index;
@@ -50,7 +51,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 //        World world = this.skinningentities.world;
 ////        if (this.path_blockpos_array != null)
 ////        {
-//        for (BlockPos bp : this.path_blockpos_arraylist)
+//        for (BlockPos bp : this.path_blockpos_list)
 //        {
 //            if (bp != null)
 //            {
@@ -61,26 +62,26 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 
         if (this.try_move)
         {
-            if (this.temp_goal_x == this.goal_x && this.temp_goal_y == this.goal_y && this.temp_goal_z == this.goal_z && !this.path_blockpos_arraylist.isEmpty())
+            if (this.temp_goal_x == this.goal_x && this.temp_goal_y == this.goal_y && this.temp_goal_z == this.goal_z && !this.path_blockpos_list.isEmpty())
             {
                 if (!this.is_goal)
                 {
                     SNode temp_snode = this.find(this.to_goal_snode);
                     if (temp_snode != null)
                     {
-                        int old_max_index = this.path_blockpos_arraylist.size();
+                        int old_max_index = this.path_blockpos_list.size();
                         this.to_goal_snode = temp_snode;
 
-                        this.path_blockpos_arraylist.clear();
-                        this.path_blockpos_arraylist.add(temp_snode.blockpos);
+                        this.path_blockpos_list.clear();
+                        this.path_blockpos_list.add(temp_snode.blockpos);
 
                         while (temp_snode.parent_snode != null)
                         {
                             temp_snode = temp_snode.parent_snode;
-                            this.path_blockpos_arraylist.add(temp_snode.blockpos);
+                            this.path_blockpos_list.add(temp_snode.blockpos);
                         }
 
-                        this.path_index = this.path_blockpos_arraylist.size() - (old_max_index - this.path_index);
+                        this.path_index = this.path_blockpos_list.size() - (old_max_index - this.path_index);
 
                         if (this.path_index == -1)
                         {
@@ -93,11 +94,11 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 //                {
                 if (this.path_index < 0)
                 {
-                    this.path_blockpos_arraylist.clear();
+                    this.path_blockpos_list.clear();
                     return;
                 }
 
-                BlockPos current_blockpos = this.path_blockpos_arraylist.get(this.path_index);
+                BlockPos current_blockpos = this.path_blockpos_list.get(this.path_index);
 
                 serverentitiesmemory.entitiesaimemory.skinningentitiesmove.setWanted(current_blockpos.getX() + 0.5D, current_blockpos.getY(), current_blockpos.getZ() + 0.5D);
 
@@ -106,7 +107,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                 {
                     if (++this.path_tick == 200)
                     {
-                        this.path_blockpos_arraylist.clear();
+                        this.path_blockpos_list.clear();
                         return;
                     }
                 }
@@ -116,9 +117,9 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                 this.old_z = this.skinningentities.posZ;
 
                 int new_index = this.path_index + 1;
-                if (new_index != this.path_blockpos_arraylist.size())
+                if (new_index != this.path_blockpos_list.size())
                 {
-                    this.far = this.path_blockpos_arraylist.get(new_index).getDistance(this.goal_x, this.goal_y, this.goal_z);
+                    this.far = this.path_blockpos_list.get(new_index).getDistance(this.goal_x, this.goal_y, this.goal_z);
                 }
 
                 if (serverentitiesmemory.entitiesaimemory.skinningentitiesmove.isDone())
@@ -126,7 +127,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                     if (--this.path_index == -1)
                     {
                         this.try_move = false;
-                        this.path_blockpos_arraylist.clear();
+                        this.path_blockpos_list.clear();
                     }
                 }
 //                }
@@ -134,13 +135,13 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
             else
             {
 //                serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos = null;
-                serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.blockpos_arraylist.clear();
-//                serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.block_arraylist.clear();
+                serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.blockpos_list.clear();
+//                serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.block_list.clear();
                 this.old_x = this.skinningentities.posX;
                 this.old_y = this.skinningentities.posY;
                 this.old_z = this.skinningentities.posZ;
                 this.to_goal_snode = null;
-                this.path_blockpos_arraylist.clear();
+                this.path_blockpos_list.clear();
                 this.is_goal = false;
                 this.path_tick = 0;
 
@@ -155,15 +156,15 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                         this.to_goal_snode = temp_snode;
                     }
 
-                    this.path_blockpos_arraylist.add(temp_snode.blockpos);
+                    this.path_blockpos_list.add(temp_snode.blockpos);
 
                     while (temp_snode.parent_snode != null)
                     {
                         temp_snode = temp_snode.parent_snode;
-                        this.path_blockpos_arraylist.add(temp_snode.blockpos);
+                        this.path_blockpos_list.add(temp_snode.blockpos);
                     }
 
-                    this.path_index = this.path_blockpos_arraylist.size() - 1;
+                    this.path_index = this.path_blockpos_list.size() - 1;
 
                     if (this.path_index == -1)
                     {
@@ -231,7 +232,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
     public void endGoal()
     {
         this.try_move = false;
-        this.path_blockpos_arraylist.clear();
+        this.path_blockpos_list.clear();
     }
 
     public boolean endGoalT()
@@ -744,8 +745,8 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
         Block block = iblockstate.getBlock();
         if (iblockstate.getMaterial() != Material.IRON && block instanceof BlockDoor || block instanceof BlockFenceGate || block instanceof BlockTrapDoor)
         {
-            serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.blockpos_arraylist.add(blockpos);
-//            serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.block_arraylist.add(block);
+            serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.blockpos_list.add(blockpos);
+//            serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.block_list.add(block);
             return true;
         }
 

@@ -30,7 +30,7 @@ public class FetchGetItem
     {
         byte[] byte_array = new byte[1 + 1];
         byte_array[0] = SetGetItems.ID;
-        byte_array[1] = skinningentitiesgetitem.state;
+        byte_array[1] = skinningentitiesgetitem.flag;
         NetworksRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
     }
 }

@@ -18,7 +18,7 @@ public class ChunkCallBack implements ForgeChunkManager.OrderedLoadingCallback
     public static void set()
     {
         I = new ChunkCallBack();
-        CHUNK_MAP = new WeakHashMap<>();
+        CHUNK_MAP = new WeakHashMap();
         ForgeChunkManager.setForcedChunkLoadingCallback(Small.I, I);
     }
 
@@ -26,7 +26,7 @@ public class ChunkCallBack implements ForgeChunkManager.OrderedLoadingCallback
     public List<ForgeChunkManager.Ticket> ticketsLoaded(List<ForgeChunkManager.Ticket> tickets, World world, int maxTicketCount)
     {
         // Return a list of tickets to load
-        List<ForgeChunkManager.Ticket> ticketsToLoad = new ArrayList<>();
+        List<ForgeChunkManager.Ticket> ticketsToLoad = new ArrayList();
 
         // Add your logic to determine which tickets to load
         // You can process the tickets parameter to make decisions

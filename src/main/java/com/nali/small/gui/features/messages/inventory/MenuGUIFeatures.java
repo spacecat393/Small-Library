@@ -9,21 +9,21 @@ import static com.nali.list.gui.InventoryGui.PAGE;
 
 public class MenuGUIFeatures extends GUIFeaturesLoader
 {
-    public String ss = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".ss");
-    public String sp = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sp");
-    public String si = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".si");
-    public String sa = I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sa");
+    public String ss = I18n.translateToLocal("info." + Reference.MOD_ID + ".bj4");
+    public String sp = I18n.translateToLocal("info." + Reference.MOD_ID + ".bj0");
+    public String si = I18n.translateToLocal("info." + Reference.MOD_ID + ".bj2");
+    public String sa = I18n.translateToLocal("info." + Reference.MOD_ID + ".bj6");
 
     public MenuGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".cv") + " : ",
-            this.sp + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sp0"),
-            this.si + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".si0"),
-            this.ss + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".ss0"),
-            this.sa + " : " + I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".sa0"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".b0") + " : ",
+            this.sp + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bj1"),
+            this.si + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bj3"),
+            this.ss + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bj5"),
+            this.sa + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bj7"),
         };
         this.createColor();
     }

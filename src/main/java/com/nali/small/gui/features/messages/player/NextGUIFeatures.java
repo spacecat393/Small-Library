@@ -15,7 +15,7 @@ public class NextGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".a6")
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".bm")
         };
         this.loadColor(2);
 //        this.int_array = new int[2];

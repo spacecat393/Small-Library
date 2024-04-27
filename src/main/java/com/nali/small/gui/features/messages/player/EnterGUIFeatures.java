@@ -12,8 +12,8 @@ public class EnterGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".a7"),
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".a70")
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".e5"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".c7")
         };
         this.createColor();
     }

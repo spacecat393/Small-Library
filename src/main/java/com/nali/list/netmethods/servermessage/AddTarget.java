@@ -35,7 +35,7 @@ public class AddTarget
                 }
 
                 boolean result = true;
-                for (int i : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_arraylist)
+                for (int i : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_list)
                 {
                     if (i == id)
                     {
@@ -46,7 +46,7 @@ public class AddTarget
 
                 if (result)
                 {
-                    serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_arraylist.add(id);
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesarea.target_list.add(id);
                 }
             }
         }

@@ -31,13 +31,13 @@ public class NameGUIFeatures extends GUIFeaturesLoader
 
         this.string_array = new String[]
         {
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".n"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".b7"),
             I18n.translateToLocal("entity." + entity_string + ".name"),
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".cn"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".b8"),
             custom_name_string,
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".un"),
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".b9"),
             uuid_string,
-            I18n.translateToLocal("gui.info." + Reference.MOD_ID + ".unh")
+            I18n.translateToLocal("info." + Reference.MOD_ID + ".ba")
         };
 
         this.createColor();
