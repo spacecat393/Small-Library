@@ -15,13 +15,13 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
     public int[] attack_frame_int_array;
 
     public byte flag = 16;//move_to prepare hit | remote walk_to
-    public float minimum_distance;// = 3.0D;
-    public int magic_point, max_magic_point = 16;
+    public float minimum_distance = 3.0F;
+    public int magic_point,
+    max_magic_point = 16;
 
-    public SkinningEntitiesAttack(SkinningEntities skinningentities, float minimum_distance)
+    public SkinningEntitiesAttack(SkinningEntities skinningentities)
     {
         super(skinningentities);
-        this.minimum_distance = minimum_distance;
     }
 
     @Override

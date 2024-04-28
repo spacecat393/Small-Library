@@ -38,8 +38,7 @@ public abstract class MixGui extends GuiContainer
     public static StringBuilder MESSAGE_STRINGBUILDER = new StringBuilder("_");
     public long last_time = Minecraft.getSystemTime();//System.currentTimeMillis();
     public int limit_time = 1000;
-    public boolean message_state;
-    public boolean render_text;
+    public byte state;//message render
 
     public MixGui(Container container)
     {
@@ -69,7 +68,7 @@ public abstract class MixGui extends GuiContainer
     @Override
     public void keyTyped(char typedChar, int keyCode) throws IOException
     {
-        if (this.message_state && keyCode != Keyboard.KEY_ESCAPE)
+        if ((this.state & 1) == 1 && keyCode != Keyboard.KEY_ESCAPE)
         {
             int index = MESSAGE_STRINGBUILDER.length() - 1;
             char end = MESSAGE_STRINGBUILDER.charAt(index);
@@ -195,7 +194,7 @@ public abstract class MixGui extends GuiContainer
                 copyToClipboard(cliententitiesmemory.uuid.toString());
             }
 
-            this.render_text = true;
+            this.state |= 2;
         }
     }
 

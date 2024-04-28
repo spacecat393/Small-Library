@@ -159,7 +159,7 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
                 return false;
             }
 
-            if ((this.flag & 128) == 0 && entity instanceof EntityLivingBase)
+            if ((this.flag & 128) == 0 && !(entity instanceof EntityLivingBase))
             {
                 return false;
             }

@@ -64,10 +64,9 @@ public class PlayerGui extends MixGui
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        this.message_state = false;
-        this.render_text = false;
+        this.state &= 255-1;
+        this.state &= 255-2;
         //
-//        this.message_state = 1;
 //        if (this.mouse_clicked == 0)
 //        {
 //            ++ItemLayerRender.DEBUG_V;
@@ -80,7 +79,7 @@ public class PlayerGui extends MixGui
 //        {
 //            GUIFEATURESLOADER = new DebugGUIFeatures(this);
 //        }
-//        this.render_text = true;
+//        this.state |= 2;
         //
 
         super.drawScreen(mouseX, mouseY, partialTicks);
@@ -100,7 +99,7 @@ public class PlayerGui extends MixGui
                 {
                     GUIFEATURESLOADER = new RandomAGUIFeatures(this);
                 }
-                this.render_text = true;
+                this.state |= 2;
             }
 
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1);// y = this.guiTop + 118; width = 18; height = 19;
@@ -115,7 +114,7 @@ public class PlayerGui extends MixGui
                 {
                     GUIFEATURESLOADER = new RandomBGUIFeatures(this);
                 }
-                this.render_text = true;
+                this.state |= 2;
             }
 
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*2;// y = this.guiTop + 118; width = 18; height = 19;
@@ -136,19 +135,19 @@ public class PlayerGui extends MixGui
                 {
                     GUIFEATURESLOADER = new MimiTalkGUIFeatures(this);
                 }
-                this.render_text = true;
+                this.state |= 2;
             }
 
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3;// y = this.guiTop + 118; width = 18; height = 19;
             if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
             {
-                this.message_state = true;
+                this.state |= 1;
 
                 if (!(GUIFEATURESLOADER instanceof DropToSakuraGUIFeatures))
                 {
                     GUIFEATURESLOADER = new DropToSakuraGUIFeatures(this);
                 }
-                this.render_text = true;
+                this.state |= 2;
             }
         }
         else
@@ -208,7 +207,7 @@ public class PlayerGui extends MixGui
                 {
                     GUIFEATURESLOADER = new BackGUIFeatures(this);
                 }
-                this.render_text = true;
+                this.state |= 2;
             }
 
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1);
@@ -227,7 +226,7 @@ public class PlayerGui extends MixGui
                 {
                     GUIFEATURESLOADER = new FetchGUIFeatures(this);
                 }
-                this.render_text = true;
+                this.state |= 2;
             }
 
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*2;
@@ -245,7 +244,7 @@ public class PlayerGui extends MixGui
                 {
                     GUIFEATURESLOADER = new NextGUIFeatures(this);
                 }
-                this.render_text = true;
+                this.state |= 2;
             }
 
             x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3;
@@ -264,11 +263,11 @@ public class PlayerGui extends MixGui
                 {
                     GUIFEATURESLOADER = new EnterGUIFeatures(this);
                 }
-                this.render_text = true;
+                this.state |= 2;
             }
         }
 
-        if (this.render_text)
+        if ((this.state & 2) == 2)
         {
             GUIFEATURESLOADER.drawText(mouseX, mouseY);
         }

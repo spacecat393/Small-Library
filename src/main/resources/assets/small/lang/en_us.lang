@@ -33,10 +33,17 @@ info.small.bv=Remove
 info.small.bw=All
 info.small.bx=Target
 info.small.by=Troublemaker
-info.small.bz=ID list
+info.small.bz=ID List
 info.small.b_0=Teleport
 info.small.b_1=Far To Owner
 info.small.b_2=Close To Owner
+info.small.b_3=Magic
+info.small.b_4=Put Player
+info.small.b_5=Put Owner
+info.small.b_6=Put Other Tameable
+info.small.b_7=Put Owner Tameable
+info.small.b_8=Put All Tameable
+info.small.b_9=Put Object
 
 info.small.b00=Lock
 info.small.b01=Unlock
@@ -156,6 +163,7 @@ info.small.e8=Enter [id, float] or [0, 180.0]
 info.small.e9=Enter [x_float, y_float, z_float] or [0.0, 1.0, 0.0]
 info.small.ea=Enter [id, x_float, y_float, z_float] or [0, 0.0, 1.0, 0.0]
 info.small.eb=Enter ID like [0 1 ...]
+info.small.ec=Enter [id, int] or [0, 1]
 
 info.small.c0=Right Click to Fetch.
 info.small.c1=Left Click to Fetch.

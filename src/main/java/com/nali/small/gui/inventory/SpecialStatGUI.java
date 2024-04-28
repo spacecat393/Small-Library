@@ -40,49 +40,49 @@ public class SpecialStatGUI
         int x = left + 48, y = top + 89, width = 16, height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            gui.message_state = true;
+            gui.state |= 1;
 
             if (!(GUIFEATURESLOADER instanceof ScaleGUIFeatures))
             {
                 GUIFEATURESLOADER = new ScaleGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 66;// y = top + 89; width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            gui.message_state = true;
+            gui.state |= 1;
 
             if (!(GUIFEATURESLOADER instanceof AttributeStatGUIFeatures))
             {
                 GUIFEATURESLOADER = new AttributeStatGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 84;// y = top + 89; width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            gui.message_state = true;
+            gui.state |= 1;
 
             if (!(GUIFEATURESLOADER instanceof SetLookGUIFeatures))
             {
                 GUIFEATURESLOADER = new SetLookGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 102;// y = top + 89; width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            gui.message_state = true;
+            gui.state |= 1;
 
             if (!(GUIFEATURESLOADER instanceof SetXYZGUIFeatures))
             {
                 GUIFEATURESLOADER = new SetXYZGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 120;// y = top + 89; width = 16; height = 16;
@@ -91,7 +91,7 @@ public class SpecialStatGUI
             //                    int id = cliententitiesmemory.workbytes.LOCATION();
 //                    if (id != -1)
 //                    {
-            gui.message_state = true;
+            gui.state |= 1;
 
             if (gui.mouse_released == 0)
             {
@@ -111,7 +111,7 @@ public class SpecialStatGUI
 //                        }
 //                    }
 
-            gui.render_text = true;
+            gui.state |= 2;
         }
     }
 }

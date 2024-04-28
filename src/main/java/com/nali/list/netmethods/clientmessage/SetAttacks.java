@@ -12,5 +12,6 @@ public class SetAttacks
     {
         AttackGUIFeatures.FLAG = clientmessage.data[1];
         AttackGUIFeatures.MINIMUM_DISTANCE = BytesReader.getFloat(clientmessage.data, 1 + 1);
+        AttackGUIFeatures.MAX_MAGIC_POINT = BytesReader.getInt(clientmessage.data, 1 + 1 + 4);
     }
 }

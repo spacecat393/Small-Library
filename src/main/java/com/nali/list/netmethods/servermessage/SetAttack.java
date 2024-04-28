@@ -69,6 +69,15 @@ public class SetAttack
                     skinningentitiesattack.minimum_distance = x;
                 }
             }
+            else if (id == 1.4F)
+            {
+                int v = (int)x;
+                if (value >= v)
+                {
+                    smallsakuratypes.set(value - v);
+                    skinningentitiesattack.max_magic_point = v;
+                }
+            }
 
             fetch(entityplayermp, skinningentitiesattack);
         }

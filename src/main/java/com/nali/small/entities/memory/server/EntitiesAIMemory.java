@@ -76,10 +76,10 @@ public class EntitiesAIMemory
         {
             this.skinningentitiescareowner = new SkinningEntitiesCareOwner(skinningentities);
         }
-//        if (workbytes.ATTACK() != -1)
-//        {
-//            this.skinningentitiesattack = new SkinningEntitiesAttack(skinningentities);
-//        }
+        if (workbytes.ATTACK() != -1)
+        {
+            this.skinningentitiesattack = new SkinningEntitiesAttack(skinningentities);
+        }
     }
 
     public void writeNBT(NBTTagCompound nbttagcompound)
@@ -104,9 +104,6 @@ public class EntitiesAIMemory
 
         nbttagcompound.setByte("flag_getitem", this.skinningentitiesgetitem.flag);
 
-        nbttagcompound.setByte("flag_attack", this.skinningentitiesattack.flag);
-        nbttagcompound.setFloat("min_dis_attack", this.skinningentitiesattack.minimum_distance);
-
         nbttagcompound.setByte("flag_follow", this.skinningentitiesfollow.flag);
         nbttagcompound.setFloat("min_dis_follow", this.skinningentitiesfollow.min_distance);
         nbttagcompound.setFloat("max_dis_follow", this.skinningentitiesfollow.max_distance);
@@ -123,10 +120,13 @@ public class EntitiesAIMemory
             nbttagcompound.setLong("end_blockpos_mine", this.skinningentitiesmine.end_blockpos.toLong());
         }
 
-//        if (this.skinningentitiesattack != null)
-//        {
-//            this.skinningentitiesattack.;
-//        }
+        if (this.skinningentitiesattack != null)
+        {
+            nbttagcompound.setByte("flag_attack", this.skinningentitiesattack.flag);
+            nbttagcompound.setFloat("min_dis_attack", this.skinningentitiesattack.minimum_distance);
+            nbttagcompound.setInteger("magic_point_attack", this.skinningentitiesattack.magic_point);
+            nbttagcompound.setInteger("max_magic_point_attack", this.skinningentitiesattack.max_magic_point);
+        }
     }
 
     public void readNBT(NBTTagCompound nbttagcompound)
@@ -160,9 +160,6 @@ public class EntitiesAIMemory
 
         this.skinningentitiesgetitem.flag = nbttagcompound.getByte("flag_getitem");
 
-        this.skinningentitiesattack.flag = nbttagcompound.getByte("flag_attack");
-        this.skinningentitiesattack.minimum_distance = nbttagcompound.getFloat("min_dis_attack");
-
         this.skinningentitiesfollow.flag = nbttagcompound.getByte("flag_follow");
         this.skinningentitiesfollow.min_distance = nbttagcompound.getFloat("min_dis_follow");
         this.skinningentitiesfollow.max_distance = nbttagcompound.getFloat("max_dis_follow");
@@ -177,6 +174,14 @@ public class EntitiesAIMemory
         if (nbttagcompound.hasKey("end_blockpos_mine"))
         {
             this.skinningentitiesmine.end_blockpos = BlockPos.fromLong(nbttagcompound.getLong("end_blockpos_mine"));
+        }
+
+        if (this.skinningentitiesattack != null)
+        {
+            this.skinningentitiesattack.flag = nbttagcompound.getByte("flag_attack");
+            this.skinningentitiesattack.minimum_distance = nbttagcompound.getFloat("min_dis_attack");
+            this.skinningentitiesattack.magic_point = nbttagcompound.getInteger("magic_point_attack");
+            this.skinningentitiesattack.max_magic_point = nbttagcompound.getInteger("max_magic_point_attack");
         }
     }
 

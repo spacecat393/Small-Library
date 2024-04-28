@@ -70,8 +70,8 @@ public class InventoryGui extends MixGui
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.block_mouse_clicked = false;
-        this.message_state = false;
-        this.render_text = false;
+        this.state &= 255-1;
+        this.state &= 255-2;
 
         SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
@@ -137,7 +137,7 @@ public class InventoryGui extends MixGui
             {
                 GUIFEATURESLOADER = new TPGUIFeatures(this);
             }
-            this.render_text = true;
+            this.state |= 2;
         }
 
         x = this.guiLeft + 47; y = this.guiTop + 25; width = 5; height = 62;
@@ -147,7 +147,7 @@ public class InventoryGui extends MixGui
             {
                 GUIFEATURESLOADER = new HPGUIFeatures(this);
             }
-            this.render_text = true;
+            this.state |= 2;
         }
 
         x = this.guiLeft + 158;/* y = this.guiTop + 25;*/ width = 9; height = 19;
@@ -157,7 +157,7 @@ public class InventoryGui extends MixGui
             {
                 GUIFEATURESLOADER = new SetAttributesGUIFeatures(this);
             }
-            this.render_text = true;
+            this.state |= 2;
         }
 
         x = this.guiLeft + 204; y = this.guiTop + 144; width = 5; height = 6;
@@ -172,7 +172,7 @@ public class InventoryGui extends MixGui
             {
                 GUIFEATURESLOADER = new EffectsGUIFeatures(this);
             }
-            this.render_text = true;
+            this.state |= 2;
         }
 
         x = this.guiLeft + 57; y = this.guiTop + 27; width = 5; height = 6;
@@ -188,7 +188,7 @@ public class InventoryGui extends MixGui
             {
                 GUIFEATURESLOADER = new LockInventoryGUIFeatures(this);
             }
-            this.render_text = true;
+            this.state |= 2;
         }
 
         /*x = this.guiLeft + 57; */y = this.guiTop + 35;/* width = 5; height = 6;*/
@@ -204,7 +204,7 @@ public class InventoryGui extends MixGui
             {
                 GUIFEATURESLOADER = new LockDamageGUIFeatures(this);
             }
-            this.render_text = true;
+            this.state |= 2;
         }
 
         x = this.guiLeft + 82; y = this.guiTop + 31; width = 18; height = 18;
@@ -223,7 +223,7 @@ public class InventoryGui extends MixGui
             {
                 GUIFEATURESLOADER = new MenuGUIFeatures(this);
             }
-            this.render_text = true;
+            this.state |= 2;
         }
 
         /*x = this.guiLeft + 82; */y = this.guiTop + 31 + 18;// width = 18; height = 18;
@@ -238,7 +238,7 @@ public class InventoryGui extends MixGui
             {
                 GUIFEATURESLOADER = new MimiTalkGUIFeatures(this);
             }
-            this.render_text = true;
+            this.state |= 2;
         }
 
         /*x = this.guiLeft + 82; */y = this.guiTop + 31 + 18 + 18;// width = 18; height = 18;
@@ -253,12 +253,13 @@ public class InventoryGui extends MixGui
             {
                 GUIFEATURESLOADER = new BoxGUIFeatures(this);
             }
-            this.render_text = true;
+            this.state |= 2;
         }
 
         x = this.guiLeft + 156; y = this.guiTop + 47; width = 28; height = 39;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
+            this.state |= 1;
             if (this.mouse_released == 1)
             {
                 this.sendPacketUUID(ResetBytes.ID);
@@ -268,7 +269,7 @@ public class InventoryGui extends MixGui
             {
                 GUIFEATURESLOADER = new WorkGUIFeatures(this);
             }
-            this.render_text = true;
+            this.state |= 2;
         }
 
         switch (PAGE)
@@ -297,7 +298,7 @@ public class InventoryGui extends MixGui
             }
         }
 
-        if (this.render_text)
+        if ((this.state & 2) == 2)
         {
             GUIFEATURESLOADER.drawText(mouseX, mouseY);
         }

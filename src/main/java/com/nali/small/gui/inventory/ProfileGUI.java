@@ -98,12 +98,13 @@ public class ProfileGUI
             {
                 GUIFEATURESLOADER = new SitGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 66;// y = top + 89; width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
+            gui.state |= 1;
 //            int id = cliententitiesmemory.workbytes.FOLLOW();
 //            if (id != -1)
 //            {
@@ -129,13 +130,13 @@ public class ProfileGUI
 //                    GUIFEATURESLOADER = new CantFollowGUIFeatures(gui);
 //                }
 //            }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 84;// y = top + 89; width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            gui.message_state = true;
+            gui.state |= 1;
             if (gui.mouse_released == 0)
             {
                 gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.GET_ITEM());
@@ -149,7 +150,7 @@ public class ProfileGUI
             {
                 GUIFEATURESLOADER = new GetItemGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 102;// y = top + 89; width = 16; height = 16;
@@ -175,7 +176,7 @@ public class ProfileGUI
 //                    GUIFEATURESLOADER = new CantRandomWalkGUIFeatures(gui);
 //                }
 //            }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 120;// y = top + 89; width = 16; height = 16;
@@ -201,12 +202,13 @@ public class ProfileGUI
 //                    GUIFEATURESLOADER = new CantRandomLookGUIFeatures(gui);
 //                }
 //            }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 138;// y = top + 89; width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
+            gui.state |= 1;
             byte id = cliententitiesmemory.workbytes.ATTACK();
             if (id != -1)
             {
@@ -231,7 +233,7 @@ public class ProfileGUI
                     GUIFEATURESLOADER = new CantAttackGUIFeatures(gui);
                 }
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 156;// y = top + 89; width = 16; height = 16;
@@ -258,7 +260,7 @@ public class ProfileGUI
 //                    GUIFEATURESLOADER = new CantReviveGUIFeatures(gui);
 //                }
 //            }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 156 + 18;// y = top + 89; width = 16; height = 16;
@@ -284,7 +286,7 @@ public class ProfileGUI
                     GUIFEATURESLOADER = new CantHealGUIFeatures(gui);
                 }
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 156 + 18 + 18;// y = top + 89; width = 16; height = 16;
@@ -310,7 +312,7 @@ public class ProfileGUI
                     GUIFEATURESLOADER = new CantProtectGUIFeatures(gui);
                 }
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 48; y = top + 107;// width = 16; height = 16;
@@ -336,7 +338,7 @@ public class ProfileGUI
                     GUIFEATURESLOADER = new CantPlayGUIFeatures(gui);
                 }
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 66;// y = top + 107;// width = 16; height = 16;
@@ -363,7 +365,7 @@ public class ProfileGUI
                     GUIFEATURESLOADER = new CantCareOwnerGUIFeatures(gui);
                 }
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 66 + 18;// y = top + 107;// width = 16; height = 16;
@@ -378,7 +380,7 @@ public class ProfileGUI
             {
                 GUIFEATURESLOADER = new WalkToGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 66 + 18 + 18;// y = top + 107;// width = 16; height = 16;
@@ -393,13 +395,13 @@ public class ProfileGUI
             {
                 GUIFEATURESLOADER = new LookToGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 66 + 18 + 18 + 18;// y = top + 107;// width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            gui.message_state = true;
+            gui.state |= 1;
             if (gui.mouse_released == 0)
             {
                 gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.MINE());
@@ -409,7 +411,7 @@ public class ProfileGUI
             {
                 GUIFEATURESLOADER = new MineGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 66 + 18 + 18 + 18 + 18;// y = top + 107;// width = 16; height = 16;
@@ -424,7 +426,7 @@ public class ProfileGUI
             {
                 GUIFEATURESLOADER = new PlantGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 66 + 18 + 18 + 18 + 18 + 18;// y = top + 107;// width = 16; height = 16;
@@ -439,7 +441,7 @@ public class ProfileGUI
             {
                 GUIFEATURESLOADER = new FishingGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 66 + 18 + 18 + 18 + 18 + 18 + 18;// y = top + 107;// width = 16; height = 16;
@@ -454,13 +456,13 @@ public class ProfileGUI
             {
                 GUIFEATURESLOADER = new UseToGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 66 + 18 + 18 + 18 + 18 + 18 + 18 + 18;// y = top + 107;// width = 16; height = 16;
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
-            gui.message_state = true;
+            gui.state |= 1;
             if (gui.mouse_released == 0)
             {
                 gui.sendPacketUUIDInt(cliententitiesmemory.workbytes.MANAGE_ITEM());
@@ -474,7 +476,7 @@ public class ProfileGUI
             {
                 GUIFEATURESLOADER = new ManageItemGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
     }
 }

@@ -1,9 +1,6 @@
 package com.nali.small.gui.inventory;
 
-import com.nali.list.netmethods.servermessage.ClearTarget;
-import com.nali.list.netmethods.servermessage.ClearTroublemaker;
-import com.nali.list.netmethods.servermessage.ViewTarget;
-import com.nali.list.netmethods.servermessage.ViewTroublemaker;
+import com.nali.list.netmethods.servermessage.*;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.inventory.*;
 
@@ -18,6 +15,7 @@ public class ScannerGUI
         gui.drawTexturedModalRect(left + 49, top + 90, 106, 14, 14, 14);
         gui.drawTexturedModalRect(left + 67, top + 90, 78, 14, 14, 14);
         gui.drawTexturedModalRect(left + 67 + 18, top + 90, 16, 0, 14, 14);
+        gui.drawTexturedModalRect(left + 67 + 18, top + 90 + 18, 58, 0, 14, 14);
         gui.drawTexturedModalRect(left + 49, top + 108, 92, 14, 14, 14);
         gui.drawTexturedModalRect(left + 67, top + 108, 92, 14, 14, 14);
         gui.drawTexturedModalRect(left + 49, top + 126, 120, 14, 14, 14);
@@ -34,13 +32,13 @@ public class ScannerGUI
         {
             gui.copyOrPaste();
 
-            gui.message_state = true;
+            gui.state |= 1;
 
             if (!(GUIFEATURESLOADER instanceof AddTargetGUIFeatures))
             {
                 GUIFEATURESLOADER = new AddTargetGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 66;// y = top + 89; width = 16; height = 16;
@@ -48,13 +46,13 @@ public class ScannerGUI
         {
             gui.copyOrPaste();
 
-            gui.message_state = true;
+            gui.state |= 1;
 
             if (!(GUIFEATURESLOADER instanceof AddTroublemakerGUIFeatures))
             {
                 GUIFEATURESLOADER = new AddTroublemakerGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 84;// y = top + 89; width = 16; height = 16;
@@ -62,13 +60,28 @@ public class ScannerGUI
         {
             gui.copyOrPaste();
 
-            gui.message_state = true;
+            gui.state |= 1;
 
             if (!(GUIFEATURESLOADER instanceof EntityListGUIFeatures))
             {
                 GUIFEATURESLOADER = new EntityListGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
+        }
+
+        /*x = left + 84;*/ y = top + 89+18; //width = 16; height = 16;
+        if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
+        {
+            gui.state |= 1;
+            if (gui.mouse_released == 1)
+            {
+                gui.sendPacketUUID(FetchArea.ID);
+            }
+            if (!(GUIFEATURESLOADER instanceof AreaGUIFeatures))
+            {
+                GUIFEATURESLOADER = new AreaGUIFeatures(gui);
+            }
+            gui.state |= 2;
         }
 
         x = left + 48; y = top + 107;// width = 16; height = 16;
@@ -76,13 +89,13 @@ public class ScannerGUI
         {
             gui.copyOrPaste();
 
-            gui.message_state = true;
+            gui.state |= 1;
 
             if (!(GUIFEATURESLOADER instanceof RemoveTargetGUIFeatures))
             {
                 GUIFEATURESLOADER = new RemoveTargetGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         /*x = left + 48; */y = top + 125;// width = 16; height = 16;
@@ -101,7 +114,7 @@ public class ScannerGUI
             {
                 GUIFEATURESLOADER = new TargetGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         x = left + 66; y = top + 107;// width = 16; height = 16;
@@ -109,13 +122,13 @@ public class ScannerGUI
         {
             gui.copyOrPaste();
 
-            gui.message_state = true;
+            gui.state |= 1;
 
             if (!(GUIFEATURESLOADER instanceof RemoveTroublemakerGUIFeatures))
             {
                 GUIFEATURESLOADER = new RemoveTroublemakerGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
 
         /*x = left + 66; */y = top + 125;// width = 16; height = 16;
@@ -134,7 +147,7 @@ public class ScannerGUI
             {
                 GUIFEATURESLOADER = new TroublemakerGUIFeatures(gui);
             }
-            gui.render_text = true;
+            gui.state |= 2;
         }
     }
 }

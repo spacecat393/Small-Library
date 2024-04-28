@@ -185,7 +185,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
     public boolean setShoot(int id0, int id1, int id2, int id3, boolean bf, SkinningEntitiesAttack skinningentitiesattack)
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        if (serverentitiesmemory.statentitiesmemory.magic_point <= 0)
+        if (serverentitiesmemory.entitiesaimemory.skinningentitiesattack.magic_point <= 0)
         {
             this.step = 1;
             if (this.checkShoot(id0, id1, id2, true))
@@ -207,7 +207,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
                     if (serverentitiesmemory.frame_int_array[this.integer_index] == this.int_2d_array[id3][1])
                     {
                         this.step = 0;
-                        serverentitiesmemory.statentitiesmemory.magic_point = serverentitiesmemory.statentitiesmemory.max_magic_point;
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesattack.magic_point = serverentitiesmemory.entitiesaimemory.skinningentitiesattack.max_magic_point;
                         return true;
                     }
                 }
@@ -246,7 +246,7 @@ public class SkinningEntitiesLiveFrame extends SkinningEntitiesAI
                 {
                     if (serverentitiesmemory.frame_int_array[this.integer_index] == attack_frame)
                     {
-                        serverentitiesmemory.statentitiesmemory.magic_point -= 1;
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesattack.magic_point -= 1;
                         skinningentitiesattack.flag |= 4;
                         break;
                     }

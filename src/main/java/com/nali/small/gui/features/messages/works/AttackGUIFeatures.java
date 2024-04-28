@@ -15,7 +15,7 @@ import static com.nali.small.gui.MixGui.MESSAGE_STRINGBUILDER;
 public class AttackGUIFeatures extends GUIFeaturesLoader
 {
     public static float MINIMUM_DISTANCE;
-    public static int MAGIC_POINT, MAX_MAGIC_POINT;
+    public static int MAX_MAGIC_POINT;
     public static byte FLAG;//move_to prepare hit | remote walk_to
     public static byte PAGE;//p0-1
 
@@ -35,9 +35,10 @@ public class AttackGUIFeatures extends GUIFeaturesLoader
             I18n.translateToLocal("info." + Reference.MOD_ID + ".c0"),
             "1.1 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b3") + " : ",
             "1.2 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b6") + " : ",
-            "1.3 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bt") + " : "
+            "1.3 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bt") + " : ",
+            "1.4 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bc") + " " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b_3") + " : "
         };
-        this.loadColor(7);
+        this.loadColor(8);
         GUINETLOADER = new SetAttackGUINet(mixgui);
     }
 
@@ -52,6 +53,7 @@ public class AttackGUIFeatures extends GUIFeaturesLoader
                 this.string_array[6] + ((FLAG & 16) == 16 ? "ON" : "OFF"),
                 this.string_array[7] + ((FLAG & 8) == 8 ? "ON" : "OFF"),
                 this.string_array[8] + MINIMUM_DISTANCE,
+                this.string_array[9] + MAX_MAGIC_POINT,
                 this.string_array[4],
                 this.string_array[5],
                 this.string_array[3] + PAGE + "/1>"

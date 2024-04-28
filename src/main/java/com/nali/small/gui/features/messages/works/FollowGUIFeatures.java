@@ -39,7 +39,7 @@ public class FollowGUIFeatures extends GUIFeaturesLoader
             "2.2 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b_2") + " : ",
             I18n.translateToLocal("info." + Reference.MOD_ID + ".e7")
         };
-        this.loadColor(8);
+        this.loadColor(6);
         GUINETLOADER = new SetFollowGUINet(mixgui);
     }
 
@@ -55,7 +55,7 @@ public class FollowGUIFeatures extends GUIFeaturesLoader
                 this.string_array[9] + MIN_DISTANCE,
                 this.string_array[10],
                 this.string_array[5],
-                this.string_array[3] + PAGE + "/1>"
+                this.string_array[3] + PAGE + "/2>"
             }, this.int_array, mouseX, mouseY, this.have_head);
         }
         else if (PAGE == 1)
@@ -67,7 +67,7 @@ public class FollowGUIFeatures extends GUIFeaturesLoader
                 this.string_array[7] + ((FLAG & 2) == 2 ? "ON" : "OFF"),
                 this.string_array[4],
                 this.string_array[5],
-                this.string_array[3] + PAGE + "/1>"
+                this.string_array[3] + PAGE + "/2>"
             }, this.int_array, mouseX, mouseY, this.have_head);
         }
         else
@@ -80,7 +80,7 @@ public class FollowGUIFeatures extends GUIFeaturesLoader
                 this.string_array[0] + ((cliententitiesmemory.work_byte_array[cliententitiesmemory.workbytes.FOLLOW() / 8] >> cliententitiesmemory.workbytes.FOLLOW() % 8 & 1) == 1 ? this.b1 : this.b0),
                 this.string_array[1],
                 this.string_array[2],
-                this.string_array[3] + PAGE + "/1>"
+                this.string_array[3] + PAGE + "/2>"
             }, this.int_array, mouseX, mouseY, this.have_head);
         }
     }
