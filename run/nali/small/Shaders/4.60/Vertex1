@@ -1,0 +1,18 @@
+#version 460 core
+
+in vec3 vertices;
+in vec2 texcoord;
+in vec3 normals;
+
+uniform mat4 ProjectionMatrix;
+uniform mat4 ModelViewMatrix;
+
+out vec2 fragment_texcoord;
+out vec3 fragment_normals;
+
+void main()
+{
+    gl_Position = ProjectionMatrix * ModelViewMatrix * vec4(vertices, 1.0);
+    fragment_texcoord = texcoord;
+    fragment_normals = normals;
+}
