@@ -1,8 +1,9 @@
 package com.nali.list.gui;
 
+import com.nali.draw.DrawScreen;
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.netmethods.servermessage.*;
-import com.nali.list.render.BoxRender;
+import com.nali.small.render.object.BoxRender;
 import com.nali.render.SkinningRender;
 import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
@@ -47,6 +48,8 @@ public class InventoryGui extends MixGui
     public SkinningEntitiesRender skinningentitiesrender;
     public float px/*, py*/;
     public BoxRender boxrender = new BoxRender();
+    public DrawScreen box_drawscreen = new DrawScreen();
+    public DrawScreen skinning_drawscreen = new DrawScreen();
 
     public InventoryGui(IInventory iinventory, SkinningEntities skinningentities)
     {
@@ -59,11 +62,14 @@ public class InventoryGui extends MixGui
 
         this.xSize = 256;
         this.ySize = 256;
-        this.boxrender.objectscreendraw.rz = 45.0F * 3.0F;
-        float s = -3.5F;
-        this.boxrender.objectscreendraw.sx = s;
-        this.boxrender.objectscreendraw.sy = s;
-        this.boxrender.objectscreendraw.sz = s;
+//        this.boxrender.objectscreendraw.rz = 45.0F * 3.0F;
+//        float s = -3.5F;
+//        this.boxrender.objectscreendraw.sx = s;
+//        this.boxrender.objectscreendraw.sy = s;
+//        this.boxrender.objectscreendraw.sz = s;
+
+        this.box_drawscreen.rz = 45.0F * 3.0F;
+        this.box_drawscreen.scale(-3.5F);
     }
 
     @Override
@@ -81,15 +87,14 @@ public class InventoryGui extends MixGui
             this.skinningentitiesrender.updateData(skinningentities, this.mc.getRenderPartialTicks());
         }
 
-        skinningrender.objectscreendraw.x = this.guiLeft + 127.5F;
-        skinningrender.objectscreendraw.y = this.guiTop + 72;
+        this.skinning_drawscreen.x = this.guiLeft + 127.5F;
+        this.skinning_drawscreen.y = this.guiTop + 72;
         skinningrender.lig_b = -1.0F;
-        skinningrender.objectscreendraw.renderScreen();
+        this.skinning_drawscreen.render(skinningrender);
 
-        this.boxrender.objectscreendraw.x = this.guiLeft + 84 + 6.5F + 0.5F;
-        this.boxrender.objectscreendraw.y = this.guiTop + 33 + 18 + 18 + 6.5F + 2.5F;
-
-        this.boxrender.objectscreendraw.renderScreen();
+        this.box_drawscreen.x = this.guiLeft + 84 + 6.5F + 0.5F;
+        this.box_drawscreen.y = this.guiTop + 33 + 18 + 18 + 6.5F + 2.5F;
+        this.box_drawscreen.render(this.boxrender);
 
         if (PAGE == 0)
         {
@@ -105,7 +110,7 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_clicked == 0)
             {
-                skinningrender.objectscreendraw.rz += ((mouseX - this.px) * 10.0F) * TD;
+                this.skinning_drawscreen.rz += ((mouseX - this.px) * 10.0F) * TD;
 //                skinningrender.objectscreendraw.ry += ((mouseY - this.py) * 10.0F) * TD;
             }
         }

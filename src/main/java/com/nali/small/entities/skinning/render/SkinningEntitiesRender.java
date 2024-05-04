@@ -1,8 +1,10 @@
 package com.nali.small.entities.skinning.render;
 
+import com.nali.data.client.SkinningClientData;
 import com.nali.render.SkinningRender;
 import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.system.opengl.memory.OpenGLAnimationMemory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.culling.ICamera;
@@ -42,7 +44,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
     public void doRender(T skinningentities, double ox, double oy, double oz, float entityYaw, float partialTicks)
     {
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
-        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
+        com.nali.small.render.SkinningEntitiesRender skinningrender = (com.nali.small.render.SkinningEntitiesRender)cliententitiesmemory.objectrender;
 
         this.renderLayer(skinningentities, ox, oy, oz, partialTicks);
 
@@ -69,7 +71,9 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
             GL_CURRENT_COLOR[3] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(3);
             GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], 0.25F);
         }
-        skinningrender.objectworlddraw.renderWorld(/*ox, oy, oz*/);
+        GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
+        skinningrender.updateLightCoord();
+        skinningrender.draw(/*ox, oy, oz*/);
         if (invisible)
         {
             GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
@@ -93,14 +97,16 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         skinningrender.entitiesrendermemory.head_pitch = (float)Math.toRadians(skinningentities.prevRotationPitch + (skinningentities.rotationPitch - skinningentities.prevRotationPitch) * partialTicks);
 //        skinningrender.timeline = partialTicks;
 
-        skinningrender.initSkinning();
+//        OpenGLAnimationMemory openglanimationmemory = skinningrender.dataloader.openglanimationmemory_list.get(((SkinningClientData)skinningrender.clientdata).AnimationID());
+        OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)skinningrender.dataloader.object_array[((SkinningClientData)skinningrender.clientdata).AnimationID()];
+        skinningrender.initSkinning(openglanimationmemory);
 
         if (!cliententitiesmemory.fake)
         {
             this.multiplyAnimation(skinningentities);
         }
 
-        skinningrender.setSkinning();
+        skinningrender.setSkinning(openglanimationmemory);
     }
 
     public void renderLayer(T skinningentities, double ox, double oy, double oz, float partialTicks)

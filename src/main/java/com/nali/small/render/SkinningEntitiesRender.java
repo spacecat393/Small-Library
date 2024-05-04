@@ -1,6 +1,7 @@
 package com.nali.small.render;
 
 import com.nali.data.BothData;
+import com.nali.data.client.ClientData;
 import com.nali.render.EntitiesRenderMemory;
 import com.nali.render.SkinningRender;
 import com.nali.system.DataLoader;
@@ -16,16 +17,16 @@ public class SkinningEntitiesRender extends SkinningRender
 {
     public Entity entity;
 
-    public SkinningEntitiesRender(EntitiesRenderMemory entitiesrendermemory, BothData bothdata, DataLoader dataloader, Entity entity, int i)
+    public SkinningEntitiesRender(EntitiesRenderMemory entitiesrendermemory, BothData bothdata, ClientData clientdata, DataLoader dataloader, Entity entity)
     {
-        super(entitiesrendermemory, bothdata, dataloader, i);
+        super(entitiesrendermemory, bothdata, clientdata, dataloader);
         this.entity = entity;
     }
 
-    @Override
+//    @Override
     public void updateLightCoord()
     {
-        super.updateLightCoord();
+//        super.updateLightCoord();
 
 //        int brightness = this.entity.getBrightnessForRender();
 //        int brightness = 0;

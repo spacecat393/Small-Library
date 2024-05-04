@@ -15,14 +15,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Map;
 import java.util.UUID;
-import java.util.WeakHashMap;
+import java.util.HashMap;
 
 public class ClientEntitiesMemory extends BothEntitiesMemory
 {
     @SideOnly(Side.CLIENT)
-    public static Map<UUID, SkinningEntities> ENTITIES_MAP = new WeakHashMap();
+    public static Map<UUID, SkinningEntities> ENTITIES_MAP = new HashMap();
     @SideOnly(Side.CLIENT)
-    public static Map<Integer, UUID> FAKE_ENTITIES_MAP = new WeakHashMap();
+    public static Map<Integer, UUID> FAKE_ENTITIES_MAP = new HashMap();
     @SideOnly(Side.CLIENT)
     public ObjectRender objectrender;
     @SideOnly(Side.CLIENT)

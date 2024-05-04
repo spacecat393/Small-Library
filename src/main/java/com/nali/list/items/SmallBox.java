@@ -1,5 +1,6 @@
 package com.nali.list.items;
 
+import com.nali.draw.DrawScreen;
 import com.nali.render.ObjectRender;
 import com.nali.small.Small;
 import com.nali.small.entities.skinning.SkinningEntities;
@@ -19,6 +20,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
@@ -32,14 +35,17 @@ import static com.nali.small.entities.memory.server.ServerEntitiesMemory.removeF
 public class SmallBox extends Item implements MixItems
 {
     public static SmallBox I;
+    @SideOnly(Side.CLIENT)
     public static ObjectRender OBJECTRENDER;
+    @SideOnly(Side.CLIENT)
+    public static DrawScreen DRAWSCREEN;
 
     public SmallBox(String[] string_array)
     {
         super();
         this.init(this, string_array[0], string_array[1], Tabs.TABS);
         this.setMaxStackSize(1);
-        I = this;
+//        I = this;
     }
 
     @Override
@@ -51,12 +57,21 @@ public class SmallBox extends Item implements MixItems
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public ObjectRender getObjectRender()
     {
         return OBJECTRENDER;
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public DrawScreen getDrawScreen()
+    {
+        return DRAWSCREEN;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
     public void render()
     {
         GL11.glPushMatrix();

@@ -22,7 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashSet;
-import java.util.WeakHashMap;
+import java.util.HashMap;
 
 import static com.nali.small.entities.EntitiesRegistryHelper.ENTITY_CLASS_ENTRIES;
 
@@ -68,7 +68,7 @@ public class Small
     @EventHandler
     public void onFMLServerStartedEvent(FMLServerStartedEvent event)
     {
-        ServerEntitiesMemory.ENTITIES_MAP = new WeakHashMap();
+        ServerEntitiesMemory.ENTITIES_MAP = new HashMap();
         ChunkCallBack.set();
     }
 

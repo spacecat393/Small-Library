@@ -41,8 +41,10 @@ public class ArrowLayerRender extends LayerRender
                 ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
                 SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
                 Random random = entity.world.rand;
-                int model_i = random.nextInt(skinningrender.memory_object_array.length);
-                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.memory_object_array[model_i];
+                int start = skinningrender.clientdata.StartPart();
+                int model_i = random.nextInt(skinningrender.clientdata.EndPart() - start) + start;
+//                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.dataloader.openglobjectmemory_array[model_i];
+                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.dataloader.object_array[model_i];
                 this.index_int_array_list.add(new int[]{model_i, random.nextInt(openglskinningmemory.index_int_array.length)});
                 this.float_array_list.add(new float[]{random.nextFloat(), random.nextFloat(), random.nextFloat()});
             }

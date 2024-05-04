@@ -1,12 +1,13 @@
 package com.nali.list.gui;
 
+import com.nali.draw.DrawScreen;
 import com.nali.list.messages.ServerMessage;
 import com.nali.list.netmethods.servermessage.OpenInvGUI;
 import com.nali.list.netmethods.servermessage.SEMapToClient;
 import com.nali.list.netmethods.servermessage.X12;
 import com.nali.list.netmethods.servermessage.X64;
-import com.nali.list.render.BoxRender;
-import com.nali.list.render.SakuraRender;
+import com.nali.small.render.object.BoxRender;
+import com.nali.small.render.object.SakuraRender;
 import com.nali.networks.NetworksRegistry;
 import com.nali.render.SkinningRender;
 import com.nali.small.entities.memory.client.ClientEntitiesMemory;
@@ -34,6 +35,7 @@ public class PlayerGui extends MixGui
     public static int CURRENT_INDEX;
     public SakuraRender sakurarender = new SakuraRender();
     public BoxRender boxrender = new BoxRender();
+    public DrawScreen drawscreen = new DrawScreen();
     public static byte PAGE;
 
     public static int MAX_NEXT;
@@ -53,11 +55,11 @@ public class PlayerGui extends MixGui
         this.xSize = 256;
         this.ySize = 256;
 
-        this.boxrender.objectscreendraw.rz = 45.0F * 3.0F;
-        float s = -3.5F;
-        this.boxrender.objectscreendraw.sx = s;
-        this.boxrender.objectscreendraw.sy = s;
-        this.boxrender.objectscreendraw.sz = s;
+//        this.boxrender.objectscreendraw.rz = 45.0F * 3.0F;
+//        float s = -3.5F;
+//        this.boxrender.objectscreendraw.sx = s;
+//        this.boxrender.objectscreendraw.sy = s;
+//        this.boxrender.objectscreendraw.sz = s;
 //        this.boxrender.sa = 0.9F;
     }
 
@@ -283,6 +285,7 @@ public class PlayerGui extends MixGui
 
         this.mc.getTextureManager().bindTexture(InventoryGui.GUI_RESOURCELOCATION);
 
+        float ry = this.drawscreen.ry;
         if (PAGE == 0)
         {
             this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F, this.guiTop + 256/2.0F - 19/2.0F, 106, 50, 18, 19);
@@ -292,8 +295,13 @@ public class PlayerGui extends MixGui
             this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*2, this.guiTop + 256/2.0F - 19/2.0F, 106, 50, 18, 19);
             this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*2 + 2, this.guiTop + 256/2.0F - 12/2.0F, 224, 0, 14, 12);
             this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3, this.guiTop + 256/2.0F - 19/2.0F, 106, 50, 18, 19);
-            this.boxrender.objectscreendraw.x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3 + (18 + 1)/2.0F - 0.5F;
-            this.boxrender.objectscreendraw.y = this.guiTop + 256/2.0F - 19/2.0F + 19/2.0F + 2.5F/2.0F;
+
+            this.drawscreen.rz = 45.0F * 3.0F;
+            this.drawscreen.ry = 0;
+            this.drawscreen.scale(-3.5F);
+
+            this.drawscreen.x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3 + (18 + 1)/2.0F - 0.5F;
+            this.drawscreen.y = this.guiTop + 256/2.0F - 19/2.0F + 19/2.0F + 2.5F/2.0F;
 //            GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT);
 //            OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
 //            GL11.glGetFloat(GL11.GL_CURRENT_COLOR, OPENGL_FIXED_PIPE_FLOATBUFFER);
@@ -302,7 +310,7 @@ public class PlayerGui extends MixGui
 //            GL_CURRENT_COLOR[2] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(2);
 //            GL_CURRENT_COLOR[3] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(3);
 //            GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.9F);
-            this.boxrender.objectscreendraw.renderScreen();
+            this.drawscreen.render(this.boxrender);
 //            GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
 //            GL11.glPopAttrib();
         }
@@ -328,7 +336,7 @@ public class PlayerGui extends MixGui
                 float x = 256/2.0F - (56 + 1)*img/2.0F, y = 256/2.0F - 60/2.0F;
                 for (int i = CURRENT_INDEX; i < MIXBUTTON_ARRAY.length; ++i)
                 {
-                    MIXBUTTON_ARRAY[i].render(this, this.guiLeft + x, this.guiTop + y, mouseX, mouseY/*, this.guiLeft, this.guiTop, this.width, this.height*/);
+                    MIXBUTTON_ARRAY[i].render(this, this.guiLeft + x, this.guiTop + y/*, mouseX, mouseY*//*, this.guiLeft, this.guiTop, this.width, this.height*/);
 
                     if (++max == 4)
                     {
@@ -350,13 +358,17 @@ public class PlayerGui extends MixGui
 
 //        this.sakura_objectrender.width = this.width;
 //        this.sakura_objectrender.height = this.height;
-        this.sakurarender.objectscreendraw.x = 15.0F;
-        this.sakurarender.objectscreendraw.y = 15.0F;
-        this.sakurarender.objectscreendraw.ry += 2.0F * Timing.TD;
+        this.drawscreen.rz = 0.0F;
+        this.drawscreen.scale(-5.0F);
+
+        this.drawscreen.x = 15.0F;
+        this.drawscreen.y = 15.0F;
+        ry += 2.0F * Timing.TD;
+        this.drawscreen.ry = ry;
 //        this.pyroxene_objectrender.z = -1.0F;
 //        this.pyroxene_objectdata.screen_float_array[2] = this.width / 2.0F;
 //        this.pyroxene_objectdata.screen_float_array[3] = this.guiTop + 72.0F;
-        this.sakurarender.objectscreendraw.renderScreen();
+        this.drawscreen.render(this.sakurarender);
 
 //        if (CapabilitiesRegistryHelper.CLIENT_CAPABILITY_OBJECT_LIST.size() > 0)
 //        {
@@ -370,6 +382,7 @@ public class PlayerGui extends MixGui
         public SkinningEntitiesRender skinningentitiesrender;
         public int /*x, y, */tx, ty, width, height;
         public UUID uuid;
+        public DrawScreen drawscreen = new DrawScreen();
 
         public MixButton(SkinningEntities skinningentities, UUID uuid/*, int x, int y*/, int tx, int ty, int width, int height)
         {
@@ -395,7 +408,7 @@ public class PlayerGui extends MixGui
             this.uuid = uuid;
         }
 
-        public void render(MixGui mixgui, float x, float y, int mouseX, int mouseY/*, int left, int top, int sys_width, int sys_height*/)
+        public void render(MixGui mixgui, float x, float y/*, int mouseX, int mouseY*//*, int left, int top, int sys_width, int sys_height*/)
         {
             mixgui.drawTexturedModalRect(x, y, this.tx, this.ty, this.width, this.height);
 
@@ -417,15 +430,15 @@ public class PlayerGui extends MixGui
 //                }
 //                float s = -25.0F;
 
-                skinningrender.objectscreendraw.x = x + 28;
-                skinningrender.objectscreendraw.y = y + 47;
+                this.drawscreen.x = x + 28;
+                this.drawscreen.y = y + 47;
 //                skinningrender.objectworlddraw.lig_b = 208.0F;
 //                skinningrender.objectworlddraw.lig_s = 240.0F;
                 skinningrender.lig_b = -1.0F;
 //                skinningrender.sx = s;
 //                skinningrender.sy = s;
 //                skinningrender.sz = s;
-                skinningrender.objectscreendraw.renderScreen();
+                this.drawscreen.render(skinningrender);
             }
         }
 

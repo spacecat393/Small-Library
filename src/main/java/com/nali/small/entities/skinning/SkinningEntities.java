@@ -702,6 +702,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         this.fallDistance = 0;
     }
 
+    @SideOnly(Side.CLIENT)
     public void updateClientObject()
     {
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
@@ -719,6 +720,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         this.updateRendering(entitydatamanager);
     }
 
+    @SideOnly(Side.CLIENT)
     public void updateRendering(EntityDataManager entitydatamanager)
     {
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
@@ -741,6 +743,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         return this.getHealth() <= 0.0F;
     }
 
+    @SideOnly(Side.CLIENT)
     public void updateClient()
     {
         float scale = this.getDataManager().get(this.getFloatDataParameterArray()[0]);
@@ -785,6 +788,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.REVIVE() / 8] ^= (byte)Math.pow(2, serverentitiesmemory.workbytes.REVIVE() % 8);
     }
 
+    @SideOnly(Side.CLIENT)
     public AxisAlignedBB getHeadAxisAlignedBB()
     {
         double hw = this.width / 2.0F + 0.001F;
@@ -792,17 +796,20 @@ public abstract class SkinningEntities extends EntityLivingBase
 
         return new AxisAlignedBB
         (
-        this.posX - hw, y, this.posZ - hw,
-        this.posX + hw, this.posY + this.height + 0.001F, this.posZ + hw
+            this.posX - hw, y, this.posZ - hw,
+            this.posX + hw, this.posY + this.height + 0.001F, this.posZ + hw
         );
     }
 
+    @SideOnly(Side.CLIENT)
     public AxisAlignedBB getMouthAxisAlignedBB()
     {
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
         SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
         int[] iv_int_array = this.getIVIntArray();
 
+//        float[] pos_vec4 = skinningrender.getScale3DSkinning((OpenGLSkinningMemory)skinningrender.dataloader.openglobjectmemory_array[iv_int_array[10]], (float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
+//        float[] pos_vec4 = skinningrender.getScale3DSkinning((OpenGLSkinningMemory)skinningrender.dataloader.object_array[iv_int_array[10]], (float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
         float[] pos_vec4 = skinningrender.getScale3DSkinning((float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
 
         double x = pos_vec4[0] / pos_vec4[3];
@@ -814,11 +821,12 @@ public abstract class SkinningEntities extends EntityLivingBase
 
         return new AxisAlignedBB
         (
-        x - hw, y - hh, z - hw,
-        x + hw, y + hh, z + hw
+            x - hw, y - hh, z - hw,
+            x + hw, y + hh, z + hw
         );
     }
 
+    @SideOnly(Side.CLIENT)
     public void initFakeFrame(){}
 
     public abstract BothData createBothData();

@@ -33,10 +33,12 @@ public class ItemsRegistryHelper
         {
             try
             {
-                ITEM_ARRAY[index++] = (Item)clasz.getConstructor(String[].class).newInstance((Object)StringReader.get(clasz));
+                Item item = (Item)clasz.getConstructor(String[].class).newInstance((Object)StringReader.get(clasz));
+                clasz.getField("I").set(item, item);
+                ITEM_ARRAY[index++] = item;
 //                ITEM_ARRAY[index++] = (Item)constructor.newInstance(clasz.getSimpleName().toLowerCase());
             }
-            catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e)
+            catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | NoSuchFieldException e)
             {
                 Small.error(e);
             }

@@ -1,5 +1,6 @@
 package com.nali.small.items;
 
+import com.nali.draw.DrawScreen;
 import com.nali.render.ObjectRender;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -10,6 +11,8 @@ public interface MixItems
 {
     @SideOnly(Side.CLIENT)
     ObjectRender getObjectRender();
+    @SideOnly(Side.CLIENT)
+    DrawScreen getDrawScreen();
 
     default void init(Item item, String name, String mod_id, CreativeTabs creativetabs)
     {
@@ -21,6 +24,6 @@ public interface MixItems
     @SideOnly(Side.CLIENT)
     default void render()
     {
-        this.getObjectRender().objectscreendraw.renderScreen();
+        this.getDrawScreen().render(this.getObjectRender());
     }
 }

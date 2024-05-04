@@ -8,7 +8,7 @@ import net.minecraftforge.common.ForgeChunkManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
+import java.util.HashMap;
 
 public class ChunkCallBack implements ForgeChunkManager.OrderedLoadingCallback
 {
@@ -18,7 +18,7 @@ public class ChunkCallBack implements ForgeChunkManager.OrderedLoadingCallback
     public static void set()
     {
         I = new ChunkCallBack();
-        CHUNK_MAP = new WeakHashMap();
+        CHUNK_MAP = new HashMap();
         ForgeChunkManager.setForcedChunkLoadingCallback(Small.I, I);
     }
 
