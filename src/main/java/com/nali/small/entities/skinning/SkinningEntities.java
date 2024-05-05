@@ -686,8 +686,12 @@ public abstract class SkinningEntities extends EntityLivingBase
     @Override
     public SoundEvent getDeathSound()
     {
-        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
-        cliententitiesmemory.soundrender.play(cliententitiesmemory.sounds.DEATH());
+        if (this.world.isRemote)
+        {
+            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
+            cliententitiesmemory.soundrender.play(cliententitiesmemory.sounds.DEATH());
+        }
+
         return super.getDeathSound();
     }
 
