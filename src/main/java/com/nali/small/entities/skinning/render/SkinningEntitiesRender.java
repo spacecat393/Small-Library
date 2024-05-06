@@ -73,7 +73,8 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
         }
         GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
         skinningrender.updateLightCoord();
-        skinningrender.draw(/*ox, oy, oz*/);
+//        skinningrender.draw(/*ox, oy, oz*/);
+        skinningrender.drawLater(/*ox, oy, oz*/);
         if (invisible)
         {
             GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
