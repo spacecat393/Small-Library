@@ -5,6 +5,8 @@ import com.nali.data.client.ClientData;
 import com.nali.render.EntitiesRenderMemory;
 import com.nali.render.SkinningRender;
 import com.nali.system.DataLoader;
+import com.nali.system.opengl.memory.OpenGLObjectMemory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
@@ -53,5 +55,11 @@ public class SkinningEntitiesRender extends SkinningRender
         }
 //        this.lig_b = brightness % 65536;
 //        this.lig_s = brightness / 65536.0F;
+    }
+
+    @Override
+    public boolean getTransparent(OpenGLObjectMemory openglobjectmemory)
+    {
+        return this.entity.isInvisible() || this.entity.isInvisibleToPlayer(Minecraft.getMinecraft().player) || super.getTransparent(openglobjectmemory);
     }
 }
