@@ -9,7 +9,6 @@ import com.nali.system.opengl.memory.OpenGLObjectMemory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -31,7 +30,7 @@ public class SkinningEntitiesRender extends SkinningRender
 //        super.updateLightCoord();
 
 //        int brightness = this.entity.getBrightnessForRender();
-//        int brightness = 0;
+        int brightness = 0;
         if (this.entity.isBurning())
         {
             this.lig_b = -1.0F;
@@ -44,9 +43,12 @@ public class SkinningEntitiesRender extends SkinningRender
 
         if (world.isBlockLoaded(blockpos))
         {
-//            brightness = world.getCombinedLight(blockpos, 0);
-            this.lig_b = world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
-            this.lig_s = world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
+            //support on optifine
+            brightness = world.getCombinedLight(blockpos, 0);
+//            this.lig_b = world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
+//            this.lig_s = world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
+            this.lig_b = (brightness % 65536) / 255.0F;
+            this.lig_s = (brightness / 65536.0F) / 255.0F;
         }
 
         if (this.lig_b < 0.1875F)
