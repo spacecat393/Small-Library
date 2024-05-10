@@ -19,7 +19,7 @@ public abstract class MixinItemMonsterPlacer
 {
     @Inject(method = "spawnCreature", at = @At(value = "JUMP", target = "Lnet/minecraft/entity/EntityList;createEntityByIDFromName(Lnet/minecraft/util/ResourceLocation;Lnet/minecraft/world/World;)Lnet/minecraft/entity/Entity;", ordinal = 1))
     @Mutable
-    private static void nali_spawnCreature(World worldIn, ResourceLocation entityID, double x, double y, double z, CallbackInfoReturnable<Entity> cir)
+    private static void nali_small_spawnCreature(World worldIn, ResourceLocation entityID, double x, double y, double z, CallbackInfoReturnable<Entity> cir)
     {
         Entity entity = EntityList.createEntityByIDFromName(entityID, worldIn);
 

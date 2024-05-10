@@ -20,14 +20,14 @@ public abstract class MixinCommandSummon
 
     @Inject(method = "execute", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/JsonToNBT;getTagFromJson(Ljava/lang/String;)Lnet/minecraft/nbt/NBTTagCompound;", shift = At.Shift.AFTER))
     @Mutable
-    private void afterGetTag(MinecraftServer server, ICommandSender sender, String[] args, CallbackInfo ci)
+    private void nali_small_afterGetTagExecute(MinecraftServer server, ICommandSender sender, String[] args, CallbackInfo ci)
     {
         this.should_execute = true;
     }
 
     @Inject(method = "execute", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setLocationAndAngles(DDDFF)V", shift = At.Shift.AFTER, ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT)
     @Mutable
-    private void execute(MinecraftServer server, ICommandSender sender, String[] args, CallbackInfo ci, Entity entity)
+    private void nali_small_execute(MinecraftServer server, ICommandSender sender, String[] args, CallbackInfo ci, Entity entity)
     {
         if (this.should_execute && (entity instanceof SkinningEntities/* || entity instanceof ObjectEntities*/))
         {

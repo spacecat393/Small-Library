@@ -21,7 +21,7 @@ public abstract class MixinItemRenderer
 {
     @Inject(method = "renderItemInFirstPerson(Lnet/minecraft/client/entity/AbstractClientPlayer;FFLnet/minecraft/util/EnumHand;FLnet/minecraft/item/ItemStack;F)V", at = @At(value = "HEAD"))
     @Mutable
-    private void renderItemInFirstPerson(AbstractClientPlayer player, float p_187457_2_, float p_187457_3_, EnumHand hand, float p_187457_5_, ItemStack stack, float p_187457_7_, CallbackInfo ci)
+    private void nali_small_renderItemInFirstPerson(AbstractClientPlayer player, float p_187457_2_, float p_187457_3_, EnumHand hand, float p_187457_5_, ItemStack stack, float p_187457_7_, CallbackInfo ci)
     {
         if (stack.getItem() instanceof MixItems)
         {
@@ -39,7 +39,7 @@ public abstract class MixinItemRenderer
 
     @Inject(method = "renderItemSide", at = @At(value = "HEAD"))
     @Mutable
-    private void renderItemSide(EntityLivingBase entitylivingbaseIn, ItemStack heldStack, ItemCameraTransforms.TransformType transform, boolean leftHanded, CallbackInfo ci)
+    private void nali_small_renderItemSide(EntityLivingBase entitylivingbaseIn, ItemStack heldStack, ItemCameraTransforms.TransformType transform, boolean leftHanded, CallbackInfo ci)
     {
         if (heldStack.getItem() instanceof MixItems)
         {

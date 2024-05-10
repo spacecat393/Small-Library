@@ -23,7 +23,7 @@ public abstract class MixinRenderItem
 
     @Inject(method = "renderModel(Lnet/minecraft/client/renderer/block/model/IBakedModel;ILnet/minecraft/item/ItemStack;)V", at = @At("HEAD"), cancellable = true)
     @Mutable
-    private void renderModel(IBakedModel model, int color, ItemStack stack, CallbackInfo ci)
+    private void nali_small_renderModel(IBakedModel model, int color, ItemStack stack, CallbackInfo ci)
     {
         if (stack.getItem() instanceof MixItems)
         {

@@ -25,14 +25,14 @@ public abstract class MixinEntityPlayer extends EntityLivingBase
 
     @Inject(method = "entityInit", at = @At("HEAD"))
     @Mutable
-    private void mixinEntityInit(CallbackInfo ci)
+    private void nali_small_entityInit(CallbackInfo ci)
     {
         this.dataManager.register(SAKURA_BYTE_DATAPARAMETER, (byte)0);
     }
 
     @Inject(method = "onUpdate", at = @At("HEAD"))
     @Mutable
-    private void mixinOnUpdate(CallbackInfo ci)
+    private void nali_small_onUpdate(CallbackInfo ci)
     {
         if (!this.world.isRemote)
         {

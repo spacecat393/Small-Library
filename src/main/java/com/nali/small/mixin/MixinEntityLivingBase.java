@@ -23,7 +23,7 @@ public abstract class MixinEntityLivingBase extends Entity
 
     @Inject(method = "onDeath", at = @At(value = "HEAD"))
     @Mutable
-    private void onDeath(DamageSource cause, CallbackInfo ci)
+    private void nali_small_onDeath(DamageSource cause, CallbackInfo ci)
     {
         Entity entity = cause.getTrueSource();
 
@@ -36,7 +36,7 @@ public abstract class MixinEntityLivingBase extends Entity
 
     @Inject(method = "attackEntityFrom", at = @At(value = "HEAD"), cancellable = true)
     @Mutable
-    private void attackEntityFrom(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir)
+    private void nali_small_attackEntityFrom(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir)
     {
         byte protect = this.getEntityData().getByte("protect_nali");
         if (protect > 0)

@@ -13,7 +13,7 @@ public abstract class MixinWorldProvider
 {
     @Inject(method = "getRespawnDimension", at = @At(value = "HEAD"), cancellable = true, remap = false)
     @Mutable
-    private void getRespawnDimension(EntityPlayerMP player, CallbackInfoReturnable<Integer> cir)
+    private void nali_small_getRespawnDimension(EntityPlayerMP player, CallbackInfoReturnable<Integer> cir)
     {
         if (player.getEntityData().hasKey("revive_nali"))
         {
