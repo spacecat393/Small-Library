@@ -28,7 +28,7 @@ public class SetAttack
             float x = BytesReader.getFloat(servermessage.data, 1 + 16 + 4);
 
             SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
-            int value = smallsakuratypes.get();
+            byte value = smallsakuratypes.get();
 
             if (id == 1.1F)
             {
@@ -36,7 +36,7 @@ public class SetAttack
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesattack.flag |= 16;
                     }
                 }
@@ -51,7 +51,7 @@ public class SetAttack
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesattack.flag |= 8;
                     }
                 }
@@ -65,7 +65,7 @@ public class SetAttack
                 int v = (int)x;
                 if (value >= v)
                 {
-                    smallsakuratypes.set(value - v);
+                    smallsakuratypes.set((byte)(value - v));
                     skinningentitiesattack.minimum_distance = x;
                 }
             }
@@ -74,7 +74,7 @@ public class SetAttack
                 int v = (int)x;
                 if (value >= v)
                 {
-                    smallsakuratypes.set(value - v);
+                    smallsakuratypes.set((byte)(value - v));
                     skinningentitiesattack.max_magic_point = v;
                 }
             }

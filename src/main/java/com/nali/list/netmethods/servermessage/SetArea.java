@@ -28,7 +28,7 @@ public class SetArea
             float x = BytesReader.getFloat(servermessage.data, 1 + 16 + 4);
 
             SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
-            int value = smallsakuratypes.get();
+            byte value = smallsakuratypes.get();
 
             if (id == 0.1F)
             {
@@ -36,7 +36,7 @@ public class SetArea
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesarea.flag |= 4;
                     }
                 }
@@ -51,7 +51,7 @@ public class SetArea
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesarea.flag |= 8;
                     }
                 }
@@ -66,7 +66,7 @@ public class SetArea
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesarea.flag |= 128;
                     }
                 }
@@ -81,7 +81,7 @@ public class SetArea
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesarea.flag |= 16;
                     }
                 }
@@ -96,7 +96,7 @@ public class SetArea
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesarea.flag |= 32;
                     }
                 }
@@ -111,7 +111,7 @@ public class SetArea
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesarea.flag |= 64;
                     }
                 }

@@ -28,7 +28,7 @@ public class SetGetItem
             float f = BytesReader.getFloat(servermessage.data, 1 + 16 + 4);
 
             SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
-            int value = smallsakuratypes.get();
+            byte value = smallsakuratypes.get();
 
             if (id >= 2)
             {
@@ -38,7 +38,7 @@ public class SetGetItem
                     {
                         if (value >= 1)
                         {
-                            smallsakuratypes.set(value - 1);
+                            smallsakuratypes.set((byte)(value - 1));
                             skinningentitiesgetitem.flag |= 4;
                         }
                     }
@@ -53,7 +53,7 @@ public class SetGetItem
                     {
                         if (value >= 1)
                         {
-                            smallsakuratypes.set(value - 1);
+                            smallsakuratypes.set((byte)(value - 1));
                             skinningentitiesgetitem.flag |= 64;
                         }
                     }
@@ -68,7 +68,7 @@ public class SetGetItem
                     {
                         if (value >= 1)
                         {
-                            smallsakuratypes.set(value - 1);
+                            smallsakuratypes.set((byte)(value - 1));
                             skinningentitiesgetitem.flag |= 16;
                         }
                     }
@@ -86,7 +86,7 @@ public class SetGetItem
                     {
                         if (value >= 1)
                         {
-                            smallsakuratypes.set(value - 1);
+                            smallsakuratypes.set((byte)(value - 1));
                             skinningentitiesgetitem.flag |= 2;
                         }
                     }
@@ -101,7 +101,7 @@ public class SetGetItem
                     {
                         if (value >= 1)
                         {
-                            smallsakuratypes.set(value - 1);
+                            smallsakuratypes.set((byte)(value - 1));
                             skinningentitiesgetitem.flag |= 32;
                         }
                     }
@@ -116,7 +116,7 @@ public class SetGetItem
                     {
                         if (value >= 1)
                         {
-                            smallsakuratypes.set(value - 1);
+                            smallsakuratypes.set((byte)(value - 1));
                             skinningentitiesgetitem.flag |= 8;
                         }
                     }

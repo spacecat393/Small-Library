@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EntityPlayer.class)
 public abstract class MixinEntityPlayer extends EntityLivingBase
 {
-    private static final DataParameter<Integer> SAKURA_INTEGER_DATAPARAMETER = EntityDataManager.<Integer>createKey(MixinEntityPlayer.class, DataSerializers.VARINT);
+    private static final DataParameter<Byte> SAKURA_BYTE_DATAPARAMETER = EntityDataManager.<Byte>createKey(MixinEntityPlayer.class, DataSerializers.BYTE);
 
     public MixinEntityPlayer(World worldIn)
     {
@@ -27,7 +27,7 @@ public abstract class MixinEntityPlayer extends EntityLivingBase
     @Mutable
     private void mixinEntityInit(CallbackInfo ci)
     {
-        this.dataManager.register(SAKURA_INTEGER_DATAPARAMETER, 0);
+        this.dataManager.register(SAKURA_BYTE_DATAPARAMETER, (byte)0);
     }
 
     @Inject(method = "onUpdate", at = @At("HEAD"))
@@ -36,11 +36,11 @@ public abstract class MixinEntityPlayer extends EntityLivingBase
     {
         if (!this.world.isRemote)
         {
-            this.dataManager.set(SAKURA_INTEGER_DATAPARAMETER, this.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null).get());
+            this.dataManager.set(SAKURA_BYTE_DATAPARAMETER, this.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null).get());
         }
         else
         {
-            this.getEntityData().setInteger("sakura_nali", this.dataManager.get(SAKURA_INTEGER_DATAPARAMETER));
+            this.getEntityData().setInteger("sakura_nali", this.dataManager.get(SAKURA_BYTE_DATAPARAMETER));
         }
     }
 }

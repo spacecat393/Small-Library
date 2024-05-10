@@ -4,26 +4,26 @@ import com.nali.list.capabilitiestypes.SmallSakuraTypes;
 
 public class SmallSakuraFactories implements SmallSakuraTypes
 {
-    public int sakura_int = 0;
+    public byte sakura_byte = 0;
 
     @Override
-    public int get()
+    public byte get()
     {
-        return this.sakura_int;
+        return this.sakura_byte;
     }
 
     @Override
-    public void set(int i)
+    public void set(byte i)
     {
-        this.sakura_int = i;
+        this.sakura_byte = i;
     }
 
     @Override
-    public void add(int i)
+    public void add(byte i)
     {
-        if (this.sakura_int + i < Integer.MAX_VALUE)
+        if (this.sakura_byte + i < 65/*Integer.MAX_VALUE*/)
         {
-            this.sakura_int += i;
+            this.sakura_byte += i;
         }
     }
 }

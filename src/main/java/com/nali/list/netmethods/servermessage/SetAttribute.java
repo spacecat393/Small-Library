@@ -25,13 +25,13 @@ public class SetAttribute
             int need = (int)f;
 
             SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
-            int value = smallsakuratypes.get();
+            byte value = smallsakuratypes.get();
 
             if (value >= need)
             {
                 if (need > 0)
                 {
-                    smallsakuratypes.set(value - need);
+                    smallsakuratypes.set((byte)(value - need));
                 }
 
                 int index = 0;

@@ -23,11 +23,11 @@ public class Scale
             int need = (int)s;
 
             SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
-            int value = smallsakuratypes.get();
+            byte value = smallsakuratypes.get();
 
             if (value >= need)
             {
-                smallsakuratypes.set(value - need);
+                smallsakuratypes.set((byte)(value - need));
                 skinningentities.getDataManager().set(skinningentities.getFloatDataParameterArray()[0], s);
             }
         }

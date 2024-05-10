@@ -20,11 +20,11 @@ public class TP
         if (skinningentities != null && canPass(skinningentities, entityplayermp))
         {
             SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
-            int value = smallsakuratypes.get();
+            byte value = smallsakuratypes.get();
 
             if (value >= 1)
             {
-                smallsakuratypes.set(value - 1);
+                smallsakuratypes.set((byte)(value - 1));
                 int dimension = skinningentities.world.provider.getDimension();
                 if (dimension != entityplayermp.world.provider.getDimension())
                 {

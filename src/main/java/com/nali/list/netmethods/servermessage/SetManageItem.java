@@ -40,7 +40,7 @@ public class SetManageItem
 //            Small.LOGGER.info("X " + x);
 
             SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
-            int value = smallsakuratypes.get();
+            byte value = smallsakuratypes.get();
 
 //            if (id >= 2)
 //            {
@@ -50,7 +50,7 @@ public class SetManageItem
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesmanageitem.state |= 32;
                     }
                 }
@@ -65,7 +65,7 @@ public class SetManageItem
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesmanageitem.state |= 2;
                     }
                 }
@@ -79,7 +79,7 @@ public class SetManageItem
                 int v = (int)x;
                 if (value >= v)
                 {
-                    smallsakuratypes.set(value - v);
+                    smallsakuratypes.set((byte)(value - v));
                     skinningentitiesmanageitem.random_area_out = v;
                 }
             }
@@ -104,7 +104,7 @@ public class SetManageItem
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesmanageitem.state |= 16;
                     }
                 }
@@ -119,7 +119,7 @@ public class SetManageItem
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesmanageitem.state |= 1;
                     }
                 }
@@ -133,7 +133,7 @@ public class SetManageItem
                 int v = (int)x;
                 if (value >= v)
                 {
-                    smallsakuratypes.set(value - v);
+                    smallsakuratypes.set((byte)(value - v));
                     skinningentitiesmanageitem.random_area_in = v;
                 }
             }

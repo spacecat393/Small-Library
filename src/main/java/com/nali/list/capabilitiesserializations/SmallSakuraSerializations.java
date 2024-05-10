@@ -23,7 +23,7 @@ public class SmallSakuraSerializations implements ICapabilitySerializable<NBTBas
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing enumfacing)
     {
-        return capability == SMALLSAKURATYPES_CAPABILITY ? SMALLSAKURATYPES_CAPABILITY.<T> cast(this.smallsakuratypes) : null;
+        return capability == SMALLSAKURATYPES_CAPABILITY ? SMALLSAKURATYPES_CAPABILITY.cast(this.smallsakuratypes) : null;
     }
 
     @Override

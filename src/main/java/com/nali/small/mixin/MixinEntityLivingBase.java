@@ -30,7 +30,7 @@ public abstract class MixinEntityLivingBase extends Entity
         if (entity instanceof EntityPlayerMP)
         {
             EntityPlayerMP entityplayermp = (EntityPlayerMP)entity;
-            entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null).add(1);
+            entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null).add((byte)1);
         }
     }
 

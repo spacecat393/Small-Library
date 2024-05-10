@@ -5,6 +5,7 @@ import com.nali.list.capabilitiestypes.SmallSakuraTypes;
 import com.nali.list.items.SmallBox;
 import com.nali.list.messages.ServerMessage;
 import com.nali.small.Small;
+import com.nali.small.config.MyConfig;
 import com.nali.small.entities.EntitiesRegistryHelper;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
@@ -23,30 +24,33 @@ public class X12
     public static byte GUARANTEE;
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
-        Random random = entityplayermp.getRNG();
-        SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
-        int value = smallsakuratypes.get();
-        if (value >= 12)
+        if (MyConfig.SERVER.player_rng)
         {
-            smallsakuratypes.set(value - 12);
+            Random random = entityplayermp.getRNG();
+            SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
+            byte value = smallsakuratypes.get();
+            if (value >= 12)
+            {
+                smallsakuratypes.set((byte)(value - 12));
 
-            if (GUARANTEE >= 10)
-            {
-                spawnX12(random, entityplayermp);
-                GUARANTEE = 0;
-            }
-            else
-            {
-                ++GUARANTEE;
-            }
+                if (GUARANTEE >= 10)
+                {
+                    spawnX12(random, entityplayermp);
+                    GUARANTEE = 0;
+                }
+                else
+                {
+                    ++GUARANTEE;
+                }
 
-            if (random.nextInt(7) == 0)
-            {
-                spawnX12(random, entityplayermp);
-            }
-            else
-            {
-                entityplayermp.dropItem(Items.STICK, 1);
+                if (random.nextInt(7) == 0)
+                {
+                    spawnX12(random, entityplayermp);
+                }
+                else
+                {
+                    entityplayermp.dropItem(Items.STICK, 1);
+                }
             }
         }
     }

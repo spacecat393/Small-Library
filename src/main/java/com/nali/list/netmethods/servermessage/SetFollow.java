@@ -28,7 +28,7 @@ public class SetFollow
             float x = BytesReader.getFloat(servermessage.data, 1 + 16 + 4);
 
             SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
-            int value = smallsakuratypes.get();
+            byte value = smallsakuratypes.get();
 
             if (id == 1.1F)
             {
@@ -36,7 +36,7 @@ public class SetFollow
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesfollow.flag |= 4;
                     }
                 }
@@ -51,7 +51,7 @@ public class SetFollow
                 {
                     if (value >= 1)
                     {
-                        smallsakuratypes.set(value - 1);
+                        smallsakuratypes.set((byte)(value - 1));
                         skinningentitiesfollow.flag |= 2;
                     }
                 }

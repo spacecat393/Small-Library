@@ -5,6 +5,7 @@ import com.nali.list.capabilitiestypes.SmallSakuraTypes;
 import com.nali.list.items.SmallBox;
 import com.nali.list.messages.ServerMessage;
 import com.nali.small.Small;
+import com.nali.small.config.MyConfig;
 import com.nali.small.entities.EntitiesRegistryHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,31 +25,34 @@ public class X64
     public static byte GUARANTEE;
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
-        Random random = entityplayermp.getRNG();
-        SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
-        int value = smallsakuratypes.get();
-
-        if (value >= 64)
+        if (MyConfig.SERVER.player_rng)
         {
-            smallsakuratypes.set(value - 64);
+            Random random = entityplayermp.getRNG();
+            SmallSakuraTypes smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null);
+            byte value = smallsakuratypes.get();
 
-            if (GUARANTEE >= 10)
+            if (value >= 64)
             {
-                spawnX64(entityplayermp);
-                GUARANTEE = 0;
-            }
-            else
-            {
-                ++GUARANTEE;
-            }
+                smallsakuratypes.set((byte)(value - 64));
 
-            if (random.nextBoolean())
-            {
-                entityplayermp.dropItem(Item.getItemById(entityplayermp.getRNG().nextInt(Item.REGISTRY.getKeys().size())), 1);
-            }
-            else
-            {
-                spawnX64(entityplayermp);
+                if (GUARANTEE >= 10)
+                {
+                    spawnX64(entityplayermp);
+                    GUARANTEE = 0;
+                }
+                else
+                {
+                    ++GUARANTEE;
+                }
+
+                if (random.nextBoolean())
+                {
+                    entityplayermp.dropItem(Item.getItemById(entityplayermp.getRNG().nextInt(Item.REGISTRY.getKeys().size())), 1);
+                }
+                else
+                {
+                    spawnX64(entityplayermp);
+                }
             }
         }
     }
