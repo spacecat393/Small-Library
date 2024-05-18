@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 
 import static com.nali.list.handlers.ServerHandler.canPass;
 import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
+import static com.nali.small.items.ItemsRegistryHelper.ITEM_ARRAY;
 
 public class PutToBox
 {
@@ -21,7 +22,7 @@ public class PutToBox
         {
             ItemStack itemstack = entityplayermp.getHeldItemMainhand();
 
-            if (itemstack.getItem() == SmallBox.I && itemstack.getTagCompound() == null)
+            if (itemstack.getItem() == ITEM_ARRAY[SmallBox.ID] && itemstack.getTagCompound() == null)
             {
                 SmallBox.putToBox(skinningentities, itemstack);
                 entityplayermp.closeScreen();

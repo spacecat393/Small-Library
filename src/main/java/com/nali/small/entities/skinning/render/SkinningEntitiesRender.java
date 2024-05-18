@@ -21,6 +21,7 @@ import java.awt.*;
 
 import static com.nali.key.KeyHelper.generateRainbowColor;
 import static com.nali.small.entities.skinning.render.SkinningEntitiesRenderMath.interpolateRotation;
+import static com.nali.system.ClientLoader.OBJECT_LIST;
 import static com.nali.system.opengl.memory.OpenGLCurrentMemory.*;
 
 @SideOnly(Side.CLIENT)
@@ -99,7 +100,8 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
 //        skinningrender.timeline = partialTicks;
 
 //        OpenGLAnimationMemory openglanimationmemory = skinningrender.dataloader.openglanimationmemory_list.get(((SkinningClientData)skinningrender.clientdata).AnimationID());
-        OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)skinningrender.dataloader.object_array[((SkinningClientData)skinningrender.clientdata).AnimationID()];
+//        OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)skinningrender.dataloader.object_array[((SkinningClientData)skinningrender.clientdata).AnimationID()];
+        OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)OBJECT_LIST.get(((SkinningClientData)skinningrender.clientdata).AnimationID());
         skinningrender.initSkinning(openglanimationmemory);
 
         if (!cliententitiesmemory.fake)

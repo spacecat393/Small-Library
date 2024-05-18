@@ -17,6 +17,8 @@ import net.minecraft.world.World;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
+import static com.nali.small.items.ItemsRegistryHelper.ITEM_ARRAY;
+
 public class X12
 {
     public static byte ID;
@@ -59,7 +61,7 @@ public class X12
     {
         try
         {
-            ItemStack itemstack = new ItemStack(SmallBox.I);
+            ItemStack itemstack = new ItemStack(ITEM_ARRAY[SmallBox.ID]);
             int id = random.nextInt(EntitiesRegistryHelper.ENTITIES_CLASS_LIST.size());
             SkinningEntities skinningentities = (SkinningEntities)EntitiesRegistryHelper.ENTITIES_CLASS_LIST.get(id).getConstructor(World.class).newInstance(entityplayermp.world);
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;

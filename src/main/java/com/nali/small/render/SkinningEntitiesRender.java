@@ -4,7 +4,6 @@ import com.nali.data.BothData;
 import com.nali.data.client.ClientData;
 import com.nali.render.EntitiesRenderMemory;
 import com.nali.render.SkinningRender;
-import com.nali.system.DataLoader;
 import com.nali.system.opengl.memory.OpenGLObjectMemory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -18,9 +17,9 @@ public class SkinningEntitiesRender extends SkinningRender
 {
     public Entity entity;
 
-    public SkinningEntitiesRender(EntitiesRenderMemory entitiesrendermemory, BothData bothdata, ClientData clientdata, DataLoader dataloader, Entity entity)
+    public SkinningEntitiesRender(EntitiesRenderMemory entitiesrendermemory, BothData bothdata, ClientData clientdata/*, DataLoader dataloader*/, Entity entity)
     {
-        super(entitiesrendermemory, bothdata, clientdata, dataloader);
+        super(entitiesrendermemory, bothdata, clientdata/*, dataloader*/);
         this.entity = entity;
     }
 

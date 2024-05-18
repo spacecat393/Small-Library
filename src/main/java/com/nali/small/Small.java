@@ -8,7 +8,6 @@ import com.nali.small.gui.OpenGUIHelper;
 import com.nali.small.render.RenderHelper;
 import com.nali.small.system.Reference;
 import com.nali.small.world.ChunkCallBack;
-import com.nali.system.DataLoader;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -21,8 +20,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashSet;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static com.nali.small.entities.EntitiesRegistryHelper.ENTITY_CLASS_ENTRIES;
 
@@ -39,8 +38,7 @@ public class Small
     {
         if (event.getSide().isClient())
         {
-            DataLoader.setModels(RenderHelper.DATALOADER, Reference.MOD_ID);
-
+//            DataLoader.setModels(RenderHelper.DATALOADER, Reference.MOD_ID);
 //            CapabilitiesRegistryHelper.update();
             OpenGUIHelper.set();
         }

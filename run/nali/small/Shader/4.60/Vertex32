@@ -1,0 +1,13 @@
+        temp_vertices_vec4 *= weight;
+        temp_normals_vec4 *= weight;
+
+        vertices_vec4 += temp_vertices_vec4;
+        normals_vec4 += temp_normals_vec4;
+    }
+
+    gl_Position = ProjectionMatrix * ModelViewMatrix * vertices_vec4;
+    fragment_texcoord = texcoord;
+    fragment_normals = normals_vec4.xyz;
+    //vec3 vxyz = gl_Position.xyz / gl_Position.w;
+    //screen_coords = (vxyz.xy / vxyz.z) * 0.5 + 0.5;
+}

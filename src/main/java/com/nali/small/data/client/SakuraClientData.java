@@ -2,17 +2,19 @@ package com.nali.small.data.client;
 
 import com.nali.data.client.ClientData;
 
+import static com.nali.list.data.SmallData.MODEL_STEP;
+
 public class SakuraClientData implements ClientData
 {
     @Override
     public int StartPart()
     {
-        return 3;
+        return MODEL_STEP + 3;
     }
 
     @Override
     public int EndPart()
     {
-        return 5;
+        return MODEL_STEP + 5;
     }
 }

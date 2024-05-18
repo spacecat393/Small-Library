@@ -34,7 +34,7 @@ import static com.nali.small.entities.memory.server.ServerEntitiesMemory.removeF
 
 public class SmallBox extends Item implements MixItems
 {
-    public static SmallBox I;
+    public static int ID;
     @SideOnly(Side.CLIENT)
     public static ObjectRender OBJECTRENDER;
     @SideOnly(Side.CLIENT)

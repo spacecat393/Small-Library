@@ -18,6 +18,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
+import static com.nali.small.items.ItemsRegistryHelper.ITEM_ARRAY;
+
 public class X64
 {
     public static byte ID;
@@ -61,7 +63,7 @@ public class X64
     {
         try
         {
-            ItemStack itemstack = new ItemStack(SmallBox.I);
+            ItemStack itemstack = new ItemStack(ITEM_ARRAY[SmallBox.ID]);
             int id = entityplayermp.getRNG().nextInt(EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length);
             Constructor constructor = ((Class)EntitiesRegistryHelper.ENTITY_KEY_ARRAY[id]).getConstructor(World.class);
             Entity entity = (Entity)constructor.newInstance(entityplayermp.world);

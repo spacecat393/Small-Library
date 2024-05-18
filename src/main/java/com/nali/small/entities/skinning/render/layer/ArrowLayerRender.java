@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.nali.system.ClientLoader.OBJECT_LIST;
+
 @SideOnly(Side.CLIENT)
 public class ArrowLayerRender extends LayerRender
 {
@@ -44,7 +46,8 @@ public class ArrowLayerRender extends LayerRender
                 int start = skinningrender.clientdata.StartPart();
                 int model_i = random.nextInt(skinningrender.clientdata.EndPart() - start) + start;
 //                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.dataloader.openglobjectmemory_array[model_i];
-                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.dataloader.object_array[model_i];
+//                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)skinningrender.dataloader.object_array[model_i];
+                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)OBJECT_LIST.get(model_i);
                 this.index_int_array_list.add(new int[]{model_i, random.nextInt(openglskinningmemory.index_int_array.length)});
                 this.float_array_list.add(new float[]{random.nextFloat(), random.nextFloat(), random.nextFloat()});
             }

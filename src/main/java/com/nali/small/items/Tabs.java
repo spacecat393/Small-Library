@@ -5,6 +5,8 @@ import com.nali.list.items.SmallBox;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
+import static com.nali.small.items.ItemsRegistryHelper.ITEM_ARRAY;
+
 public class Tabs extends CreativeTabs
 {
     public static Tabs TABS = new Tabs();
@@ -17,7 +19,7 @@ public class Tabs extends CreativeTabs
     @Override
     public ItemStack createIcon()
     {
-        return new ItemStack(SmallBox.I);
+        return new ItemStack(ITEM_ARRAY[SmallBox.ID]);
     }
 
     @Override
