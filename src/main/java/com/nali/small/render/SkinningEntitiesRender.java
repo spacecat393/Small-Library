@@ -61,6 +61,6 @@ public class SkinningEntitiesRender extends SkinningRender
     @Override
     public boolean getTransparent(OpenGLObjectMemory openglobjectmemory)
     {
-        return this.entity.isInvisible() || this.entity.isInvisibleToPlayer(Minecraft.getMinecraft().player) || super.getTransparent(openglobjectmemory);
+        return this.entity == null || this.entity.isInvisible() || this.entity.isInvisibleToPlayer(Minecraft.getMinecraft().player) || super.getTransparent(openglobjectmemory);
     }
 }

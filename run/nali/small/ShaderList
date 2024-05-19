@@ -1,2 +1,3 @@
 small Map small 0
-small NoMap small 1
+small MapNoTexture small 4
+small NoMapNoTexture small 2

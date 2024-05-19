@@ -1,4 +1,4 @@
-package com.nali.small.render.object;
+package com.nali.small.render;
 
 import com.nali.data.client.ClientData;
 import com.nali.render.EntitiesRenderMemory;

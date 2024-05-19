@@ -2,7 +2,7 @@ package com.nali.small.render;
 
 import com.nali.draw.DrawScreen;
 import com.nali.list.items.SmallBox;
-import com.nali.small.render.object.BoxRender;
+import com.nali.list.render.BoxRender;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
