@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
-public class EntitiesRegistryHelper
+public class EntitiesRegistry
 {
     public static Map<Class<? extends Entity>, EntityEntry> ENTITY_CLASS_ENTRIES = GameData.getEntityClassMap();
     public static List<Class> ENTITIES_CLASS_LIST = Reflect.getClasses("com.nali.list.entities");

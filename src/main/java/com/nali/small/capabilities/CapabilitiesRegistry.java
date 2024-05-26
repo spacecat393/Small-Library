@@ -16,26 +16,13 @@ import java.util.Comparator;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
-public class CapabilitiesRegistryHelper
+public class CapabilitiesRegistry
 {
-    public static List<Class> CAPABILITIES_STORAGES_CLASS_LIST = Reflect.getClasses("com.nali.list.capabilitiesstorages");
-    public static List<Class> CAPABILITIES_FACTORIES_CLASS_LIST = Reflect.getClasses("com.nali.list.capabilitiesfactories");
     public static List<Class> CAPABILITIES_SERIALIZATIONS_CLASS_LIST = Reflect.getClasses("com.nali.list.capabilitiesserializations");
-    public static List<Class> CAPABILITIES_TYPES_CLASS_LIST = Reflect.getClasses("com.nali.list.capabilitiestypes");
     public static ResourceLocation[] RESOURCELOCATION_ARRAY;
     static
     {
-        CAPABILITIES_STORAGES_CLASS_LIST.sort(Comparator.comparing(Class::getName));
-        CAPABILITIES_FACTORIES_CLASS_LIST.sort(Comparator.comparing(Class::getName));
         CAPABILITIES_SERIALIZATIONS_CLASS_LIST.sort(Comparator.comparing(Class::getName));
-        CAPABILITIES_TYPES_CLASS_LIST.sort(Comparator.comparing(Class::getName));
-
-        RESOURCELOCATION_ARRAY = new ResourceLocation[CAPABILITIES_STORAGES_CLASS_LIST.size()];
-        int index = 0;
-        for (Class clasz : CAPABILITIES_STORAGES_CLASS_LIST)
-        {
-            RESOURCELOCATION_ARRAY[index++] = new ResourceLocation(Reference.MOD_ID, clasz.getSimpleName().toLowerCase());
-        }
     }
 //    public static List<Object> CLIENT_CAPABILITY_OBJECT_LIST;
 
@@ -51,11 +38,25 @@ public class CapabilitiesRegistryHelper
 
     public static void register()
     {
+        List<Class> capabilities_storages_class_list = Reflect.getClasses("com.nali.list.capabilitiesstorages");
+        List<Class> capabilities_factories_class_list = Reflect.getClasses("com.nali.list.capabilitiesfactories");
+        List<Class> capabilities_types_class_list = Reflect.getClasses("com.nali.list.capabilitiestypes");
+        capabilities_storages_class_list.sort(Comparator.comparing(Class::getName));
+        capabilities_factories_class_list.sort(Comparator.comparing(Class::getName));
+        capabilities_types_class_list.sort(Comparator.comparing(Class::getName));
+
+        RESOURCELOCATION_ARRAY = new ResourceLocation[capabilities_storages_class_list.size()];
+        int index = 0;
+        for (Class clasz : capabilities_storages_class_list)
+        {
+            RESOURCELOCATION_ARRAY[index++] = new ResourceLocation(Reference.MOD_ID, clasz.getSimpleName().toLowerCase());
+        }
+
         for (int i = 0; i < RESOURCELOCATION_ARRAY.length; ++i)
         {
             try
             {
-                CapabilityManager.INSTANCE.register(CAPABILITIES_TYPES_CLASS_LIST.get(i), (Capability.IStorage)CAPABILITIES_STORAGES_CLASS_LIST.get(i).newInstance(), CAPABILITIES_FACTORIES_CLASS_LIST.get(i));
+                CapabilityManager.INSTANCE.register(capabilities_types_class_list.get(i), (Capability.IStorage)capabilities_storages_class_list.get(i).newInstance(), capabilities_factories_class_list.get(i));
             }
             catch (InstantiationException | IllegalAccessException e)
             {
@@ -65,7 +66,7 @@ public class CapabilitiesRegistryHelper
     }
 
     @SubscribeEvent
-    public static void setEntityAttachCapabilitiesEvent(net.minecraftforge.event.AttachCapabilitiesEvent<Entity> event)
+    public static void onEntityAttachCapabilitiesEvent(net.minecraftforge.event.AttachCapabilitiesEvent<Entity> event)
     {
         if (!(event.getObject() instanceof EntityPlayer)) return;
 

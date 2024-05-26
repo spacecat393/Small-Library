@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 
 import static com.nali.list.handlers.ServerHandler.canPass;
 import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
-import static com.nali.small.items.ItemsRegistryHelper.ITEM_ARRAY;
+import static com.nali.small.items.ItemsRegistry.ITEM_ARRAY;
 
 public class PutToBox
 {

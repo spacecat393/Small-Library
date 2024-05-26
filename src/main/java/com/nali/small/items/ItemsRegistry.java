@@ -1,10 +1,11 @@
 package com.nali.small.items;
 
 import com.nali.small.Small;
+import com.nali.small.blocks.BlocksRegistry;
 import com.nali.small.system.Reference;
+import com.nali.small.tiles.TileRegistry;
 import com.nali.system.Reflect;
 import com.nali.system.StringReader;
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -18,10 +19,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import static com.nali.small.blocks.BlocksRegistryHelper.BLOCK_ARRAY;
-
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
-public class ItemsRegistryHelper
+public class ItemsRegistry
 {
 //    public static List<Class> ITEMS_CLASS_LIST = Reflect.getClasses("com.nali.list.items");
     public static Item[] ITEM_ARRAY;
@@ -53,9 +52,14 @@ public class ItemsRegistryHelper
     }
 
     @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event)
+    public static void onItemRegister(RegistryEvent.Register<Item> event)
     {
         for (Item item : ITEM_ARRAY)
+        {
+            event.getRegistry().register(item);
+        }
+
+        for (Item item : BlocksRegistry.ITEM_ARRAY)
         {
             event.getRegistry().register(item);
         }
@@ -63,17 +67,29 @@ public class ItemsRegistryHelper
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public static void registerModels(ModelRegistryEvent event)
+    public static void onModelRegistryEvent(ModelRegistryEvent event)
     {
+        TileRegistry.onModelRegistryEvent(event);
+
         for (Item item : ITEM_ARRAY)
         {
             ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
         }
 
-        for (Block block : BLOCK_ARRAY)
+        for (Item item : BlocksRegistry.ITEM_ARRAY)
         {
-            Item item = Item.getItemFromBlock(block);
+//            Item item = Item.getItemFromBlock(block);
             ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
         }
+
+//        for (Block block : BlocksRegistryHelper.BLOCK_ARRAY)
+//        {
+//            Item item = Item.getItemFromBlock(block);
+////            if (item == Items.AIR)
+////            {
+////                Nali.error("AIR");
+////            }
+//            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
+//        }
     }
 }

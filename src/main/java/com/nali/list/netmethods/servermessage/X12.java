@@ -6,7 +6,7 @@ import com.nali.list.items.SmallBox;
 import com.nali.list.messages.ServerMessage;
 import com.nali.small.Small;
 import com.nali.small.config.MyConfig;
-import com.nali.small.entities.EntitiesRegistryHelper;
+import com.nali.small.entities.EntitiesRegistry;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
-import static com.nali.small.items.ItemsRegistryHelper.ITEM_ARRAY;
+import static com.nali.small.items.ItemsRegistry.ITEM_ARRAY;
 
 public class X12
 {
@@ -62,8 +62,8 @@ public class X12
         try
         {
             ItemStack itemstack = new ItemStack(ITEM_ARRAY[SmallBox.ID]);
-            int id = random.nextInt(EntitiesRegistryHelper.ENTITIES_CLASS_LIST.size());
-            SkinningEntities skinningentities = (SkinningEntities)EntitiesRegistryHelper.ENTITIES_CLASS_LIST.get(id).getConstructor(World.class).newInstance(entityplayermp.world);
+            int id = random.nextInt(EntitiesRegistry.ENTITIES_CLASS_LIST.size());
+            SkinningEntities skinningentities = (SkinningEntities) EntitiesRegistry.ENTITIES_CLASS_LIST.get(id).getConstructor(World.class).newInstance(entityplayermp.world);
             ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)skinningentities.bothentitiesmemory;
             serverentitiesmemory.owner_uuid = entityplayermp.getUniqueID();
             SmallBox.putToBox(skinningentities, itemstack);

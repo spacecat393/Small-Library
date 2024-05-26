@@ -1,6 +1,6 @@
 package com.nali.small.entities.skinning.ai;
 
-import com.nali.small.entities.EntitiesRegistryHelper;
+import com.nali.small.entities.EntitiesRegistry;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.mixin.IMixinWorldServer;
@@ -77,7 +77,7 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
 
         if (result)
         {
-            for (Class clasz : EntitiesRegistryHelper.ENTITIES_CLASS_LIST)
+            for (Class clasz : EntitiesRegistry.ENTITIES_CLASS_LIST)
             {
                 if (entity.getClass().equals(clasz))
                 {
@@ -89,7 +89,7 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
         {
             for (int id : this.target_list)
             {
-                if (id < EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length && entity.getClass().equals(EntitiesRegistryHelper.ENTITY_KEY_ARRAY[id]))
+                if (id < EntitiesRegistry.ENTITY_KEY_ARRAY.length && entity.getClass().equals(EntitiesRegistry.ENTITY_KEY_ARRAY[id]))
                 {
                     result = true;
                     break;
@@ -99,7 +99,7 @@ public class SkinningEntitiesArea extends SkinningEntitiesAI
 
         for (int id : this.troublemaker_list)
         {
-            if (id < EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length && entity.getClass().equals(EntitiesRegistryHelper.ENTITY_KEY_ARRAY[id]))
+            if (id < EntitiesRegistry.ENTITY_KEY_ARRAY.length && entity.getClass().equals(EntitiesRegistry.ENTITY_KEY_ARRAY[id]))
             {
                 return false;
             }

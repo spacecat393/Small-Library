@@ -4,7 +4,7 @@ import com.nali.draw.DrawScreen;
 import com.nali.render.ObjectRender;
 import com.nali.small.Small;
 import com.nali.small.entities.skinning.SkinningEntities;
-import com.nali.small.items.MixItems;
+import com.nali.small.items.IMixItems;
 import com.nali.small.items.Tabs;
 import com.nali.small.mixin.IMixinWorldServer;
 import com.nali.small.system.Reference;
@@ -32,7 +32,7 @@ import java.util.List;
 
 import static com.nali.small.entities.memory.server.ServerEntitiesMemory.removeFromMap;
 
-public class SmallBox extends Item implements MixItems
+public class SmallBox extends Item implements IMixItems
 {
     public static int ID;
     @SideOnly(Side.CLIENT)
@@ -76,7 +76,7 @@ public class SmallBox extends Item implements MixItems
     {
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, -0.07357F, 0.0F);
-        MixItems.super.render();
+        IMixItems.super.render();
 //        GL11.glTranslatef(0.0F, 0.07357F, 0.0F);
         GL11.glPopMatrix();
     }

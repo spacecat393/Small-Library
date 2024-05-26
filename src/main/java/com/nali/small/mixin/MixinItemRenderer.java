@@ -1,7 +1,7 @@
 package com.nali.small.mixin;
 
 import com.nali.render.ObjectRender;
-import com.nali.small.items.MixItems;
+import com.nali.small.items.IMixItems;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -23,10 +23,10 @@ public abstract class MixinItemRenderer
     @Mutable
     private void nali_small_renderItemInFirstPerson(AbstractClientPlayer player, float p_187457_2_, float p_187457_3_, EnumHand hand, float p_187457_5_, ItemStack stack, float p_187457_7_, CallbackInfo ci)
     {
-        if (stack.getItem() instanceof MixItems)
+        if (stack.getItem() instanceof IMixItems)
         {
             BlockPos blockpos = new BlockPos(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ);
-            ObjectRender objectrender = ((MixItems)stack.getItem()).getObjectRender();
+            ObjectRender objectrender = ((IMixItems)stack.getItem()).getObjectRender();
             objectrender.lig_b = player.world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
             objectrender.lig_s = player.world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
 
@@ -41,10 +41,10 @@ public abstract class MixinItemRenderer
     @Mutable
     private void nali_small_renderItemSide(EntityLivingBase entitylivingbaseIn, ItemStack heldStack, ItemCameraTransforms.TransformType transform, boolean leftHanded, CallbackInfo ci)
     {
-        if (heldStack.getItem() instanceof MixItems)
+        if (heldStack.getItem() instanceof IMixItems)
         {
             BlockPos blockpos = new BlockPos(entitylivingbaseIn.posX, entitylivingbaseIn.posY + (double)entitylivingbaseIn.getEyeHeight(), entitylivingbaseIn.posZ);
-            ObjectRender objectrender = ((MixItems)heldStack.getItem()).getObjectRender();
+            ObjectRender objectrender = ((IMixItems)heldStack.getItem()).getObjectRender();
             objectrender.lig_b = entitylivingbaseIn.world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
             objectrender.lig_s = entitylivingbaseIn.world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
 

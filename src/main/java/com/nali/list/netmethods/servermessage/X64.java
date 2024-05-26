@@ -6,7 +6,7 @@ import com.nali.list.items.SmallBox;
 import com.nali.list.messages.ServerMessage;
 import com.nali.small.Small;
 import com.nali.small.config.MyConfig;
-import com.nali.small.entities.EntitiesRegistryHelper;
+import com.nali.small.entities.EntitiesRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -18,7 +18,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
-import static com.nali.small.items.ItemsRegistryHelper.ITEM_ARRAY;
+import static com.nali.small.items.ItemsRegistry.ITEM_ARRAY;
 
 public class X64
 {
@@ -64,8 +64,8 @@ public class X64
         try
         {
             ItemStack itemstack = new ItemStack(ITEM_ARRAY[SmallBox.ID]);
-            int id = entityplayermp.getRNG().nextInt(EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length);
-            Constructor constructor = ((Class)EntitiesRegistryHelper.ENTITY_KEY_ARRAY[id]).getConstructor(World.class);
+            int id = entityplayermp.getRNG().nextInt(EntitiesRegistry.ENTITY_KEY_ARRAY.length);
+            Constructor constructor = ((Class) EntitiesRegistry.ENTITY_KEY_ARRAY[id]).getConstructor(World.class);
             Entity entity = (Entity)constructor.newInstance(entityplayermp.world);
 
             if (!(entity instanceof EntityPlayer))

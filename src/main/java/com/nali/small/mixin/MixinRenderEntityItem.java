@@ -1,7 +1,7 @@
 package com.nali.small.mixin;
 
 import com.nali.render.ObjectRender;
-import com.nali.small.items.MixItems;
+import com.nali.small.items.IMixItems;
 import net.minecraft.client.renderer.entity.RenderEntityItem;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -21,10 +21,10 @@ public class MixinRenderEntityItem
     private void nali_small_doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci)
     {
         ItemStack itemstack = entity.getItem();
-        if (itemstack.getItem() instanceof MixItems)
+        if (itemstack.getItem() instanceof IMixItems)
         {
             BlockPos blockpos = entity.getPosition();
-            ObjectRender objectrender = ((MixItems)itemstack.getItem()).getObjectRender();
+            ObjectRender objectrender = ((IMixItems)itemstack.getItem()).getObjectRender();
             objectrender.lig_b = entity.world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
             objectrender.lig_s = entity.world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
 

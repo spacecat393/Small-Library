@@ -1,7 +1,7 @@
 package com.nali.list.netmethods.servermessage;
 
 import com.nali.list.messages.ServerMessage;
-import com.nali.small.entities.EntitiesRegistryHelper;
+import com.nali.small.entities.EntitiesRegistry;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.system.bytes.BytesReader;
@@ -29,7 +29,7 @@ public class AddTroublemaker
                 int id = BytesReader.getInt(servermessage.data, index);
 //                            int id = Integer.parseInt(new_string);
 
-                if (id >= EntitiesRegistryHelper.ENTITY_KEY_ARRAY.length)
+                if (id >= EntitiesRegistry.ENTITY_KEY_ARRAY.length)
                 {
                     continue;
                 }

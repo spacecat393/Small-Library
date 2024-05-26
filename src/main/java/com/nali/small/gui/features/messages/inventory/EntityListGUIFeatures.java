@@ -1,6 +1,6 @@
 package com.nali.small.gui.features.messages.inventory;
 
-import com.nali.small.entities.EntitiesRegistryHelper;
+import com.nali.small.entities.EntitiesRegistry;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.system.Reference;
@@ -25,7 +25,7 @@ public class EntityListGUIFeatures extends GUIFeaturesLoader
         List<String> string_list = new ArrayList();
 
         int index = 1;
-        for (Object o : EntitiesRegistryHelper.ENTITY_KEY_ARRAY)
+        for (Object o : EntitiesRegistry.ENTITY_KEY_ARRAY)
         {
             String name = ((Class)o).getName();
             if (name.contains(this.string))
