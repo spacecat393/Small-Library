@@ -3,3 +3,7 @@ BoxM.001 -1 1 1 1 0 0
 BoxM.002 -1 1 1 1 0 0
 SakuraM.001 -1 2 1 1 0 0
 SakuraM.002 -1 2 1 1 0 0
+TPBase
+TPBaseTPBase.002 -2 3 0 1 0 0 1
+TPBaseTPBase.001 -2 3 0 1 0 1 1
+TPBaseTPBase.000 -2 3 0 1 0 1 1

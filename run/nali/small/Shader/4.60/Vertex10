@@ -1,7 +1,5 @@
 #version 460 core
-//precision highp float;
 in vec3 vertices;
-in vec2 texcoord;
 in vec4 joints;
 in vec4 weights;
 in vec3 normals;

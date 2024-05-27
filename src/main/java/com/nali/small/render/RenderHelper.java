@@ -1,8 +1,10 @@
 package com.nali.small.render;
 
 import com.nali.draw.DrawScreen;
+import com.nali.list.blocks.SmallTPBase;
 import com.nali.list.items.SmallBox;
 import com.nali.list.render.BoxRender;
+import com.nali.list.render.TPBaseRender;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -23,5 +25,11 @@ public class RenderHelper
 //        SmallBox.OBJECTRENDER.objectscreendraw.z = 0.0F;
         SmallBox.DRAWSCREEN.scale(0.25F);
         SmallBox.DRAWSCREEN.z = 0.0F;
+
+        SmallTPBase.DRAWSCREEN = new DrawScreen();
+        SmallTPBase.DRAWSCREEN.scale(0.25F);
+        SmallTPBase.DRAWSCREEN.z = 0.0F;
+
+        TPBaseRender.setTextureMap();
     }
 }

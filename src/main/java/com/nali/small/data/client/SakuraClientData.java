@@ -1,9 +1,12 @@
 package com.nali.small.data.client;
 
 import com.nali.data.client.ClientData;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static com.nali.list.data.SmallData.MODEL_STEP;
 
+@SideOnly(Side.CLIENT)
 public class SakuraClientData implements ClientData
 {
     @Override

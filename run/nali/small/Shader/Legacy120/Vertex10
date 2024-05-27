@@ -1,7 +1,5 @@
 #version 120
-//precision highp float;
 attribute vec3 vertices;
-attribute vec2 texcoord;
 attribute vec4 joints;
 attribute vec4 weights;
 attribute vec3 normals;
