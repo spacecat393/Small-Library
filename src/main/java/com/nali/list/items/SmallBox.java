@@ -1,6 +1,7 @@
 package com.nali.list.items;
 
 import com.nali.draw.DrawScreen;
+import com.nali.list.render.BoxRender;
 import com.nali.render.ObjectRender;
 import com.nali.small.Small;
 import com.nali.small.entities.skinning.SkinningEntities;
@@ -19,6 +20,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -35,8 +37,9 @@ import static com.nali.small.entities.memory.server.ServerEntitiesMemory.removeF
 public class SmallBox extends Item implements IMixItems
 {
     public static int ID;
+
     @SideOnly(Side.CLIENT)
-    public static ObjectRender OBJECTRENDER;
+    public static Object OBJECTRENDER;
     @SideOnly(Side.CLIENT)
     public static DrawScreen DRAWSCREEN;
 
@@ -46,6 +49,13 @@ public class SmallBox extends Item implements IMixItems
         this.init(this, string_array[0], string_array[1], Tabs.TABS);
         this.setMaxStackSize(1);
 //        I = this;
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+        {
+            OBJECTRENDER = new BoxRender();
+            DRAWSCREEN = new DrawScreen();
+            DRAWSCREEN.scale(0.25F);
+            DRAWSCREEN.z = 0.0F;
+        }
     }
 
     @Override
@@ -60,7 +70,7 @@ public class SmallBox extends Item implements IMixItems
     @SideOnly(Side.CLIENT)
     public ObjectRender getObjectRender()
     {
-        return OBJECTRENDER;
+        return (ObjectRender)OBJECTRENDER;
     }
 
     @Override

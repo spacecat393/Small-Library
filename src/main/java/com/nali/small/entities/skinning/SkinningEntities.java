@@ -2,7 +2,8 @@ package com.nali.small.entities.skinning;
 
 import com.nali.data.BothData;
 import com.nali.list.messages.ServerMessage;
-import com.nali.list.netmethods.servermessage.*;
+import com.nali.list.netmethods.servermessage.OpenInvGUI;
+import com.nali.list.netmethods.servermessage.SyncUUIDToClient;
 import com.nali.networks.NetworksRegistry;
 import com.nali.render.SkinningRender;
 import com.nali.small.entities.EntitiesAttackHelper;
@@ -22,12 +23,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -37,7 +35,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -48,7 +45,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-import static com.nali.small.entities.EntitiesMath.rayAllTargetsView;
 import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
 import static com.nali.small.world.ChunkCallBack.CHUNK_MAP;
 
@@ -163,7 +159,7 @@ public abstract class SkinningEntities extends EntityLivingBase
         if (this.world.isRemote)
         {
             ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
-            this.initFakeFrame();
+            cliententitiesmemory.initFakeFrame();
             cliententitiesmemory.objectrender.entitiesrendermemory.scale = cliententitiesmemory.bothdata.Scale();
         }
 
@@ -452,61 +448,64 @@ public abstract class SkinningEntities extends EntityLivingBase
             }
             else
             {
-                Item item = entityplayer.getHeldItemMainhand().getItem();
-                boolean milk_bucket = item == Items.MILK_BUCKET;
-                boolean eat_state = item instanceof ItemFood || milk_bucket;
+//                cliententitiesmemory.mixboxentitiesmemory.init(this);
+//                cliententitiesmemory.mixboxentitiesmemory.loop(this);
+                cliententitiesmemory.mixboxentitiesmemory.checkAxisAlignedBB(entityplayer, this);
+//                Item item = entityplayer.getHeldItemMainhand().getItem();
+//                boolean milk_bucket = item == Items.MILK_BUCKET;
+//                boolean eat_state = item instanceof ItemFood || milk_bucket;
 
-                AxisAlignedBB[] axisalignedbb_array;
-                if (eat_state)
-                {
-                    axisalignedbb_array = new AxisAlignedBB[]
-                    {
-                        this.getEntityBoundingBox(),
-                        this.getMouthAxisAlignedBB()
-                    };
-                }
-                else
-                {
-                    axisalignedbb_array = new AxisAlignedBB[]
-                    {
-                        this.getHeadAxisAlignedBB()
-                    };
-                }
-                int state = rayAllTargetsView(entityplayer, axisalignedbb_array, (byte)50);
+////                AxisAlignedBB[] axisalignedbb_array;
+//                if (eat_state)
+//                {
+////                    axisalignedbb_array = new AxisAlignedBB[]
+////                    {
+////                        this.getEntityBoundingBox(),
+////                        this.getMouthAxisAlignedBB()
+////                    };
+//                }
+//                else
+//                {
+////                    axisalignedbb_array = new AxisAlignedBB[]
+////                    {
+////                        this.getHeadAxisAlignedBB()
+////                    };
+//                }
+////                int state = rayAllTargetsView(entityplayer, axisalignedbb_array, (byte)50);
 
-                if (state == 0 && !eat_state && this.isMove())
-                {
-                    cliententitiesmemory.skinningentitiespat.run();
-                }
-                else if (state == 1)
-                {
-                    byte[] byte_array;
-                    if (milk_bucket)
-                    {
-                        byte_array = new byte[1 + 16];
-                        byte_array[0] = DrinkMilk.ID;
-                    }
-                    else
-                    {
-                        byte_array = new byte[1 + 16 + 4 + 4 + 4];
-                        byte_array[0] = Eat.ID;
-                        BytesWriter.set(byte_array, (float)(axisalignedbb_array[1].maxX + (axisalignedbb_array[1].minX - axisalignedbb_array[1].maxX) / 2.0D), 1 + 16);
-                        BytesWriter.set(byte_array, (float)(axisalignedbb_array[1].maxY + (axisalignedbb_array[1].minY - axisalignedbb_array[1].maxY) / 2.0D), 1 + 16 + 4);
-                        BytesWriter.set(byte_array, (float)(axisalignedbb_array[1].maxZ + (axisalignedbb_array[1].minZ - axisalignedbb_array[1].maxZ) / 2.0D), 1 + 16 + 4 + 4);
-                    }
-
-                    BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
-                    NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
-                }
-                else
-                {
-                    byte i = cliententitiesmemory.workbytes.SIT();
-                    byte[] byte_array = new byte[21];
-                    byte_array[0] = SetWorkByte.ID;
-                    BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
-                    BytesWriter.set(byte_array, i, 17);
-                    NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
-                }
+//                if (state == 0 && !eat_state && this.isMove())
+//                {
+//                    cliententitiesmemory.skinningentitiespat.run();
+//                }
+//                else if (state == 1)
+//                {
+//                    byte[] byte_array;
+//                    if (milk_bucket)
+//                    {
+//                        byte_array = new byte[1 + 16];
+//                        byte_array[0] = DrinkMilk.ID;
+//                    }
+//                    else
+//                    {
+//                        byte_array = new byte[1 + 16 + 4 + 4 + 4];
+//                        byte_array[0] = Eat.ID;
+//                        BytesWriter.set(byte_array, (float)(axisalignedbb_array[1].maxX + (axisalignedbb_array[1].minX - axisalignedbb_array[1].maxX) / 2.0D), 1 + 16);
+//                        BytesWriter.set(byte_array, (float)(axisalignedbb_array[1].maxY + (axisalignedbb_array[1].minY - axisalignedbb_array[1].maxY) / 2.0D), 1 + 16 + 4);
+//                        BytesWriter.set(byte_array, (float)(axisalignedbb_array[1].maxZ + (axisalignedbb_array[1].minZ - axisalignedbb_array[1].maxZ) / 2.0D), 1 + 16 + 4 + 4);
+//                    }
+//
+//                    BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
+//                    NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
+//                }
+//                else
+//                {
+//                    byte i = cliententitiesmemory.workbytes.SIT();
+//                    byte[] byte_array = new byte[21];
+//                    byte_array[0] = SetWorkByte.ID;
+//                    BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
+//                    BytesWriter.set(byte_array, i, 17);
+//                    NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
+//                }
             }
         }
 
@@ -760,11 +759,11 @@ public abstract class SkinningEntities extends EntityLivingBase
 
     }
 
-    @SideOnly(Side.CLIENT)
-    public void createClientEntitiesMemory(SkinningEntities skinningentities, BothData bothdata, WorkBytes workbytes)
-    {
-        new ClientEntitiesMemory(skinningentities, bothdata, workbytes);
-    }
+//    @SideOnly(Side.CLIENT)
+//    public void createClientEntitiesMemory(SkinningEntities skinningentities, BothData bothdata, WorkBytes workbytes)
+//    {
+//        new ClientEntitiesMemory(skinningentities, bothdata, workbytes);
+//    }
 
     public void createServerEntitiesMemory(SkinningEntities skinningentities, BothData bothdata, WorkBytes workbytes)
     {
@@ -792,46 +791,49 @@ public abstract class SkinningEntities extends EntityLivingBase
         serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.REVIVE() / 8] ^= (byte)Math.pow(2, serverentitiesmemory.workbytes.REVIVE() % 8);
     }
 
+//    @SideOnly(Side.CLIENT)
+//    public AxisAlignedBB getHeadAxisAlignedBB()
+//    {
+//        double hw = this.width / 2.0F + 0.001F;
+//        double y = this.posY + this.height / 1.125F;
+//
+//        return new AxisAlignedBB
+//        (
+//            this.posX - hw, y, this.posZ - hw,
+//            this.posX + hw, this.posY + this.height + 0.001F, this.posZ + hw
+//        );
+//    }
+//
+//    @SideOnly(Side.CLIENT)
+//    public AxisAlignedBB getMouthAxisAlignedBB()
+//    {
+//        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
+//        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
+//        int[] iv_int_array = this.getIVIntArray();
+//
+////        float[] pos_vec4 = skinningrender.getScale3DSkinning((OpenGLSkinningMemory)skinningrender.dataloader.openglobjectmemory_array[iv_int_array[10]], (float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
+////        float[] pos_vec4 = skinningrender.getScale3DSkinning((OpenGLSkinningMemory)skinningrender.dataloader.object_array[iv_int_array[10]], (float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
+//        float[] pos_vec4 = skinningrender.getScale3DSkinning((float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
+//
+//        double x = pos_vec4[0] / pos_vec4[3];
+//        double y = pos_vec4[1] / pos_vec4[3];
+//        double z = pos_vec4[2] / pos_vec4[3];
+//
+//        double hw = this.width / 1.5F;
+//        double hh = this.height / 4.0F;
+//
+//        return new AxisAlignedBB
+//        (
+//            x - hw, y - hh, z - hw,
+//            x + hw, y + hh, z + hw
+//        );
+//    }
+
     @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getHeadAxisAlignedBB()
-    {
-        double hw = this.width / 2.0F + 0.001F;
-        double y = this.posY + this.height / 1.125F;
+    public abstract void createClientEntitiesMemory(SkinningEntities skinningentities, BothData bothdata, WorkBytes workbytes);
 
-        return new AxisAlignedBB
-        (
-            this.posX - hw, y, this.posZ - hw,
-            this.posX + hw, this.posY + this.height + 0.001F, this.posZ + hw
-        );
-    }
-
-    @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getMouthAxisAlignedBB()
-    {
-        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.bothentitiesmemory;
-        SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
-        int[] iv_int_array = this.getIVIntArray();
-
-//        float[] pos_vec4 = skinningrender.getScale3DSkinning((OpenGLSkinningMemory)skinningrender.dataloader.openglobjectmemory_array[iv_int_array[10]], (float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
-//        float[] pos_vec4 = skinningrender.getScale3DSkinning((OpenGLSkinningMemory)skinningrender.dataloader.object_array[iv_int_array[10]], (float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
-        float[] pos_vec4 = skinningrender.getScale3DSkinning((float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
-
-        double x = pos_vec4[0] / pos_vec4[3];
-        double y = pos_vec4[1] / pos_vec4[3];
-        double z = pos_vec4[2] / pos_vec4[3];
-
-        double hw = this.width / 1.5F;
-        double hh = this.height / 4.0F;
-
-        return new AxisAlignedBB
-        (
-            x - hw, y - hh, z - hw,
-            x + hw, y + hh, z + hw
-        );
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void initFakeFrame(){}
+//    @SideOnly(Side.CLIENT)
+//    public void initFakeFrame(){}
 
     public abstract BothData createBothData();
     public abstract WorkBytes createWorkBytes();
@@ -840,10 +842,10 @@ public abstract class SkinningEntities extends EntityLivingBase
     public abstract DataParameter<Byte>[] getByteDataParameterArray();
     public abstract DataParameter<Integer>[] getIntegerDataParameterArray();
     public abstract DataParameter<Float>[] getFloatDataParameterArray();
-    @SideOnly(Side.CLIENT)
-    public abstract Object createObjectRender();
-    @SideOnly(Side.CLIENT)
-    public abstract Object createSoundRender();
-    @SideOnly(Side.CLIENT)
-    public abstract int[] getIVIntArray();
+//    @SideOnly(Side.CLIENT)
+//    public abstract ObjectRender createObjectRender();
+//    @SideOnly(Side.CLIENT)
+//    public abstract SoundRender createSoundRender();
+//    @SideOnly(Side.CLIENT)
+//    public abstract int[] getIVIntArray();
 }

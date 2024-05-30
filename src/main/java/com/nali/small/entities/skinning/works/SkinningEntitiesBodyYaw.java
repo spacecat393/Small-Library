@@ -3,7 +3,7 @@ package com.nali.small.entities.skinning.works;
 import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.util.math.MathHelper;
 
-public class SkinningEntitiesBodyYaw extends SkinningEntitiesWork
+public class SkinningEntitiesBodyYaw extends SkinningEntitiesWorks
 {
     public int rotationTickCounter;
     public float prevRenderYaw;

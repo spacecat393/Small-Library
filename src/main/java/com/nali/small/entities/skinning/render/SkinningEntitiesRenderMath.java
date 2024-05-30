@@ -1,10 +1,7 @@
 package com.nali.small.entities.skinning.render;
 
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.awt.*;
 
 @SideOnly(Side.CLIENT)
 public class SkinningEntitiesRenderMath
@@ -13,9 +10,10 @@ public class SkinningEntitiesRenderMath
     {
         float f;
 
-        for (f = yawOffset - prevYawOffset; f < -180.0F; f += 360.0F)
+        f = yawOffset - prevYawOffset;
+        while (f < -180.0F)
         {
-            ;
+            f += 360.0F;
         }
 
         while (f >= 180.0F)

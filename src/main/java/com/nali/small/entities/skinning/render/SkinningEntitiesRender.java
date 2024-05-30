@@ -134,7 +134,7 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
     {
         if (this.renderManager.isDebugBoundingBox() && !skinningentities.isInvisible() && !Minecraft.getMinecraft().isReducedDebug())
         {
-//            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
             GL11.glPushMatrix();
 
             GL_TEXTURE_2D = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
@@ -168,15 +168,19 @@ public abstract class SkinningEntitiesRender<T extends SkinningEntities> extends
             GL_LINE_WIDTH = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
             GL11.glLineWidth(5.0F);
 
-            AxisAlignedBB[] axisalignedbb_array = new AxisAlignedBB[]
-            {
-                skinningentities.getHeadAxisAlignedBB(),
-                skinningentities.getMouthAxisAlignedBB()
-            };
-            for (AxisAlignedBB axisalignedbb : axisalignedbb_array)
+//            AxisAlignedBB[] axisalignedbb_array = new AxisAlignedBB[]
+//            {
+//                skinningentities.getHeadAxisAlignedBB(),
+//                skinningentities.getMouthAxisAlignedBB()
+//            };
+//            for (AxisAlignedBB axisalignedbb : axisalignedbb_array)
+//            if (cliententitiesmemory.mixboxentitiesmemory.axisalignedbb_array != null)
+//            {
+            for (AxisAlignedBB axisalignedbb : cliententitiesmemory.mixboxentitiesmemory.get(skinningentities)/*cliententitiesmemory.mixboxentitiesmemory.axisalignedbb_array*/)
             {
                 RenderGlobal.drawSelectionBoundingBox(axisalignedbb, r, g, b, 1.0F);
             }
+//            }
 
             if (GL_BLEND)
             {

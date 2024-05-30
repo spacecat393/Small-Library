@@ -5,9 +5,12 @@ import com.nali.small.Small;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.works.GetItemGUIFeatures;
 import com.nali.small.gui.net.GUINetLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static com.nali.small.gui.MixGui.MESSAGE_STRINGBUILDER;
 
+@SideOnly(Side.CLIENT)
 public class SetGetItemGUINet extends GUINetLoader
 {
     public SetGetItemGUINet(MixGui mixgui)

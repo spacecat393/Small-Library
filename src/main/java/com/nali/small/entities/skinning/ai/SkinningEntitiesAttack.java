@@ -89,11 +89,20 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
     public Entity attackAndFind(List<Entity> entity_list)
     {
         ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
-        double[] far = new double[entity_list.size()];
-        int index = 0;
-        for (Entity entity : entity_list)
+//        double[] far = new double[entity_list.size()];
+//        int index = 0;
+        int index = -1;
+        double max_dis = Double.MAX_VALUE;
+        for (int i = 0; i < entity_list.size(); ++i)
         {
-            far[index++] = this.skinningentities.getDistanceSq(entity);
+            Entity entity = entity_list.get(i);
+            double far = this.skinningentities.getDistanceSq(entity);
+            if (far < max_dis)
+            {
+                index = i;
+                max_dis = far;
+            }
+//            far[index++] = this.skinningentities.getDistanceSq(entity);
             if (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null ||
                 isInArea(entity, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far))
             {
@@ -110,19 +119,26 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
             }
         }
 
-        index = 0;
+//        index = 0;
 
-        double max_dis = Double.MAX_VALUE;
+//        double max_dis = Double.MAX_VALUE;
 
-        for (int i = 0; i < far.length; ++i)
+//        for (int i = 0; i < far.length; ++i)
+//        {
+//            if (far[i] < max_dis)
+//            {
+//                index = i;
+//                max_dis = far[i];
+//            }
+//        }
+
+        if (index == -1)
         {
-            if (far[i] < max_dis)
-            {
-                index = i;
-                max_dis = far[i];
-            }
+            return null;
         }
-
-        return entity_list.get(index);
+        else
+        {
+            return entity_list.get(index);
+        }
     }
 }

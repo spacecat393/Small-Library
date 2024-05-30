@@ -4,7 +4,10 @@ import com.nali.list.netmethods.servermessage.SetAttribute;
 import com.nali.small.Small;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.net.GUINetLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class SetAttributeGUINet extends GUINetLoader
 {
     public SetAttributeGUINet(MixGui mixgui)

@@ -11,9 +11,16 @@ import com.nali.system.ClientLoader;
 import com.nali.system.opengl.memory.OpenGLAnimationMemory;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,6 +31,7 @@ import javax.annotation.Nullable;
 public class SmallTPBase extends Block implements IMixBlocks, ITileEntityProvider
 {
     public static int ID;
+    public static final AxisAlignedBB AXISALIGNEDBB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D);
 
     @SideOnly(Side.CLIENT)
     public TPBaseRender tpbaserender;
@@ -37,10 +45,18 @@ public class SmallTPBase extends Block implements IMixBlocks, ITileEntityProvide
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
         {
             this.tpbaserender = new TPBaseRender(this);
-            OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory) ClientLoader.OBJECT_LIST.get(((SkinningClientData)this.tpbaserender.clientdata).AnimationID());
+            OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)ClientLoader.OBJECT_LIST.get(((SkinningClientData)this.tpbaserender.clientdata).AnimationID());
             this.tpbaserender.initSkinning(openglanimationmemory);
             this.tpbaserender.setSkinning(openglanimationmemory);
+            DRAWSCREEN = new DrawScreen();
+            DRAWSCREEN.scale(0.25F);
+            DRAWSCREEN.z = 0.0F;
         }
+        this.fullBlock = false;
+        this.setResistance(2000.0F);
+        this.setHardness(50.0F);
+        this.setSoundType(SoundType.STONE);
+        this.setLightLevel(1.0F);
     }
 
 //    @Override
@@ -73,5 +89,29 @@ public class SmallTPBase extends Block implements IMixBlocks, ITileEntityProvide
     public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new com.nali.list.tiles.SmallTPBase();
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return AXISALIGNEDBB;
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+    {
+        return BlockFaceShape.UNDEFINED;
+    }
+
+    @Override
+    public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
     }
 }

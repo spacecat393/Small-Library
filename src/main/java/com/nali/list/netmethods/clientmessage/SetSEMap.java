@@ -54,7 +54,7 @@ public class SetSEMap
 //                                ((ObjectRender)skinningentities.client_object).texture_index_int_array[ii] = nbttagcompound.getInteger("int_" + ii);
 //                            }
 //                            skinningentities.initWriteEntityToNBT(nbttagcompound);
-                    skinningentities.initFakeFrame();
+                    cliententitiesmemory.initFakeFrame();
                 }
                 catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
                 {

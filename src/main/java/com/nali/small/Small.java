@@ -4,7 +4,6 @@ import com.nali.small.capabilities.CapabilitiesRegistry;
 import com.nali.small.entities.EntitiesRegistry;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.gui.GuiHandler;
-import com.nali.small.render.RenderHelper;
 import com.nali.small.system.Reference;
 import com.nali.small.tiles.TileRegistry;
 import com.nali.small.world.ChunkCallBack;
@@ -56,12 +55,12 @@ public class Small
     {
         EntitiesRegistry.ENTITY_KEY_ARRAY = new HashSet(ENTITY_CLASS_ENTRIES.keySet()).toArray();
 
-        if (event.getSide().isClient())
-        {
-            RenderHelper.init();
-        }
+//        if (event.getSide().isClient())
+//        {
+//            RenderHelper.init();
+//        }
 
-        EntitiesRegistry.ENTITIES_CLASS_LIST = null;
+//        EntitiesRegistry.ENTITIES_CLASS_LIST = null;
         TileRegistry.TILES_CLASS_LIST = null;
     }
 

@@ -29,64 +29,103 @@ public class SkinningEntitiesHeal extends SkinningEntitiesAI
         if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.HEAL()) && !serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list.isEmpty() && ++this.cooldown >= 200)
         {
             this.heal = true;
-            double[] far = new double[serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list.size()];
-            boolean should_move = false;
-            boolean should_move2 = true;
+//            double[] far = new double[serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list.size()];
+//            boolean should_move = false;
+//            boolean should_move2 = true;
 
-            int index = 0;
-            for (Entity entity : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list)
+            int index = -1;
+            double max_dis = Double.MAX_VALUE;
+            for (int i = 0; i < serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list.size(); ++i)
             {
-                if (!(entity instanceof EntityLivingBase) || ((EntityLivingBase)entity).getMaxHealth() - ((EntityLivingBase)entity).getHealth() < 1.0F)
+                Entity entity = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list.get(i);
+                if (this.skinningentities.equals(entity))
                 {
-                    far[index] = Double.MAX_VALUE;
+                    continue;
+                }
+
+//                if (!(entity instanceof EntityLivingBase) || ((EntityLivingBase)entity).getMaxHealth() - ((EntityLivingBase)entity).getHealth() < 1.0F)
+                if (entity instanceof EntityLivingBase && ((EntityLivingBase)entity).getMaxHealth() - ((EntityLivingBase)entity).getHealth() >= 1.0F)
+                {
+//                    far[index] = Double.MAX_VALUE;
+//                }
+//                else
+//                {
+//                    if (this.skinningentities.equals(entity))
+//                    {
+//                        should_move2 = false;
+//                    }
+
+                    double far = this.skinningentities.getDistanceSq(entity);
+                    if (far < max_dis)
+                    {
+                        index = i;
+                        max_dis = far;
+                    }
+//                    far[index] = this.skinningentities.getDistanceSq(entity);
+
+//                    if (isTooClose(this.skinningentities, entity, this.minimum_distance))
+//                    {
+//                        if (this.state == -1)
+//                        {
+//                            this.state = 0;
+//                        }
+//
+//                        if (this.state == 1)
+//                        {
+//                            ((EntityLivingBase)entity).heal(this.how_heal);
+//                        }
+//
+//                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
+//                    }
+//                    else
+//                    {
+//                        should_move = true;
+//                    }
+                }
+//                ++index;
+            }
+
+//            if (should_move && should_move2)
+//            {
+//                index = 0;
+
+//                double max_dis = Double.MAX_VALUE;
+
+//                for (int i = 0; i < far.length; ++i)
+//                {
+//                    if (far[i] < max_dis)
+//                    {
+//                        index = i;
+//                        max_dis = far[i];
+//                    }
+//                }
+
+            if (index != -1)
+            {
+                Entity entity = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list.get(index);
+                if (isTooClose(this.skinningentities, entity, this.minimum_distance))
+                {
+                    if (this.state == -1)
+                    {
+                        this.state = 0;
+                    }
+
+                    if (this.state == 1)
+                    {
+                        ((EntityLivingBase)entity).heal(this.how_heal);
+                    }
+
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
                 }
                 else
                 {
-                    if (this.skinningentities.equals(entity))
-                    {
-                        should_move2 = false;
-                    }
-
-                    far[index] = this.skinningentities.getDistanceSq(entity);
-
-                    if (isTooClose(this.skinningentities, entity, this.minimum_distance))
-                    {
-                        if (this.state == -1)
-                        {
-                            this.state = 0;
-                        }
-
-                        if (this.state == 1)
-                        {
-                            ((EntityLivingBase)entity).heal(this.how_heal);
-                        }
-
-                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
-                    }
-                    else
-                    {
-                        should_move = true;
-                    }
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(entity.posX, entity.posY, entity.posZ);
                 }
-                ++index;
             }
-
-            if (should_move && should_move2)
+            else
             {
-                index = 0;
-
-                double max_dis = Double.MAX_VALUE;
-
-                for (int i = 0; i < far.length; ++i)
-                {
-                    if (far[i] < max_dis)
-                    {
-                        index = i;
-                        max_dis = far[i];
-                    }
-                }
-
-                Entity entity = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list.get(index);
+                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.HEAL() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.HEAL() % 8));//0
+            }
 
 //            /*if (this.state == 0 || this.state == 1)
 //            {
@@ -100,21 +139,20 @@ public class SkinningEntitiesHeal extends SkinningEntitiesAI
 
 //                if (!isTooClose(this.skinningentities, entity, this.minimum_distance))
 //                {
-                serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(entity.posX, entity.posY, entity.posZ);
+//                serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setGoal(entity.posX, entity.posY, entity.posZ);
 //                this.state = -1;
 //                }
-            }
+//            }
 
             if (this.state == 1)
             {
                 this.cooldown = 0;
                 this.state = -1;
             }
-
-            if (!should_move && should_move2)
-            {
-                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.HEAL() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.HEAL() % 8));//0
-            }
+//            if (!should_move && should_move2)
+//            {
+//                serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.HEAL() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.HEAL() % 8));//0
+//            }
         }
         else
         {

@@ -119,7 +119,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                 int new_index = this.path_index + 1;
                 if (new_index != this.path_blockpos_list.size())
                 {
-                    this.far = this.path_blockpos_list.get(new_index).getDistance(this.goal_x, this.goal_y, this.goal_z);
+                    this.far = this.path_blockpos_list.get(new_index).distanceSq(this.goal_x, this.goal_y, this.goal_z);
                 }
 
                 if (serverentitiesmemory.entitiesaimemory.skinningentitiesmove.isDone())
@@ -150,7 +150,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 
                 if (temp_snode != null)
                 {
-                    this.far = blockpos.getDistance(this.goal_x, this.goal_y, this.goal_z);
+                    this.far = blockpos.distanceSq(this.goal_x, this.goal_y, this.goal_z);
                     if (!this.is_goal)
                     {
                         this.to_goal_snode = temp_snode;

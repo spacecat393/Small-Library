@@ -8,9 +8,12 @@ import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.gui.MixGui;
 import com.nali.system.bytes.BytesWriter;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static com.nali.small.gui.MixGui.MESSAGE_STRINGBUILDER;
 
+@SideOnly(Side.CLIENT)
 public abstract class GUINetLoader
 {
     public MixGui mixgui;

@@ -1,4 +1,4 @@
-package com.nali.small.entities.skinning.works;
+package com.nali.small.entities.skinning.hits;
 
 import com.nali.list.messages.ServerMessage;
 import com.nali.list.netmethods.servermessage.Pat;
@@ -6,11 +6,14 @@ import com.nali.networks.NetworksRegistry;
 import com.nali.small.entities.memory.client.ClientEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.system.bytes.BytesWriter;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class SkinningEntitiesPat extends SkinningEntitiesWork
+public class SkinningEntitiesPat extends SkinningEntitiesHits
 {
     public byte pat_time;
 
@@ -21,7 +24,7 @@ public class SkinningEntitiesPat extends SkinningEntitiesWork
     }
 
     @Override
-    public void run()
+    public void run(Entity player_entity, AxisAlignedBB axisalignedbb)
     {
         ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.skinningentities.bothentitiesmemory;
 //                    ItemStack itemstack = entityplayer.getHeldItem(enumhand);
@@ -50,5 +53,11 @@ public class SkinningEntitiesPat extends SkinningEntitiesWork
 //                            }
         }
 ////                    }
+    }
+
+    @Override
+    public boolean should(Entity player_entity, AxisAlignedBB axisalignedbb)
+    {
+        return ((EntityLivingBase)player_entity).getHeldItemMainhand().isEmpty();
     }
 }

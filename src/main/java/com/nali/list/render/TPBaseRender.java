@@ -22,24 +22,29 @@ public class TPBaseRender extends SmallSkinningBlocksRender
     public static ClientData CLIENTDATA = new TPBaseClientData();
     public static BothData BOTHDATA = new TPBaseBothData();
     public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
-    static
-    {
-        TEXTURE_MAP.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart())).element_array_buffer, 0);
-        TEXTURE_MAP.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 1)).element_array_buffer, 0);
-        TEXTURE_MAP.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 2)).element_array_buffer, 0);
-    }
+//    static
+//    {
+//        TEXTURE_MAP.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart())).element_array_buffer, 0);
+//        TEXTURE_MAP.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 1)).element_array_buffer, 0);
+//        TEXTURE_MAP.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 2)).element_array_buffer, 0);
+//    }
 
     public TPBaseRender(Block block)
     {
         super(null, BOTHDATA, CLIENTDATA, block);
     }
 
-    public static void setTextureMap()
+    public static void setTextureMap(/*TextureManager texturemanager*/)
     {
-        int diamond_block = com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/diamond_block.png"));
-        TEXTURE_MAP.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart())).element_array_buffer, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/obsidian.png")));
+//        Nali.LOGGER.info("render! this "/* + texturemanager*/);
+//        Nali.LOGGER.info(TEXTURE_MAP != null);
+//        Nali.LOGGER.info(CLIENTDATA != null);
+//        Nali.LOGGER.info(OBJECT_LIST.size());
+        int diamond_block = com.nali.render.RenderHelper.getTextureBuffer(/*texturemanager, */new ResourceLocation("textures/blocks/diamond_block.png"));
+        TEXTURE_MAP.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart())).element_array_buffer, com.nali.render.RenderHelper.getTextureBuffer(/*texturemanager, */new ResourceLocation("textures/blocks/obsidian.png")));
         TEXTURE_MAP.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 1)).element_array_buffer, diamond_block);
         TEXTURE_MAP.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 2)).element_array_buffer, diamond_block);
+//        Nali.LOGGER.info("end");
     }
 
 //    @Override
