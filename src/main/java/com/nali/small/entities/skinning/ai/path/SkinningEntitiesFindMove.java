@@ -25,7 +25,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 
     public int goal_x, goal_y, goal_z;
     public int temp_goal_x, temp_goal_y, temp_goal_z;
-    public double far;
+//    public double far;
 
     public List<BlockPos> path_blockpos_list = new ArrayList();
     public SNode to_goal_snode;
@@ -34,7 +34,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
     public int path_tick;
     public boolean try_move;
 
-    public double old_x, old_y, old_z;
+//    public double old_x, old_y, old_z;
 
     public SkinningEntitiesFindMove(SkinningEntities skinningentities)
     {
@@ -102,8 +102,59 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 
                 serverentitiesmemory.entitiesaimemory.skinningentitiesmove.setWanted(current_blockpos.getX() + 0.5D, current_blockpos.getY(), current_blockpos.getZ() + 0.5D);
 
-                double far = this.skinningentities.getDistanceSq(this.goal_x + 0.5D, this.goal_y, this.goal_z + 0.5D);
-                if ((!this.is_goal && far >= this.far) || (this.is_goal && this.skinningentities.posX == this.old_x && this.skinningentities.posY == this.old_y && this.skinningentities.posZ == this.old_z))
+//                double far = this.skinningentities.getDistanceSq(this.goal_x + 0.5D, this.goal_y, this.goal_z + 0.5D);
+//                if (/*(!this.is_goal && far >= this.far) || *//*(*/this.is_goal && this.skinningentities.posX == this.old_x && this.skinningentities.posY == this.old_y && this.skinningentities.posZ == this.old_z/*)*/)
+//                {
+//                    if (++this.path_tick == 200)
+//                    {
+//                        this.path_blockpos_list.clear();
+//                        return;
+//                    }
+//                }
+
+//                this.old_x = this.skinningentities.posX;
+//                this.old_y = this.skinningentities.posY;
+//                this.old_z = this.skinningentities.posZ;
+
+//                int new_index = this.path_index + 1;
+//                if (new_index != this.path_blockpos_list.size())
+//                {
+//                    this.far = this.path_blockpos_list.get(new_index).distanceSq(this.goal_x, this.goal_y, this.goal_z);
+//                }
+
+                //-loop check all and select next pos
+                //check speed&time and loop after offset
+                int path_index = this.path_index;
+                if (serverentitiesmemory.entitiesaimemory.skinningentitiesmove.isDone())
+                {
+//                    --this.path_index;
+                    if (--this.path_index == -1)
+                    {
+                        this.try_move = false;
+                        this.path_blockpos_list.clear();
+                    }
+                }
+//                else
+//                {
+//                    for (int b = 0; b < this.path_blockpos_list.size(); ++b)
+//                    {
+//                        BlockPos on_blockpos = this.path_blockpos_list.get(b);
+//                        if ((int)this.skinningentities.posX == on_blockpos.getX() && (int)this.skinningentities.posY == on_blockpos.getY() && (int)this.skinningentities.posZ == on_blockpos.getZ())
+//                        {
+//                            this.path_index = b - 1;
+//                            break;
+//                        }
+//                    }
+//                }
+
+//                if (this.path_index == -1)
+//                {
+//                    this.try_move = false;
+//                    this.path_blockpos_list.clear();
+//                }
+//                }
+
+                if (path_index == this.path_index)
                 {
                     if (++this.path_tick == 200)
                     {
@@ -111,35 +162,15 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                         return;
                     }
                 }
-
-                this.old_x = this.skinningentities.posX;
-                this.old_y = this.skinningentities.posY;
-                this.old_z = this.skinningentities.posZ;
-
-                int new_index = this.path_index + 1;
-                if (new_index != this.path_blockpos_list.size())
-                {
-                    this.far = this.path_blockpos_list.get(new_index).distanceSq(this.goal_x, this.goal_y, this.goal_z);
-                }
-
-                if (serverentitiesmemory.entitiesaimemory.skinningentitiesmove.isDone())
-                {
-                    if (--this.path_index == -1)
-                    {
-                        this.try_move = false;
-                        this.path_blockpos_list.clear();
-                    }
-                }
-//                }
             }
             else
             {
 //                serverentitiesmemory.entitiesaimemory.skinningentitiesmine.blockpos = null;
                 serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.blockpos_list.clear();
 //                serverentitiesmemory.entitiesaimemory.skinningentitieswalkto.block_list.clear();
-                this.old_x = this.skinningentities.posX;
-                this.old_y = this.skinningentities.posY;
-                this.old_z = this.skinningentities.posZ;
+//                this.old_x = this.skinningentities.posX;
+//                this.old_y = this.skinningentities.posY;
+//                this.old_z = this.skinningentities.posZ;
                 this.to_goal_snode = null;
                 this.path_blockpos_list.clear();
                 this.is_goal = false;
@@ -150,7 +181,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 
                 if (temp_snode != null)
                 {
-                    this.far = blockpos.distanceSq(this.goal_x, this.goal_y, this.goal_z);
+//                    this.far = blockpos.distanceSq(this.goal_x, this.goal_y, this.goal_z);
                     if (!this.is_goal)
                     {
                         this.to_goal_snode = temp_snode;

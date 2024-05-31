@@ -14,7 +14,7 @@ import static com.nali.small.gui.MixGui.MESSAGE_STRINGBUILDER;
 
 public class GetItemGUIFeatures extends GUIFeaturesLoader
 {
-    public static byte STATE;//remote_xp remote_item can_take_xp can_take_item walk_to_xp walk_to_item
+    public static byte STATE;//move_to | remote_xp remote_item can_take_xp can_take_item walk_to_xp walk_to_item
     public static byte PAGE;//p0-2
 
     public String b0 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b30");
@@ -53,9 +53,9 @@ public class GetItemGUIFeatures extends GUIFeaturesLoader
             {
                 MESSAGE_STRINGBUILDER.toString(),
                 this.string_array[8],
-                this.string_array[9] + ((STATE & 2) == 2 ? "ON" : "OFF"),
-                this.string_array[10] + ((STATE & 32) == 32 ? "ON" : "OFF"),
-                this.string_array[11] + ((STATE & 8) == 8 ? "ON" : "OFF"),
+                this.string_array[9] + ((STATE & 4) == 4 ? "ON" : "OFF"),
+                this.string_array[10] + ((STATE & 64) == 64 ? "ON" : "OFF"),
+                this.string_array[11] + ((STATE & 16) == 16 ? "ON" : "OFF"),
                 this.string_array[12],
                 this.string_array[13],
                 this.string_array[3] + PAGE + "/2>"
@@ -67,9 +67,9 @@ public class GetItemGUIFeatures extends GUIFeaturesLoader
             {
                 MESSAGE_STRINGBUILDER.toString(),
                 this.string_array[4],
-                this.string_array[5] + ((STATE & 1) == 1 ? "ON" : "OFF"),
-                this.string_array[6] + ((STATE & 16) == 16 ? "ON" : "OFF"),
-                this.string_array[7] + ((STATE & 4) == 4 ? "ON" : "OFF"),
+                this.string_array[5] + ((STATE & 2) == 2 ? "ON" : "OFF"),
+                this.string_array[6] + ((STATE & 32) == 32 ? "ON" : "OFF"),
+                this.string_array[7] + ((STATE & 8) == 8 ? "ON" : "OFF"),
                 this.string_array[12],
                 this.string_array[13],
                 this.string_array[3] + PAGE + "/2>"

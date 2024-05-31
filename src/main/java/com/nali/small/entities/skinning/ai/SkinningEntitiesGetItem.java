@@ -12,6 +12,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 
 import static com.nali.small.entities.EntitiesMath.isInArea;
+import static com.nali.small.entities.EntitiesMath.isTooClose;
 
 public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 {
@@ -50,26 +51,28 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
                 serverentitiesmemory.entitiesaimemory.skinningentitiesmine.breakWork();
             }
 
-            if (xp)
+            if (xp && should_get_xp)
             {
-                if ((this.flag & 32) == 32)
+                if ((this.flag & 32) == 32 && !isTooClose(this.skinningentities, to_entityxporb, 0))
                 {
-                    if (should_get_xp && (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(to_entityxporb, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far)))
+                    if (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(to_entityxporb, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far))
                     {
+//                        Nali.LOGGER.info("XP START");
                         this.flag |= 1;
-                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(to_entityxporb.posX, to_entityxporb.posY, to_entityxporb.posZ);
+                        skinningentitiesfindmove.setBreakGoal(to_entityxporb.posX, to_entityxporb.posY, to_entityxporb.posZ);
                     }
                 }
             }
             else if (item)
             {
                 EntityItem to_entityitem = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_list.get(serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_list.size() - 1);
-                if ((this.flag & 64) == 64)
+                if ((this.flag & 64) == 64 && !isTooClose(this.skinningentities, to_entityitem, 0))
                 {
-                    if ((serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(to_entityitem, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far)))
+                    if (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(to_entityitem, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far))
                     {
+//                        Nali.LOGGER.info("ITEM START");
                         this.flag |= 1;
-                        serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(to_entityitem.posX, to_entityitem.posY, to_entityitem.posZ);
+                        skinningentitiesfindmove.setBreakGoal(to_entityitem.posX, to_entityitem.posY, to_entityitem.posZ);
                     }
                 }
             }
@@ -81,29 +84,35 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 
         if (xp)
         {
-            if ((this.flag & 8) == 8)
+            for (EntityXPOrb entityxporb : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.xp_entity_list)
             {
-                for (EntityXPOrb entityxporb : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.xp_entity_list)
+                if (should_get_xp)
                 {
-                    if (should_get_xp && (this.skinningentities.getDistanceSq(entityxporb) <= 4.0D || (this.flag & 2) == 2))
+                    if ((this.flag & 2) == 2 || isTooClose(this.skinningentities, entityxporb, 0))
                     {
                         if ((this.flag & 1) == 1)
                         {
+//                            Nali.LOGGER.info("XP END");
                             skinningentitiesfindmove.endGoal();
                             this.flag &= 255-1;
+                            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
                         }
-
-                        this.skinningentities.onItemPickup(entityxporb, 1);
-
-                        if (!xp_itemstack.isEmpty() && xp_itemstack.isItemDamaged())
+//                        Nali.LOGGER.info("XP STEP");
+                        if ((this.flag & 8) == 8)
                         {
-                            float ratio = xp_itemstack.getItem().getXpRepairRatio(xp_itemstack);
-                            int i = Math.min(roundAverage(entityxporb.xpValue * ratio), xp_itemstack.getItemDamage());
-                            entityxporb.xpValue -= roundAverage(i / ratio);
-                            xp_itemstack.setItemDamage(xp_itemstack.getItemDamage() - i);
-                        }
+//                            Nali.LOGGER.info("XP TAKE");
+                            this.skinningentities.onItemPickup(entityxporb, 1);
 
-                        entityxporb.setDead();
+                            if (!xp_itemstack.isEmpty() && xp_itemstack.isItemDamaged())
+                            {
+                                float ratio = xp_itemstack.getItem().getXpRepairRatio(xp_itemstack);
+                                int i = Math.min(roundAverage(entityxporb.xpValue * ratio), xp_itemstack.getItemDamage());
+                                entityxporb.xpValue -= roundAverage(i / ratio);
+                                xp_itemstack.setItemDamage(xp_itemstack.getItemDamage() - i);
+                            }
+
+                            entityxporb.setDead();
+                        }
                     }
                 }
             }
@@ -111,20 +120,23 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 
         if (item)
         {
-            if ((this.flag & 16) == 16)
+            for (EntityItem entityitem : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_list)
             {
-                for (EntityItem entityitem : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_list)
+                ItemStack itemstack = entityitem.getItem();
+
+                if ((this.flag & 4) == 4 || isTooClose(this.skinningentities, entityitem, 0))
                 {
-                    ItemStack itemstack = entityitem.getItem();
-
-                    if (this.skinningentities.getDistanceSq(entityitem) <= 4.0D || (this.flag & 4) == 4)
+                    if ((this.flag & 1) == 1)
                     {
-                        if ((this.flag & 1) == 1)
-                        {
-                            skinningentitiesfindmove.endGoal();
-                            this.flag &= 255-1;
-                        }
-
+//                        Nali.LOGGER.info("ITEM END");
+                        skinningentitiesfindmove.endGoal();
+                        this.flag &= 255-1;
+                        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
+                    }
+//                    Nali.LOGGER.info("ITEM STEP");
+                    if ((this.flag & 16) == 16)
+                    {
+//                        Nali.LOGGER.info("ITEM TAKE");
                         for (byte i = 0; i < serverentitiesmemory.skinninginventory.getSizeInventory(); ++i)
                         {
                             ItemStack inv_itemstack = serverentitiesmemory.skinninginventory.getStackInSlot(i);
@@ -175,12 +187,12 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
             }
         }
 
-        if ((this.flag & 1) == 1)
-        {
-            skinningentitiesfindmove.endGoal();
-            this.flag &= 255-1;
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
-        }
+//        if ((this.flag & 1) == 1)
+//        {
+//            skinningentitiesfindmove.endGoal();
+//            this.flag &= 255-1;
+//            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
+//        }
     }
 
     public static boolean isSameItemSameTags(ItemStack itemstack_a, ItemStack itemstack_b)

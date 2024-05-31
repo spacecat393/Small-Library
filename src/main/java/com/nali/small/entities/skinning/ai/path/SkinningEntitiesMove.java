@@ -242,6 +242,12 @@ public class SkinningEntitiesMove extends SkinningEntitiesAI
 
     public boolean isDone()
     {
-        return this.skinningentities.getDistanceSq(this.x, this.y, this.z) <= 0.5D;
+//        return this.skinningentities.getDistanceSq(this.x, this.y, this.z) <= 0.5D;
+        boolean should_work = (int)this.skinningentities.posX == (int)this.x && (int)this.skinningentities.posY == (int)this.y && (int)this.skinningentities.posZ == (int)this.z;
+        if (should_work)
+        {
+            this.skinningentities.setPosition(this.x, this.y, this.z);
+        }
+        return should_work;
     }
 }
