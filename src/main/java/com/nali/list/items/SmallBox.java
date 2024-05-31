@@ -6,7 +6,7 @@ import com.nali.render.ObjectRender;
 import com.nali.small.Small;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.items.IMixItems;
-import com.nali.small.items.Tabs;
+import com.nali.small.SmallTab;
 import com.nali.small.mixin.IMixinWorldServer;
 import com.nali.small.system.Reference;
 import net.minecraft.client.util.ITooltipFlag;
@@ -39,23 +39,29 @@ public class SmallBox extends Item implements IMixItems
     public static int ID;
 
     @SideOnly(Side.CLIENT)
-    public static Object OBJECTRENDER;
+    public static ObjectRender OBJECTRENDER;
     @SideOnly(Side.CLIENT)
     public static DrawScreen DRAWSCREEN;
 
     public SmallBox(String[] string_array)
     {
         super();
-        this.init(this, string_array[0], string_array[1], Tabs.TABS);
+        this.init(this, string_array[0], string_array[1], SmallTab.TAB);
         this.setMaxStackSize(1);
 //        I = this;
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
         {
-            OBJECTRENDER = new BoxRender();
-            DRAWSCREEN = new DrawScreen();
-            DRAWSCREEN.scale(0.25F);
-            DRAWSCREEN.z = 0.0F;
+            this.renderInit();
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void renderInit()
+    {
+        OBJECTRENDER = new BoxRender();
+        DRAWSCREEN = new DrawScreen();
+        DRAWSCREEN.scale(0.25F);
+        DRAWSCREEN.z = 0.0F;
     }
 
     @Override
@@ -70,7 +76,7 @@ public class SmallBox extends Item implements IMixItems
     @SideOnly(Side.CLIENT)
     public ObjectRender getObjectRender()
     {
-        return (ObjectRender)OBJECTRENDER;
+        return OBJECTRENDER;
     }
 
     @Override

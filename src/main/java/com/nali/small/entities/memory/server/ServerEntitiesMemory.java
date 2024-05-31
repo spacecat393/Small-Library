@@ -4,7 +4,7 @@ import com.nali.data.BothData;
 import com.nali.small.entities.bytes.WorkBytes;
 import com.nali.small.entities.memory.BothEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
-import com.nali.small.world.ChunkLoader;
+import com.nali.small.chunk.ChunkLoader;
 import com.nali.system.bytes.BytesReader;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.block.material.Material;

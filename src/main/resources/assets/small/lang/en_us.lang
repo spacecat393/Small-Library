@@ -187,6 +187,7 @@ itemGroup.small=Small
 item.small.box.name=Box
 
 tile.small.tpbase.name=TP-Base
+tile.small.storage.name=Storage
 
 info.small.box0=Box's name wasn't changed, quickly unbox before world save. [When Player TP to Entity from Other Dimension]
 info.small.box1=You can use on Inventory GUI to put Our Entity to Box.

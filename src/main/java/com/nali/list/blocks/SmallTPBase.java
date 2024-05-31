@@ -6,7 +6,7 @@ import com.nali.list.render.TPBaseRender;
 import com.nali.render.ObjectRender;
 import com.nali.small.blocks.IMixBlocks;
 import com.nali.small.items.MixBlockItem;
-import com.nali.small.items.Tabs;
+import com.nali.small.SmallTab;
 import com.nali.system.ClientLoader;
 import com.nali.system.opengl.memory.OpenGLAnimationMemory;
 import net.minecraft.block.Block;
@@ -41,22 +41,34 @@ public class SmallTPBase extends Block implements IMixBlocks, ITileEntityProvide
     public SmallTPBase(String[] string_array)
     {
         super(Material.ROCK);
-        this.init(this, string_array[0], string_array[1], Tabs.TABS);
+        this.init(this, string_array[0], string_array[1], SmallTab.TAB);
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
         {
-            this.tpbaserender = new TPBaseRender(this);
-            OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)ClientLoader.OBJECT_LIST.get(((SkinningClientData)this.tpbaserender.clientdata).AnimationID());
-            this.tpbaserender.initSkinning(openglanimationmemory);
-            this.tpbaserender.setSkinning(openglanimationmemory);
-            DRAWSCREEN = new DrawScreen();
-            DRAWSCREEN.scale(0.25F);
-            DRAWSCREEN.z = 0.0F;
+            this.renderInit();
         }
-        this.fullBlock = false;
         this.setResistance(2000.0F);
         this.setHardness(50.0F);
         this.setSoundType(SoundType.STONE);
-        this.setLightLevel(1.0F);
+        this.setLightLevel(0.1F);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void renderInit()
+    {
+        this.tpbaserender = new TPBaseRender();
+        OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)ClientLoader.OBJECT_LIST.get(((SkinningClientData)this.tpbaserender.clientdata).AnimationID());
+        this.tpbaserender.initSkinning(openglanimationmemory);
+        this.tpbaserender.setSkinning(openglanimationmemory);
+        DRAWSCREEN = new DrawScreen();
+        DRAWSCREEN.scale(0.25F);
+        DRAWSCREEN.z = 0.0F;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createNewTileEntity(World worldIn, int meta)
+    {
+        return new com.nali.list.tiles.SmallTPBase();
     }
 
 //    @Override
@@ -82,13 +94,6 @@ public class SmallTPBase extends Block implements IMixBlocks, ITileEntityProvide
     public DrawScreen getDrawScreen()
     {
         return DRAWSCREEN;
-    }
-
-    @Nullable
-    @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
-        return new com.nali.list.tiles.SmallTPBase();
     }
 
     @Override

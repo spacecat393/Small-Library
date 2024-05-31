@@ -12,18 +12,18 @@ public class TPBaseClientData implements SkinningClientData
     @Override
     public int StartPart()
     {
-        return MODEL_STEP + 6;
+        return MODEL_STEP + 5;
     }
 
     @Override
     public int EndPart()
     {
-        return MODEL_STEP + 9;
+        return MODEL_STEP + 8;
     }
 
     @Override
     public int AnimationID()
     {
-        return MODEL_STEP + 5;
+        return MODEL_STEP + 4;
     }
 }

@@ -15,7 +15,6 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.player.*;
-import com.nali.system.Timing;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -285,7 +284,7 @@ public class PlayerGui extends MixGui
 
         this.mc.getTextureManager().bindTexture(InventoryGui.GUI_RESOURCELOCATION);
 
-        float ry = this.drawscreen.ry;
+//        float ry = this.drawscreen.ry;
         if (PAGE == 0)
         {
             this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F, this.guiTop + 256/2.0F - 19/2.0F, 106, 50, 18, 19);
@@ -297,7 +296,7 @@ public class PlayerGui extends MixGui
             this.drawTexturedModalRect(this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3, this.guiTop + 256/2.0F - 19/2.0F, 106, 50, 18, 19);
 
             this.drawscreen.rz = 45.0F * 3.0F;
-            this.drawscreen.ry = 0;
+//            this.drawscreen.ry = 0;
             this.drawscreen.scale(-3.5F);
 
             this.drawscreen.x = this.guiLeft + 256/2.0F - (18 + 1)*4/2.0F + (18 + 1)*3 + (18 + 1)/2.0F - 0.5F;
@@ -359,12 +358,12 @@ public class PlayerGui extends MixGui
 //        this.sakura_objectrender.width = this.width;
 //        this.sakura_objectrender.height = this.height;
         this.drawscreen.rz = 0.0F;
-        this.drawscreen.scale(-5.0F);
+        this.drawscreen.scale(-3.5F);
 
         this.drawscreen.x = 15.0F;
         this.drawscreen.y = 15.0F;
-        ry += 2.0F * Timing.TD;
-        this.drawscreen.ry = ry;
+//        ry += 2.0F * Timing.TD;
+//        this.drawscreen.ry = ry;
 //        this.pyroxene_objectrender.z = -1.0F;
 //        this.pyroxene_objectdata.screen_float_array[2] = this.width / 2.0F;
 //        this.pyroxene_objectdata.screen_float_array[3] = this.guiTop + 72.0F;

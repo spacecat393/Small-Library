@@ -31,8 +31,8 @@ public class SakuraRender extends SmallObjectRender
 //        this.objectscreendraw.sx = s;
 //        this.objectscreendraw.sy = s;
 //        this.objectscreendraw.sz = s;
-        color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart())).element_array_buffer, 0xFFffd4e9);
-        color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 1)).element_array_buffer, 0xFFffacdf);
+        color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart())).element_array_buffer, 0xFFFFACDF);//ffd4e9
+//        color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 1)).element_array_buffer, 0xFFffacdf);
     }
 
     @Override

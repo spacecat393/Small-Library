@@ -18,6 +18,6 @@ public class SakuraClientData implements ClientData
     @Override
     public int EndPart()
     {
-        return MODEL_STEP + 5;
+        return MODEL_STEP + 4;
     }
 }

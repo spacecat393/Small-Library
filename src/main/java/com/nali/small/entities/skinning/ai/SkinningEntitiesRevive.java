@@ -6,7 +6,7 @@ import com.nali.networks.NetworksRegistry;
 import com.nali.small.entities.memory.server.ServerEntitiesMemory;
 import com.nali.small.entities.skinning.SkinningEntities;
 import com.nali.small.mixin.IMixinEntityPlayer;
-import com.nali.small.world.ChunkLoader;
+import com.nali.small.chunk.ChunkLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

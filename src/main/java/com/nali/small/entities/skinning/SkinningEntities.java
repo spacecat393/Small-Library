@@ -15,7 +15,7 @@ import com.nali.small.entities.skinning.works.SkinningEntitiesBodyYaw;
 import com.nali.small.entities.sounds.Sounds;
 import com.nali.small.mixin.IMixinEntityCreeper;
 import com.nali.small.mixin.IMixinEntityLivingBase;
-import com.nali.small.world.ChunkLoader;
+import com.nali.small.chunk.ChunkLoader;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -46,7 +46,7 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
-import static com.nali.small.world.ChunkCallBack.CHUNK_MAP;
+import static com.nali.small.chunk.ChunkCallBack.CHUNK_MAP;
 
 public abstract class SkinningEntities extends EntityLivingBase
 {

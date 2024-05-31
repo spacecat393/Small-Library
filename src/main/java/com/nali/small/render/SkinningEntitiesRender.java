@@ -23,13 +23,8 @@ public class SkinningEntitiesRender extends SkinningRender
         this.entity = entity;
     }
 
-//    @Override
     public void updateLightCoord()
     {
-//        super.updateLightCoord();
-
-//        int brightness = this.entity.getBrightnessForRender();
-//        int brightness;
         if (this.entity.isBurning())
         {
             this.lig_b = -1.0F;
@@ -37,25 +32,7 @@ public class SkinningEntitiesRender extends SkinningRender
             return;
         }
 
-        World world = this.entity.world;
-        BlockPos blockpos = this.entity.getPosition();
-
-        if (world.isBlockLoaded(blockpos))
-        {
-            //support on optifine
-            int brightness = world.getCombinedLight(blockpos, 0);
-//            this.lig_b = world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
-//            this.lig_s = world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
-            this.lig_b = (brightness % 65536) / 255.0F;
-            this.lig_s = (brightness / 65536.0F) / 255.0F;
-        }
-
-        if (this.lig_b < 0.1875F)
-        {
-            this.lig_b = 0.1875F;
-        }
-//        this.lig_b = brightness % 65536;
-//        this.lig_s = brightness / 65536.0F;
+        this.updateLightCoord(this.entity.world, this.entity.getPosition());
     }
 
     @Override
