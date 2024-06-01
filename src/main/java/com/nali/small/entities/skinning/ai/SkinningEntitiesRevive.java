@@ -12,8 +12,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 
-import static com.nali.small.entities.EntitiesMath.isTooClose;
-
 public class SkinningEntitiesRevive extends SkinningEntitiesAI
 {
     public int tick = 0;
@@ -81,7 +79,8 @@ public class SkinningEntitiesRevive extends SkinningEntitiesAI
                 }
                 else
                 {
-                    if (isTooClose(this.skinningentities, entity, 1.0D))
+//                    if (isTooClose(this.skinningentities, entity, 1.0D))
+                    if (this.skinningentities.getEntityBoundingBox().intersects(this.entity.getEntityBoundingBox()))
                     {
 //                        if (serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ON_REVIVE()] != 1)
 //                        {

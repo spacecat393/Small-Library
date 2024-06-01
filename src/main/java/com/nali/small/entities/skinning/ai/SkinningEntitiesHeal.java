@@ -5,7 +5,7 @@ import com.nali.small.entities.skinning.SkinningEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 
-import static com.nali.small.entities.EntitiesMath.isTooClose;
+import static com.nali.small.entities.EntitiesMath.getDistanceAABBToAABB;
 
 public class SkinningEntitiesHeal extends SkinningEntitiesAI
 {
@@ -103,7 +103,8 @@ public class SkinningEntitiesHeal extends SkinningEntitiesAI
             if (index != -1)
             {
                 Entity entity = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list.get(index);
-                if (isTooClose(this.skinningentities, entity, this.minimum_distance))
+//                if (isTooClose(this.skinningentities, entity, this.minimum_distance))
+                if (getDistanceAABBToAABB(this.skinningentities, entity) <= this.minimum_distance)
                 {
                     if (this.state == -1)
                     {

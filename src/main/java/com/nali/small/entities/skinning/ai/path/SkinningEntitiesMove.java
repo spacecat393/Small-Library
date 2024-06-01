@@ -13,7 +13,7 @@ public class SkinningEntitiesMove extends SkinningEntitiesAI
     public double x, y, z;
 //    public double ox, oy, oz;
     public double speed;
-    public boolean move = false;
+    public boolean move, should_on_pos;
 
     public SkinningEntitiesMove(SkinningEntities skinningentities)
     {
@@ -120,22 +120,24 @@ public class SkinningEntitiesMove extends SkinningEntitiesAI
         //     this.mob.setXxa(this.strafeRight);
         //     this.operation = MoveControl.Operation.WAIT;
         // }
+//        Nali.LOGGER.info("MOVE!");
         if (this.move)
         {
-            this.move = false;
-            double d0 = this.x - this.skinningentities.posX;
-            double d1 = this.z - this.skinningentities.posZ;
-            double d2 = this.y - this.skinningentities.posY;
-            double d3 = d0 * d0 + d2 * d2 + d1 * d1;
-            if (d3 < (double)2.5000003E-7F)
-            {
-                this.skinningentities.moveForward = 0.0F;
-                return;
-            }
+//            this.move = false;
+//            double d0 = this.x - this.skinningentities.posX;
+//            double d1 = this.z - this.skinningentities.posZ;
+//            double d2 = this.y - this.skinningentities.posY;
+//            double d3 = d0 * d0 + d2 * d2 + d1 * d1;
+//            if (d3 < (double)2.5000003E-7F)
+//            {
+//                this.skinningentities.moveForward = 0.0F;
+//                return;
+//            }
 
 //            float f9 = (float)(MathHelper.atan2(d1, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
 //            this.skinningentities.rotationYaw = this.limitAngle(this.skinningentities.rotationYaw, f9, 90.0F);
 //            this.skinningentities.rotationYawHead = this.skinningentities.rotationYaw;
+//            Nali.LOGGER.info("DONE " + serverentitiesmemory.entitiesaimemory.skinningentitieslook.done);
             if (serverentitiesmemory.entitiesaimemory.skinningentitieslook.done/* || d1 != 0*/)
             {
                 Entity riding_entity = this.skinningentities.getRidingEntity();
@@ -244,9 +246,11 @@ public class SkinningEntitiesMove extends SkinningEntitiesAI
     {
 //        return this.skinningentities.getDistanceSq(this.x, this.y, this.z) <= 0.5D;
         boolean should_work = (int)this.skinningentities.posX == (int)this.x && (int)this.skinningentities.posY == (int)this.y && (int)this.skinningentities.posZ == (int)this.z;
-        if (should_work)
+        if (should_work && this.should_on_pos)
         {
             this.skinningentities.setPosition(this.x, this.y, this.z);
+//            this.skinningentities.moveForward = Float.MIN_VALUE;
+            this.should_on_pos = false;
         }
         return should_work;
     }

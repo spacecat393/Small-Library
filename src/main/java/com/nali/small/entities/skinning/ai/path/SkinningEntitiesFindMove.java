@@ -11,7 +11,6 @@ import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -23,8 +22,10 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 {
     public static int MAX_G = 64;
 
-    public int goal_x, goal_y, goal_z;
-    public int temp_goal_x, temp_goal_y, temp_goal_z;
+//    public int goal_x, goal_y, goal_z;
+    public double goal_x, goal_y, goal_z;
+//    public int temp_goal_x, temp_goal_y, temp_goal_z;
+    public double temp_goal_x, temp_goal_y, temp_goal_z;
 //    public double far;
 
     public List<BlockPos> path_blockpos_list = new ArrayList();
@@ -58,6 +59,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 //                ((WorldServer) world).spawnParticle(EnumParticleTypes.CRIT, bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, 1, 0.0D, 0.0D, 0.0D, 0.0D);
 //            }
 //        }
+//        Nali.LOGGER.info("TICK " + this.path_tick);
 ////        }
 
         if (this.try_move)
@@ -98,9 +100,20 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                     return;
                 }
 
+//                Nali.LOGGER.info("WANT!");
+
                 BlockPos current_blockpos = this.path_blockpos_list.get(this.path_index);
 
-                serverentitiesmemory.entitiesaimemory.skinningentitiesmove.setWanted(current_blockpos.getX() + 0.5D, current_blockpos.getY(), current_blockpos.getZ() + 0.5D);
+                //-if path hitbox is less than entity and on same blockpos will have some problem in future
+                if (this.is_goal && this.path_index == 0)
+                {
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesmove.setWanted(this.goal_x, this.goal_y, this.goal_z);
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesmove.should_on_pos = true;
+                }
+                else
+                {
+                    serverentitiesmemory.entitiesaimemory.skinningentitiesmove.setWanted(current_blockpos.getX() + 0.5D, current_blockpos.getY(), current_blockpos.getZ() + 0.5D);
+                }
 
 //                double far = this.skinningentities.getDistanceSq(this.goal_x + 0.5D, this.goal_y, this.goal_z + 0.5D);
 //                if (/*(!this.is_goal && far >= this.far) || *//*(*/this.is_goal && this.skinningentities.posX == this.old_x && this.skinningentities.posY == this.old_y && this.skinningentities.posZ == this.old_z/*)*/)
@@ -131,6 +144,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                     if (--this.path_index == -1)
                     {
                         this.try_move = false;
+                        serverentitiesmemory.entitiesaimemory.skinningentitiesmove.move = false;
                         this.path_blockpos_list.clear();
                     }
                 }
@@ -161,6 +175,10 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
                         this.path_blockpos_list.clear();
                         return;
                     }
+                }
+                else
+                {
+                    this.path_tick = 0;
                 }
             }
             else
@@ -212,7 +230,7 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 
     public SNode find(SNode start_snode)
     {
-        if (start_snode.blockpos.getX() == this.goal_x && start_snode.blockpos.getY() == this.goal_y && start_snode.blockpos.getZ() == this.goal_z)
+        if (start_snode.blockpos.getX() == (int)this.goal_x && start_snode.blockpos.getY() == (int)this.goal_y && start_snode.blockpos.getZ() == (int)this.goal_z)
         {
             this.is_goal = true;
             return start_snode;
@@ -231,24 +249,25 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 
     public void setGoal(double x, double y, double z)
     {
-        this.setGoal(MathHelper.floor(x), MathHelper.floor(y), MathHelper.floor(z));
-    }
-
-    public void setGoal(int x, int y, int z)
-    {
+//        this.setGoal(MathHelper.floor(x), MathHelper.floor(y), MathHelper.floor(z));
+//    }
+//
+//    public void setGoal(int x, int y, int z)
+//    {
         this.goal_x = x;
         this.goal_y = y;
         this.goal_z = z;
         this.try_move = true;
     }
 
-    public void setBreakGoal(double px, double py, double pz)
+//    public void setBreakGoal(double px, double py, double pz)
+    public void setBreakGoal(double x, double y, double z)
     {
-        this.setBreakGoal(MathHelper.floor(px), MathHelper.floor(py), MathHelper.floor(pz));
-    }
-
-    public void setBreakGoal(int x, int y, int z)
-    {
+//        this.setBreakGoal(MathHelper.floor(px), MathHelper.floor(py), MathHelper.floor(pz));
+//    }
+//
+//    public void setBreakGoal(int x, int y, int z)
+//    {
         SkinningEntitiesMine skinningentitiesmine = ((ServerEntitiesMemory)this.skinningentities.bothentitiesmemory).entitiesaimemory.skinningentitiesmine;
         if (skinningentitiesmine.goal_x != x || skinningentitiesmine.goal_y != y || skinningentitiesmine.goal_z != z)
         {
@@ -262,8 +281,10 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
 
     public void endGoal()
     {
+        ServerEntitiesMemory serverentitiesmemory = (ServerEntitiesMemory)this.skinningentities.bothentitiesmemory;
         this.try_move = false;
         this.path_blockpos_list.clear();
+        serverentitiesmemory.entitiesaimemory.skinningentitiesmove.move = false;
     }
 
     public boolean endGoalT()
@@ -282,9 +303,9 @@ public class SkinningEntitiesFindMove extends SkinningEntitiesAI
         World world = this.skinningentities.world;
 
         SNode pre_snode;
-        double to_x = (this.goal_x + 0.5D) - (start_snode.blockpos.getX() + 0.5D);
-        double to_y = (this.goal_y + 0.5D) - (start_snode.blockpos.getY() + 0.5D);
-        double to_z = (this.goal_z + 0.5D) - (start_snode.blockpos.getZ() + 0.5D);
+        double to_x = ((int)this.goal_x + 0.5D) - (start_snode.blockpos.getX() + 0.5D);
+        double to_y = ((int)this.goal_y + 0.5D) - (start_snode.blockpos.getY() + 0.5D);
+        double to_z = ((int)this.goal_z + 0.5D) - (start_snode.blockpos.getZ() + 0.5D);
         double length = to_x * to_x + to_y * to_y + to_z * to_z;
         byte new_x = 0;
         byte new_y = 0;

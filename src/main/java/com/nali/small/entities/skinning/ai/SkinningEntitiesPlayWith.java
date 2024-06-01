@@ -6,7 +6,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.WorldServer;
 
 import static com.nali.small.entities.EntitiesMath.isInArea;
-import static com.nali.small.entities.EntitiesMath.isTooClose;
 
 public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
 {
@@ -87,7 +86,8 @@ public class SkinningEntitiesPlayWith extends SkinningEntitiesAI
                     play = true;
                     if (!this.should_play)
                     {
-                        if (isTooClose(this.skinningentities, this.playwith_skinningentities, 0.0F))
+//                        if (isTooClose(this.skinningentities, this.playwith_skinningentities, 0.0F))
+                        if (this.skinningentities.getEntityBoundingBox().intersects(this.playwith_skinningentities.getEntityBoundingBox()))
                         {
                             if (((ServerEntitiesMemory)this.playwith_skinningentities.bothentitiesmemory).skinningentities == null)
                             {

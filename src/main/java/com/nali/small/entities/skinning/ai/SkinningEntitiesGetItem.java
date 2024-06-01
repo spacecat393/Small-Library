@@ -12,7 +12,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 
 import static com.nali.small.entities.EntitiesMath.isInArea;
-import static com.nali.small.entities.EntitiesMath.isTooClose;
 
 public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 {
@@ -53,7 +52,7 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 
             if (xp && should_get_xp)
             {
-                if ((this.flag & 32) == 32 && !isTooClose(this.skinningentities, to_entityxporb, 0))
+                if ((this.flag & 32) == 32 && !this.skinningentities.getEntityBoundingBox().intersects(to_entityxporb.getEntityBoundingBox())/*!isTooClose(this.skinningentities, to_entityxporb, 0)*/)
                 {
                     if (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(to_entityxporb, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far))
                     {
@@ -66,7 +65,7 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
             else if (item)
             {
                 EntityItem to_entityitem = serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_list.get(serverentitiesmemory.entitiesaimemory.skinningentitiesarea.item_entity_list.size() - 1);
-                if ((this.flag & 64) == 64 && !isTooClose(this.skinningentities, to_entityitem, 0))
+                if ((this.flag & 64) == 64 && !this.skinningentities.getEntityBoundingBox().intersects(to_entityitem.getEntityBoundingBox())/*!isTooClose(this.skinningentities, to_entityitem, 0)*/)
                 {
                     if (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(to_entityitem, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far))
                     {
@@ -77,10 +76,10 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
                 }
             }
         }
-        else
-        {
-            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
-        }
+//        else
+//        {
+//            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
+//        }
 
         if (xp)
         {
@@ -88,14 +87,14 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
             {
                 if (should_get_xp)
                 {
-                    if ((this.flag & 2) == 2 || isTooClose(this.skinningentities, entityxporb, 0))
+                    if ((this.flag & 2) == 2 || this.skinningentities.getEntityBoundingBox().intersects(entityxporb.getEntityBoundingBox())/*isTooClose(this.skinningentities, entityxporb, 0)*/)
                     {
                         if ((this.flag & 1) == 1)
                         {
 //                            Nali.LOGGER.info("XP END");
                             skinningentitiesfindmove.endGoal();
                             this.flag &= 255-1;
-                            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
+//                            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
                         }
 //                        Nali.LOGGER.info("XP STEP");
                         if ((this.flag & 8) == 8)
@@ -124,14 +123,14 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
             {
                 ItemStack itemstack = entityitem.getItem();
 
-                if ((this.flag & 4) == 4 || isTooClose(this.skinningentities, entityitem, 0))
+                if ((this.flag & 4) == 4 || this.skinningentities.getEntityBoundingBox().intersects(entityitem.getEntityBoundingBox())/*isTooClose(this.skinningentities, entityitem, 0)*/)
                 {
                     if ((this.flag & 1) == 1)
                     {
 //                        Nali.LOGGER.info("ITEM END");
                         skinningentitiesfindmove.endGoal();
                         this.flag &= 255-1;
-                        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
+//                        serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
                     }
 //                    Nali.LOGGER.info("ITEM STEP");
                     if ((this.flag & 16) == 16)
@@ -168,7 +167,7 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
                             {
                                 if (count <= 0)
                                 {
-                                    this.skinningentities.onItemPickup(entityitem, max_count);
+                                    this.skinningentities.onItemPickup(entityitem, e_count);
                                     inv_itemstack.setCount(max_count);
                                     entityitem.setDead();
 
@@ -193,6 +192,10 @@ public class SkinningEntitiesGetItem extends SkinningEntitiesAI
 //            this.flag &= 255-1;
 //            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
 //        }
+        if ((this.flag & 1) == 0)
+        {
+            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, serverentitiesmemory.workbytes.GET_ITEM() % 8));
+        }
     }
 
     public static boolean isSameItemSameTags(ItemStack itemstack_a, ItemStack itemstack_b)

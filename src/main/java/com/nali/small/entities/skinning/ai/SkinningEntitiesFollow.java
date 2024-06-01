@@ -7,7 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 
-import static com.nali.small.entities.EntitiesMath.getClose;
+import static com.nali.small.entities.EntitiesMath.getDistanceAABBToAABB;
 import static com.nali.small.entities.EntitiesMath.isInArea;
 import static com.nali.small.entities.skinning.ai.path.PathMath.PATH_BYTE_ARRAY;
 
@@ -41,7 +41,8 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
         if (owner_entity != null &&
             serverentitiesmemory.isWork(serverentitiesmemory.workbytes.FOLLOW()) &&
             (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null || isInArea(owner_entity, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far)) &&
-            (this.skinningentities.getDistanceSq(owner_entity) > this.min_distance || move_to))
+//            (this.skinningentities.getDistanceSq(owner_entity) > this.min_distance || move_to))
+            (getDistanceAABBToAABB(this.skinningentities, owner_entity) > this.min_distance || move_to))
         {
             if ((owner_entity.world).provider.getDimension() != ((this.skinningentities.world).provider.getDimension()))
             {
@@ -66,15 +67,18 @@ public class SkinningEntitiesFollow extends SkinningEntitiesAI
                 this.skinningentities.dismountRidingEntity();
             }
 
-            double step = this.skinningentities.getDistanceSq(owner_entity);
+//            double step = this.skinningentities.getDistanceSq(owner_entity);
 
-            if ((this.flag & 2) == 2 && step >= this.max_distance)
+//            if ((this.flag & 2) == 2 && step >= this.max_distance)
+//            if ((this.flag & 2) == 2 && this.skinningentities.getDistanceSq(owner_entity) >= this.max_distance)
+            if ((this.flag & 2) == 2 && getDistanceAABBToAABB(this.skinningentities, owner_entity) >= this.max_distance)
             {
                 this.tryTeleport(owner_entity);
             }
             else if ((this.flag & 4) == 4)
             {
-                if (step <= getClose(this.skinningentities, owner_entity, 1.0D))
+//                if (step <= getClose(this.skinningentities, owner_entity, 1.0D))
+                if (getDistanceAABBToAABB(this.skinningentities, owner_entity) <= 1.0D)
                 {
                     serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.endGoal();
                     this.flag &= 255-1;

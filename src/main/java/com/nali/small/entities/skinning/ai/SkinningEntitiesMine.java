@@ -19,7 +19,8 @@ public class SkinningEntitiesMine extends SkinningEntitiesAI
     public byte state;//remote1 x2-4 y8-16 z32-64 +-
     public BlockPos blockpos, start_blockpos, end_blockpos;
     public float hardness;
-    public float goal_x, goal_y, goal_z;
+//    public float goal_x, goal_y, goal_z;
+    public double goal_x, goal_y, goal_z;
 
     public SkinningEntitiesMine(SkinningEntities skinningentities)
     {
@@ -72,7 +73,7 @@ public class SkinningEntitiesMine extends SkinningEntitiesAI
             if (this.skinningentities.getDistanceSq(this.blockpos) > 8.0D)
             {
 //                    BlockPos blockpos = this.blockpos;
-                skinningentitiesfindmove.setGoal(this.blockpos.getX(), this.blockpos.getY(), this.blockpos.getZ());
+                skinningentitiesfindmove.setGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
 //                    this.blockpos = blockpos;
             }
             else

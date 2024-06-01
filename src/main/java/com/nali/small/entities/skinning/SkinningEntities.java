@@ -6,6 +6,7 @@ import com.nali.list.netmethods.servermessage.OpenInvGUI;
 import com.nali.list.netmethods.servermessage.SyncUUIDToClient;
 import com.nali.networks.NetworksRegistry;
 import com.nali.render.SkinningRender;
+import com.nali.small.chunk.ChunkLoader;
 import com.nali.small.entities.EntitiesAttackHelper;
 import com.nali.small.entities.bytes.WorkBytes;
 import com.nali.small.entities.memory.BothEntitiesMemory;
@@ -15,7 +16,6 @@ import com.nali.small.entities.skinning.works.SkinningEntitiesBodyYaw;
 import com.nali.small.entities.sounds.Sounds;
 import com.nali.small.mixin.IMixinEntityCreeper;
 import com.nali.small.mixin.IMixinEntityLivingBase;
-import com.nali.small.chunk.ChunkLoader;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -45,8 +45,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
 import static com.nali.small.chunk.ChunkCallBack.CHUNK_MAP;
+import static com.nali.small.entities.memory.server.ServerEntitiesMemory.ENTITIES_MAP;
 
 public abstract class SkinningEntities extends EntityLivingBase
 {
@@ -619,8 +619,10 @@ public abstract class SkinningEntities extends EntityLivingBase
     @Override
     public void setAIMoveSpeed(float speedIn)
     {
+//        Nali.LOGGER.info("S SPEED " + speedIn);
         super.setAIMoveSpeed(speedIn);
         this.moveForward = speedIn;
+//        Nali.LOGGER.info("E SPEED " + speedIn);
     }
 
     @Override
@@ -635,7 +637,7 @@ public abstract class SkinningEntities extends EntityLivingBase
     @Override
     public boolean canEntityBeSeen(Entity entityIn)
     {
-        return this.world.rayTraceBlocks(new Vec3d(this.posX, this.posY, this.posZ), new Vec3d(entityIn.posX, entityIn.posY, entityIn.posZ), false, true, false) == null;
+        return this.world.rayTraceBlocks(new Vec3d(this.posX, this.posY, this.posZ), new Vec3d(entityIn.posX, entityIn.posY, entityIn.posZ), false, true, false) == null || super.canEntityBeSeen(entityIn);
     }
 
     @Override

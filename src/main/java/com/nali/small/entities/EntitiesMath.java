@@ -6,17 +6,17 @@ import net.minecraft.util.math.BlockPos;
 
 public class EntitiesMath
 {
-    public static boolean isTooClose(Entity entity0, Entity entity1, double minimum_distance)
-    {
-        return entity0.getDistanceSq(entity1) < getClose(entity0, entity1, minimum_distance);
-    }
-
-    public static double getClose(Entity entity0, Entity entity1, double minimum_distance)
-    {
-        double width = (entity0.width + entity1.width) / 2.0D;
-        double height = (entity0.height + entity1.height) / 2.0D;
-        return (width + height + minimum_distance) * (width + height + minimum_distance);
-    }
+//    public static boolean isTooClose(Entity entity0, Entity entity1, double minimum_distance)
+//    {
+//        return entity0.getDistanceSq(entity1) < getClose(entity0, entity1, minimum_distance);
+//    }
+//
+//    public static double getClose(Entity entity0, Entity entity1, double minimum_distance)
+//    {
+//        double width = (entity0.width + entity1.width) / 2.0D;
+//        double height = (entity0.height + entity1.height) / 2.0D;
+//        return (width + height + minimum_distance) * (width + height + minimum_distance);
+//    }
 
     public static boolean isInArea(Entity entity, BlockPos blockpos, double minimum_distance)
     {
@@ -38,7 +38,7 @@ public class EntitiesMath
         double dy = getDistanceAxis(entity_a_aabb.minY, entity_a_aabb.maxY, entity_b_aabb.minY, entity_b_aabb.maxY);
         double dz = getDistanceAxis(entity_a_aabb.minZ, entity_a_aabb.maxZ, entity_b_aabb.minZ, entity_b_aabb.maxZ);
 
-        return Math.sqrt(dx * dx + dy * dy + dz * dz);
+        return /*Math.sqrt(*/dx * dx + dy * dy + dz * dz/*)*/;
     }
 
     public static double getDistanceAxis(double min1, double max1, double min2, double max2)

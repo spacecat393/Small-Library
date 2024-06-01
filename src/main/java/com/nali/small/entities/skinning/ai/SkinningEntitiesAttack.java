@@ -7,8 +7,8 @@ import net.minecraft.util.EnumHand;
 
 import java.util.List;
 
+import static com.nali.small.entities.EntitiesMath.getDistanceAABBToAABB;
 import static com.nali.small.entities.EntitiesMath.isInArea;
-import static com.nali.small.entities.EntitiesMath.isTooClose;
 
 public class SkinningEntitiesAttack extends SkinningEntitiesAI
 {
@@ -63,7 +63,7 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
                     serverentitiesmemory.entitiesaimemory.skinningentitieslook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
                 }
 
-                if ((this.flag & 16+8) == 16 && !(this.skinningentities.canEntityBeSeen(target_entity) && isTooClose(this.skinningentities, target_entity, this.minimum_distance)))
+                if ((this.flag & 16+8) == 16 && !(this.skinningentities.canEntityBeSeen(target_entity) && getDistanceAABBToAABB(this.skinningentities, target_entity) <= this.minimum_distance/*isTooClose(this.skinningentities, target_entity, this.minimum_distance)*/))
                 {
                     serverentitiesmemory.entitiesaimemory.skinningentitiesfindmove.setBreakGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
                     this.flag |= 1;
@@ -106,7 +106,8 @@ public class SkinningEntitiesAttack extends SkinningEntitiesAI
             if (serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far == 0 || serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos == null ||
                 isInArea(entity, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.blockpos, serverentitiesmemory.entitiesaimemory.skinningentitiessetlocation.far))
             {
-                if ((this.flag & 8) == 8 || (this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance)))
+//                if ((this.flag & 8) == 8 || (this.skinningentities.canEntityBeSeen(entity) && isTooClose(this.skinningentities, entity, this.minimum_distance)))
+                if ((this.flag & 8) == 8 || (this.skinningentities.canEntityBeSeen(entity) && getDistanceAABBToAABB(this.skinningentities, entity) <= this.minimum_distance))
                 {
                     if ((this.flag & 4) == 4)
                     {

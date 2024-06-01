@@ -8,7 +8,7 @@ import net.minecraft.entity.EntityLivingBase;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.nali.small.entities.EntitiesMath.isTooClose;
+import static com.nali.small.entities.EntitiesMath.getDistanceAABBToAABB;
 
 public class SkinningEntitiesProtect extends SkinningEntitiesAI
 {
@@ -56,7 +56,8 @@ public class SkinningEntitiesProtect extends SkinningEntitiesAI
 
             for (Entity entity : serverentitiesmemory.entitiesaimemory.skinningentitiesarea.out_entity_list)
             {
-                if (isTooClose(this.skinningentities, entity, this.minimum_distance))
+//                if (isTooClose(this.skinningentities, entity, this.minimum_distance))
+                if (getDistanceAABBToAABB(this.skinningentities, entity) <= this.minimum_distance)
                 {
                     boolean in_list = false;
                     for (Entity in_entity : this.entity_list)
