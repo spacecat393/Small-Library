@@ -1,6 +1,6 @@
 package com.nali.small.mixin;
 
-import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entity.IMixE;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.ItemMonsterPlacer;
@@ -18,12 +18,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinItemMonsterPlacer
 {
     @Inject(method = "spawnCreature", at = @At(value = "JUMP", target = "Lnet/minecraft/entity/EntityList;createEntityByIDFromName(Lnet/minecraft/util/ResourceLocation;Lnet/minecraft/world/World;)Lnet/minecraft/entity/Entity;", ordinal = 1))
-    @Mutable
     private static void nali_small_spawnCreature(World worldIn, ResourceLocation entityID, double x, double y, double z, CallbackInfoReturnable<Entity> cir)
     {
         Entity entity = EntityList.createEntityByIDFromName(entityID, worldIn);
 
-        if (entity instanceof SkinningEntities/* || entity instanceof ObjectEntities*/)
+        if (entity instanceof IMixE)
         {
             NBTTagCompound nbttagcompound = new NBTTagCompound();
             nbttagcompound = entity.writeToNBT(nbttagcompound);

@@ -1,11 +1,11 @@
 package com.nali.small;
 
 import com.nali.small.system.Reference;
-import com.nali.list.items.SmallBox;
+import com.nali.list.item.SmallBox;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
-import static com.nali.small.items.ItemsRegistry.ITEM_ARRAY;
+import static com.nali.small.item.ItemRegistry.ITEM_ARRAY;
 
 public class SmallTab extends CreativeTabs
 {

@@ -2,7 +2,7 @@ package com.nali.list.render;
 
 import com.nali.data.client.ClientData;
 import com.nali.mixin.IMixinEntityRenderer;
-import com.nali.small.data.client.BoxClientData;
+import com.nali.small.data.client.BoxClient;
 import com.nali.small.render.SmallObjectRender;
 import com.nali.system.opengl.OpenGLBuffer;
 import com.nali.system.opengl.memory.OpenGLObjectMemory;
@@ -24,7 +24,7 @@ public class BoxRender extends SmallObjectRender
 {
 //    public static int ID;
 //    public static DataLoader DATALOADER = RenderHelper.DATALOADER;
-    public static ClientData CLIENTDATA = new BoxClientData();
+    public static ClientData CLIENTDATA = new BoxClient();
     public Map<Integer, Integer> color_map = new HashMap();//element_array_buffer hex
     public byte extra_bit;
 

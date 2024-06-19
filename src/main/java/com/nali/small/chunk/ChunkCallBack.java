@@ -1,19 +1,19 @@
 package com.nali.small.chunk;
 
 import com.nali.small.Small;
-import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entity.memo.server.ServerE;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeChunkManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 public class ChunkCallBack implements ForgeChunkManager.OrderedLoadingCallback
 {
     public static ChunkCallBack I;
-    public static Map<SkinningEntities, ChunkData> CHUNK_MAP;
+    public static Map<ServerE, ChunkData> CHUNK_MAP;
 
     public static void set()
     {

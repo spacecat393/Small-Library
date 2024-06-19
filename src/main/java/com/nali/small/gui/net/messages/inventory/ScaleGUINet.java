@@ -1,6 +1,6 @@
 package com.nali.small.gui.net.messages.inventory;
 
-import com.nali.list.netmethods.servermessage.Scale;
+import com.nali.list.network.method.server.Scale;
 import com.nali.small.Small;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.net.GUINetLoader;

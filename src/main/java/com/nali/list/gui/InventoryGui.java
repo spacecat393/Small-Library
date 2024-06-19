@@ -2,12 +2,12 @@ package com.nali.list.gui;
 
 import com.nali.draw.DrawScreen;
 import com.nali.list.container.InventoryContainer;
-import com.nali.list.netmethods.servermessage.*;
+import com.nali.list.network.method.server.*;
 import com.nali.list.render.BoxRender;
 import com.nali.render.SkinningRender;
-import com.nali.small.entities.memory.client.ClientEntitiesMemory;
-import com.nali.small.entities.skinning.SkinningEntities;
-import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
+import com.nali.small.entity.memo.client.ClientLe;
+import com.nali.small.entity.EntityLeInv;
+import com.nali.small.entity.memo.client.render.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.SetAttributesGUIFeatures;
 import com.nali.small.gui.features.messages.EffectsGUIFeatures;
@@ -51,7 +51,7 @@ public class InventoryGui extends MixGui
     public DrawScreen box_drawscreen = new DrawScreen();
     public DrawScreen skinning_drawscreen = new DrawScreen();
 
-    public InventoryGui(IInventory iinventory, SkinningEntities skinningentities)
+    public InventoryGui(IInventory iinventory, EntityLeInv skinningentities)
     {
         super(new InventoryContainer(iinventory, skinningentities, Minecraft.getMinecraft().player));
         this.mc = Minecraft.getMinecraft();
@@ -79,8 +79,8 @@ public class InventoryGui extends MixGui
         this.state &= 255-1;
         this.state &= 255-2;
 
-        SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
-        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        EntityLeInv skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
+        ClientLe cliententitiesmemory = (ClientLe)skinningentities.bothentitiesmemory;
         SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
         if (!skinningrender.entitiesrendermemory.should_render)
         {
@@ -403,8 +403,8 @@ public class InventoryGui extends MixGui
             }
         }
 
-        SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
-        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        EntityLeInv skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
+        ClientLe cliententitiesmemory = (ClientLe)skinningentities.bothentitiesmemory;
 
         this.drawTexturedModalRect(this.guiLeft + 159, this.guiTop + 51, 16, 42, 22, 21);
         this.drawTexturedModalRect(this.guiLeft + 102, this.guiTop + 28, 30, 0, 14, 14);
@@ -536,8 +536,8 @@ public class InventoryGui extends MixGui
             y += 12;
             this.drawTexturedModalRect(x, y, 252, 0, 4, 4);
 
-            SkinningEntities skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
-            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+            EntityLeInv skinningentities = ((InventoryContainer)this.inventorySlots).skinningentities;
+            ClientLe cliententitiesmemory = (ClientLe)skinningentities.bothentitiesmemory;
             byte bit = cliententitiesmemory.sync_byte_array[0];
             if (((bit >> index) & 1) == 1)
             {

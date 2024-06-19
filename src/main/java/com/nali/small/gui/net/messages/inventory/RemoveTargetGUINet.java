@@ -1,6 +1,6 @@
 package com.nali.small.gui.net.messages.inventory;
 
-import com.nali.list.netmethods.servermessage.RemoveTarget;
+import com.nali.list.network.method.server.RemoveTarget;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.net.GUINetLoader;
 import net.minecraftforge.fml.relauncher.Side;

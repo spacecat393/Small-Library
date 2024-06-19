@@ -1,11 +1,11 @@
 package com.nali.small.gui.net;
 
 import com.nali.list.container.InventoryContainer;
-import com.nali.list.messages.ServerMessage;
+import com.nali.list.network.message.ServerMessage;
 import com.nali.networks.NetworksRegistry;
 import com.nali.small.Small;
-import com.nali.small.entities.memory.client.ClientEntitiesMemory;
-import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entity.memo.client.ClientLe;
+import com.nali.small.entity.EntityLeInv;
 import com.nali.small.gui.MixGui;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraftforge.fml.relauncher.Side;
@@ -40,8 +40,8 @@ public abstract class GUINetLoader
                 new_index += 4;
             }
 
-            SkinningEntities skinningentities = ((InventoryContainer)this.mixgui.inventorySlots).skinningentities;
-            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+            EntityLeInv skinningentities = ((InventoryContainer)this.mixgui.inventorySlots).skinningentities;
+            ClientLe cliententitiesmemory = (ClientLe)skinningentities.bothentitiesmemory;
             BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
             NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
         }
@@ -74,8 +74,8 @@ public abstract class GUINetLoader
                 new_index += 4;
             }
 
-            SkinningEntities skinningentities = ((InventoryContainer)this.mixgui.inventorySlots).skinningentities;
-            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+            EntityLeInv skinningentities = ((InventoryContainer)this.mixgui.inventorySlots).skinningentities;
+            ClientLe cliententitiesmemory = (ClientLe)skinningentities.bothentitiesmemory;
             BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
             NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
         }

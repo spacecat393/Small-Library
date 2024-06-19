@@ -13,14 +13,12 @@
 //public abstract class MixinMinecraft
 //{
 //    @Inject(method = "runTickKeyboard", at = @At("HEAD"))
-//    @Mutable
 //    private void runTickKeyboard(CallbackInfo ci)
 //    {
 //        FUNCTION.apply(null);
 //    }
 //
 //    @Inject(method = "dispatchKeypresses", at = @At("HEAD"))
-//    @Mutable
 //    private void dispatchKeypresses(CallbackInfo ci)
 //    {
 //        FUNCTION.apply(null);

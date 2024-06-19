@@ -3,7 +3,7 @@ package com.nali.list.render;
 import com.nali.data.BothData;
 import com.nali.data.client.ClientData;
 import com.nali.small.data.both.TPBaseBothData;
-import com.nali.small.data.client.TPBaseClientData;
+import com.nali.small.data.client.TPBaseClient;
 import com.nali.small.render.SmallSkinningRender;
 import com.nali.system.opengl.memory.OpenGLObjectMemory;
 import net.minecraft.util.ResourceLocation;
@@ -18,7 +18,7 @@ import static com.nali.system.ClientLoader.OBJECT_LIST;
 @SideOnly(Side.CLIENT)
 public class TPBaseRender extends SmallSkinningRender
 {
-    public static ClientData CLIENTDATA = new TPBaseClientData();
+    public static ClientData CLIENTDATA = new TPBaseClient();
     public static BothData BOTHDATA = new TPBaseBothData();
     public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
 

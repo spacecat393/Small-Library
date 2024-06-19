@@ -1,7 +1,7 @@
 package com.nali.list.render;
 
 import com.nali.data.client.ClientData;
-import com.nali.small.data.client.StorageClientData;
+import com.nali.small.data.client.StorageClient;
 import com.nali.small.render.SmallObjectRender;
 import com.nali.system.opengl.memory.OpenGLObjectMemory;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +16,7 @@ import static com.nali.system.ClientLoader.OBJECT_LIST;
 @SideOnly(Side.CLIENT)
 public class StorageRender extends SmallObjectRender
 {
-    public static ClientData CLIENTDATA = new StorageClientData();
+    public static ClientData CLIENTDATA = new StorageClient();
     public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
 
     public StorageRender()

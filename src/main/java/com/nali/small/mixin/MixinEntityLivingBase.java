@@ -1,6 +1,6 @@
 package com.nali.small.mixin;
 
-import com.nali.list.capabilitiesserializations.SmallSakuraSerializations;
+import com.nali.list.capability.serializable.SmallSakuraSerializable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -22,7 +22,6 @@ public abstract class MixinEntityLivingBase extends Entity
     }
 
     @Inject(method = "onDeath", at = @At(value = "HEAD"))
-    @Mutable
     private void nali_small_onDeath(DamageSource cause, CallbackInfo ci)
     {
         Entity entity = cause.getTrueSource();
@@ -30,18 +29,17 @@ public abstract class MixinEntityLivingBase extends Entity
         if (entity instanceof EntityPlayerMP)
         {
             EntityPlayerMP entityplayermp = (EntityPlayerMP)entity;
-            entityplayermp.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null).add((byte)1);
+            entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null).add((byte)1);
         }
     }
 
     @Inject(method = "attackEntityFrom", at = @At(value = "HEAD"), cancellable = true)
-    @Mutable
     private void nali_small_attackEntityFrom(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir)
     {
-        byte protect = this.getEntityData().getByte("protect_nali");
+        byte protect = this.getEntityData().getByte("Nali_protect");
         if (protect > 0)
         {
-            this.getEntityData().setByte("protect_nali", (byte)(protect - 1));
+            this.getEntityData().setByte("Nali_protect", (byte)(protect - 1));
             cir.cancel();
         }
     }

@@ -1,6 +1,6 @@
 package com.nali.small.gui.features;
 
-import com.nali.small.entities.EntitiesRegistry;
+import com.nali.small.entity.EntityRegistry;
 import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
@@ -40,9 +40,9 @@ public class MessagesFeatures
             int index = 1;
             for (int i : int_array)
             {
-                if (i < EntitiesRegistry.ENTITY_KEY_ARRAY.length)
+                if (i < EntityRegistry.ENTITY_KEY_ARRAY.length)
                 {
-                    guifeaturesloader.string_array[index++] = i + " " + ((Class) EntitiesRegistry.ENTITY_KEY_ARRAY[i]).getName();
+                    guifeaturesloader.string_array[index++] = i + " " + ((Class) EntityRegistry.ENTITY_KEY_ARRAY[i]).getName();
                 }
                 else
                 {

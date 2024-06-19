@@ -15,6 +15,5 @@ public interface IMixinWorldServer
 {
     @Accessor("entitiesByUuid")
     @Final
-    @Mutable
     Map<UUID, Entity> entitiesByUuid();
 }

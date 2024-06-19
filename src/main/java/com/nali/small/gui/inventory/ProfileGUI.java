@@ -1,9 +1,9 @@
 package com.nali.small.gui.inventory;
 
 import com.nali.list.container.InventoryContainer;
-import com.nali.list.netmethods.servermessage.*;
-import com.nali.small.entities.memory.client.ClientEntitiesMemory;
-import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.list.network.method.server.*;
+import com.nali.small.entity.memo.client.ClientLe;
+import com.nali.small.entity.EntityLeInv;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.works.*;
 
@@ -13,8 +13,8 @@ public class ProfileGUI
 {
     public static void drawGuiContainerBackgroundLayer(MixGui gui)
     {
-        SkinningEntities skinningentities = ((InventoryContainer)gui.inventorySlots).skinningentities;
-        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        EntityLeInv skinningentities = ((InventoryContainer)gui.inventorySlots).skinningentities;
+        ClientLe cliententitiesmemory = (ClientLe)skinningentities.bothentitiesmemory;
         int left = gui.getGuiLeft();
         int top = gui.getGuiTop();
         gui.drawTexturedModalRect(left + 49, top + 90, 86, 0, 14, 14);
@@ -81,8 +81,8 @@ public class ProfileGUI
 
     public static void drawScreen(MixGui gui, int mouseX, int mouseY)
     {
-        SkinningEntities skinningentities = ((InventoryContainer)gui.inventorySlots).skinningentities;
-        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        EntityLeInv skinningentities = ((InventoryContainer)gui.inventorySlots).skinningentities;
+        ClientLe cliententitiesmemory = (ClientLe)skinningentities.bothentitiesmemory;
         int left = gui.getGuiLeft();
         int top = gui.getGuiTop();
 

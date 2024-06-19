@@ -11,6 +11,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface IMixinLayerArmorBase
 {
     @Invoker("renderArmorLayer")
-    @Mutable
     void GOrenderArmorLayer(EntityLivingBase entityLivingBaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale, EntityEquipmentSlot slotIn);
 }

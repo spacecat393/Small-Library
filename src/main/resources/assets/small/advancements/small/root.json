@@ -1,0 +1,27 @@
+{
+    "display":
+    {
+        "icon":
+        {
+            "item": "small:box"
+        },
+        "title":
+        {
+            "translate": "advancements.small.root.title"
+        },
+        "description":
+        {
+            "translate": "advancements.small.root.description"
+        },
+        "background": "minecraft:textures/blocks/cake_top.png",
+        "show_toast": true,
+        "announce_to_chat": true
+    },
+    "criteria":
+    {
+        "tick":
+        {
+            "trigger": "minecraft:tick"
+        }
+    }
+}

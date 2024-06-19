@@ -1,7 +1,7 @@
 package com.nali.list.render;
 
 import com.nali.data.client.ClientData;
-import com.nali.small.data.client.SakuraClientData;
+import com.nali.small.data.client.SakuraClient;
 import com.nali.small.render.SmallObjectRender;
 import com.nali.system.opengl.memory.OpenGLObjectMemory;
 import com.nali.system.opengl.memory.OpenGLObjectShaderMemory;
@@ -20,7 +20,7 @@ public class SakuraRender extends SmallObjectRender
 {
 //    public static int ID;
 //    public static DataLoader DATALOADER = RenderHelper.DATALOADER;
-    public static ClientData CLIENTDATA = new SakuraClientData();
+    public static ClientData CLIENTDATA = new SakuraClient();
     public Map<Integer, Integer> color_map = new HashMap();//element_array_buffer hex
     public byte extra_bit;
 

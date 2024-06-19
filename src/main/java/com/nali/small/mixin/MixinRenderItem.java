@@ -1,7 +1,7 @@
 package com.nali.small.mixin;
 
 import com.nali.render.ObjectRender;
-import com.nali.small.items.IMixItems;
+import com.nali.small.item.IMixItem;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.item.ItemStack;
@@ -22,14 +22,13 @@ public abstract class MixinRenderItem
 //    }
 
     @Inject(method = "renderModel(Lnet/minecraft/client/renderer/block/model/IBakedModel;ILnet/minecraft/item/ItemStack;)V", at = @At("HEAD"), cancellable = true)
-    @Mutable
     private void nali_small_renderModel(IBakedModel model, int color, ItemStack stack, CallbackInfo ci)
     {
-        if (stack.getItem() instanceof IMixItems)
+        if (stack.getItem() instanceof IMixItem)
         {
             GL11.glPushMatrix();
             GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-            IMixItems mixitems = ((IMixItems)stack.getItem());
+            IMixItem mixitems = ((IMixItem)stack.getItem());
             mixitems.render();
             ObjectRender objectrender = mixitems.getObjectRender();
             objectrender.lig_b = -1.0F;

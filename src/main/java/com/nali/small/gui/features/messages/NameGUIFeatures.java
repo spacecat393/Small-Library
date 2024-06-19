@@ -1,7 +1,7 @@
 package com.nali.small.gui.features.messages;
 
-import com.nali.small.entities.memory.client.ClientEntitiesMemory;
-import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entity.memo.client.ClientLe;
+import com.nali.small.entity.EntityLeInv;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.system.Reference;
@@ -10,11 +10,11 @@ import net.minecraft.util.text.translation.I18n;
 
 public class NameGUIFeatures extends GUIFeaturesLoader
 {
-    public NameGUIFeatures(MixGui mixgui, SkinningEntities skinningentities)
+    public NameGUIFeatures(MixGui mixgui, EntityLeInv skinningentities)
     {
         super(mixgui);
 
-        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        ClientLe cliententitiesmemory = (ClientLe)skinningentities.bothentitiesmemory;
         String uuid_string = cliententitiesmemory.uuid.toString();
 
         String custom_name_string = "-";

@@ -1,8 +1,8 @@
 package com.nali.small.gui.features.messages.works;
 
 import com.nali.list.container.InventoryContainer;
-import com.nali.small.entities.memory.client.ClientEntitiesMemory;
-import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entity.memo.client.ClientLe;
+import com.nali.small.entity.EntityLeInv;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.system.Reference;
@@ -46,8 +46,8 @@ public class MineGUIFeatures extends GUIFeaturesLoader
         }
         else
         {
-            SkinningEntities skinningentities = ((InventoryContainer)this.mixgui.inventorySlots).skinningentities;
-            ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+            EntityLeInv skinningentities = ((InventoryContainer)this.mixgui.inventorySlots).skinningentities;
+            ClientLe cliententitiesmemory = (ClientLe)skinningentities.bothentitiesmemory;
 
             this.mixgui.drawHoveringText(new String[]
             {

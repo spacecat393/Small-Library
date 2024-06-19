@@ -17,7 +17,6 @@
 //public abstract class MixinChunkRenderContainer
 //{
 //    @Inject(method = "addRenderChunk", at = @At(value = "HEAD"))
-//    @Mutable
 //    private void addRenderChunk(RenderChunk renderChunkIn, BlockRenderLayer layer, CallbackInfo callbackinfo)
 //    {
 //        //need to find block in chunk

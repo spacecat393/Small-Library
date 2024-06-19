@@ -1,6 +1,6 @@
 package com.nali.small.gui.net.messages.inventory;
 
-import com.nali.list.netmethods.servermessage.SetFollow;
+import com.nali.list.network.method.server.SetFollow;
 import com.nali.small.Small;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.works.FollowGUIFeatures;

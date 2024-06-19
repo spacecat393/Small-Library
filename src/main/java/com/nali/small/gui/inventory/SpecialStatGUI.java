@@ -1,6 +1,6 @@
 package com.nali.small.gui.inventory;
 
-import com.nali.list.netmethods.servermessage.SendLocation;
+import com.nali.list.network.method.server.SendLocation;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.AttributeStatGUIFeatures;
 import com.nali.small.gui.features.messages.ScaleGUIFeatures;

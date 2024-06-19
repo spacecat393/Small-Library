@@ -1,0 +1,25 @@
+{
+    "parent": "small:small/root",
+    "display":
+    {
+        "icon":
+        {
+            "item": "minecraft:diamond_sword"
+        },
+        "title":
+        {
+            "translate": "advancements.small.sakura.title"
+        },
+        "description":
+        {
+            "translate": "advancements.small.sakura.description"
+        }
+    },
+    "criteria":
+    {
+        "impossible":
+        {
+            "trigger": "minecraft:impossible"
+        }
+    }
+}

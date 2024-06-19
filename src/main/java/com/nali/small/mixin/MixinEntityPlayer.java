@@ -1,6 +1,6 @@
 package com.nali.small.mixin;
 
-import com.nali.list.capabilitiesserializations.SmallSakuraSerializations;
+import com.nali.list.capability.serializable.SmallSakuraSerializable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.datasync.DataParameter;
@@ -24,19 +24,17 @@ public abstract class MixinEntityPlayer extends EntityLivingBase
     }
 
     @Inject(method = "entityInit", at = @At("HEAD"))
-    @Mutable
     private void nali_small_entityInit(CallbackInfo ci)
     {
         this.dataManager.register(SAKURA_BYTE_DATAPARAMETER, (byte)0);
     }
 
     @Inject(method = "onUpdate", at = @At("HEAD"))
-    @Mutable
     private void nali_small_onUpdate(CallbackInfo ci)
     {
         if (!this.world.isRemote)
         {
-            this.dataManager.set(SAKURA_BYTE_DATAPARAMETER, this.getCapability(SmallSakuraSerializations.SMALLSAKURATYPES_CAPABILITY, null).get());
+            this.dataManager.set(SAKURA_BYTE_DATAPARAMETER, this.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null).get());
         }
         else
         {

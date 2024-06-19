@@ -1,8 +1,8 @@
 package com.nali.small.gui.features.messages.works;
 
 import com.nali.list.container.InventoryContainer;
-import com.nali.small.entities.memory.client.ClientEntitiesMemory;
-import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entity.memo.client.ClientLe;
+import com.nali.small.entity.EntityLeInv;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.net.messages.inventory.SetManageItemGUINet;
@@ -63,8 +63,8 @@ public class ManageItemGUIFeatures extends GUIFeaturesLoader
     @Override
     public void drawText(int mouseX, int mouseY)
     {
-        SkinningEntities skinningentities = ((InventoryContainer)this.mixgui.inventorySlots).skinningentities;
-        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+        EntityLeInv skinningentities = ((InventoryContainer)this.mixgui.inventorySlots).skinningentities;
+        ClientLe cliententitiesmemory = (ClientLe)skinningentities.bothentitiesmemory;
 
         if (PAGE == 4)
         {

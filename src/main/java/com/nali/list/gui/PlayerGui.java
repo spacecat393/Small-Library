@@ -1,18 +1,18 @@
 package com.nali.list.gui;
 
 import com.nali.draw.DrawScreen;
-import com.nali.list.messages.ServerMessage;
-import com.nali.list.netmethods.servermessage.OpenInvGUI;
-import com.nali.list.netmethods.servermessage.SEMapToClient;
-import com.nali.list.netmethods.servermessage.X12;
-import com.nali.list.netmethods.servermessage.X64;
+import com.nali.list.network.message.ServerMessage;
+import com.nali.list.network.method.server.OpenInvGUI;
+import com.nali.list.network.method.server.SEMapToClient;
+import com.nali.list.network.method.server.X12;
+import com.nali.list.network.method.server.X64;
 import com.nali.list.render.BoxRender;
 import com.nali.list.render.SakuraRender;
 import com.nali.networks.NetworksRegistry;
 import com.nali.render.SkinningRender;
-import com.nali.small.entities.memory.client.ClientEntitiesMemory;
-import com.nali.small.entities.skinning.SkinningEntities;
-import com.nali.small.entities.skinning.render.SkinningEntitiesRender;
+import com.nali.small.entity.memo.client.ClientLe;
+import com.nali.small.entity.EntityLeInv;
+import com.nali.small.entity.memo.client.render.SkinningEntitiesRender;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.player.*;
 import com.nali.system.bytes.BytesWriter;
@@ -26,7 +26,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static com.nali.key.KeyHelper.*;
-import static com.nali.small.entities.memory.client.ClientEntitiesMemory.ENTITIES_MAP;
+import static com.nali.small.entity.memo.client.ClientLe.ENTITIES_MAP;
 
 public class PlayerGui extends MixGui
 {
@@ -377,13 +377,13 @@ public class PlayerGui extends MixGui
 
     public static class MixButton
     {
-        public SkinningEntities skinningentities;
+        public EntityLeInv skinningentities;
         public SkinningEntitiesRender skinningentitiesrender;
         public int /*x, y, */tx, ty, width, height;
         public UUID uuid;
         public DrawScreen drawscreen = new DrawScreen();
 
-        public MixButton(SkinningEntities skinningentities, UUID uuid/*, int x, int y*/, int tx, int ty, int width, int height)
+        public MixButton(EntityLeInv skinningentities, UUID uuid/*, int x, int y*/, int tx, int ty, int width, int height)
         {
             this.skinningentities = skinningentities;
 //            if (this.skinningentities != null)
@@ -414,7 +414,7 @@ public class PlayerGui extends MixGui
             if (this.skinningentities != null)
             {
                 Minecraft mc = Minecraft.getMinecraft();
-                ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)this.skinningentities.bothentitiesmemory;
+                ClientLe cliententitiesmemory = (ClientLe)this.skinningentities.bothentitiesmemory;
                 SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
                 if (!skinningrender.entitiesrendermemory.should_render)
                 {
@@ -468,11 +468,11 @@ public class PlayerGui extends MixGui
     public void initEntities()
     {
         int index = 0;//, x = 10, y = 10;
-        Set<UUID> keys_set = new HashSet(ENTITIES_MAP.keySet());
+//        Set<UUID> keys_set = new HashSet(ENTITIES_MAP.keySet());
         MIXBUTTON_ARRAY = new MixButton[keys_set.size()];
         for (UUID uuid : keys_set)
         {
-            SkinningEntities skinningentities = ENTITIES_MAP.get(uuid);
+            EntityLeInv skinningentities = ENTITIES_MAP.get(uuid);
 //                    if (skinningentities == null)
 //                    {
 //                        this.mixbutton_array = null;

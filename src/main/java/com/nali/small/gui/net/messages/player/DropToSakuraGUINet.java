@@ -1,6 +1,6 @@
 package com.nali.small.gui.net.messages.player;
 
-import com.nali.list.netmethods.servermessage.DropToSakura;
+import com.nali.list.network.method.server.DropToSakura;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.net.GUINetLoader;
 

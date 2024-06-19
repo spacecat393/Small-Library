@@ -14,7 +14,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
-import static com.nali.small.entities.EntitiesMath.getDistanceAABBToAABB;
+import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 
 @SideOnly(Side.CLIENT)
 public class SmallRayEntity extends MixKeyBinding
@@ -85,7 +85,7 @@ public class SmallRayEntity extends MixKeyBinding
             {
                 Entity entity = entity_list.get(index);
                 SELECT_ENTITY = entity.getEntityId();
-                Nali.LOGGER.info(entity.getName());
+                Nali.I.logger.info(entity.getName());
             }
         }
     }

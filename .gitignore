@@ -28,7 +28,7 @@ mods
 resourcepacks
 Results
 logs
-gradle.properties
+*.properties
 *.gradle
 gradlew
 gradlew.bat

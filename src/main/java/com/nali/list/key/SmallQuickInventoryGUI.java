@@ -1,8 +1,8 @@
 package com.nali.list.key;
 
 import com.nali.key.MixKeyBinding;
-import com.nali.list.messages.ServerMessage;
-import com.nali.list.netmethods.servermessage.OpenInvGUI;
+import com.nali.list.network.message.ServerMessage;
+import com.nali.list.network.method.server.OpenInvGUI;
 import com.nali.networks.NetworksRegistry;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;

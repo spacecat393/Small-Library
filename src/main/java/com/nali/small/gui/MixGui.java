@@ -1,12 +1,12 @@
 package com.nali.small.gui;
 
 import com.nali.list.container.InventoryContainer;
-import com.nali.list.messages.ServerMessage;
-import com.nali.list.netmethods.servermessage.SetWorkByte;
-import com.nali.list.netmethods.servermessage.SyncBitByte;
+import com.nali.list.network.message.ServerMessage;
+import com.nali.list.network.method.server.SetWorkByte;
+import com.nali.list.network.method.server.SyncBitByte;
 import com.nali.networks.NetworksRegistry;
-import com.nali.small.entities.memory.client.ClientEntitiesMemory;
-import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entity.memo.client.ClientLe;
+import com.nali.small.entity.EntityLeInv;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.features.messages.NameGUIFeatures;
 import com.nali.small.gui.net.GUINetLoader;
@@ -136,7 +136,7 @@ public abstract class MixGui extends GuiContainer
 
     public void sendPacketUUID(byte id)
     {
-        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
+        ClientLe cliententitiesmemory = (ClientLe)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
         this.sendPacketUUID(id, cliententitiesmemory.uuid);
     }
 
@@ -159,7 +159,7 @@ public abstract class MixGui extends GuiContainer
 
     public void sendPacketUUIDInt(byte i)
     {
-        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
+        ClientLe cliententitiesmemory = (ClientLe)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
         byte[] byte_array = new byte[18];
         byte_array[0] = SetWorkByte.ID;
         BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
@@ -170,7 +170,7 @@ public abstract class MixGui extends GuiContainer
 
     public void sendPacketUUIDByte(byte i)
     {
-        ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
+        ClientLe cliententitiesmemory = (ClientLe)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
         byte[] byte_array = new byte[18];
         byte_array[0] = SyncBitByte.ID;
         BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
@@ -179,7 +179,7 @@ public abstract class MixGui extends GuiContainer
         NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 
-    public void renderEntitiesName(SkinningEntities skinningentities, float x, float y, int width, int height, int mouseX, int mouseY)
+    public void renderEntitiesName(EntityLeInv skinningentities, float x, float y, int width, int height, int mouseX, int mouseY)
     {
         if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height)
         {
@@ -190,7 +190,7 @@ public abstract class MixGui extends GuiContainer
 
             if (this.mouse_released == 0)
             {
-                ClientEntitiesMemory cliententitiesmemory = (ClientEntitiesMemory)skinningentities.bothentitiesmemory;
+                ClientLe cliententitiesmemory = (ClientLe)skinningentities.bothentitiesmemory;
                 copyToClipboard(cliententitiesmemory.uuid.toString());
             }
 

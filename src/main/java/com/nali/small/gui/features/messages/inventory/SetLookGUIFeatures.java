@@ -1,7 +1,7 @@
 package com.nali.small.gui.features.messages.inventory;
 
 import com.nali.list.container.InventoryContainer;
-import com.nali.small.entities.skinning.SkinningEntities;
+import com.nali.small.entity.EntityLeInv;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.net.messages.inventory.SetLookGUINet;
@@ -32,7 +32,7 @@ public class SetLookGUIFeatures extends GUIFeaturesLoader
     @Override
     public void drawText(int mouseX, int mouseY)
     {
-        SkinningEntities skinningentities = ((InventoryContainer)this.mixgui.inventorySlots).skinningentities;
+        EntityLeInv skinningentities = ((InventoryContainer)this.mixgui.inventorySlots).skinningentities;
         this.mixgui.drawHoveringText(new String[]
         {
             MESSAGE_STRINGBUILDER.toString(),
