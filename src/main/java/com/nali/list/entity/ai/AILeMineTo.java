@@ -16,10 +16,13 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.FakePlayer;
 
+import static com.nali.small.entity.EntityMath.isInArea;
+
 public class AILeMineTo<E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
 {
     public static byte ID;
 
+    public AILeSetLocation<E, I, S, A> ailesetlocation;
     public AILeFindMove<E, I, S, A> ailefindmove;
     public AILeLook<E, I, S, A> ailelook;
 
@@ -37,6 +40,7 @@ public class AILeMineTo<E extends EntityLivingBase, I extends IMixLe<E>, S exten
     @Override
     public void init()
     {
+        this.ailesetlocation = (AILeSetLocation<E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
         this.ailefindmove = (AILeFindMove<E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
         this.ailelook = (AILeLook<E, I, S, A>)this.s.a.aie_map.get(AILeLook.ID);
     }
@@ -78,7 +82,10 @@ public class AILeMineTo<E extends EntityLivingBase, I extends IMixLe<E>, S exten
                     if (e.getDistanceSq(this.blockpos) > 8.0D)
                     {
     //                    BlockPos blockpos = this.blockpos;
-                        this.ailefindmove.setGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
+                        if (this.ailesetlocation.far == 0 || this.ailesetlocation.blockpos == null || isInArea(this.blockpos, this.ailesetlocation.blockpos, this.ailesetlocation.far))
+                        {
+                            this.ailefindmove.setGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
+                        }
     //                    this.blockpos = blockpos;
                     }
                     else

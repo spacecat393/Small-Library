@@ -5,8 +5,8 @@ import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
-import static com.nali.list.gui.PlayerGui.MAX_NEXT;
-import static com.nali.list.gui.PlayerGui.NEXT;
+import static com.nali.list.container.gui.PlayerGui.MAX_NEXT;
+import static com.nali.list.container.gui.PlayerGui.NEXT;
 
 public class NextGUIFeatures extends GUIFeaturesLoader
 {

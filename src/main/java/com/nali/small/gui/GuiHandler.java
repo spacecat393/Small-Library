@@ -1,55 +1,85 @@
 package com.nali.small.gui;
 
-import com.nali.list.container.InventoryContainer;
-import com.nali.list.container.PlayerContainer;
-import com.nali.list.gui.InventoryGui;
-import com.nali.list.gui.PlayerGui;
-import com.nali.small.entity.memo.client.ClientLe;
-import com.nali.small.entity.memo.server.ServerE;
-import com.nali.small.entity.EntityLeInv;
-import net.minecraft.entity.Entity;
+import com.nali.system.Reflect;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Comparator;
+import java.util.List;
 
-import static com.nali.small.entity.memo.client.ClientLe.FAKE_ENTITIES_MAP;
+import static com.nali.Nali.I;
 
 public class GuiHandler implements IGuiHandler
 {
-    @Nullable
-    @Override
-    public Object getServerGuiElement(int id, EntityPlayer entityplayer, World world, int x, int y, int z)
+    @SideOnly(Side.CLIENT)
+    public static List<Class> GUI_CLASS_LIST;
+    public static List<Class> CONTAINER_CLASS_LIST;
+
+    static
     {
-        if (id == 0)
+        CONTAINER_CLASS_LIST = Reflect.getClasses("com.nali.list.container");
+        CONTAINER_CLASS_LIST.sort(Comparator.comparing(Class::getName));
+        for (int i = 0; i < CONTAINER_CLASS_LIST.size(); ++i)
         {
-            return new InventoryContainer(entityplayer.inventory, ServerE.ENTITIES_MAP.get(entityplayer.getEntityData().getUniqueId("loli_nali")), entityplayer);
+            try
+            {
+                CONTAINER_CLASS_LIST.get(i).getField("ID").set(null, i);
+            }
+            catch (IllegalAccessException | NoSuchFieldException e)
+            {
+                I.error(e);
+            }
         }
-        else
+
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
         {
-            return new PlayerContainer();
+            clientInit();
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void clientInit()
+    {
+        GUI_CLASS_LIST = Reflect.getClasses("com.nali.list.container.gui");
+        GUI_CLASS_LIST.sort(Comparator.comparing(Class::getName));
     }
 
     @Nullable
     @Override
+    public Object getServerGuiElement(int id, EntityPlayer entityplayer, World world, int x, int y, int z)
+    {
+        try
+        {
+            return CONTAINER_CLASS_LIST.get(id).getMethod("get", EntityPlayer.class, World.class, Integer.class, Integer.class, Integer.class).invoke(entityplayer, world, x, y, z);
+        }
+        catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
+        {
+            I.error(e);
+        }
+
+        return null;
+    }
+
+    @Nullable
+    @Override
+    @SideOnly(Side.CLIENT)
     public Object getClientGuiElement(int id, EntityPlayer entityplayer, World world, int x, int y, int z)
     {
-        if (id == 0)
+        try
         {
-            Entity entity = world.getEntityByID(x);
-            if (!(entity instanceof EntityLeInv))
-            {
-                UUID uuid = FAKE_ENTITIES_MAP.get(x);
-                entity = ClientLe.ENTITIES_MAP.get(uuid);
-            }
-            return new InventoryGui(entityplayer.inventory, (EntityLeInv)entity);
+            return GUI_CLASS_LIST.get(id).getMethod("get", EntityPlayer.class, World.class, Integer.class, Integer.class, Integer.class).invoke(entityplayer, world, x, y, z);
         }
-        else
+        catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
         {
-            return new PlayerGui(new PlayerContainer());
+            I.error(e);
         }
+
+        return null;
     }
 }

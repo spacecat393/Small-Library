@@ -66,7 +66,7 @@ public class MixBoxE<R extends ObjectRender, E extends Entity, I extends IMixE<E
 
         Vec3d end_vec3d = player_vec3d.add(look_vec3d.scale(32.0D));
 
-        double min = Double.MAX_VALUE;
+        double max = Double.MAX_VALUE;
         int index = -1;
         List<AxisAlignedBB> axisalignedbb_list = this.get();
         for (int i = 0; i < axisalignedbb_list.size(); ++i)
@@ -74,11 +74,11 @@ public class MixBoxE<R extends ObjectRender, E extends Entity, I extends IMixE<E
             AxisAlignedBB axisalignedbb = axisalignedbb_list.get(i);
             if (this.sehit_list.get(i).should(player_entity, axisalignedbb_list.get(i)) && axisalignedbb.calculateIntercept(player_vec3d, end_vec3d) != null)
             {
-                double new_min = getDistanceAABBToAABB(player_entity.getEntityBoundingBox(), axisalignedbb);
-                if (new_min < min)
+                double new_max = getDistanceAABBToAABB(player_entity.getEntityBoundingBox(), axisalignedbb);
+                if (new_max < max)
                 {
                     index = i;
-                    min = new_min;
+                    max = new_max;
                 }
             }
         }

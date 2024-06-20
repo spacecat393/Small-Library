@@ -1,7 +1,7 @@
 package com.nali.list.key;
 
 import com.nali.key.MixKeyBinding;
-import com.nali.list.gui.PlayerGui;
+import com.nali.list.container.gui.PlayerGui;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.OpenPlayerGUI;
 import com.nali.networks.NetworksRegistry;

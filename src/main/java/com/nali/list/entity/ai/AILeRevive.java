@@ -22,12 +22,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
+import static com.nali.small.entity.EntityMath.isInArea;
 
 public class AILeRevive<E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
 {
     public static byte ID;
 
     public AIEArea<E, I, S, A> aiearea;
+    public AILeSetLocation<E, I, S, A> ailesetlocation;
     public AILeFindMove<E, I, S, A> ailefindmove;
     public AILeLook<E, I, S, A> ailelook;
 
@@ -52,6 +54,7 @@ public class AILeRevive<E extends EntityLivingBase, I extends IMixLe<E>, S exten
     public void init()
     {
         this.aiearea = (AIEArea<E, I, S, A>)this.s.a.aie_map.get(AIEArea.ID);
+        this.ailesetlocation = (AILeSetLocation<E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
         this.ailefindmove = (AILeFindMove<E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
         this.ailelook = (AILeLook<E, I, S, A>)this.s.a.aie_map.get(AILeLook.ID);
     }
@@ -210,7 +213,10 @@ public class AILeRevive<E extends EntityLivingBase, I extends IMixLe<E>, S exten
                             }
                             else
                             {
-                                this.ailefindmove.setGoal(this.entity.posX, this.entity.posY, this.entity.posZ);
+                                if (this.ailesetlocation.far == 0 || this.ailesetlocation.blockpos == null || isInArea(this.entity, this.ailesetlocation.blockpos, this.ailesetlocation.far))
+                                {
+                                    this.ailefindmove.setGoal(this.entity.posX, this.entity.posY, this.entity.posZ);
+                                }
     //                                this.ailefindmove.setGoal(entity.posX, entity.posY, entity.posZ);
         //                        this.s.a.state &= 255-1;
                             }
@@ -285,7 +291,7 @@ public class AILeRevive<E extends EntityLivingBase, I extends IMixLe<E>, S exten
                         else if ((this.state & 4) == 4)//?
                         {
                             int index = -1;
-                            double far = Double.MAX_VALUE;
+                            double max_far = Double.MAX_VALUE;
                             for (int i = 0; i < this.aiearea.out_entity_list.size(); ++i)
                             {
                                 Entity entity = this.aiearea.out_entity_list.get(i);
@@ -298,10 +304,10 @@ public class AILeRevive<E extends EntityLivingBase, I extends IMixLe<E>, S exten
                                     }
 
                                     double new_far = getDistanceAABBToAABB(e, entity);
-                                    if (new_far < far)
+                                    if (new_far < max_far)
                                     {
                                         this.entity = entity;
-                                        far = new_far;
+                                        max_far = new_far;
                                         index = i;
                                     }
                                 }

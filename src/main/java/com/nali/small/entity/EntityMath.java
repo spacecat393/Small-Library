@@ -18,6 +18,19 @@ public class EntityMath
 //        return (width + height + minimum_distance) * (width + height + minimum_distance);
 //    }
 
+    public static boolean isInArea(double x, double y, double z, BlockPos blockpos, double minimum_distance)
+    {
+        double d0 = x - blockpos.getX() + 0.5;
+        double d1 = y - blockpos.getY() + 0.5;
+        double d2 = z - blockpos.getZ() + 0.5;
+        return (d0 * d0 + d1 * d1 + d2 * d2) < minimum_distance;
+    }
+
+    public static boolean isInArea(BlockPos main_blockpos, BlockPos blockpos, double minimum_distance)
+    {
+        return main_blockpos.distanceSq(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5) < minimum_distance;
+    }
+
     public static boolean isInArea(Entity entity, BlockPos blockpos, double minimum_distance)
     {
         return entity.getDistanceSq(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5) < minimum_distance;

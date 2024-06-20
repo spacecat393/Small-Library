@@ -7,10 +7,13 @@ import com.nali.small.entity.memo.server.ai.MixAIE;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 
+import static com.nali.small.entity.EntityMath.isInArea;
+
 public class AILeRandomWalk<E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
 {
     public static byte ID;
 
+    public AILeSetLocation<E, I, S, A> ailesetlocation;
     public AILeFindMove<E, I, S, A> ailefindmove;
 
     public int tick;
@@ -24,6 +27,7 @@ public class AILeRandomWalk<E extends EntityLivingBase, I extends IMixLe<E>, S e
     @Override
     public void init()
     {
+        this.ailesetlocation = (AILeSetLocation<E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
         this.ailefindmove = (AILeFindMove<E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
     }
 
@@ -45,7 +49,14 @@ public class AILeRandomWalk<E extends EntityLivingBase, I extends IMixLe<E>, S e
 
                 if (--this.tick <= 0)
                 {
-                    this.ailefindmove.setGoal(e.posX + e.getRNG().nextInt(5) - e.getRNG().nextInt(5), e.posY + e.getRNG().nextInt(5) - e.getRNG().nextInt(5), e.posZ + e.getRNG().nextInt(5) - e.getRNG().nextInt(5));
+                    double x = e.posX + e.getRNG().nextInt(5) - e.getRNG().nextInt(5),
+                    y = e.posY + e.getRNG().nextInt(5) - e.getRNG().nextInt(5),
+                    z = e.posZ + e.getRNG().nextInt(5) - e.getRNG().nextInt(5);
+
+                    if (this.ailesetlocation.far == 0 || this.ailesetlocation.blockpos == null || isInArea(x, y, z, this.ailesetlocation.blockpos, this.ailesetlocation.far))
+                    {
+                        this.ailefindmove.setGoal(x, y, z);
+                    }
                     this.tick = e.getRNG().nextInt(100) + 100;
                     this.state |= 2;
 //                    this.walk = true;

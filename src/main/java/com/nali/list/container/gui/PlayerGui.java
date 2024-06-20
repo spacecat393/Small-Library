@@ -1,6 +1,7 @@
-package com.nali.list.gui;
+package com.nali.list.container.gui;
 
 import com.nali.draw.DrawScreen;
+import com.nali.list.container.PlayerContainer;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.OpenInvGUI;
 import com.nali.list.network.method.server.SEMapToClient;
@@ -18,16 +19,19 @@ import com.nali.small.gui.features.messages.player.*;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 import static com.nali.key.KeyHelper.*;
 import static com.nali.small.entity.memo.client.ClientLe.ENTITIES_MAP;
 
+@SideOnly(Side.CLIENT)
 public class PlayerGui extends MixGui
 {
     public static MixButton[] MIXBUTTON_ARRAY;
@@ -60,6 +64,11 @@ public class PlayerGui extends MixGui
 //        this.boxrender.objectscreendraw.sy = s;
 //        this.boxrender.objectscreendraw.sz = s;
 //        this.boxrender.sa = 0.9F;
+    }
+
+    public static PlayerGui get(EntityPlayer entityplayer, World world, int x, int y, int z)
+    {
+        return new PlayerGui(new PlayerContainer());
     }
 
     @Override

@@ -1,10 +1,7 @@
-package com.nali.small.entity.memo.server.frame;
+package com.nali.small.entity.memo.server.ai.frame;
 
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
-import com.nali.list.entity.ai.AILeAttack;
-import com.nali.list.entity.ai.AILeHeal;
-import com.nali.list.entity.ai.AILeProtect;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import net.minecraft.entity.Entity;
 
@@ -50,22 +47,7 @@ public abstract class FrameE<E extends Entity, I extends IMixE<E>, S extends Ser
     public void stepFrame()
     {
         I i = this.s.getI();
-        i.getE().getDataManager().set(i.getIntegerDataParameterArray()[this.integer_index], this.s.frame_int_array[this.integer_index] + this.step);
-    }
-
-    public boolean setShoot(int id0, int id1, int id2, int id3, boolean bf, AILeAttack skinningentitiesattack)
-    {
-
-    }
-
-    public boolean setHeal(int id0, AILeHeal skinningentitiesheal)
-    {
-
-    }
-
-    public boolean setProtect(int id0, int id1, int id2, int id3, AILeProtect skinningentitiesprotect)
-    {
-
+        i.getE().getDataManager().set(i.getIntegerDataParameterArray()[this.frame], this.s.frame_int_array[this.index] + this.step);
     }
 
     public abstract boolean onUpdate();

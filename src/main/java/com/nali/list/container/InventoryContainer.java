@@ -2,6 +2,7 @@ package com.nali.list.container;
 
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.Inventory;
+import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.mixin.MixinInventoryCrafting;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -9,10 +10,12 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 public class InventoryContainer extends Container
 {
     public static int ID;
+
     public EntityPlayer entityplayer;
     public EntityLeInv skinningentities;
 
@@ -69,6 +72,11 @@ public class InventoryContainer extends Container
         }
 
         this.onCraftMatrixChanged(skinninginventory.inventorycrafting);
+    }
+
+    public static InventoryContainer get(EntityPlayer entityplayer, World world, int x, int y, int z)
+    {
+        return new InventoryContainer(entityplayer.inventory, ServerE.ENTITIES_MAP.get(entityplayer.getEntityData().getUniqueId("Nali_small")), entityplayer);
     }
 
     @Override

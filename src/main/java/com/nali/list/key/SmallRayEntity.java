@@ -44,7 +44,7 @@ public class SmallRayEntity extends MixKeyBinding
             int index = -1;
 //            List<Double> far_double_list = new ArrayList();
 //            List<Entity> new_entity_list = new ArrayList();
-            double min = Double.MAX_VALUE;
+            double max = Double.MAX_VALUE;
             for (int i = 0; i < entity_list.size(); ++i)
             {
                 Entity entity = entity_list.get(i);
@@ -56,11 +56,11 @@ public class SmallRayEntity extends MixKeyBinding
                 AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox();
                 if (axisalignedbb.calculateIntercept(player_vec3d, end_vec3d) != null)
                 {
-                    double new_min = getDistanceAABBToAABB(entityplayersp, entity);
-                    if (new_min < min)
+                    double new_max = getDistanceAABBToAABB(entityplayersp, entity);
+                    if (new_max < max)
                     {
                         index = i;
-                        min = new_min;
+                        max = new_max;
                     }
 //                    far_double_list.add(getDistanceAABBToAABB(entityplayersp, entity));
 //                    new_entity_list.add(entity);

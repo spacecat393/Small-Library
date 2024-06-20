@@ -1,5 +1,6 @@
 package com.nali.list.network.method.server;
 
+import com.nali.list.container.InventoryContainer;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.client.SetWorkBytes;
@@ -23,9 +24,9 @@ public class OpenInvGUI
         EntityLeInv skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
         if (skinningentities != null && ServerHandler.canPass(skinningentities, entityplayermp))
         {
-            entityplayermp.getEntityData().setUniqueId("loli_nali", skinningentities.getUniqueID());
+            entityplayermp.getEntityData().setUniqueId("Nali_small", skinningentities.getUniqueID());
             ServerE serverentitiesmemory = (ServerE)skinningentities.bothentitiesmemory;
-            entityplayermp.openGui(Small.I, 0, entityplayermp.world, skinningentities.getEntityId(), 0, 0);
+            entityplayermp.openGui(Small.I, InventoryContainer.ID, entityplayermp.world, skinningentities.getEntityId(), 0, 0);
 
             byte[] byte_array = new byte[1 + 4 + serverentitiesmemory.main_work_byte_array.length];
             byte_array[0] = SetWorkBytes.ID;

@@ -5,7 +5,7 @@ import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
-import static com.nali.list.gui.InventoryGui.PAGE;
+import static com.nali.list.container.gui.InventoryGui.PAGE;
 
 public class MenuGUIFeatures extends GUIFeaturesLoader
 {

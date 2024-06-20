@@ -9,12 +9,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
+import static com.nali.small.entity.EntityMath.isInArea;
 
 public class AILeHeal<E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
 {
     public static byte ID;
 
     public AIEArea<E, I, S, A> aiearea;
+    public AILeSetLocation<E, I, S, A> ailesetlocation;
     public AILeFindMove<E, I, S, A> ailefindmove;
 
     public int[] heal_frame_int_array;
@@ -39,6 +41,7 @@ public class AILeHeal<E extends EntityLivingBase, I extends IMixLe<E>, S extends
     public void init()
     {
         this.aiearea = (AIEArea<E, I, S, A>)this.s.a.aie_map.get(AIEArea.ID);
+        this.ailesetlocation = (AILeSetLocation<E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
         this.ailefindmove = (AILeFindMove<E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
     }
 
@@ -147,7 +150,10 @@ public class AILeHeal<E extends EntityLivingBase, I extends IMixLe<E>, S extends
                     }
                     else
                     {
-                        this.ailefindmove.setGoal(entity.posX, entity.posY, entity.posZ);
+                        if (this.ailesetlocation.far == 0 || this.ailesetlocation.blockpos == null || isInArea(entity, this.ailesetlocation.blockpos, this.ailesetlocation.far))
+                        {
+                            this.ailefindmove.setGoal(entity.posX, entity.posY, entity.posZ);
+                        }
                     }
                 }
 //                else

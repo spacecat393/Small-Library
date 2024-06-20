@@ -1,4 +1,4 @@
-package com.nali.small.entity.memo.server.frame;
+package com.nali.small.entity.memo.server.ai.frame;
 
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;

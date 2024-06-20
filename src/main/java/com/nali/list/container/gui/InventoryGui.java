@@ -1,4 +1,4 @@
-package com.nali.list.gui;
+package com.nali.list.container.gui;
 
 import com.nali.draw.DrawScreen;
 import com.nali.list.container.InventoryContainer;
@@ -25,15 +25,19 @@ import com.nali.small.gui.inventory.SpecialStatGUI;
 import com.nali.small.system.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.UUID;
 
 import static com.nali.key.KeyHelper.generateRainbowColor;
 import static com.nali.system.Timing.TD;
@@ -70,6 +74,17 @@ public class InventoryGui extends MixGui
 
         this.box_drawscreen.rz = 45.0F * 3.0F;
         this.box_drawscreen.scale(-3.5F);
+    }
+
+    public static InventoryGui get(EntityPlayer entityplayer, World world, int x, int y, int z)
+    {
+        Entity entity = world.getEntityByID(x);
+        if (!(entity instanceof EntityLeInv))
+        {
+            UUID uuid = FAKE_ENTITIES_MAP.get(x);
+            entity = ClientLe.ENTITIES_MAP.get(uuid);
+        }
+        return new InventoryGui(entityplayer.inventory, (EntityLeInv)entity);
     }
 
     @Override

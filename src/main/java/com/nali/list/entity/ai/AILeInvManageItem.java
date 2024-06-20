@@ -20,11 +20,13 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 import static com.nali.list.entity.ai.AILeInvGetItem.isSameItemSameTags;
+import static com.nali.small.entity.EntityMath.isInArea;
 
 public class AILeInvManageItem<E extends EntityLeInv<?>, I extends IMixLe<E>, S extends ServerLeInv<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
 {
     public static byte ID;
 
+    public AILeSetLocation<E, I, S, A> ailesetlocation;
     public AILeFindMove<E, I, S, A> ailefindmove;
 
     public BlockPos in_blockpos, out_blockpos;
@@ -39,6 +41,7 @@ public class AILeInvManageItem<E extends EntityLeInv<?>, I extends IMixLe<E>, S 
     @Override
     public void init()
     {
+        this.ailesetlocation = (AILeSetLocation<E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
         this.ailefindmove = (AILeFindMove<E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
     }
 
@@ -133,7 +136,10 @@ public class AILeInvManageItem<E extends EntityLeInv<?>, I extends IMixLe<E>, S 
                     else if ((this.s.a.state & 1) == 1)
                     {
 //                            this.ailefindmove.setBreakGoal(this.in_blockpos.getX(), this.in_blockpos.getY(), this.in_blockpos.getZ());
-                        this.ailefindmove.setGoal(this.in_blockpos.getX(), this.in_blockpos.getY(), this.in_blockpos.getZ());
+                        if (this.ailesetlocation.far == 0 || this.ailesetlocation.blockpos == null || isInArea(this.in_blockpos, this.ailesetlocation.blockpos, this.ailesetlocation.far))
+                        {
+                            this.ailefindmove.setGoal(this.in_blockpos.getX(), this.in_blockpos.getY(), this.in_blockpos.getZ());
+                        }
                     }
                 }
             }
@@ -194,7 +200,10 @@ public class AILeInvManageItem<E extends EntityLeInv<?>, I extends IMixLe<E>, S 
                     else if ((this.s.a.state & 1) == 1)
                     {
 //                            this.ailefindmove.setBreakGoal(this.out_blockpos.getX(), this.out_blockpos.getY(), this.out_blockpos.getZ());
-                        this.ailefindmove.setGoal(this.out_blockpos.getX(), this.out_blockpos.getY(), this.out_blockpos.getZ());
+                        if (this.ailesetlocation.far == 0 || this.ailesetlocation.blockpos == null || isInArea(this.out_blockpos, this.ailesetlocation.blockpos, this.ailesetlocation.far))
+                        {
+                            this.ailefindmove.setGoal(this.out_blockpos.getX(), this.out_blockpos.getY(), this.out_blockpos.getZ());
+                        }
                     }
                 }
             }

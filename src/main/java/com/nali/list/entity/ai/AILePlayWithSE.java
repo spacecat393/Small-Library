@@ -76,7 +76,7 @@ public class AILePlayWithSE<E2 extends Entity, E extends EntityLivingBase, I ext
                     {
 //                        EntityLeInv playwith_skinningentities = null;
                         int index = -1;
-                        double min = Double.MAX_VALUE;
+                        double max = Double.MAX_VALUE;
                         for (int i = 0; i < this.aiearea.out_entity_list.size(); ++i)
                         {
                             Entity entity = this.aiearea.out_entity_list.get(i);
@@ -84,11 +84,11 @@ public class AILePlayWithSE<E2 extends Entity, E extends EntityLivingBase, I ext
                             {
                                 if (entity.getClass() == clasz)
                                 {
-                                    double new_min = getDistanceAABBToAABB(e, entity);
-                                    if (new_min < min)
+                                    double new_max = getDistanceAABBToAABB(e, entity);
+                                    if (new_max < max)
                                     {
                                         index = i;
-                                        min = new_min;
+                                        max = new_max;
                                     }
                                 }
                             }
@@ -205,7 +205,10 @@ public class AILePlayWithSE<E2 extends Entity, E extends EntityLivingBase, I ext
 //        }
 //        else
 //        {
-//            this.s.entitiesaimemory.skinningentitiesfindmove.setGoal(this.e2.posX, this.e2.posY, this.e2.posZ);
+//            if (this.ailesetlocation.far == 0 || this.ailesetlocation.blockpos == null || isInArea(this.e2, this.ailesetlocation.blockpos, this.ailesetlocation.far))
+//            {
+//                this.s.entitiesaimemory.skinningentitiesfindmove.setGoal(this.e2.posX, this.e2.posY, this.e2.posZ);
+//            }
 //        }
     }
 

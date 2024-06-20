@@ -3,7 +3,7 @@ package com.nali.small.entity.memo.server.ai;
 import com.nali.Nali;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
-import com.nali.small.entity.memo.server.frame.FrameE;
+import com.nali.small.entity.memo.server.ai.frame.FrameE;
 import com.nali.system.Reflect;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
