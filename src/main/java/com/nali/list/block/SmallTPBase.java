@@ -1,14 +1,14 @@
 package com.nali.list.block;
 
+import com.nali.Nali;
 import com.nali.data.client.SkinningClientData;
 import com.nali.draw.DrawScreen;
 import com.nali.list.render.TPBaseRender;
 import com.nali.render.ObjectRender;
+import com.nali.small.SmallTab;
 import com.nali.small.block.IMixBlock;
 import com.nali.small.item.MixBlockItem;
-import com.nali.small.SmallTab;
-import com.nali.system.ClientLoader;
-import com.nali.system.opengl.memory.OpenGLAnimationMemory;
+import com.nali.system.opengl.memo.OpenGLAnimationMemo;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -56,9 +56,9 @@ public class SmallTPBase extends Block implements IMixBlock, ITileEntityProvider
     public void renderInit()
     {
         this.tpbaserender = new TPBaseRender();
-        OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)ClientLoader.OBJECT_LIST.get(((SkinningClientData)this.tpbaserender.clientdata).AnimationID());
-        this.tpbaserender.initSkinning(openglanimationmemory);
-        this.tpbaserender.setSkinning(openglanimationmemory);
+        OpenGLAnimationMemo openglanimationmemo = (OpenGLAnimationMemo)Nali.I.clientloader.object_list.get(((SkinningClientData)this.tpbaserender.clientdata).AnimationID());
+        this.tpbaserender.initSkinning(openglanimationmemo);
+        this.tpbaserender.setSkinning(openglanimationmemo);
         DRAWSCREEN = new DrawScreen();
         DRAWSCREEN.scale(0.25F);
         DRAWSCREEN.z = 0.0F;

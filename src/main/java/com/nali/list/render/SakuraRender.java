@@ -56,7 +56,7 @@ public class SakuraRender extends SmallObjectRender
         }
         else
         {
-            this.extra_bit = 2;
+            this.extra_bit = 4;
             int color = this.getTextureID(openglobjectmemory);
             OPENGL_FIXED_PIPE_FLOATBUFFER.limit(3);
             OPENGL_FIXED_PIPE_FLOATBUFFER.clear();
@@ -80,7 +80,7 @@ public class SakuraRender extends SmallObjectRender
         }
         else
         {
-            this.extra_bit = 2;
+            this.extra_bit = 4;
             return integer;
         }
     }

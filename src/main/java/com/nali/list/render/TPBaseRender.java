@@ -1,11 +1,10 @@
 package com.nali.list.render;
 
-import com.nali.data.BothData;
-import com.nali.data.client.ClientData;
-import com.nali.small.data.both.TPBaseBothData;
+import com.nali.data.BothDataS;
+import com.nali.data.client.ClientDataO;
+import com.nali.small.data.both.TPBaseBothDataS;
 import com.nali.small.data.client.TPBaseClient;
 import com.nali.small.render.SmallSkinningRender;
-import com.nali.system.opengl.memory.OpenGLObjectMemory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -13,13 +12,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.nali.system.ClientLoader.OBJECT_LIST;
-
 @SideOnly(Side.CLIENT)
 public class TPBaseRender extends SmallSkinningRender
 {
-    public static ClientData CLIENTDATA = new TPBaseClient();
-    public static BothData BOTHDATA = new TPBaseBothData();
+    public static ClientDataO CLIENTDATA = new TPBaseClient();
+    public static BothDataS BOTHDATA = new TPBaseBothDataS();
     public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
 
     public TPBaseRender()

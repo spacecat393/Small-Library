@@ -2,10 +2,6 @@ BoxOrange 0 0 0 1 0 0
 BoxM.001 -1 1 1 1 0 0
 BoxM.002 -1 1 1 1 0 0
 SakuraLeaf -1 2 1 1 0 0
-TPBase
-TPBaseBase -2 3 0 1 0 0 1
-TPBaseLight.001 -2 3 0 1 0 1 1
-TPBaseLight.000 -2 3 0 1 0 1 1
 StorageOut -2 0 0 1 0 0
 StorageIn -2 0 0 1 0 1
 ProcessorRing -2 0 0 1 0 1

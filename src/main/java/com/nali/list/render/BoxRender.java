@@ -46,7 +46,7 @@ public class BoxRender extends SmallObjectRender
         }
         else
         {
-            this.extra_bit = 2;
+            this.extra_bit = 4;
             int color = this.getTextureID(openglobjectmemory);
             OPENGL_FIXED_PIPE_FLOATBUFFER.limit(3);
             OPENGL_FIXED_PIPE_FLOATBUFFER.clear();
@@ -70,7 +70,7 @@ public class BoxRender extends SmallObjectRender
         }
         else
         {
-            this.extra_bit = 2;
+            this.extra_bit = 4;
             return integer;
         }
     }
@@ -78,7 +78,7 @@ public class BoxRender extends SmallObjectRender
     @Override
     public void setLightMapUniform(OpenGLObjectShaderMemory openglobjectshadermemory)
     {
-        if (this.extra_bit == 2)
+        if (this.extra_bit == 4)
         {
             OpenGlHelper.glUniform1i(openglobjectshadermemory.uniformlocation_int_array[5], 1);
             OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE1);
