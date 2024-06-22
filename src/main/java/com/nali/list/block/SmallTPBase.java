@@ -6,7 +6,7 @@ import com.nali.draw.DrawScreen;
 import com.nali.list.render.TPBaseRender;
 import com.nali.render.ObjectRender;
 import com.nali.small.SmallTab;
-import com.nali.small.block.IMixBlock;
+import com.nali.small.block.BlockB;
 import com.nali.small.item.MixBlockItem;
 import com.nali.system.opengl.memo.OpenGLAnimationMemo;
 import net.minecraft.block.Block;
@@ -28,7 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class SmallTPBase extends Block implements IMixBlock, ITileEntityProvider
+public class SmallTPBase extends Block implements BlockB, ITileEntityProvider
 {
     public static int ID;
     public static final AxisAlignedBB AXISALIGNEDBB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D);

@@ -23,10 +23,10 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public abstract class EntityLeInv<B extends IBothLeInv<?, ?>> extends EntityLivingBase implements IMixLe
+public abstract class EntityLeInv extends EntityLivingBase implements IMixLe
 {
     public static DataParameter<ItemStack> MOUTH_ITEMSTACK_DATAPARAMETER = EntityDataManager.createKey(EntityLeInv.class, DataSerializers.ITEM_STACK);
-    public B b;
+    public IBothLeInv ibothleinv;
 
     public EntityLeInv(World world)
     {
@@ -47,7 +47,7 @@ public abstract class EntityLeInv<B extends IBothLeInv<?, ?>> extends EntityLivi
     {
         super.writeEntityToNBT(nbttagcompound);
         this.EwriteEntityToNBT(nbttagcompound);
-        this.b.writeEntityToNBT(nbttagcompound);
+        this.ibothleinv.writeEntityToNBT(nbttagcompound);
     }
 
     @Override
@@ -55,7 +55,7 @@ public abstract class EntityLeInv<B extends IBothLeInv<?, ?>> extends EntityLivi
     {
         super.readEntityFromNBT(nbttagcompound);
         this.EreadEntityFromNBT(nbttagcompound);
-        this.b.readEntityFromNBT(nbttagcompound);
+        this.ibothleinv.readEntityFromNBT(nbttagcompound);
     }
 
     @Override
@@ -106,19 +106,19 @@ public abstract class EntityLeInv<B extends IBothLeInv<?, ?>> extends EntityLivi
     @Override
     public Iterable<ItemStack> getHeldEquipment()
     {
-        return this.b.getInventory().hands_itemstack_nonnulllist;
+        return this.ibothleinv.getInventory().hands_itemstack_nonnulllist;
     }
 
     @Override
     public Iterable<ItemStack> getArmorInventoryList()
     {
-        return this.b.getInventory().armor_itemstack_nonnulllist;
+        return this.ibothleinv.getInventory().armor_itemstack_nonnulllist;
     }
 
     @Override
     public ItemStack getItemStackFromSlot(EntityEquipmentSlot entityequipmentslot)
     {
-        Inventory inventory = this.b.getInventory();
+        Inventory inventory = this.ibothleinv.getInventory();
         switch (entityequipmentslot.getSlotType())
         {
             case HAND:
@@ -140,7 +140,7 @@ public abstract class EntityLeInv<B extends IBothLeInv<?, ?>> extends EntityLivi
     public void setItemStackToSlot(EntityEquipmentSlot entityequipmentslot, ItemStack itemstack)
     {
         this.playEquipSound(itemstack);
-        Inventory inventory = this.b.getInventory();
+        Inventory inventory = this.ibothleinv.getInventory();
         switch (entityequipmentslot.getSlotType())
         {
             case HAND:
@@ -170,7 +170,7 @@ public abstract class EntityLeInv<B extends IBothLeInv<?, ?>> extends EntityLivi
             damage = 1.0F;
         }
 
-        Inventory inventory = this.b.getInventory();
+        Inventory inventory = this.ibothleinv.getInventory();
         for (int i = 0; i < inventory.armor_itemstack_nonnulllist.size(); ++i)
         {
             ItemStack itemstack = inventory.armor_itemstack_nonnulllist.get(i);
@@ -234,7 +234,7 @@ public abstract class EntityLeInv<B extends IBothLeInv<?, ?>> extends EntityLivi
     @Override
     public boolean attackEntityFrom(DamageSource damagesource, float amount)
     {
-        if (!this.b.attackEntityFrom(damagesource, amount))
+        if (!this.ibothleinv.attackEntityFrom(damagesource, amount))
         {
             return false;
         }
@@ -244,7 +244,7 @@ public abstract class EntityLeInv<B extends IBothLeInv<?, ?>> extends EntityLivi
     @Override
     public boolean attackEntityAsMob(Entity entity)
     {
-        return this.b.attackEntityAsMob(entity);
+        return this.ibothleinv.attackEntityAsMob(entity);
     }
 
     @Override
@@ -257,28 +257,28 @@ public abstract class EntityLeInv<B extends IBothLeInv<?, ?>> extends EntityLivi
     @Override
     public float updateDistance(float f0, float f1)
     {
-        this.b.getWorkEBodyYaw().run();
+        this.ibothleinv.getWorkEBodyYaw().run();
         return f1;
     }
 
     @Override
     public boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
     {
-        return this.b.processInitialInteract(entityplayer, enumhand);
+        return this.ibothleinv.processInitialInteract(entityplayer, enumhand);
     }
 
     @Override
     public void onUpdate()
     {
         super.onUpdate();
-        this.b.onUpdate();
+        this.ibothleinv.onUpdate();
     }
 
     @Nullable
     @Override
     public SoundEvent getHurtSound(DamageSource damagesource)
     {
-        this.b.getHurtSound(damagesource);
+        this.ibothleinv.getHurtSound(damagesource);
         return super.getHurtSound(damagesource);
     }
 
@@ -286,7 +286,7 @@ public abstract class EntityLeInv<B extends IBothLeInv<?, ?>> extends EntityLivi
     @Override
     public SoundEvent getDeathSound()
     {
-        this.b.getDeathSound();
+        this.ibothleinv.getDeathSound();
         return super.getDeathSound();
     }
 

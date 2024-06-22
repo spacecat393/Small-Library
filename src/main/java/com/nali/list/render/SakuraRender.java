@@ -2,7 +2,7 @@ package com.nali.list.render;
 
 import com.nali.data.client.ClientData;
 import com.nali.small.data.client.SakuraClient;
-import com.nali.small.render.SmallObjectRender;
+import com.nali.small.render.RenderO;
 import com.nali.system.opengl.memory.OpenGLObjectMemory;
 import com.nali.system.opengl.memory.OpenGLObjectShaderMemory;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -16,7 +16,7 @@ import static com.nali.system.ClientLoader.OBJECT_LIST;
 import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
-public class SakuraRender extends SmallObjectRender
+public class SakuraRender extends RenderO
 {
 //    public static int ID;
 //    public static DataLoader DATALOADER = RenderHelper.DATALOADER;

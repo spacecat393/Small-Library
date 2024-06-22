@@ -1,7 +1,7 @@
 package com.nali.small.tile;
 
 import com.nali.render.ObjectRender;
-import com.nali.small.render.IMixRender;
+import com.nali.small.block.memo.client.ClientB;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -16,7 +16,7 @@ public interface IMixTileObjectRender<T extends TileEntity>
         this.translate(x, y, z);
         GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
         this.scale();
-        ObjectRender objectrender = ((IMixRender)t.getBlockType()).getObjectRender();
+        ObjectRender objectrender = ((ClientB)t.getBlockType()).getObjectRender();
         objectrender.drawLater();
         GL11.glPopMatrix();
     }

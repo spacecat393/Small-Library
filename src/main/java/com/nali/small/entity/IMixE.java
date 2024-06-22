@@ -1,7 +1,6 @@
 package com.nali.small.entity;
 
-import com.nali.data.BothData;
-import com.nali.small.entity.memo.IBothE;
+import com.nali.data.BothDataSe;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -10,22 +9,27 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface IMixE<E extends Entity>
+public interface IMixE<B extends BothDataSe, E extends Entity>
 {
     default void Einit(E e, World world)
     {
-        BothData bothdata = this.getBothData();
-        float scale = bothdata.Scale();
-
         if (world.isRemote)
         {
-            this.newClientEntitiesMemory();
-            e.width = bothdata.Width() * scale;
-            e.height = bothdata.Height() * scale;
+            this.newC();
+
+            B b = this.getB();
+            float scale = b.Scale();
+
+            e.width = b.Width() * scale;
+            e.height = b.Height() * scale;
         }
         else
         {
-            this.newServerEntitiesMemory();
+            this.newS();
+
+            B b = this.getB();
+            float scale = b.Scale();
+
             e.width = 0.5F;
             e.height = 0.5F;
             e.getDataManager().set(this.getFloatDataParameterArray()[0], scale);
@@ -109,20 +113,20 @@ public interface IMixE<E extends Entity>
         }
     }
 
-    BothData getBothData();
+    B getB();
     byte[] getAI();
 
 //    IBothE<E, ?> getBoth();
-    void setIBothE(IBothE ibothe);
+    void setB(B b);
 
     DataParameter<Byte>[] getByteDataParameterArray();
     DataParameter<Integer>[] getIntegerDataParameterArray();
     DataParameter<Float>[] getFloatDataParameterArray();
 
     @SideOnly(Side.CLIENT)
-    void newClientEntitiesMemory();
+    void newC();
 
-    void newServerEntitiesMemory();
+    void newS();
     void newServer();
 
     E getE();

@@ -1,23 +1,23 @@
 package com.nali.small.data.client;
 
-import com.nali.data.client.ClientData;
+import com.nali.data.client.ClientDataO;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.nali.list.data.SmallData.MODEL_STEP;
+import static com.nali.list.data.SmallData.MODEL_O_STEP;
 
 @SideOnly(Side.CLIENT)
-public class SakuraClient implements ClientData
+public class SakuraClient implements ClientDataO
 {
     @Override
     public int StartPart()
     {
-        return MODEL_STEP + 3;
+        return MODEL_O_STEP + 3;
     }
 
     @Override
     public int EndPart()
     {
-        return MODEL_STEP + 4;
+        return MODEL_O_STEP + 4;
     }
 }

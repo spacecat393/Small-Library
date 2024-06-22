@@ -4,7 +4,7 @@ import com.nali.data.client.ClientDataS;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.nali.list.data.SmallData.MODEL_STEP;
+import static com.nali.list.data.SmallData.MODEL_S_STEP;
 
 @SideOnly(Side.CLIENT)
 public class TPBaseClient implements ClientDataS
@@ -12,18 +12,18 @@ public class TPBaseClient implements ClientDataS
     @Override
     public int StartPart()
     {
-        return MODEL_STEP + 5;
+        return MODEL_S_STEP + 5;
     }
 
     @Override
     public int EndPart()
     {
-        return MODEL_STEP + 8;
+        return MODEL_S_STEP + 8;
     }
 
     @Override
     public int AnimationID()
     {
-        return MODEL_STEP + 4;
+        return MODEL_S_STEP + 4;
     }
 }

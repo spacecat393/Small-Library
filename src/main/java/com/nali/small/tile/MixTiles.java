@@ -1,6 +1,6 @@
 //package com.nali.small.tiles;
 //
-//import com.nali.small.render.IMixRender;
+//import com.nali.small.block.memo.client.IMixRender;
 //import net.minecraft.block.Block;
 //import net.minecraft.creativetab.CreativeTabs;
 //

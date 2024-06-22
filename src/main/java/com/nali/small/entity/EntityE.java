@@ -1,7 +1,16 @@
 package com.nali.small.entity;
 
+import com.nali.small.entity.memo.IBothE;
 import net.minecraft.entity.Entity;
+import net.minecraft.world.World;
 
-public class EntityE<B extends BothE<?, ?>> extends Entity implements IMixE
+public abstract class EntityE extends Entity implements IMixE
 {
+    public IBothE ibothe;
+
+    public EntityE(World world)
+    {
+        super(world);
+        this.Einit(this, world);
+    }
 }

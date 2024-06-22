@@ -4,9 +4,10 @@ import com.nali.draw.DrawScreen;
 import com.nali.list.render.StorageRender;
 import com.nali.render.ObjectRender;
 import com.nali.small.SmallTab;
-import com.nali.small.block.IMixBlock;
+import com.nali.small.block.BlockB;
+import com.nali.small.block.memo.IBothB;
+import com.nali.small.block.memo.client.ClientB;
 import com.nali.small.item.MixBlockItem;
-import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -23,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class SmallStorage extends Block implements IMixBlock, ITileEntityProvider
+public class SmallStorage<B extends IBothB> extends BlockB<B> implements ITileEntityProvider
 {
     public static int ID;
 
@@ -35,7 +36,7 @@ public class SmallStorage extends Block implements IMixBlock, ITileEntityProvide
     public SmallStorage(String[] string_array)
     {
         super(Material.ROCK);
-        this.init(this, string_array[0], string_array[1], SmallTab.TAB);
+        this.b.init(this, string_array[0], string_array[1], SmallTab.TAB);
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
         {
             this.renderInit();
@@ -101,5 +102,18 @@ public class SmallStorage extends Block implements IMixBlock, ITileEntityProvide
     public boolean isFullCube(IBlockState state)
     {
         return false;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void newC()
+    {
+        this.ibothb = new ClientB();
+    }
+
+    @Override
+    public void newS()
+    {
+        this.ibothb = new ();
     }
 }

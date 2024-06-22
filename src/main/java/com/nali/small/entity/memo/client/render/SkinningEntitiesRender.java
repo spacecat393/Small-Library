@@ -4,6 +4,7 @@ import com.nali.data.client.SkinningClientData;
 import com.nali.render.SkinningRender;
 import com.nali.small.entity.memo.client.ClientLe;
 import com.nali.small.entity.EntityLeInv;
+import com.nali.small.render.RenderSle;
 import com.nali.system.opengl.memory.OpenGLAnimationMemory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderGlobal;
@@ -45,7 +46,7 @@ public abstract class SkinningEntitiesRender<C extends ClientLe, T extends Entit
     public void doRender(T skinningentities, double ox, double oy, double oz, float entityYaw, float partialTicks)
     {
         ClientLe cliententitiesmemory = (ClientLe)skinningentities.bothentitiesmemory;
-        com.nali.small.render.SkinningEntitiesRender skinningrender = (com.nali.small.render.SkinningEntitiesRender)cliententitiesmemory.objectrender;
+        RenderSle skinningrender = (RenderSle)cliententitiesmemory.objectrender;
 
         this.renderLayer(skinningentities, ox, oy, oz, partialTicks);
 

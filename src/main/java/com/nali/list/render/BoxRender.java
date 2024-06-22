@@ -3,7 +3,7 @@ package com.nali.list.render;
 import com.nali.data.client.ClientData;
 import com.nali.mixin.IMixinEntityRenderer;
 import com.nali.small.data.client.BoxClient;
-import com.nali.small.render.SmallObjectRender;
+import com.nali.small.render.RenderO;
 import com.nali.system.opengl.OpenGLBuffer;
 import com.nali.system.opengl.memory.OpenGLObjectMemory;
 import com.nali.system.opengl.memory.OpenGLObjectShaderMemory;
@@ -20,7 +20,7 @@ import static com.nali.system.ClientLoader.OBJECT_LIST;
 import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
-public class BoxRender extends SmallObjectRender
+public class BoxRender extends RenderO
 {
 //    public static int ID;
 //    public static DataLoader DATALOADER = RenderHelper.DATALOADER;

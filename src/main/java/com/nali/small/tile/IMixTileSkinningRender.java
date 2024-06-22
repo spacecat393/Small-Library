@@ -2,7 +2,7 @@ package com.nali.small.tile;
 
 import com.nali.data.client.SkinningClientData;
 import com.nali.render.SkinningRender;
-import com.nali.small.render.IMixRender;
+import com.nali.small.block.memo.client.ClientB;
 import com.nali.system.opengl.memory.OpenGLAnimationMemory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
@@ -21,7 +21,7 @@ public interface IMixTileSkinningRender<T extends TileEntity> extends IMixTileOb
         this.translate(x, y, z);
         GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
         this.scale();
-        SkinningRender skinningrender = (SkinningRender)((IMixRender)t.getBlockType()).getObjectRender();
+        SkinningRender skinningrender = (SkinningRender)((ClientB)t.getBlockType()).getObjectRender();
         OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory) OBJECT_LIST.get(((SkinningClientData)skinningrender.clientdata).AnimationID());
         skinningrender.updateLightCoord(t.getWorld(), t.getPos().up());
         skinningrender.initSkinning(openglanimationmemory);
