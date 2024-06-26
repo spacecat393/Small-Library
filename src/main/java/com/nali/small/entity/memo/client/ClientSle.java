@@ -1,10 +1,15 @@
 package com.nali.small.entity.memo.client;
 
-import com.nali.render.SkinningRender;
+import com.nali.data.IBothDaSe;
+import com.nali.data.client.ClientDaSn;
+import com.nali.render.RenderS;
 import com.nali.small.entity.IMixLe;
-import com.nali.small.entity.memo.client.mixbox.MixBoxSe;
+import com.nali.small.entity.memo.client.mixbox.MixBoxSle;
 import com.nali.small.entity.memo.client.render.layer.ArrowLayer;
 import com.nali.small.entity.memo.client.render.layer.ItemLayer;
+import com.nali.system.opengl.memo.MemoGs;
+import com.nali.system.opengl.memo.MemoSs;
+import com.nali.system.opengl.store.StoreS;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
@@ -19,13 +24,13 @@ import java.util.UUID;
 import static com.nali.small.entity.EntityLeInv.MOUTH_ITEMSTACK_DATAPARAMETER;
 
 @SideOnly(Side.CLIENT)
-public abstract class ClientSle<R extends SkinningRender, E extends EntityLivingBase, I extends IMixLe<E>, M extends MixBoxSe<R, E, I, ?>> extends ClientLe<R, E, I, M>
+public abstract class ClientSle<RG extends MemoGs, RS extends MemoSs, RC extends ClientDaSn, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, BD extends IBothDaSe, E extends EntityLivingBase, I extends IMixLe<BD, E>, M extends MixBoxSle<RG, RS, RC, RST, R, BD, E, I, ?>> extends ClientLe<RG, RS, RC, RST, R, BD, E, I, M>
 {
     public static Map<UUID, ClientSle> ENTITIES_MAP = new HashMap();
     public static Map<Integer, UUID> FAKE_ENTITIES_MAP = new HashMap();
 
-    public ArrowLayer arrowlayerrender;
-    public ItemLayer itemlayerrender;
+    public ArrowLayer<RG, RS, RC, RST, R, BD, E, I, M, ?> arrowlayerrender;
+    public ItemLayer<RG, RS, RC, RST, R, BD, E, I, M, ?> itemlayerrender;
 
     public ItemStack mouth_itemstack = ItemStack.EMPTY;
 
@@ -33,7 +38,7 @@ public abstract class ClientSle<R extends SkinningRender, E extends EntityLiving
     {
         super(i, m/*, bothdata, workbytes*/);
         this.arrowlayerrender = new ArrowLayer(this);
-        this.itemlayerrender = new ItemLayer(this);
+        this.itemlayerrender = new ItemLayer<>(this);
     }
 
     @Override

@@ -1,15 +1,19 @@
 package com.nali.small.entity.memo.client;
 
-import com.nali.data.BothData;
+import com.nali.data.IBothDaSe;
+import com.nali.data.client.ClientDaSn;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SyncUUIDToClient;
-import com.nali.networks.NetworksRegistry;
-import com.nali.render.ObjectRender;
+import com.nali.network.NetworkRegistry;
+import com.nali.render.RenderO;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.IBothLe;
 import com.nali.small.entity.memo.client.mixbox.MixBoxE;
 import com.nali.small.entity.memo.work.WorkEBodyYaw;
 import com.nali.system.bytes.BytesWriter;
+import com.nali.system.opengl.memo.MemoGo;
+import com.nali.system.opengl.memo.MemoSo;
+import com.nali.system.opengl.store.StoreO;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -18,7 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public abstract class ClientLe<R extends ObjectRender, E extends EntityLivingBase, I extends IMixLe<E>, M extends MixBoxE<R, E, I, ?>> extends ClientE<R, E, I, M> implements IBothLe<E, I>
+public abstract class ClientLe<RG extends MemoGo, RS extends MemoSo, RC extends ClientDaSn, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, BD extends IBothDaSe, E extends EntityLivingBase, I extends IMixLe<BD, E>, M extends MixBoxE<RG, RS, RC, RST, R, BD, E, I, ?>> extends ClientE<RG, RS, RC, RST, R, BD, E, I, M> implements IBothLe<BD, E, I>
 {
     public WorkEBodyYaw workebodyyaw;
 
@@ -30,7 +34,7 @@ public abstract class ClientLe<R extends ObjectRender, E extends EntityLivingBas
     {
         super(i, m);
 //        this.work_byte_array = new byte[workbytes.MAX_WORKS()];
-        this.sync_byte_array = new byte[i.getBothData().MaxSync()];
+        this.sync_byte_array = new byte[i.getBD().MaxSync()];
     }
 
     @Override
@@ -69,11 +73,11 @@ public abstract class ClientLe<R extends ObjectRender, E extends EntityLivingBas
 
     public void updateClient()
     {
-        BothData bothdata = this.i.getBothData();
+        BD bd = this.i.getBD();
         E e = this.i.getE();
         float scale = e.getDataManager().get(this.i.getFloatDataParameterArray()[0]);
-        e.width = bothdata.Width() * scale;
-        e.height = bothdata.Height() * scale;
+        e.width = bd.Width() * scale;
+        e.height = bd.Height() * scale;
     }
 
     public void updateClientObject()
@@ -85,10 +89,10 @@ public abstract class ClientLe<R extends ObjectRender, E extends EntityLivingBas
             byte[] byte_array = new byte[5];
             byte_array[0] = SyncUUIDToClient.ID;
             BytesWriter.set(byte_array, e.getEntityId(), 1);
-            NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
+            NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
         }
 
-        this.r.entitiesrendermemory.scale = e.getDataManager().get(this.i.getFloatDataParameterArray()[0]);
+        this.r.c.scale = e.getDataManager().get(this.i.getFloatDataParameterArray()[0]);
     }
 
     @Override

@@ -1,11 +1,12 @@
 package com.nali.small.entity.memo.work;
 
+import com.nali.data.IBothDaSe;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.IBothLe;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
 
-public class WorkEBodyYaw<B extends IBothLe<E, I>, E extends EntityLivingBase, I extends IMixLe<E>> extends WorkE<E, I, B>
+public class WorkEBodyYaw<BD extends IBothDaSe, B extends IBothLe<BD, E, I>, E extends EntityLivingBase, I extends IMixLe<BD, E>> extends WorkE<BD, E, I, B>
 {
     public int rotationTickCounter;
     public float prevRenderYaw;

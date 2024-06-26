@@ -12,9 +12,9 @@ import static com.nali.list.data.SmallData.SHADER_O_STEP;
 import static com.nali.list.data.SmallData.TEXTURE_STEP;
 
 @SideOnly(Side.CLIENT)
-public class RenderO<G extends MemoGo, S extends MemoSo, ST extends StoreO<G, S>, C extends ClientDataO> extends ObjectRender<G, S, ST, C>
+public class SmallRenderO<G extends MemoGo, S extends MemoSo, ST extends StoreO<G, S>, C extends ClientDataO> extends ObjectRender<G, S, ST, C>
 {
-    public RenderO(ST st, C c)
+    public SmallRenderO(ST st, C c)
     {
         super(st, c);
     }

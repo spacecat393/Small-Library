@@ -1,9 +1,15 @@
 package com.nali.small.entity.memo.client.mixbox;
 
+import com.nali.data.IBothDaSe;
+import com.nali.data.client.ClientDaSn;
+import com.nali.render.RenderS;
 import com.nali.render.SkinningRender;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.client.ClientSle;
-import com.nali.small.entity.memo.client.hits.HitSeEat;
+import com.nali.small.entity.memo.client.hits.HitOeEat;
+import com.nali.system.opengl.memo.MemoGs;
+import com.nali.system.opengl.memo.MemoSs;
+import com.nali.system.opengl.store.StoreS;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
@@ -12,9 +18,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class MixBoxSe<R extends SkinningRender, E extends EntityLivingBase, I extends IMixLe<E>, C extends ClientSle<R, E, I, ?>> extends MixBoxE<R, E, I, C>
+public class MixBoxSle<RG extends MemoGs, RS extends MemoSs, RC extends ClientDaSn, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, BD extends IBothDaSe, E extends EntityLivingBase, I extends IMixLe<BD, E>, C extends ClientSle<RG, RS, RC, RST, R, BD, E, I, ?>> extends MixBoxE<RG, RS, RC, RST, R, BD, E, I, C>
 {
-    public MixBoxSe(C c)
+    public MixBoxSle(C c)
     {
         super(c);
     }
@@ -31,7 +37,7 @@ public class MixBoxSe<R extends SkinningRender, E extends EntityLivingBase, I ex
     public void init(C c)
     {
         super.init(c);
-        this.sehit_list.add(new HitSeEat(this.c));
+        this.sehit_list.add(new HitOeEat(this.c));
     }
 
     public AxisAlignedBB getMouthAxisAlignedBB()

@@ -1,11 +1,11 @@
 package com.nali.small.entity;
 
-import com.nali.data.BothDataSe;
+import com.nali.data.IBothDaSe;
 import com.nali.small.entity.sound.SoundLe;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 
-public interface IMixLe<B extends BothDataSe, E extends EntityLivingBase> extends IMixE<B, E>
+public interface IMixLe<BD extends IBothDaSe, E extends EntityLivingBase> extends IMixE<BD, E>
 {
     @Override
     default void Einit(E e, World world)

@@ -13,9 +13,9 @@ import static com.nali.list.data.SmallData.SHADER_S_STEP;
 import static com.nali.list.data.SmallData.TEXTURE_STEP;
 
 @SideOnly(Side.CLIENT)
-public class RenderS<B extends BothDataS, G extends MemoGs, S extends MemoSs, ST extends StoreS<G, S>, C extends ClientDataS> extends SkinningRender<B, G, S, ST, C>
+public class SmallRenderS<B extends BothDataS, G extends MemoGs, S extends MemoSs, ST extends StoreS<G, S>, C extends ClientDataS> extends SkinningRender<B, G, S, ST, C>
 {
-    public RenderS(ST st, C c, B b)
+    public SmallRenderS(ST st, C c, B b)
     {
         super(st, c, b);
     }

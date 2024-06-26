@@ -5,7 +5,7 @@ import com.nali.data.client.ClientDataO;
 import com.nali.data.client.ClientDataS;
 import com.nali.small.data.both.TPBaseBothDataS;
 import com.nali.small.data.client.TPBaseClient;
-import com.nali.small.render.RenderS;
+import com.nali.small.render.SmallRenderS;
 import com.nali.system.opengl.memo.MemoGs;
 import com.nali.system.opengl.memo.MemoSs;
 import com.nali.system.opengl.store.StoreS;
@@ -19,7 +19,7 @@ import java.util.Map;
 import static com.nali.Nali.I;
 
 @SideOnly(Side.CLIENT)
-public class TPBaseRender<B extends BothDataS, G extends MemoGs, S extends MemoSs, ST extends StoreS<G, S>, C extends ClientDataS> extends RenderS<B, G, S, ST, C>
+public class TPBaseRender<B extends BothDataS, G extends MemoGs, S extends MemoSs, ST extends StoreS<G, S>, C extends ClientDataS> extends SmallRenderS<B, G, S, ST, C>
 {
     public static C c = new TPBaseClient();
     public static B b = new TPBaseBothDataS();

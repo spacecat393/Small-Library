@@ -1,14 +1,19 @@
 package com.nali.small.entity.memo.client;
 
+import com.nali.data.IBothDaSe;
+import com.nali.data.client.ClientDaSn;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.OpenInvGUI;
-import com.nali.networks.NetworksRegistry;
-import com.nali.render.ObjectRender;
-import com.nali.render.SoundRender;
+import com.nali.network.NetworkRegistry;
+import com.nali.render.RenderO;
+import com.nali.render.sound.SoundRender;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothE;
 import com.nali.small.entity.memo.client.mixbox.MixBoxE;
 import com.nali.system.bytes.BytesWriter;
+import com.nali.system.opengl.memo.MemoGo;
+import com.nali.system.opengl.memo.MemoSo;
+import com.nali.system.opengl.store.StoreO;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.UUID;
 
 @SideOnly(Side.CLIENT)
-public abstract class ClientE<R extends ObjectRender, E extends Entity, I extends IMixE<E>, M extends MixBoxE<R, E, I, ?>> implements IBothE<E, I>
+public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends ClientDaSn, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, BD extends IBothDaSe, E extends Entity, I extends IMixE<BD, E>, M extends MixBoxE<RG, RS, RC, RST, R, BD, E, I, ?>> implements IBothE<BD, E, I>
 {
     public I i;
     public R r;
@@ -50,7 +55,7 @@ public abstract class ClientE<R extends ObjectRender, E extends Entity, I extend
                 byte[] byte_array = new byte[17];
                 byte_array[0] = OpenInvGUI.ID;
                 BytesWriter.set(byte_array, this.uuid, 1);
-                NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
+                NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
             }
         }
         else
@@ -66,7 +71,7 @@ public abstract class ClientE<R extends ObjectRender, E extends Entity, I extend
     public void readEntityFromNBT(NBTTagCompound nbttagcompound)
     {
         this.initFakeFrame();
-        this.r.entitiesrendermemory.scale = this.i.getBothData().Scale();
+        this.r.c.scale = this.i.getBD().Scale();
     }
 
     @Override

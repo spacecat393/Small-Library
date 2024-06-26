@@ -1,6 +1,6 @@
 package com.nali.small.entity;
 
-import com.nali.small.entity.memo.IBothLeInv;
+import com.nali.small.entity.memo.INNeInv;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 public abstract class EntityLeInv extends EntityLivingBase implements IMixLe
 {
     public static DataParameter<ItemStack> MOUTH_ITEMSTACK_DATAPARAMETER = EntityDataManager.createKey(EntityLeInv.class, DataSerializers.ITEM_STACK);
-    public IBothLeInv ibothleinv;
+        public INNeInv ibothleinv;
 
     public EntityLeInv(World world)
     {
@@ -229,7 +229,7 @@ public abstract class EntityLeInv extends EntityLivingBase implements IMixLe
         float health = this.getHealth();
         this.setHealth(health + value);
     }
-    
+
 
     @Override
     public boolean attackEntityFrom(DamageSource damagesource, float amount)

@@ -1,19 +1,19 @@
 package com.nali.small.entity.memo;
 
-import com.nali.small.entity.IMixLe;
+import com.nali.data.IBothDaSe;
 import com.nali.small.entity.Inventory;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 
-public interface IBothLeInv<E extends EntityLivingBase, I extends IMixLe<E>> extends IBothLe<E, I>
+public interface INNeInv<BD extends IBothDaSe, E extends Entity/*, I extends IMixE<BD, E>*/>/* extends IBothLe<BD, E, I>*/
 {
-    @Override
+//    @Override
     default void writeEntityToNBT(NBTTagCompound nbttagcompound)
     {
         this.getInventory().writeNBT(nbttagcompound);
     }
 
-    @Override
+//    @Override
     default void readEntityFromNBT(NBTTagCompound nbttagcompound)
     {
         this.getInventory().readNBT(nbttagcompound);

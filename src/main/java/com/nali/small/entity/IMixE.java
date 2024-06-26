@@ -1,6 +1,7 @@
 package com.nali.small.entity;
 
-import com.nali.data.BothDataSe;
+import com.nali.data.IBothDaSe;
+import com.nali.sound.ISoundE;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -9,7 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface IMixE<B extends BothDataSe, E extends Entity>
+public interface IMixE<SB extends ISoundE, BD extends IBothDaSe, E extends Entity>
 {
     default void Einit(E e, World world)
     {
@@ -17,22 +18,20 @@ public interface IMixE<B extends BothDataSe, E extends Entity>
         {
             this.newC();
 
-            B b = this.getB();
-            float scale = b.Scale();
-
-            e.width = b.Width() * scale;
-            e.height = b.Height() * scale;
+            BD bd = this.getBD();
+            float scale = bd.Scale();
+            e.width = bd.Width() * scale;
+            e.height = bd.Height() * scale;
         }
         else
         {
             this.newS();
 
-            B b = this.getB();
-            float scale = b.Scale();
-
+            BD bd = this.getBD();
             e.width = 0.5F;
             e.height = 0.5F;
-            e.getDataManager().set(this.getFloatDataParameterArray()[0], scale);
+            e.getDataManager().set(this.getFloatDataParameterArray()[0], bd.Scale());
+
             this.newServer();
         }
     }
@@ -113,11 +112,11 @@ public interface IMixE<B extends BothDataSe, E extends Entity>
         }
     }
 
-    B getB();
+    BD getBD();
     byte[] getAI();
 
 //    IBothE<E, ?> getBoth();
-    void setB(B b);
+    void setBD(BD b);
 
     DataParameter<Byte>[] getByteDataParameterArray();
     DataParameter<Integer>[] getIntegerDataParameterArray();

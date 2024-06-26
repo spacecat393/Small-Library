@@ -1,13 +1,18 @@
 package com.nali.small.entity.memo.client.render.layer;
 
 import com.mojang.authlib.GameProfile;
-import com.nali.render.SkinningRender;
+import com.nali.data.IBothDaSe;
+import com.nali.data.client.ClientDaSn;
+import com.nali.render.RenderS;
 import com.nali.small.entity.IMixLe;
-import com.nali.small.entity.memo.client.ClientLe;
 import com.nali.small.entity.memo.client.ClientSle;
+import com.nali.small.entity.memo.client.mixbox.MixBoxSle;
 import com.nali.small.entity.memo.client.render.RenderLivingBaseObject;
 import com.nali.small.mixin.IMixinLayerArmorBase;
-import com.nali.system.opengl.memory.OpenGLCurrentMemory;
+import com.nali.system.opengl.memo.MemoCurrent;
+import com.nali.system.opengl.memo.MemoGs;
+import com.nali.system.opengl.memo.MemoSs;
+import com.nali.system.opengl.store.StoreS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
@@ -29,10 +34,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
-import static com.nali.system.opengl.memory.OpenGLCurrentMemory.GL_CULL_FACE;
+import static com.nali.system.opengl.memo.MemoCurrent.GL_CULL_FACE;
 
 @SideOnly(Side.CLIENT)
-public class ItemLayer<R extends SkinningRender, E extends EntityLivingBase, I extends IMixLe<E>, C extends ClientSle<R, E, I>> extends LayerRender<R, E, I, C>
+public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends ClientDaSn, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, BD extends IBothDaSe, E extends EntityLivingBase, I extends IMixLe<BD, E>, M extends MixBoxSle<RG, RS, RC, RST, R, BD, E, I, ?>, C extends ClientSle<RG, RS, RC, RST, R, BD, E, I, M>> extends LayerRender<RG, RS, RC, RST, R, BD, E, I, M, C>
 {
     public static RenderLivingBaseObject RENDERLIVINGBASEOBJECT = new RenderLivingBaseObject();
     public static LayerBipedArmor LAYERBIPEDARMOR = new LayerBipedArmor(RENDERLIVINGBASEOBJECT);
@@ -52,10 +57,10 @@ public class ItemLayer<R extends SkinningRender, E extends EntityLivingBase, I e
 
     public void layer(float partialTicks)
     {
-        E e = this.c.i.getSelf();
+        E e = this.c.i.getE();
 //        cliententitiesmemory.objectrender.takeDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
 //        cliententitiesmemory.objectrender.setDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
-//        OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)((ClientEntitiesMemory)this.skinningentities.bothentitiesmemory).objectrender.memory_object_array[14];
+//        OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)((ClientEntitiesMemory)e.bothentitiesmemory).objectrender.memory_object_array[14];
 //        for (int v = 0; v < openglskinningmemory.index_int_array.length; ++v)
 //        {
 //            int vi = openglskinningmemory.index_int_array[v] * 3;
@@ -88,12 +93,12 @@ public class ItemLayer<R extends SkinningRender, E extends EntityLivingBase, I e
         {
             if (((this.c.sync_byte_array[0] >> this.index) & 1) == 0)
             {
-                SkinningRender skinningrender = (SkinningRender)this.c.objectrender;
-                float[] c_vec4 = skinningrender.get3DSkinning(this.x, this.y, this.z, 0, 0, 0, i, v);
+                R r = this.c.r;
+                float[] c_vec4 = r.get3DSkinning(this.x, this.y, this.z, 0, 0, 0, i, v);
                 GL11.glPushMatrix();
-                skinningrender.apply3DSkinningVec4(c_vec4);
+                r.apply3DSkinningVec4(c_vec4);
 
-                float[] c_mat4 = skinningrender.getMat43DSkinning(i, v);
+                float[] c_mat4 = r.getMat43DSkinning(i, v);
                 float[] mat4 = new float[]
                 {
                     c_mat4[0], c_mat4[4], c_mat4[8], 0,
@@ -101,9 +106,9 @@ public class ItemLayer<R extends SkinningRender, E extends EntityLivingBase, I e
                     c_mat4[2], c_mat4[6], c_mat4[10], 0,
                     0, 0, 0, 1.0F
                 };
-                OpenGLCurrentMemory.setFloatBuffer(mat4);
+                MemoCurrent.setFloatBuffer(mat4);
                 GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
-                GL11.glMultMatrix(OpenGLCurrentMemory.OPENGL_FLOATBUFFER);
+                GL11.glMultMatrix(MemoCurrent.OPENGL_FLOATBUFFER);
 
                 boolean left_hand = transformtype == ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND;
                 if (left_hand)
@@ -124,7 +129,7 @@ public class ItemLayer<R extends SkinningRender, E extends EntityLivingBase, I e
                 }
 
                 GL11.glScalef(0.4F * 0.5F, 0.4F * 0.5F, 0.4F * 0.5F);
-                Minecraft.getMinecraft().getItemRenderer().renderItemSide(this.skinningentities, itemstack, transformtype, left_hand);
+                Minecraft.getMinecraft().getItemRenderer().renderItemSide(this.c.i.getE(), itemstack, transformtype, left_hand);
                 GL11.glPopMatrix();
             }
         }
@@ -134,21 +139,20 @@ public class ItemLayer<R extends SkinningRender, E extends EntityLivingBase, I e
 
     public void renderArmor(EntityEquipmentSlot entityequipmentslot, int i, int v, float partialTicks)
     {
-        ClientLe cliententitiesmemory = (ClientLe)this.skinningentities.bothentitiesmemory;
-
-        if (((cliententitiesmemory.sync_byte_array[0] >> this.index) & 1) == 0)
+        if (((this.c.sync_byte_array[0] >> this.index) & 1) == 0)
         {
-            SkinningRender skinningrender = (SkinningRender)cliententitiesmemory.objectrender;
+            E e = this.c.i.getE();
+            R r = this.c.r;
 
-            ItemStack itemstack = this.skinningentities.getItemStackFromSlot(entityequipmentslot);
+            ItemStack itemstack = e.getItemStackFromSlot(entityequipmentslot);
             GL_CULL_FACE = GL11.glIsEnabled(GL11.GL_CULL_FACE);
             GL11.glDisable(GL11.GL_CULL_FACE);
 
-            float[] c_vec4 = skinningrender.get3DSkinning(this.x, this.y, this.z, 0, 0, 0, i, v);
+            float[] c_vec4 = r.get3DSkinning(this.x, this.y, this.z, 0, 0, 0, i, v);
             GL11.glPushMatrix();
-            skinningrender.apply3DSkinningVec4(c_vec4);
+            r.apply3DSkinningVec4(c_vec4);
 
-            float[] c_mat4 = skinningrender.getMat43DSkinning(i, v);
+            float[] c_mat4 = r.getMat43DSkinning(i, v);
             float[] mat4 = new float[]
             {
                 c_mat4[0], c_mat4[4], c_mat4[8], 0,
@@ -156,23 +160,23 @@ public class ItemLayer<R extends SkinningRender, E extends EntityLivingBase, I e
                 c_mat4[2], c_mat4[6], c_mat4[10], 0,
                 0, 0, 0, 1.0F
             };
-            OpenGLCurrentMemory.setFloatBuffer(mat4);
+            MemoCurrent.setFloatBuffer(mat4);
             GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
-            GL11.glMultMatrix(OpenGLCurrentMemory.OPENGL_FLOATBUFFER);
+            GL11.glMultMatrix(MemoCurrent.OPENGL_FLOATBUFFER);
 
             Item item = itemstack.getItem();
             if (item instanceof ItemArmor)
             {
                 this.setArmor(entityequipmentslot.getIndex());
                 GL11.glScalef(0.08F * 0.5F, 0.08F * 0.5F, 0.08F * 0.5F);
-                ((IMixinLayerArmorBase)LAYERBIPEDARMOR).GOrenderArmorLayer(this.skinningentities, this.skinningentities.limbSwing, this.skinningentities.limbSwingAmount, partialTicks, RENDERLIVINGBASEOBJECT.handleRotationFloat(this.skinningentities, partialTicks), 0.0F, 0.0F, 1.0F, entityequipmentslot);
+                ((IMixinLayerArmorBase)LAYERBIPEDARMOR).GOrenderArmorLayer(e, e.limbSwing, e.limbSwingAmount, partialTicks, RENDERLIVINGBASEOBJECT.handleRotationFloat(e, partialTicks), 0.0F, 0.0F, 1.0F, entityequipmentslot);
             }
             else if (itemstack.getItem() == Items.ELYTRA)
             {
                 this.setArmor(entityequipmentslot.getIndex());
                 GL11.glTranslatef(0.0F, 1.0F * 0.5F, 0.0F);
                 GL11.glScalef(0.035F * 0.5F, 0.035F * 0.5F, 0.035F * 0.5F);
-                LAYERELYTRA.doRenderLayer(this.skinningentities, this.skinningentities.limbSwing, this.skinningentities.limbSwingAmount, partialTicks, RENDERLIVINGBASEOBJECT.handleRotationFloat(this.skinningentities, partialTicks), 0.0F, 0.0F, 1.0F);
+                LAYERELYTRA.doRenderLayer(e, e.limbSwing, e.limbSwingAmount, partialTicks, RENDERLIVINGBASEOBJECT.handleRotationFloat(e, partialTicks), 0.0F, 0.0F, 1.0F);
             }
             else if (item == Items.SKULL)
             {
@@ -208,7 +212,7 @@ public class ItemLayer<R extends SkinningRender, E extends EntityLivingBase, I e
                 }
 
                 GL11.glScalef(0.25F * 0.5F, 0.25F * 0.5F, 0.25F * 0.5F);
-                TileEntitySkullRenderer.instance.renderSkull(-0.5F, 0.0F, -0.5F, EnumFacing.UP, 180.0F, itemstack.getMetadata(), gameprofile, -1, this.skinningentities.limbSwing);
+                TileEntitySkullRenderer.instance.renderSkull(-0.5F, 0.0F, -0.5F, EnumFacing.UP, 180.0F, itemstack.getMetadata(), gameprofile, -1, e.limbSwing);
             }
             else
             {
@@ -233,7 +237,7 @@ public class ItemLayer<R extends SkinningRender, E extends EntityLivingBase, I e
     //            }
                 GL11.glTranslatef(this.transform_float_array[-(entityequipmentslot.getIndex() - 3) * 3], 0.0F, 0.0F);
 
-                Minecraft.getMinecraft().getItemRenderer().renderItem(this.skinningentities, itemstack, ItemCameraTransforms.TransformType.HEAD);
+                Minecraft.getMinecraft().getItemRenderer().renderItem(e, itemstack, ItemCameraTransforms.TransformType.HEAD);
             }
 
             GL11.glPopMatrix();

@@ -3,7 +3,7 @@ package com.nali.small.entity.memo.server;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.Inventory;
-import com.nali.small.entity.memo.IBothLeInv;
+import com.nali.small.entity.memo.INNeInv;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,7 +11,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 
 import static com.nali.small.entity.EntityLeInv.MOUTH_ITEMSTACK_DATAPARAMETER;
 
-public abstract class ServerLeInv<E extends EntityLeInv<?>, I extends IMixLe<E>, A extends MixAIE<E, I, ?>> extends ServerLe<E, I, A> implements IBothLeInv<E, I>
+public abstract class ServerLeInv<E extends EntityLeInv<?>, I extends IMixLe<E>, A extends MixAIE<E, I, ?>> extends ServerLe<E, I, A> implements INNeInv<E, I>
 {
     public Inventory inventory;
 
@@ -41,14 +41,14 @@ public abstract class ServerLeInv<E extends EntityLeInv<?>, I extends IMixLe<E>,
     public void writeEntityToNBT(NBTTagCompound nbttagcompound)
     {
         super.writeEntityToNBT(nbttagcompound);
-        IBothLeInv.super.writeEntityToNBT(nbttagcompound);
+        INNeInv.super.writeEntityToNBT(nbttagcompound);
     }
 
     @Override
     public void readEntityFromNBT(NBTTagCompound nbttagcompound)
     {
         super.readEntityFromNBT(nbttagcompound);
-        IBothLeInv.super.readEntityFromNBT(nbttagcompound);
+        INNeInv.super.readEntityFromNBT(nbttagcompound);
     }
 
     @Override

@@ -1,14 +1,19 @@
 package com.nali.small.entity.memo.client.mixbox;
 
+import com.nali.data.IBothDaSe;
+import com.nali.data.client.ClientDaSn;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SetWorkByte;
 import com.nali.network.NetworkRegistry;
-import com.nali.render.ObjectRender;
+import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.hits.HitE;
-import com.nali.small.entity.memo.client.hits.HitSePat;
+import com.nali.small.entity.memo.client.hits.HitOePat;
 import com.nali.system.bytes.BytesWriter;
+import com.nali.system.opengl.memo.MemoGo;
+import com.nali.system.opengl.memo.MemoSo;
+import com.nali.system.opengl.store.StoreO;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
@@ -21,7 +26,7 @@ import java.util.List;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 
 @SideOnly(Side.CLIENT)
-public class MixBoxE<R extends ObjectRender, E extends Entity, I extends IMixE<E>, C extends ClientE<R, E, I, ?>>
+public class MixBoxE<RG extends MemoGo, RS extends MemoSo, RC extends ClientDaSn, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, BD extends IBothDaSe, E extends Entity, I extends IMixE<BD, E>, C extends ClientE<RG, RS, RC, RST, R, BD, E, I, ?>>
 {
     public C c;
     public List<HitE> sehit_list = new ArrayList();
@@ -41,7 +46,7 @@ public class MixBoxE<R extends ObjectRender, E extends Entity, I extends IMixE<E
     public void init(C c)
     {
         this.c = c;
-        this.sehit_list.add(new HitSePat(this.c));
+        this.sehit_list.add(new HitOePat(this.c));
     }
 
 //    public void loop(SkinningEntities skinningentities)

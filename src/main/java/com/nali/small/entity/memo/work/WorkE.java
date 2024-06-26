@@ -1,10 +1,11 @@
 package com.nali.small.entity.memo.work;
 
+import com.nali.data.IBothDaSe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothE;
 import net.minecraft.entity.Entity;
 
-public abstract class WorkE<E extends Entity, I extends IMixE<E>, B extends IBothE<E, I>>
+public abstract class WorkE<BD extends IBothDaSe, E extends Entity, I extends IMixE<BD, E>, B extends IBothE<BD, E, I>>
 {
     public B b;
 
