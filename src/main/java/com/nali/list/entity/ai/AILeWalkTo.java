@@ -1,10 +1,12 @@
 package com.nali.list.entity.ai;
 
 import com.mojang.authlib.GameProfile;
+import com.nali.data.IBothDaE;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
+import com.nali.sound.ISoundLe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockFenceGate;
@@ -22,11 +24,11 @@ import net.minecraftforge.common.util.FakePlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AILeWalkTo<E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
+public class AILeWalkTo<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 
-    public AIESit<E, I, S, A> aiesit;
+    public AIESit<SD, BD, E, I, S, A> aiesit;
 
     public byte state;
 
@@ -44,7 +46,7 @@ public class AILeWalkTo<E extends EntityLivingBase, I extends IMixLe<E>, S exten
     @Override
     public void init()
     {
-        this.aiesit = (AIESit<E, I, S, A>)this.s.a.aie_map.get(AIESit.ID);
+        this.aiesit = (AIESit<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIESit.ID);
     }
 
     @Override

@@ -7,7 +7,7 @@ import com.nali.list.render.BoxRender;
 import com.nali.render.SkinningRender;
 import com.nali.small.entity.memo.client.ClientLe;
 import com.nali.small.entity.EntityLeInv;
-import com.nali.small.entity.memo.client.render.SkinningEntitiesRender;
+import com.nali.small.entity.memo.client.render.RenderSleInv;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.SetAttributesGUIFeatures;
 import com.nali.small.gui.features.messages.EffectsGUIFeatures;
@@ -49,7 +49,7 @@ public class InventoryGui extends MixGui
 {
     public static ResourceLocation GUI_RESOURCELOCATION = new ResourceLocation(Reference.MOD_ID, "textures/gui/inventory.png");
     public static byte PAGE;
-    public SkinningEntitiesRender skinningentitiesrender;
+    public RenderSleInv skinningentitiesrender;
     public float px/*, py*/;
     public BoxRender boxrender = new BoxRender();
     public DrawScreen box_drawscreen = new DrawScreen();
@@ -62,7 +62,7 @@ public class InventoryGui extends MixGui
         ScaledResolution scaledresolution = new ScaledResolution(this.mc);
         this.setWorldAndResolution(Minecraft.getMinecraft(), scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
 
-        this.skinningentitiesrender = (SkinningEntitiesRender)this.mc.getRenderManager().getEntityRenderObject(skinningentities);
+        this.skinningentitiesrender = (RenderSleInv)this.mc.getRenderManager().getEntityRenderObject(skinningentities);
 
         this.xSize = 256;
         this.ySize = 256;

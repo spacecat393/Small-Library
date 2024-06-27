@@ -1,9 +1,11 @@
 package com.nali.small.entity.memo.server.ai;
 
 import com.nali.Nali;
+import com.nali.data.IBothDaE;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.ai.frame.FrameE;
+import com.nali.sound.ISoundN;
 import com.nali.system.Reflect;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,15 +15,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class MixAIE<E extends Entity, I extends IMixE<E>, S extends ServerE<E, I, ?>>
+public abstract class MixAIE<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, ?>>
 {
     public static List<Class> AI_CLASS_LIST;
 
     public S s;
-    public Map<Byte, AI<E, I, S, ?>> aie_map = new HashMap();
+    public Map<Byte, AI<SD, BD, E, I, S, ?>> aie_map = new HashMap();
     public byte state = (byte)255;//main_work sub_work init ?map chunk
 
-    public FrameE<E, I, S, ?>[] framee_array;
+    public FrameE<SD, BD, E, I, S, ?>[] framee_array;
 
     public MixAIE(S s)
     {
@@ -43,7 +45,7 @@ public abstract class MixAIE<E extends Entity, I extends IMixE<E>, S extends Ser
             }
         }
 
-        for (AI<E, I, S, ?> aie : this.aie_map.values())
+        for (AI aie : this.aie_map.values())
         {
             aie.init();
         }
@@ -88,7 +90,7 @@ public abstract class MixAIE<E extends Entity, I extends IMixE<E>, S extends Ser
             this.aie_map.get(b).onUpdate();
         }
 
-        for (FrameE<E, I, S, ?> framee : this.framee_array)
+        for (FrameE<SD, BD, E, I, S, ?> framee : this.framee_array)
         {
             framee.onUpdate();
         }

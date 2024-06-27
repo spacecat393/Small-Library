@@ -1,17 +1,19 @@
 package com.nali.list.entity.ai;
 
+import com.nali.data.IBothDaE;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
+import com.nali.sound.ISoundLe;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class AILeRandomLook<E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
+public class AILeRandomLook<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 
-    public AILeLook<E, I, S, A> ailelook;
+    public AILeLook<SD, BD, E, I, S, A> ailelook;
 
     public int tick;
     public byte state;//on look
@@ -26,7 +28,7 @@ public class AILeRandomLook<E extends EntityLivingBase, I extends IMixLe<E>, S e
     @Override
     public void init()
     {
-        this.ailelook = (AILeLook<E, I, S, A>)this.s.a.aie_map.get(AILeLook.ID);
+        this.ailelook = (AILeLook<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeLook.ID);
     }
 
     @Override

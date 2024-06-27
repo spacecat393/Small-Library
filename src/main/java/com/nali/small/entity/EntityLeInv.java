@@ -1,6 +1,6 @@
 package com.nali.small.entity;
 
-import com.nali.small.entity.memo.INNeInv;
+import com.nali.small.entity.memo.IBothLeInv;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,12 +26,70 @@ import javax.annotation.Nullable;
 public abstract class EntityLeInv extends EntityLivingBase implements IMixLe
 {
     public static DataParameter<ItemStack> MOUTH_ITEMSTACK_DATAPARAMETER = EntityDataManager.createKey(EntityLeInv.class, DataSerializers.ITEM_STACK);
-        public INNeInv ibothleinv;
+    public IBothLeInv ibothleinv;
 
     public EntityLeInv(World world)
     {
         super(world);
         this.Einit(this, world);
+    }
+
+    @Override
+    public boolean isPushedByWater()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isMovementBlocked()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isEntityAlive()
+    {
+        return !this.isDead;
+    }
+
+    @Override
+    public double getYOffset()
+    {
+        return 0.3D;
+    }
+
+    @Override
+    public void setAIMoveSpeed(float speed)
+    {
+        super.setAIMoveSpeed(speed);
+        this.moveForward = speed;
+    }
+
+    @Override
+    public boolean canEntityBeSeen(Entity entity)
+    {
+        return this.world.rayTraceBlocks(new Vec3d(this.posX, this.posY, this.posZ), new Vec3d(entity.posX, entity.posY, entity.posZ), false, true, false) == null || super.canEntityBeSeen(entity);
+    }
+
+    @Override
+    public BlockPos getPosition()
+    {
+        return new BlockPos(this.posX, this.posY, this.posZ);
+    }
+
+    @Override
+    public void heal(float value)
+    {
+        value = net.minecraftforge.event.ForgeEventFactory.onLivingHeal(this, value);
+        if (value <= 0) return;
+        float health = this.getHealth();
+        this.setHealth(health + value);
+    }
+
+    @Override
+    public EnumHandSide getPrimaryHand()
+    {
+        return EnumHandSide.RIGHT;
     }
 
     @Override
@@ -56,36 +114,6 @@ public abstract class EntityLeInv extends EntityLivingBase implements IMixLe
         super.readEntityFromNBT(nbttagcompound);
         this.EreadEntityFromNBT(nbttagcompound);
         this.ibothleinv.readEntityFromNBT(nbttagcompound);
-    }
-
-    @Override
-    public double getYOffset()
-    {
-        return 0.3D;
-    }
-
-    @Override
-    public boolean isPushedByWater()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isMovementBlocked()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isEntityAlive()
-    {
-        return !this.isDead;
-    }
-
-    @Override
-    public EnumHandSide getPrimaryHand()
-    {
-        return EnumHandSide.RIGHT;
     }
 
     @Override
@@ -210,28 +238,6 @@ public abstract class EntityLeInv extends EntityLivingBase implements IMixLe
     }
 
     @Override
-    public boolean canEntityBeSeen(Entity entity)
-    {
-        return this.world.rayTraceBlocks(new Vec3d(this.posX, this.posY, this.posZ), new Vec3d(entity.posX, entity.posY, entity.posZ), false, true, false) == null || super.canEntityBeSeen(entity);
-    }
-
-    @Override
-    public BlockPos getPosition()
-    {
-        return new BlockPos(this.posX, this.posY, this.posZ);
-    }
-
-    @Override
-    public void heal(float value)
-    {
-        value = net.minecraftforge.event.ForgeEventFactory.onLivingHeal(this, value);
-        if (value <= 0) return;
-        float health = this.getHealth();
-        this.setHealth(health + value);
-    }
-
-
-    @Override
     public boolean attackEntityFrom(DamageSource damagesource, float amount)
     {
         if (!this.ibothleinv.attackEntityFrom(damagesource, amount))
@@ -245,13 +251,6 @@ public abstract class EntityLeInv extends EntityLivingBase implements IMixLe
     public boolean attackEntityAsMob(Entity entity)
     {
         return this.ibothleinv.attackEntityAsMob(entity);
-    }
-
-    @Override
-    public void setAIMoveSpeed(float speed)
-    {
-        super.setAIMoveSpeed(speed);
-        this.moveForward = speed;
     }
 
     @Override

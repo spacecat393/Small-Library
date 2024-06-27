@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.client.mixbox;
 
-import com.nali.data.IBothDaSe;
-import com.nali.data.client.ClientDaSn;
+import com.nali.data.IBothDaE;
+import com.nali.data.client.IClientDaO;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SetWorkByte;
 import com.nali.network.NetworkRegistry;
@@ -9,8 +9,10 @@ import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.hits.HitE;
-import com.nali.small.entity.memo.client.hits.HitOePat;
-import com.nali.system.bytes.BytesWriter;
+import com.nali.small.entity.memo.client.hits.HitOlePat;
+import com.nali.small.entity.memo.client.render.IRender;
+import com.nali.sound.ISoundN;
+import com.nali.system.bytes.ByteWriter;
 import com.nali.system.opengl.memo.MemoGo;
 import com.nali.system.opengl.memo.MemoSo;
 import com.nali.system.opengl.store.StoreO;
@@ -26,7 +28,7 @@ import java.util.List;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 
 @SideOnly(Side.CLIENT)
-public class MixBoxE<RG extends MemoGo, RS extends MemoSo, RC extends ClientDaSn, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, BD extends IBothDaSe, E extends Entity, I extends IMixE<BD, E>, C extends ClientE<RG, RS, RC, RST, R, BD, E, I, ?>>
+public abstract class MixBoxE<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, IR extends IRender, C extends ClientE<RG, RS, RC, RST, R, SD, BD, E, I, ?, IR>>
 {
     public C c;
     public List<HitE> sehit_list = new ArrayList();
@@ -36,18 +38,18 @@ public class MixBoxE<RG extends MemoGo, RS extends MemoSo, RC extends ClientDaSn
         this.c = c;
     }
 
-    public List<AxisAlignedBB> get()
-    {
-        List<AxisAlignedBB> axisalignedbb_list = new ArrayList();
-        axisalignedbb_list.add(this.getHeadAxisAlignedBB());
-        return axisalignedbb_list;
-    }
+//    public List<AxisAlignedBB> get()
+//    {
+//        List<AxisAlignedBB> axisalignedbb_list = new ArrayList();
+////        axisalignedbb_list.add(this.getHeadAxisAlignedBB());
+//        return axisalignedbb_list;
+//    }
 
-    public void init(C c)
-    {
-        this.c = c;
-        this.sehit_list.add(new HitOePat(this.c));
-    }
+//    public void init(C c)
+//    {
+////        this.c = c;
+////        this.sehit_list.add(new HitOlePat(this.c));
+//    }
 
 //    public void loop(SkinningEntities skinningentities)
 //    {
@@ -59,8 +61,8 @@ public class MixBoxE<RG extends MemoGo, RS extends MemoSo, RC extends ClientDaSn
         byte i = this.c.bytele.SIT();
         byte[] byte_array = new byte[21];
         byte_array[0] = SetWorkByte.ID;
-        BytesWriter.set(byte_array, this.c.uuid, 1);
-        BytesWriter.set(byte_array, i, 17);
+        ByteWriter.set(byte_array, this.c.uuid, 1);
+        ByteWriter.set(byte_array, i, 17);
         NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 
@@ -97,16 +99,19 @@ public class MixBoxE<RG extends MemoGo, RS extends MemoSo, RC extends ClientDaSn
         this.end();
     }
 
-    public AxisAlignedBB getHeadAxisAlignedBB()
-    {
-        E e = this.c.i.getE();
-        double hw = e.width / 2.0F + 0.001F;
-        double y = e.posY + e.height / 1.125F;
+    public abstract List<AxisAlignedBB> get();
+    public abstract void init(C c);
 
-        return new AxisAlignedBB
-        (
-            e.posX - hw, y, e.posZ - hw,
-            e.posX + hw, e.posY + e.height + 0.001F, e.posZ + hw
-        );
-    }
+//    public AxisAlignedBB getHeadAxisAlignedBB()
+//    {
+//        E e = this.c.i.getE();
+//        double hw = e.width / 2.0F + 0.001F;
+//        double y = e.posY + e.height / 1.125F;
+//
+//        return new AxisAlignedBB
+//        (
+//            e.posX - hw, y, e.posZ - hw,
+//            e.posX + hw, e.posY + e.height + 0.001F, e.posZ + hw
+//        );
+//    }
 }

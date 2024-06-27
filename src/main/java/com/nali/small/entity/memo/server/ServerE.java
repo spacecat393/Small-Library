@@ -1,12 +1,14 @@
 package com.nali.small.entity.memo.server;
 
+import com.nali.data.IBothDaE;
 import com.nali.small.chunk.ChunkLoader;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothE;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.entity.memo.server.ai.StatLe;
-import com.nali.system.bytes.BytesReader;
-import com.nali.system.bytes.BytesWriter;
+import com.nali.sound.ISoundN;
+import com.nali.system.bytes.ByteReader;
+import com.nali.system.bytes.ByteWriter;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -21,7 +23,7 @@ import java.util.UUID;
 
 import static com.nali.small.chunk.ChunkCallBack.CHUNK_MAP;
 
-public abstract class ServerE<E extends Entity, I extends IMixE<E>, A extends MixAIE<E, I, ?>> implements IBothE<E, I>
+public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, A extends MixAIE<SD, BD, E, I, ?>> implements IBothE<SD, BD, E, I>
 {
     public static Map<UUID, ServerE> S_MAP;
 
@@ -53,7 +55,7 @@ public abstract class ServerE<E extends Entity, I extends IMixE<E>, A extends Mi
 //        this.work_byte_array = new byte[(int)Math.ceil(this.i.getAI().length / 8.0F)/*size*/];// /8
 //        this.current_work_byte_array = new byte[size];
         this.frame_int_array = new int[i.getIntegerDataParameterArray().length];
-        this.sync_byte_array = new byte[this.i.getBothData().MaxSync()];
+        this.sync_byte_array = new byte[this.i.getBD().MaxSync()];
     }
 
     @Override
@@ -118,7 +120,7 @@ public abstract class ServerE<E extends Entity, I extends IMixE<E>, A extends Mi
         if (this.owner_uuid != null)
         {
             byte[] byte_array = new byte[16];
-            BytesWriter.set(byte_array, this.owner_uuid, 0);
+            ByteWriter.set(byte_array, this.owner_uuid, 0);
             nbttagcompound.setByteArray("owner_uuid", byte_array);
         }
 
@@ -164,7 +166,7 @@ public abstract class ServerE<E extends Entity, I extends IMixE<E>, A extends Mi
 
         if (nbttagcompound.hasKey("owner_uuid", 7))
         {
-            this.owner_uuid = BytesReader.getUUID(nbttagcompound.getByteArray("owner_uuid"), 0);
+            this.owner_uuid = ByteReader.getUUID(nbttagcompound.getByteArray("owner_uuid"), 0);
         }
 
 //        this.entitiesaimemory.readNBT(nbttagcompound);

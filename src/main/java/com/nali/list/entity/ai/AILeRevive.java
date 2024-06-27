@@ -1,6 +1,7 @@
 package com.nali.list.entity.ai;
 
 import com.nali.Nali;
+import com.nali.data.IBothDaE;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.RespawnPlayer;
 import com.nali.network.NetworkRegistry;
@@ -10,6 +11,7 @@ import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.mixin.IMixinEntityPlayer;
+import com.nali.sound.ISoundLe;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,14 +26,14 @@ import java.util.UUID;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class AILeRevive<E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
+public class AILeRevive<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 
-    public AIEArea<E, I, S, A> aiearea;
-    public AILeSetLocation<E, I, S, A> ailesetlocation;
-    public AILeFindMove<E, I, S, A> ailefindmove;
-    public AILeLook<E, I, S, A> ailelook;
+    public AIEArea<SD, BD, E, I, S, A> aiearea;
+    public AILeSetLocation<SD, BD, E, I, S, A> ailesetlocation;
+    public AILeFindMove<SD, BD, E, I, S, A> ailefindmove;
+    public AILeLook<SD, BD, E, I, S, A> ailelook;
 
     public byte state;//try_revive-N revive_owner revive_other_entity remote
 
@@ -53,10 +55,10 @@ public class AILeRevive<E extends EntityLivingBase, I extends IMixLe<E>, S exten
     @Override
     public void init()
     {
-        this.aiearea = (AIEArea<E, I, S, A>)this.s.a.aie_map.get(AIEArea.ID);
-        this.ailesetlocation = (AILeSetLocation<E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
-        this.ailefindmove = (AILeFindMove<E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
-        this.ailelook = (AILeLook<E, I, S, A>)this.s.a.aie_map.get(AILeLook.ID);
+        this.aiearea = (AIEArea<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIEArea.ID);
+        this.ailesetlocation = (AILeSetLocation<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
+        this.ailefindmove = (AILeFindMove<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
+        this.ailelook = (AILeLook<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeLook.ID);
     }
 
     @Override

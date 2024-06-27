@@ -1,11 +1,14 @@
 package com.nali.list.entity.ai;
 
+import com.nali.data.IBothDaE;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.entity.memo.server.ai.path.PathMath;
 import com.nali.small.entity.memo.server.ai.path.SNode;
+import com.nali.sound.ISoundLe;
+import com.nali.sound.ISoundN;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockFenceGate;
@@ -19,17 +22,17 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AILeFindMove<E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
+public class AILeFindMove<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 
     public static int MAX_G = 64;
 
-    public AIESit<E, I, S, A> aiesit;
+    public AIESit<SD, BD, E, I, S, A> aiesit;
 //    public AILeSetLocation<E, I, S, A> ailesetlocation;
-    public AILeMove<E, I, S, A> ailemove;
-    public AILeWalkTo<E, I, S, A> ailewalkto;
-    public AILeMineTo<E, I, S, A> ailemineto;
+    public AILeMove<SD, BD, E, I, S, A> ailemove;
+    public AILeWalkTo<SD, BD, E, I, S, A> ailewalkto;
+    public AILeMineTo<SD, BD, E, I, S, A> ailemineto;
 
 //    public int goal_x, goal_y, goal_z;
     public double goal_x, goal_y, goal_z;
@@ -54,11 +57,11 @@ public class AILeFindMove<E extends EntityLivingBase, I extends IMixLe<E>, S ext
     @Override
     public void init()
     {
-        this.aiesit = (AIESit<E, I, S, A>)this.s.a.aie_map.get(AIESit.ID);
+        this.aiesit = (AIESit<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIESit.ID);
 //        this.ailesetlocation = (AILeSetLocation<E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
-        this.ailemove = (AILeMove<E, I, S, A>)this.s.a.aie_map.get(AILeMove.ID);
-        this.ailewalkto = (AILeWalkTo<E, I, S, A>)this.s.a.aie_map.get(AILeWalkTo.ID);
-        this.ailemineto = (AILeMineTo<E, I, S, A>)this.s.a.aie_map.get(AILeMineTo.ID);
+        this.ailemove = (AILeMove<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeMove.ID);
+        this.ailewalkto = (AILeWalkTo<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeWalkTo.ID);
+        this.ailemineto = (AILeMineTo<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeMineTo.ID);
     }
 
     @Override

@@ -6,12 +6,15 @@ import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class RenderLivingBaseObject<T extends EntityLivingBase> extends RenderLivingBase<T>
+@SideOnly(Side.CLIENT)
+public class RenderFle<E extends EntityLivingBase> extends RenderLivingBase<E>
 {
-    public RenderLivingBaseObject()
+    public RenderFle()
     {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelBase()
         {
@@ -25,14 +28,14 @@ public class RenderLivingBaseObject<T extends EntityLivingBase> extends RenderLi
 
     @Nullable
     @Override
-    public ResourceLocation getEntityTexture(T entity)
+    public ResourceLocation getEntityTexture(E e)
     {
         return null;
     }
 
     @Override
-    public float handleRotationFloat(T livingBase, float partialTicks)
+    public float handleRotationFloat(E e, float partialTicks)
     {
-        return super.handleRotationFloat(livingBase, partialTicks);
+        return super.handleRotationFloat(e, partialTicks);
     }
 }

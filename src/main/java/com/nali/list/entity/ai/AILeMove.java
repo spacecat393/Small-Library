@@ -1,9 +1,11 @@
 package com.nali.list.entity.ai;
 
+import com.nali.data.IBothDaE;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.entity.memo.server.ai.AI;
+import com.nali.sound.ISoundLe;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
@@ -11,13 +13,13 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.Vec3d;
 
-public class AILeMove<E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
+public class AILeMove<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 
-    public AILeLook<E, I, S, A> ailelook;
-    public AILeJump<E, I, S, A> ailejump;
-    public AIESit<E, I, S, A> aiesit;
+    public AILeLook<SD, BD, E, I, S, A> ailelook;
+    public AILeJump<SD, BD, E, I, S, A> ailejump;
+    public AIESit<SD, BD, E, I, S, A> aiesit;
 
     public double x, y, z;
 //    public double ox, oy, oz;
@@ -32,9 +34,9 @@ public class AILeMove<E extends EntityLivingBase, I extends IMixLe<E>, S extends
     @Override
     public void init()
     {
-        this.ailelook = (AILeLook<E, I, S, A>)this.s.a.aie_map.get(AILeLook.ID);
-        this.ailejump = (AILeJump<E, I, S, A>)this.s.a.aie_map.get(AILeJump.ID);
-        this.aiesit = (AIESit<E, I, S, A>)this.s.a.aie_map.get(AIESit.ID);
+        this.ailelook = (AILeLook<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeLook.ID);
+        this.ailejump = (AILeJump<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeJump.ID);
+        this.aiesit = (AIESit<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIESit.ID);
     }
 
     @Override

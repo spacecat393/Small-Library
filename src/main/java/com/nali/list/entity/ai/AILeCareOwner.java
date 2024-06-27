@@ -1,10 +1,12 @@
 package com.nali.list.entity.ai;
 
+import com.nali.data.IBothDaE;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.mixin.IMixinEntityLivingBase;
+import com.nali.sound.ISoundLe;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,11 +16,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AILeCareOwner<E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
+public class AILeCareOwner<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 
-    public AIEArea<E, I, S, A> aiearea;
+    public AIEArea<SD, BD, E, I, S, A> aiearea;
 
     public byte state;
 
@@ -33,7 +35,7 @@ public class AILeCareOwner<E extends EntityLivingBase, I extends IMixLe<E>, S ex
     @Override
     public void init()
     {
-        this.aiearea = (AIEArea<E, I, S, A>)this.s.a.aie_map.get(AIEArea.ID);
+        this.aiearea = (AIEArea<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIEArea.ID);
     }
 
     @Override

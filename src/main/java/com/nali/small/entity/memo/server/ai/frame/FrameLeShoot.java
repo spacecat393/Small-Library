@@ -1,23 +1,25 @@
 package com.nali.small.entity.memo.server.ai.frame;
 
+import com.nali.data.IBothDaE;
 import com.nali.list.entity.ai.AILeAttack;
 import com.nali.list.entity.ai.AILeFindMove;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.MixAIE;
+import com.nali.sound.ISoundLe;
 import net.minecraft.entity.EntityLivingBase;
 
-public class FrameLeShoot<E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends FrameE<E, I, S, A>
+public class FrameLeShoot<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameE<SD, BD, E, I, S, A>
 {
-    public AILeAttack<E, I, S, A> aileattack;
-    public AILeFindMove<E, I, S, A> ailefindmove;
+    public AILeAttack<SD, BD, E, I, S, A> aileattack;
+    public AILeFindMove<SD, BD, E, I, S, A> ailefindmove;
     public byte index1, index2, index3;
 
     public FrameLeShoot(S s, byte frame, byte index, byte index1, byte index2, byte index3)
     {
         super(s, frame, index);
-        this.aileattack = (AILeAttack<E, I, S, A>)this.s.a.aie_map.get(AILeAttack.ID);
-        this.ailefindmove = (AILeFindMove<E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
+        this.aileattack = (AILeAttack<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeAttack.ID);
+        this.ailefindmove = (AILeFindMove<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
         this.index1 = index1;
         this.index2 = index2;
         this.index3 = index3;

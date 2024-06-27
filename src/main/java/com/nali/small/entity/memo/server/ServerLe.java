@@ -1,5 +1,6 @@
 package com.nali.small.entity.memo.server;
 
+import com.nali.data.IBothDaE;
 import com.nali.small.chunk.ChunkLoader;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.IMixLe;
@@ -9,6 +10,7 @@ import com.nali.small.entity.memo.work.WorkEBodyYaw;
 import com.nali.small.mixin.IMixinEntity;
 import com.nali.small.mixin.IMixinEntityCreeper;
 import com.nali.small.mixin.IMixinEntityLivingBase;
+import com.nali.sound.ISoundN;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,7 +27,7 @@ import net.minecraft.util.math.MathHelper;
 import java.util.Map;
 import java.util.UUID;
 
-public abstract class ServerLe<E extends EntityLivingBase, I extends IMixLe<E>, A extends MixAIE<E, I, ?>> extends ServerE<E, I, A> implements IBothLe<E, I>
+public abstract class ServerLe<SD extends ISoundN, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, A extends MixAIE<SD, BD, E, I, ?>> extends ServerE<SD, BD, E, I, A> implements IBothLe<SD, BD, E, I>
 {
     public WorkEBodyYaw workebodyyaw;
 

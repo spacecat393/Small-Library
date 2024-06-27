@@ -13,7 +13,7 @@ import com.nali.networks.NetworksRegistry;
 import com.nali.render.SkinningRender;
 import com.nali.small.entity.memo.client.ClientLe;
 import com.nali.small.entity.EntityLeInv;
-import com.nali.small.entity.memo.client.render.SkinningEntitiesRender;
+import com.nali.small.entity.memo.client.render.RenderSleInv;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.player.*;
 import com.nali.system.bytes.BytesWriter;
@@ -387,7 +387,7 @@ public class PlayerGui extends MixGui
     public static class MixButton
     {
         public EntityLeInv skinningentities;
-        public SkinningEntitiesRender skinningentitiesrender;
+        public RenderSleInv skinningentitiesrender;
         public int /*x, y, */tx, ty, width, height;
         public UUID uuid;
         public DrawScreen drawscreen = new DrawScreen();
@@ -397,7 +397,7 @@ public class PlayerGui extends MixGui
             this.skinningentities = skinningentities;
 //            if (this.skinningentities != null)
 //            {
-            this.skinningentitiesrender = (SkinningEntitiesRender)Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(skinningentities);
+            this.skinningentitiesrender = (RenderSleInv)Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(skinningentities);
 //                SkinningRender skinningrender = (SkinningRender)skinningentities.client_object;
 //                skinningrender.screen_float_array[3] = 0.0F;
 //                skinningrender.screen_float_array[4] = -10.0F;

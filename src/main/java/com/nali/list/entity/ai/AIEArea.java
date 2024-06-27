@@ -1,11 +1,13 @@
 package com.nali.list.entity.ai;
 
+import com.nali.data.IBothDaE;
 import com.nali.small.entity.EntityRegistry;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.mixin.IMixinWorldServer;
+import com.nali.sound.ISoundN;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -16,7 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.*;
 
-public class AIEArea<E extends Entity, I extends IMixE<E>, S extends ServerE<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
+public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 

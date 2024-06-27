@@ -2,13 +2,15 @@ package com.nali.small.entity.memo.client.render.layer;
 
 import com.mojang.authlib.GameProfile;
 import com.nali.data.IBothDaSe;
-import com.nali.data.client.ClientDaSn;
+import com.nali.data.client.IClientDaS;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.client.ClientSle;
 import com.nali.small.entity.memo.client.mixbox.MixBoxSle;
-import com.nali.small.entity.memo.client.render.RenderLivingBaseObject;
+import com.nali.small.entity.memo.client.render.IRender;
+import com.nali.small.entity.memo.client.render.RenderFle;
 import com.nali.small.mixin.IMixinLayerArmorBase;
+import com.nali.sound.ISoundLe;
 import com.nali.system.opengl.memo.MemoCurrent;
 import com.nali.system.opengl.memo.MemoGs;
 import com.nali.system.opengl.memo.MemoSs;
@@ -37,9 +39,9 @@ import org.lwjgl.opengl.GL11;
 import static com.nali.system.opengl.memo.MemoCurrent.GL_CULL_FACE;
 
 @SideOnly(Side.CLIENT)
-public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends ClientDaSn, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, BD extends IBothDaSe, E extends EntityLivingBase, I extends IMixLe<BD, E>, M extends MixBoxSle<RG, RS, RC, RST, R, BD, E, I, ?>, C extends ClientSle<RG, RS, RC, RST, R, BD, E, I, M>> extends LayerRender<RG, RS, RC, RST, R, BD, E, I, M, C>
+public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, IR extends IRender, M extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, IR, ?>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, M, IR>> extends LayerRender<RG, RS, RC, RST, R, SD, BD, E, I, IR, M, C>
 {
-    public static RenderLivingBaseObject RENDERLIVINGBASEOBJECT = new RenderLivingBaseObject();
+    public static RenderFle RENDERLIVINGBASEOBJECT = new RenderFle();
     public static LayerBipedArmor LAYERBIPEDARMOR = new LayerBipedArmor(RENDERLIVINGBASEOBJECT);
     public static LayerElytra LAYERELYTRA = new LayerElytra(RENDERLIVINGBASEOBJECT);
 

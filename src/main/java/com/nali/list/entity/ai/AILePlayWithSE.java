@@ -1,8 +1,10 @@
 package com.nali.list.entity.ai;
 
+import com.nali.data.IBothDaE;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.MixAIE;
+import com.nali.sound.ISoundLe;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,13 +14,13 @@ import java.util.Random;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class AILePlayWithSE<E2 extends Entity, E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends AIEPlayWithRE<E2, E, I, S, A>
+public class AILePlayWithSE<E2 extends Entity, SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AIEPlayWithRE<E2, SD, BD, E, I, S, A>
 {
     public static byte ID;
 
-    public AIEArea<E, I, S, A> aiearea;
-    public AILeFindMove<E, I, S, A> ailefindmove;
-    public AILeSetLocation<E, I, S, A> ailesetlocation;
+    public AIEArea<SD, BD, E, I, S, A> aiearea;
+    public AILeFindMove<SD, BD, E, I, S, A> ailefindmove;
+    public AILeSetLocation<SD, BD, E, I, S, A> ailesetlocation;
 
     public byte state;//on should_play *first_playwith
     public Class[] class_array;
@@ -34,9 +36,9 @@ public class AILePlayWithSE<E2 extends Entity, E extends EntityLivingBase, I ext
     @Override
     public void init()
     {
-        this.aiearea = (AIEArea<E, I, S, A>)this.s.a.aie_map.get(AIEArea.ID);
-        this.ailefindmove = (AILeFindMove<E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
-        this.ailesetlocation = (AILeSetLocation<E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
+        this.aiearea = (AIEArea<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIEArea.ID);
+        this.ailefindmove = (AILeFindMove<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
+        this.ailesetlocation = (AILeSetLocation<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
     }
 
     @Override

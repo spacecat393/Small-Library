@@ -1,9 +1,12 @@
 package com.nali.list.entity.ai;
 
+import com.nali.data.IBothDaE;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.entity.memo.server.ai.AI;
+import com.nali.sound.ISoundLe;
+import com.nali.sound.ISoundN;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -14,12 +17,12 @@ import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 import static com.nali.small.entity.memo.server.ai.path.PathMath.PATH_BYTE_ARRAY;
 
-public class AILeFollow<E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
+public class AILeFollow<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 
-    public AILeSetLocation<E, I, S, A> ailesetlocation;
-    public AILeFindMove<E, I, S, A> ailefindmove;
+    public AILeSetLocation<SD, BD, E, I, S, A> ailesetlocation;
+    public AILeFindMove<SD, BD, E, I, S, A> ailefindmove;
 
     public float max_distance = 196.0F;
     public float min_distance = 96.0F;
@@ -33,8 +36,8 @@ public class AILeFollow<E extends EntityLivingBase, I extends IMixLe<E>, S exten
     @Override
     public void init()
     {
-        this.ailesetlocation = (AILeSetLocation<E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
-        this.ailefindmove = (AILeFindMove<E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
+        this.ailesetlocation = (AILeSetLocation<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
+        this.ailefindmove = (AILeFindMove<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
     }
 
     @Override

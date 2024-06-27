@@ -1,20 +1,22 @@
 package com.nali.list.entity.ai;
 
+import com.nali.data.IBothDaE;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
+import com.nali.sound.ISoundLe;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class AILeRandomWalk<E extends EntityLivingBase, I extends IMixLe<E>, S extends ServerLe<E, I, A>, A extends MixAIE<E, I, S>> extends AI<E, I, S, A>
+public class AILeRandomWalk<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 
-    public AILeSetLocation<E, I, S, A> ailesetlocation;
-    public AILeFindMove<E, I, S, A> ailefindmove;
+    public AILeSetLocation<SD, BD, E, I, S, A> ailesetlocation;
+    public AILeFindMove<SD, BD, E, I, S, A> ailefindmove;
 
     public int tick;
     public byte state;//on walk
@@ -27,8 +29,8 @@ public class AILeRandomWalk<E extends EntityLivingBase, I extends IMixLe<E>, S e
     @Override
     public void init()
     {
-        this.ailesetlocation = (AILeSetLocation<E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
-        this.ailefindmove = (AILeFindMove<E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
+        this.ailesetlocation = (AILeSetLocation<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
+        this.ailefindmove = (AILeFindMove<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
     }
 
     @Override
