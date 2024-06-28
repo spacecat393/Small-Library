@@ -159,17 +159,17 @@ public abstract class MixGui extends GuiContainer
 //        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
 //    }
 
-    //should use byte
-    public void sendPacketUUIDInt(byte i)
-    {
-        ClientLe cliententitiesmemory = (ClientLe)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
-        byte[] byte_array = new byte[18];
-        byte_array[0] = SetWorkByte.ID;
-        ByteWriter.set(byte_array, cliententitiesmemory.uuid, 1);
-        byte_array[17] = i;
-//        BytesWriter.set(byte_array, i, 17);
-        NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
-    }
+//    //should use byte
+//    public void sendPacketUUIDInt(byte i)
+//    {
+//        ClientLe cliententitiesmemory = (ClientLe)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
+//        byte[] byte_array = new byte[18];
+//        byte_array[0] = SetWorkByte.ID;
+//        ByteWriter.set(byte_array, cliententitiesmemory.uuid, 1);
+//        byte_array[17] = i;
+////        BytesWriter.set(byte_array, i, 17);
+//        NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+//    }
 
     public void sendPacketUUIDByte(byte i)
     {

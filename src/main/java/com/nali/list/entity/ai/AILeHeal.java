@@ -6,7 +6,6 @@ import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.sound.ISoundLe;
-import com.nali.sound.ISoundN;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -46,6 +45,12 @@ public class AILeHeal<SD extends ISoundLe, BD extends IBothDaE, E extends Entity
         this.aiearea = (AIEArea<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIEArea.ID);
         this.ailesetlocation = (AILeSetLocation<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
         this.ailefindmove = (AILeFindMove<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
+    }
+
+    @Override
+    public void call()
+    {
+
     }
 
     @Override

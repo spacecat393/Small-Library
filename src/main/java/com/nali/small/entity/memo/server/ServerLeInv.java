@@ -1,18 +1,18 @@
 package com.nali.small.entity.memo.server;
 
 import com.nali.data.IBothDaE;
-import com.nali.small.entity.EntityEInv;
-import com.nali.small.entity.IMixE;
+import com.nali.small.entity.EntityLeInv;
+import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.Inventory;
 import com.nali.small.entity.memo.IBothEInv;
 import com.nali.small.entity.memo.server.ai.MixAIE;
-import com.nali.sound.ISoundN;
+import com.nali.sound.ISoundLe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.EntityDataManager;
 
 import static com.nali.small.entity.EntityLeInv.MOUTH_ITEMSTACK_DATAPARAMETER;
 
-public abstract class ServerLeInv<SD extends ISoundN, BD extends IBothDaE, E extends EntityEInv, I extends IMixE<SD, BD, E>, A extends MixAIE<SD, BD, E, I, ?>> extends ServerE<SD, BD, E, I, A> implements IBothEInv<SD, BD, E, I>
+public abstract class ServerLeInv<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLeInv, I extends IMixLe<SD, BD, E>, A extends MixAIE<SD, BD, E, I, ?>> extends ServerLe<SD, BD, E, I, A> implements IBothEInv<SD, BD, E, I>
 {
     public Inventory inventory;
 

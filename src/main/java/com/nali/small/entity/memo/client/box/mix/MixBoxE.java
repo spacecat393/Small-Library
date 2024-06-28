@@ -2,16 +2,13 @@ package com.nali.small.entity.memo.client.box.mix;
 
 import com.nali.data.IBothDaE;
 import com.nali.data.client.IClientDaO;
-import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.SetWorkByte;
-import com.nali.network.NetworkRegistry;
+import com.nali.list.entity.ai.AIESit;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.hits.HitE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.sound.ISoundN;
-import com.nali.system.bytes.ByteWriter;
 import com.nali.system.opengl.memo.MemoGo;
 import com.nali.system.opengl.memo.MemoSo;
 import com.nali.system.opengl.store.StoreO;
@@ -55,15 +52,17 @@ public abstract class MixBoxE<RG extends MemoGo, RS extends MemoSo, RC extends I
 //        this.axisalignedbb_array = this.get(skinningentities);
 //    }
 
-    public void end()
-    {
-        byte i = this.c.bytele.SIT();
-        byte[] byte_array = new byte[21];
-        byte_array[0] = SetWorkByte.ID;
-        ByteWriter.set(byte_array, this.c.uuid, 1);
-        ByteWriter.set(byte_array, i, 17);
-        NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
-    }
+//    public void end()
+//    {
+////        byte i = this.c.bytele.SIT();
+//        byte b = AIESit.ID;
+//        byte[] byte_array = new byte[18];
+//        byte_array[0] = SetWorkByte.ID;
+//        ByteWriter.set(byte_array, this.c.uuid, 1);
+//        byte_array[17] = b;
+////        ByteWriter.set(byte_array, i, 17);
+//        NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+//    }
 
     public void checkAxisAlignedBB(Entity player_entity)
     {
@@ -95,7 +94,7 @@ public abstract class MixBoxE<RG extends MemoGo, RS extends MemoSo, RC extends I
             return;
         }
 
-        this.end();
+        this.c.sendPacketUUID(AIESit.ID);
     }
 
     public abstract List<AxisAlignedBB> get();

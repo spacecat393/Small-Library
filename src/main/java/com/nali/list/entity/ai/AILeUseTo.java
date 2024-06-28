@@ -27,6 +27,12 @@ public class AILeUseTo<SD extends ISoundLe, BD extends IBothDaE, E extends Entit
     }
 
     @Override
+    public void call()
+    {
+
+    }
+
+    @Override
     public void onUpdate()
     {
 

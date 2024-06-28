@@ -6,7 +6,6 @@ import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.sound.ISoundLe;
-import com.nali.sound.ISoundN;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -47,6 +46,12 @@ public class AILeAttack<SD extends ISoundLe, BD extends IBothDaE, E extends Enti
         this.ailefindmove = (AILeFindMove<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
         this.ailelook = (AILeLook<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeLook.ID);
         this.ailecareowner = (AILeCareOwner<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeCareOwner.ID);
+    }
+
+    @Override
+    public void call()
+    {
+
     }
 
     @Override

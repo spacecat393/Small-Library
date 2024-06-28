@@ -3,10 +3,9 @@ package com.nali.list.entity.ai;
 import com.nali.data.IBothDaE;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
-import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.entity.memo.server.ai.AI;
+import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.sound.ISoundLe;
-import com.nali.sound.ISoundN;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -38,6 +37,12 @@ public class AILeFollow<SD extends ISoundLe, BD extends IBothDaE, E extends Enti
     {
         this.ailesetlocation = (AILeSetLocation<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
         this.ailefindmove = (AILeFindMove<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
+    }
+
+    @Override
+    public void call()
+    {
+
     }
 
     @Override

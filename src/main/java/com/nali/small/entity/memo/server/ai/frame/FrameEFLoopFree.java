@@ -7,7 +7,7 @@ import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.sound.ISoundN;
 import net.minecraft.entity.Entity;
 
-public class FrameEFLoopFree<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameE<SD, BD, E, I, S, A>
+public abstract class FrameEFLoopFree<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameE<SD, BD, E, I, S, A>
 {
     public byte id_pack;
 
@@ -23,7 +23,8 @@ public class FrameEFLoopFree<SD extends ISoundN, BD extends IBothDaE, E extends 
         int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
         if (this.s.frame_int_array[this.frame] == frame_2d_int_array[this.index][1] - 1)
         {
-            this.s.statentitiesmemory.stat &= 255 - this.id_pack;
+            this.free();
+//            this.s.statentitiesmemory.stat &= 255 - this.id_pack;
 
             this.s.frame_int_array[this.frame] = frame_2d_int_array[this.index][1] - 1;
             this.step = 0;
@@ -39,4 +40,6 @@ public class FrameEFLoopFree<SD extends ISoundN, BD extends IBothDaE, E extends 
         this.step = 1;
         return this.s.frame_int_array[this.frame] < frame_2d_int_array[this.index][1];
     }
+
+    public abstract void free();
 }

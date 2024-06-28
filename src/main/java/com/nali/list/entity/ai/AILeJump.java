@@ -26,6 +26,12 @@ public class AILeJump<SD extends ISoundLe, BD extends IBothDaE, E extends Entity
 
     }
 
+    @Override
+    public void call()
+    {
+
+    }
+
     public void setJumping()
     {
         this.isJumping = true;

@@ -1,6 +1,5 @@
 package com.nali.small;
 
-import com.nali.small.system.Reference;
 import com.nali.list.item.SmallBox;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;

@@ -33,7 +33,7 @@ public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, 
     public List<Integer> troublemaker_list = new ArrayList();
     public List<Integer> target_list = new ArrayList();
 
-    public byte state;
+//    public byte state;
     public byte flag;//check_tameable is_tameable | put_player put_owner put_other_tameable put_owner_tameable put_all_tameable put_object
 
     public AIEArea(S s)
@@ -45,6 +45,12 @@ public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, 
     public void init()
     {
         this.entity_map = ((IMixinWorldServer)this.s.getI().getE().world).entitiesByUuid();
+    }
+
+    @Override
+    public void call()
+    {
+
     }
 
     @Override
@@ -93,7 +99,7 @@ public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, 
     public void writeNBT(NBTTagCompound nbttagcompound)
     {
         NBTTagCompound new_nbttagcompound = new NBTTagCompound();
-        new_nbttagcompound.setByte("state", this.state);
+//        new_nbttagcompound.setByte("state", this.state);
         new_nbttagcompound.setByte("flag", this.flag);
         new_nbttagcompound.setIntArray("target", this.target_list.stream().mapToInt(Integer::intValue).toArray());
         new_nbttagcompound.setIntArray("troublemaker", this.troublemaker_list.stream().mapToInt(Integer::intValue).toArray());
@@ -107,7 +113,7 @@ public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, 
         if (nbttagcompound.hasKey(key))
         {
             NBTTagCompound new_nbttagcompound = (NBTTagCompound)nbttagcompound.getTag(key);
-            this.state = new_nbttagcompound.getByte("state");
+//            this.state = new_nbttagcompound.getByte("state");
             this.flag = new_nbttagcompound.getByte("flag");
 
             int[] int_array = new_nbttagcompound.getIntArray("target");

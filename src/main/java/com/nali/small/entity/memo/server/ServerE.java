@@ -5,7 +5,6 @@ import com.nali.small.chunk.ChunkLoader;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothE;
 import com.nali.small.entity.memo.server.ai.MixAIE;
-import com.nali.small.entity.memo.server.ai.StatLe;
 import com.nali.sound.ISoundN;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
@@ -42,7 +41,7 @@ public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends
 //    public boolean sus_init;
 //    public SkinningEntities skinningentities;
 
-    public StatLe statle = new StatLe();
+//    public StatLe statle = new StatLe();
 //    public ItemStack current_mouth_itemstack;
     public byte[] sync_byte_array;
 
@@ -132,27 +131,28 @@ public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends
 //            this.initWorkBytes();
 //        }
 
-        if (!this.sus_init)
-        {
-            this.main_work_byte_array[this.workbytes.LOCK_INVENTORY() / 8] ^= (byte)Math.pow(2, this.workbytes.LOCK_INVENTORY() % 8);
-            this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] ^= (byte)Math.pow(2, this.workbytes.LOCK_DAMAGE() % 8);
-
-            if (this.workbytes.CARE_OWNER() != -1)
-            {
-                this.main_work_byte_array[this.workbytes.CARE_OWNER() / 8] ^= (byte)Math.pow(2, this.workbytes.CARE_OWNER() % 8);
-            }
-
-            nbttagcompound.setFloat("float_0", this.i.getBothData().Scale());
-            this.initWriteEntityToNBT(nbttagcompound);
-//            nbttagcompound.setByteArray("work_bytes", this.main_work_byte_array);
-        }
+//        if (!this.sus_init)
+//        if ((this.a.state & 4) == 0)
+//        {
+//            this.main_work_byte_array[this.workbytes.LOCK_INVENTORY() / 8] ^= (byte)Math.pow(2, this.workbytes.LOCK_INVENTORY() % 8);
+//            this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] ^= (byte)Math.pow(2, this.workbytes.LOCK_DAMAGE() % 8);
+//
+//            if (this.workbytes.CARE_OWNER() != -1)
+//            {
+//                this.main_work_byte_array[this.workbytes.CARE_OWNER() / 8] ^= (byte)Math.pow(2, this.workbytes.CARE_OWNER() % 8);
+//            }
+//
+//            nbttagcompound.setFloat("float_0", this.i.getBothData().Scale());
+//            this.initWriteEntityToNBT(nbttagcompound);
+////            nbttagcompound.setByteArray("work_bytes", this.main_work_byte_array);
+//        }
 
 //        nbttagcompound.setByteArray("work_bytes", this.main_work_byte_array);
 
-        nbttagcompound.setBoolean("sus_init", true);
+//        nbttagcompound.setBoolean("sus_init", true);
 
         this.a.writeNBT(nbttagcompound);
-        this.statle.writeNBT(nbttagcompound);
+//        this.statle.writeNBT(nbttagcompound);
     }
 
     @Override
@@ -170,26 +170,27 @@ public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends
         }
 
 //        this.entitiesaimemory.readNBT(nbttagcompound);
-
-        this.sus_init = nbttagcompound.hasKey("sus_init");
-        if (!this.sus_init)
-        {
-            this.main_work_byte_array[this.workbytes.LOCK_INVENTORY() / 8] ^= (byte)Math.pow(2, this.workbytes.LOCK_INVENTORY() % 8);
-            this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] ^= (byte)Math.pow(2, this.workbytes.LOCK_DAMAGE() % 8);
-
-            if (this.workbytes.CARE_OWNER() != -1)
-            {
-                this.main_work_byte_array[this.workbytes.CARE_OWNER() / 8] ^= (byte)Math.pow(2, this.workbytes.CARE_OWNER() % 8);
-            }
-
-            this.i.getE().getDataManager().set(this.i.getFloatDataParameterArray()[0], this.i.getBothData().Scale());
-            this.initReadEntityFromNBT(nbttagcompound);
-
-            this.sus_init = true;
-        }
-
         this.a.readNBT(nbttagcompound);
-        this.statle.readNBT(nbttagcompound);
+
+//        this.sus_init = nbttagcompound.hasKey("sus_init");
+//        if (!this.sus_init)
+//        if ((this.a.state & 4) == 0)
+//        {
+//            this.main_work_byte_array[this.workbytes.LOCK_INVENTORY() / 8] ^= (byte)Math.pow(2, this.workbytes.LOCK_INVENTORY() % 8);
+//            this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] ^= (byte)Math.pow(2, this.workbytes.LOCK_DAMAGE() % 8);
+//
+//            if (this.workbytes.CARE_OWNER() != -1)
+//            {
+//                this.main_work_byte_array[this.workbytes.CARE_OWNER() / 8] ^= (byte)Math.pow(2, this.workbytes.CARE_OWNER() % 8);
+//            }
+//
+//            this.i.getE().getDataManager().set(this.i.getFloatDataParameterArray()[0], this.i.getBothData().Scale());
+//            this.initReadEntityFromNBT(nbttagcompound);
+//
+//            this.sus_init = true;
+//        }
+
+//        this.statle.readNBT(nbttagcompound);
     }
 
     @Override
@@ -251,26 +252,15 @@ public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends
 //        return (this.current_work_byte_array[index / 8] >> index % 8 & 1) == 1;
 //    }
 
-    public void initWriteEntityToNBT(NBTTagCompound nbttagcompound)
-    {
-        this.initWorkBytes();
-    }
-
-    public void initReadEntityFromNBT(NBTTagCompound nbttagcompound)
-    {
-        this.initWorkBytes();
-    }
-
-    public void initWorkBytes()
-    {
-        this.a.aie_list.get().num;
-        this.main_work_byte_array[this.workbytes.FOLLOW() / 8] ^= (byte)Math.pow(2, this.workbytes.FOLLOW() % 8);
-        this.main_work_byte_array[this.workbytes.RANDOM_WALK() / 8] ^= (byte)Math.pow(2, this.workbytes.RANDOM_WALK() % 8);
-        this.main_work_byte_array[this.workbytes.RANDOM_LOOK() / 8] ^= (byte)Math.pow(2, this.workbytes.RANDOM_LOOK() % 8);
-        this.main_work_byte_array[this.workbytes.WALK_TO() / 8] ^= (byte)Math.pow(2, this.workbytes.WALK_TO() % 8);
-        this.main_work_byte_array[this.workbytes.LOOK_TO() / 8] ^= (byte)Math.pow(2, this.workbytes.LOOK_TO() % 8);
-        this.main_work_byte_array[this.workbytes.REVIVE() / 8] ^= (byte)Math.pow(2, this.workbytes.REVIVE() % 8);
-    }
+//    public void initWriteEntityToNBT(NBTTagCompound nbttagcompound)
+//    {
+//        this.initWorkBytes();
+//    }
+//
+//    public void initReadEntityFromNBT(NBTTagCompound nbttagcompound)
+//    {
+//        this.initWorkBytes();
+//    }
 
     @Override
     public I getI()

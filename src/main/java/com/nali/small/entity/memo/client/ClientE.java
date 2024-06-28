@@ -4,6 +4,7 @@ import com.nali.data.IBothDaE;
 import com.nali.data.client.IClientDaO;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.OpenInvGUI;
+import com.nali.list.network.method.server.SetWorkByte;
 import com.nali.list.network.method.server.SyncUUIDToClient;
 import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderO;
@@ -144,6 +145,15 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
     public void doRender(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
     {
         this.mr.doRender(rendere, ox, oy, oz, partialTicks);
+    }
+
+    public void sendPacketUUID(byte i)
+    {
+        byte[] byte_array = new byte[18];
+        byte_array[0] = SetWorkByte.ID;
+        ByteWriter.set(byte_array, this.uuid, 1);
+        byte_array[17] = i;
+        NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 
     @Override

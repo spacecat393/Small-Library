@@ -40,6 +40,12 @@ public class AILeMove<SD extends ISoundLe, BD extends IBothDaE, E extends Entity
     }
 
     @Override
+    public void call()
+    {
+
+    }
+
+    @Override
     public void onUpdate()
     {
         if (this.s.isMove())

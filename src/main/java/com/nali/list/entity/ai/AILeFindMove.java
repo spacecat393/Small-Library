@@ -8,7 +8,6 @@ import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.entity.memo.server.ai.path.PathMath;
 import com.nali.small.entity.memo.server.ai.path.SNode;
 import com.nali.sound.ISoundLe;
-import com.nali.sound.ISoundN;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockFenceGate;
@@ -62,6 +61,12 @@ public class AILeFindMove<SD extends ISoundLe, BD extends IBothDaE, E extends En
         this.ailemove = (AILeMove<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeMove.ID);
         this.ailewalkto = (AILeWalkTo<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeWalkTo.ID);
         this.ailemineto = (AILeMineTo<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeMineTo.ID);
+    }
+
+    @Override
+    public void call()
+    {
+
     }
 
     @Override

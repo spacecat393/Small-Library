@@ -18,6 +18,8 @@ public abstract class AI<SD extends ISoundN, BD extends IBothDaE, E extends Enti
     }
 
     public abstract void init();
+    public abstract void call();
+//    public abstract void flip();
     public abstract void onUpdate();
     public abstract void writeNBT(NBTTagCompound nbttagcompound);
     public abstract void readNBT(NBTTagCompound nbttagcompound);

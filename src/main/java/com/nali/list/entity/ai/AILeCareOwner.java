@@ -39,6 +39,12 @@ public class AILeCareOwner<SD extends ISoundLe, BD extends IBothDaE, E extends E
     }
 
     @Override
+    public void call()
+    {
+
+    }
+
+    @Override
     public void onUpdate()
     {
         if (this.s.isMove())

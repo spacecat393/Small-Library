@@ -13,7 +13,7 @@ public class AIESit<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I
 {
     public static byte ID;
 
-    public byte state;//on
+    public byte state;//on t-ready f-ready
 
     public AIESit(S s)
     {
@@ -24,6 +24,21 @@ public class AIESit<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I
     public void init()
     {
 
+    }
+
+    public void flip()
+    {
+        if ((this.state & 1) == 1)
+        {
+            this.state |= 4;
+            this.state &= 255-(2+1);
+        }
+        else
+        {
+            this.state |= 2+1;
+            this.state &= 255-4;
+        }
+//        this.state ^= 1;
     }
 
     @Override

@@ -37,6 +37,12 @@ public class AILeLookTo<SD extends ISoundLe, BD extends IBothDaE, E extends Enti
     }
 
     @Override
+    public void call()
+    {
+
+    }
+
+    @Override
     public void onUpdate()
     {
 //        if (serverentitiesmemory.isWorkBypass(serverentitiesmemory.workbytes.LOOK_TO(), this.bypass_int_array))

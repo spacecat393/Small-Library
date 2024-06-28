@@ -1,12 +1,11 @@
 package com.nali.small;
 
-import com.nali.Nali;
 import com.nali.small.capability.CapabilityRegistry;
+import com.nali.small.chunk.ChunkCallBack;
 import com.nali.small.entity.EntityRegistry;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.gui.GuiHandler;
 import com.nali.small.tile.TileRegistry;
-import com.nali.small.chunk.ChunkCallBack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -62,16 +61,16 @@ public class Small
     @EventHandler
     public void onFMLServerStartedEvent(FMLServerStartedEvent event)
     {
-        ServerE.ENTITIES_MAP = new HashMap();
+        ServerE.S_MAP = new HashMap();
         ChunkCallBack.set();
-        MixAILe.init();
+//        MixAIE.init();
     }
 
     @EventHandler
     public void onFMLServerStoppingEvent(FMLServerStoppingEvent event)
     {
-        ServerE.ENTITIES_MAP = null;
-        MixAILe.AI_CLASS_LIST = null;
+        ServerE.S_MAP = null;
+//        MixAIE.AI_CLASS_LIST = null;
     }
 
 //    @Mod.EventBusSubscriber(modid = Nali.ID)

@@ -1,6 +1,7 @@
 package com.nali.small.entity.memo.server;
 
 import com.nali.data.IBothDaE;
+import com.nali.list.entity.ai.AILeLockDMG;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.IBothLe;
 import com.nali.small.entity.memo.server.ai.MixAIE;
@@ -8,7 +9,7 @@ import com.nali.small.entity.memo.work.WorkEBodyYaw;
 import com.nali.small.mixin.IMixinEntity;
 import com.nali.small.mixin.IMixinEntityCreeper;
 import com.nali.small.mixin.IMixinEntityLivingBase;
-import com.nali.sound.ISoundN;
+import com.nali.sound.ISoundLe;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,14 +23,16 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 
-public abstract class ServerLe<SD extends ISoundN, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, A extends MixAIE<SD, BD, E, I, ?>> extends ServerE<SD, BD, E, I, A> implements IBothLe<SD, BD, E, I>
+public abstract class ServerLe<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, A extends MixAIE<SD, BD, E, I, ?>> extends ServerE<SD, BD, E, I, A> implements IBothLe<SD, BD, E, I>
 {
     public WorkEBodyYaw workebodyyaw;
+    public AILeLockDMG<SD, BD, E, I, ?, A> ailelockdmg;
 
     public ServerLe(I i)
     {
         super(i);
         this.workebodyyaw = new WorkEBodyYaw(this);
+        this.ailelockdmg = (AILeLockDMG<SD, BD, E, I, ?, A>)this.a.aie_map.get(AILeLockDMG.ID);
     }
 
     @Override
@@ -37,7 +40,8 @@ public abstract class ServerLe<SD extends ISoundN, BD extends IBothDaE, E extend
     {
 //        if (!this.world.isRemote)
 //        {
-        if ((this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] >> this.workbytes.LOCK_DAMAGE() % 8 & 1) == 1)
+//        if ((this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] >> this.workbytes.LOCK_DAMAGE() % 8 & 1) == 1)
+        if ((this.ailelockdmg.state & 1) == 1)
         {
             Entity owner_entity = this.getOwner();
             if (owner_entity != null && owner_entity.equals(damagesource.getTrueSource()))
@@ -73,7 +77,8 @@ public abstract class ServerLe<SD extends ISoundN, BD extends IBothDaE, E extend
 //        if (!this.world.isRemote)
 //        {
         Entity owner_entity = this.getOwner();
-        if ((this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] >> this.workbytes.LOCK_DAMAGE() % 8 & 1) == 1 && owner_entity instanceof EntityLivingBase)
+//        if ((this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] >> this.workbytes.LOCK_DAMAGE() % 8 & 1) == 1 && owner_entity instanceof EntityLivingBase)
+        if ((this.ailelockdmg.state & 1) == 1 && owner_entity instanceof EntityLivingBase)
         {
             by_entitylivingbase = (EntityLivingBase)owner_entity;
         }
@@ -97,7 +102,7 @@ public abstract class ServerLe<SD extends ISoundN, BD extends IBothDaE, E extend
             mainhand_itemstack.damageItem(1, e);
             if (i > 0 && entity instanceof EntityLivingBase)
             {
-                ((EntityLivingBase)entity).knockBack(this, (float)i * 0.5F, MathHelper.sin(e.rotationYaw * 0.017453292F), -MathHelper.cos(e.rotationYaw * 0.017453292F));
+                ((EntityLivingBase)entity).knockBack(e, (float)i * 0.5F, MathHelper.sin(e.rotationYaw * 0.017453292F), -MathHelper.cos(e.rotationYaw * 0.017453292F));
                 e.motionX *= 0.6D;
                 e.motionZ *= 0.6D;
             }

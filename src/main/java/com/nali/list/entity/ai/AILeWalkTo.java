@@ -50,6 +50,12 @@ public class AILeWalkTo<SD extends ISoundLe, BD extends IBothDaE, E extends Enti
     }
 
     @Override
+    public void call()
+    {
+
+    }
+
+    @Override
     public void onUpdate()
     {
         if (this.s.isMove() && (this.aiesit.state & 1) == 1)

@@ -36,6 +36,12 @@ public class AILeLook<SD extends ISoundLe, BD extends IBothDaE, E extends Entity
 
     }
 
+    @Override
+    public void call()
+    {
+
+    }
+
 //    public void setLookPositionWithEntity(Entity entityIn, float deltaYaw, float deltaPitch)
 //    {
 //        this.posX = entityIn.posX;

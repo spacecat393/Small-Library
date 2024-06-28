@@ -27,6 +27,12 @@ public class AILeLockDMG<SD extends ISoundLe, BD extends IBothDaE, E extends Ent
     }
 
     @Override
+    public void call()
+    {
+
+    }
+
+    @Override
     public void onUpdate()
     {
 

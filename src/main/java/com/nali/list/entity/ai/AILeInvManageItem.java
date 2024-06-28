@@ -4,7 +4,7 @@ import com.nali.data.IBothDaE;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.Inventory;
-import com.nali.small.entity.memo.server.ServerEInv;
+import com.nali.small.entity.memo.server.ServerLeInv;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.mixin.MixinInventoryCrafting;
@@ -24,7 +24,7 @@ import java.util.Random;
 import static com.nali.list.entity.ai.AILeInvGetItem.isSameItemSameTags;
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class AILeInvManageItem<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLeInv, I extends IMixLe<SD, BD, E>, S extends ServerEInv<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
+public class AILeInvManageItem<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLeInv, I extends IMixLe<SD, BD, E>, S extends ServerLeInv<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 
@@ -45,6 +45,12 @@ public class AILeInvManageItem<SD extends ISoundLe, BD extends IBothDaE, E exten
     {
         this.ailesetlocation = (AILeSetLocation<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
         this.ailefindmove = (AILeFindMove<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
+    }
+
+    @Override
+    public void call()
+    {
+
     }
 
     @Override
