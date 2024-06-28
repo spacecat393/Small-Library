@@ -10,17 +10,17 @@ import net.minecraft.util.text.translation.I18n;
 
 public class FishingGUIFeatures extends GUIFeaturesLoader
 {
-    public String b0 = I18n.translateToLocal("info." + Reference.MOD_ID + ".bg0");
-    public String b1 = I18n.translateToLocal("info." + Reference.MOD_ID + ".bg1");
+    public String b0 = I18n.translateToLocal("info." + Small.ID + ".bg0");
+    public String b1 = I18n.translateToLocal("info." + Small.ID + ".bg1");
 
     public FishingGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".b0") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bg2"),
-            this.b1 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bg3")
+            I18n.translateToLocal("info." + Small.ID + ".b0") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("info." + Small.ID + ".bg2"),
+            this.b1 + " : " + I18n.translateToLocal("info." + Small.ID + ".bg3")
         };
         this.createColor();
     }

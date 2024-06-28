@@ -12,8 +12,8 @@ public class RandomBGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bk2"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bk3")
+            I18n.translateToLocal("info." + Small.ID + ".bk2"),
+            I18n.translateToLocal("info." + Small.ID + ".bk3")
         };
         this.createColor();
     }

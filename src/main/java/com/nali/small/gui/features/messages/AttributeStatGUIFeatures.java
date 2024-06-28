@@ -14,9 +14,9 @@ public class AttributeStatGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bl2"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".e7"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bl3"),
+            I18n.translateToLocal("info." + Small.ID + ".bl2"),
+            I18n.translateToLocal("info." + Small.ID + ".e7"),
+            I18n.translateToLocal("info." + Small.ID + ".bl3"),
         };
         this.loadColor(4);
 //        this.int_array = new int[4];

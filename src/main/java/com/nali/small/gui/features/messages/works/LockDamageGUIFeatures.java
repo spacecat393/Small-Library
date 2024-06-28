@@ -10,17 +10,17 @@ import net.minecraft.util.text.translation.I18n;
 
 public class LockDamageGUIFeatures extends GUIFeaturesLoader
 {
-    public String b0 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b00");
-    public String b1 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b01");
+    public String b0 = I18n.translateToLocal("info." + Small.ID + ".b00");
+    public String b1 = I18n.translateToLocal("info." + Small.ID + ".b01");
 
     public LockDamageGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".b0") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b04"),
-            this.b1 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b05")
+            I18n.translateToLocal("info." + Small.ID + ".b0") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("info." + Small.ID + ".b04"),
+            this.b1 + " : " + I18n.translateToLocal("info." + Small.ID + ".b05")
         };
         this.createColor();
     }

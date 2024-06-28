@@ -5,8 +5,8 @@ import com.nali.data.client.IClientDaO;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.IBothLe;
-import com.nali.small.entity.memo.client.mixbox.MixBoxE;
-import com.nali.small.entity.memo.client.render.IRender;
+import com.nali.small.entity.memo.client.box.mix.MixBoxE;
+import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.small.entity.memo.work.WorkEBodyYaw;
 import com.nali.sound.ISoundLe;
 import com.nali.system.opengl.memo.MemoGo;
@@ -18,15 +18,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public abstract class ClientLe<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, M extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, IR, ?>, IR extends IRender> extends ClientE<RG, RS, RC, RST, R, SD, BD, E, I, M, IR> implements IBothLe<SD, BD, E, I>
+public abstract class ClientLe<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, MR, ?>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> extends ClientE<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR> implements IBothLe<SD, BD, E, I>
 {
     public WorkEBodyYaw workebodyyaw;
 
 //    public byte[] work_byte_array;
 
-    public ClientLe(I i, M m)
+    public ClientLe(I i)
     {
-        super(i, m);
+        super(i);
 //        this.work_byte_array = new byte[workbytes.MAX_WORKS()];
         this.sync_byte_array = new byte[i.getBD().MaxSync()];
     }

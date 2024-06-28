@@ -28,10 +28,13 @@ public interface IBothE<SD extends ISoundN, BD extends IBothDaE, E extends Entit
     void writeEntityToNBT(NBTTagCompound nbttagcompound);
     void readEntityFromNBT(NBTTagCompound nbttagcompound);
 
+//    void add();
+    void remove();
+
     @SideOnly(Side.CLIENT)
     void setShouldRender(boolean result);
     @SideOnly(Side.CLIENT)
-    void doRender(RenderE<E> render, double ox, double oy, double oz, float partialTicks);
+    void doRender(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks);
 
     I getI();
 }

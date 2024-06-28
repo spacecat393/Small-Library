@@ -20,7 +20,7 @@ public class SetAttributesGUIFeatures extends GUIFeaturesLoader
         EntityLeInv skinningentities = ((InventoryContainer)this.mixgui.inventorySlots).skinningentities;
         int size = skinningentities.getAttributeMap().getAllAttributes().size();
         this.string_array = new String[size + 1];
-        this.string_array[0] = I18n.translateToLocal("info." + Reference.MOD_ID + ".bn");
+        this.string_array[0] = I18n.translateToLocal("info." + Small.ID + ".bn");
         int index = 1;
         for (IAttributeInstance iattributeinstance : skinningentities.getAttributeMap().getAllAttributes())
         {

@@ -20,13 +20,13 @@ public class SetLocationGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            "0 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bs"),
+            "0 " + I18n.translateToLocal("info." + Small.ID + ".bs"),
             "X : ",
             "Y : ",
             "Z : ",
-            "1 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bt") + " : ",
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".ea"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".c1")
+            "1 " + I18n.translateToLocal("info." + Small.ID + ".bt") + " : ",
+            I18n.translateToLocal("info." + Small.ID + ".ea"),
+            I18n.translateToLocal("info." + Small.ID + ".c1")
         };
         this.loadColor(8);
 //        this.int_array = new int[8];

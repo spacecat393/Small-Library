@@ -16,7 +16,7 @@ public class TroublemakerGUIFeatures extends GUIFeaturesLoader
         MessagesFeatures.initEntities
         (
             TROUBLEMAKER_INT_ARRAY,
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bw") + " " + I18n.translateToLocal("info." + Reference.MOD_ID + ".by"),
+            I18n.translateToLocal("info." + Small.ID + ".bw") + " " + I18n.translateToLocal("info." + Small.ID + ".by"),
             this
         );
     }

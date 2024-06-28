@@ -1,9 +1,9 @@
 package com.nali.small.gui.features.messages.inventory;
 
+import com.nali.small.Small;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.net.messages.inventory.SetAreaGUINet;
-import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 import static com.nali.small.gui.MixGui.GUINETLOADER;
@@ -19,15 +19,15 @@ public class AreaGUIFeatures extends GUIFeaturesLoader
         super(mixgui);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".e0") + " <",
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".ec"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".c0"),
-            "0.1 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b_4") + " : ",
-            "0.2 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b_5") + " : ",
-            "0.3 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b_9") + " : ",
-            "1.1 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b_6") + " : ",
-            "1.2 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b_7") + " : ",
-            "1.3 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b_8") + " : "
+            I18n.translateToLocal("info." + Small.ID + ".e0") + " <",
+            I18n.translateToLocal("info." + Small.ID + ".ec"),
+            I18n.translateToLocal("info." + Small.ID + ".c0"),
+            "0.1 " + I18n.translateToLocal("info." + Small.ID + ".b_4") + " : ",
+            "0.2 " + I18n.translateToLocal("info." + Small.ID + ".b_5") + " : ",
+            "0.3 " + I18n.translateToLocal("info." + Small.ID + ".b_9") + " : ",
+            "1.1 " + I18n.translateToLocal("info." + Small.ID + ".b_6") + " : ",
+            "1.2 " + I18n.translateToLocal("info." + Small.ID + ".b_7") + " : ",
+            "1.3 " + I18n.translateToLocal("info." + Small.ID + ".b_8") + " : "
         };
         this.loadColor(7);
         GUINETLOADER = new SetAreaGUINet(mixgui);

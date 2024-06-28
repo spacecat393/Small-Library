@@ -18,22 +18,20 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import java.util.HashMap;
 
-import static com.nali.small.entity.EntityRegistry.ENTITY_CLASS_ENTRIES;
-
 @Mod(modid = Small.ID)
 public class Small
 {
     public final static String ID = "small";
 
     @Instance
-    public static Nali I;
+    public static Small I;
 
 //    @EventHandler
 //    public void onFMLPreInitializationEvent(FMLPreInitializationEvent event)
 //    {
 ////        if (event.getSide().isClient())
 ////        {
-//////            DataLoader.setModels(RenderHelper.DATALOADER, Reference.MOD_ID);
+//////            DataLoader.setModels(RenderHelper.DATALOADER, Small.ID);
 //////            CapabilitiesRegistryHelper.update();
 ////            OpenGUIHelper.set();
 ////        }

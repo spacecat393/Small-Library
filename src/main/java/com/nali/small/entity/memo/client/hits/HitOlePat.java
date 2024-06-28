@@ -8,8 +8,8 @@ import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.client.ClientLe;
-import com.nali.small.entity.memo.client.mixbox.MixBoxE;
-import com.nali.small.entity.memo.client.render.IRender;
+import com.nali.small.entity.memo.client.box.mix.MixBoxE;
+import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.sound.ISoundLe;
 import com.nali.system.bytes.ByteWriter;
 import com.nali.system.opengl.memo.MemoGo;
@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class HitOlePat<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, IR extends IRender, M extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, IR, C>, C extends ClientLe<RG, RS, RC, RST, R, SD, BD, E, I, M, IR>> extends HitE<RG, RS, RC, RST, R, SD, BD, E, I, IR, M, C>
+public class HitOlePat<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientLe<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends HitE<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>
 {
     public byte pat_time;
 

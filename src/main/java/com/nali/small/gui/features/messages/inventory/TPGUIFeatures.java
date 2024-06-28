@@ -13,9 +13,9 @@ public class TPGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bl4"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bl5"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".br") + " : ",
+            I18n.translateToLocal("info." + Small.ID + ".bl4"),
+            I18n.translateToLocal("info." + Small.ID + ".bl5"),
+            I18n.translateToLocal("info." + Small.ID + ".br") + " : ",
         };
         this.createColor();
     }

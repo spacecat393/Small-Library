@@ -19,25 +19,25 @@ public class FollowGUIFeatures extends GUIFeaturesLoader
     public static byte FLAG;//move_to | tp_to walk_to
     public static byte PAGE;//p0-2
 
-    public String b0 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b20");
-    public String b1 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b21");
+    public String b0 = I18n.translateToLocal("info." + Small.ID + ".b20");
+    public String b1 = I18n.translateToLocal("info." + Small.ID + ".b21");
 
     public FollowGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".b0") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b22"),
-            this.b1 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b23"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".e0") + " <",
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".e2"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".c0"),
-            "1.1 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b3") + " : ",
-            "1.2 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b_0") + " : ",
-            "2.1 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b_1") + " : ",
-            "2.2 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b_2") + " : ",
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".e7")
+            I18n.translateToLocal("info." + Small.ID + ".b0") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("info." + Small.ID + ".b22"),
+            this.b1 + " : " + I18n.translateToLocal("info." + Small.ID + ".b23"),
+            I18n.translateToLocal("info." + Small.ID + ".e0") + " <",
+            I18n.translateToLocal("info." + Small.ID + ".e2"),
+            I18n.translateToLocal("info." + Small.ID + ".c0"),
+            "1.1 " + I18n.translateToLocal("info." + Small.ID + ".b3") + " : ",
+            "1.2 " + I18n.translateToLocal("info." + Small.ID + ".b_0") + " : ",
+            "2.1 " + I18n.translateToLocal("info." + Small.ID + ".b_1") + " : ",
+            "2.2 " + I18n.translateToLocal("info." + Small.ID + ".b_2") + " : ",
+            I18n.translateToLocal("info." + Small.ID + ".e7")
         };
         this.loadColor(6);
         GUINETLOADER = new SetFollowGUINet(mixgui);

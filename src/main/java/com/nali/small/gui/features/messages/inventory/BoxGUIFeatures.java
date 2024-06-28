@@ -12,8 +12,8 @@ public class BoxGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bk6"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bk7")
+            I18n.translateToLocal("info." + Small.ID + ".bk6"),
+            I18n.translateToLocal("info." + Small.ID + ".bk7")
         };
         this.createColor();
     }

@@ -17,18 +17,18 @@ public class MineGUIFeatures extends GUIFeaturesLoader
     public static BlockPos START_BLOCKPOS, END_BLOCKPOS;
     public static byte PAGE;//p0-2
 
-    public String b0 = I18n.translateToLocal("info." + Reference.MOD_ID + ".be0");
-    public String b1 = I18n.translateToLocal("info." + Reference.MOD_ID + ".be1");
+    public String b0 = I18n.translateToLocal("info." + Small.ID + ".be0");
+    public String b1 = I18n.translateToLocal("info." + Small.ID + ".be1");
 
     public MineGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".b0") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".be2"),
-            this.b1 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".be3"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".e0") + " <",
+            I18n.translateToLocal("info." + Small.ID + ".b0") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("info." + Small.ID + ".be2"),
+            this.b1 + " : " + I18n.translateToLocal("info." + Small.ID + ".be3"),
+            I18n.translateToLocal("info." + Small.ID + ".e0") + " <",
         };
         this.loadColor(9);
     }

@@ -16,11 +16,11 @@ public class RemoveTroublemakerGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bv") + " " + I18n.translateToLocal("info." + Reference.MOD_ID + ".by"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".e3"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".eb"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".c3"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".c4")
+            I18n.translateToLocal("info." + Small.ID + ".bv") + " " + I18n.translateToLocal("info." + Small.ID + ".by"),
+            I18n.translateToLocal("info." + Small.ID + ".e3"),
+            I18n.translateToLocal("info." + Small.ID + ".eb"),
+            I18n.translateToLocal("info." + Small.ID + ".c3"),
+            I18n.translateToLocal("info." + Small.ID + ".c4")
         };
         this.loadColor(6);
 //        this.int_array = new int[6];

@@ -14,8 +14,8 @@ public class HPGUIFeatures extends GUIFeaturesLoader
         super(mixgui);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bb") + " : ",
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bc") + " : "
+            I18n.translateToLocal("info." + Small.ID + ".bb") + " : ",
+            I18n.translateToLocal("info." + Small.ID + ".bc") + " : "
         };
         this.createColor();
     }

@@ -16,7 +16,7 @@ public class TargetGUIFeatures extends GUIFeaturesLoader
         MessagesFeatures.initEntities
         (
             TARGET_INT_ARRAY,
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bw") + " " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bx"),
+            I18n.translateToLocal("info." + Small.ID + ".bw") + " " + I18n.translateToLocal("info." + Small.ID + ".bx"),
             this
         );
     }

@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
+@Mod.EventBusSubscriber(modid = Small.ID)
 public class BlockRegistry
 {
     public static Item[] ITEM_ARRAY;

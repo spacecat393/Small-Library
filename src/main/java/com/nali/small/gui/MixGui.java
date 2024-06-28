@@ -4,12 +4,14 @@ import com.nali.list.container.InventoryContainer;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SetWorkByte;
 import com.nali.list.network.method.server.SyncBitByte;
+import com.nali.network.NetworkRegistry;
 import com.nali.networks.NetworksRegistry;
-import com.nali.small.entity.memo.client.ClientLe;
 import com.nali.small.entity.EntityLeInv;
+import com.nali.small.entity.memo.client.ClientLe;
 import com.nali.small.gui.features.GUIFeaturesLoader;
 import com.nali.small.gui.features.messages.NameGUIFeatures;
 import com.nali.small.gui.net.GUINetLoader;
+import com.nali.system.bytes.ByteWriter;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -131,7 +133,7 @@ public abstract class MixGui extends GuiContainer
     {
         byte[] byte_array = new byte[1];
         byte_array[0] = id;
-        NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
+        NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 
     public void sendPacketUUID(byte id)
@@ -144,8 +146,8 @@ public abstract class MixGui extends GuiContainer
     {
         byte[] byte_array = new byte[17];
         byte_array[0] = id;
-        BytesWriter.set(byte_array, uuid, 1);
-        NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
+        ByteWriter.set(byte_array, uuid, 1);
+        NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 
 //    public void sendPacketUUIDInt(byte id, UUID uuid, int i)
@@ -157,15 +159,16 @@ public abstract class MixGui extends GuiContainer
 //        NetworksRegistry.I.sendToServer(new SkinningEntitiesServerMessage(byte_array));
 //    }
 
+    //should use byte
     public void sendPacketUUIDInt(byte i)
     {
         ClientLe cliententitiesmemory = (ClientLe)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
         byte[] byte_array = new byte[18];
         byte_array[0] = SetWorkByte.ID;
-        BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
+        ByteWriter.set(byte_array, cliententitiesmemory.uuid, 1);
         byte_array[17] = i;
 //        BytesWriter.set(byte_array, i, 17);
-        NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
+        NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 
     public void sendPacketUUIDByte(byte i)
@@ -173,10 +176,10 @@ public abstract class MixGui extends GuiContainer
         ClientLe cliententitiesmemory = (ClientLe)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
         byte[] byte_array = new byte[18];
         byte_array[0] = SyncBitByte.ID;
-        BytesWriter.set(byte_array, cliententitiesmemory.uuid, 1);
+        ByteWriter.set(byte_array, cliententitiesmemory.uuid, 1);
         byte_array[17] = i;
 //        BytesWriter.set(byte_array, i, 17);
-        NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
+        NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 
     public void renderEntitiesName(EntityLeInv skinningentities, float x, float y, int width, int height, int mouseX, int mouseY)
@@ -210,9 +213,9 @@ public abstract class MixGui extends GuiContainer
 //
 //            this.drawHoveringText(new String[]
 //            {
-//                I18n.translateToLocal("info." + Reference.MOD_ID + ".un"),
+//                I18n.translateToLocal("info." + Small.ID + ".un"),
 //                uuid_string,
-//                I18n.translateToLocal("info." + Reference.MOD_ID + ".ba")
+//                I18n.translateToLocal("info." + Small.ID + ".ba")
 //            }, mouseX, mouseY, false);
 //        }
 //    }

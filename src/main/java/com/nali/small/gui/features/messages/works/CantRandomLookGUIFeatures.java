@@ -11,7 +11,7 @@
 //        super(mixgui);
 //        this.string_array = new String[]
 //        {
-//            I18n.translateToLocal("info." + Reference.MOD_ID + ".c6")info.c6=Can't Random Look
+//            I18n.translateToLocal("info." + Small.ID + ".c6")info.c6=Can't Random Look
 //        };
 //        this.createColor();
 //    }

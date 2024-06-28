@@ -1,7 +1,7 @@
 package com.nali.small.gui.features;
 
+import com.nali.small.Small;
 import com.nali.small.entity.EntityRegistry;
-import com.nali.small.system.Reference;
 import net.minecraft.util.text.translation.I18n;
 
 public class MessagesFeatures
@@ -21,7 +21,7 @@ public class MessagesFeatures
 //        }
 //
 //        guifeaturesloader.string_array = new String[sub_key_string_array.length + 1];
-//        guifeaturesloader.string_array[0] = I18n.translateToLocal("info." + Reference.MOD_ID + ".b0") + " : " + (skinningentities.work_byte_array[id] == 1 ? main_key_string_array[0] : main_key_string_array[1]);
+//        guifeaturesloader.string_array[0] = I18n.translateToLocal("info." + Small.ID + ".b0") + " : " + (skinningentities.work_byte_array[id] == 1 ? main_key_string_array[0] : main_key_string_array[1]);
 //
 //        for (int i = 0; i < sub_key_string_array.length; ++i)
 //        {
@@ -56,8 +56,8 @@ public class MessagesFeatures
         }
 
         guifeaturesloader.string_array[0] = key;
-        guifeaturesloader.string_array[guifeaturesloader.string_array.length - 2] = I18n.translateToLocal("info." + Reference.MOD_ID + ".c1");
-        guifeaturesloader.string_array[guifeaturesloader.string_array.length - 1] = I18n.translateToLocal("info." + Reference.MOD_ID + ".c2");
+        guifeaturesloader.string_array[guifeaturesloader.string_array.length - 2] = I18n.translateToLocal("info." + Small.ID + ".c1");
+        guifeaturesloader.string_array[guifeaturesloader.string_array.length - 1] = I18n.translateToLocal("info." + Small.ID + ".c2");
 
         guifeaturesloader.createColor();
     }

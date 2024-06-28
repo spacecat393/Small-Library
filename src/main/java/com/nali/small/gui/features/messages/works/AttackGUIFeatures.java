@@ -19,24 +19,24 @@ public class AttackGUIFeatures extends GUIFeaturesLoader
     public static byte FLAG;//move_to prepare hit | remote walk_to
     public static byte PAGE;//p0-1
 
-    public String b0 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b60");
-    public String b1 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b61");
+    public String b0 = I18n.translateToLocal("info." + Small.ID + ".b60");
+    public String b1 = I18n.translateToLocal("info." + Small.ID + ".b61");
 
     public AttackGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".b0") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b62"),
-            this.b1 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b63"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".e0") + " <",
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".e2"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".c0"),
-            "1.1 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b3") + " : ",
-            "1.2 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b6") + " : ",
-            "1.3 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bt") + " : ",
-            "1.4 " + I18n.translateToLocal("info." + Reference.MOD_ID + ".bc") + " " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b_3") + " : "
+            I18n.translateToLocal("info." + Small.ID + ".b0") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("info." + Small.ID + ".b62"),
+            this.b1 + " : " + I18n.translateToLocal("info." + Small.ID + ".b63"),
+            I18n.translateToLocal("info." + Small.ID + ".e0") + " <",
+            I18n.translateToLocal("info." + Small.ID + ".e2"),
+            I18n.translateToLocal("info." + Small.ID + ".c0"),
+            "1.1 " + I18n.translateToLocal("info." + Small.ID + ".b3") + " : ",
+            "1.2 " + I18n.translateToLocal("info." + Small.ID + ".b6") + " : ",
+            "1.3 " + I18n.translateToLocal("info." + Small.ID + ".bt") + " : ",
+            "1.4 " + I18n.translateToLocal("info." + Small.ID + ".bc") + " " + I18n.translateToLocal("info." + Small.ID + ".b_3") + " : "
         };
         this.loadColor(8);
         GUINETLOADER = new SetAttackGUINet(mixgui);

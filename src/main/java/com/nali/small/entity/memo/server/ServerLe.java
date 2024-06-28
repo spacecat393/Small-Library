@@ -1,8 +1,6 @@
 package com.nali.small.entity.memo.server;
 
 import com.nali.data.IBothDaE;
-import com.nali.small.chunk.ChunkLoader;
-import com.nali.small.entity.IMixE;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.IBothLe;
 import com.nali.small.entity.memo.server.ai.MixAIE;
@@ -24,16 +22,13 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 
-import java.util.Map;
-import java.util.UUID;
-
 public abstract class ServerLe<SD extends ISoundN, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, A extends MixAIE<SD, BD, E, I, ?>> extends ServerE<SD, BD, E, I, A> implements IBothLe<SD, BD, E, I>
 {
     public WorkEBodyYaw workebodyyaw;
 
-    public ServerLe(I i, A a)
+    public ServerLe(I i)
     {
-        super(i, a);
+        super(i);
         this.workebodyyaw = new WorkEBodyYaw(this);
     }
 

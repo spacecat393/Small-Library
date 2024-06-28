@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Config(modid = Reference.MOD_ID)
+@Config(modid = Small.ID)
 public class MyConfig
 {
     @Config.Name("Server Settings")
@@ -22,15 +22,15 @@ public class MyConfig
         public boolean player_rng = false;
     }
 
-    @Mod.EventBusSubscriber(modid = Reference.MOD_ID, value = Side.CLIENT)
+    @Mod.EventBusSubscriber(modid = Small.ID, value = Side.CLIENT)
     public static class ConfigEvent
     {
         @SubscribeEvent
         public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
         {
-            if (event.getModID().equals(Reference.MOD_ID))
+            if (event.getModID().equals(Small.ID))
             {
-                ConfigManager.sync(Reference.MOD_ID, Config.Type.INSTANCE);
+                ConfigManager.sync(Small.ID, Config.Type.INSTANCE);
             }
         }
     }

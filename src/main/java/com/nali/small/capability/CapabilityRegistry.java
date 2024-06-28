@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.Comparator;
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
+@Mod.EventBusSubscriber(modid = Small.ID)
 public class CapabilityRegistry
 {
     public static List<Class> CAPABILITIES_SERIALIZATIONS_CLASS_LIST = Reflect.getClasses("com.nali.list.capability.serializable");
@@ -49,7 +49,7 @@ public class CapabilityRegistry
         int index = 0;
         for (Class clasz : capabilities_storages_class_list)
         {
-            RESOURCELOCATION_ARRAY[index++] = new ResourceLocation(Reference.MOD_ID, clasz.getSimpleName().toLowerCase());
+            RESOURCELOCATION_ARRAY[index++] = new ResourceLocation(Small.ID, clasz.getSimpleName().toLowerCase());
         }
 
         for (int i = 0; i < RESOURCELOCATION_ARRAY.length; ++i)

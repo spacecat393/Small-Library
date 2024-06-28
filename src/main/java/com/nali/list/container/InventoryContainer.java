@@ -2,6 +2,7 @@ package com.nali.list.container;
 
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.Inventory;
+import com.nali.small.entity.memo.client.ClientSleInv;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.mixin.MixinInventoryCrafting;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,18 +13,20 @@ import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class InventoryContainer extends Container
+public class InventoryContainer<C extends ClientSleInv> extends Container
 {
     public static int ID;
 
-    public EntityPlayer entityplayer;
-    public EntityLeInv skinningentities;
+    public C c;
 
-    public InventoryContainer(IInventory iinventory, EntityLeInv skinningentities, EntityPlayer entityplayer)
+    public EntityPlayer entityplayer;
+//    public EntityLeInv skinningentities;
+
+    public InventoryContainer(IInventory iinventory, C c, EntityPlayer entityplayer)
     {
         this.entityplayer = entityplayer;
-        this.skinningentities = skinningentities;
-        Inventory skinninginventory = this.skinningentities.bothentitiesmemory.skinninginventory;
+        this.c = c;
+        Inventory skinninginventory = this.c.inventory;
         ((MixinInventoryCrafting)skinninginventory.inventorycrafting).eventHandler(this);
 //        skinninginventory.reflectFinal(this);
 

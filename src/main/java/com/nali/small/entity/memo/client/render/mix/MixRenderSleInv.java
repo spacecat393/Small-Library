@@ -1,11 +1,14 @@
-package com.nali.small.entity.memo.client.render;
+package com.nali.small.entity.memo.client.render.mix;
 
 import com.nali.data.IBothDaSe;
 import com.nali.data.client.IClientDaS;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.client.ClientSle;
-import com.nali.small.entity.memo.client.mixbox.MixBoxSle;
+import com.nali.small.entity.memo.client.box.mix.MixBoxSle;
+import com.nali.small.entity.memo.client.render.RenderE;
+import com.nali.small.entity.memo.client.render.layer.ArrowLayer;
+import com.nali.small.entity.memo.client.render.layer.ItemLayer;
 import com.nali.sound.ISoundLe;
 import com.nali.system.opengl.memo.MemoAnimation;
 import com.nali.system.opengl.memo.MemoGs;
@@ -28,21 +31,31 @@ import static com.nali.small.entity.memo.client.render.RenderSeMath.interpolateR
 import static com.nali.system.opengl.memo.MemoCurrent.*;
 
 @SideOnly(Side.CLIENT)
-public interface IRenderSInv<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, M extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, M, ?>> extends IRender
+public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>
 {
-    default void doRender(C c/*, R r, E e*/, RenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
+    public ArrowLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> arrowlayerrender;
+    public ItemLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> itemlayerrender;
+
+    public MixRenderSleInv(C c)
     {
-        R r = c.r;
-        E e = c.i.getE();
-        this.renderLayer(c/*, r*/, rendere, ox, oy, oz, partialTicks);
+        super(c);
+        this.arrowlayerrender = new ArrowLayer(c);
+        this.itemlayerrender = new ItemLayer(c);
+    }
+
+    public void doRender(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
+    {
+        R r = this.c.r;
+        E e = this.c.i.getE();
+        this.renderLayer(rendere, ox, oy, oz, partialTicks);
 
         GL11.glPushMatrix();
 
-        this.updateData(c/*, e*/, partialTicks);
+        this.updateData(partialTicks);
 
         GL11.glTranslated(ox, oy, oz);
 
-        this.renderHitBox(c, rendere);
+        this.renderHitBox(rendere);
 
         GL11.glScalef(r.scale, r.scale, r.scale);
         rendere.mShadowOpaque(r.scale);
@@ -74,14 +87,14 @@ public interface IRenderSInv<RG extends MemoGs, RS extends MemoSs, RC extends IC
 
     }
 
-    default void updateData(C c/*, E e*/, float partialTicks)
+    public void updateData(float partialTicks)
     {
-        R r = c.r;
-        E e = c.i.getE();
-        c.body_rot = (float)Math.toRadians(interpolateRotation(e.prevRenderYawOffset, e.renderYawOffset, partialTicks));
-        c.head_rot = (float)Math.toRadians(interpolateRotation(e.prevRotationYaw, e.rotationYaw, partialTicks));
-        c.net_head_yaw = c.head_rot - c.body_rot;
-        c.head_pitch = (float)Math.toRadians(e.prevRotationPitch + (e.rotationPitch - e.prevRotationPitch) * partialTicks);
+        R r = this.c.r;
+        E e = this.c.i.getE();
+        this.c.body_rot = (float)Math.toRadians(interpolateRotation(e.prevRenderYawOffset, e.renderYawOffset, partialTicks));
+        this.c.head_rot = (float)Math.toRadians(interpolateRotation(e.prevRotationYaw, e.rotationYaw, partialTicks));
+        this.c.net_head_yaw = this.c.head_rot - this.c.body_rot;
+        this.c.head_pitch = (float)Math.toRadians(e.prevRotationPitch + (e.rotationPitch - e.prevRotationPitch) * partialTicks);
 //        r.timeline = partialTicks;
 
 //        OpenGLAnimationMemory openglanimationmemory = r.dataloader.openglanimationmemory_list.get(((SkinningClientData)r.clientdata).AnimationID());
@@ -89,34 +102,34 @@ public interface IRenderSInv<RG extends MemoGs, RS extends MemoSs, RC extends IC
         MemoAnimation memoanimation = r.st.memoanimation_list.get(r.c.AnimationID());
         r.initSkinning(memoanimation);
 
-        if (!c.fake)
+        if (!this.c.fake)
         {
-            this.multiplyAnimation(c);
+            this.multiplyAnimation();
         }
 
         r.setSkinning(memoanimation);
     }
 
-    default void renderLayer(C c/*, R r*/, RenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
+    public void renderLayer(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
     {
-        R r = c.r;
+        R r = this.c.r;
         GL11.glPushMatrix();
 
         GL11.glTranslated(ox, oy, oz);
         GL11.glScalef(r.scale, r.scale, r.scale);
         GL11.glTranslated(-ox, -oy, -oz);
-        c.itemlayerrender.x = (float)ox;
-        c.itemlayerrender.y = (float)oy;
-        c.itemlayerrender.z = (float)oz;
-        c.itemlayerrender.layer(partialTicks);
-        c.arrowlayerrender.layer(rendere, (float)ox, (float)oy, (float)oz, partialTicks);
+        this.itemlayerrender.x = (float)ox;
+        this.itemlayerrender.y = (float)oy;
+        this.itemlayerrender.z = (float)oz;
+        this.itemlayerrender.layer(partialTicks);
+        this.arrowlayerrender.layer(rendere, (float)ox, (float)oy, (float)oz, partialTicks);
 
         GL11.glPopMatrix();
     }
 
-    default void renderHitBox(C c/*, E e*/, RenderE<E> rendere)
+    public void renderHitBox(RenderE<E> rendere)
     {
-        E e = c.i.getE();
+        E e = this.c.i.getE();
         if (rendere.getRenderManager().isDebugBoundingBox() && !e.isInvisible() && !Minecraft.getMinecraft().isReducedDebug())
         {
             GL11.glPushMatrix();
@@ -160,7 +173,7 @@ public interface IRenderSInv<RG extends MemoGs, RS extends MemoSs, RC extends IC
 //            for (AxisAlignedBB axisalignedbb : axisalignedbb_array)
 //            if (cliententitiesmemory.mixboxentitiesmemory.axisalignedbb_array != null)
 //            {
-            for (AxisAlignedBB axisalignedbb : c.m.get()/*cliententitiesmemory.mixboxentitiesmemory.axisalignedbb_array*/)
+            for (AxisAlignedBB axisalignedbb : this.c.mb.get()/*cliententitiesmemory.mixboxentitiesmemory.axisalignedbb_array*/)
             {
                 RenderGlobal.drawSelectionBoundingBox(axisalignedbb, r, g, b, 1.0F);
             }
@@ -193,5 +206,5 @@ public interface IRenderSInv<RG extends MemoGs, RS extends MemoSs, RC extends IC
         }
     }
 
-    void multiplyAnimation(C c);
+    public abstract void multiplyAnimation();
 }

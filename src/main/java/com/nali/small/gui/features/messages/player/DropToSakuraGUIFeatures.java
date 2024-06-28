@@ -16,9 +16,9 @@ public class DropToSakuraGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bk8"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bk9"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".e4")
+            I18n.translateToLocal("info." + Small.ID + ".bk8"),
+            I18n.translateToLocal("info." + Small.ID + ".bk9"),
+            I18n.translateToLocal("info." + Small.ID + ".e4")
         };
         this.loadColor(4);
 //        this.int_array = new int[4];

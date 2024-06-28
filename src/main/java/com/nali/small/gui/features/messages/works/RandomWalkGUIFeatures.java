@@ -10,17 +10,17 @@ import net.minecraft.util.text.translation.I18n;
 
 public class RandomWalkGUIFeatures extends GUIFeaturesLoader
 {
-    public String b0 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b40");
-    public String b1 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b41");
+    public String b0 = I18n.translateToLocal("info." + Small.ID + ".b40");
+    public String b1 = I18n.translateToLocal("info." + Small.ID + ".b41");
 
     public RandomWalkGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".b0") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b42"),
-            this.b1 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b43")
+            I18n.translateToLocal("info." + Small.ID + ".b0") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("info." + Small.ID + ".b42"),
+            this.b1 + " : " + I18n.translateToLocal("info." + Small.ID + ".b43")
         };
         this.createColor();
     }

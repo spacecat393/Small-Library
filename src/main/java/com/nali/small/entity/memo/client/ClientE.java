@@ -9,8 +9,9 @@ import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothE;
-import com.nali.small.entity.memo.client.mixbox.MixBoxE;
-import com.nali.small.entity.memo.client.render.IRender;
+import com.nali.small.entity.memo.client.box.mix.MixBoxE;
+import com.nali.small.entity.memo.client.render.RenderE;
+import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.sound.ISoundN;
 import com.nali.sound.Sound;
 import com.nali.system.bytes.ByteWriter;
@@ -26,15 +27,20 @@ import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @SideOnly(Side.CLIENT)
-public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, M extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, IR, ?>, IR extends IRender> implements IBothE<SD, BD, E, I>
+public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, MB extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, MR, ?>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> implements IBothE<SD, BD, E, I>
 {
+    public static Map<UUID, ClientSle> C_MAP = new HashMap();
+    public static Map<Integer, UUID> UUID_MAP = new HashMap();
+
     public I i;
     public R r;
-    public M m;
-    public IR ir;
+    public MB mb;
+    public MR mr;
 
 //    public IEMixBox iemixbox;
     public float body_rot,
@@ -49,11 +55,12 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
     public boolean fake;
     public byte[] sync_byte_array;
 
-    public ClientE(I i, M m)
+    public ClientE(I i)
     {
         this.i = i;
-        this.m = m;
-        this.r = this.createObjectRender();
+        this.r = this.createR();
+        this.mb = this.createMB();
+        this.mr = this.createMR();
         this.sound = this.createSoundRender();
     }
 
@@ -72,7 +79,7 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
         }
         else
         {
-            this.m.checkAxisAlignedBB(entityplayer);
+            this.mb.checkAxisAlignedBB(entityplayer);
         }
 
         entityplayer.swingArm(enumhand);
@@ -134,13 +141,21 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
     }
 
     @Override
+    public void doRender(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
+    {
+        this.mr.doRender(rendere, ox, oy, oz, partialTicks);
+    }
+
+    @Override
     public I getI()
     {
         return this.i;
     }
 
     public abstract void initFakeFrame();
-    public abstract R createObjectRender();
+    public abstract R createR();
+    public abstract MB createMB();
+    public abstract MR createMR();
     public abstract Sound createSoundRender();
 //    public abstract IEMixBox createIEMixBox();
 }

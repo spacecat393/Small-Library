@@ -10,17 +10,17 @@ import net.minecraft.util.text.translation.I18n;
 
 public class ReviveGUIFeatures extends GUIFeaturesLoader
 {
-    public String b0 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b70");
-    public String b1 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b71");
+    public String b0 = I18n.translateToLocal("info." + Small.ID + ".b70");
+    public String b1 = I18n.translateToLocal("info." + Small.ID + ".b71");
 
     public ReviveGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".b0") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b72"),
-            this.b1 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b73")
+            I18n.translateToLocal("info." + Small.ID + ".b0") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("info." + Small.ID + ".b72"),
+            this.b1 + " : " + I18n.translateToLocal("info." + Small.ID + ".b73")
         };
         this.createColor();
     }

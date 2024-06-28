@@ -1,4 +1,4 @@
-package com.nali.small.entity.memo.client.mixbox;
+package com.nali.small.entity.memo.client.box.mix;
 
 import com.nali.data.IBothDaSe;
 import com.nali.data.client.IClientDaS;
@@ -7,7 +7,7 @@ import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.client.ClientSle;
 import com.nali.small.entity.memo.client.hits.HitOeEat;
 import com.nali.small.entity.memo.client.hits.HitOlePat;
-import com.nali.small.entity.memo.client.render.IRender;
+import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.sound.ISoundLe;
 import com.nali.system.opengl.memo.MemoGs;
 import com.nali.system.opengl.memo.MemoSs;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class MixBoxSle<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, IR extends IRender, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, IR>> extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, IR, C>
+public class MixBoxSle<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, MR>> extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>
 {
     public MixBoxSle(C c)
     {

@@ -12,7 +12,7 @@ public class SmallTab extends CreativeTabs
     public static SmallTab TAB = new SmallTab();
     public SmallTab()
     {
-        super(Reference.MOD_ID);
+        super(Small.ID);
         this.setBackgroundImageName("item_search.png");
     }
 

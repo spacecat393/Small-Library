@@ -37,15 +37,15 @@ public class EntityListGUIFeatures extends GUIFeaturesLoader
         }
 
         this.string_array = new String[string_list.size() + 3];
-        this.string_array[0] = I18n.translateToLocal("info." + Reference.MOD_ID + ".bz");
+        this.string_array[0] = I18n.translateToLocal("info." + Small.ID + ".bz");
 
         for (int i = 1; i < this.string_array.length - 2; ++i)
         {
             this.string_array[i] = string_list.get(i - 1);
         }
 
-        this.string_array[this.string_array.length - 2] = I18n.translateToLocal("info." + Reference.MOD_ID + ".c3");
-        this.string_array[this.string_array.length - 1] = I18n.translateToLocal("info." + Reference.MOD_ID + ".c4");
+        this.string_array[this.string_array.length - 2] = I18n.translateToLocal("info." + Small.ID + ".c3");
+        this.string_array[this.string_array.length - 1] = I18n.translateToLocal("info." + Small.ID + ".c4");
 
         index = this.string_array.length + 1;
         this.int_array = new int[index];

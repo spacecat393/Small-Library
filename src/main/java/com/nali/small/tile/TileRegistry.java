@@ -15,7 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.List;
 
-//@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
+//@Mod.EventBusSubscriber(modid = Small.ID)
 public class TileRegistry
 {
     public static List<Class> TILES_CLASS_LIST = Reflect.getClasses("com.nali.list.block.tile");

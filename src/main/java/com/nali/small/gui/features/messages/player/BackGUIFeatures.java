@@ -15,7 +15,7 @@ public class BackGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bk")
+            I18n.translateToLocal("info." + Small.ID + ".bk")
         };
         this.loadColor(2);
 //        this.int_array = new int[2];

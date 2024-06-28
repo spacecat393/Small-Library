@@ -175,12 +175,12 @@ info.small.c6=Right Click to send request.
 info.small.c7=Click to paste.
 info.small.c8=Right Click to Reset WorkBytes.
 
-info.small.z0=Can't Attack
-info.small.z1=Can't Heal
-info.small.z2=Can't Protect
-info.small.z3=Can't Revive
-info.small.z4=Can't Play
-info.small.z5=Can't Care Owner
+#info.small.z0=Can't Attack
+#info.small.z1=Can't Heal
+#info.small.z2=Can't Protect
+#info.small.z3=Can't Revive
+#info.small.z4=Can't Play
+#info.small.z5=Can't Care Owner
 
 itemGroup.small=Small
 

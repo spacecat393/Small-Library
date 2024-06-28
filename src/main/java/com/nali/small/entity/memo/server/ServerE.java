@@ -46,10 +46,10 @@ public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends
 //    public ItemStack current_mouth_itemstack;
     public byte[] sync_byte_array;
 
-    public ServerE(I i, A a)
+    public ServerE(I i)
     {
         this.i = i;
-        this.a = a;
+        this.a = this.createA();
         this.worldserver = (WorldServer)i.getE().world;
 //        int size = (int)Math.ceil(this.i.getAI().length / 8.0F);
 //        this.work_byte_array = new byte[(int)Math.ceil(this.i.getAI().length / 8.0F)/*size*/];// /8
@@ -103,10 +103,10 @@ public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends
         {
             if (this.uuid != null)
             {
-                ENTITIES_MAP.remove(this.uuid);
+                S_MAP.remove(this.uuid);
             }
 
-            ENTITIES_MAP.put(uuid, this.i);
+            S_MAP.put(uuid, this);
             this.uuid = uuid;
         }
 
@@ -192,10 +192,11 @@ public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends
         this.statle.readNBT(nbttagcompound);
     }
 
-    public void removeFromMap()
+    @Override
+    public void remove()
     {
         ChunkLoader.removeChunk(this.i);
-        ENTITIES_MAP.remove(this.uuid);
+        S_MAP.remove(this.uuid);
     }
 
     public Entity getOwner()
@@ -276,6 +277,8 @@ public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends
     {
         return this.i;
     }
+
+    public abstract A createA();
 
     public abstract int[][] getFrame2DIntArray();
 

@@ -12,9 +12,9 @@ public class FetchGUIFeatures extends GUIFeaturesLoader
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".bl"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".c5"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".c6")
+            I18n.translateToLocal("info." + Small.ID + ".bl"),
+            I18n.translateToLocal("info." + Small.ID + ".c5"),
+            I18n.translateToLocal("info." + Small.ID + ".c6")
         };
         this.createColor();
     }

@@ -10,17 +10,17 @@ import net.minecraft.util.text.translation.I18n;
 
 public class LockInventoryGUIFeatures extends GUIFeaturesLoader
 {
-    public String b0 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b00");
-    public String b1 = I18n.translateToLocal("info." + Reference.MOD_ID + ".b01");
+    public String b0 = I18n.translateToLocal("info." + Small.ID + ".b00");
+    public String b1 = I18n.translateToLocal("info." + Small.ID + ".b01");
 
     public LockInventoryGUIFeatures(MixGui mixgui)
     {
         super(mixgui, true);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".b0") + " : ",
-            this.b0 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b02"),
-            this.b1 + " : " + I18n.translateToLocal("info." + Reference.MOD_ID + ".b03")
+            I18n.translateToLocal("info." + Small.ID + ".b0") + " : ",
+            this.b0 + " : " + I18n.translateToLocal("info." + Small.ID + ".b02"),
+            this.b1 + " : " + I18n.translateToLocal("info." + Small.ID + ".b03")
         };
         this.createColor();
     }

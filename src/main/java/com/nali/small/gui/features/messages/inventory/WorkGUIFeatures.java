@@ -18,8 +18,8 @@ public class WorkGUIFeatures extends GUIFeaturesLoader
         super(mixgui);
         this.string_array = new String[]
         {
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".c8"),
-            I18n.translateToLocal("info." + Reference.MOD_ID + ".e0") + " <"
+            I18n.translateToLocal("info." + Small.ID + ".c8"),
+            I18n.translateToLocal("info." + Small.ID + ".e0") + " <"
         };
         this.loadColor(3);
         GUINETLOADER = new SetWorkGUINet(mixgui);

@@ -4,14 +4,14 @@ import com.nali.draw.DrawScreen;
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.network.method.server.*;
 import com.nali.list.render.BoxRender;
-import com.nali.render.SkinningRender;
-import com.nali.small.entity.memo.client.ClientLe;
+import com.nali.small.Small;
 import com.nali.small.entity.EntityLeInv;
+import com.nali.small.entity.memo.client.ClientLe;
 import com.nali.small.entity.memo.client.render.RenderSleInv;
 import com.nali.small.gui.MixGui;
-import com.nali.small.gui.features.messages.SetAttributesGUIFeatures;
 import com.nali.small.gui.features.messages.EffectsGUIFeatures;
 import com.nali.small.gui.features.messages.HPGUIFeatures;
+import com.nali.small.gui.features.messages.SetAttributesGUIFeatures;
 import com.nali.small.gui.features.messages.inventory.BoxGUIFeatures;
 import com.nali.small.gui.features.messages.inventory.MenuGUIFeatures;
 import com.nali.small.gui.features.messages.inventory.TPGUIFeatures;
@@ -22,7 +22,6 @@ import com.nali.small.gui.features.messages.works.LockInventoryGUIFeatures;
 import com.nali.small.gui.inventory.ProfileGUI;
 import com.nali.small.gui.inventory.ScannerGUI;
 import com.nali.small.gui.inventory.SpecialStatGUI;
-import com.nali.small.system.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.Entity;
@@ -41,13 +40,11 @@ import java.util.UUID;
 
 import static com.nali.key.KeyHelper.generateRainbowColor;
 import static com.nali.system.Timing.TD;
-import static com.nali.system.opengl.memory.OpenGLCurrentMemory.GL_CURRENT_COLOR;
-import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
 public class InventoryGui extends MixGui
 {
-    public static ResourceLocation GUI_RESOURCELOCATION = new ResourceLocation(Reference.MOD_ID, "textures/gui/inventory.png");
+    public static ResourceLocation GUI_RESOURCELOCATION = new ResourceLocation(Small.ID, "textures/gui/inventory.png");
     public static byte PAGE;
     public RenderSleInv skinningentitiesrender;
     public float px/*, py*/;
