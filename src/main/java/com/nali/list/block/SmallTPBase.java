@@ -1,15 +1,12 @@
 package com.nali.list.block;
 
-import com.nali.Nali;
-import com.nali.data.client.SkinningClientData;
-import com.nali.draw.DrawScreen;
-import com.nali.list.render.TPBaseRender;
-import com.nali.render.ObjectRender;
+import com.nali.data.client.IClientDaS;
+import com.nali.list.render.s.TPBaseRender;
 import com.nali.small.SmallTab;
 import com.nali.small.block.BlockB;
+import com.nali.small.block.memo.client.child.s.ClientTPBase;
 import com.nali.small.item.MixBlockItem;
-import com.nali.system.opengl.memo.OpenGLAnimationMemo;
-import net.minecraft.block.Block;
+import com.nali.system.opengl.memo.MemoAnimation;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -22,47 +19,48 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class SmallTPBase extends Block implements BlockB, ITileEntityProvider
+import static com.nali.Nali.I;
+
+public class SmallTPBase extends BlockB implements ITileEntityProvider
 {
     public static int ID;
     public static final AxisAlignedBB AXISALIGNEDBB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D);
 
-    @SideOnly(Side.CLIENT)
-    public TPBaseRender tpbaserender;
-    @SideOnly(Side.CLIENT)
-    public static DrawScreen DRAWSCREEN;
+//    @SideOnly(Side.CLIENT)
+//    public TPBaseRender tpbaserender;
+//    @SideOnly(Side.CLIENT)
+//    public static DrawScreen DRAWSCREEN;
 
     public SmallTPBase(String[] string_array)
     {
         super(Material.ROCK);
-        this.init(this, string_array[0], string_array[1], SmallTab.TAB);
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
-        {
-            this.renderInit();
-        }
+        this.ibothb.init(this, string_array[0], string_array[1], SmallTab.TAB);
+//        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+//        {
+//            this.renderInit();
+//        }
         this.setResistance(2000.0F);
         this.setHardness(50.0F);
         this.setSoundType(SoundType.STONE);
         this.setLightLevel(0.1F);
     }
 
-    @SideOnly(Side.CLIENT)
-    public void renderInit()
-    {
-        this.tpbaserender = new TPBaseRender();
-        OpenGLAnimationMemo openglanimationmemo = (OpenGLAnimationMemo)Nali.I.clientloader.object_list.get(((SkinningClientData)this.tpbaserender.clientdata).AnimationID());
-        this.tpbaserender.initSkinning(openglanimationmemo);
-        this.tpbaserender.setSkinning(openglanimationmemo);
-        DRAWSCREEN = new DrawScreen();
-        DRAWSCREEN.scale(0.25F);
-        DRAWSCREEN.z = 0.0F;
-    }
+//    @SideOnly(Side.CLIENT)
+//    public void renderInit()
+//    {
+////        this.tpbaserender = new TPBaseRender();
+////        OpenGLAnimationMemo openglanimationmemo = (OpenGLAnimationMemo)Nali.I.clientloader.object_list.get(((SkinningClientData)this.tpbaserender.clientdata).AnimationID());
+////        this.tpbaserender.initSkinning(openglanimationmemo);
+////        this.tpbaserender.setSkinning(openglanimationmemo);
+////        DRAWSCREEN = new DrawScreen();
+////        DRAWSCREEN.scale(0.25F);
+////        DRAWSCREEN.z = 0.0F;
+//    }
 
     @Nullable
     @Override
@@ -78,23 +76,23 @@ public class SmallTPBase extends Block implements BlockB, ITileEntityProvider
         return new MixBlockItem(this);
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public ObjectRender getObjectRender()
-    {
-//        if (this.tpbaserender == null)
-//        {
-//            this.tpbaserender = new TPBaseRender(this);
-//        }
-        return this.tpbaserender;
-    }
+//    @Override
+//    @SideOnly(Side.CLIENT)
+//    public ObjectRender getObjectRender()
+//    {
+////        if (this.tpbaserender == null)
+////        {
+////            this.tpbaserender = new TPBaseRender(this);
+////        }
+//        return this.tpbaserender;
+//    }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public DrawScreen getDrawScreen()
-    {
-        return DRAWSCREEN;
-    }
+//    @Override
+//    @SideOnly(Side.CLIENT)
+//    public DrawScreen getDrawScreen()
+//    {
+//        return DRAWSCREEN;
+//    }
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
@@ -118,5 +116,24 @@ public class SmallTPBase extends Block implements BlockB, ITileEntityProvider
     public boolean isFullCube(IBlockState state)
     {
         return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void newC()
+    {
+        IClientDaS iclientdas = TPBaseRender.ICLIENTDAS;
+        TPBaseRender tpbaserender = new TPBaseRender(I.clientloader.stores, iclientdas, TPBaseRender.IBOTHDASN);
+        ClientTPBase clienttpbase = new ClientTPBase(tpbaserender);
+        MemoAnimation memoanimation = I.clientloader.stores.memoanimation_list.get(iclientdas.AnimationID());
+        tpbaserender.initSkinning(memoanimation);
+        tpbaserender.setSkinning(memoanimation);
+        this.ibothb = clienttpbase;
+    }
+
+    @Override
+    public void newS()
+    {
+
     }
 }

@@ -1,8 +1,9 @@
 package com.nali.small.render;
 
-import com.nali.data.BothDataS;
-import com.nali.data.client.ClientDataS;
-import com.nali.render.SkinningRender;
+import com.nali.data.IBothDaSn;
+import com.nali.data.client.IClientDaS;
+import com.nali.render.RenderS;
+import com.nali.sound.ISoundN;
 import com.nali.system.opengl.memo.MemoGs;
 import com.nali.system.opengl.memo.MemoSs;
 import com.nali.system.opengl.store.StoreS;
@@ -13,22 +14,22 @@ import static com.nali.list.data.SmallData.SHADER_S_STEP;
 import static com.nali.list.data.SmallData.TEXTURE_STEP;
 
 @SideOnly(Side.CLIENT)
-public class SmallRenderS<B extends BothDataS, G extends MemoGs, S extends MemoSs, ST extends StoreS<G, S>, C extends ClientDataS> extends SkinningRender<B, G, S, ST, C>
+public class SmallRenderS<SD extends ISoundN, BD extends IBothDaSn<SD>, RG extends MemoGs, RS extends MemoSs, RST extends StoreS<RG, RS>, RC extends IClientDaS> extends RenderS<SD, BD, RG, RS, RST, RC>
 {
-    public SmallRenderS(ST st, C c, B b)
+    public SmallRenderS(RST rst, RC rc, BD bd)
     {
-        super(st, c, b);
+        super(rst, rc, bd);
     }
 
     @Override
-    public int getTextureID(G g)
+    public int getTextureID(RG rg)
     {
-        return TEXTURE_STEP + super.getTextureID(g);
+        return TEXTURE_STEP + super.getTextureID(rg);
     }
 
     @Override
-    public int getShaderID(G g)
+    public int getShaderID(RG rg)
     {
-        return SHADER_S_STEP + super.getShaderID(g);
+        return SHADER_S_STEP + super.getShaderID(rg);
     }
 }

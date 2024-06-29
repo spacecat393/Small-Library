@@ -1,10 +1,11 @@
-package com.nali.list.render;
+package com.nali.list.render.o;
 
-import com.nali.data.client.ClientData;
+import com.nali.data.client.IClientDaO;
 import com.nali.small.data.client.SakuraClient;
 import com.nali.small.render.SmallRenderO;
-import com.nali.system.opengl.memory.OpenGLObjectMemory;
-import com.nali.system.opengl.memory.OpenGLObjectShaderMemory;
+import com.nali.system.opengl.memo.MemoGo;
+import com.nali.system.opengl.memo.MemoSo;
+import com.nali.system.opengl.store.StoreO;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -12,31 +13,31 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.nali.system.ClientLoader.OBJECT_LIST;
-import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_FIXED_PIPE_FLOATBUFFER;
+import static com.nali.Nali.I;
+import static com.nali.system.opengl.memo.MemoCurrent.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
-public class SakuraRender extends SmallRenderO
+public class SakuraRender<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>> extends SmallRenderO<RG, RS, RST, RC>
 {
 //    public static int ID;
 //    public static DataLoader DATALOADER = RenderHelper.DATALOADER;
-    public static ClientData CLIENTDATA = new SakuraClient();
+    public static IClientDaO ICLIENTDAO = new SakuraClient();
     public Map<Integer, Integer> color_map = new HashMap();//element_array_buffer hex
     public byte extra_bit;
 
-    public SakuraRender()
+    public SakuraRender(RST rst, RC rc)
     {
-        super(null, CLIENTDATA/*, RenderHelper.DATALOADER*/);
+        super(rst, rc);
 //        float s = -5.0F;
 //        this.objectscreendraw.sx = s;
 //        this.objectscreendraw.sy = s;
 //        this.objectscreendraw.sz = s;
-        color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart())).element_array_buffer, 0xFFFFACDF);//ffd4e9
+        color_map.put((I.clientloader.storeo.rg_list.get(ICLIENTDAO.StartPart())).element_array_buffer, 0xFFFFACDF);//ffd4e9
 //        color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 1)).element_array_buffer, 0xFFffacdf);
     }
 
     @Override
-    public void setLightCoord(OpenGLObjectShaderMemory openglobjectshadermemory)
+    public void setLightCoord(RS rs)
     {
     }
 
@@ -46,18 +47,18 @@ public class SakuraRender extends SmallRenderO
 //    }
 
     @Override
-    public void setTextureUniform(OpenGLObjectMemory openglobjectmemory, OpenGLObjectShaderMemory openglobjectshadermemory)
+    public void setTextureUniform(RG rg, RS rs)
     {
-        Integer integer = this.color_map.get(openglobjectmemory.element_array_buffer);
+        Integer integer = this.color_map.get(rg.element_array_buffer);
         if (integer == null)
         {
             this.extra_bit = 0;
-            super.setTextureUniform(openglobjectmemory, openglobjectshadermemory);
+            super.setTextureUniform(rg, rs);
         }
         else
         {
             this.extra_bit = 4;
-            int color = this.getTextureID(openglobjectmemory);
+            int color = this.getTextureID(rg);
             OPENGL_FIXED_PIPE_FLOATBUFFER.limit(3);
             OPENGL_FIXED_PIPE_FLOATBUFFER.clear();
             OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
@@ -65,18 +66,18 @@ public class SakuraRender extends SmallRenderO
             OPENGL_FIXED_PIPE_FLOATBUFFER.put((color & 0xFF) / 255.0F);
             OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
             OPENGL_FIXED_PIPE_FLOATBUFFER.flip();
-            OpenGlHelper.glUniform4(openglobjectshadermemory.uniformlocation_int_array[4], OPENGL_FIXED_PIPE_FLOATBUFFER);
+            OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4], OPENGL_FIXED_PIPE_FLOATBUFFER);
         }
     }
 
     @Override
-    public int getTextureID(OpenGLObjectMemory openglobjectmemory)
+    public int getTextureID(RG rg)
     {
-        Integer integer = this.color_map.get(openglobjectmemory.element_array_buffer);
+        Integer integer = this.color_map.get(rg.element_array_buffer);
         if (integer == null)
         {
             this.extra_bit = 0;
-            return super.getTextureID(openglobjectmemory);
+            return super.getTextureID(rg);
         }
         else
         {
@@ -86,7 +87,7 @@ public class SakuraRender extends SmallRenderO
     }
 
     @Override
-    public byte getExtraBit(OpenGLObjectMemory openglobjectmemory)
+    public byte getExtraBit(RG rg)
     {
         return this.extra_bit;
     }

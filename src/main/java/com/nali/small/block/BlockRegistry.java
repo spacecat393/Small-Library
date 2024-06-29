@@ -1,7 +1,7 @@
 package com.nali.small.block;
 
+import com.nali.Nali;
 import com.nali.small.Small;
-import com.nali.small.system.Reference;
 import com.nali.small.tile.TileRegistry;
 import com.nali.system.Reflect;
 import com.nali.system.StringReader;
@@ -38,7 +38,7 @@ public class BlockRegistry
             }
             catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | NoSuchFieldException e)
             {
-                Small.error(e);
+                Nali.I.error(e);
             }
         }
     }

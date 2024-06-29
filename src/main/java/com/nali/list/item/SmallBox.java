@@ -1,7 +1,7 @@
 package com.nali.list.item;
 
 import com.nali.draw.DrawScreen;
-import com.nali.list.render.BoxRender;
+import com.nali.list.render.o.BoxRender;
 import com.nali.render.ObjectRender;
 import com.nali.small.Small;
 import com.nali.small.SmallTab;

@@ -31,7 +31,7 @@ import static com.nali.small.entity.memo.client.render.RenderSeMath.interpolateR
 import static com.nali.system.opengl.memo.MemoCurrent.*;
 
 @SideOnly(Side.CLIENT)
-public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>
+public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<SD, BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>
 {
     public ArrowLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> arrowlayerrender;
     public ItemLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> itemlayerrender;
@@ -99,7 +99,7 @@ public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC e
 
 //        OpenGLAnimationMemory openglanimationmemory = r.dataloader.openglanimationmemory_list.get(((SkinningClientData)r.clientdata).AnimationID());
 //        OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)r.dataloader.object_array[((SkinningClientData)r.clientdata).AnimationID()];
-        MemoAnimation memoanimation = r.st.memoanimation_list.get(r.c.AnimationID());
+        MemoAnimation memoanimation = r.rst.memoanimation_list.get(r.rc.AnimationID());
         r.initSkinning(memoanimation);
 
         if (!this.c.fake)

@@ -1,9 +1,10 @@
-package com.nali.small.entity.memo.server.ai.frame;
+package com.nali.small.entity.memo.server.ai.frame.free;
 
 import com.nali.data.IBothDaE;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.ai.MixAIE;
+import com.nali.small.entity.memo.server.ai.frame.FrameE;
 import com.nali.sound.ISoundN;
 import net.minecraft.entity.Entity;
 

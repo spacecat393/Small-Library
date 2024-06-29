@@ -26,6 +26,12 @@ public class AIESit<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I
 
     }
 
+    @Override
+    public void call()
+    {
+
+    }
+
     public void flip()
     {
         if ((this.state & 1) == 1)

@@ -1,12 +1,9 @@
 package com.nali.list.block;
 
-import com.nali.draw.DrawScreen;
-import com.nali.list.render.StorageRender;
-import com.nali.render.ObjectRender;
+import com.nali.list.render.o.StorageRender;
 import com.nali.small.SmallTab;
 import com.nali.small.block.BlockB;
-import com.nali.small.block.memo.IBothB;
-import com.nali.small.block.memo.client.ClientB;
+import com.nali.small.block.memo.client.child.o.ClientBStorage;
 import com.nali.small.item.MixBlockItem;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -18,43 +15,41 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class SmallStorage<B extends IBothB> extends BlockB<B> implements ITileEntityProvider
+import static com.nali.Nali.I;
+
+public class SmallStorage extends BlockB implements ITileEntityProvider
 {
     public static int ID;
 
-    @SideOnly(Side.CLIENT)
-    public StorageRender storagerender;
-    @SideOnly(Side.CLIENT)
-    public static DrawScreen DRAWSCREEN;
+//    @SideOnly(Side.CLIENT)
+//    public StorageRender storagerender;
+//    @SideOnly(Side.CLIENT)
+//    public static DrawScreen DRAWSCREEN;
 
     public SmallStorage(String[] string_array)
     {
         super(Material.ROCK);
-        this.b.init(this, string_array[0], string_array[1], SmallTab.TAB);
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
-        {
-            this.renderInit();
-        }
+        this.ibothb.init(this, string_array[0], string_array[1], SmallTab.TAB);
         this.setResistance(2000.0F);
         this.setHardness(50.0F);
         this.setSoundType(SoundType.STONE);
         this.setLightLevel(0.1F);
     }
 
-    @SideOnly(Side.CLIENT)
-    public void renderInit()
-    {
-        this.storagerender = new StorageRender();
-        DRAWSCREEN = new DrawScreen();
-        DRAWSCREEN.scale(0.25F);
-        DRAWSCREEN.z = 0.0F;
-    }
+//    @Override
+//    @SideOnly(Side.CLIENT)
+//    public void renderInit()
+//    {
+//        this.storagerender = new StorageRender();
+//        DRAWSCREEN = new DrawScreen();
+//        DRAWSCREEN.scale(0.25F);
+//        DRAWSCREEN.z = 0.0F;
+//    }
 
     @Nullable
     @Override
@@ -68,23 +63,23 @@ public class SmallStorage<B extends IBothB> extends BlockB<B> implements ITileEn
         return new MixBlockItem(this);
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public ObjectRender getObjectRender()
-    {
-//        if (this.tpbaserender == null)
-//        {
-//            this.tpbaserender = new TPBaseRender(this);
-//        }
-        return this.storagerender;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public DrawScreen getDrawScreen()
-    {
-        return DRAWSCREEN;
-    }
+//    @Override
+//    @SideOnly(Side.CLIENT)
+//    public ObjectRender getObjectRender()
+//    {
+////        if (this.tpbaserender == null)
+////        {
+////            this.tpbaserender = new TPBaseRender(this);
+////        }
+//        return this.storagerender;
+//    }
+//
+//    @Override
+//    @SideOnly(Side.CLIENT)
+//    public DrawScreen getDrawScreen()
+//    {
+//        return DRAWSCREEN;
+//    }
 
     @Override
     public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face)
@@ -104,16 +99,17 @@ public class SmallStorage<B extends IBothB> extends BlockB<B> implements ITileEn
         return false;
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
+    @Override
     public void newC()
     {
-        this.ibothb = new ClientB();
+        ClientBStorage clientbstorage = new ClientBStorage(new StorageRender(I.clientloader.storeo, StorageRender.ICLIENTDAO));
+        this.ibothb = clientbstorage;
     }
 
     @Override
     public void newS()
     {
-        this.ibothb = new ();
+//        this.ibothb = new ();
     }
 }

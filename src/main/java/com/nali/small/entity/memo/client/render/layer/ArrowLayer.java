@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Random;
 
 @SideOnly(Side.CLIENT)
-public class ArrowLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends LayerRender<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>
+public class ArrowLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<SD, BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends LayerRender<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>
 {
     public List<int[]> index_int_array_list = new ArrayList();
     public List<float[]> float_array_list = new ArrayList();
@@ -49,14 +49,14 @@ public class ArrowLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClient
             if (this.index_int_array_list.size() < i)
             {
                 Random random = entity.world.rand;
-                int start = r.c.StartPart();
-                int model_i = random.nextInt(r.c.EndPart() - start) + start;
+                int start = r.rc.StartPart();
+                int model_i = random.nextInt(r.rc.EndPart() - start) + start;
 //                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)r.dataloader.openglobjectmemory_array[model_i];
 //                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)r.dataloader.object_array[model_i];
 //                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)OBJECT_LIST.get(model_i);
 //                RG rg = this.c.r.st.g_list.get(model_i);
 //                this.index_int_array_list.add(new int[]{model_i, random.nextInt(openglskinningmemory.index_int_array.length)});
-                this.index_int_array_list.add(new int[]{model_i, random.nextInt(this.c.r.st.g_list.get(model_i).index_int_array.length)});
+                this.index_int_array_list.add(new int[]{model_i, random.nextInt(this.c.r.rst.rg_list.get(model_i).index_int_array.length)});
                 this.float_array_list.add(new float[]{random.nextFloat(), random.nextFloat(), random.nextFloat()});
             }
             else if (this.index_int_array_list.size() > i)

@@ -3,7 +3,7 @@ package com.nali.list.container.gui;
 import com.nali.draw.DrawScreen;
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.network.method.server.*;
-import com.nali.list.render.BoxRender;
+import com.nali.list.render.o.BoxRender;
 import com.nali.small.Small;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.memo.client.ClientLe;

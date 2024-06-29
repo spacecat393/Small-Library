@@ -1,12 +1,13 @@
-package com.nali.list.render;
+package com.nali.list.render.o;
 
-import com.nali.data.client.ClientData;
+import com.nali.data.client.IClientDaO;
 import com.nali.mixin.IMixinEntityRenderer;
 import com.nali.small.data.client.BoxClient;
 import com.nali.small.render.SmallRenderO;
 import com.nali.system.opengl.OpenGLBuffer;
-import com.nali.system.opengl.memory.OpenGLObjectMemory;
-import com.nali.system.opengl.memory.OpenGLObjectShaderMemory;
+import com.nali.system.opengl.memo.MemoGo;
+import com.nali.system.opengl.memo.MemoSo;
+import com.nali.system.opengl.store.StoreO;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -16,38 +17,38 @@ import org.lwjgl.opengl.GL13;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.nali.system.ClientLoader.OBJECT_LIST;
-import static com.nali.system.opengl.memory.OpenGLCurrentMemory.OPENGL_FIXED_PIPE_FLOATBUFFER;
+import static com.nali.Nali.I;
+import static com.nali.system.opengl.memo.MemoCurrent.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
-public class BoxRender extends SmallRenderO
+public class BoxRender<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>> extends SmallRenderO<RG, RS, RST, RC>
 {
 //    public static int ID;
 //    public static DataLoader DATALOADER = RenderHelper.DATALOADER;
-    public static ClientData CLIENTDATA = new BoxClient();
+    public static IClientDaO ICLIENTDAO = new BoxClient();
     public Map<Integer, Integer> color_map = new HashMap();//element_array_buffer hex
     public byte extra_bit;
 
-    public BoxRender()
+    public BoxRender(RST rst, RC rc)
     {
-        super(null, CLIENTDATA/*, RenderHelper.DATALOADER*/);
-        color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 1)).element_array_buffer, 0xFFffc196);
-        color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 2)).element_array_buffer, 0xFFffc196);
+        super(rst, rc);
+        color_map.put((I.clientloader.storeo.rg_list.get(ICLIENTDAO.StartPart() + 1)).element_array_buffer, 0xFFffc196);
+        color_map.put((I.clientloader.storeo.rg_list.get(ICLIENTDAO.StartPart() + 2)).element_array_buffer, 0xFFffc196);
     }
 
     @Override
-    public void setTextureUniform(OpenGLObjectMemory openglobjectmemory, OpenGLObjectShaderMemory openglobjectshadermemory)
+    public void setTextureUniform(RG rg, RS rs)
     {
-        Integer integer = this.color_map.get(openglobjectmemory.element_array_buffer);
+        Integer integer = this.color_map.get(rg.element_array_buffer);
         if (integer == null)
         {
             this.extra_bit = 0;
-            super.setTextureUniform(openglobjectmemory, openglobjectshadermemory);
+            super.setTextureUniform(rg, rs);
         }
         else
         {
             this.extra_bit = 4;
-            int color = this.getTextureID(openglobjectmemory);
+            int color = this.getTextureID(rg);
             OPENGL_FIXED_PIPE_FLOATBUFFER.limit(3);
             OPENGL_FIXED_PIPE_FLOATBUFFER.clear();
             OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
@@ -55,18 +56,18 @@ public class BoxRender extends SmallRenderO
             OPENGL_FIXED_PIPE_FLOATBUFFER.put((color & 0xFF) / 255.0F);
             OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
             OPENGL_FIXED_PIPE_FLOATBUFFER.flip();
-            OpenGlHelper.glUniform4(openglobjectshadermemory.uniformlocation_int_array[4], OPENGL_FIXED_PIPE_FLOATBUFFER);
+            OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4], OPENGL_FIXED_PIPE_FLOATBUFFER);
         }
     }
 
     @Override
-    public int getTextureID(OpenGLObjectMemory openglobjectmemory)
+    public int getTextureID(RG rg)
     {
-        Integer integer = this.color_map.get(openglobjectmemory.element_array_buffer);
+        Integer integer = this.color_map.get(rg.element_array_buffer);
         if (integer == null)
         {
             this.extra_bit = 0;
-            return super.getTextureID(openglobjectmemory);
+            return super.getTextureID(rg);
         }
         else
         {
@@ -76,22 +77,22 @@ public class BoxRender extends SmallRenderO
     }
 
     @Override
-    public void setLightMapUniform(OpenGLObjectShaderMemory openglobjectshadermemory)
+    public void setLightMapUniform(RS rs)
     {
         if (this.extra_bit == 4)
         {
-            OpenGlHelper.glUniform1i(openglobjectshadermemory.uniformlocation_int_array[5], 1);
+            OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[5], 1);
             OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE1);
             OpenGLBuffer.setLightMapBuffer(((IMixinEntityRenderer) Minecraft.getMinecraft().entityRenderer).lightmapTexture().getGlTextureId());
         }
         else
         {
-            super.setLightMapUniform(openglobjectshadermemory);
+            super.setLightMapUniform(rs);
         }
     }
 
     @Override
-    public byte getExtraBit(OpenGLObjectMemory openglobjectmemory)
+    public byte getExtraBit(RG rg)
     {
         return this.extra_bit;
     }

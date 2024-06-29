@@ -1,42 +1,49 @@
 package com.nali.small.render;
 
-import com.nali.data.BothDataS;
-import com.nali.data.client.ClientDataS;
-import com.nali.render.SkinningRender;
+import com.nali.data.IBothDaSe;
+import com.nali.data.client.IClientDaS;
+import com.nali.render.RenderS;
+import com.nali.small.entity.IMixLe;
+import com.nali.small.entity.memo.client.ClientSle;
+import com.nali.small.entity.memo.client.box.mix.MixBoxSle;
+import com.nali.small.entity.memo.client.render.mix.MixRenderE;
+import com.nali.sound.ISoundLe;
 import com.nali.system.opengl.memo.MemoGs;
 import com.nali.system.opengl.memo.MemoSs;
-import com.nali.system.opengl.store.StoreSle;
+import com.nali.system.opengl.store.StoreS;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderSle<B extends BothDataS, G extends MemoGs, S extends MemoSs, ST extends StoreSle<G, S>, C extends ClientDataS> extends SkinningRender<B, G, S, ST, C>
+public class RenderSle<E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RG, RS, RC, RST, ?, SD, BD, E, I, MR, C>, MR extends MixRenderE<RG, RS, RC, RST, ?, SD, BD, E, I, MB, C>, C extends ClientSle<RG, RS, RC, RST, ?, SD, BD, E, I, MB, MR>, SD extends ISoundLe, BD extends IBothDaSe<SD>, RG extends MemoGs, RS extends MemoSs, RST extends StoreS<RG, RS>, RC extends IClientDaS> extends RenderS<SD, BD, RG, RS, RST, RC>
 {
-    public Entity entity;
+    public C c;
 
-    public RenderSle(ST st, C c, B b, Entity entity)
+    public RenderSle(RST rst, RC rc, BD bd, C c)
     {
-        super(st, c, b);
-        this.entity = entity;
+        super(rst, rc, bd);
+        this.c = c;
     }
 
     public void updateLightCoord()
     {
-        if (this.entity.isBurning())
+        E e = this.c.i.getE();
+        if (e.isBurning())
         {
             this.lig_b = -1.0F;
             this.lig_s = -1.0F;
             return;
         }
 
-        this.updateLightCoord(this.entity.world, this.entity.getPosition());
+        this.updateLightCoord(e.world, e.getPosition());
     }
 
     @Override
-    public boolean getTransparent(G g)
+    public boolean getTransparent(RG rg)
     {
-        return this.entity == null || this.entity.isInvisible() || this.entity.isInvisibleToPlayer(Minecraft.getMinecraft().player) || super.getTransparent(g);
+        E e = this.c.i.getE();
+        return e == null || e.isInvisible() || e.isInvisibleToPlayer(Minecraft.getMinecraft().player) || super.getTransparent(rg);
     }
 }

@@ -1,7 +1,7 @@
 package com.nali.small.render;
 
-import com.nali.data.client.ClientDataO;
-import com.nali.render.ObjectRender;
+import com.nali.data.client.IClientDaO;
+import com.nali.render.RenderO;
 import com.nali.system.opengl.memo.MemoGo;
 import com.nali.system.opengl.memo.MemoSo;
 import com.nali.system.opengl.store.StoreO;
@@ -12,22 +12,22 @@ import static com.nali.list.data.SmallData.SHADER_O_STEP;
 import static com.nali.list.data.SmallData.TEXTURE_STEP;
 
 @SideOnly(Side.CLIENT)
-public class SmallRenderO<G extends MemoGo, S extends MemoSo, ST extends StoreO<G, S>, C extends ClientDataO> extends ObjectRender<G, S, ST, C>
+public class SmallRenderO<RG extends MemoGo, RS extends MemoSo, RST extends StoreO<RG, RS>, RC extends IClientDaO> extends RenderO<RG, RS, RST, RC>
 {
-    public SmallRenderO(ST st, C c)
+    public SmallRenderO(RST rst, RC rc)
     {
-        super(st, c);
+        super(rst, rc);
     }
 
     @Override
-    public int getTextureID(G g)
+    public int getTextureID(RG rg)
     {
-        return TEXTURE_STEP + super.getTextureID(g);
+        return TEXTURE_STEP + super.getTextureID(rg);
     }
 
     @Override
-    public int getShaderID(G g)
+    public int getShaderID(RG rg)
     {
-        return SHADER_O_STEP + super.getShaderID(g);
+        return SHADER_O_STEP + super.getShaderID(rg);
     }
 }
