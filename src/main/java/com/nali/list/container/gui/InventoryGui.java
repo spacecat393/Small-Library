@@ -147,7 +147,7 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                this.sendPacketUUID(TP.ID);
+                this.sendPacketUUID(STP.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof TPGUIFeatures))
@@ -182,7 +182,7 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                this.sendPacketUUID(GetEffects.ID);
+                this.sendPacketUUID(SGetEffects.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof EffectsGUIFeatures))
@@ -197,7 +197,7 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                this.sendPacketUUID(SetOwner.ID);
+                this.sendPacketUUID(SSetOwner.ID);
                 this.sendPacketUUIDInt(cliententitiesmemory.workbytes.LOCK_INVENTORY());
             }
 
@@ -213,7 +213,7 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                this.sendPacketUUID(SetOwner.ID);
+                this.sendPacketUUID(SSetOwner.ID);
                 this.sendPacketUUIDInt(cliententitiesmemory.workbytes.LOCK_DAMAGE());
             }
 
@@ -248,7 +248,7 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                this.sendPacket1(OpenPlayerGUI.ID);
+                this.sendPacket1(SOpenPlayerGUI.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof MimiTalkGUIFeatures))
@@ -263,7 +263,7 @@ public class InventoryGui extends MixGui
         {
             if (this.mouse_released == 0)
             {
-                this.sendPacketUUID(PutToBox.ID);
+                this.sendPacketUUID(SPutToBox.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof BoxGUIFeatures))
@@ -279,7 +279,7 @@ public class InventoryGui extends MixGui
             this.state |= 1;
             if (this.mouse_released == 1)
             {
-                this.sendPacketUUID(ResetBytes.ID);
+                this.sendPacketUUID(SResetBytes.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof WorkGUIFeatures))

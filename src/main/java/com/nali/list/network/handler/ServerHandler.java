@@ -1,9 +1,6 @@
 package com.nali.list.network.handler;
 
 import com.nali.list.network.message.ServerMessage;
-import com.nali.small.Small;
-import com.nali.small.entity.memo.server.ServerE;
-import com.nali.small.entity.EntityLeInv;
 import com.nali.system.Reflect;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.WorldServer;
@@ -15,9 +12,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import static com.nali.Nali.I;
+
 public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
 {
     public static Method[] METHOD_ARRAY;
+
+//    public static EntityPlayerMP ENTITYPLAYERMP;
+//    public static byte[] BYTE_ARRAY;
+
     static
     {
         List<Class> servermessage_class_list = Reflect.getClasses("com.nali.list.network.method.server");
@@ -33,7 +36,7 @@ public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
             }
             catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException e)
             {
-                Small.error(e);
+                I.error(e);
             }
         }
     }
@@ -50,7 +53,7 @@ public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
             }
             catch (IllegalAccessException | InvocationTargetException e)
             {
-                Small.warn(e);
+                I.warn(e);
 //                Small.error(e);
             }
         });
@@ -58,14 +61,14 @@ public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
         return null;
     }
 
-    public static boolean canPass(EntityLeInv skinningentities, EntityPlayerMP entityplayermp)
-    {
-        ServerE serverentitiesmemory = (ServerE)skinningentities.bothentitiesmemory;
-        if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.LOCK_INVENTORY() / 8] >> serverentitiesmemory.workbytes.LOCK_INVENTORY() % 8 & 1) == 1)
-        {
-            return serverentitiesmemory.owner_uuid == null || entityplayermp.getUniqueID().equals(serverentitiesmemory.owner_uuid);
-        }
-
-        return true;
-    }
+//    public static boolean canPass(ServerE servere, EntityPlayerMP entityplayermp)
+//    {
+////        if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.LOCK_INVENTORY() / 8] >> serverentitiesmemory.workbytes.LOCK_INVENTORY() % 8 & 1) == 1)
+//        if ((((AILeInvLockInv)servere.a.aie_map.get(AILeInvLockInv.ID)).state & 1) == 1)
+//        {
+//            return servere.owner_uuid == null || entityplayermp.getUniqueID().equals(servere.owner_uuid);
+//        }
+//
+//        return true;
+//    }
 }

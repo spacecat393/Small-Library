@@ -3,7 +3,7 @@ package com.nali.list.entity.gi;
 import com.nali.data.IBothDaE;
 import com.nali.data.client.IClientDaO;
 import com.nali.list.entity.ai.AILeInvManageItem;
-import com.nali.list.network.method.server.FetchManageItem;
+import com.nali.list.network.method.server.SFetchManageItem;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
@@ -47,7 +47,7 @@ public class GILeInvManageItem<G extends MixGui, RG extends MemoGo, RS extends M
         }
         else if (g.mouse_released == 1)
         {
-            g.sendPacketUUID(FetchManageItem.ID);
+            g.sendPacketUUID(SFetchManageItem.ID);
         }
 
         if (!(GUIFEATURESLOADER instanceof ManageItemGUIFeatures))

@@ -7,13 +7,13 @@ import com.nali.render.RenderS;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.client.ClientSle;
 import com.nali.small.entity.memo.client.box.mix.MixBoxSle;
-import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.small.entity.memo.client.render.RenderFle;
+import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.small.mixin.IMixinLayerArmorBase;
 import com.nali.sound.ISoundLe;
-import com.nali.system.opengl.memo.MemoCurrent;
-import com.nali.system.opengl.memo.MemoGs;
-import com.nali.system.opengl.memo.MemoSs;
+import com.nali.system.opengl.memo.client.MemoCurrent;
+import com.nali.system.opengl.memo.client.MemoGs;
+import com.nali.system.opengl.memo.client.MemoSs;
 import com.nali.system.opengl.store.StoreS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -36,7 +36,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
-import static com.nali.system.opengl.memo.MemoCurrent.GL_CULL_FACE;
+import static com.nali.system.opengl.memo.client.MemoCurrent.GL_CULL_FACE;
 
 @SideOnly(Side.CLIENT)
 public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<SD, BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends LayerRender<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>

@@ -3,7 +3,7 @@ package com.nali.list.entity.ai;
 import com.nali.Nali;
 import com.nali.data.IBothDaE;
 import com.nali.list.network.message.ClientMessage;
-import com.nali.list.network.method.client.RespawnPlayer;
+import com.nali.list.network.method.client.CRespawnPlayer;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.chunk.ChunkLoader;
 import com.nali.small.entity.IMixLe;
@@ -173,7 +173,7 @@ public class AILeRevive<SD extends ISoundLe, BD extends IBothDaE, E extends Enti
                                     this.uuid = this.entity.getUniqueID();
 //                                    e_nbttagcompound.setUniqueId("Nali_reviver", this.entity.getUniqueID());
                                     ChunkLoader.updateChunk(this.s);
-                                    NetworkRegistry.I.sendTo(new ClientMessage(new byte[]{RespawnPlayer.ID}), entityplayermp);
+                                    NetworkRegistry.I.sendTo(new ClientMessage(new byte[]{CRespawnPlayer.ID}), entityplayermp);
     //                                entityplayermp.setPositionAndUpdate(x, y, z);
 
     //                                GameType gametype = entityplayermp.interactionManager.getGameType();

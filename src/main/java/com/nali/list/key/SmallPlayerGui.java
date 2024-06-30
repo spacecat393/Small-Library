@@ -3,7 +3,7 @@ package com.nali.list.key;
 import com.nali.key.MixKeyBinding;
 import com.nali.list.container.gui.PlayerGui;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.OpenPlayerGUI;
+import com.nali.list.network.method.server.SOpenPlayerGUI;
 import com.nali.networks.NetworksRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
@@ -25,7 +25,7 @@ public class SmallPlayerGui extends MixKeyBinding
         if (Minecraft.getMinecraft().currentScreen == null)
         {
             PlayerGui.PAGE = 0;
-            NetworksRegistry.I.sendToServer(new ServerMessage(new byte[]{OpenPlayerGUI.ID}));
+            NetworksRegistry.I.sendToServer(new ServerMessage(new byte[]{SOpenPlayerGUI.ID}));
         }
     }
 }

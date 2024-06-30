@@ -3,7 +3,7 @@ package com.nali.small.gui;
 import com.nali.list.container.InventoryContainer;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SetWorkByte;
-import com.nali.list.network.method.server.SyncBitByte;
+import com.nali.list.network.method.server.SSyncBitByte;
 import com.nali.network.NetworkRegistry;
 import com.nali.networks.NetworksRegistry;
 import com.nali.small.entity.EntityLeInv;
@@ -175,7 +175,7 @@ public abstract class MixGui extends GuiContainer
     {
         ClientLe cliententitiesmemory = (ClientLe)((InventoryContainer)this.inventorySlots).skinningentities.bothentitiesmemory;
         byte[] byte_array = new byte[18];
-        byte_array[0] = SyncBitByte.ID;
+        byte_array[0] = SSyncBitByte.ID;
         ByteWriter.set(byte_array, cliententitiesmemory.uuid, 1);
         byte_array[17] = i;
 //        BytesWriter.set(byte_array, i, 17);

@@ -1,6 +1,6 @@
 package com.nali.small.gui.net.messages.inventory;
 
-import com.nali.list.network.method.server.SetAttribute;
+import com.nali.list.network.method.server.SSetAttribute;
 import com.nali.small.Small;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.net.GUINetLoader;
@@ -20,7 +20,7 @@ public class SetAttributeGUINet extends GUINetLoader
     {
         try
         {
-            this.sendUUIDFloatBytes(SetAttribute.ID, (byte)2);
+            this.sendUUIDFloatBytes(SSetAttribute.ID, (byte)2);
         }
         catch (Exception e)
         {

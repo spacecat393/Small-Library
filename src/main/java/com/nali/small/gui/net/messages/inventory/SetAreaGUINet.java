@@ -1,6 +1,6 @@
 package com.nali.small.gui.net.messages.inventory;
 
-import com.nali.list.network.method.server.SetArea;
+import com.nali.list.network.method.server.SSetArea;
 import com.nali.small.Small;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.inventory.AreaGUIFeatures;
@@ -40,7 +40,7 @@ public class SetAreaGUINet extends GUINetLoader
 
                 if (pos || size == 2)
                 {
-                    this.sendUUIDFloatBytes(SetArea.ID, size, string_array);
+                    this.sendUUIDFloatBytes(SSetArea.ID, size, string_array);
                 }
             }
         }

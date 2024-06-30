@@ -1,6 +1,5 @@
 package com.nali.small.gui.net.messages.inventory;
 
-import com.nali.list.network.method.server.AddTroublemaker;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.net.GUINetLoader;
 import net.minecraftforge.fml.relauncher.Side;
@@ -17,6 +16,6 @@ public class AddTroublemakerGUINet extends GUINetLoader
     @Override
     public void run()
     {
-        this.sendUUIDIntBytes(AddTroublemaker.ID);
+        this.sendUUIDIntBytes(SAddTroublemaker.ID);
     }
 }

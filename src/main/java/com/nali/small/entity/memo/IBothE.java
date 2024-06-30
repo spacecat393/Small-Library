@@ -36,5 +36,8 @@ public interface IBothE<SD extends ISoundN, BD extends IBothDaE, E extends Entit
     @SideOnly(Side.CLIENT)
     void doRender(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks);
 
+    @SideOnly(Side.CLIENT)
+    void playSound(int i);
+
     I getI();
 }

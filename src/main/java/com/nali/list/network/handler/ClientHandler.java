@@ -1,7 +1,6 @@
 package com.nali.list.network.handler;
 
 import com.nali.list.network.message.ClientMessage;
-import com.nali.small.Small;
 import com.nali.system.Reflect;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -10,6 +9,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+
+import static com.nali.Nali.I;
 
 public class ClientHandler implements IMessageHandler<ClientMessage, IMessage>
 {
@@ -29,7 +30,7 @@ public class ClientHandler implements IMessageHandler<ClientMessage, IMessage>
             }
             catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException e)
             {
-                Small.error(e);
+                I.error(e);
             }
         }
     }
@@ -43,7 +44,7 @@ public class ClientHandler implements IMessageHandler<ClientMessage, IMessage>
         }
         catch (IllegalAccessException | InvocationTargetException e)
         {
-            Small.warn(e);
+            I.warn(e);
 //            Small.error(e);
         }
 

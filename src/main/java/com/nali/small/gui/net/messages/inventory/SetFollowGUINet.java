@@ -1,6 +1,6 @@
 package com.nali.small.gui.net.messages.inventory;
 
-import com.nali.list.network.method.server.SetFollow;
+import com.nali.list.network.method.server.SSetFollow;
 import com.nali.small.Small;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.works.FollowGUIFeatures;
@@ -40,7 +40,7 @@ public class SetFollowGUINet extends GUINetLoader
 
                 if (pos || size == 2)
                 {
-                    this.sendUUIDFloatBytes(SetFollow.ID, size, string_array);
+                    this.sendUUIDFloatBytes(SSetFollow.ID, size, string_array);
                 }
             }
         }

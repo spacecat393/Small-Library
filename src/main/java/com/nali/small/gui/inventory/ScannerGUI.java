@@ -103,11 +103,11 @@ public class ScannerGUI
         {
             if (gui.mouse_released == 0)
             {
-                gui.sendPacketUUID(ViewTarget.ID);
+                gui.sendPacketUUID(SViewTarget.ID);
             }
             else if (gui.mouse_released == 1)
             {
-                gui.sendPacketUUID(ClearTarget.ID);
+                gui.sendPacketUUID(SClearTarget.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof TargetGUIFeatures))
@@ -136,11 +136,11 @@ public class ScannerGUI
         {
             if (gui.mouse_released == 0)
             {
-                gui.sendPacketUUID(ViewTroublemaker.ID);
+                gui.sendPacketUUID(SViewTroublemaker.ID);
             }
             else if (gui.mouse_released == 1)
             {
-                gui.sendPacketUUID(ClearTroublemaker.ID);
+                gui.sendPacketUUID(SClearTroublemaker.ID);
             }
 
             if (!(GUIFEATURESLOADER instanceof TroublemakerGUIFeatures))

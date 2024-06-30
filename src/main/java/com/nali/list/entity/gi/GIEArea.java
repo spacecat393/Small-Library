@@ -2,7 +2,7 @@ package com.nali.list.entity.gi;
 
 import com.nali.data.IBothDaE;
 import com.nali.data.client.IClientDaO;
-import com.nali.list.network.method.server.FetchArea;
+import com.nali.list.network.method.server.SFetchArea;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
@@ -41,7 +41,7 @@ public class GIEArea<G extends MixGui, RG extends MemoGo, RS extends MemoSo, RC 
         g.state |= 1;
         if (g.mouse_released == 1)
         {
-            g.sendPacketUUID(FetchArea.ID);
+            g.sendPacketUUID(SFetchArea.ID);
         }
         if (!(GUIFEATURESLOADER instanceof AreaGUIFeatures))
         {

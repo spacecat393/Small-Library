@@ -3,7 +3,7 @@ package com.nali.list.container.gui;
 import com.nali.draw.DrawScreen;
 import com.nali.list.container.PlayerContainer;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.OpenInvGUI;
+import com.nali.list.network.method.server.SOpenInvGUI;
 import com.nali.list.network.method.server.SEMapToClient;
 import com.nali.list.network.method.server.X12;
 import com.nali.list.network.method.server.X64;
@@ -265,7 +265,7 @@ public class PlayerGui extends MixGui
                     String uuid_string = getTextFromClipboard();
                     if (isValidUUIDString(uuid_string))
                     {
-                        this.sendPacketUUID(OpenInvGUI.ID, UUID.fromString(uuid_string));
+                        this.sendPacketUUID(SOpenInvGUI.ID, UUID.fromString(uuid_string));
                     }
                 }
 
@@ -466,7 +466,7 @@ public class PlayerGui extends MixGui
                 if (mixgui.mouse_released == 0)
                 {
                     byte[] byte_array = new byte[17];
-                    byte_array[0] = OpenInvGUI.ID;
+                    byte_array[0] = SOpenInvGUI.ID;
                     BytesWriter.set(byte_array, this.uuid, 1);
                     NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));
                 }

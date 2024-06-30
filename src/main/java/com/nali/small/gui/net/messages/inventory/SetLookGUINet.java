@@ -1,6 +1,6 @@
 package com.nali.small.gui.net.messages.inventory;
 
-import com.nali.list.network.method.server.SetLook;
+import com.nali.list.network.method.server.SSetLook;
 import com.nali.small.Small;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.net.GUINetLoader;
@@ -20,7 +20,7 @@ public class SetLookGUINet extends GUINetLoader
     {
         try
         {
-            this.sendUUIDFloatBytes(SetLook.ID, (byte)2);
+            this.sendUUIDFloatBytes(SSetLook.ID, (byte)2);
         }
         catch (Exception e)
         {

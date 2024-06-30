@@ -1,6 +1,6 @@
 package com.nali.small.gui.net.messages.inventory;
 
-import com.nali.list.network.method.server.SetAttack;
+import com.nali.list.network.method.server.SSetAttack;
 import com.nali.small.Small;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.works.AttackGUIFeatures;
@@ -40,7 +40,7 @@ public class SetAttackGUINet extends GUINetLoader
 
                 if (pos || size == 2)
                 {
-                    this.sendUUIDFloatBytes(SetAttack.ID, size, string_array);
+                    this.sendUUIDFloatBytes(SSetAttack.ID, size, string_array);
                 }
             }
         }

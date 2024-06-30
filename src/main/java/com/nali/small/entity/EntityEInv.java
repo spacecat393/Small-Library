@@ -50,4 +50,10 @@ public abstract class EntityEInv extends Entity implements IMixE
         super.onUpdate();
         this.ibotheinv.onUpdate();
     }
+
+    @Override
+    public IBothEInv getB()
+    {
+        return ibotheinv;
+    }
 }

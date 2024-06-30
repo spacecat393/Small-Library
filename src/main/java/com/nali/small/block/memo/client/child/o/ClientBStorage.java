@@ -19,9 +19,9 @@ public class ClientBStorage<RG extends MemoGo, RS extends MemoSo, RC extends ICl
     }
 
     @Override
-    public DrawScreen<R> createDrawScreen()
+    public DrawScreen<RG, RS, RST, RC, R> createDrawScreen()
     {
-        DrawScreen<R> drawscreen = new DrawScreen();
+        DrawScreen<RG, RS, RST, RC, R> drawscreen = new DrawScreen(this.r);
         drawscreen.scale(0.25F);
         drawscreen.z = 0.0F;
         return drawscreen;

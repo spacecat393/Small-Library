@@ -1,6 +1,6 @@
 package com.nali.small.gui.net.messages.inventory;
 
-import com.nali.list.network.method.server.RemoveTarget;
+import com.nali.list.network.method.server.SRemoveTarget;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.net.GUINetLoader;
 import net.minecraftforge.fml.relauncher.Side;
@@ -17,6 +17,6 @@ public class RemoveTargetGUINet extends GUINetLoader
     @Override
     public void run()
     {
-        this.sendUUIDIntBytes(RemoveTarget.ID);
+        this.sendUUIDIntBytes(SRemoveTarget.ID);
     }
 }

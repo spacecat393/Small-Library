@@ -3,8 +3,9 @@ package com.nali.small.entity.memo.client;
 import com.nali.data.IBothDaE;
 import com.nali.data.client.IClientDaO;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.OpenInvGUI;
-import com.nali.list.network.method.server.SyncUUIDToClient;
+import com.nali.list.network.method.server.SAIE;
+import com.nali.list.network.method.server.SOpenInvGUI;
+import com.nali.list.network.method.server.SSyncUUIDToClient;
 import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
@@ -15,8 +16,8 @@ import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.sound.ISoundN;
 import com.nali.sound.Sound;
 import com.nali.system.bytes.ByteWriter;
-import com.nali.system.opengl.memo.MemoGo;
-import com.nali.system.opengl.memo.MemoSo;
+import com.nali.system.opengl.memo.client.MemoGo;
+import com.nali.system.opengl.memo.client.MemoSo;
 import com.nali.system.opengl.store.StoreO;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,10 +44,10 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
     public MR mr;
 
 //    public IEMixBox iemixbox;
-    public float body_rot,
-        head_rot,
-        net_head_yaw,
-        head_pitch;
+//    public float body_rot,
+//        head_rot,
+//        net_head_yaw,
+//        head_pitch;
     public boolean should_render;
 
     public Sound sound;
@@ -72,7 +73,7 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
             if (this.uuid != null)
             {
                 byte[] byte_array = new byte[17];
-                byte_array[0] = OpenInvGUI.ID;
+                byte_array[0] = SOpenInvGUI.ID;
                 ByteWriter.set(byte_array, this.uuid, 1);
                 NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
             }
@@ -134,7 +135,7 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
         if (this.uuid == null)
         {
             byte[] byte_array = new byte[5];
-            byte_array[0] = SyncUUIDToClient.ID;
+            byte_array[0] = SSyncUUIDToClient.ID;
             ByteWriter.set(byte_array, this.i.getE().getEntityId(), 1);
             NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
         }
@@ -146,14 +147,19 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
         this.mr.doRender(rendere, ox, oy, oz, partialTicks);
     }
 
-//    public void sendPacketUUID(byte i)
-//    {
-//        byte[] byte_array = new byte[18];
-//        byte_array[0] = SetWorkByte.ID;
-//        ByteWriter.set(byte_array, this.uuid, 1);
-//        byte_array[17] = i;
-//        NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
-//    }
+    @Override
+    public void playSound(int i)
+    {
+        this.sound.play(i);
+    }
+
+    public void sendSAIE(byte[] byte_array, byte i)
+    {
+        byte_array[0] = SAIE.ID;
+        ByteWriter.set(byte_array, this.uuid, 1);
+        byte_array[17] = i;
+        NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+    }
 
     @Override
     public I getI()

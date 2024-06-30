@@ -1,6 +1,6 @@
 package com.nali.small.gui.net.messages.inventory;
 
-import com.nali.list.network.method.server.SetLocation;
+import com.nali.list.network.method.server.SSetLocation;
 import com.nali.small.Small;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.works.ManageItemGUIFeatures;
@@ -31,7 +31,7 @@ public class SetLocationGUINet extends GUINetLoader
 
             if (pos || size == 2)
             {
-                this.sendUUIDFloatBytes(SetLocation.ID, size, string_array);
+                this.sendUUIDFloatBytes(SSetLocation.ID, size, string_array);
             }
         }
         catch (Exception e)

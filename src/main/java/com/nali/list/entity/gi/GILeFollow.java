@@ -3,8 +3,8 @@ package com.nali.list.entity.gi;
 import com.nali.data.IBothDaE;
 import com.nali.data.client.IClientDaO;
 import com.nali.list.entity.ai.AILeFollow;
-import com.nali.list.network.method.server.FetchFollow;
-import com.nali.list.network.method.server.SetOwner;
+import com.nali.list.network.method.server.SFetchFollow;
+import com.nali.list.network.method.server.SSetOwner;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
@@ -46,13 +46,13 @@ public class GILeFollow<G extends MixGui, RG extends MemoGo, RS extends MemoSo, 
 //            {
         if (g.mouse_released == 0)
         {
-            g.sendPacketUUID(SetOwner.ID);
+            g.sendPacketUUID(SSetOwner.ID);
 //            g.sendPacketUUIDInt(cliententitiesmemory.workbytes.FOLLOW());
             g.sendPacketUUIDInt(AILeFollow.ID);
         }
         else if (g.mouse_released == 1)
         {
-            g.sendPacketUUID(FetchFollow.ID);
+            g.sendPacketUUID(SFetchFollow.ID);
         }
 
         if (!(GUIFEATURESLOADER instanceof FollowGUIFeatures))

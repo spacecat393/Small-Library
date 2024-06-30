@@ -1,6 +1,6 @@
 package com.nali.small.gui.net.messages.inventory;
 
-import com.nali.list.network.method.server.SetGetItem;
+import com.nali.list.network.method.server.SSetGetItem;
 import com.nali.small.Small;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.works.GetItemGUIFeatures;
@@ -34,7 +34,7 @@ public class SetGetItemGUINet extends GUINetLoader
             }
             else
             {
-                this.sendUUIDFloatBytes(SetGetItem.ID, (byte)2, string_array);
+                this.sendUUIDFloatBytes(SSetGetItem.ID, (byte)2, string_array);
             }
         }
         catch (Exception e)

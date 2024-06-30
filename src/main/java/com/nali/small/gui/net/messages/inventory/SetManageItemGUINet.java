@@ -1,6 +1,6 @@
 package com.nali.small.gui.net.messages.inventory;
 
-import com.nali.list.network.method.server.SetManageItem;
+import com.nali.list.network.method.server.SSetManageItem;
 import com.nali.small.Small;
 import com.nali.small.gui.MixGui;
 import com.nali.small.gui.features.messages.works.ManageItemGUIFeatures;
@@ -40,7 +40,7 @@ public class SetManageItemGUINet extends GUINetLoader
 
                 if (pos || size == 2)
                 {
-                    this.sendUUIDFloatBytes(SetManageItem.ID, size, string_array);
+                    this.sendUUIDFloatBytes(SSetManageItem.ID, size, string_array);
                 }
             }
         }

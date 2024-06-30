@@ -1,13 +1,15 @@
 package com.nali.list.entity.ai;
 
+import com.nali.Nali;
 import com.nali.data.IBothDaE;
 import com.nali.small.entity.EntityRegistry;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
-import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.entity.memo.server.ai.AI;
+import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.mixin.IMixinWorldServer;
 import com.nali.sound.ISoundN;
+import com.nali.system.bytes.ByteReader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -50,7 +52,97 @@ public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, 
     @Override
     public void call()
     {
+        switch (this.s.a.byte_array[18])
+        {
+            case 0:
+                this.addTarget();
+                break;
+            case 1:
+                this.clearTarget();
+                break;
+            case 2:
+                this.addTroublemaker();
+                break;
+            case 3:
+                this.clearTroublemaker();
+                break;
+            default:
+                Nali.I.warn("BIT_FLIP");
+        }
+    }
 
+    public void addTarget()
+    {
+        byte[] byte_array = this.s.a.byte_array;
+        for (int index = 1 + 16 + 1 + 1; index < byte_array.length; index += 4)
+        {
+            int id = ByteReader.getInt(byte_array, index);
+//                            int id = Integer.parseInt(new_string);
+
+            if (id >= EntityRegistry.ENTITY_KEY_ARRAY.length)
+            {
+                continue;
+            }
+
+            boolean result = true;
+            for (int i : this.target_list)
+            {
+                if (i == id)
+                {
+                    result = false;
+                    break;
+                }
+            }
+
+            if (result)
+            {
+                this.target_list.add(id);
+            }
+        }
+    }
+
+    public void clearTarget()
+    {
+        this.target_list.clear();
+    }
+
+    public void addTroublemaker()
+    {
+        byte[] byte_array = this.s.a.byte_array;
+//                        String string = new String(servermessage.data, 1 + 16, servermessage.data.length - (1 + 16));
+//                        String[] string_array = string.split(" ");
+
+//                        for (String new_string : string_array)
+        for (int index = 1 + 16 + 1 + 1; index < byte_array.length; index += 4)
+        {
+            int id = ByteReader.getInt(byte_array, index);
+//                            int id = Integer.parseInt(new_string);
+
+            if (id >= EntityRegistry.ENTITY_KEY_ARRAY.length)
+            {
+                continue;
+            }
+
+            boolean result = true;
+            for (int i : this.troublemaker_list)
+            {
+                if (i == id)
+                {
+                    result = false;
+                    break;
+                }
+            }
+
+            if (result)
+            {
+                this.troublemaker_list.add(id);
+            }
+        }
+    }
+
+    public void clearTroublemaker()
+    {
+        this.troublemaker_list.clear();
     }
 
     @Override

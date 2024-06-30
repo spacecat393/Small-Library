@@ -10,9 +10,9 @@ import com.nali.small.entity.memo.client.render.RenderE;
 import com.nali.small.entity.memo.client.render.layer.ArrowLayer;
 import com.nali.small.entity.memo.client.render.layer.ItemLayer;
 import com.nali.sound.ISoundLe;
-import com.nali.system.opengl.memo.MemoAnimation;
-import com.nali.system.opengl.memo.MemoGs;
-import com.nali.system.opengl.memo.MemoSs;
+import com.nali.system.opengl.memo.client.MemoAnimation;
+import com.nali.system.opengl.memo.client.MemoGs;
+import com.nali.system.opengl.memo.client.MemoSs;
 import com.nali.system.opengl.store.StoreS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderGlobal;
@@ -28,13 +28,19 @@ import java.awt.*;
 
 import static com.nali.key.KeyHelper.generateRainbowColor;
 import static com.nali.small.entity.memo.client.render.RenderSeMath.interpolateRotation;
-import static com.nali.system.opengl.memo.MemoCurrent.*;
+import static com.nali.system.opengl.memo.client.MemoCurrent.*;
 
 @SideOnly(Side.CLIENT)
 public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<SD, BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>
 {
     public ArrowLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> arrowlayerrender;
     public ItemLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> itemlayerrender;
+
+    public float
+    body_rot,
+    head_rot,
+    net_head_yaw,
+    head_pitch;
 
     public MixRenderSleInv(C c)
     {
@@ -91,10 +97,10 @@ public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC e
     {
         R r = this.c.r;
         E e = this.c.i.getE();
-        this.c.body_rot = (float)Math.toRadians(interpolateRotation(e.prevRenderYawOffset, e.renderYawOffset, partialTicks));
-        this.c.head_rot = (float)Math.toRadians(interpolateRotation(e.prevRotationYaw, e.rotationYaw, partialTicks));
-        this.c.net_head_yaw = this.c.head_rot - this.c.body_rot;
-        this.c.head_pitch = (float)Math.toRadians(e.prevRotationPitch + (e.rotationPitch - e.prevRotationPitch) * partialTicks);
+        this.body_rot = (float)Math.toRadians(interpolateRotation(e.prevRenderYawOffset, e.renderYawOffset, partialTicks));
+        this.head_rot = (float)Math.toRadians(interpolateRotation(e.prevRotationYaw, e.rotationYaw, partialTicks));
+        this.net_head_yaw = this.head_rot - this.body_rot;
+        this.head_pitch = (float)Math.toRadians(e.prevRotationPitch + (e.rotationPitch - e.prevRotationPitch) * partialTicks);
 //        r.timeline = partialTicks;
 
 //        OpenGLAnimationMemory openglanimationmemory = r.dataloader.openglanimationmemory_list.get(((SkinningClientData)r.clientdata).AnimationID());

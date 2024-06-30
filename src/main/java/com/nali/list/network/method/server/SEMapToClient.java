@@ -2,7 +2,7 @@ package com.nali.list.network.method.server;
 
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.client.SetSEMap;
+import com.nali.list.network.method.client.CSetSEMap;
 import com.nali.networks.NetworksRegistry;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.chunk.ChunkLoader;
@@ -10,8 +10,6 @@ import com.nali.system.bytes.BytesWriter;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayerMP;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 import static com.nali.small.entity.memo.server.ServerE.ENTITIES_MAP;
@@ -27,7 +25,7 @@ public class SEMapToClient
         //                if (!entity_map.isEmpty())
         if (ENTITIES_MAP.isEmpty())
         {
-            NetworksRegistry.I.sendTo(new ClientMessage(new byte[]{SetSEMap.ID}), entityplayermp);
+            NetworksRegistry.I.sendTo(new ClientMessage(new byte[]{CSetSEMap.ID}), entityplayermp);
         }
         else
         {
@@ -35,7 +33,7 @@ public class SEMapToClient
             //                    Set<UUID> keys_set = new HashSet<>(entity_map.keySet());
 //            Set<UUID> keys_set = new HashSet(ENTITIES_MAP.keySet());
             byte[] byte_array = new byte[keys_set.size() * 16 + 1 + keys_set.size() * 8];
-            byte_array[0] = SetSEMap.ID;
+            byte_array[0] = CSetSEMap.ID;
 
             for (UUID uuid : keys_set)
             {

@@ -8,6 +8,7 @@ import com.nali.small.entity.memo.server.ai.frame.FrameE;
 import com.nali.sound.ISoundN;
 import com.nali.system.Reflect;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.lang.reflect.InvocationTargetException;
@@ -37,7 +38,10 @@ public abstract class MixAIE<SD extends ISoundN, BD extends IBothDaE, E extends 
 
     public S s;
     public Map<Byte, AI<SD, BD, E, I, S, ?>> aie_map = new HashMap();
-    public byte state = (byte)255;//main_work sub_work init ?map chunk
+    public byte state = (byte)255;//main_work sub_work init ai-lock ?map chunk
+
+    public EntityPlayerMP entityplayermp;
+    public byte[] byte_array;
 
     public FrameE<SD, BD, E, I, S, ?>[] framee_array;
 
@@ -112,7 +116,7 @@ public abstract class MixAIE<SD extends ISoundN, BD extends IBothDaE, E extends 
 
     public void readNBT(NBTTagCompound nbttagcompound)
     {
-        this.state = nbttagcompound.getByte("MixAIE_state");
+        this.state = (byte)(nbttagcompound.getByte("MixAIE_state") & 255-8);
 
         if ((this.state & 4) == 0)
         {
@@ -155,9 +159,24 @@ public abstract class MixAIE<SD extends ISoundN, BD extends IBothDaE, E extends 
         this.state = (byte)255;
     }
 
+    public void set(EntityPlayerMP entityplayermp, byte[] byte_array)
+    {
+//        if ((this.state & 8) == 8)
+//        {
+        this.entityplayermp = entityplayermp;
+        this.byte_array = byte_array;
+//        }
+    }
+
     public void call(byte id)
     {
         this.aie_map.get(id).call();
+    }
+
+    public void clear()
+    {
+        this.entityplayermp = null;
+        this.byte_array = null;
     }
 
     public abstract void init();

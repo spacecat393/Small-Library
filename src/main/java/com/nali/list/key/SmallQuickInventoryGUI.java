@@ -2,7 +2,7 @@ package com.nali.list.key;
 
 import com.nali.key.MixKeyBinding;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.OpenInvGUI;
+import com.nali.list.network.method.server.SOpenInvGUI;
 import com.nali.networks.NetworksRegistry;
 import com.nali.system.bytes.BytesWriter;
 import net.minecraft.client.Minecraft;
@@ -33,7 +33,7 @@ public class SmallQuickInventoryGUI extends MixKeyBinding
             if (isValidUUIDString(uuid_string))
             {
                 byte[] byte_array = new byte[21];
-                byte_array[0] = OpenInvGUI.ID;
+                byte_array[0] = SOpenInvGUI.ID;
                 BytesWriter.set(byte_array, UUID.fromString(uuid_string), 1);
                 BytesWriter.set(byte_array, 1, 17);
                 NetworksRegistry.I.sendToServer(new ServerMessage(byte_array));

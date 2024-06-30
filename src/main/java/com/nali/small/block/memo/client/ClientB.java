@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class ClientB<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>> implements IBothB
 {
     public R r;
-    public DrawScreen<R> drawscreen;
+    public DrawScreen<RG, RS, RST, RC, R> drawscreen;
 
     public ClientB(R r)
     {
@@ -24,8 +24,8 @@ public abstract class ClientB<RG extends MemoGo, RS extends MemoSo, RC extends I
 
     public void render()
     {
-        this.drawscreen.render(this.r);
+        this.drawscreen.render();
     }
 
-    public abstract DrawScreen<R> createDrawScreen();
+    public abstract DrawScreen<RG, RS, RST, RC, R> createDrawScreen();
 }

@@ -3,7 +3,7 @@ package com.nali.list.entity.gi;
 import com.nali.data.IBothDaE;
 import com.nali.data.client.IClientDaO;
 import com.nali.list.entity.ai.AILeAttack;
-import com.nali.list.network.method.server.FetchAttack;
+import com.nali.list.network.method.server.SFetchAttack;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
@@ -50,7 +50,7 @@ public class GILeAttack<G extends MixGui, RG extends MemoGo, RS extends MemoSo, 
         }
         else if (g.mouse_released == 1)
         {
-            g.sendPacketUUID(FetchAttack.ID);
+            g.sendPacketUUID(SFetchAttack.ID);
         }
 
         if (!(GUIFEATURESLOADER instanceof AttackGUIFeatures))

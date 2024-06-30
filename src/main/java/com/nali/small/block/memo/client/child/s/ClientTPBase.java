@@ -15,22 +15,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ClientTPBase<SD extends ISoundN, BD extends IBothDaSn<SD>, RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<SD, BD, RG, RS, RST, RC>> extends ClientB<RG, RS, RC, RST, R>
 {
-    public static DrawScreen DRAWSCREEN;
-    static
-    {
-        DRAWSCREEN = new DrawScreen();
-        DRAWSCREEN.scale(0.25F);
-        DRAWSCREEN.z = 0.0F;
-    }
-
     public ClientTPBase(R r)
     {
         super(r);
     }
 
     @Override
-    public DrawScreen<R> createDrawScreen()
+    public DrawScreen<RG, RS, RST, RC, R> createDrawScreen()
     {
-        return DRAWSCREEN;
+        DrawScreen<RG, RS, RST, RC, R> drawscreen = new DrawScreen(this.r);
+        drawscreen.scale(0.25F);
+        drawscreen.z = 0.0F;
+        return drawscreen;
     }
 }

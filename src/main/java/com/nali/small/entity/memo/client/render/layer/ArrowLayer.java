@@ -1,17 +1,19 @@
 package com.nali.small.entity.memo.client.render.layer;
 
+import com.nali.Nali;
 import com.nali.data.IBothDaSe;
 import com.nali.data.client.IClientDaS;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.client.ClientSle;
 import com.nali.small.entity.memo.client.box.mix.MixBoxSle;
-import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.small.entity.memo.client.render.RenderE;
+import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.sound.ISoundLe;
-import com.nali.system.opengl.memo.MemoCurrent;
-import com.nali.system.opengl.memo.MemoGs;
-import com.nali.system.opengl.memo.MemoSs;
+import com.nali.system.opengl.memo.Memo3DS;
+import com.nali.system.opengl.memo.client.MemoCurrent;
+import com.nali.system.opengl.memo.client.MemoGs;
+import com.nali.system.opengl.memo.client.MemoSs;
 import com.nali.system.opengl.store.StoreS;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -56,7 +58,8 @@ public class ArrowLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClient
 //                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)OBJECT_LIST.get(model_i);
 //                RG rg = this.c.r.st.g_list.get(model_i);
 //                this.index_int_array_list.add(new int[]{model_i, random.nextInt(openglskinningmemory.index_int_array.length)});
-                this.index_int_array_list.add(new int[]{model_i, random.nextInt(this.c.r.rst.rg_list.get(model_i).index_int_array.length)});
+                Memo3DS memo3ds = Nali.I.bothloader.memo3d_list.get(model_i);
+                this.index_int_array_list.add(new int[]{model_i, random.nextInt(memo3ds.index_int_array.length)});
                 this.float_array_list.add(new float[]{random.nextFloat(), random.nextFloat(), random.nextFloat()});
             }
             else if (this.index_int_array_list.size() > i)

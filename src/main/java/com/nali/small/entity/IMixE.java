@@ -1,6 +1,7 @@
 package com.nali.small.entity;
 
 import com.nali.data.IBothDaE;
+import com.nali.small.entity.memo.IBothE;
 import com.nali.sound.ISoundN;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -131,4 +132,5 @@ public interface IMixE<SD extends ISoundN, BD extends IBothDaE, E extends Entity
     void newServer();
 
     E getE();
+    IBothE getB();
 }
