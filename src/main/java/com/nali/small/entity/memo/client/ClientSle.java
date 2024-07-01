@@ -9,7 +9,7 @@ import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.sound.ISoundLe;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.store.StoreS;
+import com.nali.system.opengl.memo.client.store.StoreS;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,9 +24,9 @@ public abstract class ClientSle<RG extends MemoGs, RS extends MemoSs, RC extends
 {
     public ItemStack mouth_itemstack = ItemStack.EMPTY;
 
-    public ClientSle(I i)
+    public ClientSle(I i, R r, MB mb, MR mr)
     {
-        super(i);
+        super(i, r, mb, mr);
     }
 
     @Override
@@ -46,5 +46,5 @@ public abstract class ClientSle<RG extends MemoGs, RS extends MemoSs, RC extends
         this.mouth_itemstack = entitydatamanager.get(MOUTH_ITEMSTACK_DATAPARAMETER);
     }
 
-    public abstract int[] getIVIntArray();
+//    public abstract int[] getIVIntArray();
 }

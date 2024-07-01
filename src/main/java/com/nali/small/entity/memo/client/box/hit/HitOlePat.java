@@ -2,6 +2,7 @@ package com.nali.small.entity.memo.client.box.hit;
 
 import com.nali.data.IBothDaE;
 import com.nali.data.client.IClientDaO;
+import com.nali.list.entity.ai.AIEPat;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderO;
@@ -13,7 +14,7 @@ import com.nali.sound.ISoundLe;
 import com.nali.system.bytes.ByteWriter;
 import com.nali.system.opengl.memo.client.MemoGo;
 import com.nali.system.opengl.memo.client.MemoSo;
-import com.nali.system.opengl.store.StoreO;
+import com.nali.system.opengl.memo.client.store.StoreO;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -44,13 +45,14 @@ public class HitOlePat<RG extends MemoGo, RS extends MemoSo, RC extends IClientD
         {
             this.pat_time = (byte)e.world.rand.nextInt(16);
 
-            byte[] byte_array = new byte[1 + 16 + 4];
-            byte_array[0] = SPat.ID;
+//            this.c.sendSAIE(new byte[1 + 16 + 1], AIEPat.ID);
+            byte[] byte_array = new byte[1 + 16 + 1 + 4];
+            byte_array[0] = AIEPat.ID;
             ByteWriter.set(byte_array, this.c.uuid, 1);
             ByteWriter.set(byte_array, (float)e.getEntityBoundingBox().maxY, 1 + 16);
             NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 
-            this.c.sound.play(this.c.i.getSD().PAT());
+//            this.c.sound.play(this.c.i.getSD().PAT());
 
 //            serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ON_PAT()] = 1;
 //            this.skinningentities.world.spawnEntity(new EntityXPOrb(this.skinningentities.world, this.skinningentities.posX, this.skinningentities.posY, this.skinningentities.posZ, 10));

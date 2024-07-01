@@ -1,9 +1,8 @@
 package com.nali.list.network.method.client;
 
 import com.nali.list.network.message.ClientMessage;
-import com.nali.small.entity.memo.client.ClientLe;
-import com.nali.small.entity.EntityLeInv;
-import com.nali.system.bytes.BytesReader;
+import com.nali.small.entity.IMixE;
+import com.nali.system.bytes.ByteReader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 
@@ -13,11 +12,10 @@ public class CSetUUID
 
     public static void run(ClientMessage clientmessage)
     {
-        Entity entity = Minecraft.getMinecraft().world.getEntityByID(BytesReader.getInt(clientmessage.data, 1 + 16));
-        if (entity instanceof EntityLeInv)
+        Entity entity = Minecraft.getMinecraft().world.getEntityByID(ByteReader.getInt(clientmessage.data, 1 + 16));
+        if (entity instanceof IMixE)
         {
-            ClientLe cliententitiesmemory = (ClientLe)((EntityLeInv)entity).bothentitiesmemory;
-            cliententitiesmemory.uuid = BytesReader.getUUID(clientmessage.data, 1);
+            ((IMixE)entity).getB().setUUID(ByteReader.getUUID(clientmessage.data, 1));
         }
     }
 }

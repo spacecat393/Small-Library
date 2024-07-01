@@ -2,7 +2,6 @@ package com.nali.small.entity.memo.server.ai;
 
 import com.nali.data.IBothDaE;
 import com.nali.list.entity.ai.AIEInvLockInv;
-import com.nali.list.network.handler.ServerHandler;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.sound.ISoundN;
@@ -19,7 +18,7 @@ public abstract class MixAIEInv<SD extends ISoundN, BD extends IBothDaE, E exten
 
     public void call(byte id)
     {
-        if (this.aileinvlockinv.canPass(ServerHandler.ENTITYPLAYERMP))
+        if (this.aileinvlockinv.canPass(this.s.a.entityplayermp))
         {
             super.call(id);
         }

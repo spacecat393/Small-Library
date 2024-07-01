@@ -13,6 +13,8 @@ public class AIEInvLockInv<SD extends ISoundN, BD extends IBothDaE, E extends En
 {
     public static byte ID;
 
+    public AIEOwner<SD, BD, E, I, S, A> aieowner;
+
     public byte state;//on
 
     public AIEInvLockInv(S s)
@@ -23,7 +25,7 @@ public class AIEInvLockInv<SD extends ISoundN, BD extends IBothDaE, E extends En
     @Override
     public void init()
     {
-
+        this.aieowner = (AIEOwner<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIEOwner.ID);
     }
 
     @Override
@@ -54,7 +56,7 @@ public class AIEInvLockInv<SD extends ISoundN, BD extends IBothDaE, E extends En
     {
         if ((this.state & 1) == 1)
         {
-            return this.s.owner_uuid == null || entity.getUniqueID().equals(this.s.owner_uuid);
+            return this.aieowner.uuid == null || entity.getUniqueID().equals(this.aieowner.uuid);
         }
 
         return true;

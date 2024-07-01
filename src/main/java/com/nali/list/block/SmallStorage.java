@@ -1,10 +1,11 @@
 package com.nali.list.block;
 
+import com.nali.draw.DrawScreen;
 import com.nali.list.render.o.StorageRender;
-import com.nali.small.SmallTab;
-import com.nali.small.block.BlockB;
-import com.nali.small.block.memo.client.child.o.ClientBStorage;
-import com.nali.small.item.MixBlockItem;
+import com.nali.small.mix.block.BlockB;
+import com.nali.small.mix.item.ItemB;
+import com.nali.small.mix.memo.IBothN;
+import com.nali.small.mix.memo.client.ClientB;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -33,8 +34,8 @@ public class SmallStorage extends BlockB implements ITileEntityProvider
 
     public SmallStorage(String[] string_array)
     {
-        super(Material.ROCK);
-        this.ibothb.init(this, string_array[0], string_array[1], SmallTab.TAB);
+        super(string_array, Material.ROCK);
+//        this.ibothb.init(this, string_array[0], string_array[1], SmallTab.TAB);
         this.setResistance(2000.0F);
         this.setHardness(50.0F);
         this.setSoundType(SoundType.STONE);
@@ -60,7 +61,7 @@ public class SmallStorage extends BlockB implements ITileEntityProvider
 
     public Item getNewItem()
     {
-        return new MixBlockItem(this);
+        return new ItemB(this);
     }
 
 //    @Override
@@ -103,13 +104,28 @@ public class SmallStorage extends BlockB implements ITileEntityProvider
     @Override
     public void newC()
     {
-        ClientBStorage clientbstorage = new ClientBStorage(new StorageRender(I.clientloader.storeo, StorageRender.ICLIENTDAO));
-        this.ibothb = clientbstorage;
+        StorageRender storagerender = new StorageRender(I.clientloader.storeo, StorageRender.ICLIENTDAO);
+        DrawScreen drawscreen = new DrawScreen(storagerender);
+        drawscreen.scale(0.25F);
+        drawscreen.z = 0.0F;
+        this.ibothb = new ClientB(storagerender, drawscreen, this);
     }
 
     @Override
     public void newS()
     {
 //        this.ibothb = new ();
+    }
+
+    @Override
+    public IBothN getB()
+    {
+        return this.ibothb;
+    }
+
+    @Override
+    public Object getE()
+    {
+        return this;
     }
 }

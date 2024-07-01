@@ -1,6 +1,11 @@
 package com.nali.list.entity.ai;
 
 import com.nali.data.IBothDaE;
+import com.nali.list.capability.serializable.SmallSakuraSerializable;
+import com.nali.list.capability.type.SmallSakuraType;
+import com.nali.list.network.message.ClientMessage;
+import com.nali.list.network.method.client.CSetGetItem;
+import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.Inventory;
@@ -9,6 +14,7 @@ import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.mixin.MixinInventoryCrafting;
 import com.nali.sound.ISoundLe;
+import com.nali.system.bytes.ByteReader;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -48,6 +54,123 @@ public class AILeInvGetItem<SD extends ISoundLe, BD extends IBothDaE, E extends 
     public void call()
     {
 
+    }
+
+    public void set()
+    {
+        byte[] byte_array = this.s.a.byte_array;
+        float id = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1);
+        float f = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4);
+
+        SmallSakuraType smallsakuratypes = this.s.a.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+        byte value = smallsakuratypes.get();
+
+        if (id >= 2)
+        {
+            if (id == 2.1F)
+            {
+                if (f == 1)
+                {
+                    if (value >= 1)
+                    {
+                        smallsakuratypes.set((byte)(value - 1));
+                        this.flag |= 4;
+                    }
+                }
+                else
+                {
+                    this.flag &= 255-4;
+                }
+            }
+            else if (id == 2.2F)
+            {
+                if (f == 1)
+                {
+                    if (value >= 1)
+                    {
+                        smallsakuratypes.set((byte)(value - 1));
+                        this.flag |= 64;
+                    }
+                }
+                else
+                {
+                    this.flag &= 255-64;
+                }
+            }
+            else if (id == 2.3F)
+            {
+                if (f == 1)
+                {
+                    if (value >= 1)
+                    {
+                        smallsakuratypes.set((byte)(value - 1));
+                        this.flag |= 16;
+                    }
+                }
+                else
+                {
+                    this.flag &= 255-16;
+                }
+            }
+        }
+        else if (id >= 1)
+        {
+            if (id == 1.1F)
+            {
+                if (f == 1)
+                {
+                    if (value >= 1)
+                    {
+                        smallsakuratypes.set((byte)(value - 1));
+                        this.flag |= 2;
+                    }
+                }
+                else
+                {
+                    this.flag &= 255-2;
+                }
+            }
+            else if (id == 1.2F)
+            {
+                if (f == 1)
+                {
+                    if (value >= 1)
+                    {
+                        smallsakuratypes.set((byte)(value - 1));
+                        this.flag |= 32;
+                    }
+                }
+                else
+                {
+                    this.flag &= 255-32;
+                }
+            }
+            else if (id == 1.3F)
+            {
+                if (f == 1)
+                {
+                    if (value >= 1)
+                    {
+                        smallsakuratypes.set((byte)(value - 1));
+                        this.flag |= 8;
+                    }
+                }
+                else
+                {
+                    this.flag &= 255-8;
+                }
+            }
+        }
+
+        this.fetch();
+    }
+
+    public void fetch()
+    {
+        byte[] byte_array = new byte[1 + 1];
+        byte_array[0] = CSetGetItem.ID;
+        byte_array[1] = this.flag;
+        NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.a.entityplayermp);
     }
 
     @Override

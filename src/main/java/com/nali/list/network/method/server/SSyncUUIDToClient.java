@@ -3,10 +3,9 @@ package com.nali.list.network.method.server;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.client.CSetUUID;
-import com.nali.networks.NetworksRegistry;
-import com.nali.small.entity.EntityLeInv;
-import com.nali.system.bytes.BytesReader;
-import com.nali.system.bytes.BytesWriter;
+import com.nali.network.NetworkRegistry;
+import com.nali.system.bytes.ByteReader;
+import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -16,16 +15,16 @@ public class SSyncUUIDToClient
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
-        int id = BytesReader.getInt(servermessage.data, 1);
+        int id = ByteReader.getInt(servermessage.data, 1);
         Entity entity = entityplayermp.world.getEntityByID(id);
-        if (entity instanceof EntityLeInv)
-        {
-            byte[] byte_array = new byte[1 + 16 + 4];
-            byte_array[0] = CSetUUID.ID;
-            BytesWriter.set(byte_array, entity.getUniqueID(), 1);
-            BytesWriter.set(byte_array, id, 1 + 16);
-            NetworksRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
-        }
+//        if (entity instanceof IMixE)
+//        {
+        byte[] byte_array = new byte[1 + 16 + 4];
+        byte_array[0] = CSetUUID.ID;
+        ByteWriter.set(byte_array, entity.getUniqueID(), 1);
+        ByteWriter.set(byte_array, id, 1 + 16);
+        NetworkRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
+//        }
         //                entitydatamanager.set(skinningentitieshelper.getIntegerDataParameterArray()[id], BytesReader.getInt(skinningentitiesmessage.data, 21));
     }
 }

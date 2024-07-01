@@ -11,7 +11,7 @@ import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.sound.ISoundN;
 import com.nali.system.opengl.memo.client.MemoGo;
 import com.nali.system.opengl.memo.client.MemoSo;
-import com.nali.system.opengl.store.StoreO;
+import com.nali.system.opengl.memo.client.store.StoreO;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
@@ -94,7 +94,8 @@ public abstract class MixBoxE<RG extends MemoGo, RS extends MemoSo, RC extends I
             return;
         }
 
-        this.c.sendPacketUUID(AIESit.ID);
+        this.c.sendSAIE(new byte[1 + 16 + 1], AIESit.ID);
+//        this.c.sendPacketUUID(AIESit.ID);
     }
 
     public abstract List<AxisAlignedBB> get();

@@ -10,7 +10,7 @@ import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.sound.ISoundLe;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.store.StoreS;
+import com.nali.system.opengl.memo.client.store.StoreS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.fml.relauncher.Side;

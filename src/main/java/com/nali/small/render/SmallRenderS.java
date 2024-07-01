@@ -6,7 +6,7 @@ import com.nali.render.RenderS;
 import com.nali.sound.ISoundN;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.store.StoreS;
+import com.nali.system.opengl.memo.client.store.StoreS;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

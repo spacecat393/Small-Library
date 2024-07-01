@@ -11,7 +11,7 @@ import com.nali.small.entity.memo.work.WorkEBodyYaw;
 import com.nali.sound.ISoundLe;
 import com.nali.system.opengl.memo.client.MemoGo;
 import com.nali.system.opengl.memo.client.MemoSo;
-import com.nali.system.opengl.store.StoreO;
+import com.nali.system.opengl.memo.client.store.StoreO;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,9 +24,9 @@ public abstract class ClientLe<RG extends MemoGo, RS extends MemoSo, RC extends 
 
 //    public byte[] work_byte_array;
 
-    public ClientLe(I i)
+    public ClientLe(I i, R r, MB mb, MR mr)
     {
-        super(i);
+        super(i, r, mb, mr);
 //        this.work_byte_array = new byte[workbytes.MAX_WORKS()];
         this.sync_byte_array = new byte[i.getBD().MaxSync()];
     }

@@ -4,7 +4,7 @@ import com.nali.list.item.SmallBox;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
-import static com.nali.small.item.ItemRegistry.ITEM_ARRAY;
+import static com.nali.small.mix.item.ItemRegistry.ITEM_ARRAY;
 
 public class SmallTab extends CreativeTabs
 {

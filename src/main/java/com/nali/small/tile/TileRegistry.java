@@ -1,6 +1,6 @@
 package com.nali.small.tile;
 
-import com.nali.small.Small;
+import com.nali.Nali;
 import com.nali.system.Reflect;
 import com.nali.system.StringReader;
 import net.minecraft.block.Block;
@@ -59,7 +59,7 @@ public class TileRegistry
             }
             catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
             {
-                Small.error(e);
+                Nali.I.error(e);
             }
         }
     }

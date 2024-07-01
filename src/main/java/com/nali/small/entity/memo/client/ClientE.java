@@ -2,9 +2,10 @@ package com.nali.small.entity.memo.client;
 
 import com.nali.data.IBothDaE;
 import com.nali.data.client.IClientDaO;
+import com.nali.list.entity.ai.AIEInvOpenInv;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SAIE;
-import com.nali.list.network.method.server.SOpenInvGUI;
+import com.nali.list.network.method.server.SSound;
 import com.nali.list.network.method.server.SSyncUUIDToClient;
 import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderO;
@@ -18,7 +19,7 @@ import com.nali.sound.Sound;
 import com.nali.system.bytes.ByteWriter;
 import com.nali.system.opengl.memo.client.MemoGo;
 import com.nali.system.opengl.memo.client.MemoSo;
-import com.nali.system.opengl.store.StoreO;
+import com.nali.system.opengl.memo.client.store.StoreO;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,7 +36,7 @@ import java.util.UUID;
 @SideOnly(Side.CLIENT)
 public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, MB extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, MR, ?>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> implements IBothE<SD, BD, E, I>
 {
-    public static Map<UUID, ClientSle> C_MAP = new HashMap();
+    public static Map<UUID, ClientE> C_MAP = new HashMap();
     public static Map<Integer, UUID> UUID_MAP = new HashMap();
 
     public I i;
@@ -56,12 +57,15 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
     public boolean fake;
     public byte[] sync_byte_array;
 
-    public ClientE(I i)
+    public ClientE(I i, R r, MB mb, MR mr)
     {
         this.i = i;
-        this.r = this.createR();
-        this.mb = this.createMB();
-        this.mr = this.createMR();
+        this.r = r;
+        this.mb = mb;
+        this.mr = mr;
+//        this.r = this.createR();
+//        this.mb = this.createMB();
+//        this.mr = this.createMR();
         this.sound = this.createSoundRender();
     }
 
@@ -70,13 +74,14 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
     {
         if (entityplayer.isSneaking())
         {
-            if (this.uuid != null)
-            {
-                byte[] byte_array = new byte[17];
-                byte_array[0] = SOpenInvGUI.ID;
-                ByteWriter.set(byte_array, this.uuid, 1);
-                NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
-            }
+            this.sendSAIE(new byte[1 + 16 + 1], AIEInvOpenInv.ID);
+//            if (this.uuid != null)
+//            {
+//                byte[] byte_array = new byte[17];
+//                byte_array[0] = SOpenInvGUI.ID;
+//                ByteWriter.set(byte_array, this.uuid, 1);
+//                NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+//            }
         }
         else
         {
@@ -148,9 +153,20 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
     }
 
     @Override
+    public void setUUID(UUID uuid)
+    {
+        this.uuid = uuid;
+    }
+
+    @Override
     public void playSound(int i)
     {
-        this.sound.play(i);
+        byte[] byte_array = new byte[1 + 4 + 4];
+        byte_array[0] = SSound.ID;
+        ByteWriter.set(byte_array, this.i.getE().getEntityId(), 1);
+        ByteWriter.set(byte_array, i, 5);
+        NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+//        this.sound.play(i);
     }
 
     public void sendSAIE(byte[] byte_array, byte i)
@@ -168,9 +184,9 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
     }
 
     public abstract void initFakeFrame();
-    public abstract R createR();
-    public abstract MB createMB();
-    public abstract MR createMR();
+//    public abstract R createR();
+//    public abstract MB createMB();
+//    public abstract MR createMR();
     public abstract Sound createSoundRender();
 //    public abstract IEMixBox createIEMixBox();
 }

@@ -1,11 +1,18 @@
 package com.nali.list.entity.ai;
 
 import com.nali.data.IBothDaE;
+import com.nali.list.capability.serializable.SmallSakuraSerializable;
+import com.nali.list.capability.type.SmallSakuraType;
+import com.nali.list.network.message.ClientMessage;
+import com.nali.list.network.method.client.CSetAttack;
+import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.sound.ISoundLe;
+import com.nali.system.bytes.ByteReader;
+import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -52,6 +59,77 @@ public class AILeAttack<SD extends ISoundLe, BD extends IBothDaE, E extends Enti
     public void call()
     {
 
+    }
+
+    public void set()
+    {
+        byte[] byte_array = this.s.a.byte_array;
+        float id = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1);
+        float x = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4);
+
+        SmallSakuraType smallsakuratypes = this.s.a.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+        byte value = smallsakuratypes.get();
+
+        if (id == 1.1F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.flag |= 16;
+                }
+            }
+            else
+            {
+                this.flag &= 255 - 16;
+            }
+        }
+        else if (id == 1.2F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.flag |= 8;
+                }
+            }
+            else
+            {
+                this.flag &= 255 - 8;
+            }
+        }
+        else if (id == 1.3F)
+        {
+            int v = (int)x;
+            if (value >= v)
+            {
+                smallsakuratypes.set((byte)(value - v));
+                this.minimum_distance = x;
+            }
+        }
+        else if (id == 1.4F)
+        {
+            int v = (int)x;
+            if (value >= v)
+            {
+                smallsakuratypes.set((byte)(value - v));
+                this.max_magic_point = v;
+            }
+        }
+
+        this.fetch();
+    }
+
+    public void fetch()
+    {
+        byte[] byte_array = new byte[1 + 1 + 4 + 4];
+        byte_array[0] = CSetAttack.ID;
+        byte_array[1] = this.flag;
+        ByteWriter.set(byte_array, this.minimum_distance, 1 + 1);
+        ByteWriter.set(byte_array, this.max_magic_point, 1 + 1 + 4);
+        NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.a.entityplayermp);
     }
 
     @Override

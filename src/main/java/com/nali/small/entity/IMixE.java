@@ -116,6 +116,7 @@ public interface IMixE<SD extends ISoundN, BD extends IBothDaE, E extends Entity
     BD getBD();
     SD getSD();
     byte[] getAI();
+    int[] getIVIntArray();
 
 //    IBothE<E, ?> getBoth();
     void setBD(BD bd);

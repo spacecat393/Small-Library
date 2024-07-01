@@ -1,11 +1,18 @@
 package com.nali.list.entity.ai;
 
 import com.nali.data.IBothDaE;
+import com.nali.list.capability.serializable.SmallSakuraSerializable;
+import com.nali.list.capability.type.SmallSakuraType;
+import com.nali.list.network.message.ClientMessage;
+import com.nali.list.network.method.client.CSetFollow;
+import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.sound.ISoundLe;
+import com.nali.system.bytes.ByteReader;
+import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -20,6 +27,7 @@ public class AILeFollow<SD extends ISoundLe, BD extends IBothDaE, E extends Enti
 {
     public static byte ID;
 
+    public AIEOwner<SD, BD, E, I, S, A> aieowner;
     public AILeSetLocation<SD, BD, E, I, S, A> ailesetlocation;
     public AILeFindMove<SD, BD, E, I, S, A> ailefindmove;
 
@@ -35,6 +43,7 @@ public class AILeFollow<SD extends ISoundLe, BD extends IBothDaE, E extends Enti
     @Override
     public void init()
     {
+        this.aieowner = (AIEOwner<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIEOwner.ID);
         this.ailesetlocation = (AILeSetLocation<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
         this.ailefindmove = (AILeFindMove<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
     }
@@ -45,10 +54,71 @@ public class AILeFollow<SD extends ISoundLe, BD extends IBothDaE, E extends Enti
 
     }
 
+    public void set()
+    {
+        byte[] byte_array = this.s.a.byte_array;
+        float id = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1);
+        float x = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4);
+
+        SmallSakuraType smallsakuratypes = this.s.a.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+        byte value = smallsakuratypes.get();
+
+        if (id == 1.1F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.flag |= 4;
+                }
+            }
+            else
+            {
+                this.flag &= 255 - 4;
+            }
+        }
+        else if (id == 1.2F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.flag |= 2;
+                }
+            }
+            else
+            {
+                this.flag &= 255 - 2;
+            }
+        }
+        else if (id == 2.1F)
+        {
+            this.max_distance = x;
+        }
+        else if (id == 2.2F)
+        {
+            this.min_distance = x;
+        }
+
+        this.fetch();
+    }
+
+    public void fetch()
+    {
+        byte[] byte_array = new byte[1 + 1 + 4 + 4];
+        byte_array[0] = CSetFollow.ID;
+        byte_array[1] = this.flag;
+        ByteWriter.set(byte_array, this.min_distance, 1 + 1);
+        ByteWriter.set(byte_array, this.max_distance, 1 + 1 + 4);
+        NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.a.entityplayermp);
+    }
+
     @Override
     public void onUpdate()
     {
-        Entity owner_entity = this.s.getOwner();
+        Entity owner_entity = this.aieowner.getOwner();
 
         if (owner_entity instanceof EntityPlayerMP)
         {

@@ -11,7 +11,7 @@ import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.sound.ISoundLe;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.store.StoreS;
+import com.nali.system.opengl.memo.client.store.StoreS;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
@@ -50,7 +50,7 @@ public class MixBoxSle<RG extends MemoGs, RS extends MemoSs, RC extends IClientD
     {
         E e = this.c.i.getE();
 //        R r = this.c.r;
-        int[] iv_int_array = this.c.getIVIntArray();
+        int[] iv_int_array = this.c.i.getIVIntArray();
 
 //        float[] pos_vec4 = skinningrender.getScale3DSkinning((OpenGLSkinningMemory)skinningrender.dataloader.openglobjectmemory_array[iv_int_array[10]], (float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
 //        float[] pos_vec4 = skinningrender.getScale3DSkinning((OpenGLSkinningMemory)skinningrender.dataloader.object_array[iv_int_array[10]], (float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);

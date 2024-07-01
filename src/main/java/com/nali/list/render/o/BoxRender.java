@@ -5,9 +5,9 @@ import com.nali.mixin.IMixinEntityRenderer;
 import com.nali.small.data.client.BoxClient;
 import com.nali.small.render.SmallRenderO;
 import com.nali.system.opengl.OpenGLBuffer;
-import com.nali.system.opengl.memo.MemoGo;
-import com.nali.system.opengl.memo.MemoSo;
-import com.nali.system.opengl.store.StoreO;
+import com.nali.system.opengl.memo.client.MemoGo;
+import com.nali.system.opengl.memo.client.MemoSo;
+import com.nali.system.opengl.memo.client.store.StoreO;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.nali.Nali.I;
-import static com.nali.system.opengl.memo.MemoCurrent.OPENGL_FIXED_PIPE_FLOATBUFFER;
+import static com.nali.system.opengl.memo.client.MemoCurrent.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
 public class BoxRender<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>> extends SmallRenderO<RG, RS, RST, RC>

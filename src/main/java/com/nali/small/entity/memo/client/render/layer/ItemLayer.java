@@ -14,7 +14,7 @@ import com.nali.sound.ISoundLe;
 import com.nali.system.opengl.memo.client.MemoCurrent;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.store.StoreS;
+import com.nali.system.opengl.memo.client.store.StoreS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
@@ -45,7 +45,7 @@ public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientD
     public static LayerBipedArmor LAYERBIPEDARMOR = new LayerBipedArmor(RENDERLIVINGBASEOBJECT);
     public static LayerElytra LAYERELYTRA = new LayerElytra(RENDERLIVINGBASEOBJECT);
 
-    public int[] iv_int_array;
+//    public int[] iv_int_array;
     public float[] rotation_float_array;
     public float[] transform_float_array;
 
@@ -79,14 +79,15 @@ public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientD
 //        }
 
         this.index = 0;
-        this.renderHeldItem(e.getHeldItemMainhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, this.iv_int_array[2], this.iv_int_array[3]);
-        this.renderHeldItem(e.getHeldItemOffhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, this.iv_int_array[0], this.iv_int_array[1]);
+        int[] iv_int_array = this.c.i.getIVIntArray();
+        this.renderHeldItem(e.getHeldItemMainhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, iv_int_array[2], iv_int_array[3]);
+        this.renderHeldItem(e.getHeldItemOffhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, iv_int_array[0], iv_int_array[1]);
 
-        this.renderArmor(EntityEquipmentSlot.HEAD, this.iv_int_array[4], this.iv_int_array[5], partialTicks);
-        this.renderArmor(EntityEquipmentSlot.CHEST, this.iv_int_array[6], this.iv_int_array[7], partialTicks);
-        this.renderArmor(EntityEquipmentSlot.LEGS, this.iv_int_array[8], this.iv_int_array[9], partialTicks);
-        this.renderArmor(EntityEquipmentSlot.FEET, this.iv_int_array[8], this.iv_int_array[9], partialTicks);
-        this.renderHeldItem(this.c.mouth_itemstack, ItemCameraTransforms.TransformType.GROUND, this.iv_int_array[10], this.iv_int_array[11]);
+        this.renderArmor(EntityEquipmentSlot.HEAD, iv_int_array[4], iv_int_array[5], partialTicks);
+        this.renderArmor(EntityEquipmentSlot.CHEST, iv_int_array[6], iv_int_array[7], partialTicks);
+        this.renderArmor(EntityEquipmentSlot.LEGS, iv_int_array[8], iv_int_array[9], partialTicks);
+        this.renderArmor(EntityEquipmentSlot.FEET, iv_int_array[8], iv_int_array[9], partialTicks);
+        this.renderHeldItem(this.c.mouth_itemstack, ItemCameraTransforms.TransformType.GROUND, iv_int_array[10], iv_int_array[11]);
     }
 
     public void renderHeldItem(ItemStack itemstack, ItemCameraTransforms.TransformType transformtype, int i, int v)

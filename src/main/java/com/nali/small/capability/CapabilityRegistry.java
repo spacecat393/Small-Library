@@ -1,7 +1,6 @@
 package com.nali.small.capability;
 
 import com.nali.small.Small;
-import com.nali.small.system.Reference;
 import com.nali.system.Reflect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,6 +13,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Comparator;
 import java.util.List;
+
+import static com.nali.Nali.I;
 
 @Mod.EventBusSubscriber(modid = Small.ID)
 public class CapabilityRegistry
@@ -60,7 +61,7 @@ public class CapabilityRegistry
             }
             catch (InstantiationException | IllegalAccessException e)
             {
-                Small.error(e);
+                I.error(e);
             }
         }
     }
@@ -78,7 +79,7 @@ public class CapabilityRegistry
             }
             catch (InstantiationException | IllegalAccessException e)
             {
-                Small.error(e);
+                I.error(e);
             }
         }
     }

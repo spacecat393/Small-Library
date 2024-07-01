@@ -12,7 +12,7 @@ import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.sound.ISoundN;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.store.StoreS;
+import com.nali.system.opengl.memo.client.store.StoreS;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -21,9 +21,9 @@ public abstract class ClientSeInv<RG extends MemoGs, RS extends MemoSs, RC exten
 {
     public Inventory inventory;
 
-    public ClientSeInv(I i, Inventory inventory)
+    public ClientSeInv(I i, R r, MB mb, MR mr, Inventory inventory)
     {
-        super(i);
+        super(i, r, mb, mr);
         this.inventory = inventory;
     }
 

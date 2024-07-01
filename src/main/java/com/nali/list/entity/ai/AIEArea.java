@@ -2,6 +2,13 @@ package com.nali.list.entity.ai;
 
 import com.nali.Nali;
 import com.nali.data.IBothDaE;
+import com.nali.list.capability.serializable.SmallSakuraSerializable;
+import com.nali.list.capability.type.SmallSakuraType;
+import com.nali.list.network.message.ClientMessage;
+import com.nali.list.network.method.client.CSetArea;
+import com.nali.list.network.method.client.CSetTarget;
+import com.nali.list.network.method.client.CSetTroublemaker;
+import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.EntityRegistry;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
@@ -10,6 +17,7 @@ import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.mixin.IMixinWorldServer;
 import com.nali.sound.ISoundN;
 import com.nali.system.bytes.ByteReader;
+import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -24,6 +32,7 @@ public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, 
 {
     public static byte ID;
 
+    public AIEOwner<SD, BD, E, I, S, A> aieowner;
     public Map<UUID, Entity> entity_map;
     public Collection<Entity> entity_collection;
 
@@ -46,6 +55,7 @@ public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, 
     @Override
     public void init()
     {
+        this.aieowner = (AIEOwner<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIEOwner.ID);
         this.entity_map = ((IMixinWorldServer)this.s.getI().getE().world).entitiesByUuid();
     }
 
@@ -65,6 +75,9 @@ public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, 
                 break;
             case 3:
                 this.clearTroublemaker();
+                break;
+            case 4:
+                this.fetch();
                 break;
             default:
                 Nali.I.warn("BIT_FLIP");
@@ -97,6 +110,31 @@ public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, 
             if (result)
             {
                 this.target_list.add(id);
+            }
+        }
+    }
+
+    public void removeTarget()
+    {
+//                        String string = new String(servermessage.data, 1 + 16, servermessage.data.length - (1 + 16));
+//                        String[] string_array = string.split(" ");
+
+//                        for (String new_string : string_array)
+        byte[] byte_array = this.s.a.byte_array;
+        for (int x = 1 + 16 + 1 + 1; x < byte_array.length; x += 4)
+        {
+            int id = ByteReader.getInt(byte_array, x);
+//                            int id = Integer.parseInt(new_string);
+
+            int index = 0;
+            for (int i : this.target_list)
+            {
+                if (i == id)
+                {
+                    this.target_list.remove(index);
+                    break;
+                }
+                ++index;
             }
         }
     }
@@ -140,9 +178,173 @@ public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, 
         }
     }
 
+    public void removeTroublemaker()
+    {
+        //                        String string = new String(servermessage.data, 1 + 16, servermessage.data.length - (1 + 16));
+//                        String[] string_array = string.split(" ");
+
+//                        for (String new_string : string_array)
+        byte[] byte_array = this.s.a.byte_array;
+        for (int x = 1 + 16 + 1 + 1; x < byte_array.length; x += 4)
+        {
+            int id = ByteReader.getInt(byte_array, x);
+//                            int id = Integer.parseInt(new_string);
+
+            int index = 0;
+            for (int i : this.troublemaker_list)
+            {
+                if (i == id)
+                {
+                    this.troublemaker_list.remove(index);
+                    break;
+                }
+                ++index;
+            }
+        }
+    }
+
     public void clearTroublemaker()
     {
         this.troublemaker_list.clear();
+    }
+
+    public void set()
+    {
+        byte[] byte_array = this.s.a.byte_array;
+        float id = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1);
+        float x = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4);
+
+        SmallSakuraType smallsakuratypes = this.s.a.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+        byte value = smallsakuratypes.get();
+
+        if (id == 0.1F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.flag |= 4;
+                }
+            }
+            else
+            {
+                this.flag &= 255 - 4;
+            }
+        }
+        else if (id == 0.2F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.flag |= 8;
+                }
+            }
+            else
+            {
+                this.flag &= 255 - 8;
+            }
+        }
+        else if (id == 0.3F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.flag |= 128;
+                }
+            }
+            else
+            {
+                this.flag &= 255 - 128;
+            }
+        }
+        else if (id == 1.1F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.flag |= 16;
+                }
+            }
+            else
+            {
+                this.flag &= 255 - 16;
+            }
+        }
+        else if (id == 1.2F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.flag |= 32;
+                }
+            }
+            else
+            {
+                this.flag &= 255 - 32;
+            }
+        }
+        else if (id == 1.3F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.flag |= 64;
+                }
+            }
+            else
+            {
+                this.flag &= 255 - 64;
+            }
+        }
+
+        this.fetch();
+    }
+
+    public void fetch()
+    {
+        byte[] byte_array = new byte[1 + 1];
+        byte_array[0] = CSetArea.ID;
+        byte_array[1] = this.flag;
+        NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.a.entityplayermp);
+    }
+
+    public void fetchTarget()
+    {
+        int size = this.target_list.size() * 4;
+        byte[] byte_array = new byte[1 + size];
+        byte_array[0] = CSetTarget.ID;
+        int index = 0;
+        for (int i = 1; i < size; i += 4)
+        {
+            ByteWriter.set(byte_array, this.target_list.get(index++), i);
+        }
+
+        NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.a.entityplayermp);
+    }
+
+    public void fetchTroublemaker()
+    {
+        int size = this.troublemaker_list.size() * 4;
+        byte[] byte_array = new byte[1 + size];
+        byte_array[0] = CSetTroublemaker.ID;
+        int index = 0;
+        for (int i = 1; i < size; i += 4)
+        {
+            ByteWriter.set(byte_array, this.troublemaker_list.get(index++), i);
+        }
+
+        NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.a.entityplayermp);
     }
 
     @Override
@@ -278,7 +480,7 @@ public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, 
 
                 if ((this.flag & 32) == 0)
                 {
-                    UUID uuid = this.s.owner_uuid;
+                    UUID uuid = this.aieowner.uuid;
                     if (uuid != null)
                     {
                         byte flag = (byte)(this.flag & 1+2);
@@ -304,7 +506,7 @@ public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, 
                 return false;
             }
 
-            if ((this.flag & 8) == 0 && entity.getUniqueID().equals(this.s.owner_uuid))
+            if ((this.flag & 8) == 0 && entity.getUniqueID().equals(this.aieowner.uuid))
             {
                 return false;
             }

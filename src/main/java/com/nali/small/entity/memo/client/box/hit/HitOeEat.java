@@ -2,7 +2,9 @@ package com.nali.small.entity.memo.client.box.hit;
 
 import com.nali.data.IBothDaE;
 import com.nali.data.client.IClientDaO;
+import com.nali.list.entity.ai.AILeEat;
 import com.nali.list.network.message.ServerMessage;
+import com.nali.list.network.method.server.SAIE;
 import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
@@ -13,7 +15,7 @@ import com.nali.sound.ISoundN;
 import com.nali.system.bytes.ByteWriter;
 import com.nali.system.opengl.memo.client.MemoGo;
 import com.nali.system.opengl.memo.client.MemoSo;
-import com.nali.system.opengl.store.StoreO;
+import com.nali.system.opengl.memo.client.store.StoreO;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
@@ -40,22 +42,27 @@ public class HitOeEat<RG extends MemoGo, RS extends MemoSo, RC extends IClientDa
 
         if (item instanceof ItemFood || milk_bucket)
         {
-            byte[] byte_array;
+            byte[] byte_array = new byte[1 + 16 + 1];
+//            this.c.sendSAIE(new byte[1 + 16 + 1], AILeEat.ID);
+            byte_array[0] = SAIE.ID;
             if (milk_bucket)
             {
-                byte_array = new byte[1 + 16];
-                byte_array[0] = SDrinkMilk.ID;
+                byte_array = new byte[1 + 16 + 1/* + 1*/];
+//                byte_array[0] = SDrinkMilk.ID;
+//                byte_array[0] = SAIE.ID;
+//                byte_array[18] = ;
             }
             else
             {
-                byte_array = new byte[1 + 16 + 4 + 4 + 4];
-                byte_array[0] = SEat.ID;
-                ByteWriter.set(byte_array, (float)(axisalignedbb.maxX + (axisalignedbb.minX - axisalignedbb.maxX) / 2.0D), 1 + 16);
-                ByteWriter.set(byte_array, (float)(axisalignedbb.maxY + (axisalignedbb.minY - axisalignedbb.maxY) / 2.0D), 1 + 16 + 4);
-                ByteWriter.set(byte_array, (float)(axisalignedbb.maxZ + (axisalignedbb.minZ - axisalignedbb.maxZ) / 2.0D), 1 + 16 + 4 + 4);
+                byte_array = new byte[1 + 16 + 1/* + 1*/ + 4 + 4 + 4];
+//                byte_array[0] = SEat.ID;
+//                byte_array[18] = ;
+                ByteWriter.set(byte_array, (float)(axisalignedbb.maxX + (axisalignedbb.minX - axisalignedbb.maxX) / 2.0D), 1 + 16 + 1);
+                ByteWriter.set(byte_array, (float)(axisalignedbb.maxY + (axisalignedbb.minY - axisalignedbb.maxY) / 2.0D), 1 + 16 + 1 + 4);
+                ByteWriter.set(byte_array, (float)(axisalignedbb.maxZ + (axisalignedbb.minZ - axisalignedbb.maxZ) / 2.0D), 1 + 16 + 1 + 4 + 4);
             }
-
             ByteWriter.set(byte_array, this.c.uuid, 1);
+            byte_array[17] = AILeEat.ID;
             NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
         }
     }

@@ -6,8 +6,6 @@ import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothE;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.sound.ISoundN;
-import com.nali.system.bytes.ByteReader;
-import com.nali.system.bytes.ByteWriter;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -25,13 +23,15 @@ import static com.nali.small.chunk.ChunkCallBack.CHUNK_MAP;
 public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, A extends MixAIE<SD, BD, E, I, ?>> implements IBothE<SD, BD, E, I>
 {
     public static Map<UUID, ServerE> S_MAP;
+//    public static List<ServerE> S_LIST;
 
     public I i;
     public A a;
 
     public WorldServer worldserver;
 
-    public UUID owner_uuid;
+//    public UUID owner_uuid;
+//    public int id;
     public UUID uuid;
 //    public byte[] work_byte_array;
     //    public byte[] server_state_byte_array;
@@ -45,10 +45,11 @@ public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends
 //    public ItemStack current_mouth_itemstack;
     public byte[] sync_byte_array;
 
-    public ServerE(I i)
+    public ServerE(I i, A a)
     {
         this.i = i;
-        this.a = this.createA();
+        this.a = a;
+//        this.a = this.createA();
         this.worldserver = (WorldServer)i.getE().world;
 //        int size = (int)Math.ceil(this.i.getAI().length / 8.0F);
 //        this.work_byte_array = new byte[(int)Math.ceil(this.i.getAI().length / 8.0F)/*size*/];// /8
@@ -116,12 +117,12 @@ public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends
     @Override
     public void writeEntityToNBT(NBTTagCompound nbttagcompound)
     {
-        if (this.owner_uuid != null)
-        {
-            byte[] byte_array = new byte[16];
-            ByteWriter.set(byte_array, this.owner_uuid, 0);
-            nbttagcompound.setByteArray("owner_uuid", byte_array);
-        }
+//        if (this.owner_uuid != null)
+//        {
+//            byte[] byte_array = new byte[16];
+//            ByteWriter.set(byte_array, this.owner_uuid, 0);
+//            nbttagcompound.setByteArray("owner_uuid", byte_array);
+//        }
 
 //        this.entitiesaimemory.writeNBT(nbttagcompound);
 
@@ -164,10 +165,10 @@ public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends
 //            this.main_work_byte_array = work_bytes;
 //        }
 
-        if (nbttagcompound.hasKey("owner_uuid", 7))
-        {
-            this.owner_uuid = ByteReader.getUUID(nbttagcompound.getByteArray("owner_uuid"), 0);
-        }
+//        if (nbttagcompound.hasKey("owner_uuid", 7))
+//        {
+//            this.owner_uuid = ByteReader.getUUID(nbttagcompound.getByteArray("owner_uuid"), 0);
+//        }
 
 //        this.entitiesaimemory.readNBT(nbttagcompound);
         this.a.readNBT(nbttagcompound);
@@ -200,15 +201,15 @@ public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends
         S_MAP.remove(this.uuid);
     }
 
-    public Entity getOwner()
-    {
-        if (this.owner_uuid == null)
-        {
-            return null;
-        }
-
-        return this.worldserver.getEntityFromUuid(this.owner_uuid);
-    }
+//    public Entity getOwner()
+//    {
+//        if (this.owner_uuid == null)
+//        {
+//            return null;
+//        }
+//
+//        return this.worldserver.getEntityFromUuid(this.owner_uuid);
+//    }
 
     public Material getMaterial(BlockPos blockpos)
     {
@@ -268,7 +269,7 @@ public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends
         return this.i;
     }
 
-    public abstract A createA();
+//    public abstract A createA();
 
     public abstract int[][] getFrame2DIntArray();
 

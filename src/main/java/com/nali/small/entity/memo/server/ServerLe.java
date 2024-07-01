@@ -1,6 +1,7 @@
 package com.nali.small.entity.memo.server;
 
 import com.nali.data.IBothDaE;
+import com.nali.list.entity.ai.AIEOwner;
 import com.nali.list.entity.ai.AILeLockDMG;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.IBothLe;
@@ -26,12 +27,14 @@ import net.minecraft.util.math.MathHelper;
 public abstract class ServerLe<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, A extends MixAIE<SD, BD, E, I, ?>> extends ServerE<SD, BD, E, I, A> implements IBothLe<SD, BD, E, I>
 {
     public WorkEBodyYaw workebodyyaw;
+    public AIEOwner<SD, BD, E, I, ?, A> aieowner;
     public AILeLockDMG<SD, BD, E, I, ?, A> ailelockdmg;
 
-    public ServerLe(I i)
+    public ServerLe(I i, A a)
     {
-        super(i);
+        super(i, a);
         this.workebodyyaw = new WorkEBodyYaw(this);
+        this.aieowner = (AIEOwner<SD, BD, E, I, ?, A>)this.a.aie_map.get(AIEOwner.ID);
         this.ailelockdmg = (AILeLockDMG<SD, BD, E, I, ?, A>)this.a.aie_map.get(AILeLockDMG.ID);
     }
 
@@ -43,7 +46,7 @@ public abstract class ServerLe<SD extends ISoundLe, BD extends IBothDaE, E exten
 //        if ((this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] >> this.workbytes.LOCK_DAMAGE() % 8 & 1) == 1)
         if ((this.ailelockdmg.state & 1) == 1)
         {
-            Entity owner_entity = this.getOwner();
+            Entity owner_entity = this.aieowner.getOwner();
             if (owner_entity != null && owner_entity.equals(damagesource.getTrueSource()))
             {
                 return false;
@@ -76,7 +79,7 @@ public abstract class ServerLe<SD extends ISoundLe, BD extends IBothDaE, E exten
 
 //        if (!this.world.isRemote)
 //        {
-        Entity owner_entity = this.getOwner();
+        Entity owner_entity = this.aieowner.getOwner();
 //        if ((this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] >> this.workbytes.LOCK_DAMAGE() % 8 & 1) == 1 && owner_entity instanceof EntityLivingBase)
         if ((this.ailelockdmg.state & 1) == 1 && owner_entity instanceof EntityLivingBase)
         {

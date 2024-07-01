@@ -12,9 +12,9 @@ public abstract class ServerEInv<SD extends ISoundN, BD extends IBothDaE, E exte
 {
     public Inventory inventory;
 
-    public ServerEInv(I i, Inventory inventory)
+    public ServerEInv(I i, A a, Inventory inventory)
     {
-        super(i);
+        super(i, a);
         this.inventory = inventory;
     }
 

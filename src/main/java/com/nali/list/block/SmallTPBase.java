@@ -1,12 +1,13 @@
 package com.nali.list.block;
 
 import com.nali.data.client.IClientDaS;
+import com.nali.draw.DrawScreen;
 import com.nali.list.render.s.TPBaseRender;
-import com.nali.small.SmallTab;
-import com.nali.small.block.BlockB;
-import com.nali.small.block.memo.client.child.s.ClientTPBase;
-import com.nali.small.item.MixBlockItem;
-import com.nali.system.opengl.memo.MemoAnimation;
+import com.nali.small.mix.block.BlockB;
+import com.nali.small.mix.item.ItemB;
+import com.nali.small.mix.memo.IBothN;
+import com.nali.small.mix.memo.client.ClientTPBase;
+import com.nali.system.opengl.memo.client.MemoAnimation;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -38,8 +39,8 @@ public class SmallTPBase extends BlockB implements ITileEntityProvider
 
     public SmallTPBase(String[] string_array)
     {
-        super(Material.ROCK);
-        this.ibothb.init(this, string_array[0], string_array[1], SmallTab.TAB);
+        super(string_array, Material.ROCK);
+//        this.ibothb.init(this, string_array[0], string_array[1], SmallTab.TAB);
 //        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
 //        {
 //            this.renderInit();
@@ -73,7 +74,7 @@ public class SmallTPBase extends BlockB implements ITileEntityProvider
 //    public Item getNewItem(Block block)
     public Item getNewItem()
     {
-        return new MixBlockItem(this);
+        return new ItemB(this);
     }
 
 //    @Override
@@ -124,16 +125,30 @@ public class SmallTPBase extends BlockB implements ITileEntityProvider
     {
         IClientDaS iclientdas = TPBaseRender.ICLIENTDAS;
         TPBaseRender tpbaserender = new TPBaseRender(I.clientloader.stores, iclientdas, TPBaseRender.IBOTHDASN);
-        ClientTPBase clienttpbase = new ClientTPBase(tpbaserender);
+        DrawScreen drawscreen = new DrawScreen(tpbaserender);
+        drawscreen.scale(0.25F);
+        drawscreen.z = 0.0F;
         MemoAnimation memoanimation = I.clientloader.stores.memoanimation_list.get(iclientdas.AnimationID());
         tpbaserender.initSkinning(memoanimation);
         tpbaserender.setSkinning(memoanimation);
-        this.ibothb = clienttpbase;
+        this.ibothb = new ClientTPBase(tpbaserender, drawscreen, this);
     }
 
     @Override
     public void newS()
     {
 
+    }
+
+    @Override
+    public IBothN getB()
+    {
+        return this.ibothb;
+    }
+
+    @Override
+    public Object getE()
+    {
+        return this;
     }
 }

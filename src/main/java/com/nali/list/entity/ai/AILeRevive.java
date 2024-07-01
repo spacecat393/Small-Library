@@ -30,6 +30,7 @@ public class AILeRevive<SD extends ISoundLe, BD extends IBothDaE, E extends Enti
 {
     public static byte ID;
 
+    public AIEOwner<SD, BD, E, I, S, A> aieowner;
     public AIEArea<SD, BD, E, I, S, A> aiearea;
     public AILeSetLocation<SD, BD, E, I, S, A> ailesetlocation;
     public AILeFindMove<SD, BD, E, I, S, A> ailefindmove;
@@ -55,6 +56,7 @@ public class AILeRevive<SD extends ISoundLe, BD extends IBothDaE, E extends Enti
     @Override
     public void init()
     {
+        this.aieowner = (AIEOwner<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIEOwner.ID);
         this.aiearea = (AIEArea<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIEArea.ID);
         this.ailesetlocation = (AILeSetLocation<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeSetLocation.ID);
         this.ailefindmove = (AILeFindMove<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeFindMove.ID);
@@ -289,7 +291,7 @@ public class AILeRevive<SD extends ISoundLe, BD extends IBothDaE, E extends Enti
 
                         if ((this.state & 2) == 2)
                         {
-                            Entity owner_entity = this.s.getOwner();
+                            Entity owner_entity = this.aieowner.getOwner();
                             if (owner_entity != null && !owner_entity.isEntityAlive()/* && owner_entity instanceof EntityPlayerMP*/)
                             {
     //                            e_nbttagcompound.setUniqueId("Nali_reviver", owner_entity.getUniqueID());
@@ -306,7 +308,7 @@ public class AILeRevive<SD extends ISoundLe, BD extends IBothDaE, E extends Enti
 
                                 if (!entity.isEntityAlive())
                                 {
-                                    if (entity.getUniqueID().equals(this.s.owner_uuid))
+                                    if (entity.getUniqueID().equals(this.aieowner.uuid))
                                     {
                                         continue;
                                     }

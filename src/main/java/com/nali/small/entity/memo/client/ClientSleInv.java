@@ -11,7 +11,7 @@ import com.nali.small.entity.memo.client.render.mix.MixRenderSleInv;
 import com.nali.sound.ISoundLe;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.store.StoreS;
+import com.nali.system.opengl.memo.client.store.StoreS;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -21,9 +21,9 @@ public abstract class ClientSleInv<RG extends MemoGs, RS extends MemoSs, RC exte
 {
     public Inventory inventory;
 
-    public ClientSleInv(I i, Inventory inventory)
+    public ClientSleInv(I i, R r, MB mb, MR mr, Inventory inventory)
     {
-        super(i);
+        super(i, r, mb, mr);
         this.inventory = inventory;
     }
 

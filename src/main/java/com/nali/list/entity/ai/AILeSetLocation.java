@@ -1,11 +1,16 @@
 package com.nali.list.entity.ai;
 
 import com.nali.data.IBothDaE;
+import com.nali.list.network.message.ClientMessage;
+import com.nali.list.network.method.client.CSetLocation;
+import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
-import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.entity.memo.server.ai.AI;
+import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.sound.ISoundLe;
+import com.nali.system.bytes.ByteReader;
+import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -39,6 +44,29 @@ public class AILeSetLocation<SD extends ISoundLe, BD extends IBothDaE, E extends
     public void call()
     {
 
+    }
+
+    public void set()
+    {
+        byte[] byte_array = this.s.a.byte_array;
+        int id = (int) ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1);
+        if (id == 1)
+        {
+            this.far = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4);
+        }
+        else
+        {
+            this.blockpos_long = new BlockPos(ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4), ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4 + 4), ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4 + 4 + 4)).toLong();
+        }
+    }
+
+    public void fetch()
+    {
+        byte[] byte_array = new byte[1 + 8 + 4];
+        byte_array[0] = CSetLocation.ID;
+        ByteWriter.set(byte_array, this.blockpos_long, 1);
+        ByteWriter.set(byte_array, this.far, 1 + 8);
+        NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.a.entityplayermp);
     }
 
     @Override

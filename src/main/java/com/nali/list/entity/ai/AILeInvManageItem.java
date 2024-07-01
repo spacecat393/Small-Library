@@ -1,6 +1,11 @@
 package com.nali.list.entity.ai;
 
 import com.nali.data.IBothDaE;
+import com.nali.list.capability.serializable.SmallSakuraSerializable;
+import com.nali.list.capability.type.SmallSakuraType;
+import com.nali.list.network.message.ClientMessage;
+import com.nali.list.network.method.client.CSetManageItem;
+import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.Inventory;
@@ -9,6 +14,8 @@ import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.mixin.MixinInventoryCrafting;
 import com.nali.sound.ISoundLe;
+import com.nali.system.bytes.ByteReader;
+import com.nali.system.bytes.ByteWriter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.Container;
@@ -51,6 +58,164 @@ public class AILeInvManageItem<SD extends ISoundLe, BD extends IBothDaE, E exten
     public void call()
     {
 
+    }
+
+    public void set()
+    {
+        byte[] byte_array = this.s.a.byte_array;
+        float id = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1);
+        BlockPos blockpos = null;
+
+        float x = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4);
+        if (byte_array.length > 1 + 16 + 1 + 1 + 4 + 4)
+        {
+            float y = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4 + 4);
+            float z = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4 + 4 + 4);
+            blockpos = new BlockPos(x, y, z);
+        }
+
+//            Small.LOGGER.info("ID " + id);
+//            Small.LOGGER.info("X " + x);
+
+        SmallSakuraType smallsakuratypes = this.s.a.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+        byte value = smallsakuratypes.get();
+
+//            if (id >= 2)
+//            {
+        if (id == 2.1F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.state |= 32;
+                }
+            }
+            else
+            {
+                this.state &= 255 - 32;
+            }
+        }
+        else if (id == 2.2F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.state |= 2;
+                }
+            }
+            else
+            {
+                this.state &= 255 - 2;
+            }
+        }
+        else if (id == 2.3F)
+        {
+            int v = (int)x;
+            if (value >= v)
+            {
+                smallsakuratypes.set((byte)(value - v));
+                this.out_random = v;
+            }
+        }
+        else if (id == 2.0F)
+        {
+            if (blockpos != null)
+            {
+                this.out_blockpos = blockpos;
+            }
+            else
+            {
+                this.out_blockpos = null;
+                this.state ^= 8;
+            }
+        }
+//            }
+//            else if (id >= 1)
+//            {
+        else if (id == 1.1F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.state |= 16;
+                }
+            }
+            else
+            {
+                this.state &= 255 - 16;
+            }
+        }
+        else if (id == 1.2F)
+        {
+            if (x == 1)
+            {
+                if (value >= 1)
+                {
+                    smallsakuratypes.set((byte)(value - 1));
+                    this.state |= 1;
+                }
+            }
+            else
+            {
+                this.state &= 255 - 1;
+            }
+        }
+        else if (id == 1.3F)
+        {
+            int v = (int)x;
+            if (value >= v)
+            {
+                smallsakuratypes.set((byte)(value - v));
+                this.in_random = v;
+            }
+        }
+        else if (id == 1.0F)
+        {
+            if (blockpos != null)
+            {
+                this.in_blockpos = blockpos;
+            }
+            else
+            {
+                this.in_blockpos = null;
+                this.state ^= 4;
+            }
+        }
+//            }
+
+        this.fetch();
+    }
+
+    public void fetch()
+    {
+        byte[] byte_array = new byte[1 + 1 + 8 + 8 + 4 + 4];
+        byte_array[0] = CSetManageItem.ID;
+        byte_array[1] = this.state;
+        if (this.in_blockpos != null)
+        {
+            ByteWriter.set(byte_array, this.in_blockpos.toLong(), 1 + 1);
+        }
+        else
+        {
+            byte_array[1 + 1] = -1;
+        }
+        if (this.out_blockpos != null)
+        {
+            ByteWriter.set(byte_array, this.out_blockpos.toLong(), 1 + 1 + 8);
+        }
+        else
+        {
+            byte_array[1 + 1 + 8] = -1;
+        }
+        ByteWriter.set(byte_array, this.in_random, 1 + 1 + 8 + 8);
+        ByteWriter.set(byte_array, this.out_random, 1 + 1 + 8 + 8 + 4);
+        NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.a.entityplayermp);
     }
 
     @Override

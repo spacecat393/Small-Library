@@ -1,13 +1,12 @@
 package com.nali.small.mixin;
 
-import com.nali.render.ObjectRender;
-import com.nali.small.item.IMixItem;
+import com.nali.small.mix.IMixN;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -24,14 +23,14 @@ public abstract class MixinRenderItem
     @Inject(method = "renderModel(Lnet/minecraft/client/renderer/block/model/IBakedModel;ILnet/minecraft/item/ItemStack;)V", at = @At("HEAD"), cancellable = true)
     private void nali_small_renderModel(IBakedModel model, int color, ItemStack stack, CallbackInfo ci)
     {
-        if (stack.getItem() instanceof IMixItem)
+        Item item = stack.getItem();
+        if (item instanceof IMixN)
         {
+            IMixN imixn = (IMixN)item;
             GL11.glPushMatrix();
             GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-            IMixItem mixitems = ((IMixItem)stack.getItem());
-            mixitems.render();
-            ObjectRender objectrender = mixitems.getObjectRender();
-            objectrender.lig_b = -1.0F;
+            imixn.render();
+            imixn.light();
 //            objectrender.objectworlddraw.lig_b = 208.0F;
 //            objectrender.objectworlddraw.lig_s = 240.0F;
             GL11.glPopMatrix();

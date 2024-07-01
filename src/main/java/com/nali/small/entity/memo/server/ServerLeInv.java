@@ -16,9 +16,9 @@ public abstract class ServerLeInv<SD extends ISoundLe, BD extends IBothDaE, E ex
 {
     public Inventory inventory;
 
-    public ServerLeInv(I i, Inventory inventory)
+    public ServerLeInv(I i, A a, Inventory inventory)
     {
-        super(i);
+        super(i, a);
         this.inventory = inventory;
     }
 

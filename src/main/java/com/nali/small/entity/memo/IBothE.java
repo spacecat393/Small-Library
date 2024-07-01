@@ -11,6 +11,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.UUID;
+
 public interface IBothE<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>>
 {
     default boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
@@ -35,7 +37,11 @@ public interface IBothE<SD extends ISoundN, BD extends IBothDaE, E extends Entit
     void setShouldRender(boolean result);
     @SideOnly(Side.CLIENT)
     void doRender(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks);
+//    @SideOnly(Side.CLIENT)
+//    void doContainer();
 
+    @SideOnly(Side.CLIENT)//will remove later
+    void setUUID(UUID uuid);
     @SideOnly(Side.CLIENT)
     void playSound(int i);
 

@@ -6,6 +6,7 @@ import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.sound.ISoundLe;
+import com.nali.system.bytes.ByteReader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -39,7 +40,19 @@ public class AILeLook<SD extends ISoundLe, BD extends IBothDaE, E extends Entity
     @Override
     public void call()
     {
+        byte[] byte_array = this.s.a.byte_array;
+        int id = (int)ByteReader.getFloat(byte_array, 1 + 16 + 1);
+        float f = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 4);
 
+        E e = this.s.i.getE();
+        if (id == 1)
+        {
+            e.rotationPitch = f;
+        }
+        else if (id == 0)
+        {
+            e.rotationYaw = f;
+        }
     }
 
 //    public void setLookPositionWithEntity(Entity entityIn, float deltaYaw, float deltaPitch)

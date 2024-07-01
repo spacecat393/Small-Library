@@ -20,6 +20,7 @@ public class AILeCareOwner<SD extends ISoundLe, BD extends IBothDaE, E extends E
 {
     public static byte ID;
 
+    public AIEOwner<SD, BD, E, I, S, A> aieowner;
     public AIEArea<SD, BD, E, I, S, A> aiearea;
 
     public byte state;
@@ -35,6 +36,7 @@ public class AILeCareOwner<SD extends ISoundLe, BD extends IBothDaE, E extends E
     @Override
     public void init()
     {
+        this.aieowner = (AIEOwner<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIEOwner.ID);
         this.aiearea = (AIEArea<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIEArea.ID);
     }
 
@@ -50,7 +52,7 @@ public class AILeCareOwner<SD extends ISoundLe, BD extends IBothDaE, E extends E
         if (this.s.isMove())
         {
             E e = this.s.i.getE();
-            Entity owner_entity = this.s.getOwner();
+            Entity owner_entity = this.aieowner.getOwner();
 //            if (this.s.isWork(this.s.bytele.CARE_OWNER()) && owner_entity != null && !this.aiearea.all_entity_list.isEmpty())
             if ((this.s.a.state & 1) == 1 && (this.state & 1) == 1 && owner_entity != null && !this.aiearea.all_entity_list.isEmpty())
             {

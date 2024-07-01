@@ -32,7 +32,7 @@ public class AIEPat<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I
     {
         this.state |= 1;
         E e = this.s.i.getE();
-        this.s.worldserver.spawnParticle(EnumParticleTypes.HEART, e.posX, ByteReader.getFloat(this.s.a.byte_array, 1 + 16), e.posZ, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+        this.s.worldserver.spawnParticle(EnumParticleTypes.HEART, e.posX, ByteReader.getFloat(this.s.a.byte_array, 1 + 16 + 1), e.posZ, 1, 0.0D, 0.0D, 0.0D, 0.0D);
     }
 
     @Override

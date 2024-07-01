@@ -13,7 +13,7 @@ import com.nali.sound.ISoundLe;
 import com.nali.system.opengl.memo.client.MemoAnimation;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.store.StoreS;
+import com.nali.system.opengl.memo.client.store.StoreS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.EntityLivingBase;

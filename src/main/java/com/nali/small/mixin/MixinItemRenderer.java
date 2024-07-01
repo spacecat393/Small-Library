@@ -1,17 +1,15 @@
 package com.nali.small.mixin;
 
-import com.nali.render.ObjectRender;
-import com.nali.small.item.IMixItem;
+import com.nali.small.mix.IMixN;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumSkyBlock;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -22,34 +20,20 @@ public abstract class MixinItemRenderer
     @Inject(method = "renderItemInFirstPerson(Lnet/minecraft/client/entity/AbstractClientPlayer;FFLnet/minecraft/util/EnumHand;FLnet/minecraft/item/ItemStack;F)V", at = @At(value = "HEAD"))
     private void nali_small_renderItemInFirstPerson(AbstractClientPlayer player, float p_187457_2_, float p_187457_3_, EnumHand hand, float p_187457_5_, ItemStack stack, float p_187457_7_, CallbackInfo ci)
     {
-        if (stack.getItem() instanceof IMixItem)
+        Item item = stack.getItem();
+        if (item instanceof IMixN)
         {
-            BlockPos blockpos = new BlockPos(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ);
-            ObjectRender objectrender = ((IMixItem)stack.getItem()).getObjectRender();
-            objectrender.lig_b = player.world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
-            objectrender.lig_s = player.world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
-
-            if (objectrender.lig_b < 0.1875F)
-            {
-                objectrender.lig_b = 0.1875F;
-            }
+            ((IMixN)item).updateLight(player.world, new BlockPos(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ));
         }
     }
 
     @Inject(method = "renderItemSide", at = @At(value = "HEAD"))
     private void nali_small_renderItemSide(EntityLivingBase entitylivingbaseIn, ItemStack heldStack, ItemCameraTransforms.TransformType transform, boolean leftHanded, CallbackInfo ci)
     {
-        if (heldStack.getItem() instanceof IMixItem)
+        Item item = heldStack.getItem();
+        if (item instanceof IMixN)
         {
-            BlockPos blockpos = new BlockPos(entitylivingbaseIn.posX, entitylivingbaseIn.posY + (double)entitylivingbaseIn.getEyeHeight(), entitylivingbaseIn.posZ);
-            ObjectRender objectrender = ((IMixItem)heldStack.getItem()).getObjectRender();
-            objectrender.lig_b = entitylivingbaseIn.world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
-            objectrender.lig_s = entitylivingbaseIn.world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
-
-            if (objectrender.lig_b < 0.1875F)
-            {
-                objectrender.lig_b = 0.1875F;
-            }
+            ((IMixN)item).updateLight(entitylivingbaseIn.world, new BlockPos(entitylivingbaseIn.posX, entitylivingbaseIn.posY + (double)entitylivingbaseIn.getEyeHeight(), entitylivingbaseIn.posZ));
         }
     }
 }
