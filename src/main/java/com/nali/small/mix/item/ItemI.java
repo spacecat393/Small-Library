@@ -4,6 +4,7 @@ import com.nali.small.SmallTab;
 import com.nali.small.mix.IMixN;
 import com.nali.small.mix.memo.IBothI;
 import com.nali.small.mix.memo.IBothN;
+import com.nali.small.mix.memo.server.ServerI;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,8 +17,8 @@ public abstract class ItemI extends Item implements IMixN
 
     public ItemI(String[] string_array)
     {
-        this.ibothi.init(this, string_array[0], string_array[1], SmallTab.TAB);
         this.Ninit();
+        this.ibothi.init(this, string_array[0], string_array[1], SmallTab.TAB);
     }
 
     @SideOnly(Side.CLIENT)
@@ -37,6 +38,12 @@ public abstract class ItemI extends Item implements IMixN
     public void light()
     {
         this.ibothi.light();
+    }
+
+    @Override
+    public void newS()
+    {
+        this.ibothi = new ServerI();
     }
 
     @Override

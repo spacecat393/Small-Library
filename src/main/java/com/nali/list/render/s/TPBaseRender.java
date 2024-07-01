@@ -26,6 +26,11 @@ public class TPBaseRender<SD extends ISoundN, BD extends IBothDaSn<SD>, RG exten
 
     public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
 
+    public TPBaseRender()
+    {
+        this((RST)I.clientloader.stores, (RC)ICLIENTDAS, (BD)IBOTHDASN);
+    }
+
     public TPBaseRender(RST rst, RC rc, BD bd)
     {
         super(rst, rc, bd);

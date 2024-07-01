@@ -112,12 +112,6 @@ public class SmallStorage extends BlockB implements ITileEntityProvider
     }
 
     @Override
-    public void newS()
-    {
-//        this.ibothb = new ();
-    }
-
-    @Override
     public IBothN getB()
     {
         return this.ibothb;

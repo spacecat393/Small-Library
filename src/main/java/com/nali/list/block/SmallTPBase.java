@@ -135,12 +135,6 @@ public class SmallTPBase extends BlockB implements ITileEntityProvider
     }
 
     @Override
-    public void newS()
-    {
-
-    }
-
-    @Override
     public IBothN getB()
     {
         return this.ibothb;

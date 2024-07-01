@@ -72,34 +72,4 @@ public class Small
         ServerE.S_MAP = null;
 //        MixAIE.AI_CLASS_LIST = null;
     }
-
-//    @Mod.EventBusSubscriber(modid = Nali.ID)
-//    public static class OK
-//    {
-//        @SubscribeEvent
-//        public static void onLivingDeathEvent(LivingDeathEvent event)
-//        {
-//            I.logger.info("Some Death");
-//            Entity e = event.getEntityLiving();
-//            if (e instanceof EntitySheep && !e.world.isRemote)
-//            {
-//                I.logger.info("GET Sheep");
-//                Entity e2 = event.getSource().getTrueSource();
-//                if (e2 instanceof EntityPlayerMP)
-//                {
-//                    EntityPlayerMP p = (EntityPlayerMP)e2;
-//                    Advancement advancement = p.getServer().getAdvancementManager().getAdvancement(new ResourceLocation(ID, "test/kill_a_mob"));
-//                    AdvancementProgress progress = p.getAdvancements().getProgress(advancement);
-//                    if (!progress.isDone())
-//                    {
-//                        I.logger.info("try unlock");
-//                        for (String criterion : progress.getRemaningCriteria())
-//                        {
-//                            p.getAdvancements().grantCriterion(advancement, criterion);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 }

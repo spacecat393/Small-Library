@@ -13,7 +13,7 @@
         {
             "translate": "advancements.small.root.description"
         },
-        "background": "minecraft:textures/blocks/cake_top.png",
+        "background": "minecraft:textures/blocks/cauldron_bottom.png",
         "show_toast": true,
         "announce_to_chat": true
     },

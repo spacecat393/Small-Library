@@ -21,6 +21,11 @@ public class StorageRender<RG extends MemoGo, RS extends MemoSo, RC extends ICli
     public static IClientDaO ICLIENTDAO = new StorageClient();
     public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
 
+    public StorageRender()
+    {
+        this((RST)I.clientloader.storeo, (RC)ICLIENTDAO);
+    }
+
     public StorageRender(RST rst, RC rc)
     {
         super(rst, rc);

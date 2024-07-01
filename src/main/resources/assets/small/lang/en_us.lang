@@ -196,3 +196,9 @@ key.categories.small=Small
 key.small.playergui=Player GUI
 key.small.quickinventorygui=Quick Inventory GUI
 key.small.rayentity=Ray Entity
+
+advancements.small.root.title=Small
+advancements.small.root.description=Try feature here
+
+advancements.small.sakura.title=Red Sakura
+advancements.small.sakura.description=Go kill some people

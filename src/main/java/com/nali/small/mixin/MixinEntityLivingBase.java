@@ -1,13 +1,16 @@
 package com.nali.small.mixin;
 
 import com.nali.list.capability.serializable.SmallSakuraSerializable;
+import com.nali.small.Small;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -30,6 +33,16 @@ public abstract class MixinEntityLivingBase extends Entity
         {
             EntityPlayerMP entityplayermp = (EntityPlayerMP)entity;
             entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null).add((byte)1);
+
+            Advancement advancement = entityplayermp.getServer().getAdvancementManager().getAdvancement(new ResourceLocation(Small.ID, "small/sakura"));
+            AdvancementProgress advancementprogress = entityplayermp.getAdvancements().getProgress(advancement);
+            if (!advancementprogress.isDone())
+            {
+                for (String criterion : advancementprogress.getRemaningCriteria())
+                {
+                    entityplayermp.getAdvancements().grantCriterion(advancement, criterion);
+                }
+            }
         }
     }
 

@@ -92,12 +92,6 @@ public class SmallBox extends ItemI
         this.ibothi = new ClientI(boxrender, drawscreen, this);
     }
 
-    @Override
-    public void newS()
-    {
-
-    }
-
 //    @Override
 //    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityplayer, EnumHand enumhand)
 //    {

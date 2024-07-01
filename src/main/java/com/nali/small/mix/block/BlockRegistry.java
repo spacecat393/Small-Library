@@ -21,8 +21,8 @@ public class BlockRegistry
     public static Block[] BLOCK_ARRAY;
     static
     {
-        List<Class> blocks_class_list = Reflect.getClasses("com.nali.list.block");
-        int size = blocks_class_list.size();
+        List<Class> block_class_list = Reflect.getClasses("com.nali.list.block");
+        int size = block_class_list.size();
         BLOCK_ARRAY = new Block[size];
         ITEM_ARRAY = new Item[size];
 
@@ -30,7 +30,7 @@ public class BlockRegistry
         {
             try
             {
-                Class clasz = blocks_class_list.get(i);
+                Class clasz = block_class_list.get(i);
                 Block block = (Block)clasz.getConstructor(String[].class).newInstance((Object)StringReader.get(clasz));
                 clasz.getField("ID").set(null, i);
                 BLOCK_ARRAY[i] = block;

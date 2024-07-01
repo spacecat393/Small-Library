@@ -29,6 +29,11 @@ public class BoxRender<RG extends MemoGo, RS extends MemoSo, RC extends IClientD
     public Map<Integer, Integer> color_map = new HashMap();//element_array_buffer hex
     public byte extra_bit;
 
+    public BoxRender()
+    {
+        this((RST)I.clientloader.storeo, (RC)ICLIENTDAO);
+    }
+
     public BoxRender(RST rst, RC rc)
     {
         super(rst, rc);
