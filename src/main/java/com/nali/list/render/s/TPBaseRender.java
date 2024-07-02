@@ -5,7 +5,6 @@ import com.nali.data.client.IClientDaS;
 import com.nali.small.data.both.TPBaseBothDaS;
 import com.nali.small.data.client.TPBaseClient;
 import com.nali.small.render.SmallRenderS;
-import com.nali.sound.ISoundN;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
 import com.nali.system.opengl.memo.client.store.StoreS;
@@ -19,7 +18,7 @@ import java.util.Map;
 import static com.nali.Nali.I;
 
 @SideOnly(Side.CLIENT)
-public class TPBaseRender<SD extends ISoundN, BD extends IBothDaSn<SD>, RG extends MemoGs, RS extends MemoSs, RST extends StoreS<RG, RS>, RC extends IClientDaS> extends SmallRenderS<SD, BD, RG, RS, RST, RC>
+public class TPBaseRender<BD extends IBothDaSn, RG extends MemoGs, RS extends MemoSs, RST extends StoreS<RG, RS>, RC extends IClientDaS> extends SmallRenderS<BD, RG, RS, RST, RC>
 {
     public static IClientDaS ICLIENTDAS = new TPBaseClient();
     public static IBothDaSn IBOTHDASN = new TPBaseBothDaS();

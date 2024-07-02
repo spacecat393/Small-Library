@@ -1,8 +1,7 @@
 package com.nali.small.entity;
 
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.small.entity.memo.IBothE;
-import com.nali.sound.ISoundN;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -11,7 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface IMixE<SD extends ISoundN, BD extends IBothDaE, E extends Entity>
+public interface IMixE<SD, BD extends IBothDaNe, E extends Entity>
 {
     default void Einit(E e, World world)
     {
@@ -113,14 +112,7 @@ public interface IMixE<SD extends ISoundN, BD extends IBothDaE, E extends Entity
         }
     }
 
-    BD getBD();
-    SD getSD();
     byte[] getAI();
-    int[] getIVIntArray();
-
-//    IBothE<E, ?> getBoth();
-    void setBD(BD bd);
-    void setSD(SD sd);
 
     DataParameter<Byte>[] getByteDataParameterArray();
     DataParameter<Integer>[] getIntegerDataParameterArray();
@@ -132,6 +124,8 @@ public interface IMixE<SD extends ISoundN, BD extends IBothDaE, E extends Entity
     void newS();
     void newServer();
 
+    BD getBD();
+    SD getSD();
     E getE();
     IBothE getB();
 }

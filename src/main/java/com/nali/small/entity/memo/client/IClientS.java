@@ -1,10 +1,10 @@
 package com.nali.small.entity.memo.client;
 
-import com.nali.data.IBothDaSe;
+import com.nali.data.IBothDaNe;
+import com.nali.data.IBothDaSn;
 import com.nali.data.client.IClientDaS;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixE;
-import com.nali.sound.ISoundN;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
 import com.nali.system.opengl.memo.client.store.StoreS;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public interface IClientS<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<SD, BD, RG, RS, RST, RC>, SD extends ISoundN, BD extends IBothDaSe<SD>, E extends Entity, I extends IMixE<SD, BD, E>>
+public interface IClientS<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD, BD extends IBothDaNe & IBothDaSn, E extends Entity, I extends IMixE<SD, BD, E>>
 {
     default void updateClientObject(R r, I i)
     {

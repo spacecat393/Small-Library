@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo.server;
 
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.list.entity.ai.AIEOwner;
 import com.nali.list.entity.ai.AILeLockDMG;
 import com.nali.small.entity.IMixLe;
@@ -24,7 +24,7 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 
-public abstract class ServerLe<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, A extends MixAIE<SD, BD, E, I, ?>> extends ServerE<SD, BD, E, I, A> implements IBothLe<SD, BD, E, I>
+public abstract class ServerLe<SD extends ISoundLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, A extends MixAIE<SD, BD, E, I, ?>> extends ServerE<SD, BD, E, I, A> implements IBothLe<SD, BD, E, I>
 {
     public WorkEBodyYaw workebodyyaw;
     public AIEOwner<SD, BD, E, I, ?, A> aieowner;

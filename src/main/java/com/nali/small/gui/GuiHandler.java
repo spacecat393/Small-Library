@@ -56,7 +56,7 @@ public class GuiHandler implements IGuiHandler
     {
         try
         {
-            return CONTAINER_CLASS_LIST.get(id).getMethod("get", EntityPlayer.class, World.class, Integer.class, Integer.class, Integer.class).invoke(entityplayer, world, x, y, z);
+            return CONTAINER_CLASS_LIST.get(id).getMethod("get", EntityPlayer.class, World.class, int.class, int.class, int.class).invoke(null, entityplayer, world, x, y, z);
         }
         catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
         {
@@ -73,7 +73,7 @@ public class GuiHandler implements IGuiHandler
     {
         try
         {
-            return GUI_CLASS_LIST.get(id).getMethod("get", EntityPlayer.class, World.class, Integer.class, Integer.class, Integer.class).invoke(entityplayer, world, x, y, z);
+            return GUI_CLASS_LIST.get(id).getMethod("get", EntityPlayer.class, World.class, int.class, int.class, int.class).invoke(null, entityplayer, world, x, y, z);
         }
         catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
         {

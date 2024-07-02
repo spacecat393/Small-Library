@@ -5,7 +5,6 @@ import com.nali.data.client.IClientDaS;
 import com.nali.draw.DrawScreen;
 import com.nali.render.RenderS;
 import com.nali.small.mix.IMixN;
-import com.nali.sound.ISoundN;
 import com.nali.system.opengl.memo.client.MemoAnimation;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
@@ -17,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public abstract class ClientSb<SD extends ISoundN, BD extends IBothDaSn<SD>, RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<SD, BD, RG, RS, RST, RC>, D extends DrawScreen<RG, RS, RST, RC, R>, I extends IMixN<?, E>, E extends Block, T extends TileEntity> extends ClientB<RG, RS, RC, RST, R, D, I, E, T>
+public abstract class ClientSb<SD, BD extends IBothDaSn, RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, D extends DrawScreen<RG, RS, RST, RC, R>, I extends IMixN<?, E>, E extends Block, T extends TileEntity> extends ClientB<RG, RS, RC, RST, R, D, I, E, T>
 {
     public ClientSb(R r, D d, I i)
     {

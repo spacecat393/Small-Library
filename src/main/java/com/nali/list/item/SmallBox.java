@@ -95,38 +95,40 @@ public class SmallBox extends ItemI
 //    @Override
 //    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityplayer, EnumHand enumhand)
 //    {
-//        if (!entityplayer.isSneaking())
-//        {
-//            if (!world.isRemote)
-//            {
-//                ItemStack itemstack = entityplayer.getHeldItem(enumhand);
-//                NBTTagCompound nbttagcompound = itemstack.getTagCompound();
-//
-//                if (nbttagcompound == null)
-//                {
-//                    Entity entity = null;
-//                    double max_dis = 4.0D;
-//
-//                    for (Entity uuid_entity : new HashSet<>(((IMixinWorldServer)world).entitiesByUuid().values()))
-//                    {
-//                        double new_dis = uuid_entity.getDistanceSq(entityplayer);
-//                        if (/*uuid_entity.dimension == entityplayer.dimension && */new_dis < max_dis && !(uuid_entity instanceof EntityPlayer))
-//                        {
-//                            entity = uuid_entity;
-//                            max_dis = new_dis;
-//                        }
-//                    }
-//
-//                    if (entity != null)
-//                    {
-//                        putToBox(entity, itemstack);
-//                    }
-//                }
-//            }
-//
-//            return new ActionResult(EnumActionResult.SUCCESS, entityplayer.getHeldItem(enumhand));
-//        }
-//
+//        ItemStack itemstack = entityplayer.getHeldItem(enumhand);
+//        byte[] byte_array = serializeNBT(itemstack.serializeNBT());
+////        if (!entityplayer.isSneaking())
+////        {
+////            if (!world.isRemote)
+////            {
+////                ItemStack itemstack = entityplayer.getHeldItem(enumhand);
+////                NBTTagCompound nbttagcompound = itemstack.getTagCompound();
+////
+////                if (nbttagcompound == null)
+////                {
+////                    Entity entity = null;
+////                    double max_dis = 4.0D;
+////
+////                    for (Entity uuid_entity : new HashSet<>(((IMixinWorldServer)world).entitiesByUuid().values()))
+////                    {
+////                        double new_dis = uuid_entity.getDistanceSq(entityplayer);
+////                        if (/*uuid_entity.dimension == entityplayer.dimension && */new_dis < max_dis && !(uuid_entity instanceof EntityPlayer))
+////                        {
+////                            entity = uuid_entity;
+////                            max_dis = new_dis;
+////                        }
+////                    }
+////
+////                    if (entity != null)
+////                    {
+////                        putToBox(entity, itemstack);
+////                    }
+////                }
+////            }
+////
+////            return new ActionResult(EnumActionResult.SUCCESS, entityplayer.getHeldItem(enumhand));
+////        }
+////
 //        return super.onItemRightClick(world, entityplayer, enumhand);
 //    }
 

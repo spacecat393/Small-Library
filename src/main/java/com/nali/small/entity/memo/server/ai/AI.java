@@ -1,13 +1,12 @@
 package com.nali.small.entity.memo.server.ai;
 
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
-import com.nali.sound.ISoundN;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 
-public abstract class AI<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>>
+public abstract class AI<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>>
 {
     public S s;
 //    public byte num;

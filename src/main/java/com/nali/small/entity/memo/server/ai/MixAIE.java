@@ -1,11 +1,10 @@
 package com.nali.small.entity.memo.server.ai;
 
 import com.nali.Nali;
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.ai.frame.FrameE;
-import com.nali.sound.ISoundN;
 import com.nali.system.Reflect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -16,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class MixAIE<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, ?>>
+public abstract class MixAIE<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, ?>>
 {
     public static List<Class> AI_CLASS_LIST;
 

@@ -1,7 +1,7 @@
 package com.nali.list.entity.ai;
 
 import com.nali.Nali;
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.list.capability.serializable.SmallSakuraSerializable;
 import com.nali.list.capability.type.SmallSakuraType;
 import com.nali.list.network.message.ClientMessage;
@@ -15,7 +15,6 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.mixin.IMixinWorldServer;
-import com.nali.sound.ISoundN;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
@@ -28,7 +27,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.*;
 
-public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
+public class AIEArea<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 
@@ -357,7 +356,7 @@ public class AIEArea<SD extends ISoundN, BD extends IBothDaE, E extends Entity, 
             this.all_entity_list.clear();
             this.out_entity_list.clear();
 
-            this.entity_collection = this.entity_map.values();
+            this.entity_collection = new ArrayList(this.entity_map.values());
 
 //            for (Entity entity : new ArrayList<>(this.entity_map.values()))
             for (Entity entity : this.entity_collection)

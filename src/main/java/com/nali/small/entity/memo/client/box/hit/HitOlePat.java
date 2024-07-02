@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo.client.box.hit;
 
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.data.client.IClientDaO;
 import com.nali.list.entity.ai.AIEPat;
 import com.nali.list.network.message.ServerMessage;
@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class HitOlePat<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientLe<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends HitE<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>
+public class HitOlePat<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientLe<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends HitE<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>
 {
     public byte pat_time;
 

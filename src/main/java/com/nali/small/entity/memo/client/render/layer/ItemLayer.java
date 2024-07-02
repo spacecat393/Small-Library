@@ -1,7 +1,8 @@
 package com.nali.small.entity.memo.client.render.layer;
 
 import com.mojang.authlib.GameProfile;
-import com.nali.data.IBothDaSe;
+import com.nali.data.IBothDaNe;
+import com.nali.data.IBothDaSn;
 import com.nali.data.client.IClientDaS;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixLe;
@@ -39,7 +40,7 @@ import org.lwjgl.opengl.GL11;
 import static com.nali.system.opengl.memo.client.MemoCurrent.GL_CULL_FACE;
 
 @SideOnly(Side.CLIENT)
-public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<SD, BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends LayerRender<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>
+public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends LayerRender<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>
 {
     public static RenderFle RENDERLIVINGBASEOBJECT = new RenderFle();
     public static LayerBipedArmor LAYERBIPEDARMOR = new LayerBipedArmor(RENDERLIVINGBASEOBJECT);
@@ -79,7 +80,7 @@ public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientD
 //        }
 
         this.index = 0;
-        int[] iv_int_array = this.c.i.getIVIntArray();
+        int[] iv_int_array = this.c.getIVIntArray();
         this.renderHeldItem(e.getHeldItemMainhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, iv_int_array[2], iv_int_array[3]);
         this.renderHeldItem(e.getHeldItemOffhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, iv_int_array[0], iv_int_array[1]);
 

@@ -1,11 +1,10 @@
 package com.nali.small.entity.memo.server;
 
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.small.chunk.ChunkLoader;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothE;
 import com.nali.small.entity.memo.server.ai.MixAIE;
-import com.nali.sound.ISoundN;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -20,7 +19,7 @@ import java.util.UUID;
 
 import static com.nali.small.chunk.ChunkCallBack.CHUNK_MAP;
 
-public abstract class ServerE<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, A extends MixAIE<SD, BD, E, I, ?>> implements IBothE<SD, BD, E, I>
+public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, A extends MixAIE<SD, BD, E, I, ?>> implements IBothE<SD, BD, E, I>
 {
     public static Map<UUID, ServerE> S_MAP;
 //    public static List<ServerE> S_LIST;

@@ -1,9 +1,8 @@
 package com.nali.small.entity.memo;
 
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.render.RenderE;
-import com.nali.sound.ISoundN;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.UUID;
 
-public interface IBothE<SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>>
+public interface IBothE<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>>
 {
     default boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
     {

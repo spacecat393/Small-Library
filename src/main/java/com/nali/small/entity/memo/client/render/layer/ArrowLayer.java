@@ -1,6 +1,7 @@
 package com.nali.small.entity.memo.client.render.layer;
 
-import com.nali.data.IBothDaSe;
+import com.nali.data.IBothDaNe;
+import com.nali.data.IBothDaSn;
 import com.nali.data.client.IClientDaS;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixLe;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.Random;
 
 @SideOnly(Side.CLIENT)
-public class ArrowLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<SD, BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends LayerRender<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>
+public class ArrowLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends LayerRender<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>
 {
     public List<int[]> index_int_array_list = new ArrayList();
     public List<float[]> float_array_list = new ArrayList();

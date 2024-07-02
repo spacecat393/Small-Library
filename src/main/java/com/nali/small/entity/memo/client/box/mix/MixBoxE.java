@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo.client.box.mix;
 
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.data.client.IClientDaO;
 import com.nali.list.entity.ai.AIESit;
 import com.nali.render.RenderO;
@@ -8,7 +8,6 @@ import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.box.hit.HitE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
-import com.nali.sound.ISoundN;
 import com.nali.system.opengl.memo.client.MemoGo;
 import com.nali.system.opengl.memo.client.MemoSo;
 import com.nali.system.opengl.memo.client.store.StoreO;
@@ -24,7 +23,7 @@ import java.util.List;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 
 @SideOnly(Side.CLIENT)
-public abstract class MixBoxE<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientE<RG, RS, RC, RST, R, SD, BD, E, I, ?, MR>>
+public abstract class MixBoxE<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientE<RG, RS, RC, RST, R, SD, BD, E, I, ?, MR>>
 {
     public C c;
     public List<HitE> sehit_list = new ArrayList();

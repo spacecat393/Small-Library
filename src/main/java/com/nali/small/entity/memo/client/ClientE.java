@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo.client;
 
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.data.client.IClientDaO;
 import com.nali.list.entity.ai.AIEInvOpenInv;
 import com.nali.list.network.message.ServerMessage;
@@ -14,7 +14,6 @@ import com.nali.small.entity.memo.IBothE;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.render.RenderE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
-import com.nali.sound.ISoundN;
 import com.nali.sound.Sound;
 import com.nali.system.bytes.ByteWriter;
 import com.nali.system.opengl.memo.client.MemoGo;
@@ -34,7 +33,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @SideOnly(Side.CLIENT)
-public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD extends ISoundN, BD extends IBothDaE, E extends Entity, I extends IMixE<SD, BD, E>, MB extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, MR, ?>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> implements IBothE<SD, BD, E, I>
+public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MB extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, MR, ?>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> implements IBothE<SD, BD, E, I>
 {
     public static Map<UUID, ClientE> C_MAP = new HashMap();
     public static Map<Integer, UUID> UUID_MAP = new HashMap();
@@ -189,4 +188,5 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
 //    public abstract MR createMR();
     public abstract Sound createSoundRender();
 //    public abstract IEMixBox createIEMixBox();
+    public abstract int[] getIVIntArray();
 }

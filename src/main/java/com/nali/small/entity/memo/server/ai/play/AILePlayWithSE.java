@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo.server.ai.play;
 
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.list.entity.ai.AIEArea;
 import com.nali.list.entity.ai.AILeFindMove;
 import com.nali.list.entity.ai.AILeSetLocation;
@@ -17,7 +17,7 @@ import java.util.Random;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public abstract class AILePlayWithSE<E2 extends Entity, SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AIEPlayWithRE<E2, SD, BD, E, I, S, A>
+public abstract class AILePlayWithSE<E2 extends Entity, SD extends ISoundLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AIEPlayWithRE<E2, SD, BD, E, I, S, A>
 {
 //    public static byte ID;
 

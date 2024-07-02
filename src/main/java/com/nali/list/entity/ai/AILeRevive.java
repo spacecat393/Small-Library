@@ -1,7 +1,7 @@
 package com.nali.list.entity.ai;
 
 import com.nali.Nali;
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CRespawnPlayer;
 import com.nali.network.NetworkRegistry;
@@ -26,7 +26,7 @@ import java.util.UUID;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class AILeRevive<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
+public class AILeRevive<SD extends ISoundLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 

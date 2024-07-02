@@ -1,6 +1,7 @@
 package com.nali.small.entity.memo.client.box.mix;
 
-import com.nali.data.IBothDaSe;
+import com.nali.data.IBothDaNe;
+import com.nali.data.IBothDaSn;
 import com.nali.data.client.IClientDaS;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixLe;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class MixBoxSle<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<SD, BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, MR>> extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>
+public class MixBoxSle<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, MR>> extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>
 {
     public MixBoxSle(C c)
     {
@@ -50,7 +51,7 @@ public class MixBoxSle<RG extends MemoGs, RS extends MemoSs, RC extends IClientD
     {
         E e = this.c.i.getE();
 //        R r = this.c.r;
-        int[] iv_int_array = this.c.i.getIVIntArray();
+        int[] iv_int_array = this.c.getIVIntArray();
 
 //        float[] pos_vec4 = skinningrender.getScale3DSkinning((OpenGLSkinningMemory)skinningrender.dataloader.openglobjectmemory_array[iv_int_array[10]], (float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
 //        float[] pos_vec4 = skinningrender.getScale3DSkinning((OpenGLSkinningMemory)skinningrender.dataloader.object_array[iv_int_array[10]], (float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);

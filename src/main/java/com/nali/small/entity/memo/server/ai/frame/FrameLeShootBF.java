@@ -1,13 +1,13 @@
 package com.nali.small.entity.memo.server.ai.frame;
 
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.sound.ISoundLe;
 import net.minecraft.entity.EntityLivingBase;
 
-public class FrameLeShootBF<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameLeShoot<SD, BD, E, I, S, A>
+public class FrameLeShootBF<SD extends ISoundLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameLeShoot<SD, BD, E, I, S, A>
 {
     public FrameLeShootBF(S s, byte frame, byte index, byte index1, byte index2, byte index3)
     {

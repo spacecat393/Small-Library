@@ -15,8 +15,8 @@ import net.minecraft.util.text.TextComponentString;
 
 public class Inventory implements IInventory
 {
-    public NonNullList<ItemStack> hands_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(2, ItemStack.EMPTY);
-    public NonNullList<ItemStack> armor_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(4, ItemStack.EMPTY);
+    public NonNullList<ItemStack> hands_itemstack_nonnulllist = NonNullList.withSize(2, ItemStack.EMPTY);
+    public NonNullList<ItemStack> armor_itemstack_nonnulllist = NonNullList.withSize(4, ItemStack.EMPTY);
     public NonNullList<ItemStack> inventory_itemstack_nonnulllist;
     public NonNullList<ItemStack> offset_itemstack_nonnulllist;
 //    public List<IInventoryChangedListener> change_listeners;
@@ -26,8 +26,8 @@ public class Inventory implements IInventory
 
     public Inventory(int offset)
     {
-        this.inventory_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(27-3*3, ItemStack.EMPTY);
-        this.offset_itemstack_nonnulllist = NonNullList.<ItemStack>withSize(offset, ItemStack.EMPTY);
+        this.inventory_itemstack_nonnulllist = NonNullList.withSize(27-3*3, ItemStack.EMPTY);
+        this.offset_itemstack_nonnulllist = NonNullList.withSize(offset, ItemStack.EMPTY);
     }
 
 //    public void addInventoryChangeListener(IInventoryChangedListener listener)

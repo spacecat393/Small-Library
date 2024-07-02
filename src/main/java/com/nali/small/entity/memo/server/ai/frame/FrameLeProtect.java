@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo.server.ai.frame;
 
-import com.nali.data.IBothDaE;
+import com.nali.data.IBothDaNe;
 import com.nali.list.entity.ai.AILeProtect;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
@@ -8,7 +8,7 @@ import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.sound.ISoundLe;
 import net.minecraft.entity.EntityLivingBase;
 
-public class FrameLeProtect<SD extends ISoundLe, BD extends IBothDaE, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameE<SD, BD, E, I, S, A>
+public class FrameLeProtect<SD extends ISoundLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameE<SD, BD, E, I, S, A>
 {
     public AILeProtect<SD, BD, E, I, S, A> aileprotect;
     public byte index1, index2, index3;

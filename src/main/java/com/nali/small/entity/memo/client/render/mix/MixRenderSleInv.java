@@ -1,6 +1,7 @@
 package com.nali.small.entity.memo.client.render.mix;
 
-import com.nali.data.IBothDaSe;
+import com.nali.data.IBothDaNe;
+import com.nali.data.IBothDaSn;
 import com.nali.data.client.IClientDaS;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixLe;
@@ -31,7 +32,7 @@ import static com.nali.small.entity.memo.client.render.RenderSeMath.interpolateR
 import static com.nali.system.opengl.memo.client.MemoCurrent.*;
 
 @SideOnly(Side.CLIENT)
-public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<SD, BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaSe<SD>, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>
+public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>
 {
     public ArrowLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> arrowlayerrender;
     public ItemLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> itemlayerrender;
