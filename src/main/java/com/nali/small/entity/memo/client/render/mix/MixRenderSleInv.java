@@ -11,7 +11,6 @@ import com.nali.small.entity.memo.client.render.RenderE;
 import com.nali.small.entity.memo.client.render.layer.ArrowLayer;
 import com.nali.small.entity.memo.client.render.layer.ItemLayer;
 import com.nali.sound.ISoundLe;
-import com.nali.system.opengl.memo.client.MemoAnimation;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
 import com.nali.system.opengl.memo.client.store.StoreS;
@@ -34,8 +33,8 @@ import static com.nali.system.opengl.memo.client.MemoCurrent.*;
 @SideOnly(Side.CLIENT)
 public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>
 {
-    public ArrowLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> arrowlayerrender;
-    public ItemLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> itemlayerrender;
+    public ArrowLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> arrowlayer;
+    public ItemLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> itemlayer;
 
     public float
     body_rot,
@@ -46,8 +45,8 @@ public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC e
     public MixRenderSleInv(C c)
     {
         super(c);
-        this.arrowlayerrender = new ArrowLayer(c);
-        this.itemlayerrender = new ItemLayer(c);
+        this.arrowlayer = new ArrowLayer(c);
+        this.itemlayer = new ItemLayer(c);
     }
 
     public void doRender(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
@@ -106,15 +105,15 @@ public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC e
 
 //        OpenGLAnimationMemory openglanimationmemory = r.dataloader.openglanimationmemory_list.get(((SkinningClientData)r.clientdata).AnimationID());
 //        OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)r.dataloader.object_array[((SkinningClientData)r.clientdata).AnimationID()];
-        MemoAnimation memoanimation = r.rst.memoanimation_list.get(r.rc.AnimationID());
-        r.initSkinning(memoanimation);
+//        MemoAnimation memoanimation = r.rst.memoanimation_list.get(r.rc.AnimationID());
+        r.initSkinning(/*memoanimation*/);
 
         if (!this.c.fake)
         {
             this.multiplyAnimation();
         }
 
-        r.setSkinning(memoanimation);
+        r.setSkinning(/*memoanimation*/);
     }
 
     public void renderLayer(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
@@ -125,11 +124,11 @@ public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC e
         GL11.glTranslated(ox, oy, oz);
         GL11.glScalef(r.scale, r.scale, r.scale);
         GL11.glTranslated(-ox, -oy, -oz);
-        this.itemlayerrender.x = (float)ox;
-        this.itemlayerrender.y = (float)oy;
-        this.itemlayerrender.z = (float)oz;
-        this.itemlayerrender.layer(partialTicks);
-        this.arrowlayerrender.layer(rendere, (float)ox, (float)oy, (float)oz, partialTicks);
+        this.itemlayer.x = (float)ox;
+        this.itemlayer.y = (float)oy;
+        this.itemlayer.z = (float)oz;
+        this.itemlayer.layer(partialTicks);
+        this.arrowlayer.layer(rendere, (float)ox, (float)oy, (float)oz, partialTicks);
 
         GL11.glPopMatrix();
     }

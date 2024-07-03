@@ -21,9 +21,9 @@ public abstract class ClientSeInv<RG extends MemoGs, RS extends MemoSs, RC exten
 {
     public Inventory inventory;
 
-    public ClientSeInv(I i, R r, MB mb, MR mr, Inventory inventory)
+    public ClientSeInv(I i, R r, Inventory inventory)
     {
-        super(i, r, mb, mr);
+        super(i, r);
         this.inventory = inventory;
     }
 

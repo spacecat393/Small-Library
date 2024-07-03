@@ -22,10 +22,10 @@ public class RenderSle<E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, 
 {
     public C c;
 
-    public RenderSle(RST rst, RC rc, BD bd, C c)
+    public RenderSle(RST rst, RC rc, BD bd)
     {
         super(rst, rc, bd);
-        this.c = c;
+//        this.c = c;
     }
 
     public void updateLightCoord()

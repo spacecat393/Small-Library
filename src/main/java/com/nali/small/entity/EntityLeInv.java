@@ -191,6 +191,12 @@ public abstract class EntityLeInv extends EntityLe implements IMixLe
     }
 
     @Override
+    public Entity getE()
+    {
+        return this;
+    }
+
+    @Override
     public IBothLeInv getB()
     {
         return ibothleinv;

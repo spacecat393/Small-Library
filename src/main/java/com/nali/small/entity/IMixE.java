@@ -32,7 +32,7 @@ public interface IMixE<SD, BD extends IBothDaNe, E extends Entity>
             e.height = 0.5F;
             e.getDataManager().set(this.getFloatDataParameterArray()[0], bd.Scale());
 
-            this.newServer();
+//            this.newServer();
         }
     }
 
@@ -122,7 +122,7 @@ public interface IMixE<SD, BD extends IBothDaNe, E extends Entity>
     void newC();
 
     void newS();
-    void newServer();
+//    void newServer();
 
     BD getBD();
     SD getSD();

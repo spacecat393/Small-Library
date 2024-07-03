@@ -5,7 +5,6 @@ import com.nali.data.client.IClientDaS;
 import com.nali.draw.DrawScreen;
 import com.nali.render.RenderS;
 import com.nali.small.mix.IMixN;
-import com.nali.system.opengl.memo.client.MemoAnimation;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
 import com.nali.system.opengl.memo.client.store.StoreS;
@@ -30,11 +29,11 @@ public abstract class ClientSb<SD, BD extends IBothDaSn, RG extends MemoGs, RS e
         this.translate(x, y, z);
         GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
         this.scale();
-        MemoAnimation memoanimation = this.r.rst.memoanimation_list.get(this.r.rc.AnimationID());
+//        MemoAnimation memoanimation = this.r.rst.memoanimation_list.get(this.r.rc.AnimationID());
         this.r.updateLightCoord(t.getWorld(), t.getPos().up());
-        this.r.initSkinning(memoanimation);
+        this.r.initSkinning(/*memoanimation*/);
         this.updateFrame(this.r);
-        this.r.setSkinning(memoanimation);
+        this.r.setSkinning(/*memoanimation*/);
         this.r.drawLater();
         GL11.glPopMatrix();
     }

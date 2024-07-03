@@ -11,9 +11,9 @@ public abstract class ServerEInv<SD, BD extends IBothDaNe, E extends EntityEInv,
 {
     public Inventory inventory;
 
-    public ServerEInv(I i, A a, Inventory inventory)
+    public ServerEInv(I i, Inventory inventory)
     {
-        super(i, a);
+        super(i);
         this.inventory = inventory;
     }
 

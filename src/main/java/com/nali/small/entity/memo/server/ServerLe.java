@@ -30,9 +30,9 @@ public abstract class ServerLe<SD extends ISoundLe, BD extends IBothDaNe, E exte
     public AIEOwner<SD, BD, E, I, ?, A> aieowner;
     public AILeLockDMG<SD, BD, E, I, ?, A> ailelockdmg;
 
-    public ServerLe(I i, A a)
+    public ServerLe(I i)
     {
-        super(i, a);
+        super(i);
         this.workebodyyaw = new WorkEBodyYaw(this);
         this.aieowner = (AIEOwner<SD, BD, E, I, ?, A>)this.a.aie_map.get(AIEOwner.ID);
         this.ailelockdmg = (AILeLockDMG<SD, BD, E, I, ?, A>)this.a.aie_map.get(AILeLockDMG.ID);
@@ -340,5 +340,15 @@ public abstract class ServerLe<SD extends ISoundLe, BD extends IBothDaNe, E exte
     public WorkEBodyYaw getWorkEBodyYaw()
     {
         return this.workebodyyaw;
+    }
+
+    @Override
+    public void getHurtSound(DamageSource damageSource)
+    {
+    }
+
+    @Override
+    public void getDeathSound()
+    {
     }
 }

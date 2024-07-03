@@ -25,9 +25,9 @@ public abstract class ClientSle<RG extends MemoGs, RS extends MemoSs, RC extends
 {
     public ItemStack mouth_itemstack = ItemStack.EMPTY;
 
-    public ClientSle(I i, R r, MB mb, MR mr)
+    public ClientSle(I i, R r)
     {
-        super(i, r, mb, mr);
+        super(i, r);
     }
 
     @Override

@@ -47,8 +47,8 @@ public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientD
     public static LayerElytra LAYERELYTRA = new LayerElytra(RENDERLIVINGBASEOBJECT);
 
 //    public int[] iv_int_array;
-    public float[] rotation_float_array;
-    public float[] transform_float_array;
+//    public float[] rotation_float_array;
+//    public float[] transform_float_array;
 
     public float x, y, z;
     public byte index;
@@ -117,13 +117,15 @@ public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientD
                 boolean left_hand = transformtype == ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND;
                 if (left_hand)
                 {
-                    GL11.glRotatef(this.rotation_float_array[0], 0.0F, 1.0F, 0.0F);
-                    GL11.glRotatef(this.rotation_float_array[1], 1.0F, 0.0F, 0.0F);
+                    float[] rotation_float_array = this.c.getRotationFloatArray();
+                    GL11.glRotatef(rotation_float_array[0], 0.0F, 1.0F, 0.0F);
+                    GL11.glRotatef(rotation_float_array[1], 1.0F, 0.0F, 0.0F);
                 }
                 else if (transformtype == ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
                 {
-                    GL11.glRotatef(this.rotation_float_array[2], 0.0F, 1.0F, 0.0F);
-                    GL11.glRotatef(this.rotation_float_array[3], 1.0F, 0.0F, 0.0F);
+                    float[] rotation_float_array = this.c.getRotationFloatArray();
+                    GL11.glRotatef(rotation_float_array[2], 0.0F, 1.0F, 0.0F);
+                    GL11.glRotatef(rotation_float_array[3], 1.0F, 0.0F, 0.0F);
                 }
                 else
                 {
@@ -212,7 +214,7 @@ public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientD
                 }
                 else
                 {
-                    GL11.glTranslatef(this.transform_float_array[-(entityequipmentslot.getIndex() - 3) * 3], 0.25F, 0.0F);
+                    GL11.glTranslatef(this.c.getTransformFloatArray()[-(entityequipmentslot.getIndex() - 3) * 3], 0.25F, 0.0F);
                 }
 
                 GL11.glScalef(0.25F * 0.5F, 0.25F * 0.5F, 0.25F * 0.5F);
@@ -239,7 +241,7 @@ public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientD
     //            {
     //                GL11.glTranslatef(0.0F, 0.0F, 0.1F);
     //            }
-                GL11.glTranslatef(this.transform_float_array[-(entityequipmentslot.getIndex() - 3) * 3], 0.0F, 0.0F);
+                GL11.glTranslatef(this.c.getTransformFloatArray()[-(entityequipmentslot.getIndex() - 3) * 3], 0.0F, 0.0F);
 
                 Minecraft.getMinecraft().getItemRenderer().renderItem(e, itemstack, ItemCameraTransforms.TransformType.HEAD);
             }
@@ -263,6 +265,7 @@ public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientD
     {
         GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
         int i = -(index - 3) * 3;
-        GL11.glTranslatef(this.transform_float_array[i], this.transform_float_array[i + 1], this.transform_float_array[i + 2]);
+        float[] transform_float_array = this.c.getTransformFloatArray();
+        GL11.glTranslatef(transform_float_array[i], transform_float_array[i + 1], transform_float_array[i + 2]);
     }
 }

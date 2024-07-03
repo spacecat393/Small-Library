@@ -19,7 +19,7 @@ public class FrameEFLoopOffSet<SD, BD extends IBothDaNe, E extends Entity, I ext
     @Override
     public boolean onUpdate()
     {
-        int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
+        int[][] frame_2d_int_array = this.s.a.getFrame2DIntArray();
         boolean result = this.s.frame_int_array[this.frame] > frame_2d_int_array[this.index][0] && this.s.frame_int_array[this.frame] < frame_2d_int_array[this.index1][1];
 
         if (result)

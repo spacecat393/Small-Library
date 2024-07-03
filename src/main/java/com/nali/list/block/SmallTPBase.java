@@ -7,7 +7,6 @@ import com.nali.small.mix.block.BlockB;
 import com.nali.small.mix.item.ItemB;
 import com.nali.small.mix.memo.IBothN;
 import com.nali.small.mix.memo.client.ClientTPBase;
-import com.nali.system.opengl.memo.client.MemoAnimation;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -128,9 +127,9 @@ public class SmallTPBase extends BlockB implements ITileEntityProvider
         DrawScreen drawscreen = new DrawScreen(tpbaserender);
         drawscreen.scale(0.25F);
         drawscreen.z = 0.0F;
-        MemoAnimation memoanimation = I.clientloader.stores.memoanimation_list.get(iclientdas.AnimationID());
-        tpbaserender.initSkinning(memoanimation);
-        tpbaserender.setSkinning(memoanimation);
+//        MemoAnimation memoanimation = I.clientloader.stores.memoanimation_list.get(iclientdas.AnimationID());
+        tpbaserender.initSkinning(/*memoanimation*/);
+        tpbaserender.setSkinning(/*memoanimation*/);
         this.ibothb = new ClientTPBase(tpbaserender, drawscreen, this);
     }
 

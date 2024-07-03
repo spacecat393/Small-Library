@@ -17,7 +17,7 @@ public class FrameLeShootBF<SD extends ISoundLe, BD extends IBothDaNe, E extends
     @Override
     public void step()
     {
-        int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
+        int[][] frame_2d_int_array = this.s.a.getFrame2DIntArray();
         if (this.s.frame_int_array[this.frame] == frame_2d_int_array[this.index1][0])
         {
             this.step = 1;

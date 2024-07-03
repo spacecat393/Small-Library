@@ -24,7 +24,7 @@ public class FrameLeProtect<SD extends ISoundLe, BD extends IBothDaNe, E extends
     @Override
     public boolean onUpdate()
     {
-        int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
+        int[][] frame_2d_int_array = this.s.a.getFrame2DIntArray();
         this.step = 1;
         switch (this.aileprotect.state & (4+8))
         {

@@ -22,9 +22,9 @@ public abstract class ClientSleInv<RG extends MemoGs, RS extends MemoSs, RC exte
 {
     public Inventory inventory;
 
-    public ClientSleInv(I i, R r, MB mb, MR mr, Inventory inventory)
+    public ClientSleInv(I i, R r, Inventory inventory)
     {
-        super(i, r, mb, mr);
+        super(i, r);
         this.inventory = inventory;
     }
 

@@ -16,7 +16,7 @@ public class FrameETLoop<SD, BD extends IBothDaNe, E extends Entity, I extends I
     @Override
     public boolean onUpdate()
     {
-        int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
+        int[][] frame_2d_int_array = this.s.a.getFrame2DIntArray();
         this.step = 1;
         if (this.s.frame_int_array[this.frame] < frame_2d_int_array[this.index][0] || this.s.frame_int_array[this.frame] > frame_2d_int_array[this.index][1] - 1)
         {

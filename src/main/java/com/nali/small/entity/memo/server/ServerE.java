@@ -4,6 +4,7 @@ import com.nali.data.IBothDaNe;
 import com.nali.small.chunk.ChunkLoader;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothE;
+import com.nali.small.entity.memo.client.render.RenderE;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,6 +14,8 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Map;
 import java.util.UUID;
@@ -44,10 +47,10 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 //    public ItemStack current_mouth_itemstack;
     public byte[] sync_byte_array;
 
-    public ServerE(I i, A a)
+    public ServerE(I i)
     {
         this.i = i;
-        this.a = a;
+//        this.a = a;
 //        this.a = this.createA();
         this.worldserver = (WorldServer)i.getE().world;
 //        int size = (int)Math.ceil(this.i.getAI().length / 8.0F);
@@ -193,7 +196,7 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 //        this.statle.readNBT(nbttagcompound);
     }
 
-    @Override
+//    @Override
     public void remove()
     {
         ChunkLoader.removeChunk(this.i);
@@ -262,6 +265,30 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 //        this.initWorkBytes();
 //    }
 
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void setShouldRender(boolean b)
+    {
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void doRender(RenderE renderE, double v, double v1, double v2, float v3)
+    {
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void setUUID(UUID uuid)
+    {
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void playSound(int i)
+    {
+    }
+
     @Override
     public I getI()
     {
@@ -270,7 +297,7 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 
 //    public abstract A createA();
 
-    public abstract int[][] getFrame2DIntArray();
+//    public abstract int[][] getFrame2DIntArray();
 
     public abstract void updateServer();
 }

@@ -4,7 +4,6 @@ import com.nali.Nali;
 import com.nali.data.IBothDaNe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
-import com.nali.small.entity.memo.server.ai.frame.FrameE;
 import com.nali.system.Reflect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -36,13 +35,13 @@ public abstract class MixAIE<SD, BD extends IBothDaNe, E extends Entity, I exten
     }
 
     public S s;
-    public Map<Byte, AI<SD, BD, E, I, S, ?>> aie_map = new HashMap();
+    public Map<Byte, AI/*<SD, BD, E, I, S, ?>*/> aie_map = new HashMap();
     public byte state = (byte)255;//main_work sub_work init ai-lock ?map chunk
 
     public EntityPlayerMP entityplayermp;
     public byte[] byte_array;
 
-    public FrameE<SD, BD, E, I, S, ?>[] framee_array;
+//    public FrameE<SD, BD, E, I, S, ?>[] framee_array;
 
     public MixAIE(S s)
     {
@@ -149,10 +148,10 @@ public abstract class MixAIE<SD, BD extends IBothDaNe, E extends Entity, I exten
             this.aie_map.get(b).onUpdate();
         }
 
-        for (FrameE<SD, BD, E, I, S, ?> framee : this.framee_array)
-        {
-            framee.onUpdate();
-        }
+//        for (FrameE<SD, BD, E, I, S, ?> framee : this.framee_array)
+//        {
+//            framee.onUpdate();
+//        }
 
 //        this.state = (byte)((this.state & 1) * 4 | 255-4);
         this.state = (byte)255;
@@ -188,6 +187,5 @@ public abstract class MixAIE<SD, BD extends IBothDaNe, E extends Entity, I exten
 //        this.main_work_byte_array[this.workbytes.LOOK_TO() / 8] ^= (byte)Math.pow(2, this.workbytes.LOOK_TO() % 8);
 //        this.main_work_byte_array[this.workbytes.REVIVE() / 8] ^= (byte)Math.pow(2, this.workbytes.REVIVE() % 8);
 //    }
-
-    public abstract byte[][] getFrame2D();
+//    public abstract int[][] getFrame2DIntArray();
 }

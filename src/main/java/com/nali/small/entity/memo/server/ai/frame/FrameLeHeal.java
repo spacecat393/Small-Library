@@ -23,7 +23,7 @@ public class FrameLeHeal<SD extends ISoundLe, BD extends IBothDaNe, E extends En
         this.step = 1;
         if (this.aileheal.state == 0 || this.aileheal.state == 1)
         {
-            int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
+            int[][] frame_2d_int_array = this.s.a.getFrame2DIntArray();
             for (int heal_frame : this.aileheal.heal_frame_int_array)
             {
                 if (this.s.frame_int_array[this.frame] == heal_frame)

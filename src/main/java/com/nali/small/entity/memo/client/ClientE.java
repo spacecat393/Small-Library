@@ -56,16 +56,16 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
     public boolean fake;
     public byte[] sync_byte_array;
 
-    public ClientE(I i, R r, MB mb, MR mr)
+    public ClientE(I i, R r)
     {
         this.i = i;
         this.r = r;
-        this.mb = mb;
-        this.mr = mr;
+//        this.mb = mb;
+//        this.mr = mr;
 //        this.r = this.createR();
 //        this.mb = this.createMB();
 //        this.mr = this.createMR();
-        this.sound = this.createSoundRender();
+        this.sound = this.createSound();
     }
 
     @Override
@@ -176,6 +176,11 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
         NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
     }
 
+//    @Override
+//    public void remove()
+//    {
+//    }
+
     @Override
     public I getI()
     {
@@ -186,7 +191,9 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
 //    public abstract R createR();
 //    public abstract MB createMB();
 //    public abstract MR createMR();
-    public abstract Sound createSoundRender();
+    public abstract Sound createSound();
 //    public abstract IEMixBox createIEMixBox();
     public abstract int[] getIVIntArray();
+    public abstract float[] getRotationFloatArray();
+    public abstract float[] getTransformFloatArray();
 }

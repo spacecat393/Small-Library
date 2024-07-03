@@ -30,7 +30,7 @@ public interface IBothE<SD, BD extends IBothDaNe, E extends Entity, I extends IM
     void readEntityFromNBT(NBTTagCompound nbttagcompound);
 
 //    void add();
-    void remove();
+//    void remove();
 
     @SideOnly(Side.CLIENT)
     void setShouldRender(boolean result);
