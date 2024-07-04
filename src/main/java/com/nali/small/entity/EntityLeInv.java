@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public abstract class EntityLeInv extends EntityLe implements IMixLe
+public abstract class EntityLeInv extends EntityLe
 {
     public static DataParameter<ItemStack> MOUTH_ITEMSTACK_DATAPARAMETER = EntityDataManager.createKey(EntityLeInv.class, DataSerializers.ITEM_STACK);
     public IBothLeInv ibothleinv;

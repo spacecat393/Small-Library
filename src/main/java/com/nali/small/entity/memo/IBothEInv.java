@@ -10,12 +10,12 @@ public interface IBothEInv<SD, BD extends IBothDaNe, E extends Entity, I extends
     @Override
     default void writeEntityToNBT(NBTTagCompound nbttagcompound)
     {
-        IBothInv.super.writeEntityToNBT(nbttagcompound);
+        this.writeInvToNBT(nbttagcompound);
     }
 
     @Override
     default void readEntityFromNBT(NBTTagCompound nbttagcompound)
     {
-        IBothInv.super.readEntityFromNBT(nbttagcompound);
+        this.readInvFromNBT(nbttagcompound);
     }
 }

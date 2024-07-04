@@ -5,12 +5,12 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public interface IBothInv
 {
-    default void writeEntityToNBT(NBTTagCompound nbttagcompound)
+    default void writeInvToNBT(NBTTagCompound nbttagcompound)
     {
         this.getInventory().writeNBT(nbttagcompound);
     }
 
-    default void readEntityFromNBT(NBTTagCompound nbttagcompound)
+    default void readInvFromNBT(NBTTagCompound nbttagcompound)
     {
         this.getInventory().readNBT(nbttagcompound);
     }

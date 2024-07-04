@@ -1,40 +1,31 @@
 package com.nali.small.entity;
 
 import com.nali.small.entity.memo.IBothEInv;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class EntityEInv extends Entity implements IMixE
+public abstract class EntityEInv extends EntityE
 {
     public IBothEInv ibotheinv;
 
     public EntityEInv(World world)
     {
         super(world);
-        this.Einit(this, world);
-    }
-
-    @Override
-    public BlockPos getPosition()
-    {
-        return new BlockPos(this.posX, this.posY, this.posZ);
     }
 
     @Override
     public void writeEntityToNBT(NBTTagCompound nbttagcompound)
     {
-        this.EwriteEntityToNBT(nbttagcompound);
+        super.writeEntityToNBT(nbttagcompound);
         this.ibotheinv.writeEntityToNBT(nbttagcompound);
     }
 
     @Override
     public void readEntityFromNBT(NBTTagCompound nbttagcompound)
     {
-        this.EreadEntityFromNBT(nbttagcompound);
+        super.readEntityFromNBT(nbttagcompound);
         this.ibotheinv.readEntityFromNBT(nbttagcompound);
     }
 

@@ -1,17 +1,21 @@
 package com.nali.small.entity.memo.server;
 
-import com.nali.small.entity.memo.server.ai.frame.FrameE;
+import com.nali.small.entity.memo.server.ai.frame.FrameS;
 
 public interface IServerS
 {
     default void updateFrame()
     {
-        for (FrameE framee : this.getFrameArray())
+        for (FrameS frames : this.getFrameSArray())
         {
-            framee.onUpdate();
+            if (frames.onUpdate())
+            {
+                return;
+            }
         }
     }
 
-    FrameE[] getFrameArray();
+    void initFrame();
+    FrameS[] getFrameSArray();
     int[][] getFrame2DIntArray();
 }

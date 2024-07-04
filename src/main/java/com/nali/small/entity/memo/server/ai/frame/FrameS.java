@@ -6,7 +6,7 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import net.minecraft.entity.Entity;
 
-public abstract class FrameE<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>>
+public abstract class FrameS<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>>
 {
     public S s;
 
@@ -17,13 +17,14 @@ public abstract class FrameE<SD, BD extends IBothDaNe, E extends Entity, I exten
     public boolean lock;
 //    public Supplier<Boolean>[] condition_boolean_supplier_array;
 
-    public FrameE(S s/*, int main_integer_index*/, byte frame, byte index/*, int[][] int_2d_array*/)
+    public FrameS(S s/*, int main_integer_index*/, byte frame, byte index/*, int[][] int_2d_array*/)
     {
         this.s = s;
 //        this.main_integer_index = main_integer_index;
         this.frame = frame;
         this.index = index;
 //        this.int_2d_array = int_2d_array;
+        this.init();
     }
 
 //    @Override
@@ -49,6 +50,10 @@ public abstract class FrameE<SD, BD extends IBothDaNe, E extends Entity, I exten
     {
         I i = this.s.getI();
         i.getE().getDataManager().set(i.getIntegerDataParameterArray()[this.frame], this.s.frame_int_array[this.index] + this.step);
+    }
+
+    public void init()
+    {
     }
 
     public abstract boolean onUpdate();

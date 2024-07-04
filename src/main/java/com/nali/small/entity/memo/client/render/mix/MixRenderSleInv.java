@@ -40,7 +40,10 @@ public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC e
     body_rot,
     head_rot,
     net_head_yaw,
-    head_pitch;
+    head_pitch,
+
+    shadow_opaque,
+    shadow_size;
 
     public MixRenderSleInv(C c)
     {
@@ -57,15 +60,15 @@ public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC e
 
         GL11.glPushMatrix();
 
-        this.updateData(partialTicks);
+        this.updateData(/*rendere, */partialTicks);
 
         GL11.glTranslated(ox, oy, oz);
 
         this.renderHitBox(rendere);
 
         GL11.glScalef(r.scale, r.scale, r.scale);
-        rendere.mShadowOpaque(r.scale);
-        rendere.mShadowSize(r.scale);
+        rendere.setShadowOpaque(this.shadow_opaque * r.scale);
+        rendere.setShadowSize(this.shadow_size * r.scale);
 
         boolean invisible = e.isInvisible() || e.isInvisibleToPlayer(Minecraft.getMinecraft().player);
         if (invisible)
@@ -93,7 +96,7 @@ public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC e
 
     }
 
-    public void updateData(float partialTicks)
+    public void updateData(/*RenderE<E> rendere, */float partialTicks)
     {
         R r = this.c.r;
         E e = this.c.i.getE();
@@ -110,7 +113,7 @@ public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC e
 
         if (!this.c.fake)
         {
-            this.multiplyAnimation();
+            this.multiplyAnimation(/*rendere*/);
         }
 
         r.setSkinning(/*memoanimation*/);
@@ -212,5 +215,5 @@ public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC e
         }
     }
 
-    public abstract void multiplyAnimation();
+    public abstract void multiplyAnimation(/*RenderE<E> rendere*/);
 }
