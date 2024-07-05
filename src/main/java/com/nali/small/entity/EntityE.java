@@ -30,4 +30,10 @@ public abstract class EntityE extends Entity implements IMixE
     {
         this.EreadEntityFromNBT(nbttagcompound);
     }
+
+    @Override
+    public Entity getE()
+    {
+        return this;
+    }
 }

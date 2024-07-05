@@ -2,7 +2,7 @@ package com.nali.list.block;
 
 import com.nali.data.client.IClientDaS;
 import com.nali.draw.DrawScreen;
-import com.nali.list.render.s.TPBaseRender;
+import com.nali.list.render.s.RenderTPBase;
 import com.nali.small.mix.block.BlockB;
 import com.nali.small.mix.item.ItemB;
 import com.nali.small.mix.memo.IBothN;
@@ -122,15 +122,15 @@ public class SmallTPBase extends BlockB implements ITileEntityProvider
     @Override
     public void newC()
     {
-        IClientDaS iclientdas = TPBaseRender.ICLIENTDAS;
-        TPBaseRender tpbaserender = new TPBaseRender(I.clientloader.stores, iclientdas, TPBaseRender.IBOTHDASN);
-        DrawScreen drawscreen = new DrawScreen(tpbaserender);
-        drawscreen.scale(0.25F);
-        drawscreen.z = 0.0F;
+        IClientDaS rc = RenderTPBase.ICLIENTDAS;
+        RenderTPBase r = new RenderTPBase(I.clientloader.stores, rc, RenderTPBase.IBOTHDASN);
+        DrawScreen d = new DrawScreen(r);
+        d.scale(0.25F);
+        d.z = 0.0F;
 //        MemoAnimation memoanimation = I.clientloader.stores.memoanimation_list.get(iclientdas.AnimationID());
-        tpbaserender.initSkinning(/*memoanimation*/);
-        tpbaserender.setSkinning(/*memoanimation*/);
-        this.ibothb = new ClientTPBase(tpbaserender, drawscreen, this);
+        r.initSkinning(/*memoanimation*/);
+        r.setSkinning(/*memoanimation*/);
+        this.ibothb = new ClientTPBase(r, d, this);
     }
 
     @Override

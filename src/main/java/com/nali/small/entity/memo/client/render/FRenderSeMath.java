@@ -4,7 +4,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderSeMath
+public class FRenderSeMath
 {
     public static float interpolateRotation(float prevYawOffset, float yawOffset, float partialTicks)
     {

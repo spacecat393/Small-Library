@@ -7,9 +7,9 @@ import com.nali.render.RenderS;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.client.ClientSle;
 import com.nali.small.entity.memo.client.box.mix.MixBoxSle;
-import com.nali.small.entity.memo.client.render.RenderE;
-import com.nali.small.entity.memo.client.render.layer.ArrowLayer;
-import com.nali.small.entity.memo.client.render.layer.ItemLayer;
+import com.nali.small.entity.memo.client.render.FRenderE;
+import com.nali.small.entity.memo.client.render.layer.LayerSleArrow;
+import com.nali.small.entity.memo.client.render.layer.LayerSleItem;
 import com.nali.sound.ISoundLe;
 import com.nali.system.opengl.memo.client.MemoGs;
 import com.nali.system.opengl.memo.client.MemoSs;
@@ -27,99 +27,43 @@ import org.lwjgl.opengl.GL20;
 import java.awt.*;
 
 import static com.nali.key.KeyHelper.generateRainbowColor;
-import static com.nali.small.entity.memo.client.render.RenderSeMath.interpolateRotation;
+import static com.nali.small.entity.memo.client.render.FRenderSeMath.interpolateRotation;
 import static com.nali.system.opengl.memo.client.MemoCurrent.*;
 
 @SideOnly(Side.CLIENT)
-public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>
+public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> extends MixRenderSe<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>
 {
-    public ArrowLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> arrowlayer;
-    public ItemLayer<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> itemlayer;
+    public LayerSleArrow<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> layerslearrow;
+    public LayerSleItem<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> layersleitem;
 
     public float
     body_rot,
-    head_rot,
-    net_head_yaw,
-    head_pitch,
-
-    shadow_opaque,
-    shadow_size;
+    net_head_yaw;
 
     public MixRenderSleInv(C c)
     {
         super(c);
-        this.arrowlayer = new ArrowLayer(c);
-        this.itemlayer = new ItemLayer(c);
+        this.layerslearrow = new LayerSleArrow(c);
+        this.layersleitem = new LayerSleItem(c);
     }
 
-    public void doRender(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
+    @Override
+    public void updateData(float partialTicks)
     {
-        R r = this.c.r;
-        E e = this.c.i.getE();
-        this.renderLayer(rendere, ox, oy, oz, partialTicks);
-
-        GL11.glPushMatrix();
-
-        this.updateData(/*rendere, */partialTicks);
-
-        GL11.glTranslated(ox, oy, oz);
-
-        this.renderHitBox(rendere);
-
-        GL11.glScalef(r.scale, r.scale, r.scale);
-        rendere.setShadowOpaque(this.shadow_opaque * r.scale);
-        rendere.setShadowSize(this.shadow_size * r.scale);
-
-        boolean invisible = e.isInvisible() || e.isInvisibleToPlayer(Minecraft.getMinecraft().player);
-        if (invisible)
-        {
-            OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
-            GL11.glGetFloat(GL11.GL_CURRENT_COLOR, OPENGL_FIXED_PIPE_FLOATBUFFER);
-            GL_CURRENT_COLOR[0] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
-            GL_CURRENT_COLOR[1] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(1);
-            GL_CURRENT_COLOR[2] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(2);
-            GL_CURRENT_COLOR[3] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(3);
-            GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], 0.25F);
-        }
-        GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
-        r.updateLightCoord(e.world, e.getPosition());
-//        r.draw(/*ox, oy, oz*/);
-        r.drawLater(/*ox, oy, oz*/);
-        if (invisible)
-        {
-            GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
-        }
-
-        GL11.glPopMatrix();
-
-//        this.renderLayer(t, ox, oy, oz, partialTicks);
-
-    }
-
-    public void updateData(/*RenderE<E> rendere, */float partialTicks)
-    {
-        R r = this.c.r;
         E e = this.c.i.getE();
         this.body_rot = (float)Math.toRadians(interpolateRotation(e.prevRenderYawOffset, e.renderYawOffset, partialTicks));
-        this.head_rot = (float)Math.toRadians(interpolateRotation(e.prevRotationYaw, e.rotationYaw, partialTicks));
+        super.updateData(partialTicks);
         this.net_head_yaw = this.head_rot - this.body_rot;
-        this.head_pitch = (float)Math.toRadians(e.prevRotationPitch + (e.rotationPitch - e.prevRotationPitch) * partialTicks);
-//        r.timeline = partialTicks;
-
-//        OpenGLAnimationMemory openglanimationmemory = r.dataloader.openglanimationmemory_list.get(((SkinningClientData)r.clientdata).AnimationID());
-//        OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)r.dataloader.object_array[((SkinningClientData)r.clientdata).AnimationID()];
-//        MemoAnimation memoanimation = r.rst.memoanimation_list.get(r.rc.AnimationID());
-        r.initSkinning(/*memoanimation*/);
-
-        if (!this.c.fake)
-        {
-            this.multiplyAnimation(/*rendere*/);
-        }
-
-        r.setSkinning(/*memoanimation*/);
     }
 
-    public void renderLayer(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
+    @Override
+    public void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
+    {
+        this.renderLayer(rendere, ox, oy, oz, partialTicks);
+        super.doRender(rendere, ox, oy, oz, partialTicks);
+    }
+
+    public void renderLayer(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
     {
         R r = this.c.r;
         GL11.glPushMatrix();
@@ -127,16 +71,17 @@ public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC e
         GL11.glTranslated(ox, oy, oz);
         GL11.glScalef(r.scale, r.scale, r.scale);
         GL11.glTranslated(-ox, -oy, -oz);
-        this.itemlayer.x = (float)ox;
-        this.itemlayer.y = (float)oy;
-        this.itemlayer.z = (float)oz;
-        this.itemlayer.layer(partialTicks);
-        this.arrowlayer.layer(rendere, (float)ox, (float)oy, (float)oz, partialTicks);
+        this.layersleitem.x = (float)ox;
+        this.layersleitem.y = (float)oy;
+        this.layersleitem.z = (float)oz;
+        this.layersleitem.layer(partialTicks);
+        this.layerslearrow.layer(rendere, (float)ox, (float)oy, (float)oz, partialTicks);
 
         GL11.glPopMatrix();
     }
 
-    public void renderHitBox(RenderE<E> rendere)
+    @Override
+    public void renderHitBox(FRenderE<E> rendere)
     {
         E e = this.c.i.getE();
         if (rendere.getRenderManager().isDebugBoundingBox() && !e.isInvisible() && !Minecraft.getMinecraft().isReducedDebug())
@@ -214,6 +159,4 @@ public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC e
             GL11.glPopMatrix();
         }
     }
-
-    public abstract void multiplyAnimation(/*RenderE<E> rendere*/);
 }

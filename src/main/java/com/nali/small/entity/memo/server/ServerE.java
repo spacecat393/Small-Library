@@ -4,7 +4,7 @@ import com.nali.data.IBothDaNe;
 import com.nali.small.chunk.ChunkLoader;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothE;
-import com.nali.small.entity.memo.client.render.RenderE;
+import com.nali.small.entity.memo.client.render.FRenderE;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -273,7 +273,7 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void doRender(RenderE renderE, double v, double v1, double v2, float v3)
+    public void doRender(FRenderE renderE, double v, double v1, double v2, float v3)
     {
     }
 

@@ -12,7 +12,7 @@ import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothE;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
-import com.nali.small.entity.memo.client.render.RenderE;
+import com.nali.small.entity.memo.client.render.FRenderE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.sound.Sound;
 import com.nali.system.bytes.ByteWriter;
@@ -146,7 +146,7 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
     }
 
     @Override
-    public void doRender(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
+    public void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
     {
         this.mr.doRender(rendere, ox, oy, oz, partialTicks);
     }

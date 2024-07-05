@@ -2,7 +2,7 @@ package com.nali.small.entity.memo;
 
 import com.nali.data.IBothDaNe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.memo.client.render.RenderE;
+import com.nali.small.entity.memo.client.render.FRenderE;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,7 +35,7 @@ public interface IBothE<SD, BD extends IBothDaNe, E extends Entity, I extends IM
     @SideOnly(Side.CLIENT)
     void setShouldRender(boolean result);
     @SideOnly(Side.CLIENT)
-    void doRender(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks);
+    void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks);
 //    @SideOnly(Side.CLIENT)
 //    void doContainer();
 

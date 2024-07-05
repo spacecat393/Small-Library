@@ -6,6 +6,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class SmallStorageRender<T extends SmallStorage> extends RenderT<T>
+public class SmallRenderStorage<T extends SmallStorage> extends RenderT<T>
 {
 }

@@ -16,17 +16,17 @@ import java.util.Map;
 import static com.nali.Nali.I;
 
 @SideOnly(Side.CLIENT)
-public class StorageRender<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>> extends SmallRenderO<RG, RS, RST, RC>
+public class RenderStorage<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>> extends SmallRenderO<RG, RS, RST, RC>
 {
     public static IClientDaO ICLIENTDAO = new StorageClient();
     public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
 
-    public StorageRender()
+    public RenderStorage()
     {
         this((RST)I.clientloader.storeo, (RC)ICLIENTDAO);
     }
 
-    public StorageRender(RST rst, RC rc)
+    public RenderStorage(RST rst, RC rc)
     {
         super(rst, rc);
     }

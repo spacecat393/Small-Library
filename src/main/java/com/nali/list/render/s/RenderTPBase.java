@@ -18,19 +18,19 @@ import java.util.Map;
 import static com.nali.Nali.I;
 
 @SideOnly(Side.CLIENT)
-public class TPBaseRender<BD extends IBothDaSn, RG extends MemoGs, RS extends MemoSs, RST extends StoreS<RG, RS>, RC extends IClientDaS> extends SmallRenderS<BD, RG, RS, RST, RC>
+public class RenderTPBase<BD extends IBothDaSn, RG extends MemoGs, RS extends MemoSs, RST extends StoreS<RG, RS>, RC extends IClientDaS> extends SmallRenderS<BD, RG, RS, RST, RC>
 {
     public static IClientDaS ICLIENTDAS = new TPBaseClient();
     public static IBothDaSn IBOTHDASN = new TPBaseBothDaS();
 
     public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
 
-    public TPBaseRender()
+    public RenderTPBase()
     {
         this((RST)I.clientloader.stores, (RC)ICLIENTDAS, (BD)IBOTHDASN);
     }
 
-    public TPBaseRender(RST rst, RC rc, BD bd)
+    public RenderTPBase(RST rst, RC rc, BD bd)
     {
         super(rst, rc, bd);
     }

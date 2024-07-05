@@ -8,7 +8,7 @@ import com.nali.render.RenderS;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.client.ClientSle;
 import com.nali.small.entity.memo.client.box.mix.MixBoxSle;
-import com.nali.small.entity.memo.client.render.RenderFle;
+import com.nali.small.entity.memo.client.render.FRenderFle;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.small.mixin.IMixinLayerArmorBase;
 import com.nali.sound.ISoundLe;
@@ -40,11 +40,11 @@ import org.lwjgl.opengl.GL11;
 import static com.nali.system.opengl.memo.client.MemoCurrent.GL_CULL_FACE;
 
 @SideOnly(Side.CLIENT)
-public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends LayerRender<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>
+public class LayerSleItem<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends LayerE<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>
 {
-    public static RenderFle RENDERLIVINGBASEOBJECT = new RenderFle();
-    public static LayerBipedArmor LAYERBIPEDARMOR = new LayerBipedArmor(RENDERLIVINGBASEOBJECT);
-    public static LayerElytra LAYERELYTRA = new LayerElytra(RENDERLIVINGBASEOBJECT);
+    public static FRenderFle FRENDERFLE = new FRenderFle();
+    public static LayerBipedArmor LAYERBIPEDARMOR = new LayerBipedArmor(FRENDERFLE);
+    public static LayerElytra LAYERELYTRA = new LayerElytra(FRENDERFLE);
 
 //    public int[] iv_int_array;
 //    public float[] rotation_float_array;
@@ -53,7 +53,7 @@ public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientD
     public float x, y, z;
     public byte index;
 
-    public ItemLayer(C c)
+    public LayerSleItem(C c)
     {
         super(c);
     }
@@ -175,14 +175,14 @@ public class ItemLayer<RG extends MemoGs, RS extends MemoSs, RC extends IClientD
             {
                 this.setArmor(entityequipmentslot.getIndex());
                 GL11.glScalef(0.08F * 0.5F, 0.08F * 0.5F, 0.08F * 0.5F);
-                ((IMixinLayerArmorBase)LAYERBIPEDARMOR).GOrenderArmorLayer(e, e.limbSwing, e.limbSwingAmount, partialTicks, RENDERLIVINGBASEOBJECT.handleRotationFloat(e, partialTicks), 0.0F, 0.0F, 1.0F, entityequipmentslot);
+                ((IMixinLayerArmorBase)LAYERBIPEDARMOR).GOrenderArmorLayer(e, e.limbSwing, e.limbSwingAmount, partialTicks, FRENDERFLE.handleRotationFloat(e, partialTicks), 0.0F, 0.0F, 1.0F, entityequipmentslot);
             }
             else if (itemstack.getItem() == Items.ELYTRA)
             {
                 this.setArmor(entityequipmentslot.getIndex());
                 GL11.glTranslatef(0.0F, 1.0F * 0.5F, 0.0F);
                 GL11.glScalef(0.035F * 0.5F, 0.035F * 0.5F, 0.035F * 0.5F);
-                LAYERELYTRA.doRenderLayer(e, e.limbSwing, e.limbSwingAmount, partialTicks, RENDERLIVINGBASEOBJECT.handleRotationFloat(e, partialTicks), 0.0F, 0.0F, 1.0F);
+                LAYERELYTRA.doRenderLayer(e, e.limbSwing, e.limbSwingAmount, partialTicks, FRENDERFLE.handleRotationFloat(e, partialTicks), 0.0F, 0.0F, 1.0F);
             }
             else if (item == Items.SKULL)
             {

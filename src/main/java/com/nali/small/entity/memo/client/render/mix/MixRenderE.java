@@ -6,7 +6,7 @@ import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
-import com.nali.small.entity.memo.client.render.RenderE;
+import com.nali.small.entity.memo.client.render.FRenderE;
 import com.nali.system.opengl.memo.client.MemoGo;
 import com.nali.system.opengl.memo.client.MemoSo;
 import com.nali.system.opengl.memo.client.store.StoreO;
@@ -19,10 +19,12 @@ public abstract class MixRenderE<RG extends MemoGo, RS extends MemoSo, RC extend
 {
     public C c;
 
+    public float shadow_opaque, shadow_size;
+
     public MixRenderE(C c)
     {
         this.c = c;
     }
 
-    public abstract void doRender(RenderE<E> rendere, double ox, double oy, double oz, float partialTicks);
+    public abstract void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks);
 }
