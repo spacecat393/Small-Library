@@ -17,5 +17,6 @@ public interface IServerS
 
     void initFrame();
     FrameS[] getFrameSArray();
+    byte[] getFrameByteArray();
     int[][] getFrame2DIntArray();
 }

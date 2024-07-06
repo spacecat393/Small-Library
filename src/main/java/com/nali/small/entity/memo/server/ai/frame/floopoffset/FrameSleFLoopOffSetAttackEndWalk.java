@@ -9,18 +9,19 @@ import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.sound.ISoundLe;
 
-public class FrameSleFLoopOffSetEndAttackWalk<SD extends ISoundLe, BD extends IBothDaNe, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A> & IServerS, A extends MixAIE<SD, BD, E, I, S>> extends FrameSFLoopOffSet<SD, BD, E, I, S, A>
+public class FrameSleFLoopOffSetAttackEndWalk<SD extends ISoundLe, BD extends IBothDaNe, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A> & IServerS, A extends MixAIE<SD, BD, E, I, S>> extends FrameSFLoopOffSet<SD, BD, E, I, S, A>
 {
-    public FrameSleFLoopOffSetEndAttackWalk(S s, byte frame, byte index, byte index1)
-    {
-        super(s, frame, index, index1);
-    }
-
     public AILeAttack<SD, BD, E, I, S, A> aileattack;
+
+    public FrameSleFLoopOffSetAttackEndWalk(S s, int index)
+    {
+        super(s, index);
+    }
 
     @Override
     public void init()
     {
+        super.init();
         this.aileattack = (AILeAttack<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeAttack.ID);
     }
 

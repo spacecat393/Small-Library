@@ -1,4 +1,4 @@
-package com.nali.small.data.both;
+package com.nali.small.da.both;
 
 import com.nali.data.IBothDaSn;
 

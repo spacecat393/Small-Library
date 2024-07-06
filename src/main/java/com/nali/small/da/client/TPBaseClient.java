@@ -1,4 +1,4 @@
-package com.nali.small.data.client;
+package com.nali.small.da.client;
 
 import com.nali.data.client.IClientDaS;
 import net.minecraftforge.fml.relauncher.Side;

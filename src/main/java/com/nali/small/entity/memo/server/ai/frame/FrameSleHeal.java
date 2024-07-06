@@ -12,14 +12,19 @@ import com.nali.sound.ISoundLe;
 public class FrameSleHeal<SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerSle<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameS<SD, BD, E, I, S, A>
 {
     public AILeHeal<SD, BD, E, I, S, A> aileheal;
-    public FrameSleHeal(S s, byte frame, byte index)
+
+//    public byte index;
+
+    public FrameSleHeal(S s, int index)
     {
-        super(s, frame, index);
+        super(s, index);
+//        index = index;
     }
 
     @Override
     public void init()
     {
+        super.init();
         this.aileheal = (AILeHeal<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeHeal.ID);
     }
 
@@ -30,23 +35,26 @@ public class FrameSleHeal<SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn,
         if (this.aileheal.state == 0 || this.aileheal.state == 1)
         {
             int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
+            byte[] frame_byte_array = this.s.getFrameByteArray();
+            byte frame = frame_byte_array[this.index];
             for (int heal_frame : this.aileheal.heal_frame_int_array)
             {
-                if (this.s.frame_int_array[this.frame] == heal_frame)
+                if (this.s.frame_int_array[frame] == heal_frame)
                 {
                     this.aileheal.state = 1;
                     break;
                 }
             }
 
-            if (this.s.frame_int_array[this.frame] < frame_2d_int_array[this.index][0] || this.s.frame_int_array[this.frame] > frame_2d_int_array[this.index][1])
+            byte index = frame_byte_array[this.index + 1];
+            if (this.s.frame_int_array[frame] < frame_2d_int_array[index][0] || this.s.frame_int_array[frame] > frame_2d_int_array[index][1])
             {
-                this.s.frame_int_array[this.frame] = frame_2d_int_array[this.index][0];
+                this.s.frame_int_array[frame] = frame_2d_int_array[index][0];
                 this.step = 0;
             }
-            else if (this.s.frame_int_array[this.frame] == frame_2d_int_array[this.index][1])
+            else if (this.s.frame_int_array[frame] == frame_2d_int_array[index][1])
             {
-                this.s.frame_int_array[this.frame] = frame_2d_int_array[this.index][0];
+                this.s.frame_int_array[frame] = frame_2d_int_array[index][0];
                 this.step = 0;
             }
 

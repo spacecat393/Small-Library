@@ -12,7 +12,7 @@ public class AIESit<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<
 {
     public static byte ID;
 
-    public byte state;//on t-ready f-ready
+    public byte state;//on t-ready/hard_ready f-ready/soft_ready
 
     public AIESit(S s)
     {

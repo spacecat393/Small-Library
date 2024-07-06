@@ -1,7 +1,7 @@
 package com.nali.list.render.o;
 
 import com.nali.data.client.IClientDaO;
-import com.nali.small.data.client.StorageClient;
+import com.nali.small.da.client.StorageClient;
 import com.nali.small.render.SmallRenderO;
 import com.nali.system.opengl.memo.client.MemoGo;
 import com.nali.system.opengl.memo.client.MemoSo;

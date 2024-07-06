@@ -11,16 +11,17 @@ import com.nali.sound.ISoundLe;
 
 public class FrameSleTLoopAttackWalk<SD extends ISoundLe, BD extends IBothDaNe, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A> & IServerS, A extends MixAIE<SD, BD, E, I, S>> extends FrameSTLoop<SD, BD, E, I, S, A>
 {
-    public FrameSleTLoopAttackWalk(S s, byte frame, byte index)
-    {
-        super(s, frame, index);
-    }
-
     public AILeAttack<SD, BD, E, I, S, A> aileattack;
+
+    public FrameSleTLoopAttackWalk(S s, int index)
+    {
+        super(s, index);
+    }
 
     @Override
     public void init()
     {
+        super.init();
         this.aileattack = (AILeAttack<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AILeAttack.ID);
     }
 

@@ -12,14 +12,15 @@ public class FrameSFLoopFreePat<SD, BD extends IBothDaNe, E extends Entity, I ex
 {
     public AIEPat<SD, BD, E, I, S, A> aiepat;
 
-    public FrameSFLoopFreePat(S s, byte frame, byte index/*, byte bit*/)
+    public FrameSFLoopFreePat(S s, int index)
     {
-        super(s, frame, index/*, (byte)(255-1)*/);
+        super(s, index);
     }
 
     @Override
     public void init()
     {
+        super.init();
         this.aiepat = (AIEPat<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIEPat.ID);
     }
 

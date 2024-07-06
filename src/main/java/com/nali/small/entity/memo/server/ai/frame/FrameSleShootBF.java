@@ -10,20 +10,23 @@ import com.nali.sound.ISoundLe;
 
 public class FrameSleShootBF<SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerSle<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameSleShoot<SD, BD, E, I, S, A>
 {
-    public FrameSleShootBF(S s, byte frame, byte index, byte index1, byte index2, byte index3)
+    public FrameSleShootBF(S s, int index)
     {
-        super(s, frame, index, index1, index2, index3);
+        super(s, index);
     }
 
     @Override
     public void step()
     {
         int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
-        if (this.s.frame_int_array[this.frame] == frame_2d_int_array[this.index1][0])
+        byte[] frame_byte_array = this.s.getFrameByteArray();
+        byte frame = frame_byte_array[this.index];
+        byte index1 = frame_byte_array[this.index + 2];
+        if (this.s.frame_int_array[frame] == frame_2d_int_array[index1][0])
         {
             this.step = 1;
         }
-        else if (this.s.frame_int_array[this.frame] == frame_2d_int_array[this.index1][1])
+        else if (this.s.frame_int_array[frame] == frame_2d_int_array[index1][1])
         {
             this.step = -1;
         }

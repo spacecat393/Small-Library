@@ -2,7 +2,7 @@ package com.nali.list.render.o;
 
 import com.nali.data.client.IClientDaO;
 import com.nali.mixin.IMixinEntityRenderer;
-import com.nali.small.data.client.BoxClient;
+import com.nali.small.da.client.BoxClient;
 import com.nali.small.render.SmallRenderO;
 import com.nali.system.opengl.OpenGLBuffer;
 import com.nali.system.opengl.memo.client.MemoGo;

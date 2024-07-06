@@ -1,4 +1,4 @@
-package com.nali.small.entity.memo.server.ai.frame.floop;
+package com.nali.small.entity.memo.server.ai.frame.tloopinset;
 
 import com.nali.data.IBothDaNe;
 import com.nali.small.entity.EntityLe;
@@ -8,9 +8,9 @@ import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.sound.ISoundLe;
 
-public class FrameSleFLoopDie<SD extends ISoundLe, BD extends IBothDaNe, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A> & IServerS, A extends MixAIE<SD, BD, E, I, S>> extends FrameSFLoop<SD, BD, E, I, S, A>
+public class FrameSleTLoopInSetDie<SD extends ISoundLe, BD extends IBothDaNe, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A> & IServerS, A extends MixAIE<SD, BD, E, I, S>> extends FrameSTLoopInSet<SD, BD, E, I, S, A>
 {
-    public FrameSleFLoopDie(S s, int index)
+    public FrameSleTLoopInSetDie(S s, int index)
     {
         super(s, index);
     }
