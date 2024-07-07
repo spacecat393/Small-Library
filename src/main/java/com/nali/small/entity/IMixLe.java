@@ -1,6 +1,6 @@
 package com.nali.small.entity;
 
-import com.nali.data.IBothDaNe;
+import com.nali.da.IBothDaNe;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 

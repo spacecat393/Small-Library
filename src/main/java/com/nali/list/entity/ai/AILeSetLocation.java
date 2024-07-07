@@ -1,6 +1,6 @@
 package com.nali.list.entity.ai;
 
-import com.nali.data.IBothDaNe;
+import com.nali.da.IBothDaNe;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetLocation;
 import com.nali.network.NetworkRegistry;
@@ -8,7 +8,7 @@ import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
-import com.nali.sound.ISoundLe;
+import com.nali.sound.ISoundDaLe;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class AILeSetLocation<SD extends ISoundLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
+public class AILeSetLocation<SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 

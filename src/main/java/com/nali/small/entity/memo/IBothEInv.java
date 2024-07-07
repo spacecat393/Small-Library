@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo;
 
-import com.nali.data.IBothDaNe;
+import com.nali.da.IBothDaNe;
 import com.nali.small.entity.IMixE;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;

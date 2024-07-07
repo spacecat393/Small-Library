@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.server.ai;
 
 import com.nali.Nali;
-import com.nali.data.IBothDaNe;
+import com.nali.da.IBothDaNe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.system.Reflect;

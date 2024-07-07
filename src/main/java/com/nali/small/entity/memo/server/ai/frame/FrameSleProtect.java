@@ -1,15 +1,15 @@
 package com.nali.small.entity.memo.server.ai.frame;
 
-import com.nali.data.IBothDaNe;
-import com.nali.data.IBothDaSn;
+import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaSn;
 import com.nali.list.entity.ai.AILeProtect;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerSle;
 import com.nali.small.entity.memo.server.ai.MixAIE;
-import com.nali.sound.ISoundLe;
+import com.nali.sound.ISoundDaLe;
 
-public class FrameSleProtect<SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerSle<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameS<SD, BD, E, I, S, A>
+public class FrameSleProtect<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerSle<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameS<SD, BD, E, I, S, A>
 {
     public AILeProtect<SD, BD, E, I, S, A> aileprotect;
     public FrameSleProtect(S s, int index)

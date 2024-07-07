@@ -1,6 +1,6 @@
 package com.nali.list.entity.ai;
 
-import com.nali.data.IBothDaNe;
+import com.nali.da.IBothDaNe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.ai.AI;

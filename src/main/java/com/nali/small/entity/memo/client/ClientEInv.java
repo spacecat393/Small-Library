@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.client;
 
-import com.nali.data.IBothDaNe;
-import com.nali.data.client.IClientDaO;
+import com.nali.da.IBothDaNe;
+import com.nali.da.client.IClientDaO;
 import com.nali.render.RenderO;
 import com.nali.small.entity.EntityEInv;
 import com.nali.small.entity.IMixE;

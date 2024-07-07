@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo.server;
 
-import com.nali.data.IBothDaNe;
+import com.nali.da.IBothDaNe;
 import com.nali.small.entity.EntityEInv;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.Inventory;

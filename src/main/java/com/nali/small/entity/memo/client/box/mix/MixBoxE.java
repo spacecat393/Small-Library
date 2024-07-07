@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.client.box.mix;
 
-import com.nali.data.IBothDaNe;
-import com.nali.data.client.IClientDaO;
+import com.nali.da.IBothDaNe;
+import com.nali.da.client.IClientDaO;
 import com.nali.list.entity.ai.AIESit;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;

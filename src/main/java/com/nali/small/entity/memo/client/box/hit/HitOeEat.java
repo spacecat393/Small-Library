@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.client.box.hit;
 
-import com.nali.data.IBothDaNe;
-import com.nali.data.client.IClientDaO;
+import com.nali.da.IBothDaNe;
+import com.nali.da.client.IClientDaO;
 import com.nali.list.entity.ai.AILeEat;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SAIE;

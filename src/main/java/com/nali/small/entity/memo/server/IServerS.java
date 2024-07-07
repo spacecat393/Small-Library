@@ -6,17 +6,20 @@ public interface IServerS
 {
     default void updateFrame()
     {
-        for (FrameS frames : this.getFrameSArray())
+        for (FrameS[] frames_array : this.getFrameS2DArray())
         {
-            if (frames.onUpdate())
+            for (FrameS frames : frames_array)
             {
-                return;
+                if (frames.onUpdate())
+                {
+                    break;
+                }
             }
         }
     }
 
     void initFrame();
-    FrameS[] getFrameSArray();
+    FrameS[][] getFrameS2DArray();
     byte[] getFrameByteArray();
     int[][] getFrame2DIntArray();
 }

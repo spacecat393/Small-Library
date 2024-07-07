@@ -1,6 +1,6 @@
 package com.nali.small.da.both;
 
-import com.nali.data.IBothDaSn;
+import com.nali.da.IBothDaSn;
 
 public class TPBaseBothDaS implements IBothDaSn
 {

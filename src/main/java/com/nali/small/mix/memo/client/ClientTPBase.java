@@ -1,7 +1,7 @@
 package com.nali.small.mix.memo.client;
 
-import com.nali.data.IBothDaSn;
-import com.nali.data.client.IClientDaS;
+import com.nali.da.IBothDaSn;
+import com.nali.da.client.IClientDaS;
 import com.nali.draw.DrawScreen;
 import com.nali.render.RenderS;
 import com.nali.small.mix.IMixN;

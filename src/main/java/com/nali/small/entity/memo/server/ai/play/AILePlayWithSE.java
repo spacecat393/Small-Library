@@ -1,13 +1,13 @@
 package com.nali.small.entity.memo.server.ai.play;
 
-import com.nali.data.IBothDaNe;
+import com.nali.da.IBothDaNe;
 import com.nali.list.entity.ai.AIEArea;
 import com.nali.list.entity.ai.AILeFindMove;
 import com.nali.list.entity.ai.AILeSetLocation;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.MixAIE;
-import com.nali.sound.ISoundLe;
+import com.nali.sound.ISoundDaLe;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,7 +17,7 @@ import java.util.Random;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public abstract class AILePlayWithSE<E2 extends Entity, SD extends ISoundLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AIEPlayWithRE<E2, SD, BD, E, I, S, A>
+public abstract class AILePlayWithSE<E2 extends Entity, SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AIEPlayWithRE<E2, SD, BD, E, I, S, A>
 {
 //    public static byte ID;
 

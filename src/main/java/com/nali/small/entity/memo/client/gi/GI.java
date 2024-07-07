@@ -1,7 +1,7 @@
 //package com.nali.small.entity.memo.client.gi;
 //
-//import com.nali.data.IBothDaE;
-//import com.nali.data.client.IClientDaO;
+//import com.nali.da.IBothDaE;
+//import com.nali.da.client.IClientDaO;
 //import com.nali.render.RenderO;
 //import com.nali.small.entity.IMixE;
 //import com.nali.small.entity.memo.client.ClientE;

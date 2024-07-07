@@ -1,6 +1,6 @@
 package com.nali.small.da.client;
 
-import com.nali.data.client.IClientDaO;
+import com.nali.da.client.IClientDaO;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

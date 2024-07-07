@@ -1,7 +1,7 @@
 package com.nali.list.entity.ai;
 
 import com.nali.Nali;
-import com.nali.data.IBothDaNe;
+import com.nali.da.IBothDaNe;
 import com.nali.list.capability.serializable.SmallSakuraSerializable;
 import com.nali.list.capability.type.SmallSakuraType;
 import com.nali.list.network.message.ClientMessage;

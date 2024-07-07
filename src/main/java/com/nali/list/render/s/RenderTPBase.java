@@ -1,7 +1,7 @@
 package com.nali.list.render.s;
 
-import com.nali.data.IBothDaSn;
-import com.nali.data.client.IClientDaS;
+import com.nali.da.IBothDaSn;
+import com.nali.da.client.IClientDaS;
 import com.nali.small.da.both.TPBaseBothDaS;
 import com.nali.small.da.client.TPBaseClient;
 import com.nali.small.render.SmallRenderS;

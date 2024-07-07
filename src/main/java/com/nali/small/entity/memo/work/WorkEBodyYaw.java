@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo.work;
 
-import com.nali.data.IBothDaNe;
+import com.nali.da.IBothDaNe;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.IBothLe;
 import net.minecraft.entity.EntityLivingBase;

@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.server.ai.frame.floopfree;
 
-import com.nali.data.IBothDaNe;
-import com.nali.data.IBothDaSn;
+import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaSn;
 import com.nali.list.entity.ai.AIEPat;
 import com.nali.list.entity.ai.AIESit;
 import com.nali.list.entity.ai.AILeEat;
@@ -9,9 +9,9 @@ import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerSle;
 import com.nali.small.entity.memo.server.ai.MixAIE;
-import com.nali.sound.ISoundLe;
+import com.nali.sound.ISoundDaLe;
 
-public class FrameSleFLoopFreePSrE<SD extends ISoundLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerSle<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameSFLoopFree<SD, BD, E, I, S, A>
+public class FrameSleFLoopFreePSrE<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerSle<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameSFLoopFree<SD, BD, E, I, S, A>
 {
     public AIEPat<SD, BD, E, I, S, A> aiepat;
     public AIESit<SD, BD, E, I, S, A> aiesit;
