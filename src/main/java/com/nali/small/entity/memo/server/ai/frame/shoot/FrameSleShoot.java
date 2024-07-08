@@ -1,4 +1,4 @@
-package com.nali.small.entity.memo.server.ai.frame;
+package com.nali.small.entity.memo.server.ai.frame.shoot;
 
 import com.nali.da.IBothDaNe;
 import com.nali.da.IBothDaSn;
@@ -8,6 +8,7 @@ import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerSle;
 import com.nali.small.entity.memo.server.ai.MixAIE;
+import com.nali.small.entity.memo.server.ai.frame.FrameS;
 import com.nali.sound.ISoundDaLe;
 
 public class FrameSleShoot<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerSle<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameS<SD, BD, E, I, S, A>
@@ -37,20 +38,21 @@ public class FrameSleShoot<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDa
         if (this.aileattack.magic_point <= 0)
         {
             this.step = 1;
-            if (this.checkShoot(true))
+//            if (this.checkShoot(true))
+//            {
+//                return true;
+//            }
+//            else
+            if (!this.checkShoot(true))
             {
-                return true;
-            }
-            else
-            {
-                byte index3 = frame_byte_array[this.index + 4];
+                byte index3 = this.getReload();
                 this.ailefindmove.endGoal();
 
                 if (this.s.frame_int_array[frame] < frame_2d_int_array[index3][0] || this.s.frame_int_array[frame] > frame_2d_int_array[index3][1])
                 {
                     this.step = 0;
                     this.s.frame_int_array[frame] = frame_2d_int_array[index3][0];
-                    return true;
+//                    return true;
                 }
                 else if (this.s.frame_int_array[frame] >= frame_2d_int_array[index3][0] && this.s.frame_int_array[frame] <= frame_2d_int_array[index3][1])
                 {
@@ -58,16 +60,19 @@ public class FrameSleShoot<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDa
                     {
                         this.step = 0;
                         this.aileattack.magic_point = this.aileattack.max_magic_point;
-                        return true;
+//                        return true;
                     }
                 }
-                return true;
+//                return true;
             }
+            return true;
         }
         else if ((this.aileattack.flag & 2) == 2)
         {
-            byte index = frame_byte_array[this.index + 1];
-            byte index1 = frame_byte_array[this.index + 2];
+//            byte index = frame_byte_array[this.index + 1];
+            byte index = this.getStartAttack();
+//            byte index1 = frame_byte_array[this.index + 2];
+            byte index1 = this.getAttack();
             if (this.s.frame_int_array[frame] >= frame_2d_int_array[index1][0] && this.s.frame_int_array[frame] <= frame_2d_int_array[index1][1])
             {
                 this.step();
@@ -116,9 +121,12 @@ public class FrameSleShoot<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDa
         int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
         byte[] frame_byte_array = this.s.getFrameByteArray();
         byte frame = frame_byte_array[this.index];
-        byte index = frame_byte_array[this.index + 1];
-        byte index1 = frame_byte_array[this.index + 2];
-        byte index2 = frame_byte_array[this.index + 3];
+//        byte index = frame_byte_array[this.index + 1];
+        byte index = this.getStartAttack();
+//        byte index1 = frame_byte_array[this.index + 2];
+        byte index1 = this.getAttack();
+//        byte index2 = frame_byte_array[this.index + 3];
+        byte index2 = this.getEndAttack();
         if (this.s.frame_int_array[frame] >= frame_2d_int_array[index][0] && this.s.frame_int_array[frame] <= frame_2d_int_array[index][1])
         {
             this.ailefindmove.endGoal();
@@ -155,7 +163,8 @@ public class FrameSleShoot<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDa
         int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
         byte[] frame_byte_array = this.s.getFrameByteArray();
         byte frame = frame_byte_array[this.index];
-        byte index1 = frame_byte_array[this.index + 2];
+//        byte index1 = frame_byte_array[this.index + 2];
+        byte index1 = this.getAttack();
         this.step = 1;
         if (this.s.frame_int_array[frame] >= frame_2d_int_array[index1][0] && this.s.frame_int_array[frame] <= frame_2d_int_array[index1][1])
         {
@@ -165,5 +174,25 @@ public class FrameSleShoot<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDa
                 this.step = 0;
             }
         }
+    }
+
+    public byte getStartAttack()
+    {
+        return this.s.getFrameByteArray()[this.index + 1];
+    }
+
+    public byte getAttack()
+    {
+        return this.s.getFrameByteArray()[this.index + 2];
+    }
+
+    public byte getEndAttack()
+    {
+        return this.s.getFrameByteArray()[this.index + 3];
+    }
+
+    public byte getReload()
+    {
+        return this.s.getFrameByteArray()[this.index + 4];
     }
 }

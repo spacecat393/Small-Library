@@ -11,13 +11,13 @@ import com.nali.sound.ISoundDaLe;
 public class FrameSleFLoopFreePEPlus<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerSle<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameSleFLoopFreePE<SD, BD, E, I, S, A>
 {
     public byte
-    how,
-    size;
+    free;
+//    size;
 
-    public FrameSleFLoopFreePEPlus(S s, int index, byte size)
+    public FrameSleFLoopFreePEPlus(S s, int index/*, byte size*/)
     {
         super(s, index);
-        this.size = size;
+//        this.size = size;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class FrameSleFLoopFreePEPlus<SD extends ISoundDaLe, BD extends IBothDaNe
         boolean result = super.step();
         if (!result)
         {
-            this.how = (byte)(this.s.i.getE().ticksExisted % this.size);
+            this.free = (byte)(this.s.i.getE().ticksExisted % /*this.size*/this.s.getFrameByteArray()[this.index + 1]);
         }
 
         return result;
@@ -35,6 +35,6 @@ public class FrameSleFLoopFreePEPlus<SD extends ISoundDaLe, BD extends IBothDaNe
     @Override
     public byte getIndex()
     {
-        return this.s.getFrameByteArray()[this.index + this.how + 1];
+        return this.s.getFrameByteArray()[this.index + 1 + 1 + this.free];
     }
 }

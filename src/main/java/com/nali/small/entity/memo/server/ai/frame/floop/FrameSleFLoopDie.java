@@ -18,6 +18,11 @@ public class FrameSleFLoopDie<SD extends ISoundDaLe, BD extends IBothDaNe, E ext
     @Override
     public boolean onUpdate()
     {
-        return this.s.isZeroMove() && super.onUpdate();
+        return this.step() && super.onUpdate();
+    }
+
+    public boolean step()
+    {
+        return this.s.isZeroMove();
     }
 }

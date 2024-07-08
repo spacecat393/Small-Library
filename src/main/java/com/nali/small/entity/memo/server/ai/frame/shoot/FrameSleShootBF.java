@@ -1,4 +1,4 @@
-package com.nali.small.entity.memo.server.ai.frame;
+package com.nali.small.entity.memo.server.ai.frame.shoot;
 
 import com.nali.da.IBothDaNe;
 import com.nali.da.IBothDaSn;

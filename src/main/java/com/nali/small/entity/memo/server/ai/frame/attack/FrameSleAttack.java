@@ -1,4 +1,4 @@
-package com.nali.small.entity.memo.server.ai.frame;
+package com.nali.small.entity.memo.server.ai.frame.attack;
 
 import com.nali.da.IBothDaNe;
 import com.nali.da.IBothDaSn;
@@ -8,21 +8,17 @@ import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.server.ServerSle;
 import com.nali.small.entity.memo.server.ai.MixAIE;
+import com.nali.small.entity.memo.server.ai.frame.FrameS;
 import com.nali.sound.ISoundDaLe;
 
-public class FrameSleMelee<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerSle<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameS<SD, BD, E, I, S, A>
+public class FrameSleAttack<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLe, I extends IMixLe<SD, BD, E>, S extends ServerSle<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends FrameS<SD, BD, E, I, S, A>
 {
     public AILeAttack<SD, BD, E, I, S, A> aileattack;
     public AILeFindMove<SD, BD, E, I, S, A> ailefindmove;
 
-    public byte
-    how_attack,
-    size;
-
-    public FrameSleMelee(S s, int index, byte size)
+    public FrameSleAttack(S s, int index)
     {
         super(s, index);
-        this.size = size;
     }
 
     @Override
@@ -36,15 +32,15 @@ public class FrameSleMelee<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDa
     @Override
     public boolean onUpdate()
     {
-        boolean result = (this.aileattack.flag & 2) == 2;
-        if (result)
+        if (this.step())
         {
             int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
-            byte[] frame_byte_array = this.s.getFrameByteArray();
+//            byte[] frame_byte_array = this.s.getFrameByteArray();
             this.step = 1;
 
-            byte frame = frame_byte_array[this.index];
-            byte id = frame_byte_array[this.index + this.how_attack + 1];
+//            byte frame = frame_byte_array[this.index];
+            byte frame = this.s.getFrameByteArray()[this.index];
+            byte id = this.getIndex();
 
             if (this.s.frame_int_array[frame] < frame_2d_int_array[id][0] || this.s.frame_int_array[frame] >= frame_2d_int_array[id][1])
             {
@@ -61,12 +57,20 @@ public class FrameSleMelee<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDa
                     break;
                 }
             }
-        }
-        else
-        {
-            this.how_attack = (byte)(this.s.i.getE().ticksExisted % this.size);
+
+            return true;
         }
 
-        return result;
+        return false;
+    }
+
+    public boolean step()
+    {
+        return (this.aileattack.flag & 2) == 2;
+    }
+
+    public byte getIndex()
+    {
+        return this.s.getFrameByteArray()[this.index + 1];
     }
 }

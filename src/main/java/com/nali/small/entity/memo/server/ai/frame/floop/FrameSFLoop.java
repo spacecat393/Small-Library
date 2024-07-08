@@ -21,7 +21,7 @@ public class FrameSFLoop<SD, BD extends IBothDaNe, E extends Entity, I extends I
         int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
         byte[] frame_byte_array = this.s.getFrameByteArray();
         byte frame = frame_byte_array[this.index];
-        byte index = frame_byte_array[this.index + 1];
+        byte index = this.getIndex();
         if (this.s.frame_int_array[frame] == frame_2d_int_array[index][1])
         {
             this.s.frame_int_array[frame] = frame_2d_int_array[index][1];
@@ -37,5 +37,10 @@ public class FrameSFLoop<SD, BD extends IBothDaNe, E extends Entity, I extends I
 
         this.step = 1;
         return this.s.frame_int_array[frame] < frame_2d_int_array[index][1];
+    }
+
+    public byte getIndex()
+    {
+        return this.s.getFrameByteArray()[this.index + 1];
     }
 }
