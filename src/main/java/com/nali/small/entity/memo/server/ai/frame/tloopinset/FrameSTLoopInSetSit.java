@@ -1,4 +1,4 @@
-package com.nali.small.entity.memo.server.ai.frame.tloop;
+package com.nali.small.entity.memo.server.ai.frame.tloopinset;
 
 import com.nali.da.IBothDaNe;
 import com.nali.list.entity.ai.AIESit;
@@ -8,11 +8,11 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import net.minecraft.entity.Entity;
 
-public class FrameSeTLoopSit<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, A> & IServerS, A extends MixAIE<SD, BD, E, I, S>> extends FrameSTLoop<SD, BD, E, I, S, A>
+public class FrameSTLoopInSetSit<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, A> & IServerS, A extends MixAIE<SD, BD, E, I, S>> extends FrameSTLoopInSet<SD, BD, E, I, S, A>
 {
     public AIESit<SD, BD, E, I, S, A> aiesit;
 
-    public FrameSeTLoopSit(S s, int index)
+    public FrameSTLoopInSetSit(S s, int index)
     {
         super(s, index);
     }

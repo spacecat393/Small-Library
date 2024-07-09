@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ClientTPBase<SD, BD extends IBothDaSn, RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, D extends DrawScreen<RG, RS, RST, RC, R>, I extends IMixN<?, E>, E extends Block, T extends TileEntity> extends ClientSb<SD, BD, RG, RS, RC, RST, R, D, I, E, T>
+public class ClientTPBase</*SD, */BD extends IBothDaSn, RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, D extends DrawScreen<RG, RS, RST, RC, R>, I extends IMixN<?, E>, E extends Block, T extends TileEntity> extends ClientSb</*SD, */BD, RG, RS, RC, RST, R, D, I, E, T>
 {
     public ClientTPBase(R r, D d, I i)
     {
