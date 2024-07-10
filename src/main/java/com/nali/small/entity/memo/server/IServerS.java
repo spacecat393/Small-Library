@@ -12,6 +12,7 @@ public interface IServerS
             {
                 if (frames.onUpdate())
                 {
+                    frames.stepFrame();
                     break;
                 }
             }

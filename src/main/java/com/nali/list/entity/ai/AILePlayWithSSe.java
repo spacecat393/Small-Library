@@ -13,7 +13,7 @@ import net.minecraft.entity.EntityLivingBase;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public abstract class AILePlayWithSSe<S2 extends ServerE<SD2, BD2, E2, I2, A2>, SD2, BD2 extends IBothDaNe, E2 extends Entity, I2 extends IMixE<SD2, BD2, E2>, A2 extends MixAIE<SD2, BD2, E2, I2, S2>, SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AIEPlayWithRSe<S2, SD2, BD2, E2, I2, A2, SD, BD, E, I, S, A>
+public abstract class AILePlayWithSSe<R2 extends AIEPlayWithRSe<S, SD, BD, E, I, A, SD2, BD2, E2, I2, S2, A2>, S2 extends ServerE<SD2, BD2, E2, I2, A2>, SD2, BD2 extends IBothDaNe, E2 extends Entity, I2 extends IMixE<SD2, BD2, E2>, A2 extends MixAIE<SD2, BD2, E2, I2, S2>, SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AIEPlayWithRSe<S2, SD2, BD2, E2, I2, A2, SD, BD, E, I, S, A>
 {
     public static byte ID;
 
@@ -22,7 +22,7 @@ public abstract class AILePlayWithSSe<S2 extends ServerE<SD2, BD2, E2, I2, A2>, 
     public AILeSetLocation<SD, BD, E, I, S, A> ailesetlocation;
 
 //    public AIESit<SD2, BD2, E2, I2, S2, A2> aiesit2;
-    public AIEPlayWithRSe<S, SD, BD, E, I, A, SD2, BD2, E2, I2, S2, A2> aieplaywith2;
+    public R2 r2;
 
     public Class e2_class;
     public int tick;
@@ -80,7 +80,7 @@ public abstract class AILePlayWithSSe<S2 extends ServerE<SD2, BD2, E2, I2, A2>, 
                                 else
                                 {
                                     this.s2 = null;
-                                    this.aieplaywith2 = null;
+                                    this.r2 = null;
                                 }
                             }
 //                            }
@@ -136,8 +136,8 @@ public abstract class AILePlayWithSSe<S2 extends ServerE<SD2, BD2, E2, I2, A2>, 
     {
         Entity entity = this.aiearea.out_entity_list.get(index);
         this.s2 = (S2)ServerE.S_MAP.get(entity.getUniqueID());
-        this.aieplaywith2 = ((AIEPlayWithRSe)this.s2.a.aie_map.get(AIEPlayWithRSe.ID));
-        return this.aieplaywith2.s2 == null && (this.aieplaywith2.state & 1) == 1 && (this.ailesetlocation.far == 0 || this.ailesetlocation.blockpos == null || isInArea(entity, this.ailesetlocation.blockpos, this.ailesetlocation.far));
+        this.r2 = ((R2)this.s2.a.aie_map.get(AIEPlayWithRSe.ID));
+        return this.r2.s2 == null && (this.r2.state & 1) == 1 && (this.ailesetlocation.far == 0 || this.ailesetlocation.blockpos == null || isInArea(entity, this.ailesetlocation.blockpos, this.ailesetlocation.far));
     }
 
 //    public void onFind(int index)
@@ -163,9 +163,9 @@ public abstract class AILePlayWithSSe<S2 extends ServerE<SD2, BD2, E2, I2, A2>, 
         E2 e2 = this.s2.i.getE();
         if (e.getEntityBoundingBox().intersects(e2.getEntityBoundingBox()))
         {
-            if ((this.aieplaywith2.state & 1) == 1 && this.aieplaywith2.s2 == null)
+            if ((this.r2.state & 1) == 1 && this.r2.s2 == null)
             {
-                this.aieplaywith2.s2 = this.s;
+                this.r2.s2 = this.s;
                 this.state |= 2;
 //                this.aieplaywith2.state |= 2+4;
             }
@@ -190,10 +190,10 @@ public abstract class AILePlayWithSSe<S2 extends ServerE<SD2, BD2, E2, I2, A2>, 
     {
 //        super.onFree();
 //        this.aiesit2 = null;
-        this.aieplaywith2.s2 = null;
+        this.r2.s2 = null;
 //        this.aieplaywith2.state &= 255-(2+4);
-        this.aieplaywith2.state &= 255-2;
-        this.aieplaywith2 = null;
+        this.r2.state &= 255-2;
+        this.r2 = null;
 
         this.s2 = null;
 //        this.state &= 255-(2+4);
