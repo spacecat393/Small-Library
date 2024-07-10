@@ -1,0 +1,13 @@
+#version 460 core
+
+in vec4 vertices;
+
+//uniform mat4 ModelViewMatrix;
+
+out vec2 fragment_texcoord;
+
+void main()
+{
+    gl_Position = /*ModelViewMatrix * */vec4(vertices.xy, 0.0, 1.0);
+    fragment_texcoord = vertices.zw;
+}
