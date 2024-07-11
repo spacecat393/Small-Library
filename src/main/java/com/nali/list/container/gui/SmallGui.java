@@ -5,7 +5,6 @@ import com.nali.list.container.SmallContainer;
 import com.nali.list.data.SmallData;
 import com.nali.system.opengl.OpenGLBuffer;
 import com.nali.system.opengl.memo.client.MemoSo;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +37,9 @@ public class SmallGui extends GuiContainer
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        float t_width = 10*4*3*2, t_height = 10*3*2;
+        int tw = this.fontRenderer.getStringWidth("HOME")/*-1*/;
+        int th = 9-1;//FontRenderer.FONT_HEIGHT-SHADOW;
+//        float t_width = tw, t_height = th;
         int framebuffer = OpenGlHelper.glGenFramebuffers();
 
         GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
@@ -61,9 +62,11 @@ public class SmallGui extends GuiContainer
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
 //        GL11.glViewport(this.mc.displayWidth / 2, this.mc.displayHeight / 2, this.mc.displayWidth, this.mc.displayHeight);
 //        GL11.glViewport(0, 0, this.mc.displayWidth / 2, this.mc.displayHeight / 2);
-        GL11.glViewport(0, 0, (int)t_width, (int)t_height);
+        int ptw = tw + 4, pth = th + 4;
+
+        GL11.glViewport(0, 0, ptw, pth);
 //        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, this.mc.displayWidth/* / 2*/, this.mc.displayHeight/* / 2*/, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
-        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, (int)t_width, (int)t_height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
+        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, ptw, pth, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 
@@ -87,17 +90,17 @@ public class SmallGui extends GuiContainer
 //        }
 
         //1
-        int tw = fontRenderer.getStringWidth("HOME")/*-1*/;
-        int th = 9-1;//FontRenderer.FONT_HEIGHT-SHADOW;
 
-        float s = Math.min((float)this.width / tw, (float)this.height / th);
+//        float s = Math.min((float)this.width / tw, (float)this.height / th);
+        float sx = (float)this.width / tw;
+        float sy = (float)this.height / th;
 
-        int tx = (this.width - (int) (tw * s)) / 2;
-        int ty = (this.height - (int) (th * s)) / 2;
+//        float tx = (this.width - (tw * sx)) / 2.0F;
+//        float ty = (this.height - (th * sy)) / 2.0F;
 
         GL11.glPushMatrix();
-        GL11.glTranslated(tx, ty, 0);
-        GL11.glScalef(s, s, s);
+//        GL11.glTranslated(tx, ty, 0);
+        GL11.glScalef(sx, sy, 1.0F);
 
 //        OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
 //        GL11.glGetFloat(GL11.GL_PROJECTION_MATRIX, OPENGL_FIXED_PIPE_FLOATBUFFER);
@@ -110,7 +113,8 @@ public class SmallGui extends GuiContainer
 ////        GL11.glLoadIdentity();
 //        GL11.glMatrixMode(GL11.GL_MODELVIEW);
 //        GL11.glLoadIdentity();
-        Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("HOME", 0, 0, 0xFFFFACDF/*getRainbowColor4()*/);
+//        Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("HOME", 0, 0, 0xFFFFACDF/*getRainbowColor4()*/);
+        this.fontRenderer.drawStringWithShadow("HOME", 0, 0, 0xFFFFACDF/*getRainbowColor4()*/);
 
 //        GL11.glMatrixMode(GL11.GL_PROJECTION);
 //        GL11.glLoadMatrix(OPENGL_FIXED_PIPE_FLOATBUFFER);
@@ -132,7 +136,9 @@ public class SmallGui extends GuiContainer
 //        int array_buffer = this.genQuad(this.width / 2.0F - 4.0F*3.0F, this.height / 2.0F - 3.0F, t_width, t_height, this.mc.displayWidth, this.mc.displayHeight);
 //        int array_buffer = this.genQuad(this.mc.displayWidth / 2.0F, 0, 4*3*2, 3*2);
 //        int array_buffer = this.genQuad(0.5F, 0.5F, 4*3*2, 3*2);
-        int array_buffer = this.genQuad(x - t_width, y - t_height, x + t_width, y + t_height, this.mc.displayWidth, this.mc.displayHeight);
+        float fx = tw * (float)this.mc.displayWidth / this.width;
+        float fy = th * (float)this.mc.displayHeight / this.height;
+        int array_buffer = this.genQuad(x - fx, y - fy, x + fx, y + fy, this.mc.displayWidth, this.mc.displayHeight);
 //        int array_buffer = this.genQuad(0, 0, this.mc.displayWidth, this.mc.displayHeight, this.mc.displayWidth, this.mc.displayHeight);
 //        int array_buffer = this.genQuad(this.width / 2.0F - 4.0F*3.0F, this.height / 2.0F - 3.0F, t_width, t_height, this.mc.displayWidth, this.mc.displayHeight);
 //        int array_buffer = this.genQuad(0, 0, this.mc.displayWidth, this.mc.displayHeight);

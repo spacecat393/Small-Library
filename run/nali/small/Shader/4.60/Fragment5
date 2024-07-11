@@ -14,7 +14,8 @@ void main()
 
     if (texture_color.a == 0.0/* || Color.a == 0.0*/)
     {
-        discard;
+        texture_color = vec4(1.0, 0.0, 0.0, 1.0);
+        //discard;
     }
 
     //fragColor = vec4(texture_color.rgb * Color.rgb, texture_color.a * Color.a);
