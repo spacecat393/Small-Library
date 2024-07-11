@@ -19,4 +19,5 @@ void main()
 
     //fragColor = vec4(texture_color.rgb * Color.rgb, texture_color.a * Color.a);
     fragColor = texture_color;
+    //fragColor = vec4(1.0, 0.0, 0.0, 1.0);
 }
