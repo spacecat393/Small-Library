@@ -1,26 +1,24 @@
 package com.nali.list.container.gui;
 
-import com.nali.Nali;
 import com.nali.list.container.SmallContainer;
-import com.nali.list.data.SmallData;
-import com.nali.system.opengl.OpenGLBuffer;
-import com.nali.system.opengl.memo.client.MemoSo;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import com.nali.math.M4x4;
+import com.nali.math.Quaternion;
+import com.nali.small.gui.MixGUI;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
 
-import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import static com.nali.system.opengl.memo.client.MemoCurrent.*;
 
 @SideOnly(Side.CLIENT)
-public class SmallGui extends GuiContainer
+public class SmallGui extends MixGUI
 {
     public SmallGui(Container inventorySlotsIn)
     {
@@ -35,19 +33,75 @@ public class SmallGui extends GuiContainer
     }
 
     @Override
+    public void init()
+    {
+////        if (this.framebuffer == -1)
+////        {
+//        int framebuffer = OpenGlHelper.glGenFramebuffers();
+////        }
+//        if (this.texture != -1)
+//        {
+//            GL11.glDeleteTextures(this.texture);
+//            OpenGlHelper.glDeleteBuffers(this.array_buffer);
+//        }
+//
+//        GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
+//        int draw_frame_buffer = OPENGL_INTBUFFER.get(0);
+//        GL11.glGetInteger(GL30.GL_READ_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
+//        int read_frame_buffer = OPENGL_INTBUFFER.get(0);
+//        GL11.glGetInteger(GL30.GL_RENDERBUFFER_BINDING, OPENGL_INTBUFFER);
+//        int renderbuffer_binding = OPENGL_INTBUFFER.get(0);
+//
+//        OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, framebuffer);
+//        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, 0);
+//
+//        int texture = GL11.glGenTextures();
+//
+//        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
+//        GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
+//        GL_TEXTURE_MIN_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER);
+//        GL_TEXTURE_MAG_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER);
+//
+//        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, ptw, pth, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
+//        GL11.glViewport(0, 0, ptw, pth);
+//        OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, texture, 0);
+//
+//        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
+//        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_FILTER_0);
+//        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAG_FILTER_0);
+//
+//        //draw
+//        //draw own model with re-tex
+//        //draw from mc without re-tex
+//
+//        OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, read_frame_buffer);
+//        OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, draw_frame_buffer);
+//        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, renderbuffer_binding);
+//
+//        OpenGlHelper.glDeleteFramebuffers(framebuffer);
+    }
+
+    @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        int tw = this.fontRenderer.getStringWidth("HOME")/*-1*/;
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        //avoid same renderbuffer
+        // transparent ? state
+        int tw = this.fontRenderer.getStringWidth("HOME")/*-1*/;//big
         int th = 9-1;//FontRenderer.FONT_HEIGHT-SHADOW;
 //        float t_width = tw, t_height = th;
         int framebuffer = OpenGlHelper.glGenFramebuffers();
+//        int renderbuffer = OpenGlHelper.glGenRenderbuffers();
 
         GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
-        int draw_frame_buffer = OPENGL_INTBUFFER.get(0);
+        int draw_framebuffer_binding = OPENGL_INTBUFFER.get(0);
         GL11.glGetInteger(GL30.GL_READ_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
-        int read_frame_buffer = OPENGL_INTBUFFER.get(0);
+        int read_framebuffer_binding = OPENGL_INTBUFFER.get(0);
+        GL11.glGetInteger(GL30.GL_RENDERBUFFER_BINDING, OPENGL_INTBUFFER);
+        int renderbuffer_binding = OPENGL_INTBUFFER.get(0);
 
-        OpenGlHelper.glBindFramebuffer(GL30.GL_FRAMEBUFFER, framebuffer);
+        OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, framebuffer);
+        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, 0);
 
         //0
         int texture = GL11.glGenTextures();
@@ -70,7 +124,9 @@ public class SmallGui extends GuiContainer
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 
-        GL30.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, texture, 0);
+        OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, texture, 0);
+//        OpenGlHelper.glRenderbufferStorage(OpenGlHelper.GL_RENDERBUFFER, GL11.GL_DEPTH_COMPONENT, ptw, pth);
+//        OpenGlHelper.glFramebufferRenderbuffer(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_DEPTH_ATTACHMENT, OpenGlHelper.GL_RENDERBUFFER, renderbuffer);
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
 //        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_S_0);
@@ -80,7 +136,7 @@ public class SmallGui extends GuiContainer
 
         //0
         this.mc.getFramebuffer().checkFramebufferComplete();
-//        if (GL30.glCheckFramebufferStatus(GL30.GL_FRAMEBUFFER) == GL30.GL_FRAMEBUFFER_COMPLETE)
+//        if (GL30.glCheckFramebufferStatus(OpenGlHelper.GL_FRAMEBUFFER) == GL30.GL_FRAMEBUFFER_COMPLETE)
 //        {
 //        Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("" + this.mc.player.getEntityData().getInteger("sakura_nali"), 25, 11, 0xFFFFACDF/*getRainbowColor4()*/);
 //        Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("HOME", this.width / 2.0F - 4.0F*3.0F, this.height / 2.0F - 3.0F, 0xFFFFACDF/*getRainbowColor4()*/);
@@ -114,7 +170,7 @@ public class SmallGui extends GuiContainer
 //        GL11.glMatrixMode(GL11.GL_MODELVIEW);
 //        GL11.glLoadIdentity();
 //        Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("HOME", 0, 0, 0xFFFFACDF/*getRainbowColor4()*/);
-        this.fontRenderer.drawStringWithShadow("HOME", 0, 0, 0xFFFFACDF/*getRainbowColor4()*/);
+        this.fontRenderer.drawStringWithShadow("HOME", 0, 0, 0xFFFFFFFF/*getRainbowColor4()*/);
 
 //        GL11.glMatrixMode(GL11.GL_PROJECTION);
 //        GL11.glLoadMatrix(OPENGL_FIXED_PIPE_FLOATBUFFER);
@@ -126,8 +182,9 @@ public class SmallGui extends GuiContainer
         GL11.glPopMatrix();
         //1
 
-        OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, read_frame_buffer);
-        OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, draw_frame_buffer);
+        OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, read_framebuffer_binding);
+        OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, draw_framebuffer_binding);
+        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, renderbuffer_binding);
 //        GL11.glViewport(0, 0, 4*3*2, 3*2);
         GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
 
@@ -144,176 +201,18 @@ public class SmallGui extends GuiContainer
 //        int array_buffer = this.genQuad(0, 0, this.mc.displayWidth, this.mc.displayHeight);
 //        int array_buffer = this.genQuad((this.mc.displayWidth - t_width) / 2, (this.mc.displayHeight - t_height) / 2, t_width, t_height);
 //        int array_buffer = this.genQuad();
-        this.drawQuad(array_buffer, texture);
+//        M4x4 m4x4 = new M4x4();
+//        m4x4.rotateZ(1.57079633F);
+//        this.drawQuad(m4x4.mat, array_buffer, texture);
+//        M4x4 m4x4 = new M4x4();
+//        m4x4.scale(1.0F / sx, 1.0F / sy, 1.0F);
+//        new Quaternion(0.0F, 0.0F, 1.57079633F).getM4x4().multiply(m4x4.mat, 0);
+//        this.drawQuad(m4x4.mat, array_buffer, texture);
+        this.drawQuad(new Quaternion(0.0F, 0.0F, 1.57079633F).getM4x4().mat, array_buffer, texture);
+        this.drawQuad(M4x4.IDENTITY, array_buffer, texture);
 
         OpenGlHelper.glDeleteFramebuffers(framebuffer);
         GL11.glDeleteTextures(texture);
         OpenGlHelper.glDeleteBuffers(array_buffer);
-    }
-
-    public float[] createQuadVertices(float x, float y, float width, float height, float fwidth, float fheight)
-    {
-//        return new float[]
-//        {
-//            // First triangle
-//            x, y, 0.0f, 0.0f, // Bottom-left
-//            x + width, y, 1.0f, 0.0f, // Bottom-right
-//            x + width, y + height, 1.0f, 1.0f, // Top-right
-//
-//            // Second triangle
-//            x, y, 0.0f, 0.0f, // Bottom-left
-//            x + width, y + height, 1.0f, 1.0f, // Top-right
-//            x, y + height, 0.0f, 1.0f // Top-left
-//        };
-//        return new float[]
-//        {
-//            // Triangle 1
-//            (x - width / 2.0F) / fwidth, (y + height / 2.0F) / fheight, 0.0F, 1.0F,
-//            (x + width / 2.0F) / fwidth, (y + height / 2.0F) / fheight, 1.0F, 1.0F,
-//            (x + width / 2.0F) / fwidth, (y - height / 2.0F) / fheight, 1.0F, 0.0F,
-//
-//            // Triangle 2
-//            (x - width / 2.0F) / fwidth, (y + height / 2.0F) / fheight, 0.0F, 1.0F,
-//            (x + width / 2.0F) / fwidth, (y - height / 2.0F) / fheight, 1.0F, 0.0F,
-//            (x - width / 2.0F) / fwidth, (y - height / 2.0F) / fheight, 0.0F, 0.0F
-//        };
-//        float w = 1.0F / width;
-//        float h = 1.0F / height;
-//        x = 1.0F / x;
-//        y = 1.0F / y;
-//        float nx = (2.0F * x / width) - 1.0F;
-//        float ny = (2.0F * y / height) - 1.0F;
-//        return new float[]
-//        {
-//            // positions    // texCoords
-//            -1.0F + nx,  1.0F + ny,   0.0F,   1.0F,
-//            -1.0F + nx,  -1.0F + ny,  0.0F,   0.0F,
-//            1.0F + nx,   -1.0F + ny,  1.0F,   0.0F,
-//
-//            -1.0F + nx,  1.0F + ny,   0.0F,   1.0F,
-//            1.0F + nx,   -1.0F + ny,  1.0F,   0.0F,
-//            1.0F + nx,   1.0F + ny,   1.0F,   1.0F
-//        };
-        float nx1 = (2.0F * x / fwidth) - 1.0F;
-        float ny1 = (2.0F * y / fheight) - 1.0F;
-
-        float nx2 = (2.0F * width / fwidth) - 1.0F;
-        float ny2 = (2.0F * height / fheight) - 1.0F;
-
-        return new float[]
-        {
-            nx1, ny2,  0.0f,  1.0f,
-            nx1, ny1,  0.0f,  0.0f,
-            nx2, ny1,  1.0f,  0.0f,
-
-            nx1, ny2,  0.0f,  1.0f,
-            nx2, ny1,  1.0f,  0.0f,
-            nx2, ny2,  1.0f,  1.0f
-        };
-    }
-
-    public int genQuad(float x, float y, float width, float height, float fwidth, float fheight)
-    {
-        GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
-        GL_ARRAY_BUFFER_BINDING = OPENGL_INTBUFFER.get(0);
-
-        float[] quad_vertices = this.createQuadVertices(x, y, width, height, fwidth, fheight);
-//        float[] quad_vertices =
-//        {
-//            -1.0f,  1.0f,
-//            -1.0f, -1.0f,
-//            1.0f, -1.0f,
-//
-//            -1.0f,  1.0f,
-//            1.0f, -1.0f,
-//            1.0f,  1.0f
-//        };
-//        float[] quad_vertices =
-//        {
-//            // positions    // texCoords
-//            -1.0F,  1.0F,   0.0F,   1.0F,
-//            -1.0F,  -1.0F,  0.0F,   0.0F,
-//            1.0F,   -1.0F,  1.0F,   0.0F,
-//
-//            -1.0F,  1.0F,   0.0F,   1.0F,
-//            1.0F,   -1.0F,  1.0F,   0.0F,
-//            1.0F,   1.0F,   1.0F,   1.0F
-//        };
-
-//        for (int i = 0; i < quad_vertices.length; ++i)
-//        {
-//            quad_vertices[i] *= 2.0F;
-//        }
-
-        ByteBuffer bytebuffer = OpenGLBuffer.createFloatByteBuffer(quad_vertices, true);
-
-        //load
-//        int array_buffer = OpenGlHelper.glGenBuffers();
-        int array_buffer = OpenGLBuffer.loadFloatBuffer(bytebuffer);
-//        OpenGlHelper.glBindBuffer(GL15.GL_ARRAY_BUFFER, array_buffer);
-//        OpenGlHelper.glBufferData(GL15.GL_ARRAY_BUFFER, bytebuffer, GL15.GL_STATIC_DRAW);
-//        //set
-//        OpenGlHelper.glBindBuffer(GL15.GL_ARRAY_BUFFER, array_buffer);
-//        GL20.glVertexAttribPointer(0, 2, GL11.GL_FLOAT, false, 2 * Float.BYTES, 0);
-//        GL20.glEnableVertexAttribArray(0);
-
-        OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
-
-        return array_buffer;
-    }
-
-    public void drawQuad(int array_buffer, int texture)
-    {
-        MemoSo rs = Nali.I.clientloader.storeo.rs_list.get(SmallData.SHADER_O_STEP + 3);
-
-        //takeDefault
-        GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
-        GL_ARRAY_BUFFER_BINDING = OPENGL_INTBUFFER.get(0);
-
-        GL11.glGetInteger(GL20.GL_CURRENT_PROGRAM, OPENGL_INTBUFFER);
-        GL_CURRENT_PROGRAM = OPENGL_INTBUFFER.get(0);
-
-        GL_ACTIVE_TEXTURE = OPENGL_INTBUFFER.get(0);
-        OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
-
-        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
-        GL_TEXTURE_BINDING_2D_0 = OPENGL_INTBUFFER.get(0);
-
-//        GL_TEXTURE_WRAP_S_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S);
-//        GL_TEXTURE_WRAP_T_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T);
-        GL_TEXTURE_MIN_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER);
-        GL_TEXTURE_MAG_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER);
-
-        //enableBuffer
-        OpenGLBuffer.setFloatBuffer(0, array_buffer, 4);
-//        OpenGlHelper.glBindBuffer(GL15.GL_ARRAY_BUFFER, array_buffer);
-//        GL20.glVertexAttribPointer(0, 4, GL11.GL_FLOAT, false, 0, 0);
-
-        OpenGlHelper.glUseProgram(rs.program);
-        GL20.glEnableVertexAttribArray(0);
-
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
-
-        GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, 6);
-
-        //setDefault
-        GL20.glDisableVertexAttribArray(0);
-//        OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D_0);
-//        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_S_0);
-//        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_T_0);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_FILTER_0);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAG_FILTER_0);
-
-        OpenGlHelper.glUseProgram(GL_CURRENT_PROGRAM);
-
-        OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
-    }
-
-    @Override
-    public void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
-    {
     }
 }

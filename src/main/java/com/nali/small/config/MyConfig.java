@@ -12,16 +12,28 @@ import static com.nali.small.Small.ID;
 @Config(modid = ID)
 public class MyConfig
 {
-    @Config.Name("Server Settings")
-    public static final Server SERVER = new Server();
-
-    public static class Server
+    @Config.Name("Client Settings")
+    public static final Client CLIENT = new Client();
+    public static class Client
     {
-        @Config.Name("Player RNG")
-        @Config.Comment("Enable RNG on Player GUI.")
-        @Config.RequiresMcRestart
-        public boolean player_rng = false;
+        @Config.Name("Font Box")
+        public float font_box = 16.0F;
+//        @Config.Name("Font Length")
+//        @Config.Comment("")
+//        @Config.RequiresMcRestart
+//        public int font_length = 16;
     }
+
+//    @Config.Name("Server Settings")
+//    public static final Server SERVER = new Server();
+
+//    public static class Server
+//    {
+//        @Config.Name("Player RNG")
+//        @Config.Comment("Enable RNG on Player GUI.")
+//        @Config.RequiresMcRestart
+//        public boolean player_rng = false;
+//    }
 
     @Mod.EventBusSubscriber(modid = ID, value = Side.CLIENT)
     public static class ConfigEvent

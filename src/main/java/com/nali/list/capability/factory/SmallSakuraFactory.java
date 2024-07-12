@@ -21,7 +21,7 @@ public class SmallSakuraFactory implements SmallSakuraType
     @Override
     public void add(byte i)
     {
-        if (this.sakura_byte + i < 65/*Integer.MAX_VALUE*/)
+        if (this.sakura_byte + i < Byte.MAX_VALUE/*Integer.MAX_VALUE*/)
         {
             this.sakura_byte += i;
         }
