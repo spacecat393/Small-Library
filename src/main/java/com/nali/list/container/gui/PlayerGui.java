@@ -372,7 +372,7 @@
 ////
 //////        if (CapabilitiesRegistryHelper.CLIENT_CAPABILITY_OBJECT_LIST.size() > 0)
 //////        {
-//        Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("" + this.mc.player.getEntityData().getInteger("sakura_nali"), 25, 11, 0xFFFFACDF/*getRainbowColor4()*/);
+//        Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("" + this.mc.player.getEntityData().getInteger("Nali_sakura"), 25, 11, 0xFFFFACDF/*getRainbowColor4()*/);
 ////        }
 //    }
 //

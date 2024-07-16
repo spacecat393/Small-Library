@@ -6,6 +6,7 @@ import com.nali.small.entity.EntityRegistry;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.gui.GuiHandler;
 import com.nali.small.tile.TileRegistry;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -16,6 +17,8 @@ import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import java.util.HashMap;
+
+import static com.nali.small.gui.MixGUI.STRING_ARRAY;
 
 @Mod(modid = Small.ID)
 public class Small
@@ -49,10 +52,25 @@ public class Small
     {
 //        EntityRegistry.ENTITY_KEY_ARRAY = new HashSet(ENTITY_CLASS_ENTRIES.keySet()).toArray();
 
-//        if (event.getSide().isClient())
-//        {
+        if (event.getSide().isClient())
+        {
+            byte size = 15;
+            String t_string = "info." + Small.ID + ".t";
+            STRING_ARRAY = new String[size];
+//            FontRenderer fontrenderer = Minecraft.getMinecraft().fontRenderer;
+            for (byte i = 0; i < size; ++i)
+            {
+//                String string = I18n.translateToLocal(t_string + i);
+//                STRING_ARRAY[i] = string;
+//                byte tw = (byte)fontrenderer.getStringWidth(string);
+//                if (MAX_TW < tw)
+//                {
+//                    MAX_TW = tw;
+//                }
+                STRING_ARRAY[i] = I18n.translateToLocal(t_string + i);
+            }
 //            RenderHelper.init();
-//        }
+        }
 
 //        EntitiesRegistry.ENTITIES_CLASS_LIST = null;
         TileRegistry.TILES_CLASS_LIST = null;

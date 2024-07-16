@@ -1,4 +1,4 @@
-package com.nali.small.config;
+package com.nali.small;
 
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
@@ -10,14 +10,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import static com.nali.small.Small.ID;
 
 @Config(modid = ID)
-public class MyConfig
+public class SmallConfig
 {
     @Config.Name("Client Settings")
     public static final Client CLIENT = new Client();
     public static class Client
     {
-        @Config.Name("Font Box")
-        public float font_box = 16.0F;
+        @Config.Name("Font")
+        @Config.Comment("Scale Framebuffer")
+        public int font = 0;
 //        @Config.Name("Font Length")
 //        @Config.Comment("")
 //        @Config.RequiresMcRestart

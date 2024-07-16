@@ -1,0 +1,11 @@
+#version 460 core
+
+uniform vec4 Color;
+
+out vec4 fragColor;
+
+void main()
+{
+    vec4 ccc = Color;
+    fragColor = ccc;
+}

@@ -8,7 +8,6 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -38,7 +37,7 @@ public abstract class MixinEntityPlayer extends EntityLivingBase
         }
         else
         {
-            this.getEntityData().setInteger("sakura_nali", this.dataManager.get(SAKURA_BYTE_DATAPARAMETER));
+            this.getEntityData().setByte("Nali_sakura", this.dataManager.get(SAKURA_BYTE_DATAPARAMETER));
         }
     }
 }

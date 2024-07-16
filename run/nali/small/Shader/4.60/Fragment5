@@ -2,7 +2,7 @@
 
 uniform sampler2D texture_sampler;
 
-//uniform vec4 Color;
+uniform vec4 Color;
 
 in vec2 fragment_texcoord;
 
@@ -12,13 +12,12 @@ void main()
 {
     vec4 texture_color = texture(texture_sampler, fragment_texcoord);
 
-    if (texture_color.a == 0.0/* || Color.a == 0.0*/)
+    texture_color *= Color.a;
+    if (texture_color.a == 0.0)
     {
-        texture_color = vec4(1.0, 0.0, 0.0, 1.0);
-        //discard;
+        //texture_color = vec4(1.0, 0.0, 0.0, 0.75);
+        discard;
     }
 
-    //fragColor = vec4(texture_color.rgb * Color.rgb, texture_color.a * Color.a);
     fragColor = texture_color;
-    //fragColor = vec4(1.0, 0.0, 0.0, 1.0);
 }

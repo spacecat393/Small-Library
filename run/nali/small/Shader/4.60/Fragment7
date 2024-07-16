@@ -1,0 +1,22 @@
+#version 460 core
+
+uniform sampler2D texture_sampler;
+
+in vec2 fragment_texcoord;
+
+out vec4 fragColor;
+
+void main()
+{
+    vec4 blur = vec4(0.0);
+    for (int i = -4; i <= 4; ++i)
+    {
+        for (int j = -4; j <= 4; ++j)
+        {
+            blur += texture(texture_sampler, fragment_texcoord + vec2(i, j) / vec2(800, 600));
+        }
+    }
+
+    blur /= 81.0;
+    fragColor = blur;
+}
