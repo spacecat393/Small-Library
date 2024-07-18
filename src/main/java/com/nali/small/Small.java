@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import java.util.HashMap;
 
-import static com.nali.small.gui.MixGUI.STRING_ARRAY;
+import static com.nali.small.gui.page.Page.STRING_ARRAY;
 
 @Mod(modid = Small.ID)
 public class Small
@@ -54,7 +54,7 @@ public class Small
 
         if (event.getSide().isClient())
         {
-            byte size = 15;
+            byte size = 19;
             String t_string = "info." + Small.ID + ".t";
             STRING_ARRAY = new String[size];
 //            FontRenderer fontrenderer = Minecraft.getMinecraft().fontRenderer;

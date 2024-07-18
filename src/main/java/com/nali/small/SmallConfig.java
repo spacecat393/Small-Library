@@ -17,8 +17,16 @@ public class SmallConfig
     public static class Client
     {
         @Config.Name("Font")
-        @Config.Comment("Scale Framebuffer")
-        public int font = 0;
+        public Font font = new Font();
+
+        public static class Font
+        {
+            @Config.Name("Scale")
+            public int scale = 2;
+        }
+//        @Config.Name("Player Name")
+//        @Config.Comment("Use to call you.")
+//        public String name = "";
 //        @Config.Name("Font Length")
 //        @Config.Comment("")
 //        @Config.RequiresMcRestart

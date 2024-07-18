@@ -6,15 +6,26 @@ info.small.t3=Team
 info.small.t4=Chat
 
 info.small.t5=Stat
-info.small.t6=HP
-info.small.t7=MP
-info.small.t8=SP
+#HP
+info.small.t6=❤
+#MP
+info.small.t7=⭐
+#SP
+info.small.t8=⚡
 info.small.t9=XP
 info.small.t10=Lv
-info.small.t11=Sakura
+#Sakura
+info.small.t11=❀
 info.small.t12=World
 info.small.t13=Time
-info.small.t14=Menu
+info.small.t14=MENU
+#Check
+info.small.t15=⬚
+#Uncheck
+info.small.t16=⧄
+#TeamUp
+info.small.t17=☻
+info.small.t18=⬅Left Arrow / Q
 
 #info.small.b0=Current
 #info.small.b1=XP
