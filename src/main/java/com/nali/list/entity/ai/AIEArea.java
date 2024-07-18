@@ -55,7 +55,7 @@ public class AIEArea<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE
     public void init()
     {
         this.aieowner = (AIEOwner<SD, BD, E, I, S, A>)this.s.a.aie_map.get(AIEOwner.ID);
-        this.entity_map = ((IMixinWorldServer)this.s.getI().getE().world).entitiesByUuid();
+        this.entity_map = ((IMixinWorldServer)this.s.i.getE().world).entitiesByUuid();
     }
 
     @Override

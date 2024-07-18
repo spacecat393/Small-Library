@@ -9,7 +9,8 @@ import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.Inventory;
-import com.nali.small.entity.memo.server.ServerLeInv;
+import com.nali.small.entity.memo.IBothLeInv;
+import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.mixin.MixinInventoryCrafting;
@@ -25,7 +26,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class AILeInvGetItem<SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLeInv, I extends IMixLe<SD, BD, E>, S extends ServerLeInv<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
+public class AILeInvGetItem<SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLeInv, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A> & IBothLeInv<SD, BD, E, I>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 
@@ -288,7 +289,7 @@ public class AILeInvGetItem<SD extends ISoundDaLe, BD extends IBothDaNe, E exten
                         if ((this.flag & 16) == 16)
                         {
     //                        Nali.LOGGER.info("ITEM TAKE");
-                            Inventory inventory = this.s.inventory;
+                            Inventory inventory = this.s.getInventory();
                             for (byte i = 0; i < inventory.getSizeInventory(); ++i)
                             {
                                 ItemStack inv_itemstack = inventory.getStackInSlot(i);

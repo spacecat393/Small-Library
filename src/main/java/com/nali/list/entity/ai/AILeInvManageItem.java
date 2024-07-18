@@ -9,7 +9,8 @@ import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.Inventory;
-import com.nali.small.entity.memo.server.ServerLeInv;
+import com.nali.small.entity.memo.IBothLeInv;
+import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.ai.AI;
 import com.nali.small.entity.memo.server.ai.MixAIE;
 import com.nali.small.mixin.MixinInventoryCrafting;
@@ -31,7 +32,7 @@ import java.util.Random;
 import static com.nali.list.entity.ai.AILeInvGetItem.isSameItemSameTags;
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class AILeInvManageItem<SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLeInv, I extends IMixLe<SD, BD, E>, S extends ServerLeInv<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
+public class AILeInvManageItem<SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLeInv, I extends IMixLe<SD, BD, E>, S extends ServerLe<SD, BD, E, I, A> & IBothLeInv<SD, BD, E, I>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
     public static byte ID;
 
@@ -231,7 +232,7 @@ public class AILeInvManageItem<SD extends ISoundDaLe, BD extends IBothDaNe, E ex
             E e = this.s.i.getE();
             Random random = e.getRNG();
             World world = e.world;
-            Inventory inventory = this.s.inventory;
+            Inventory inventory = this.s.getInventory();
 
 //                if ((this.s.main_work_byte_array[this.s.bytele.MINE() / 8] >> this.s.bytele.MINE() % 8 & 1) == 1 && this.s.entitiesaimemory.skinningentitiesmine.blockpos != null)
 //                {

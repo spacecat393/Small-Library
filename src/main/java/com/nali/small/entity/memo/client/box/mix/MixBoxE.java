@@ -31,6 +31,7 @@ public abstract class MixBoxE<RG extends MemoGo, RS extends MemoSo, RC extends I
     public MixBoxE(C c)
     {
         this.c = c;
+        this.init(c);
     }
 
 //    public List<AxisAlignedBB> get()
@@ -76,7 +77,7 @@ public abstract class MixBoxE<RG extends MemoGo, RS extends MemoSo, RC extends I
         for (int i = 0; i < axisalignedbb_list.size(); ++i)
         {
             AxisAlignedBB axisalignedbb = axisalignedbb_list.get(i);
-            if (this.sehit_list.get(i).should(player_entity, axisalignedbb_list.get(i)) && axisalignedbb.calculateIntercept(player_vec3d, end_vec3d) != null)
+            if (this.sehit_list.get(i).should(player_entity, axisalignedbb) && axisalignedbb.calculateIntercept(player_vec3d, end_vec3d) != null)
             {
                 double new_max = getDistanceAABBToAABB(player_entity.getEntityBoundingBox(), axisalignedbb);
                 if (new_max < max)

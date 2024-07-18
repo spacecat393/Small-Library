@@ -21,7 +21,7 @@ public abstract class MixAIE<SD, BD extends IBothDaNe, E extends Entity, I exten
     static
     {
         AI_CLASS_LIST = Reflect.getClasses("com.nali.list.entity.ai");
-        for (int i = 0; i < AI_CLASS_LIST.size(); ++i)
+        for (byte i = 0; i < AI_CLASS_LIST.size(); ++i)
         {
             try
             {
@@ -62,10 +62,13 @@ public abstract class MixAIE<SD, BD extends IBothDaNe, E extends Entity, I exten
                 Nali.I.error(e);
             }
         }
+    }
 
-        for (AI aie : this.aie_map.values())
+    public/* abstract*/ void init()
+    {
+        for (AI ai : this.aie_map.values())
         {
-            aie.init();
+            ai.init();
         }
     }
 
@@ -176,8 +179,6 @@ public abstract class MixAIE<SD, BD extends IBothDaNe, E extends Entity, I exten
         this.entityplayermp = null;
         this.byte_array = null;
     }
-
-    public abstract void init();
 //    {
 //        this.a.aie_list.get().num;
 //        this.main_work_byte_array[this.workbytes.FOLLOW() / 8] ^= (byte)Math.pow(2, this.workbytes.FOLLOW() % 8);

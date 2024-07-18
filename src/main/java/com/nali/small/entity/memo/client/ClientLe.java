@@ -28,6 +28,7 @@ public abstract class ClientLe<RG extends MemoGo, RS extends MemoSo, RC extends 
     public ClientLe(I i, R r)
     {
         super(i, r);
+        this.workebodyyaw = new WorkEBodyYaw(this);
 //        this.work_byte_array = new byte[workbytes.MAX_WORKS()];
         this.sync_byte_array = new byte[i.getBD().MaxSync()];
     }
