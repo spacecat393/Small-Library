@@ -83,7 +83,7 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 //            entitydatamanager.set(MOUTH_ITEMSTACK_DATAPARAMETER, mouth_itemstack);
 //        }
 
-        if (!CHUNK_MAP.containsKey(this))
+        if (!CHUNK_MAP.containsKey(this.uuid))
         {
             ChunkLoader.updateChunk(this);
         }
@@ -199,7 +199,8 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 //    @Override
     public void remove()
     {
-        ChunkLoader.removeChunk(this.i);
+//        UUID uuid = this.i.getE().getUniqueID();
+        ChunkLoader.removeChunk(this.uuid);
         S_MAP.remove(this.uuid);
     }
 

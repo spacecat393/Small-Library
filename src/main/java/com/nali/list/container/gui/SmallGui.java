@@ -2,6 +2,8 @@ package com.nali.list.container.gui;
 
 import com.nali.list.container.SmallContainer;
 import com.nali.small.SmallConfig;
+import com.nali.small.gui.key.KeyMenu;
+import com.nali.small.gui.mouse.MouseSmall;
 import com.nali.small.gui.page.*;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -19,6 +21,8 @@ import org.lwjgl.opengl.*;
 import java.io.IOException;
 import java.nio.IntBuffer;
 
+import static com.nali.small.gui.key.Key.KEY;
+import static com.nali.small.gui.mouse.Mouse.*;
 import static com.nali.small.gui.page.Page.*;
 import static com.nali.system.opengl.memo.client.MemoCurrent.*;
 
@@ -34,15 +38,16 @@ public class SmallGui extends GuiContainer
 //    public static List<Integer>
 //    TEXTURE_INT_LIST = new ArrayList(),
 //    ARRAY_BUFFER_INT_LIST = new ArrayList();
+    public static byte FLAG;
     public static int
     OFFSET_RENDER_BUFFER = -1,
     OFFSET_FRAMEBUFFER = -1,
     OFFSET_FRAMEBUFFER_TEXTURE = -1;
 
-    public byte
-    state,//on_hit new_page back_page init
-    hit,
-    page;
+//    public byte
+////    state,//on_hit new_page back_page init
+//    hit,
+//    page;
 
     public int mouse_x, mouse_y;
 //    public int eventButton;
@@ -68,6 +73,8 @@ public class SmallGui extends GuiContainer
             new PageMenu(STRING_ARRAY[14]),
             new PageSmall((byte)1)
         };
+        KEY = new KeyMenu();
+        MOUSE = new MouseSmall();
     }
 
     public static SmallGui get(EntityPlayer entityplayer, World world, int x, int y, int z)
@@ -78,6 +85,8 @@ public class SmallGui extends GuiContainer
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+        KEY.run();
+        MOUSE.run();
 //        if ((this.state & 8) == 8)
 //        {
 //            this.state &= 255-8;
@@ -134,7 +143,7 @@ public class SmallGui extends GuiContainer
 //        int read_frame_buffer = OPENGL_INTBUFFER.get(0);
         GL_READ_FRAMEBUFFER_BINDING = OPENGL_INTBUFFER.get(0);
 
-        if (WIDTH != this.mc.displayWidth || HEIGHT != this.mc.displayHeight || FONT != SmallConfig.CLIENT.font.scale || (this.state & 8) == 8/* || MAIN_FRAMEBUFFER == -1*/)
+        if (WIDTH != this.mc.displayWidth || HEIGHT != this.mc.displayHeight || FONT != SmallConfig.CLIENT.font.scale || (FLAG & 1) == 1/* || (this.state & 8) == 8*//* || MAIN_FRAMEBUFFER == -1*/)
         {
             WIDTH = this.mc.displayWidth;
             HEIGHT = this.mc.displayHeight;
@@ -293,7 +302,8 @@ public class SmallGui extends GuiContainer
 //        }
             //init
 //            this.init();
-            this.state &= 255-8;
+//            this.state &= 255-8;
+            FLAG &= 255-1;
         }
 
         //takeDefault
@@ -317,10 +327,10 @@ public class SmallGui extends GuiContainer
         //t
 
 //        this.preDraw();
-        for (Page page : PAGE_ARRAY)
-        {
-            page.preDraw();
-        }
+//        for (Page page : PAGE_ARRAY)
+//        {
+//            page.preDraw();
+//        }
 
 //        MemoSo rs = Nali.I.clientloader.storeo.rs_list.get(SmallData.SHADER_O_STEP + 4);
 //
@@ -407,13 +417,20 @@ public class SmallGui extends GuiContainer
 //        Nali.I.logger.info("ID " + r);
 //        this.hit = (byte)r;
 //        this.hit = (byte)OPENGL_INTBUFFER.get(0);
-        this.hit = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(0) * 255.0F);
-        if ((this.state & 1) == 1)
+//        MOUSE.detect();
+        HIT = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(0) * 255.0F);
+        if ((STATE & 1) == 1)
         {
-            this.page = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(1) * 255.0F);
-//            this.page = (byte)(OPENGL_INTBUFFER.get(1) & 0xFF);
-            SMALLGUI.state &= 255-1;
+            PAGE = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(1) * 255.0F);
+            STATE &= 255-1;
         }
+//        this.hit = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(0) * 255.0F);
+//        if ((this.state & 1) == 1)
+//        {
+//            this.page = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(1) * 255.0F);
+////            this.page = (byte)(OPENGL_INTBUFFER.get(1) & 0xFF);
+//            SMALLGUI.state &= 255-1;
+//        }
 
 //        GL11.glPixelStorei(GL11.GL_PACK_ALIGNMENT, gl_pack_alignment);
 
@@ -440,7 +457,9 @@ public class SmallGui extends GuiContainer
             page.draw();
         }
 
-        this.state &= 255-4;
+//        KEY.run();
+//        MOUSE.run();
+//        this.state &= 255-4;
 
 //        for (Page page : PAGE_ARRAY)
 //        {
@@ -504,7 +523,8 @@ public class SmallGui extends GuiContainer
 //            this.mouse_x = Mouse.getEventX();
 //            this.mouse_y = Mouse.getEventY();
 //            this.eventButton = -1;
-            this.state |= 1/*+8*/;
+            STATE |= 1;
+//            this.state |= 1/*+8*/;
         }
     }
 
@@ -513,10 +533,11 @@ public class SmallGui extends GuiContainer
     {
         if (keyCode != Keyboard.KEY_ESCAPE)
         {
-            if (typedChar == 'q' || keyCode == Keyboard.KEY_LEFT)
-            {
-                this.state |= 4/*+8*/;
-            }
+            KEY.detect(typedChar, keyCode);
+//            if (typedChar == 'q' || keyCode == Keyboard.KEY_LEFT)
+//            {
+//                this.state |= 4/*+8*/;
+//            }
 //            int index = MESSAGE_STRINGBUILDER.length() - 1;
 //            char end = MESSAGE_STRINGBUILDER.charAt(index);
 //

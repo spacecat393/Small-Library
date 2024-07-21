@@ -123,11 +123,11 @@ public class AILeEat<SD extends ISoundDaLe, BD extends IBothDaNe, E extends Enti
     @Override
     public void onUpdate()
     {
-        if (this.time > 0)
+        if (this.time > 0 && !this.s.isZeroMove())
         {
             E e = this.s.i.getE();
             e.heal(1);
-            --this.time;
+            this.time -= 0.05F;
         }
     }
 

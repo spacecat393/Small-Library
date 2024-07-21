@@ -13,7 +13,6 @@ import com.nali.system.opengl.memo.client.MemoSo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.Entity;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -55,19 +54,24 @@ public class PageArmy extends Page
         this.initC();
     }
 
-    @Override
-    public void preDraw()
-    {
-        if (SIZE != C_MAP.size())
-        {
-            SMALLGUI.state |= 8;
-        }
-//        super.preDraw();
-    }
+//    @Override
+//    public void preDraw()
+//    {
+//        if (SIZE != C_MAP.size())
+//        {
+//            SMALLGUI.state |= 8;
+//        }
+////        super.preDraw();
+//    }
 
     @Override
     public void draw()
     {
+        if (SIZE != C_MAP.size())
+        {
+            FLAG |= 1;
+//            SMALLGUI.state |= 8;
+        }
 //        Set<UUID> keys_set = new HashSet(C_MAP.keySet());
 ////        GL20.glDisableVertexAttribArray(0);
 //        for (UUID uuid : keys_set)
@@ -117,11 +121,11 @@ public class PageArmy extends Page
             GL20.glDisableVertexAttribArray(0);
         }
 
-        if ((SMALLGUI.state & 4) == 4)
-        {
-            SMALLGUI.state &= 255-4;
-            SMALLGUI.defaultPage();
-        }
+//        if ((SMALLGUI.state & 4) == 4)
+//        {
+//            SMALLGUI.state &= 255-4;
+//            SMALLGUI.defaultPage();
+//        }
     }
 
     @Override
@@ -178,7 +182,14 @@ public class PageArmy extends Page
             if (c != null)
             {
     //            this.preDrawModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c, -1, (int)(25 / (SMALLGUI.width / (float)display_width)), (int)(25 / (SMALLGUI.height / (float)display_height)), LEFT + H + 4.0F * 0.005F * display_width/* + 25.0F / (SMALLGUI.width / (float)display_width)*/, display_height - H * 2.0F - 2.0F * 0.005F * display_height/* - 25.0F / (SMALLGUI.height / (float)display_height)*/, -25.0F/* / (SMALLGUI.height / (float)display_height)*/);
+                this.preDrawModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c/*, -1*/, width, height, x, y, -scale);
                 IMixE i = c.i;
+                String statp_string = "";
+                if ((c.state & 1) == 1)
+                {
+                    statp_string = STRING_ARRAY[25];
+                }
+
                 if (i == null)
                 {
 //                    DimensionManager.getProviderType(c.dimension).getName();
@@ -206,11 +217,13 @@ public class PageArmy extends Page
                     {
                         stat_string = STRING_ARRAY[20];
                     }
-                    String string = id + " " + e.getName() + " " + stat_string;
+                    String string = id + " " + e.getName() + " " + stat_string + statp_string;
                     int l = (int)(minecraft.fontRenderer.getStringWidth(string) * SCALE);
                     this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, H, x_offset, y + text_height * 2.0F + 4.0F * 0.005F * display_width, SCALE);
 
-                    string = DimensionManager.getProviderType(c.dimension).getName();
+//                    string = DimensionManager.getProviderType(e.dimension).getName();
+//                    string = DimensionManager.getProviderType(e.world.getWorldType().getId()).getName();
+                    string = e.world.provider.getDimensionType().getName();
                     l = (int)(minecraft.fontRenderer.getStringWidth(string) * text_scale);
                     this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, text_height, x_offset, y + text_height + 2.0F * 0.005F * display_width, text_scale);
 
@@ -218,7 +231,7 @@ public class PageArmy extends Page
                     l = (int)(minecraft.fontRenderer.getStringWidth(string) * text_scale);
                     this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, text_height, x_offset, y, text_scale);
                 }
-                this.preDrawModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c/*, -1*/, width, height, x, y, -scale);
+//                this.preDrawModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c/*, -1*/, width, height, x, y, -scale);
     //            x += ;
                 y -= scale / (SMALLGUI.height / (float)display_height) + 2.0F * 0.005F * display_height;
                 ++id;
@@ -308,6 +321,7 @@ public class PageArmy extends Page
 //        GL11.glCullFace(gl_cull_face_mode);
 
 //        GL11.glClear(/*GL11.GL_COLOR_BUFFER_BIT | */GL11.GL_DEPTH_BUFFER_BIT);
+        OpenGlHelper.glFramebufferRenderbuffer(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_DEPTH_ATTACHMENT, OpenGlHelper.GL_RENDERBUFFER, 0);
         OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, 0);
 
 //        OpenGlHelper.glDeleteRenderbuffers(render_buffer);

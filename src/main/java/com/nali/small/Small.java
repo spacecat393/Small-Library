@@ -1,12 +1,20 @@
 package com.nali.small;
 
+import com.nali.Nali;
 import com.nali.small.capability.CapabilityRegistry;
 import com.nali.small.chunk.ChunkCallBack;
+import com.nali.small.chunk.ChunkData;
 import com.nali.small.entity.EntityRegistry;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.gui.GuiHandler;
 import com.nali.small.tile.TileRegistry;
+import com.nali.system.bytes.ByteReader;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -16,8 +24,13 @@ import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.UUID;
 
+import static com.nali.small.chunk.ChunkCallBack.CHUNK_MAP;
 import static com.nali.small.gui.page.Page.STRING_ARRAY;
 
 @Mod(modid = Small.ID)
@@ -82,6 +95,55 @@ public class Small
         ServerE.S_MAP = new HashMap();
         ChunkCallBack.set();
 //        MixAIE.init();
+
+        //save file
+        WorldServer[] worldserver_array = FMLCommonHandler.instance().getMinecraftServerInstance().worlds;
+        File file = new File(worldserver_array[0].getSaveHandler().getWorldDirectory() + "/nali");
+        if (!file.isDirectory())
+        {
+            file.mkdirs();
+        }
+//        file = new File(worldserver_array[0].getSaveHandler().getWorldDirectory() + "/server");
+//        if (!file.isDirectory())
+//        {
+//            file.mkdirs();
+//        }
+
+        file = new File(file + "/entity");
+        if (!file.isDirectory())
+        {
+            file.mkdirs();
+        }
+        File[] file_array = file.listFiles();
+        if (file_array != null)
+        {
+            for (File f : file_array)
+            {
+                try
+                {
+                    byte[] byte_array = Files.readAllBytes(f.toPath());
+                    UUID uuid = UUID.fromString(f.getName());
+                    WorldServer worldserver = worldserver_array[ByteReader.getInt(byte_array, 0)];
+                    BlockPos blockpos = BlockPos.fromLong(ByteReader.getLong(byte_array, 4));
+
+                    ChunkData chunkdata = new ChunkData();
+                    chunkdata.world = worldserver;
+                    chunkdata.chunkpos = new ChunkPos(blockpos);
+                    chunkdata.ticket = ForgeChunkManager.requestTicket(Small.I, chunkdata.world, ForgeChunkManager.Type.NORMAL);
+
+                    if (chunkdata.ticket != null)
+                    {
+                        ForgeChunkManager.forceChunk(chunkdata.ticket, chunkdata.chunkpos);
+                        CHUNK_MAP.put(uuid, chunkdata);
+                    }
+                }
+                catch (IOException e)
+                {
+                    Nali.I.warn(e);
+                    f.delete();
+                }
+            }
+        }
     }
 
     @EventHandler

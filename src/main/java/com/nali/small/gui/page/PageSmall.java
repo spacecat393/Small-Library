@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.nali.list.container.gui.SmallGui.*;
+import static com.nali.small.gui.mouse.Mouse.HIT;
 
 @SideOnly(Side.CLIENT)
 public class PageSmall extends Page
@@ -67,11 +68,11 @@ public class PageSmall extends Page
         this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, H, display_width / 2.0F - box_width / 2.0F, display_height / 2.0F - H/* / 2.0F*/ - 2.0F * 0.005F * display_height, SCALE);
     }
 
-    @Override
-    public void preDraw()
-    {
-//        super.preDraw();
-    }
+//    @Override
+//    public void preDraw()
+//    {
+////        super.preDraw();
+//    }
 
     @Override
     public void draw()
@@ -80,26 +81,26 @@ public class PageSmall extends Page
         OpenGlHelper.glUseProgram(rs.program);
         GL20.glEnableVertexAttribArray(0);
 
-        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], SMALLGUI.hit == 1 ? this.color_vec4_2d_float_array[1] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(0), TEXTURE_INTEGER_LIST.get(0));
-        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], SMALLGUI.hit == 2 ? this.color_vec4_2d_float_array[1] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(1), TEXTURE_INTEGER_LIST.get(1));
+        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], HIT == 1 ? this.color_vec4_2d_float_array[1] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(0), TEXTURE_INTEGER_LIST.get(0));
+        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], HIT == 2 ? this.color_vec4_2d_float_array[1] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(1), TEXTURE_INTEGER_LIST.get(1));
 
         GL20.glDisableVertexAttribArray(0);
 
-        if (SMALLGUI.page == PAGE)
-        {
-            if (SMALLGUI.hit == 1)
-            {
-                PAGE_ARRAY = new Page[]
-                {
-                    new PageBack(),
-                    new PageMenu(STRING_ARRAY[14] + "|" + STRING_ARRAY[0]),
-                    new PageArmy()
-                };
-            }
-
-            SMALLGUI.hit = 0;
-            SMALLGUI.page = 0;
-        }
+//        if (SMALLGUI.page == PAGE)
+//        {
+//            if (SMALLGUI.hit == 1)
+//            {
+//                PAGE_ARRAY = new Page[]
+//                {
+//                    new PageBack(),
+//                    new PageMenu(STRING_ARRAY[14] + "|" + STRING_ARRAY[0]),
+//                    new PageArmy()
+//                };
+//            }
+//
+//            SMALLGUI.hit = 0;
+//            SMALLGUI.page = 0;
+//        }
     }
 
     @Override

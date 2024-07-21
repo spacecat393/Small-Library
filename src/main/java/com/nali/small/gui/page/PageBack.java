@@ -34,11 +34,11 @@ public class PageBack extends Page
         BACK_ARRAY_BUFFER = OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVUv(0, 0, display_width, display_height, display_width, display_height/*, 1.0F, 1.0F*/), true));
     }
 
-    @Override
-    public void preDraw()
-    {
-//        super.preDraw();
-    }
+//    @Override
+//    public void preDraw()
+//    {
+////        super.preDraw();
+//    }
 
     @Override
     public void draw()

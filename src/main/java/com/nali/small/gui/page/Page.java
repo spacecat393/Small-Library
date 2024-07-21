@@ -26,10 +26,10 @@ public abstract class Page
 //    MAX_TW,
     MAX_TH = 9/*-1*/;//FontRenderer.FONT_HEIGHT-SHADOW+y;
 
-    public Page()
-    {
-        SMALLGUI.state |= 2;
-    }
+//    public Page()
+//    {
+//        SMALLGUI.state |= 2;
+//    }
 
     public void init()
     {
@@ -51,7 +51,7 @@ public abstract class Page
 //        ARRAY_BUFFER_INT_ARRAY = new int[size];
         texture_integer_list.clear();
         array_buffer_integer_list.clear();
-        SMALLGUI.state &= 255-2;
+//        SMALLGUI.state &= 255-2;
     }
 
     //    public float[] createQuadVertices(float x0, float y0, float x1, float y1, float fwidth, float fheight, float u, float v)
@@ -424,7 +424,7 @@ public abstract class Page
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
     }
 
-    public abstract void preDraw();
+//    public abstract void preDraw();
 //    {
 //        SMALLGUI.state &= 255-2;
 //    }

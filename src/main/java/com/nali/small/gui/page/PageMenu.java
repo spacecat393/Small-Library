@@ -64,56 +64,62 @@ public class PageMenu extends Page
         WO = box_width;
     }
 
-    @Override
-    public void preDraw()
-    {
-        byte sakura = SMALLGUI.mc.player.getEntityData().getByte("Nali_sakura");
-        if (SAKURA != sakura || (SMALLGUI.state & 2) == 2)
-        {
-            SMALLGUI.state |= 8;
-//            int framebuffer = OpenGlHelper.glGenFramebuffers();
-//            OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, framebuffer);
+//    @Override
+//    public void preDraw()
+//    {
+//        byte sakura = SMALLGUI.mc.player.getEntityData().getByte("Nali_sakura");
+//        if (SAKURA != sakura || (SMALLGUI.state & 2) == 2)
+//        {
+//            SMALLGUI.state |= 8;
+////            int framebuffer = OpenGlHelper.glGenFramebuffers();
+////            OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, framebuffer);
+////
+//////            GL11.glLoadIdentity();
+//////            GL11.glOrtho(0.0D, width, height, 0.0D, 1000.0D, 3000.0D);
+//////            GL11.glMatrixMode(GL11.GL_MODELVIEW);
+////
+//////            if (false)
+//////            {
+//////                this.drawPath(0);
+//////            }
+//////            if (SAKURA != sakura)
+//////            {
+//////            GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
+//////            GL_ARRAY_BUFFER_BINDING = OPENGL_INTBUFFER.get(0);
+////
+////            this.drawPath(0);
+////            this.drawSakura(sakura, 1);
+////
+//////            OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
+//////            }
+////
+//////            GL11.glMatrixMode(GL11.GL_PROJECTION);
+//////            GL11.glLoadMatrix(OPENGL_PROJECTION_MATRIX_FLOATBUFFER);
+////
+//////            GL11.glMatrixMode(GL_MATRIX_MODE);
+////
+////            OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, GL_READ_FRAMEBUFFER_BINDING);
+////            OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER_BINDING);
+////
+////            OpenGlHelper.glDeleteFramebuffers(framebuffer);
+////
+////            Minecraft minecraft = SMALLGUI.mc;
+////            GL11.glViewport(0, 0, minecraft.displayWidth, minecraft.displayHeight);
+//            SMALLGUI.state &= 255-2;
+//        }
 //
-////            GL11.glLoadIdentity();
-////            GL11.glOrtho(0.0D, width, height, 0.0D, 1000.0D, 3000.0D);
-////            GL11.glMatrixMode(GL11.GL_MODELVIEW);
-//
-////            if (false)
-////            {
-////                this.drawPath(0);
-////            }
-////            if (SAKURA != sakura)
-////            {
-////            GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
-////            GL_ARRAY_BUFFER_BINDING = OPENGL_INTBUFFER.get(0);
-//
-//            this.drawPath(0);
-//            this.drawSakura(sakura, 1);
-//
-////            OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
-////            }
-//
-////            GL11.glMatrixMode(GL11.GL_PROJECTION);
-////            GL11.glLoadMatrix(OPENGL_PROJECTION_MATRIX_FLOATBUFFER);
-//
-////            GL11.glMatrixMode(GL_MATRIX_MODE);
-//
-//            OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, GL_READ_FRAMEBUFFER_BINDING);
-//            OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER_BINDING);
-//
-//            OpenGlHelper.glDeleteFramebuffers(framebuffer);
-//
-//            Minecraft minecraft = SMALLGUI.mc;
-//            GL11.glViewport(0, 0, minecraft.displayWidth, minecraft.displayHeight);
-            SMALLGUI.state &= 255-2;
-        }
-
-//        super.preDraw();
-    }
+////        super.preDraw();
+//    }
 
     @Override
     public void draw()
     {
+        byte sakura = SMALLGUI.mc.player.getEntityData().getByte("Nali_sakura");
+        if (SAKURA != sakura)
+        {
+            FLAG |= 1;
+        }
+
         MemoSo rs = Nali.I.clientloader.storeo.rs_list.get(SmallData.SHADER_O_STEP + 3);
         OpenGlHelper.glUseProgram(rs.program);
         GL20.glEnableVertexAttribArray(0);
@@ -121,10 +127,10 @@ public class PageMenu extends Page
         this.vec2_2d_float_array[0][1] = Y;
         this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(0), TEXTURE_INTEGER_LIST.get(0));
         this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[1], ARRAY_BUFFER_INTEGER_LIST.get(1), TEXTURE_INTEGER_LIST.get(1));
-        if ((SMALLGUI.state & 4) == 4)
-        {
-            BT = 5.0F;
-        }
+//        if ((SMALLGUI.state & 4) == 4)
+//        {
+//            BT = 5.0F;
+//        }
         boolean bt = BT > 0.0F;
         this.drawQuadVUv(rs, this.vec2_2d_float_array[1], bt ? this.color_vec4_2d_float_array[2] : this.color_vec4_2d_float_array[1], ARRAY_BUFFER_INTEGER_LIST.get(2), TEXTURE_INTEGER_LIST.get(2));
         if (bt)
