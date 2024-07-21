@@ -12,8 +12,7 @@ import org.lwjgl.opengl.GL20;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.nali.list.container.gui.SmallGui.SCALE;
-import static com.nali.list.container.gui.SmallGui.SMALLGUI;
+import static com.nali.list.container.gui.SmallGui.*;
 
 @SideOnly(Side.CLIENT)
 public class PageMenu extends Page
@@ -49,8 +48,8 @@ public class PageMenu extends Page
         int display_height = minecraft.displayHeight;
 
         Y = 0;
-        this.drawPath(-1);
-        this.drawSakura(minecraft.player.getEntityData().getByte("Nali_sakura"), -1);
+        this.initPath(-1);
+        this.initSakura(minecraft.player.getEntityData().getByte("Nali_sakura"), -1);
 
         float scale = SCALE * 0.5F;
         int h = (int)(MAX_TH * scale);
@@ -61,7 +60,8 @@ public class PageMenu extends Page
         {
             box_width = i;
         }
-        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*/, -1, box_width, h, display_width - box_width - 2.0F * 0.005F * display_width, 2.0F * 0.005F * display_height, scale);
+        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, h, display_width - box_width - 2.0F * 0.005F * display_width, 2.0F * 0.005F * display_height, scale);
+        WO = box_width;
     }
 
     @Override
@@ -164,30 +164,7 @@ public class PageMenu extends Page
         return TEXTURE_INTEGER_LIST;
     }
 
-    public void drawSakura(byte sakura, int index)
-    {
-        Minecraft minecraft = SMALLGUI.mc;
-        int display_width = minecraft.displayWidth;
-        int display_height = minecraft.displayHeight;
-
-        SAKURA = sakura;//(byte)this.mc.player.getEntityData().getInteger("Nali_sakura");
-
-        String string = STRING_ARRAY[11] + " " + SAKURA;
-//        String string = STRING;
-//        string += " > ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        int i = (int)(minecraft.fontRenderer.getStringWidth(string) * SCALE),
-        box_width = i - display_width;
-        if (i < display_width)
-        {
-            box_width = i;
-        }
-//        this.preDrawTextHorizontal(string, false, index, (int)(box_width * SCALE), H, H, this.mc.displayHeight - H, SCALE);
-        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*/, index, box_width, H, H + 4.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
-//        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*/, index, -box_width + i, H, H + 4.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
-//        this.preDrawTextHorizontal(string, false, index, (int)(box_width * SCALE * 1.1F), H, H + -(SCALE * 1.1F)/* / 2.0F*/, this.mc.displayHeight - H, SCALE * 1.1F);
-    }
-
-    public void drawPath(int index)
+    public void initPath(int index)
     {
         Minecraft minecraft = SMALLGUI.mc;
         int display_height = minecraft.displayHeight;
@@ -212,7 +189,36 @@ public class PageMenu extends Page
         MAX_Y = ((display_height + box_height) / (float)display_height) * 2.0F;
 //        this.preDrawTextVertical(string, false, index, H, (int)(box_height * SCALE), 0.0F, 0.0F, SCALE);
 //        this.preDrawTextVertical(string, true, index, max_w, box_height, (H - max_w) / 2.0F, 0.0F, SCALE);
-        this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, STRING/*, true*/, index, H, box_height, 2.0F * 0.005F * minecraft.displayWidth, 0.0F, SCALE);
+//        LEFT = 2.0F * 0.005F * minecraft.displayWidth;
+        this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, STRING/*, true*//*, index*/, H, box_height, 2.0F * 0.005F * minecraft.displayWidth, 0.0F, SCALE);
 //        this.preDrawTextVertical(string, false, index, H, (int)(box_height * SCALE * 1.1F), 0.0F, -(SCALE * 1.1F)/* / 2.0F*/, SCALE * 1.1F);
+        TOP -= box_height;
+    }
+
+    public void initSakura(byte sakura, int index)
+    {
+        Minecraft minecraft = SMALLGUI.mc;
+        int display_width = minecraft.displayWidth;
+        int display_height = minecraft.displayHeight;
+
+        SAKURA = sakura;//(byte)this.mc.player.getEntityData().getInteger("Nali_sakura");
+
+        String string = STRING_ARRAY[11] + " " + SAKURA;
+//        String string = STRING;
+//        string += " > ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        int i = (int)(minecraft.fontRenderer.getStringWidth(string) * SCALE),
+        box_width = i - display_width;
+        if (i < display_width)
+        {
+            box_width = i;
+        }
+//        this.preDrawTextHorizontal(string, false, index, (int)(box_width * SCALE), H, H, this.mc.displayHeight - H, SCALE);
+//        LEFT = LEFT * 4 + H;
+//        LEFT += H + 4.0F * 0.005F * display_width;
+//        TOP += display_height - H - 2.0F * 0.005F * display_height;
+        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, index*/, box_width, H, H + 4.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
+//        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*/, index, -box_width + i, H, H + 4.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
+//        this.preDrawTextHorizontal(string, false, index, (int)(box_width * SCALE * 1.1F), H, H + -(SCALE * 1.1F)/* / 2.0F*/, this.mc.displayHeight - H, SCALE * 1.1F);
+        LEFT += box_width;
     }
 }

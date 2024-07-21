@@ -13,12 +13,12 @@ public class SAIE
 
     public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
     {
-        ServerE servere = S_MAP.get(ByteReader.getUUID(servermessage.data, 1));
-        if (servere != null && (servere.a.state & 8) == 8)
+        ServerE s = S_MAP.get(ByteReader.getUUID(servermessage.data, 1));
+        if (s != null && (s.a.state & 8) == 8)
         {
-            servere.a.set(entityplayermp, servermessage.data);
-            servere.a.call(servermessage.data[17]);
-            servere.a.clear();
+            s.a.set(entityplayermp, servermessage.data);
+            s.a.call(servermessage.data[17]);
+            s.a.clear();
         }
     }
 }

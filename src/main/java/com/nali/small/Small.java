@@ -54,7 +54,7 @@ public class Small
 
         if (event.getSide().isClient())
         {
-            byte size = 19;
+            byte size = 26;
             String t_string = "info." + Small.ID + ".t";
             STRING_ARRAY = new String[size];
 //            FontRenderer fontrenderer = Minecraft.getMinecraft().fontRenderer;

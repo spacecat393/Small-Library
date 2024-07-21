@@ -6,7 +6,7 @@ import com.nali.system.bytes.ByteReader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 
-public class CSetUUID
+public class CSUUID
 {
     public static byte ID;
 

@@ -31,6 +31,7 @@ public class AILeEat<SD extends ISoundDaLe, BD extends IBothDaNe, E extends Enti
     public static byte ID;
 
     public byte state;//t-eat t-drinkMilk
+    public float time;
 
     public AILeEat(S s)
     {
@@ -78,7 +79,8 @@ public class AILeEat<SD extends ISoundDaLe, BD extends IBothDaNe, E extends Enti
             this.state |= 1;
 
             worldserver.spawnEntity(new EntityXPOrb(worldserver, e.posX, e.posY, e.posZ, 10));
-            e.heal(itemfood.getHealAmount(itemstack) + itemfood.getSaturationModifier(itemstack));
+            this.time += itemfood.getHealAmount(itemstack) + itemfood.getSaturationModifier(itemstack);
+            e.heal(this.time);
             itemstack.shrink(1);
 
 //                        Vec3d view_vec3d = skinningentities.getLookVec().scale(0.25F);
@@ -121,6 +123,12 @@ public class AILeEat<SD extends ISoundDaLe, BD extends IBothDaNe, E extends Enti
     @Override
     public void onUpdate()
     {
+        if (this.time > 0)
+        {
+            E e = this.s.i.getE();
+            e.heal(1);
+            --this.time;
+        }
     }
 
     @Override

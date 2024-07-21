@@ -55,7 +55,7 @@ public class PageSmall extends Page
         {
             box_width = i;
         }
-        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*/, -1, box_width, H, display_width / 2.0F - box_width / 2.0F, display_height / 2.0F/* - H / 2.0F*/ + 2.0F * 0.005F * display_height, SCALE);
+        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, H, display_width / 2.0F - box_width / 2.0F, display_height / 2.0F/* - H / 2.0F*/ + 2.0F * 0.005F * display_height, SCALE);
 
         string = STRING_ARRAY[3];
         i = (int)(fontrenderer.getStringWidth(string) * SCALE);
@@ -64,7 +64,7 @@ public class PageSmall extends Page
         {
             box_width = i;
         }
-        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*/, -1, box_width, H, display_width / 2.0F - box_width / 2.0F, display_height / 2.0F - H/* / 2.0F*/ - 2.0F * 0.005F * display_height, SCALE);
+        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, H, display_width / 2.0F - box_width / 2.0F, display_height / 2.0F - H/* / 2.0F*/ - 2.0F * 0.005F * display_height, SCALE);
     }
 
     @Override

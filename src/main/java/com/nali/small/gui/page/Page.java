@@ -55,7 +55,7 @@ public abstract class Page
     }
 
     //    public float[] createQuadVertices(float x0, float y0, float x1, float y1, float fwidth, float fheight, float u, float v)
-    public float[] createQuadVUv(float x0, float y0, float x1, float y1, float fwidth, float fheight, float u, float v)
+    public float[] createQuadVUv(float x0, float y0, float x1, float y1, float fwidth, float fheight/*, float u, float v*/)
     {
 //        return new float[]
 //        {
@@ -108,15 +108,25 @@ public abstract class Page
         float nx2 = (2.0F * x1 / fwidth) - 1.0F;
         float ny2 = (2.0F * y1 / fheight) - 1.0F;
 
+//        return new float[]
+//        {
+//            nx1, ny2, 0.0F, v,
+//            nx1, ny1, 0.0F, 0.0F,
+//            nx2, ny1, u, 0.0F,
+//
+//            nx1, ny2, 0.0F, v,
+//            nx2, ny1, u, 0.0F,
+//            nx2, ny2, u, v
+//        };
         return new float[]
         {
-            nx1, ny2, 0.0F, v,
+            nx1, ny2, 0.0F, 1.0F,
             nx1, ny1, 0.0F, 0.0F,
-            nx2, ny1, u, 0.0F,
+            nx2, ny1, 1.0F, 0.0F,
 
-            nx1, ny2, 0.0F, v,
-            nx2, ny1, u, 0.0F,
-            nx2, ny2, u, v
+            nx1, ny2, 0.0F, 1.0F,
+            nx2, ny1, 1.0F, 0.0F,
+            nx2, ny2, 1.0F, 1.0F
         };
 
 //        return new float[]
@@ -133,7 +143,7 @@ public abstract class Page
     }
 
     //    public void preDrawText(/*int framebuffer, */String string, int texture_index)
-    public void preDrawTextHorizontal(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, /*int framebuffer, */String string/*, boolean shadow*/, int texture_index, int width, int height, float x, float y, float scale)
+    public void preDrawTextHorizontal(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, /*int framebuffer, */String string/*, boolean shadow*//*, int texture_index*/, int width, int height, float x, float y, float scale)
     {
         Minecraft minecraft = SMALLGUI.mc;
 //        if (this.framebuffer == -1)
@@ -147,7 +157,7 @@ public abstract class Page
 //        GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
 //        ARRAY_BUFFER_INT_ARRAY[INDEX] = OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVertices(x - fx, y - fy, x + fx, y + fy, this.mc.displayWidth, this.mc.displayHeight), true));
 //        ARRAY_BUFFER_INT_LIST.add(OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVertices(x - fx, y - fy, x + fx, y + fy, this.mc.displayWidth, this.mc.displayHeight, 1.0F, 1.0F), true)));
-        array_buffer_integer_list.add(OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVUv(x, y, width + x, height + y, minecraft.displayWidth, minecraft.displayHeight, 1.0F, 1.0F), true)));
+        array_buffer_integer_list.add(OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVUv(x, y, width + x, height + y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F, 1.0F*/), true)));
         OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
 
 //        GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
@@ -162,15 +172,15 @@ public abstract class Page
 
 //        TEXTURE_INT_ARRAY[INDEX] = GL11.glGenTextures();
         int texture = GL11.glGenTextures();
-        if (texture_index == -1)
-        {
-            texture_integer_list.add(texture);
-        }
-        else
-        {
-            GL11.glDeleteTextures(texture_integer_list.get(texture_index));
-            texture_integer_list.set(texture_index, texture);
-        }
+//        if (texture_index == -1)
+//        {
+        texture_integer_list.add(texture);
+//        }
+//        else
+//        {
+//            GL11.glDeleteTextures(texture_integer_list.get(texture_index));
+//            texture_integer_list.set(texture_index, texture);
+//        }
 
         GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
         GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
@@ -180,8 +190,8 @@ public abstract class Page
         OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
         GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
         GL_TEXTURE_BINDING_2D_0 = OPENGL_INTBUFFER.get(0);
-        GL_TEXTURE_MIN_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER);
-        GL_TEXTURE_MAG_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER);
+//        GL_TEXTURE_MIN_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER);
+//        GL_TEXTURE_MAG_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER);
 
 //        int ptw = tw + FONT, pth = MAX_TH + FONT;
 //        GL11.glBindTexture(GL11.GL_TEXTURE_2D, TEXTURE_INT_ARRAY[INDEX]);
@@ -236,22 +246,22 @@ public abstract class Page
 //        OpenGlHelper.glDeleteFramebuffers(framebuffer);
     }
 
-    public void preDrawTextVertical(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, String string/*, boolean shadow*/, int texture_index, int width, int height, float x, float y, float scale)
+    public void preDrawTextVertical(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, String string/*, boolean shadow*//*, int texture_index*/, int width, int height, float x, float y, float scale)
     {
         Minecraft minecraft = SMALLGUI.mc;
-        array_buffer_integer_list.add(OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVUv(x, -height + y, width + x, y, minecraft.displayWidth, minecraft.displayHeight, 1.0F/* / (this.mc.displayWidth / (float)this.width)*/, 1.0F), true)));
+        array_buffer_integer_list.add(OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVUv(x, -height + y, width + x, y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F*//* / (this.mc.displayWidth / (float)this.width)*//*, 1.0F*/), true)));
         OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
 
         int texture = GL11.glGenTextures();
-        if (texture_index == -1)
-        {
-            texture_integer_list.add(texture);
-        }
-        else
-        {
-            GL11.glDeleteTextures(texture_integer_list.get(texture_index));
-            texture_integer_list.set(texture_index, texture);
-        }
+//        if (texture_index == -1)
+//        {
+        texture_integer_list.add(texture);
+//        }
+//        else
+//        {
+//            GL11.glDeleteTextures(texture_integer_list.get(texture_index));
+//            texture_integer_list.set(texture_index, texture);
+//        }
 
         GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
         GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
@@ -385,6 +395,18 @@ public abstract class Page
 
     public void drawQuadStatic/*Blur*/(int array_buffer, int texture)
     {
+        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
+        GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
+
+        GL11.glGetInteger(GL13.GL_ACTIVE_TEXTURE, OPENGL_INTBUFFER);
+        GL_ACTIVE_TEXTURE = OPENGL_INTBUFFER.get(0);
+        OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
+        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
+        GL_TEXTURE_BINDING_2D_0 = OPENGL_INTBUFFER.get(0);
+        GL_TEXTURE_MIN_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER);
+        GL_TEXTURE_MAG_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER);
+        //
+
         OpenGLBuffer.setFloatBuffer(0, array_buffer, 4);
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
@@ -392,6 +414,14 @@ public abstract class Page
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 
         GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, 6);
+
+        //
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D_0);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_FILTER_0);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAG_FILTER_0);
+
+        OpenGlHelper.setActiveTexture(GL_ACTIVE_TEXTURE);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
     }
 
     public abstract void preDraw();

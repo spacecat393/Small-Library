@@ -6,7 +6,7 @@ import com.nali.list.entity.ai.AIEInvOpenInv;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SAIE;
 import com.nali.list.network.method.server.SSound;
-import com.nali.list.network.method.server.SSyncUUIDToClient;
+import com.nali.list.network.method.server.SSUUID;
 import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
@@ -53,8 +53,13 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
     public Sound sound;
 
     public UUID uuid;
+
     public boolean fake;
-    public byte[] sync_byte_array;
+    public byte state;//regen
+    public int dimension = -1;
+    public float x, y, z;
+
+    public byte[] sync_byte_array;//remove later?
 
     public ClientE(I i, R r)
     {
@@ -139,7 +144,7 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
         if (this.uuid == null)
         {
             byte[] byte_array = new byte[5];
-            byte_array[0] = SSyncUUIDToClient.ID;
+            byte_array[0] = SSUUID.ID;
             ByteWriter.set(byte_array, this.i.getE().getEntityId(), 1);
             NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
         }
@@ -155,6 +160,8 @@ public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends I
     public void setUUID(UUID uuid)
     {
         this.uuid = uuid;
+//        C_MAP.put(this.uuid, this);
+//        UUID_MAP.put(this.i.getE().getEntityId(), this.uuid);
     }
 
     @Override

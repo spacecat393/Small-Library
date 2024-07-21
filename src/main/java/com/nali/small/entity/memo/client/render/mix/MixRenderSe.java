@@ -23,7 +23,7 @@ import static com.nali.system.opengl.memo.client.MemoCurrent.GL_CURRENT_COLOR;
 import static com.nali.system.opengl.memo.client.MemoCurrent.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
-public abstract class MixRenderSe<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD, BD extends IBothDaNe & IBothDaSn, E extends Entity, I extends IMixE<SD, BD, E>, MB extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientE<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?> & IClientS<RG, RS, RC, RST, R, SD, BD, E, I>> extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>
+public abstract class MixRenderSe<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD, BD extends IBothDaNe & IBothDaSn, E extends Entity, I extends IMixE<SD, BD, E>, MB extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientE<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?> & IClientS<RG, RS, RC, RST, R, SD, BD, E, I, ?>> extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>
 {
     public float
     head_rot,
@@ -94,10 +94,10 @@ public abstract class MixRenderSe<RG extends MemoGs, RS extends MemoSs, RC exten
         R r = this.c.r;
         r.initSkinning(/*memoanimation*/);
 
-        if (!this.c.fake)
-        {
-            this.multiplyAnimation(/*rendere*/);
-        }
+//        if (!this.c.fake)
+//        {
+        this.multiplyAnimation(/*rendere*/);
+//        }
 
         r.setSkinning(/*memoanimation*/);
     }

@@ -5,7 +5,7 @@ import com.nali.list.network.message.ServerMessage;
 import com.nali.small.Small;
 import net.minecraft.entity.player.EntityPlayerMP;
 
-public class SOpenPlayerGUI
+public class SOpenSmallGui
 {
     public static byte ID;
 

@@ -26,6 +26,20 @@ info.small.t16=⧄
 #TeamUp
 info.small.t17=☻
 info.small.t18=⬅Left Arrow / Q
+#Call
+info.small.t19=✆
+#Death
+info.small.t20=†
+#Negative
+info.small.t21=×
+#TeamReady
+info.small.t22=☺
+#Wait
+info.small.t23=⌛
+#Terminal
+info.small.t24=⎀
+#Regen
+info.small.t25=☕
 
 #info.small.b0=Current
 #info.small.b1=XP

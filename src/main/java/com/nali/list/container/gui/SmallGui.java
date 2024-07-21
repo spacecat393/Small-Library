@@ -2,10 +2,7 @@ package com.nali.list.container.gui;
 
 import com.nali.list.container.SmallContainer;
 import com.nali.small.SmallConfig;
-import com.nali.small.gui.page.Page;
-import com.nali.small.gui.page.PageBack;
-import com.nali.small.gui.page.PageMenu;
-import com.nali.small.gui.page.PageSmall;
+import com.nali.small.gui.page.*;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -30,13 +27,17 @@ public class SmallGui extends GuiContainer
 {
     public static SmallGui SMALLGUI;
     public static Page[] PAGE_ARRAY;
-    public static float WIDTH, HEIGHT, SCALE;
+    public static float
+    SCALE,
+    WIDTH, HEIGHT,
+    LEFT, RIGHT, TOP, DOWN, WO, HO;
 //    public static List<Integer>
 //    TEXTURE_INT_LIST = new ArrayList(),
 //    ARRAY_BUFFER_INT_LIST = new ArrayList();
     public static int
+    OFFSET_RENDER_BUFFER = -1,
     OFFSET_FRAMEBUFFER = -1,
-    OFFSET_FRAMEBUFFER_TEXTURE;
+    OFFSET_FRAMEBUFFER_TEXTURE = -1;
 
     public byte
     state,//on_hit new_page back_page init
@@ -99,21 +100,21 @@ public class SmallGui extends GuiContainer
 //        GL11.glMatrixMode(GL11.GL_PROJECTION);
 //        GL11.glLoadIdentity();
 
-        GL_BLEND = GL11.glIsEnabled(GL11.GL_BLEND);
+        boolean gl_blend = GL11.glIsEnabled(GL11.GL_BLEND);
 
         GL11.glGetInteger(GL20.GL_BLEND_EQUATION_RGB, OPENGL_INTBUFFER);
-        GL_BLEND_EQUATION_RGB = OPENGL_INTBUFFER.get(0);
+        int gl_blend_equation_rgb = OPENGL_INTBUFFER.get(0);
         GL11.glGetInteger(GL20.GL_BLEND_EQUATION_ALPHA, OPENGL_INTBUFFER);
-        GL_BLEND_EQUATION_ALPHA = OPENGL_INTBUFFER.get(0);
+        int gl_blend_equation_alpha = OPENGL_INTBUFFER.get(0);
 
         GL11.glGetInteger(GL14.GL_BLEND_SRC_RGB, OPENGL_INTBUFFER);
-        GL_BLEND_SRC_RGB = OPENGL_INTBUFFER.get(0);
+        int gl_blend_src_rgb = OPENGL_INTBUFFER.get(0);
         GL11.glGetInteger(GL14.GL_BLEND_SRC_ALPHA, OPENGL_INTBUFFER);
-        GL_BLEND_SRC_ALPHA = OPENGL_INTBUFFER.get(0);
+        int gl_blend_src_alpha = OPENGL_INTBUFFER.get(0);
         GL11.glGetInteger(GL14.GL_BLEND_DST_RGB, OPENGL_INTBUFFER);
-        GL_BLEND_DST_RGB = OPENGL_INTBUFFER.get(0);
+        int gl_blend_dst_rgb = OPENGL_INTBUFFER.get(0);
         GL11.glGetInteger(GL14.GL_BLEND_DST_ALPHA, OPENGL_INTBUFFER);
-        GL_BLEND_DST_ALPHA = OPENGL_INTBUFFER.get(0);
+        int gl_blend_dst_alpha = OPENGL_INTBUFFER.get(0);
 
         GL11.glEnable(GL11.GL_BLEND);
 
@@ -142,10 +143,19 @@ public class SmallGui extends GuiContainer
             SCALE = FONT / (this.height / (float)this.mc.displayHeight);
             H = (int)(MAX_TH * SCALE);
 
+            LEFT = 0;
+            RIGHT = 0;
+            TOP = 0;
+            DOWN = 0;
+            WO = 0;
+            HO = 0;
+
             if (OFFSET_FRAMEBUFFER == -1)
             {
                 OFFSET_FRAMEBUFFER = OpenGlHelper.glGenFramebuffers();
                 OFFSET_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
+
+                OFFSET_RENDER_BUFFER = OpenGlHelper.glGenRenderbuffers();
 
 //                GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
 //                int draw_frame_buffer = OPENGL_INTBUFFER.get(0);
@@ -288,21 +298,23 @@ public class SmallGui extends GuiContainer
 
         //takeDefault
         GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
-        GL_ARRAY_BUFFER_BINDING = OPENGL_INTBUFFER.get(0);
+        int gl_array_buffer_binding = OPENGL_INTBUFFER.get(0);
 
         GL11.glGetInteger(GL20.GL_CURRENT_PROGRAM, OPENGL_INTBUFFER);
-        GL_CURRENT_PROGRAM = OPENGL_INTBUFFER.get(0);
+        int gl_current_program = OPENGL_INTBUFFER.get(0);
 
-        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
-        GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
-
-        GL11.glGetInteger(GL13.GL_ACTIVE_TEXTURE, OPENGL_INTBUFFER);
-        GL_ACTIVE_TEXTURE = OPENGL_INTBUFFER.get(0);
-        OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
-        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
-        GL_TEXTURE_BINDING_2D_0 = OPENGL_INTBUFFER.get(0);
-        GL_TEXTURE_MIN_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER);
-        GL_TEXTURE_MAG_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER);
+        //t
+//        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
+//        GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
+//
+//        GL11.glGetInteger(GL13.GL_ACTIVE_TEXTURE, OPENGL_INTBUFFER);
+//        GL_ACTIVE_TEXTURE = OPENGL_INTBUFFER.get(0);
+//        OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
+//        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
+//        GL_TEXTURE_BINDING_2D_0 = OPENGL_INTBUFFER.get(0);
+//        GL_TEXTURE_MIN_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER);
+//        GL_TEXTURE_MAG_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER);
+        //t
 
 //        this.preDraw();
         for (Page page : PAGE_ARRAY)
@@ -358,14 +370,14 @@ public class SmallGui extends GuiContainer
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, this.mc.displayWidth, this.mc.displayHeight, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
         OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE, 0);
 
-        //
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D_0);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_FILTER_0);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAG_FILTER_0);
-
-        OpenGlHelper.setActiveTexture(GL_ACTIVE_TEXTURE);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
-        //
+//        //
+//        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D_0);
+//        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_FILTER_0);
+//        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAG_FILTER_0);
+//
+//        OpenGlHelper.setActiveTexture(GL_ACTIVE_TEXTURE);
+//        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
+//        //
 
 //        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, 0);
 //            this.drawScreen(0, 0, 0);
@@ -445,23 +457,25 @@ public class SmallGui extends GuiContainer
 
 //        GL20.glDisableVertexAttribArray(0);
 
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D_0);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_FILTER_0);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAG_FILTER_0);
+        //t
+//        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D_0);
+//        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_FILTER_0);
+//        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAG_FILTER_0);
+//
+//        OpenGlHelper.setActiveTexture(GL_ACTIVE_TEXTURE);
+//        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
+        //t
 
-        OpenGlHelper.setActiveTexture(GL_ACTIVE_TEXTURE);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
+        OpenGlHelper.glUseProgram(gl_current_program);
 
-        OpenGlHelper.glUseProgram(GL_CURRENT_PROGRAM);
-
-        OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
+        OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, gl_array_buffer_binding);
 
         OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, GL_READ_FRAMEBUFFER_BINDING);
         OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER_BINDING);
 
         OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, renderbuffer_binding);
 
-        if (GL_BLEND)
+        if (gl_blend)
         {
             GL11.glEnable(GL11.GL_BLEND);
         }
@@ -470,8 +484,8 @@ public class SmallGui extends GuiContainer
             GL11.glDisable(GL11.GL_BLEND);
         }
 
-        GL20.glBlendEquationSeparate(GL_BLEND_EQUATION_RGB, GL_BLEND_EQUATION_ALPHA);
-        GL14.glBlendFuncSeparate(GL_BLEND_SRC_RGB, GL_BLEND_DST_RGB, GL_BLEND_SRC_ALPHA, GL_BLEND_DST_ALPHA);
+        GL20.glBlendEquationSeparate(gl_blend_equation_rgb, gl_blend_equation_alpha);
+        GL14.glBlendFuncSeparate(gl_blend_src_rgb, gl_blend_dst_rgb, gl_blend_src_alpha, gl_blend_dst_alpha);
         this.defaultState(mouseX, mouseY);
     }
 

@@ -1,13 +1,12 @@
 package com.nali.small.mixin;
 
-import com.nali.small.entity.EntityLeInv;
+import com.nali.small.entity.IMixE;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.server.CommandSummon;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -27,7 +26,7 @@ public abstract class MixinCommandSummon
     @Inject(method = "execute", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setLocationAndAngles(DDDFF)V", shift = At.Shift.AFTER, ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void nali_small_execute(MinecraftServer server, ICommandSender sender, String[] args, CallbackInfo ci, Entity entity)
     {
-        if (this.should_execute && (entity instanceof EntityLeInv/* || entity instanceof ObjectEntities*/))
+        if (this.should_execute && (entity instanceof IMixE))
         {
             NBTTagCompound nbttagcompound = new NBTTagCompound();
             nbttagcompound = entity.writeToNBT(nbttagcompound);

@@ -36,7 +36,7 @@ public abstract class MixAIE<SD, BD extends IBothDaNe, E extends Entity, I exten
 
     public S s;
     public Map<Byte, AI/*<SD, BD, E, I, S, ?>*/> aie_map = new HashMap();
-    public byte state = (byte)255;//main_work sub_work init ai-lock ?map chunk
+    public byte state = (byte)255;//main_work sub_work init ai-lock ?map chunk ?regen
 
     public EntityPlayerMP entityplayermp;
     public byte[] byte_array;
