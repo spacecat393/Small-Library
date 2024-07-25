@@ -6,9 +6,6 @@ import com.nali.da.client.IClientDaS;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
-import com.nali.system.opengl.memo.client.MemoGs;
-import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.memo.client.store.StoreS;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -16,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public interface IClientS<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD, BD extends IBothDaNe & IBothDaSn, E extends Entity, I extends IMixE<SD, BD, E>, MR extends MixRenderSe<RG, RS, RC, RST, R, SD, BD, E, I, ?, ?>>
+public interface IClientS<RC extends IClientDaS, R extends RenderS<BD, RC>, SD, BD extends IBothDaNe & IBothDaSn, E extends Entity, I extends IMixE<SD, BD, E>, MR extends MixRenderSe<RC, R, SD, BD, E, I, ?, ?>>
 {
     default void updateClientObject(R r, I i)
     {

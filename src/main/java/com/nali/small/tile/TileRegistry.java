@@ -1,6 +1,5 @@
 package com.nali.small.tile;
 
-import com.nali.Nali;
 import com.nali.system.Reflect;
 import com.nali.system.StringReader;
 import net.minecraft.block.Block;
@@ -14,6 +13,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.List;
+
+import static com.nali.Nali.error;
 
 //@Mod.EventBusSubscriber(modid = Small.ID)
 public class TileRegistry
@@ -59,7 +60,7 @@ public class TileRegistry
             }
             catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
             {
-                Nali.I.error(e);
+                error(e);
             }
         }
     }

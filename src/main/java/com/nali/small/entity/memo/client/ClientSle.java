@@ -8,9 +8,6 @@ import com.nali.small.entity.IMixLe;
 import com.nali.small.entity.memo.client.box.mix.MixBoxSle;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
 import com.nali.sound.ISoundDaLe;
-import com.nali.system.opengl.memo.client.MemoGs;
-import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.memo.client.store.StoreS;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,7 +18,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import static com.nali.small.entity.EntityLeInv.MOUTH_ITEMSTACK_DATAPARAMETER;
 
 @SideOnly(Side.CLIENT)
-public abstract class ClientSle<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, MR, ?>, MR extends MixRenderSe<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> extends ClientLe<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR> implements IClientS<RG, RS, RC, RST, R, SD, BD, E, I, MR>
+public abstract class ClientSle<RC extends IClientDaS, R extends RenderS<BD, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RC, R, SD, BD, E, I, MR, ?>, MR extends MixRenderSe<RC, R, SD, BD, E, I, MB, ?>> extends ClientLe<RC, R, SD, BD, E, I, MB, MR> implements IClientS<RC, R, SD, BD, E, I, MR>
 {
     public ItemStack mouth_itemstack = ItemStack.EMPTY;
 

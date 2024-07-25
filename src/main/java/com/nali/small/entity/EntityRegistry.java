@@ -19,7 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.nali.Nali.I;
+import static com.nali.Nali.error;
 
 @Mod.EventBusSubscriber(modid = Small.ID)
 public class EntityRegistry
@@ -47,7 +47,7 @@ public class EntityRegistry
             }
             catch (NoSuchFieldException | IllegalAccessException e)
             {
-                I.error(e);
+                error(e);
             }
         }
     }
@@ -76,7 +76,7 @@ public class EntityRegistry
                         }
                         catch (InstantiationException | InvocationTargetException | IllegalAccessException e)
                         {
-                            I.error(e);
+                            error(e);
                         }
 
                         return null;
@@ -85,7 +85,7 @@ public class EntityRegistry
             }
             catch (NoSuchMethodException e)
             {
-                I.error(e);
+                error(e);
             }
         }
     }

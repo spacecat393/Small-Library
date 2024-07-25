@@ -1,6 +1,5 @@
 package com.nali.list.entity.ai;
 
-import com.nali.Nali;
 import com.nali.da.IBothDaNe;
 import com.nali.list.capability.serializable.SmallSakuraSerializable;
 import com.nali.list.capability.type.SmallSakuraType;
@@ -26,6 +25,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.*;
+
+import static com.nali.Nali.warn;
 
 public class AIEArea<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, A>, A extends MixAIE<SD, BD, E, I, S>> extends AI<SD, BD, E, I, S, A>
 {
@@ -79,7 +80,7 @@ public class AIEArea<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE
                 this.fetch();
                 break;
             default:
-                Nali.I.warn("BIT_FLIP");
+                warn("BIT_FLIP");
         }
     }
 

@@ -40,6 +40,11 @@ info.small.t23=⌛
 info.small.t24=⎀
 #Regen
 info.small.t25=☕
+#Reload
+info.small.t26=↺
+info.small.t27=↺R
+#Search
+info.small.t28=⌕
 
 #info.small.b0=Current
 #info.small.b1=XP

@@ -1,6 +1,5 @@
 package com.nali.list.network.method.client;
 
-import com.nali.Nali;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
@@ -13,6 +12,7 @@ import net.minecraft.world.World;
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
+import static com.nali.Nali.warn;
 import static com.nali.small.entity.memo.client.ClientE.C_MAP;
 
 public class CSToC
@@ -71,7 +71,7 @@ public class CSToC
                 }
                 catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
                 {
-                    Nali.I.warn(e);
+                    warn(e);
                     continue;
                 }
             }

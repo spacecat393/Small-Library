@@ -1,6 +1,5 @@
 package com.nali.list.block;
 
-import com.nali.draw.DrawScreen;
 import com.nali.list.render.o.RenderStorage;
 import com.nali.small.mix.block.BlockB;
 import com.nali.small.mix.item.ItemB;
@@ -20,8 +19,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-
-import static com.nali.Nali.I;
 
 public class SmallStorage extends BlockB implements ITileEntityProvider
 {
@@ -104,11 +101,11 @@ public class SmallStorage extends BlockB implements ITileEntityProvider
     @Override
     public void newC()
     {
-        RenderStorage r = new RenderStorage(I.clientloader.storeo, RenderStorage.ICLIENTDAO);
-        DrawScreen d = new DrawScreen(r);
-        d.scale(0.25F);
-        d.z = 0.0F;
-        this.ibothb = new ClientB(r, d, this);
+        RenderStorage r = new RenderStorage(RenderStorage.ICLIENTDAO);
+//        DrawScreen d = new DrawScreen(r);
+//        d.scale(0.25F);
+//        d.z = 0.0F;
+        this.ibothb = new ClientB(r/*, d*/, this);
     }
 
     @Override

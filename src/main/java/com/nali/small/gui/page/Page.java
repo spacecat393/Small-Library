@@ -1,7 +1,6 @@
 package com.nali.small.gui.page;
 
-import com.nali.system.opengl.OpenGLBuffer;
-import com.nali.system.opengl.memo.client.MemoSo;
+import com.nali.system.opengl.memo.client.MemoS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -9,12 +8,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL20;
 
 import java.nio.IntBuffer;
 import java.util.List;
 
 import static com.nali.list.container.gui.SmallGui.SMALLGUI;
-import static com.nali.system.opengl.memo.client.MemoCurrent.*;
+import static com.nali.system.opengl.memo.client.MemoA1.genFloatBuffer;
+import static com.nali.system.opengl.memo.client.MemoC.*;
 
 @SideOnly(Side.CLIENT)
 public abstract class Page
@@ -157,7 +158,7 @@ public abstract class Page
 //        GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
 //        ARRAY_BUFFER_INT_ARRAY[INDEX] = OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVertices(x - fx, y - fy, x + fx, y + fy, this.mc.displayWidth, this.mc.displayHeight), true));
 //        ARRAY_BUFFER_INT_LIST.add(OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVertices(x - fx, y - fy, x + fx, y + fy, this.mc.displayWidth, this.mc.displayHeight, 1.0F, 1.0F), true)));
-        array_buffer_integer_list.add(OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVUv(x, y, width + x, height + y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F, 1.0F*/), true)));
+        array_buffer_integer_list.add(genFloatBuffer(createFloatByteBuffer(this.createQuadVUv(x, y, width + x, height + y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F, 1.0F*/)/*, true*/)));
         OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
 
 //        GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
@@ -249,7 +250,7 @@ public abstract class Page
     public void preDrawTextVertical(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, String string/*, boolean shadow*//*, int texture_index*/, int width, int height, float x, float y, float scale)
     {
         Minecraft minecraft = SMALLGUI.mc;
-        array_buffer_integer_list.add(OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVUv(x, -height + y, width + x, y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F*//* / (this.mc.displayWidth / (float)this.width)*//*, 1.0F*/), true)));
+        array_buffer_integer_list.add(genFloatBuffer(createFloatByteBuffer(this.createQuadVUv(x, -height + y, width + x, y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F*//* / (this.mc.displayWidth / (float)this.width)*//*, 1.0F*/)/*, true*/)));
         OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
 
         int texture = GL11.glGenTextures();
@@ -312,10 +313,10 @@ public abstract class Page
         GL11.glPopMatrix();
     }
 
-    //    public void drawQuad(MemoSo rs, float[] m4x4_float_array, float[] color_float_array, int array_buffer, int texture)
-    public void drawQuadVUv(MemoSo rs, float[] vec2_float_array, float[] color_float_array, int array_buffer, int texture)
+    //    public void drawQuad(MemoS rs, float[] m4x4_float_array, float[] color_float_array, int array_buffer, int texture)
+    public void drawQuadVUv(MemoS rs, float[] vec2_float_array, float[] color_float_array, int array_buffer, int texture)
     {
-//        MemoSo rs = Nali.I.clientloader.storeo.rs_list.get(SmallData.SHADER_O_STEP + 3);
+//        MemoS rs = S_LIST.get(SmallData.SHADER_O_STEP + 3);
 
 //        //takeDefault
 //        GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
@@ -336,7 +337,9 @@ public abstract class Page
 //        GL_TEXTURE_MAG_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER);
 
         //enableBuffer
-        OpenGLBuffer.setFloatBuffer(0, array_buffer, 4);
+//        OpenGLBuffer.setFloatBuffer(0, array_buffer, 4);
+        OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, array_buffer);
+        GL20.glVertexAttribPointer(rs.attriblocation_int_array[0], 4, GL11.GL_FLOAT, false, 0, 0);
 //        OpenGlHelper.glBindBuffer(GL15.GL_ARRAY_BUFFER, array_buffer);
 //        GL20.glVertexAttribPointer(0, 4, GL11.GL_FLOAT, false, 0, 0);
 
@@ -393,7 +396,7 @@ public abstract class Page
 //        OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
     }
 
-    public void drawQuadStatic/*Blur*/(int array_buffer, int texture)
+    public void drawQuadStatic/*Blur*/(MemoS rs, int array_buffer, int texture)
     {
         GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
         GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
@@ -407,7 +410,9 @@ public abstract class Page
         GL_TEXTURE_MAG_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER);
         //
 
-        OpenGLBuffer.setFloatBuffer(0, array_buffer, 4);
+//        OpenGLBuffer.setFloatBuffer(0, array_buffer, 4);
+        OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, array_buffer);
+        GL20.glVertexAttribPointer(rs.attriblocation_int_array[0], 4, GL11.GL_FLOAT, false, 0, 0);
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
@@ -429,8 +434,8 @@ public abstract class Page
 //        SMALLGUI.state &= 255-2;
 //    }
 
-    public abstract void draw(/*MemoSo rs*/);
-    public abstract void detect(/*MemoSo rs*/);
+    public abstract void draw(/*MemoS rs*/);
+    public abstract void detect(/*MemoS rs*/);
 //    public abstract void change();
 
     public abstract List<Integer> getArrayBufferIntegerList();

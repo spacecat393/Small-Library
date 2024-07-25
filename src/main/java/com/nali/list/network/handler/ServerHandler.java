@@ -12,7 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import static com.nali.Nali.I;
+import static com.nali.Nali.*;
 
 public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
 {
@@ -36,7 +36,7 @@ public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
             }
             catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException e)
             {
-                I.error(e);
+                error(e);
             }
         }
     }
@@ -53,7 +53,7 @@ public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
             }
             catch (IllegalAccessException | InvocationTargetException e)
             {
-                I.warn(e);
+                warn(e);
 //                Small.error(e);
             }
         });

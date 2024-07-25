@@ -9,9 +9,6 @@ import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.IClientS;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.render.FRenderE;
-import com.nali.system.opengl.memo.client.MemoGs;
-import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.memo.client.store.StoreS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
@@ -19,11 +16,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import static com.nali.small.entity.memo.client.render.FRenderSeMath.interpolateRotation;
-import static com.nali.system.opengl.memo.client.MemoCurrent.GL_CURRENT_COLOR;
-import static com.nali.system.opengl.memo.client.MemoCurrent.OPENGL_FIXED_PIPE_FLOATBUFFER;
+import static com.nali.system.opengl.memo.client.MemoC.GL_CURRENT_COLOR;
+import static com.nali.system.opengl.memo.client.MemoC.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
-public abstract class MixRenderSe<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD, BD extends IBothDaNe & IBothDaSn, E extends Entity, I extends IMixE<SD, BD, E>, MB extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientE<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?> & IClientS<RG, RS, RC, RST, R, SD, BD, E, I, ?>> extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>
+public abstract class MixRenderSe<RC extends IClientDaS, R extends RenderS<BD, RC>, SD, BD extends IBothDaNe & IBothDaSn, E extends Entity, I extends IMixE<SD, BD, E>, MB extends MixBoxE<RC, R, SD, BD, E, I, ?, C>, C extends ClientE<RC, R, SD, BD, E, I, MB, ?> & IClientS<RC, R, SD, BD, E, I, ?>> extends MixRenderE<RC, R, SD, BD, E, I, MB, C>
 {
     public float
     head_rot,

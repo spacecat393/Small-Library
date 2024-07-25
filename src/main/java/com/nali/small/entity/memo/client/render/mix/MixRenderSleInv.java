@@ -11,9 +11,6 @@ import com.nali.small.entity.memo.client.render.FRenderE;
 import com.nali.small.entity.memo.client.render.layer.LayerSleArrow;
 import com.nali.small.entity.memo.client.render.layer.LayerSleItem;
 import com.nali.sound.ISoundDaLe;
-import com.nali.system.opengl.memo.client.MemoGs;
-import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.memo.client.store.StoreS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,13 +25,13 @@ import java.awt.*;
 
 import static com.nali.key.KeyHelper.generateRainbowColor;
 import static com.nali.small.entity.memo.client.render.FRenderSeMath.interpolateRotation;
-import static com.nali.system.opengl.memo.client.MemoCurrent.*;
+import static com.nali.system.opengl.memo.client.MemoC.*;
 
 @SideOnly(Side.CLIENT)
-public abstract class MixRenderSleInv<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, ?, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> extends MixRenderSe<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>
+public abstract class MixRenderSleInv<RC extends IClientDaS, R extends RenderS<BD, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MB extends MixBoxSle<RC, R, SD, BD, E, I, ?, C>, C extends ClientSle<RC, R, SD, BD, E, I, MB, ?>> extends MixRenderSe<RC, R, SD, BD, E, I, MB, C>
 {
-    public LayerSleArrow<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> layerslearrow;
-    public LayerSleItem<RG, RS, RC, RST, R, SD, BD, E, I, ?, MB, C> layersleitem;
+    public LayerSleArrow<RC, R, SD, BD, E, I, ?, MB, C> layerslearrow;
+    public LayerSleItem<RC, R, SD, BD, E, I, ?, MB, C> layersleitem;
 
     public float
     body_rot,

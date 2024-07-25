@@ -1,6 +1,5 @@
 package com.nali.small.entity.memo.server.ai;
 
-import com.nali.Nali;
 import com.nali.da.IBothDaNe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
@@ -13,6 +12,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.nali.Nali.error;
 
 public abstract class MixAIE<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, ?>>
 {
@@ -29,7 +30,7 @@ public abstract class MixAIE<SD, BD extends IBothDaNe, E extends Entity, I exten
             }
             catch (IllegalAccessException | NoSuchFieldException e)
             {
-                Nali.I.error(e);
+                error(e);
             }
         }
     }
@@ -59,7 +60,7 @@ public abstract class MixAIE<SD, BD extends IBothDaNe, E extends Entity, I exten
             }
             catch (InstantiationException | IllegalAccessException | InvocationTargetException e)
             {
-                Nali.I.error(e);
+                error(e);
             }
         }
     }

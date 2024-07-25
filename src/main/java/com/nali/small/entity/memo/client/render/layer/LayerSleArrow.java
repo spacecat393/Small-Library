@@ -10,10 +10,8 @@ import com.nali.small.entity.memo.client.box.mix.MixBoxSle;
 import com.nali.small.entity.memo.client.render.FRenderE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
 import com.nali.sound.ISoundDaLe;
-import com.nali.system.opengl.memo.client.MemoCurrent;
-import com.nali.system.opengl.memo.client.MemoGs;
-import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.memo.client.store.StoreS;
+import com.nali.system.opengl.memo.client.MemoA2;
+import com.nali.system.opengl.memo.client.MemoC;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityTippedArrow;
@@ -26,8 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.nali.system.ClientLoader.A2_MAP;
+
 @SideOnly(Side.CLIENT)
-public class LayerSleArrow<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderSe<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends LayerE<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>
+public class LayerSleArrow<RC extends IClientDaS, R extends RenderS<BD, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderSe<RC, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RC, R, SD, BD, E, I, MR, C>, C extends ClientSle<RC, R, SD, BD, E, I, MB, MR>> extends LayerE<RC, R, SD, BD, E, I, MR, MB, C>
 {
     public List<int[]> index_int_array_list = new ArrayList();
     public List<float[]> float_array_list = new ArrayList();
@@ -55,9 +55,10 @@ public class LayerSleArrow<RG extends MemoGs, RS extends MemoSs, RC extends ICli
 //                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)r.dataloader.openglobjectmemory_array[model_i];
 //                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)r.dataloader.object_array[model_i];
 //                OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)OBJECT_LIST.get(model_i);
-                RG rg = this.c.r.rst.rg_list.get(model_i);
+//                MemoG rg = this.c.r.rst.rg_list.get(model_i);
+                MemoA2 ra2 = A2_MAP.get(model_i);
 //                this.index_int_array_list.add(new int[]{model_i, random.nextInt(openglskinningmemory.index_int_array.length)});
-                this.index_int_array_list.add(new int[]{model_i, random.nextInt(rg.index_int_array.length)});
+                this.index_int_array_list.add(new int[]{model_i, random.nextInt(ra2.index_int_array.length)});
                 this.float_array_list.add(new float[]{random.nextFloat(), random.nextFloat(), random.nextFloat()});
             }
             else if (this.index_int_array_list.size() > i)
@@ -81,9 +82,9 @@ public class LayerSleArrow<RG extends MemoGs, RS extends MemoSs, RC extends ICli
                     c_mat4[2], c_mat4[6], c_mat4[10], 0,
                     0, 0, 0, 1.0F
                 };
-                MemoCurrent.setFloatBuffer(mat4);
+                MemoC.setFloatBuffer(mat4);
                 GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
-                GL11.glMultMatrix(MemoCurrent.OPENGL_FLOATBUFFER);
+                GL11.glMultMatrix(MemoC.OPENGL_FLOATBUFFER);
                 GL11.glScalef(0.5F * 0.5F, 0.5F * 0.5F, 0.5F * 0.5F);
 //                    RenderHelper.disableStandardItemLighting();
                 float f = float_array[0];

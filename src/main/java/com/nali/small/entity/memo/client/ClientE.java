@@ -5,8 +5,8 @@ import com.nali.da.client.IClientDaO;
 import com.nali.list.entity.ai.AIEInvOpenInv;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SAIE;
-import com.nali.list.network.method.server.SSound;
 import com.nali.list.network.method.server.SSUUID;
+import com.nali.list.network.method.server.SSound;
 import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
@@ -16,9 +16,6 @@ import com.nali.small.entity.memo.client.render.FRenderE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.sound.Sound;
 import com.nali.system.bytes.ByteWriter;
-import com.nali.system.opengl.memo.client.MemoGo;
-import com.nali.system.opengl.memo.client.MemoSo;
-import com.nali.system.opengl.memo.client.store.StoreO;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -33,7 +30,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @SideOnly(Side.CLIENT)
-public abstract class ClientE<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MB extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, MR, ?>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, ?>> implements IBothE<SD, BD, E, I>
+public abstract class ClientE<RC extends IClientDaO, R extends RenderO<RC>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MB extends MixBoxE<RC, R, SD, BD, E, I, MR, ?>, MR extends MixRenderE<RC, R, SD, BD, E, I, MB, ?>> implements IBothE<SD, BD, E, I>
 {
     public static Map<UUID, ClientE> C_MAP = new HashMap();
     public static Map<Integer, UUID> UUID_MAP = new HashMap();

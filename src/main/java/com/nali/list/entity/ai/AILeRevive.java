@@ -1,6 +1,5 @@
 package com.nali.list.entity.ai;
 
-import com.nali.Nali;
 import com.nali.da.IBothDaNe;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CRespawnPlayer;
@@ -23,6 +22,7 @@ import net.minecraft.world.World;
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
+import static com.nali.Nali.error;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 
@@ -212,7 +212,7 @@ public class AILeRevive<SD extends ISoundDaLe, BD extends IBothDaNe, E extends E
                                     }
                                     catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ex)
                                     {
-                                        Nali.I.error(ex);
+                                        error(ex);
                                     }
                                 }
     ////                            }

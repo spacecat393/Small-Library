@@ -4,7 +4,7 @@ import com.nali.da.client.IClientDaO;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.nali.list.data.SmallData.MODEL_O_STEP;
+import static com.nali.list.data.SmallData.MODEL_STEP;
 
 @SideOnly(Side.CLIENT)
 public class StorageClient implements IClientDaO
@@ -12,12 +12,12 @@ public class StorageClient implements IClientDaO
     @Override
     public int StartPart()
     {
-        return MODEL_O_STEP + 4;
+        return MODEL_STEP + 4;
     }
 
     @Override
     public int EndPart()
     {
-        return MODEL_O_STEP + 6;
+        return MODEL_STEP + 6;
     }
 }

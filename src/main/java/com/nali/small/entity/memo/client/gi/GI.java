@@ -8,8 +8,8 @@
 //import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 //import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 //import com.nali.sound.ISoundN;
-//import com.nali.system.opengl.memo.client.MemoGo;
-//import com.nali.system.opengl.memo.client.MemoSo;
+//import com.nali.system.opengl.memo.client.MemoG;
+//import com.nali.system.opengl.memo.client.MemoS;
 //import com.nali.system.opengl.store.StoreO;
 //import net.minecraft.client.gui.inventory.GuiContainer;
 //import net.minecraft.entity.Entity;
@@ -17,7 +17,7 @@
 //import net.minecraftforge.fml.relauncher.SideOnly;
 //
 //@SideOnly(Side.CLIENT)
-//public abstract class GI<G extends GuiContainer, RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>, R extends RenderO<RG, RS, RST, RC>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MR extends MixRenderE<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxE<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientE<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>>
+//public abstract class GI<G extends GuiContainer, RC extends IClientDaO, R extends RenderO<RC>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MR extends MixRenderE<RC, R, SD, BD, E, I, MB, C>, MB extends MixBoxE<RC, R, SD, BD, E, I, MR, C>, C extends ClientE<RC, R, SD, BD, E, I, MB, MR>>
 //{
 //    //change to framebuffer later
 //    public int

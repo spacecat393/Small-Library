@@ -12,10 +12,7 @@ import com.nali.small.entity.memo.client.render.FRenderFle;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
 import com.nali.small.mixin.IMixinLayerArmorBase;
 import com.nali.sound.ISoundDaLe;
-import com.nali.system.opengl.memo.client.MemoCurrent;
-import com.nali.system.opengl.memo.client.MemoGs;
-import com.nali.system.opengl.memo.client.MemoSs;
-import com.nali.system.opengl.memo.client.store.StoreS;
+import com.nali.system.opengl.memo.client.MemoC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
@@ -37,10 +34,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
-import static com.nali.system.opengl.memo.client.MemoCurrent.GL_CULL_FACE;
+import static com.nali.system.opengl.memo.client.MemoC.GL_CULL_FACE;
 
 @SideOnly(Side.CLIENT)
-public class LayerSleItem<RG extends MemoGs, RS extends MemoSs, RC extends IClientDaS, RST extends StoreS<RG, RS>, R extends RenderS<BD, RG, RS, RST, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderSe<RG, RS, RC, RST, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RG, RS, RC, RST, R, SD, BD, E, I, MR, C>, C extends ClientSle<RG, RS, RC, RST, R, SD, BD, E, I, MB, MR>> extends LayerE<RG, RS, RC, RST, R, SD, BD, E, I, MR, MB, C>
+public class LayerSleItem<RC extends IClientDaS, R extends RenderS<BD, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderSe<RC, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RC, R, SD, BD, E, I, MR, C>, C extends ClientSle<RC, R, SD, BD, E, I, MB, MR>> extends LayerE<RC, R, SD, BD, E, I, MR, MB, C>
 {
     public static FRenderFle FRENDERFLE = new FRenderFle();
     public static LayerBipedArmor LAYERBIPEDARMOR = new LayerBipedArmor(FRENDERFLE);
@@ -110,9 +107,9 @@ public class LayerSleItem<RG extends MemoGs, RS extends MemoSs, RC extends IClie
                     c_mat4[2], c_mat4[6], c_mat4[10], 0,
                     0, 0, 0, 1.0F
                 };
-                MemoCurrent.setFloatBuffer(mat4);
+                MemoC.setFloatBuffer(mat4);
                 GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
-                GL11.glMultMatrix(MemoCurrent.OPENGL_FLOATBUFFER);
+                GL11.glMultMatrix(MemoC.OPENGL_FLOATBUFFER);
 
                 boolean left_hand = transformtype == ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND;
                 if (left_hand)
@@ -166,9 +163,9 @@ public class LayerSleItem<RG extends MemoGs, RS extends MemoSs, RC extends IClie
                 c_mat4[2], c_mat4[6], c_mat4[10], 0,
                 0, 0, 0, 1.0F
             };
-            MemoCurrent.setFloatBuffer(mat4);
+            MemoC.setFloatBuffer(mat4);
             GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
-            GL11.glMultMatrix(MemoCurrent.OPENGL_FLOATBUFFER);
+            GL11.glMultMatrix(MemoC.OPENGL_FLOATBUFFER);
 
             Item item = itemstack.getItem();
             if (item instanceof ItemArmor)

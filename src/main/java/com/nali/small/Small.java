@@ -1,6 +1,5 @@
 package com.nali.small;
 
-import com.nali.Nali;
 import com.nali.small.capability.CapabilityRegistry;
 import com.nali.small.chunk.ChunkCallBack;
 import com.nali.small.chunk.ChunkData;
@@ -9,6 +8,7 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.gui.GuiHandler;
 import com.nali.small.tile.TileRegistry;
 import com.nali.system.bytes.ByteReader;
+import com.nali.system.opengl.memo.client.MemoC;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.translation.I18n;
@@ -23,6 +23,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +31,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.UUID;
 
+import static com.nali.Nali.warn;
 import static com.nali.small.chunk.ChunkCallBack.CHUNK_MAP;
 import static com.nali.small.gui.page.Page.STRING_ARRAY;
 
@@ -37,6 +39,17 @@ import static com.nali.small.gui.page.Page.STRING_ARRAY;
 public class Small
 {
     public final static String ID = "small";
+    static
+    {
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+        {
+            int max_bone = 16 * 2;
+            if (MemoC.MAX_BONE < max_bone)
+            {
+                MemoC.MAX_BONE = max_bone;
+            }
+        }
+    }
 
     @Instance
     public static Small I;
@@ -67,7 +80,7 @@ public class Small
 
         if (event.getSide().isClient())
         {
-            byte size = 26;
+            byte size = 29;
             String t_string = "info." + Small.ID + ".t";
             STRING_ARRAY = new String[size];
 //            FontRenderer fontrenderer = Minecraft.getMinecraft().fontRenderer;
@@ -139,7 +152,7 @@ public class Small
                 }
                 catch (IOException e)
                 {
-                    Nali.I.warn(e);
+                    warn(e);
                     f.delete();
                 }
             }

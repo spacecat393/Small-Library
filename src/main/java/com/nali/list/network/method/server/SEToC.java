@@ -1,5 +1,6 @@
 package com.nali.list.network.method.server;
 
+import com.nali.list.entity.ai.AILeEat;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.client.CEToC;
@@ -8,6 +9,7 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import java.util.UUID;
@@ -26,8 +28,8 @@ public class SEToC
         {
 //            ChunkLoader.updateChunk(s);
             Entity e = s.i.getE();
-
-            byte[] byte_array = new byte[1 + 16 + 4 + 4 + 4 + 4];
+            byte[] name_byte_array = e.getName().getBytes();
+            byte[] byte_array = new byte[1 + 16 + 4 + 4 + 4 + 4 + name_byte_array.length + 4 * s.frame_int_array.length + 1 + 4];
             byte_array[0] = CEToC.ID;
 
             ByteWriter.set(byte_array, uuid, 1);
@@ -35,6 +37,15 @@ public class SEToC
             ByteWriter.set(byte_array, (float)e.posX, 1 + 16 + 4);
             ByteWriter.set(byte_array, (float)e.posY, 1 + 16 + 4 + 4);
             ByteWriter.set(byte_array, (float)e.posZ, 1 + 16 + 4 + 4 + 4);
+            System.arraycopy(name_byte_array, 0, byte_array, 1 + 16 + 4 + 4 + 4 + 4, name_byte_array.length);
+
+            for (int i = 0; i < s.frame_int_array.length; ++i)
+            {
+                ByteWriter.set(byte_array, s.frame_int_array[i], 1 + 16 + 4 + 4 + 4 + 4 + name_byte_array.length + 4 * i);
+            }
+
+            byte_array[1 + 16 + 4 + 4 + 4 + 4 + name_byte_array.length + 4 * s.frame_int_array.length] = ((AILeEat)s.a.aie_map.get(AILeEat.ID)).state;
+            ByteWriter.set(byte_array, ((EntityLivingBase)e).getHealth(), 1 + 16 + 4 + 4 + 4 + 4 + name_byte_array.length + 4 * s.frame_int_array.length + 1);
 
             NetworkRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
         }

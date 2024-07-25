@@ -1,7 +1,6 @@
 package com.nali.list.block;
 
 import com.nali.da.client.IClientDaS;
-import com.nali.draw.DrawScreen;
 import com.nali.list.render.s.RenderTPBase;
 import com.nali.small.mix.block.BlockB;
 import com.nali.small.mix.item.ItemB;
@@ -23,8 +22,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-
-import static com.nali.Nali.I;
 
 public class SmallTPBase extends BlockB implements ITileEntityProvider
 {
@@ -123,14 +120,15 @@ public class SmallTPBase extends BlockB implements ITileEntityProvider
     public void newC()
     {
         IClientDaS rc = RenderTPBase.ICLIENTDAS;
-        RenderTPBase r = new RenderTPBase(I.clientloader.stores, rc, RenderTPBase.IBOTHDASN);
-        DrawScreen d = new DrawScreen(r);
-        d.scale(0.25F);
-        d.z = 0.0F;
+        RenderTPBase r = new RenderTPBase(rc, RenderTPBase.IBOTHDASN);
+//        DrawScreen d = new DrawScreen(r);
+//        d.scale(0.25F);
+//        d.z = 0.0F;
 //        MemoAnimation memoanimation = I.clientloader.stores.memoanimation_list.get(iclientdas.AnimationID());
-        r.initSkinning(/*memoanimation*/);
-        r.setSkinning(/*memoanimation*/);
-        this.ibothb = new ClientTPBase(r, d, this);
+//        r.initSkinning(/*memoanimation*/);
+//        r.frame_int_array[0] = 40;
+//        r.setSkinning(/*memoanimation*/);
+        this.ibothb = new ClientTPBase(r/*, d*/, this);
     }
 
     @Override

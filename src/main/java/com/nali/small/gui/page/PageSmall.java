@@ -1,8 +1,7 @@
 package com.nali.small.gui.page;
 
-import com.nali.Nali;
 import com.nali.list.data.SmallData;
-import com.nali.system.opengl.memo.client.MemoSo;
+import com.nali.system.opengl.memo.client.MemoS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -13,8 +12,10 @@ import org.lwjgl.opengl.GL20;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.nali.list.container.gui.SmallGui.*;
+import static com.nali.list.container.gui.SmallGui.SCALE;
+import static com.nali.list.container.gui.SmallGui.SMALLGUI;
 import static com.nali.small.gui.mouse.Mouse.HIT;
+import static com.nali.system.ClientLoader.S_LIST;
 
 @SideOnly(Side.CLIENT)
 public class PageSmall extends Page
@@ -50,22 +51,24 @@ public class PageSmall extends Page
         int display_height = minecraft.displayHeight;
 
         String string = STRING_ARRAY[0];
-        int i = (int)(fontrenderer.getStringWidth(string) * SCALE),
-        box_width = i - SMALLGUI.mc.displayWidth;
-        if (i < SMALLGUI.mc.displayWidth)
-        {
-            box_width = i;
-        }
-        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, H, display_width / 2.0F - box_width / 2.0F, display_height / 2.0F/* - H / 2.0F*/ + 2.0F * 0.005F * display_height, SCALE);
+        int i = (int)(fontrenderer.getStringWidth(string) * SCALE);
+//        box_width = i - SMALLGUI.mc.displayWidth;
+//        if (i < SMALLGUI.mc.displayWidth)
+//        {
+//            box_width = i;
+//        }
+//        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, H, display_width / 2.0F - box_width / 2.0F, display_height / 2.0F/* - H / 2.0F*/ + 2.0F * 0.005F * display_height, SCALE);
+        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, i, H, display_width / 2.0F - i / 2.0F, display_height / 2.0F/* - H / 2.0F*/ + 2.0F * 0.005F * display_height, SCALE);
 
         string = STRING_ARRAY[3];
         i = (int)(fontrenderer.getStringWidth(string) * SCALE);
-        box_width = i - SMALLGUI.mc.displayWidth;
-        if (i < SMALLGUI.mc.displayWidth)
-        {
-            box_width = i;
-        }
-        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, H, display_width / 2.0F - box_width / 2.0F, display_height / 2.0F - H/* / 2.0F*/ - 2.0F * 0.005F * display_height, SCALE);
+//        box_width = i - SMALLGUI.mc.displayWidth;
+//        if (i < SMALLGUI.mc.displayWidth)
+//        {
+//            box_width = i;
+//        }
+//        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, H, display_width / 2.0F - box_width / 2.0F, display_height / 2.0F - H/* / 2.0F*/ - 2.0F * 0.005F * display_height, SCALE);
+        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, i, H, display_width / 2.0F - i / 2.0F, display_height / 2.0F - H/* / 2.0F*/ - 2.0F * 0.005F * display_height, SCALE);
     }
 
 //    @Override
@@ -77,14 +80,15 @@ public class PageSmall extends Page
     @Override
     public void draw()
     {
-        MemoSo rs = Nali.I.clientloader.storeo.rs_list.get(SmallData.SHADER_O_STEP + 3);
+        MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 3);
         OpenGlHelper.glUseProgram(rs.program);
-        GL20.glEnableVertexAttribArray(0);
+        int v = rs.attriblocation_int_array[0];
+        GL20.glEnableVertexAttribArray(v);
 
         this.drawQuadVUv(rs, this.vec2_2d_float_array[0], HIT == 1 ? this.color_vec4_2d_float_array[1] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(0), TEXTURE_INTEGER_LIST.get(0));
         this.drawQuadVUv(rs, this.vec2_2d_float_array[0], HIT == 2 ? this.color_vec4_2d_float_array[1] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(1), TEXTURE_INTEGER_LIST.get(1));
 
-        GL20.glDisableVertexAttribArray(0);
+        GL20.glDisableVertexAttribArray(v);
 
 //        if (SMALLGUI.page == PAGE)
 //        {
@@ -106,15 +110,16 @@ public class PageSmall extends Page
     @Override
     public void detect()
     {
-        MemoSo rs = Nali.I.clientloader.storeo.rs_list.get(SmallData.SHADER_O_STEP + 4);
+        MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 4);
 
         OpenGlHelper.glUseProgram(rs.program);
-        GL20.glEnableVertexAttribArray(0);
+        int v = rs.attriblocation_int_array[0];
+        GL20.glEnableVertexAttribArray(v);
 
         this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[2], ARRAY_BUFFER_INTEGER_LIST.get(0), TEXTURE_INTEGER_LIST.get(0));
         this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[3], ARRAY_BUFFER_INTEGER_LIST.get(1), TEXTURE_INTEGER_LIST.get(1));
 
-        GL20.glDisableVertexAttribArray(0);
+        GL20.glDisableVertexAttribArray(v);
     }
 
 //    @Override

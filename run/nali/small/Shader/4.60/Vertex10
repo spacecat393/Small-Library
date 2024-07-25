@@ -1,5 +1,0 @@
-#version 460 core
-in vec3 vertices;
-in vec4 joints;
-in vec4 weights;
-in vec3 normals;

@@ -8,9 +8,17 @@ public class Mouse
 {
     public static Mouse MOUSE;
 
+    public static int MOUSE_X, MOUSE_Y/*, EVENTDWHEEL*//*, DY*//*, DWHEEL*/;
+    public static float EVENTDWHEEL;
+
     public static byte
     HIT, PAGE,
-    STATE;//rc
+    STATE;//rc cme scroll ?cms
+
+    public Mouse()
+    {
+        STATE = 0;
+    }
 
 //    public void detect()
 //    {

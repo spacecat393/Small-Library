@@ -4,8 +4,7 @@ import com.nali.da.client.IClientDaS;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.nali.list.data.SmallData.ANIMATION_STEP;
-import static com.nali.list.data.SmallData.MODEL_S_STEP;
+import static com.nali.list.data.SmallData.*;
 
 @SideOnly(Side.CLIENT)
 public class TPBaseClient implements IClientDaS
@@ -13,18 +12,18 @@ public class TPBaseClient implements IClientDaS
     @Override
     public int StartPart()
     {
-        return MODEL_S_STEP/* + 0*/;
+        return MODEL_STEP + 21;
     }
 
     @Override
     public int EndPart()
     {
-        return MODEL_S_STEP + 3;
+        return MODEL_STEP + 24;
     }
 
     @Override
-    public int AnimationID()
+    public int FrameID()
     {
-        return ANIMATION_STEP/* + 0*/;
+        return FRAME_STEP/* + 0*/;
     }
 }

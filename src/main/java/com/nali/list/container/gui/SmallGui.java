@@ -4,7 +4,10 @@ import com.nali.list.container.SmallContainer;
 import com.nali.small.SmallConfig;
 import com.nali.small.gui.key.KeyMenu;
 import com.nali.small.gui.mouse.MouseSmall;
-import com.nali.small.gui.page.*;
+import com.nali.small.gui.page.Page;
+import com.nali.small.gui.page.PageBack;
+import com.nali.small.gui.page.PageMenu;
+import com.nali.small.gui.page.PageSmall;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -24,7 +27,7 @@ import java.nio.IntBuffer;
 import static com.nali.small.gui.key.Key.KEY;
 import static com.nali.small.gui.mouse.Mouse.*;
 import static com.nali.small.gui.page.Page.*;
-import static com.nali.system.opengl.memo.client.MemoCurrent.*;
+import static com.nali.system.opengl.memo.client.MemoC.*;
 
 @SideOnly(Side.CLIENT)
 public class SmallGui extends GuiContainer
@@ -41,6 +44,8 @@ public class SmallGui extends GuiContainer
     public static byte FLAG;
     public static int
     OFFSET_RENDER_BUFFER = -1,
+//    OFFSET_CUTOFF_FRAMEBUFFER = -1,
+//    OFFSET_CUTOFF_FRAMEBUFFER_TEXTURE = -1,
     OFFSET_FRAMEBUFFER = -1,
     OFFSET_FRAMEBUFFER_TEXTURE = -1;
 
@@ -49,7 +54,7 @@ public class SmallGui extends GuiContainer
 //    hit,
 //    page;
 
-    public int mouse_x, mouse_y;
+//    public int mouse_x, mouse_y;
 //    public int eventButton;
 
     public float partial_ticks;
@@ -97,8 +102,8 @@ public class SmallGui extends GuiContainer
 //        }
 
         this.partial_ticks = partialTicks;
-//        GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
-//        GL_ARRAY_BUFFER_BINDING = OPENGL_INTBUFFER.get(0);
+        GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
+        int gl_array_buffer_binding = OPENGL_INTBUFFER.get(0);
 
         GL11.glGetInteger(GL11.GL_MATRIX_MODE, OPENGL_INTBUFFER);
 //        int gl_matrix_mode = OPENGL_INTBUFFER.get(0);
@@ -161,6 +166,8 @@ public class SmallGui extends GuiContainer
 
             if (OFFSET_FRAMEBUFFER == -1)
             {
+//                OFFSET_CUTOFF_FRAMEBUFFER = OpenGlHelper.glGenFramebuffers();
+//                OFFSET_CUTOFF_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
                 OFFSET_FRAMEBUFFER = OpenGlHelper.glGenFramebuffers();
                 OFFSET_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
 
@@ -211,8 +218,8 @@ public class SmallGui extends GuiContainer
             int framebuffer = OpenGlHelper.glGenFramebuffers();
 
             //genQuad
-            GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
-            GL_ARRAY_BUFFER_BINDING = OPENGL_INTBUFFER.get(0);
+//            GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
+//            int gl_array_buffer_binding = OPENGL_INTBUFFER.get(0);
             //genQuad
 
             //preDraw
@@ -293,7 +300,7 @@ public class SmallGui extends GuiContainer
             }
 
             //genQuad
-            OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
+            OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, gl_array_buffer_binding);
             //genQuad
 
             OpenGlHelper.glDeleteFramebuffers(framebuffer);
@@ -307,8 +314,8 @@ public class SmallGui extends GuiContainer
         }
 
         //takeDefault
-        GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
-        int gl_array_buffer_binding = OPENGL_INTBUFFER.get(0);
+//        GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
+//        int gl_array_buffer_binding = OPENGL_INTBUFFER.get(0);
 
         GL11.glGetInteger(GL20.GL_CURRENT_PROGRAM, OPENGL_INTBUFFER);
         int gl_current_program = OPENGL_INTBUFFER.get(0);
@@ -332,7 +339,7 @@ public class SmallGui extends GuiContainer
 //            page.preDraw();
 //        }
 
-//        MemoSo rs = Nali.I.clientloader.storeo.rs_list.get(SmallData.SHADER_O_STEP + 4);
+//        MemoS rs = S_LIST.get(SmallData.SHADER_O_STEP + 4);
 //
 //        OpenGlHelper.glUseProgram(rs.program);
 //        GL20.glEnableVertexAttribArray(0);
@@ -401,7 +408,7 @@ public class SmallGui extends GuiContainer
 //        int gl_pack_alignment = OPENGL_INTBUFFER.get(0);
 //        GL11.glPixelStorei(GL11.GL_PACK_ALIGNMENT, 2);
         OPENGL_FIXED_PIPE_FLOATBUFFER.limit(4);
-        GL11.glReadPixels(this.mouse_x, this.mouse_y, 1, 1, GL11.GL_RGBA, GL11.GL_FLOAT, OPENGL_FIXED_PIPE_FLOATBUFFER);
+        GL11.glReadPixels(MOUSE_X, MOUSE_Y, 1, 1, GL11.GL_RGBA, GL11.GL_FLOAT, OPENGL_FIXED_PIPE_FLOATBUFFER);
 //        OPENGL_FIXED_PIPE_FLOATBUFFER.limit(4);
 //        GL11.glReadPixels(this.mouse_x, this.mouse_y, 1, 1, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, OPENGL_FIXED_PIPE_FLOATBUFFER);
 
@@ -444,7 +451,7 @@ public class SmallGui extends GuiContainer
 //        this.detect(rs);
 //        GL20.glDisableVertexAttribArray(0);
 
-//        rs = Nali.I.clientloader.storeo.rs_list.get(SmallData.SHADER_O_STEP + 3);
+//        rs = S_LIST.get(SmallData.SHADER_O_STEP + 3);
 //        OpenGlHelper.glUseProgram(rs.program);
 //        GL20.glEnableVertexAttribArray(0);
 
@@ -508,14 +515,65 @@ public class SmallGui extends GuiContainer
         this.defaultState(mouseX, mouseY);
     }
 
+//    @Override
+//    public void handleInput() throws IOException
+//    {
+//        if (Mouse.isCreated())
+//        {
+//            do
+//            {
+////                this.mouseHandled = false;
+////                if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent.Pre(this))) continue;
+//                this.handleMouseInput();
+////                if (this.equals(this.mc.currentScreen) && !this.mouseHandled) net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent.Post(this));
+//            }
+//            while (Mouse.next());
+//        }
+//
+//        if (Keyboard.isCreated())
+//        {
+//            while (Keyboard.next())
+//            {
+//                this.keyHandled = false;
+//                if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent.Pre(this))) continue;
+//                this.handleKeyboardInput();
+//                if (this.equals(this.mc.currentScreen) && !this.keyHandled) net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent.Post(this));
+//            }
+//        }
+//    }
+
     @Override
     public void handleMouseInput()
     {
+//        Nali.I.logger.info("START");
         int k = Mouse.getEventButton();
-        this.mouse_x = Mouse.getEventX();
-        this.mouse_y = Mouse.getEventY();
+        MOUSE_X = Mouse.getEventX();
+        MOUSE_Y = Mouse.getEventY();
+//        int dwheel = Mouse.getDWheel();
+//        EVENTDWHEEL = /*Integer.signum(*/Mouse.getEventDWheel()/*)*/;
+        int eventdwheel = Integer.signum(Mouse.getEventDWheel());
+        if (eventdwheel != 0)
+        {
+            if (EVENTDWHEEL > 0 && eventdwheel < 0)
+            {
+                EVENTDWHEEL = 0;
+            }
+            else if (EVENTDWHEEL < 0 && eventdwheel > 0)
+            {
+                EVENTDWHEEL = 0;
+            }
+            EVENTDWHEEL += eventdwheel;
+            STATE |= 4;
+        }
+//        if (dwheel != 0)
+//        {
+//            DWHEEL += dwheel;
+//        }
+//        DY += Mouse.getDY();
+//        DY += Mouse.getDY();
         if (Mouse.getEventButtonState())//c
         {
+            STATE |= 2;
 //            this.eventButton = k;
         }
         else if (k != -1)//r
@@ -524,8 +582,10 @@ public class SmallGui extends GuiContainer
 //            this.mouse_y = Mouse.getEventY();
 //            this.eventButton = -1;
             STATE |= 1;
+            STATE &= 255-2;
 //            this.state |= 1/*+8*/;
         }
+//        Nali.I.logger.info("END");
     }
 
     @Override
@@ -881,7 +941,7 @@ public class SmallGui extends GuiContainer
 //        return OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVertices(x, y, width, height, fwidth, fheight), true));
 //    }
 
-//    public void drawQuadV(MemoSo rs, float[] m4x4_float_array, float[] color_float_array, int array_buffer)
+//    public void drawQuadV(MemoS rs, float[] m4x4_float_array, float[] color_float_array, int array_buffer)
 //    {
 //        OpenGLBuffer.setFloatBuffer(0, array_buffer, 4);
 //
@@ -936,8 +996,8 @@ public class SmallGui extends GuiContainer
 
 //    public abstract void initBuffer();
 //    public abstract void preDraw();
-//    public abstract void drawText(MemoSo rs);
+//    public abstract void drawText(MemoS rs);
 //    public abstract void drawStaticBlur();
-//    public abstract void detectText(MemoSo rs);
-//    public abstract void detectModel(MemoSo rs);
+//    public abstract void detectText(MemoS rs);
+//    public abstract void detectModel(MemoS rs);
 }

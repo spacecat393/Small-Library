@@ -1,6 +1,5 @@
 package com.nali.list.item;
 
-import com.nali.draw.DrawScreen;
 import com.nali.list.render.o.RenderBox;
 import com.nali.small.Small;
 import com.nali.small.mix.item.ItemI;
@@ -15,8 +14,6 @@ import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
 import java.util.List;
-
-import static com.nali.Nali.I;
 
 public class SmallBox extends ItemI
 {
@@ -85,11 +82,11 @@ public class SmallBox extends ItemI
     @Override
     public void newC()
     {
-        RenderBox r = new RenderBox(I.clientloader.storeo, RenderBox.ICLIENTDAO);
-        DrawScreen d = new DrawScreen(r);
-        d.scale(0.25F);
-        d.z = 0.0F;
-        this.ibothi = new ClientI(r, d, this);
+        RenderBox r = new RenderBox(RenderBox.ICLIENTDAO);
+//        DrawScreen d = new DrawScreen(r);
+//        d.scale(0.25F);
+//        d.z = 0.0F;
+        this.ibothi = new ClientI(r/*, d*/, this);
     }
 
 //    @Override

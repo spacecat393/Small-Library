@@ -3,9 +3,8 @@ package com.nali.list.render.o;
 import com.nali.da.client.IClientDaO;
 import com.nali.small.da.client.SakuraClient;
 import com.nali.small.render.SmallRenderO;
-import com.nali.system.opengl.memo.client.MemoGo;
-import com.nali.system.opengl.memo.client.MemoSo;
-import com.nali.system.opengl.memo.client.store.StoreO;
+import com.nali.system.opengl.memo.client.MemoG;
+import com.nali.system.opengl.memo.client.MemoS;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -13,11 +12,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.nali.Nali.I;
-import static com.nali.system.opengl.memo.client.MemoCurrent.OPENGL_FIXED_PIPE_FLOATBUFFER;
+import static com.nali.system.ClientLoader.G_LIST;
+import static com.nali.system.opengl.memo.client.MemoC.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
-public class RenderSakura<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>> extends SmallRenderO<RG, RS, RST, RC>
+public class RenderSakura<RC extends IClientDaO> extends SmallRenderO<RC>
 {
 //    public static int ID;
 //    public static DataLoader DATALOADER = RenderHelper.DATALOADER;
@@ -25,24 +24,19 @@ public class RenderSakura<RG extends MemoGo, RS extends MemoSo, RC extends IClie
     public Map<Integer, Integer> color_map = new HashMap();//element_array_buffer hex
     public byte extra_bit;
 
-    public RenderSakura()
+    public RenderSakura(RC rc)
     {
-        this((RST)I.clientloader.storeo, (RC)ICLIENTDAO);
-    }
-
-    public RenderSakura(RST rst, RC rc)
-    {
-        super(rst, rc);
+        super(rc);
 //        float s = -5.0F;
 //        this.objectscreendraw.sx = s;
 //        this.objectscreendraw.sy = s;
 //        this.objectscreendraw.sz = s;
-        color_map.put((I.clientloader.storeo.rg_list.get(ICLIENTDAO.StartPart())).element_array_buffer, 0xFFFFACDF);//ffd4e9
+        color_map.put((G_LIST.get(ICLIENTDAO.StartPart())).element_array_buffer, 0xFFFFACDF);//ffd4e9
 //        color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 1)).element_array_buffer, 0xFFffacdf);
     }
 
     @Override
-    public void setLightCoord(RS rs)
+    public void setLightCoord(MemoS rs)
     {
     }
 
@@ -52,7 +46,7 @@ public class RenderSakura<RG extends MemoGo, RS extends MemoSo, RC extends IClie
 //    }
 
     @Override
-    public void setTextureUniform(RG rg, RS rs)
+    public void setTextureUniform(MemoG rg, MemoS rs)
     {
         Integer integer = this.color_map.get(rg.element_array_buffer);
         if (integer == null)
@@ -76,7 +70,7 @@ public class RenderSakura<RG extends MemoGo, RS extends MemoSo, RC extends IClie
     }
 
     @Override
-    public int getTextureID(RG rg)
+    public int getTextureID(MemoG rg)
     {
         Integer integer = this.color_map.get(rg.element_array_buffer);
         if (integer == null)
@@ -92,7 +86,7 @@ public class RenderSakura<RG extends MemoGo, RS extends MemoSo, RC extends IClie
     }
 
     @Override
-    public byte getExtraBit(RG rg)
+    public byte getExtraBit(MemoG rg)
     {
         return this.extra_bit;
     }

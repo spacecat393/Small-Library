@@ -4,8 +4,9 @@ public class SmallData
 {
     public static int
     TEXTURE_STEP,
-    SHADER_O_STEP, SHADER_S_STEP,
-    MODEL_O_STEP, MODEL_S_STEP,
-    ANIMATION_STEP;
-//    OPENAL_STEP;
+    SHADER_STEP,/* SHADER_S_STEP,*/
+    MODEL_STEP,/* MODEL_S_STEP,*/
+//    ANIMATION_STEP;
+    FRAME_STEP;
+//    SOUND_STEP;
 }

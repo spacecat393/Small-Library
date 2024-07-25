@@ -1,0 +1,7 @@
+small Map small o0 0
+small MapNoTexture small o1 4
+small NoMapNoTexture small o1 2
+small Quad small o2 5
+small QuadNoTexture small o3 6
+small QuadStatic small o4 7
+small Light small s1 3 small TPBase

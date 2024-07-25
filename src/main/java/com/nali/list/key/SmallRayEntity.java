@@ -85,7 +85,7 @@ public class SmallRayEntity extends MixKeyBinding
             {
                 Entity entity = entity_list.get(index);
                 SELECT_ENTITY = entity.getEntityId();
-                Nali.I.logger.info(entity.getName());
+                Nali.LOGGER.info(entity.getName());
             }
         }
     }

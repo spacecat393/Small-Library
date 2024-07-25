@@ -1,5 +1,0 @@
-#version 120
-attribute vec3 vertices;
-attribute vec4 joints;
-attribute vec4 weights;
-attribute vec3 normals;

@@ -4,10 +4,8 @@ import com.nali.da.client.IClientDaO;
 import com.nali.mixin.IMixinEntityRenderer;
 import com.nali.small.da.client.BoxClient;
 import com.nali.small.render.SmallRenderO;
-import com.nali.system.opengl.OpenGLBuffer;
-import com.nali.system.opengl.memo.client.MemoGo;
-import com.nali.system.opengl.memo.client.MemoSo;
-import com.nali.system.opengl.memo.client.store.StoreO;
+import com.nali.system.opengl.memo.client.MemoG;
+import com.nali.system.opengl.memo.client.MemoS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -17,11 +15,11 @@ import org.lwjgl.opengl.GL13;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.nali.Nali.I;
-import static com.nali.system.opengl.memo.client.MemoCurrent.OPENGL_FIXED_PIPE_FLOATBUFFER;
+import static com.nali.system.ClientLoader.G_LIST;
+import static com.nali.system.opengl.memo.client.MemoC.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
-public class RenderBox<RG extends MemoGo, RS extends MemoSo, RC extends IClientDaO, RST extends StoreO<RG, RS>> extends SmallRenderO<RG, RS, RST, RC>
+public class RenderBox<RC extends IClientDaO> extends SmallRenderO<RC>
 {
 //    public static int ID;
 //    public static DataLoader DATALOADER = RenderHelper.DATALOADER;
@@ -29,20 +27,15 @@ public class RenderBox<RG extends MemoGo, RS extends MemoSo, RC extends IClientD
     public Map<Integer, Integer> color_map = new HashMap();//element_array_buffer hex
     public byte extra_bit;
 
-    public RenderBox()
+    public RenderBox(RC rc)
     {
-        this((RST)I.clientloader.storeo, (RC)ICLIENTDAO);
-    }
-
-    public RenderBox(RST rst, RC rc)
-    {
-        super(rst, rc);
-        color_map.put((I.clientloader.storeo.rg_list.get(ICLIENTDAO.StartPart() + 1)).element_array_buffer, 0xFFffc196);
-        color_map.put((I.clientloader.storeo.rg_list.get(ICLIENTDAO.StartPart() + 2)).element_array_buffer, 0xFFffc196);
+        super(rc);
+        color_map.put((G_LIST.get(ICLIENTDAO.StartPart() + 1)).element_array_buffer, 0xFFffc196);
+        color_map.put((G_LIST.get(ICLIENTDAO.StartPart() + 2)).element_array_buffer, 0xFFffc196);
     }
 
     @Override
-    public void setTextureUniform(RG rg, RS rs)
+    public void setTextureUniform(MemoG rg, MemoS rs)
     {
         Integer integer = this.color_map.get(rg.element_array_buffer);
         if (integer == null)
@@ -66,7 +59,7 @@ public class RenderBox<RG extends MemoGo, RS extends MemoSo, RC extends IClientD
     }
 
     @Override
-    public int getTextureID(RG rg)
+    public int getTextureID(MemoG rg)
     {
         Integer integer = this.color_map.get(rg.element_array_buffer);
         if (integer == null)
@@ -82,13 +75,13 @@ public class RenderBox<RG extends MemoGo, RS extends MemoSo, RC extends IClientD
     }
 
     @Override
-    public void setLightMapUniform(RS rs)
+    public void setLightMapUniform(MemoS rs)
     {
         if (this.extra_bit == 4)
         {
             OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[5], 1);
             OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE1);
-            OpenGLBuffer.setLightMapBuffer(((IMixinEntityRenderer) Minecraft.getMinecraft().entityRenderer).lightmapTexture().getGlTextureId());
+            setLightMapBuffer(((IMixinEntityRenderer) Minecraft.getMinecraft().entityRenderer).lightmapTexture().getGlTextureId());
         }
         else
         {
@@ -97,7 +90,7 @@ public class RenderBox<RG extends MemoGo, RS extends MemoSo, RC extends IClientD
     }
 
     @Override
-    public byte getExtraBit(RG rg)
+    public byte getExtraBit(MemoG rg)
     {
         return this.extra_bit;
     }

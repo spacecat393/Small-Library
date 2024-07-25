@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.nali.Nali.I;
+import static com.nali.Nali.error;
 
 @Mod.EventBusSubscriber(modid = Small.ID)
 public class CapabilityRegistry
@@ -61,7 +61,7 @@ public class CapabilityRegistry
             }
             catch (InstantiationException | IllegalAccessException e)
             {
-                I.error(e);
+                error(e);
             }
         }
     }
@@ -79,7 +79,7 @@ public class CapabilityRegistry
             }
             catch (InstantiationException | IllegalAccessException e)
             {
-                I.error(e);
+                error(e);
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.nali.small.mix.item;
 
-import com.nali.Nali;
 import com.nali.small.Small;
 import com.nali.small.mix.block.BlockRegistry;
 import com.nali.small.tile.TileRegistry;
@@ -18,6 +17,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
+import static com.nali.Nali.error;
 
 @Mod.EventBusSubscriber(modid = Small.ID)
 public class ItemRegistry
@@ -46,7 +47,7 @@ public class ItemRegistry
             }
             catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | NoSuchFieldException e)
             {
-                Nali.I.error(e);
+                error(e);
             }
         }
     }

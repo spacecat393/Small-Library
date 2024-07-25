@@ -1,6 +1,5 @@
 package com.nali.small.chunk;
 
-import com.nali.Nali;
 import com.nali.small.Small;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.system.bytes.ByteWriter;
@@ -14,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.UUID;
 
+import static com.nali.Nali.error;
 import static com.nali.small.chunk.ChunkCallBack.CHUNK_MAP;
 
 public class ChunkLoader
@@ -66,19 +66,20 @@ public class ChunkLoader
             }
             catch (IOException ex)
             {
-                Nali.I.error(ex);
+                error(ex);
             }
         }
     }
 
     public static void removeChunk(UUID uuid)
     {
-        if (CHUNK_MAP != null && CHUNK_MAP.containsKey(uuid))
+        if (uuid != null && CHUNK_MAP != null && CHUNK_MAP.containsKey(uuid))
         {
             ChunkData chunkdata = CHUNK_MAP.get(uuid);
 //            ForgeChunkManager.unforceChunk(chunkdata.ticket, chunkdata.chunkpos);
             ForgeChunkManager.releaseTicket(chunkdata.ticket);
             CHUNK_MAP.remove(uuid);
+            new File(chunkdata.world.getSaveHandler().getWorldDirectory() + "/nali/entity/" + uuid).delete();
         }
     }
 }
