@@ -14,7 +14,7 @@ import java.nio.IntBuffer;
 import java.util.List;
 
 import static com.nali.list.container.gui.SmallGui.SMALLGUI;
-import static com.nali.system.opengl.memo.client.MemoA1.genFloatBuffer;
+import static com.nali.system.opengl.memo.client.MemoA1.genBuffer;
 import static com.nali.system.opengl.memo.client.MemoC.*;
 
 @SideOnly(Side.CLIENT)
@@ -158,7 +158,7 @@ public abstract class Page
 //        GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
 //        ARRAY_BUFFER_INT_ARRAY[INDEX] = OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVertices(x - fx, y - fy, x + fx, y + fy, this.mc.displayWidth, this.mc.displayHeight), true));
 //        ARRAY_BUFFER_INT_LIST.add(OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVertices(x - fx, y - fy, x + fx, y + fy, this.mc.displayWidth, this.mc.displayHeight, 1.0F, 1.0F), true)));
-        array_buffer_integer_list.add(genFloatBuffer(createFloatByteBuffer(this.createQuadVUv(x, y, width + x, height + y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F, 1.0F*/)/*, true*/)));
+        array_buffer_integer_list.add(genBuffer(createFloatByteBuffer(this.createQuadVUv(x, y, width + x, height + y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F, 1.0F*/)/*, true*/)));
         OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
 
 //        GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
@@ -250,7 +250,7 @@ public abstract class Page
     public void preDrawTextVertical(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, String string/*, boolean shadow*//*, int texture_index*/, int width, int height, float x, float y, float scale)
     {
         Minecraft minecraft = SMALLGUI.mc;
-        array_buffer_integer_list.add(genFloatBuffer(createFloatByteBuffer(this.createQuadVUv(x, -height + y, width + x, y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F*//* / (this.mc.displayWidth / (float)this.width)*//*, 1.0F*/)/*, true*/)));
+        array_buffer_integer_list.add(genBuffer(createFloatByteBuffer(this.createQuadVUv(x, -height + y, width + x, y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F*//* / (this.mc.displayWidth / (float)this.width)*//*, 1.0F*/)/*, true*/)));
         OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
 
         int texture = GL11.glGenTextures();

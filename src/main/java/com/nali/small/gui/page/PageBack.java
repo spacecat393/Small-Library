@@ -13,7 +13,7 @@ import java.util.List;
 
 import static com.nali.list.container.gui.SmallGui.SMALLGUI;
 import static com.nali.system.ClientLoader.S_LIST;
-import static com.nali.system.opengl.memo.client.MemoA1.genFloatBuffer;
+import static com.nali.system.opengl.memo.client.MemoA1.genBuffer;
 import static com.nali.system.opengl.memo.client.MemoC.createFloatByteBuffer;
 
 @SideOnly(Side.CLIENT)
@@ -32,7 +32,7 @@ public class PageBack extends Page
         Minecraft minecraft = SMALLGUI.mc;
         int display_width = minecraft.displayWidth,
         display_height = minecraft.displayHeight;
-        BACK_ARRAY_BUFFER = genFloatBuffer(createFloatByteBuffer(this.createQuadVUv(0, 0, display_width, display_height, display_width, display_height/*, 1.0F, 1.0F*/)/*, true*/));
+        BACK_ARRAY_BUFFER = genBuffer(createFloatByteBuffer(this.createQuadVUv(0, 0, display_width, display_height, display_width, display_height/*, 1.0F, 1.0F*/)/*, true*/));
     }
 
 //    @Override

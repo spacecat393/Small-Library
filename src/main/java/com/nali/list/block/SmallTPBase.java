@@ -125,9 +125,9 @@ public class SmallTPBase extends BlockB implements ITileEntityProvider
 //        d.scale(0.25F);
 //        d.z = 0.0F;
 //        MemoAnimation memoanimation = I.clientloader.stores.memoanimation_list.get(iclientdas.AnimationID());
-//        r.initSkinning(/*memoanimation*/);
+        r.initSkinning(/*memoanimation*/);
 //        r.frame_int_array[0] = 40;
-//        r.setSkinning(/*memoanimation*/);
+        r.setSkinning(/*memoanimation*/);
         this.ibothb = new ClientTPBase(r/*, d*/, this);
     }
 

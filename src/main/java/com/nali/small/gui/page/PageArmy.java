@@ -12,6 +12,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.*;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.util.*;
 
@@ -20,7 +22,7 @@ import static com.nali.small.entity.memo.client.ClientE.C_MAP;
 import static com.nali.small.gui.mouse.MouseArmy.Y;
 import static com.nali.small.gui.mouse.MouseArmy.Y_STAR;
 import static com.nali.system.ClientLoader.S_LIST;
-import static com.nali.system.opengl.memo.client.MemoA1.genFloatBuffer;
+import static com.nali.system.opengl.memo.client.MemoA1.genBuffer;
 import static com.nali.system.opengl.memo.client.MemoC.*;
 
 @SideOnly(Side.CLIENT)
@@ -113,6 +115,20 @@ public class PageArmy extends Page
             float offset = H + 4.0F * 0.005F * display_height;
             int h = (int)(display_height - offset);
 
+            MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 3);
+            OpenGlHelper.glUseProgram(rs.program);
+            int v = rs.attriblocation_int_array[0];
+            GL20.glEnableVertexAttribArray(v);
+
+            int size = ARRAY_BUFFER_INTEGER_LIST.size();
+
+            this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(size - 1), TEXTURE_INTEGER_LIST.get(size - 1));
+
+//            if (y - < display_height)
+//            {
+//                break;
+//            }
+
             OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_FRAMEBUFFER);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE);
 //            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, display_width, h, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
@@ -133,32 +149,21 @@ public class PageArmy extends Page
 //            GL11.glOrtho(0, display_width, h, y, 1000.0D, 3000.0D);
 //            GL11.glOrtho(0, display_width, -0.5D, 0.5D, 1000.0D, 3000.0D);
 
-            MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 3);
-            OpenGlHelper.glUseProgram(rs.program);
-            int v = rs.attriblocation_int_array[0];
-            GL20.glEnableVertexAttribArray(v);
-
-//            if (y - < display_height)
-//            {
-//                break;
-//            }
-
-            int size = ARRAY_BUFFER_INTEGER_LIST.size();
             this.vec2_2d_float_array[0][1] = Y;
-            for (int i = 0; i < size - 2; ++i)
+            for (int i = 0; i < size - 3; ++i)
             {
                 this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
             }
 
-            this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(size - 2), TEXTURE_INTEGER_LIST.get(size - 2));
+            this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(size - 3), TEXTURE_INTEGER_LIST.get(size - 3));
             this.vec2_2d_float_array[2][1] = -Y_STAR;
-            this.drawQuadVUv(rs, this.vec2_2d_float_array[2], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(size - 1), TEXTURE_INTEGER_LIST.get(size - 1));
+            this.drawQuadVUv(rs, this.vec2_2d_float_array[2], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(size - 2), TEXTURE_INTEGER_LIST.get(size - 2));
 
             GL11.glViewport(0, 0, display_width, h);
 //            GL11.glViewport(0, 0, display_width, (int)(display_height + offset));
 //            GL11.glViewport(0, 0, display_width, display_height);
 
-            OFFSET_CUTOFF_ARRAY_BUFFER = genFloatBuffer(createFloatByteBuffer(this.createQuadVUv(0, 0, minecraft.displayWidth, minecraft.displayHeight, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F*//* / (this.mc.displayWidth / (float)this.width)*//*, 1.0F*/)/*, true*/));
+            OFFSET_CUTOFF_ARRAY_BUFFER = genBuffer(createFloatByteBuffer(this.createQuadVUv(0, 0, minecraft.displayWidth, minecraft.displayHeight, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F*//* / (this.mc.displayWidth / (float)this.width)*//*, 1.0F*/)/*, true*/));
 
             OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, GL_READ_FRAMEBUFFER_BINDING);
             OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER_BINDING);
@@ -240,12 +245,22 @@ public class PageArmy extends Page
             {
     //            this.preDrawModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c, -1, (int)(25 / (SMALLGUI.width / (float)display_width)), (int)(25 / (SMALLGUI.height / (float)display_height)), LEFT + H + 4.0F * 0.005F * display_width/* + 25.0F / (SMALLGUI.width / (float)display_width)*/, display_height - H * 2.0F - 2.0F * 0.005F * display_height/* - 25.0F / (SMALLGUI.height / (float)display_height)*/, -25.0F/* / (SMALLGUI.height / (float)display_height)*/);
 //                this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, text_height, x, y, text_scale);
+                ByteBuffer bytebuffer = ByteBuffer.allocateDirect(4).order(ByteOrder.nativeOrder());
+                bytebuffer.put((byte)0);
+                bytebuffer.put((byte)0);
+                bytebuffer.put((byte)0);
+                bytebuffer.put((byte)(255/4.0F));
+                bytebuffer.flip();
+//                this.createBox(x, y, (int)(width + display_width / 2.0F), (int)(height / 2.0F), bytebuffer);
+                this.createBox(x, y, (int)(display_width - LEFT - H - 8.0F * 0.005F * display_width - x), (int)(height / 2.0F), bytebuffer);
+
                 this.preDrawModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c/*, -1*/, width, height, x, y, -scale);
+
                 IMixE i = c.i;
                 String statp_string = "";
                 if ((c.state & 1) == 1)
                 {
-                    statp_string = STRING_ARRAY[25];
+                    statp_string = " " + STRING_ARRAY[25];
                 }
 
                 if (i == null)
@@ -275,13 +290,18 @@ public class PageArmy extends Page
                     {
                         stat_string = STRING_ARRAY[20];
                     }
-                    String string = id + " " + e.getName() + " " + stat_string + statp_string;
+
+                    String string = id + " " + e.getName() + " ";
                     int l = (int)(minecraft.fontRenderer.getStringWidth(string) * SCALE);
                     this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, H, x_offset, y + text_height * 2.0F + 4.0F * 0.005F * display_width, SCALE);
 
                     string = STRING_ARRAY[26];
 //                    l = (int)(minecraft.fontRenderer.getStringWidth(string) * text_scale);
                     this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, (int)(minecraft.fontRenderer.getStringWidth(string) * text_scale), text_height, x_offset + l + 2.0F * 0.005F * display_width, y + text_height * 2.0F + 4.0F * 0.005F * display_width, text_scale);
+
+                    string = stat_string + statp_string;
+                    l = (int)(minecraft.fontRenderer.getStringWidth(string) * SCALE);
+                    this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, H, x, y + height - H, SCALE);
 
 //                    string = DimensionManager.getProviderType(e.dimension).getName();
 //                    string = DimensionManager.getProviderType(e.world.getWorldType().getId()).getName();
@@ -328,6 +348,11 @@ public class PageArmy extends Page
 //        this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, stringbuilder.toString(), H, box_height, 0, display_height / 2.0F, SCALE);
         this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, STRING_ARRAY[7], H, H, display_width - LEFT - H - 6.0F * 0.005F * display_width, display_height - H/* * 3.0F */- 4.0F * 0.005F * display_height - h_offset/* + h_offset*/, SCALE);
         WO = ye;
+
+        //search
+        String string = STRING_ARRAY[28];
+        int l = (int)(minecraft.fontRenderer.getStringWidth(string) * SCALE);
+        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, H, display_width - l - 2.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
     }
 
     public void preDrawModel(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, ClientE c/*, int texture_index*/, int width, int height, float x, float y, float scale)
@@ -336,7 +361,7 @@ public class PageArmy extends Page
 //        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, render_buffer);
 
         Minecraft minecraft = SMALLGUI.mc;
-        array_buffer_integer_list.add(genFloatBuffer(createFloatByteBuffer(this.createQuadVUv(x, y, width + x, height + y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F, 1.0F*/)/*, true*/)));
+        array_buffer_integer_list.add(genBuffer(createFloatByteBuffer(this.createQuadVUv(x, y, width + x, height + y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F, 1.0F*/)/*, true*/)));
         OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
 
         int texture = GL11.glGenTextures();
@@ -416,5 +441,28 @@ public class PageArmy extends Page
         OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, 0);
 
 //        OpenGlHelper.glDeleteRenderbuffers(render_buffer);
+    }
+
+    public void createBox(float x, float y, int width, int height, ByteBuffer bytebuffer)
+    {
+        Minecraft minecraft = SMALLGUI.mc;
+        int texture = GL11.glGenTextures();
+        ARRAY_BUFFER_INTEGER_LIST.add(genBuffer(createFloatByteBuffer(this.createQuadVUv(x, y, width + x, height + y, minecraft.displayWidth, minecraft.displayHeight))));
+        TEXTURE_INTEGER_LIST.add(texture);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
+
+//        ByteBuffer bytebuffer = BufferUtils.createByteBuffer(4);
+//        bytebuffer.put((byte)0);
+//        bytebuffer.put((byte)0);
+//        bytebuffer.put((byte)0);
+//        bytebuffer.put((byte)(255/2.0F));
+//        bytebuffer.flip();
+
+        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, 1, 1, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, bytebuffer);
+        GL11.glViewport(0, 0, width, height);
+        OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, texture, 0);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D_0);
+        OpenGlHelper.setActiveTexture(GL_ACTIVE_TEXTURE);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
     }
 }
