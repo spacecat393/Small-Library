@@ -4,6 +4,7 @@ import com.nali.list.data.SmallData;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
+import com.nali.small.gui.mouse.MouseArmy;
 import com.nali.system.opengl.memo.client.MemoS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -34,6 +35,8 @@ public class PageArmy extends Page
     public static int SIZE,
     OFFSET_CUTOFF_ARRAY_BUFFER = -1;
 //    public static float i;
+
+    public static float MAX_Y, MAX_Y_STAR;
 
     public float[][] vec2_2d_float_array;
     public float[][] color_vec4_2d_float_array;
@@ -149,11 +152,31 @@ public class PageArmy extends Page
 //            GL11.glOrtho(0, display_width, h, y, 1000.0D, 3000.0D);
 //            GL11.glOrtho(0, display_width, -0.5D, 0.5D, 1000.0D, 3000.0D);
 
+//            int debug = 0;
+            float scale = 75.0F / ((float)SMALLGUI.height / display_height),
+            h_offset = H + 4.0F * 0.005F * display_height,
+//            y = MouseArmy.Y / 2.0F * display_height + (display_height - (h_offset * 2.0F)),
+            py = display_height - (h_offset * 2.0F),
+            y0 = scale + 2.0F * 0.005F * display_height,
+            y = (MouseArmy.Y / 2.0F * display_height + py) / y0;
+            float max_y = y + 1.0F, min_y = (y - py / y0 - 1.0F), id;
+
             this.vec2_2d_float_array[0][1] = Y;
             for (int i = 0; i < size - 3; ++i)
             {
-                this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
+                id = i / 7.0F;
+//                float y1 = y0 * (i - 1),
+//                y2 = y0 * /*(*/i/* + 3)*/;
+//
+//                if (y >= y1 && y <= y2)
+                if (id >= min_y && id <= max_y)
+                {
+                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
+//                    ++debug;
+                }
             }
+//            Nali.LOGGER.info("debug " + debug);
+//            Nali.LOGGER.info("max " + (size-3));
 
             this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(size - 3), TEXTURE_INTEGER_LIST.get(size - 3));
             this.vec2_2d_float_array[2][1] = -Y_STAR;
@@ -227,14 +250,22 @@ public class PageArmy extends Page
         display_width = minecraft.displayWidth,
         display_height = minecraft.displayHeight,
         width = (int)(scale / (SMALLGUI.width / (float)display_width)),
-        height = (int)(scale / (SMALLGUI.height / (float)display_height)),
+//        height = (int)(scale / (SMALLGUI.height / (float)display_height)),
         id = 0;
         float
-        h_offset = H/* + 2.0F * 0.005F * display_height*/ - 2.0F * 0.005F * display_height,
+        h2 = 2.0F * 0.005F * display_height,
+        h_offset_y = H + 4.0F * 0.005F * display_height,
+        height_f = scale / (SMALLGUI.height / (float)display_height),
+        h_offset = H/* + h2*/ - h2,
         x = LEFT + H + 6.0F * 0.005F * display_width,
         x_offset = x + scale / (SMALLGUI.width / (float)display_width) + 2.0F * 0.005F * display_width,
         y = display_height - scale / (SMALLGUI.height / (float)display_height) - 4.0F * 0.005F * display_height - H - h_offset/* * 2.0F*//* - (8.0F * 0.005F * display_height) * 2.0F*/;
 //        int max_l = (int)(display_width - y);
+
+        MAX_Y = (((height_f + h2) * C_MAP.size() - (display_height - (h_offset_y * 2.0F))) / display_height) * 2.0F;
+        MAX_Y_STAR = ((display_height - h_offset_y - (H * 2.0F)/* + *//*h_offset*//*(h_offset * 2.0F)*/) / /*(*/display_height/* - h_offset * 2.0F)*/) * 2.0F;
+
+        int height = (int)height_f;
 
         SIZE = C_MAP.size();
         Set<UUID> keys_set = new HashSet(C_MAP.keySet());
@@ -243,7 +274,7 @@ public class PageArmy extends Page
             ClientE c = C_MAP.get(uuid);
             if (c != null)
             {
-    //            this.preDrawModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c, -1, (int)(25 / (SMALLGUI.width / (float)display_width)), (int)(25 / (SMALLGUI.height / (float)display_height)), LEFT + H + 4.0F * 0.005F * display_width/* + 25.0F / (SMALLGUI.width / (float)display_width)*/, display_height - H * 2.0F - 2.0F * 0.005F * display_height/* - 25.0F / (SMALLGUI.height / (float)display_height)*/, -25.0F/* / (SMALLGUI.height / (float)display_height)*/);
+    //            this.preDrawModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c, -1, (int)(25 / (SMALLGUI.width / (float)display_width)), (int)(25 / (SMALLGUI.height / (float)display_height)), LEFT + H + 4.0F * 0.005F * display_width/* + 25.0F / (SMALLGUI.width / (float)display_width)*/, display_height - H * 2.0F - h2/* - 25.0F / (SMALLGUI.height / (float)display_height)*/, -25.0F/* / (SMALLGUI.height / (float)display_height)*/);
 //                this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, text_height, x, y, text_scale);
                 ByteBuffer bytebuffer = ByteBuffer.allocateDirect(4).order(ByteOrder.nativeOrder());
                 bytebuffer.put((byte)0);
@@ -315,7 +346,7 @@ public class PageArmy extends Page
                 }
 //                this.preDrawModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c/*, -1*/, width, height, x, y, -scale);
     //            x += ;
-                y -= scale / (SMALLGUI.height / (float)display_height) + 2.0F * 0.005F * display_height;
+                y -= scale / (SMALLGUI.height / (float)display_height) + h2;
                 ++id;
             }
 //            HO = y;
@@ -350,9 +381,9 @@ public class PageArmy extends Page
         WO = ye;
 
         //search
-        String string = STRING_ARRAY[28];
+        String string = "________" + STRING_ARRAY[28];
         int l = (int)(minecraft.fontRenderer.getStringWidth(string) * SCALE);
-        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, H, display_width - l - 2.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
+        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, H, display_width - l - 2.0F * 0.005F * display_width, display_height - H - h2, SCALE);
     }
 
     public void preDrawModel(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, ClientE c/*, int texture_index*/, int width, int height, float x, float y, float scale)

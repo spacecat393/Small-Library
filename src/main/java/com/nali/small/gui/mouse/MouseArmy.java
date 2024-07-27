@@ -5,13 +5,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static com.nali.list.container.gui.SmallGui.SMALLGUI;
-import static com.nali.small.entity.memo.client.ClientE.C_MAP;
-import static com.nali.small.gui.page.Page.H;
+import static com.nali.small.gui.page.PageArmy.MAX_Y;
+import static com.nali.small.gui.page.PageArmy.MAX_Y_STAR;
 
 @SideOnly(Side.CLIENT)
 public class MouseArmy extends Mouse
 {
-    public static float /*X, */Y, Y_STAR;
+    public static float /*X, */Y, Y_STAR, DRAG;
     public float /*mouse_x, */mouse_y;
 //    public int dwheel;
 
@@ -23,14 +23,45 @@ public class MouseArmy extends Mouse
     @Override
     public void run()
     {
+        float drag = 0;
         if ((STATE & 2) == 2)
         {
 //            X = this.mouse_x - MOUSE_X;
 //            float v = (this.mouse_y - MOUSE_Y) * 0.05F * SMALLGUI.partial_ticks;
 //            Y -= v;
 //            Y_STAR -= v;
-            Y -= (this.mouse_y - MOUSE_Y) * 0.05F * SMALLGUI.partial_ticks;
+            drag = (this.mouse_y - MOUSE_Y) * 0.5F * SMALLGUI.partial_ticks;
 //            STATE &= 255-2;
+        }
+
+        if (drag != 0)
+        {
+            if (DRAG > 0 && drag < 0)
+            {
+                DRAG = 0;
+            }
+            else if (DRAG < 0 && drag > 0)
+            {
+                DRAG = 0;
+            }
+            DRAG += drag;
+            STATE |= 4;
+        }
+
+        Y += DRAG * 0.01F;
+
+        if (DRAG > 0)
+        {
+            DRAG -= SMALLGUI.partial_ticks;
+        }
+        else
+        {
+            DRAG += SMALLGUI.partial_ticks;
+        }
+
+        if ((int)DRAG == 0)
+        {
+            DRAG = 0;
         }
 
 //        Y += (DWHEEL - this.dwheel) * 0.05F * SMALLGUI.partial_ticks;
@@ -47,7 +78,7 @@ public class MouseArmy extends Mouse
 //        float v = EVENTDWHEEL * 0.05F * SMALLGUI.partial_ticks;
 //        Y += v;
 //        Y_STAR += v;
-        Y += EVENTDWHEEL * 0.05F * SMALLGUI.partial_ticks;
+        Y -= EVENTDWHEEL * 0.05F * SMALLGUI.partial_ticks;
         if ((STATE & 4) == 4)
         {
             STATE &= 255-4;
@@ -57,7 +88,6 @@ public class MouseArmy extends Mouse
             if (EVENTDWHEEL > 0)
             {
                 EVENTDWHEEL -= /*5.0F * */SMALLGUI.partial_ticks;
-
             }
             else
             {
@@ -81,10 +111,10 @@ public class MouseArmy extends Mouse
             Y = 0;
         }
 
-        if (Y_STAR < 0)
-        {
-            Y_STAR = 0;
-        }
+//        if (Y_STAR < 0)
+//        {
+//            Y_STAR = 0;
+//        }
 //
 //        if (Y_STAR < -0.25F)
 //        {
@@ -99,29 +129,29 @@ public class MouseArmy extends Mouse
         float
         display_height = minecraft.displayHeight;
 //        float h_offset = (H + 4.0F * 0.005F * display_height) * 2.0F;
-        float h_offset = (H + 4.0F * 0.005F * display_height);
-////        y = display_height - scale / (SMALLGUI.height / (float)display_height) - 4.0F * 0.005F * display_height - H + h_offset + height;
-//
-        float scale = 75.0F / ((float)SMALLGUI.height / display_height);
-//        float offset = (MAX_TH * FONT + 4.0F * 0.005F * display_height/* - 2.0F * 0.005F * display_height*/)/* * 2.0F*/;
-        // / max full height
-//        float height = ((/*75.0F * (display_height / (float)SMALLGUI.height)*/scale + 2.0F * 0.005F * display_height + offset) * C_MAP.size()) / ((float)display_height - offset/*(offset / 4.0F)*/)/* + h_offset*//* + (8.0F * 0.005F * display_height) * 2.0F*//* + offset*/;
-////        float h = SMALLGUI.height / (float)(display_height/* - offset*/);
-////        height = (((height + 2.0F * 0.005F * display_height) * C_MAP.size()) * h);
-//        float height = (((((scale + 2.0F * 0.005F * display_height) * C_MAP.size()) / (SMALLGUI.height / (float)display_height)))) / ((float)display_height - offset);
-        float height = (((scale + 2.0F * 0.005F * display_height) * C_MAP.size() - (display_height - (h_offset * 2.0F))) / display_height) * 2.0F;
-        if (Y > height)
+//        float h_offset = H + 4.0F * 0.005F * display_height;
+//////        y = display_height - scale / (SMALLGUI.height / (float)display_height) - 4.0F * 0.005F * display_height - H + h_offset + height;
+////
+//        float scale = 75.0F / ((float)SMALLGUI.height / display_height);
+////        float offset = (MAX_TH * FONT + 4.0F * 0.005F * display_height/* - 2.0F * 0.005F * display_height*/)/* * 2.0F*/;
+//        // / max full height
+////        float height = ((/*75.0F * (display_height / (float)SMALLGUI.height)*/scale + 2.0F * 0.005F * display_height + offset) * C_MAP.size()) / ((float)display_height - offset/*(offset / 4.0F)*/)/* + h_offset*//* + (8.0F * 0.005F * display_height) * 2.0F*//* + offset*/;
+//////        float h = SMALLGUI.height / (float)(display_height/* - offset*/);
+//////        height = (((height + 2.0F * 0.005F * display_height) * C_MAP.size()) * h);
+////        float height = (((((scale + 2.0F * 0.005F * display_height) * C_MAP.size()) / (SMALLGUI.height / (float)display_height)))) / ((float)display_height - offset);
+//        float height = (((scale + 2.0F * 0.005F * display_height) * C_MAP.size() - (display_height - (h_offset * 2.0F))) / display_height) * 2.0F;
+        if (Y > MAX_Y)
         {
-            Y = height;
+            Y = MAX_Y;
         }
 
 //        float max_y_star = 2.0F-0.5F;
-        float max_y_star = ((display_height - h_offset - (H * 2.0F)/* + *//*h_offset*//*(h_offset * 2.0F)*/) / /*(*/display_height/* - h_offset * 2.0F)*/) * 2.0F;
+//        float max_y_star = ((display_height - h_offset - (H * 2.0F)/* + *//*h_offset*//*(h_offset * 2.0F)*/) / /*(*/display_height/* - h_offset * 2.0F)*/) * 2.0F;
 //        float max_y_star = (display_height - h_offset) / minecraft.displayHeight;
 //        float ye = display_height - MAX_TH * FONT * 2.0F + 8.0F * 0.005F * display_height + (offset * 2.0F);
 //        int max_l = (int)(Math.ceil(ye / (MAX_TH * FONT)))/* + 1*/;
 //        float max_y_star = (((max_l * MAX_TH * FONT) + (offset * 2.0F))) / (display_height - (offset * 2.0F));
-        Y_STAR = max_y_star * (Y / height);
+        Y_STAR = MAX_Y_STAR * (Y / MAX_Y);
 //        Y_STAR = Y;
 
 //        float max_y_star = 2.0F;

@@ -44,9 +44,11 @@ public class HitOlePat<RC extends IClientDaO, R extends RenderO<RC>, SD extends 
 
 //            this.c.sendSAIE(new byte[1 + 16 + 1], AIEPat.ID);
             byte[] byte_array = new byte[1 + 16 + 1 + 4];
-            byte_array[0] = AIEPat.ID;
-            ByteWriter.set(byte_array, this.c.uuid, 1);
-            ByteWriter.set(byte_array, (float)e.getEntityBoundingBox().maxY, 1 + 16);
+            ByteWriter.set(byte_array, (float)e.getEntityBoundingBox().maxY, 1 + 16 + 1);
+            this.c.sendSAIE(byte_array, AIEPat.ID);
+//            byte_array[0] = SAIE.ID;
+//            ByteWriter.set(byte_array, this.c.uuid, 1);
+//            byte_array[1 + 16] = AIEPat.ID;
             NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 
 //            this.c.sound.play(this.c.i.getSD().PAT());
