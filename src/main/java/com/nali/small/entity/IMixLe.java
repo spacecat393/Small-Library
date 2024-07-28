@@ -1,6 +1,7 @@
 package com.nali.small.entity;
 
 import com.nali.da.IBothDaNe;
+import com.nali.small.entity.memo.IBothLe;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 
@@ -20,4 +21,7 @@ public interface IMixLe<SD, BD extends IBothDaNe, E extends EntityLivingBase> ex
 
 //    @Override
 //    IBothLe<E, ?> getBoth();
+//    @Override
+//    IMixLe getI();
+    IBothLe getB();
 }

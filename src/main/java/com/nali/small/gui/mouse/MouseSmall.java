@@ -24,7 +24,7 @@ public class MouseSmall extends Mouse
                 {
                     new PageBack(),
                     new PageMenuArmy(STRING_ARRAY[14] + "|" + STRING_ARRAY[0]),
-                    new PageArmy()
+                    new PageArmy((byte)1)
                 };
                 KEY = new KeyMenuArmy();
                 MOUSE = new MouseArmy();

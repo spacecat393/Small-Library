@@ -2,16 +2,21 @@ package com.nali.small.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public abstract class EntityLe extends EntityLivingBase implements IMixLe
 {
@@ -21,9 +26,16 @@ public abstract class EntityLe extends EntityLivingBase implements IMixLe
     }
 
     @Override
-    public boolean canEntityBeSeen(Entity entity)
+    public boolean isGlowing()
     {
-        return this.world.rayTraceBlocks(new Vec3d(this.posX, this.posY, this.posZ), new Vec3d(entity.posX, entity.posY, entity.posZ), false, true, false) == null || super.canEntityBeSeen(entity);
+        this.getB().setGlowing(this.world.isRemote && this.getFlag(6));
+        return this.glowing;
+    }
+
+    @Override
+    public double getYOffset()
+    {
+        return 0.3D;
     }
 
     @Override
@@ -33,15 +45,18 @@ public abstract class EntityLe extends EntityLivingBase implements IMixLe
     }
 
     @Override
-    public float getSoundVolume()
+    public void heal(float value)
     {
-        return super.getSoundVolume();
+        value = net.minecraftforge.event.ForgeEventFactory.onLivingHeal(this, value);
+        if (value <= 0) return;
+        float health = this.getHealth();
+        this.setHealth(health + value);
     }
 
     @Override
-    public float getSoundPitch()
+    public boolean canEntityBeSeen(Entity entity)
     {
-        return super.getSoundPitch();
+        return this.world.rayTraceBlocks(new Vec3d(this.posX, this.posY, this.posZ), new Vec3d(entity.posX, entity.posY, entity.posZ), false, true, false) == null || super.canEntityBeSeen(entity);
     }
 
     @Override
@@ -93,12 +108,6 @@ public abstract class EntityLe extends EntityLivingBase implements IMixLe
     }
 
     @Override
-    public double getYOffset()
-    {
-        return 0.3D;
-    }
-
-    @Override
     public boolean isEntityAlive()
     {
         return !this.isDead;
@@ -117,17 +126,108 @@ public abstract class EntityLe extends EntityLivingBase implements IMixLe
     }
 
     @Override
-    public void heal(float value)
-    {
-        value = net.minecraftforge.event.ForgeEventFactory.onLivingHeal(this, value);
-        if (value <= 0) return;
-        float health = this.getHealth();
-        this.setHealth(health + value);
-    }
-
-    @Override
     public void onDeath(DamageSource damagesource){}
 
     @Override
     public void onDeathUpdate(){}
+
+    @Nullable
+    @Override
+    public SoundEvent getHurtSound(DamageSource damagesource)
+    {
+        this.getB().getHurtSound(damagesource);
+        return super.getHurtSound(damagesource);
+    }
+
+    @Nullable
+    @Override
+    public SoundEvent getDeathSound()
+    {
+        this.getB().getDeathSound();
+        return super.getDeathSound();
+    }
+
+    @Override
+    public void entityInit()
+    {
+        super.entityInit();
+        this.EentityInit();
+    }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound nbttagcompound)
+    {
+        super.writeEntityToNBT(nbttagcompound);
+        this.EwriteEntityToNBT(nbttagcompound);
+        this.getB().writeEntityToNBT(nbttagcompound);
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound nbttagcompound)
+    {
+        super.readEntityFromNBT(nbttagcompound);
+        this.EreadEntityFromNBT(nbttagcompound);
+        this.getB().readEntityFromNBT(nbttagcompound);
+    }
+
+    @Override
+    public void setAIMoveSpeed(float speed)
+    {
+        super.setAIMoveSpeed(speed);
+        this.moveForward = speed;
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource damagesource, float amount)
+    {
+        if (!this.getB().attackEntityFrom(damagesource, amount))
+        {
+            return false;
+        }
+        return super.attackEntityFrom(damagesource, amount);
+    }
+
+    @Override
+    public boolean attackEntityAsMob(Entity entity)
+    {
+        return this.getB().attackEntityAsMob(entity);
+    }
+
+    @Override
+    public float updateDistance(float f0, float f1)
+    {
+        this.getB().getWorkEBodyYaw().run();
+        return f1;
+    }
+
+    @Override
+    public boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
+    {
+        return this.getB().processInitialInteract(entityplayer, enumhand);
+    }
+
+    @Override
+    public void onUpdate()
+    {
+        super.onUpdate();
+        this.getB().onUpdate();
+    }
+
+    @Override
+    public float getSoundVolume()
+    {
+        return super.getSoundVolume();
+    }
+
+    @Override
+    public float getSoundPitch()
+    {
+        return super.getSoundPitch();
+    }
+
+    @Override
+    public IMixE getI()
+    {
+        return this;
+    }
 }

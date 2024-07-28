@@ -37,15 +37,20 @@ public class PageArmy extends Page
 //    public static float i;
 
     public static float MAX_Y, MAX_Y_STAR;
+//    public static byte[] MOVE_BYTE_ARRAY;
+    public static byte PAGE;
 
     public float[][] vec2_2d_float_array;
     public float[][] color_vec4_2d_float_array;
 
-    public PageArmy()
+    public PageArmy(byte page)
     {
+        PAGE = page;
         this.vec2_2d_float_array = new float[4][2];
-        this.color_vec4_2d_float_array = new float[1][4];
+        this.color_vec4_2d_float_array = new float[2][4];
         this.color_vec4_2d_float_array[0] = new float[]{1.0F, 1.0F, 1.0F, 1.0F};
+
+        this.color_vec4_2d_float_array[1] = new float[]{1.0F/255.0F, PAGE/255.0F, 0.0F, 1.0F};
     }
 
     @Override
@@ -125,17 +130,19 @@ public class PageArmy extends Page
 
             int size = ARRAY_BUFFER_INTEGER_LIST.size();
 
-            this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(size - 1), TEXTURE_INTEGER_LIST.get(size - 1));
+            int index = ARRAY_BUFFER_INTEGER_LIST.size() - 1;
+            this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(index), TEXTURE_INTEGER_LIST.get(index));
 
 //            if (y - < display_height)
 //            {
 //                break;
 //            }
 
+            float w = LEFT + H + 6.0F * 0.005F * display_width;
             OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_FRAMEBUFFER);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE);
 //            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, display_width, h, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
-            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, display_width, h, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
+            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, (int)(display_width - w), h, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
             OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE, 0);
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 //            OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_CUTOFF_FRAMEBUFFER);
@@ -178,11 +185,13 @@ public class PageArmy extends Page
 //            Nali.LOGGER.info("debug " + debug);
 //            Nali.LOGGER.info("max " + (size-3));
 
-            this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(size - 3), TEXTURE_INTEGER_LIST.get(size - 3));
-            this.vec2_2d_float_array[2][1] = -Y_STAR;
-            this.drawQuadVUv(rs, this.vec2_2d_float_array[2], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(size - 2), TEXTURE_INTEGER_LIST.get(size - 2));
+//            this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(size - 3), TEXTURE_INTEGER_LIST.get(size - 3));
+//            this.vec2_2d_float_array[2][1] = -Y_STAR;
+//            this.drawQuadVUv(rs, this.vec2_2d_float_array[2], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(size - 2), TEXTURE_INTEGER_LIST.get(size - 2));
 
-            GL11.glViewport(0, 0, display_width, h);
+//            GL11.glViewport(0, 0, display_width, h);
+//            GL11.glViewport(0, 0, (int)(display_width + (LEFT + H + 6.0F * 0.005F * display_width)), h);
+            GL11.glViewport(0, 0, (int)(display_width - w), h);
 //            GL11.glViewport(0, 0, display_width, (int)(display_height + offset));
 //            GL11.glViewport(0, 0, display_width, display_height);
 
@@ -197,6 +206,14 @@ public class PageArmy extends Page
             this.vec2_2d_float_array[3][1] = (H * 2.0F - 4.0F * 0.005F * display_height) / display_height;
             this.drawQuadVUv(rs, this.vec2_2d_float_array[3], this.color_vec4_2d_float_array[0], OFFSET_CUTOFF_ARRAY_BUFFER, OFFSET_FRAMEBUFFER_TEXTURE);
 
+            GL11.glViewport(0, 0, display_width, display_height);
+
+            index = ARRAY_BUFFER_INTEGER_LIST.size() - 3;
+            this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(index), TEXTURE_INTEGER_LIST.get(index));
+            this.vec2_2d_float_array[2][1] = -Y_STAR;
+            index = ARRAY_BUFFER_INTEGER_LIST.size() - 2;
+            this.drawQuadVUv(rs, this.vec2_2d_float_array[2], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(index), TEXTURE_INTEGER_LIST.get(index));
+
             GL20.glDisableVertexAttribArray(v);
 
 //            GL11.glLoadMatrix(OPENGL_PROJECTION_MATRIX_FLOATBUFFER);
@@ -205,7 +222,7 @@ public class PageArmy extends Page
 //            OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, GL_READ_FRAMEBUFFER_BINDING);
 //            OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER_BINDING);
 
-            GL11.glViewport(0, 0, display_width, display_height);
+//            GL11.glViewport(0, 0, display_width, display_height);
 
             OpenGlHelper.glDeleteBuffers(OFFSET_CUTOFF_ARRAY_BUFFER);
         }
@@ -220,7 +237,16 @@ public class PageArmy extends Page
     @Override
     public void detect()
     {
+        MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 4);
 
+        OpenGlHelper.glUseProgram(rs.program);
+        int v = rs.attriblocation_int_array[0];
+        GL20.glEnableVertexAttribArray(v);
+
+        int index = ARRAY_BUFFER_INTEGER_LIST.size() - 3;
+        this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[1], ARRAY_BUFFER_INTEGER_LIST.get(index), TEXTURE_INTEGER_LIST.get(index));
+
+        GL20.glDisableVertexAttribArray(v);
     }
 
 //    @Override
@@ -258,12 +284,17 @@ public class PageArmy extends Page
         height_f = scale / (SMALLGUI.height / (float)display_height),
         h_offset = H/* + h2*/ - h2,
         x = LEFT + H + 6.0F * 0.005F * display_width,
+//        x = -(LEFT + H + 6.0F * 0.005F * display_width),
+//        x = 0,
         x_offset = x + scale / (SMALLGUI.width / (float)display_width) + 2.0F * 0.005F * display_width,
-        y = display_height - scale / (SMALLGUI.height / (float)display_height) - 4.0F * 0.005F * display_height - H - h_offset/* * 2.0F*//* - (8.0F * 0.005F * display_height) * 2.0F*/;
+        y = display_height - scale / (SMALLGUI.height / (float)display_height) - 4.0F * 0.005F * display_height - H - h_offset/* * 2.0F*//* - (8.0F * 0.005F * display_height) * 2.0F*/,
 //        int max_l = (int)(display_width - y);
+        h_offset_y2 = h_offset_y * 2.0F;
 
-        MAX_Y = (((height_f + h2) * C_MAP.size() - (display_height - (h_offset_y * 2.0F))) / display_height) * 2.0F;
-        MAX_Y_STAR = ((display_height - h_offset_y - (H * 2.0F)/* + *//*h_offset*//*(h_offset * 2.0F)*/) / /*(*/display_height/* - h_offset * 2.0F)*/) * 2.0F;
+        MAX_Y = (((height_f + h2) * C_MAP.size() - (display_height - h_offset_y2)) / display_height) * 2.0F;
+//        MAX_Y_STAR = ((display_height - h_offset_y - (H * 2.0F)/* + *//*h_offset*//*(h_offset * 2.0F)*/) / /*(*/display_height/* - h_offset * 2.0F)*/) * 2.0F;
+        MAX_Y_STAR = ((display_height/* - h_offset_y*/ - h_offset_y2 - H) / display_height) * 2.0F;
+//        MAX_Y_STAR = -WO / (SMALLGUI.width / (float)display_width) * 2.0F;
 
         int height = (int)height_f;
 
@@ -352,7 +383,7 @@ public class PageArmy extends Page
 //            HO = y;
         }
 
-        float ye = display_height - H * 2.0F + 8.0F * 0.005F * display_height/*, ys = 0*/;
+        float ye = display_height - (H/* * 2.0F*/ + 4.0F * 0.005F * display_height) * 2.0F/*, ys = 0*/;
         StringBuilder stringbuilder = new StringBuilder();
 //        stringbuilder.append("|");
 //        while (ys < ye)
@@ -375,10 +406,11 @@ public class PageArmy extends Page
 //        }
 //        this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, stringbuilder.toString(), H, (int)ys, display_width - H - RIGHT - 6.0F * 0.005F * display_width, display_height - H - 4.0F * 0.005F * display_height, SCALE);
 //        this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, stringbuilder.toString(), H, (int)ye, display_width - LEFT - H - 6.0F * 0.005F * display_width, display_height - H - 4.0F * 0.005F * display_height + h_offset, SCALE);
-        this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, stringbuilder.toString(), H, (int)(max_l * MAX_TH * SCALE), display_width - LEFT - H - 6.0F * 0.005F * display_width, display_height - H - 4.0F * 0.005F * display_height/* + h_offset*/, SCALE);
+        WO = max_l * MAX_TH * SCALE;
+        this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, stringbuilder.toString(), H, (int)WO, display_width - LEFT - H - 6.0F * 0.005F * display_width, display_height - H - 4.0F * 0.005F * display_height/* + h_offset*/, SCALE);
 //        this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, stringbuilder.toString(), H, box_height, 0, display_height / 2.0F, SCALE);
-        this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, STRING_ARRAY[7], H, H, display_width - LEFT - H - 6.0F * 0.005F * display_width, display_height - H/* * 3.0F */- 4.0F * 0.005F * display_height - h_offset/* + h_offset*/, SCALE);
-        WO = ye;
+//        this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, STRING_ARRAY[7], H, H, display_width - LEFT - H - 6.0F * 0.005F * display_width, display_height - H/* * 3.0F */- 4.0F * 0.005F * display_height - h_offset/* + h_offset*/, SCALE);
+        this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, STRING_ARRAY[7], H, H, display_width - LEFT - H - 6.0F * 0.005F * display_width, display_height - H - 4.0F * 0.005F * display_height/* - H*/, SCALE);
 
         //search
         String string = "________" + STRING_ARRAY[28];

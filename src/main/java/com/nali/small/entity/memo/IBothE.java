@@ -33,6 +33,8 @@ public interface IBothE<SD, BD extends IBothDaNe, E extends Entity, I extends IM
 //    void remove();
 
     @SideOnly(Side.CLIENT)
+    void setGlowing(boolean b);
+    @SideOnly(Side.CLIENT)
     void setShouldRender(boolean result);
     @SideOnly(Side.CLIENT)
     void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks);

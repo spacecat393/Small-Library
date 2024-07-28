@@ -52,7 +52,7 @@ public abstract class ClientE<RC extends IClientDaO, R extends RenderO<RC>, SD, 
     public UUID uuid;
 
     public boolean fake;
-    public byte state;//regen
+    public byte state;//regen outline/glowing
     public int dimension = -1;
     public float x, y, z;
 
@@ -184,6 +184,20 @@ public abstract class ClientE<RC extends IClientDaO, R extends RenderO<RC>, SD, 
 //    public void remove()
 //    {
 //    }
+
+    @Override
+    public void setGlowing(boolean b)
+    {
+//        this.glowing = b;
+        if (b)
+        {
+            this.state |= 2;
+        }
+        else
+        {
+            this.state &= 255-2;
+        }
+    }
 
     @Override
     public I getI()
