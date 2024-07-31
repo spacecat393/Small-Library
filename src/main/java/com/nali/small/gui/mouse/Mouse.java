@@ -11,6 +11,7 @@ public class Mouse
     public static int MOUSE_X, MOUSE_Y/*, EVENTDWHEEL*//*, DY*//*, DWHEEL*/;
     public static float EVENTDWHEEL;
 
+//    public static int HIT;
     public static byte
     HIT, PAGE,
     STATE;//rc cme scroll ?cms
@@ -31,7 +32,7 @@ public class Mouse
 
     public void run()
     {
-        HIT = 0;
+        HIT = -1;
         PAGE = 0;
     }
 }

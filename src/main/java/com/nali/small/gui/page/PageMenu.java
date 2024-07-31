@@ -27,6 +27,7 @@ public class PageMenu extends Page
     public static String STRING;
     public static byte SAKURA = -1;
     public static float /*X, */Y, MAX_Y,
+    LEFT, RIGHT,
     BT;
 
     public PageMenu(String string)
@@ -42,7 +43,11 @@ public class PageMenu extends Page
     @Override
     public void init()
     {
+        LEFT = 0;
+        RIGHT = 0;
+
         super.init();
+
         Minecraft minecraft = SMALLGUI.mc;
         int display_width = minecraft.displayWidth,
         display_height = minecraft.displayHeight;
@@ -204,7 +209,7 @@ public class PageMenu extends Page
         this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, STRING/*, true*//*, index*/, H, i, 2.0F * 0.005F * minecraft.displayWidth, 0.0F, SCALE);
 //        this.preDrawTextVertical(string, false, index, H, (int)(box_height * SCALE * 1.1F), 0.0F, -(SCALE * 1.1F)/* / 2.0F*/, SCALE * 1.1F);
 //        TOP -= box_height;
-        TOP -= i;
+//        TOP -= i;
     }
 
     public void initSakura(byte sakura/*, int index*/)

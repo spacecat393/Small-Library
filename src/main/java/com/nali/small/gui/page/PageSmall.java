@@ -37,8 +37,8 @@ public class PageSmall extends Page
         this.color_vec4_2d_float_array[0] = new float[]{1.0F, 1.0F, 1.0F, 1.0F};
         this.color_vec4_2d_float_array[1] = new float[]{0.5F, 1.0F, 0.5F, 1.0F};
 
-        this.color_vec4_2d_float_array[2] = new float[]{1.0F/255.0F, PAGE/255.0F, 0.0F, 1.0F};
-        this.color_vec4_2d_float_array[3] = new float[]{2.0F/255.0F, PAGE/255.0F, 0.0F, 1.0F};
+        this.color_vec4_2d_float_array[2] = new float[]{1.0F/* / Integer.MAX_VALUE*//255.0F, PAGE/255.0F, 0.0F, 1.0F};
+        this.color_vec4_2d_float_array[3] = new float[]{2.0F/* / Integer.MAX_VALUE*//255.0F, PAGE/255.0F, 0.0F, 1.0F};
     }
 
     @Override

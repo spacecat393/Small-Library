@@ -13,18 +13,25 @@ import static com.nali.list.container.gui.SmallGui.SMALLGUI;
 @SideOnly(Side.CLIENT)
 public class KeyMenuArmy extends KeyMenu
 {
+    public static StringBuffer STRINGBUFFER;
+
+    public KeyMenuArmy()
+    {
+        STRINGBUFFER = new StringBuffer();
+    }
+
     @Override
     public void run()
     {
-        if ((this.state & 1) == 1)
+        if ((STATE & 1) == 1)
         {
             SMALLGUI.defaultPage();
 //            super.run();
         }
-        if ((this.state & 2) == 2)
+        if ((STATE & 2) == 2)
         {
             FLAG |= 1;
-            this.state &= 255-2;
+            STATE &= 255-2;
         }
     }
 
@@ -32,11 +39,15 @@ public class KeyMenuArmy extends KeyMenu
     public void detect(char typedChar, int keyCode)
     {
         super.detect(typedChar, keyCode);
-        if (typedChar == 'r')
+        if ((STATE & 4) == 4)
+        {
+            STRINGBUFFER.append(typedChar);
+        }
+        else if (typedChar == 'r')
         {
             PageMenuArmy.BT27 = 5.0F;
             NetworkRegistry.I.sendToServer(new ServerMessage(new byte[]{SSToC.ID}));
-            this.state |= 2;
+            STATE |= 2;
         }
     }
 }

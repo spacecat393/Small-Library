@@ -1,5 +1,6 @@
 package com.nali.small.gui.mouse;
 
+import com.nali.small.gui.key.KeyMenuArmy;
 import com.nali.small.gui.page.PageArmy;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -25,6 +26,15 @@ public class MouseArmy extends Mouse
     public void run()
     {
         float drag = 0;
+        if (PageArmy.PAGE == PAGE && HIT == 2)
+        {
+            KeyMenuArmy.STATE |= 4;
+        }
+        else if (HIT == 0)
+        {
+            KeyMenuArmy.STATE &= 255-4;
+        }
+
         if ((STATE & 2) == 2)
         {
 //            X = this.mouse_x - MOUSE_X;
@@ -152,12 +162,18 @@ public class MouseArmy extends Mouse
 //        float ye = display_height - MAX_TH * FONT * 2.0F + 8.0F * 0.005F * display_height + (offset * 2.0F);
 //        int max_l = (int)(Math.ceil(ye / (MAX_TH * FONT)))/* + 1*/;
 //        float max_y_star = (((max_l * MAX_TH * FONT) + (offset * 2.0F))) / (display_height - (offset * 2.0F));
+        if (PageArmy.PAGE == PAGE && HIT > 2)
+        {
+
+        }
+
         if (PageArmy.PAGE == PAGE && HIT == 1)
         {
             float
             display_height = SMALLGUI.mc.displayHeight,
             mouse_y = display_height - MOUSE_Y,
             h_offset_y = H + 4.0F * 0.005F * display_height;
+
             Y_STAR = (mouse_y - h_offset_y) / (display_height) * 2.0F;
             Y = MAX_Y * (Y_STAR / MAX_Y_STAR);
         }

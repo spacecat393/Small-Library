@@ -8,12 +8,17 @@ import org.lwjgl.input.Keyboard;
 @SideOnly(Side.CLIENT)
 public class KeyMenu extends Key
 {
-    public byte state;//back reload
+    public static byte STATE;//back reload on_type
+
+    public KeyMenu()
+    {
+        STATE = 0;
+    }
 
     @Override
     public void run()
     {
-        this.state &= 255-1;
+        STATE &= 255-1;
     }
 
     @Override
@@ -22,7 +27,7 @@ public class KeyMenu extends Key
         if (typedChar == 'q' || keyCode == Keyboard.KEY_LEFT)
         {
             PageMenu.BT = 5.0F;
-            this.state |= 1;
+            STATE |= 1;
         }
     }
 }

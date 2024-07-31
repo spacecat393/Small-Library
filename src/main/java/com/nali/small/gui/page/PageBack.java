@@ -11,28 +11,27 @@ import org.lwjgl.opengl.GL20;
 import java.util.Collections;
 import java.util.List;
 
+import static com.nali.list.container.gui.SmallGui.FULL_ARRAY_BUFFER;
 import static com.nali.list.container.gui.SmallGui.SMALLGUI;
 import static com.nali.system.ClientLoader.S_LIST;
-import static com.nali.system.opengl.memo.client.MemoA1.genBuffer;
-import static com.nali.system.opengl.memo.client.MemoC.createFloatByteBuffer;
 
 @SideOnly(Side.CLIENT)
 public class PageBack extends Page
 {
-    public static int BACK_ARRAY_BUFFER = -1;
+//    public static int BACK_ARRAY_BUFFER = -1;
 
     @Override
     public void init()
     {
         super.init();
-        if (BACK_ARRAY_BUFFER != -1)
-        {
-            OpenGlHelper.glDeleteBuffers(BACK_ARRAY_BUFFER);
-        }
+//        if (BACK_ARRAY_BUFFER != -1)
+//        {
+//            OpenGlHelper.glDeleteBuffers(BACK_ARRAY_BUFFER);
+//        }
         Minecraft minecraft = SMALLGUI.mc;
         int display_width = minecraft.displayWidth,
         display_height = minecraft.displayHeight;
-        BACK_ARRAY_BUFFER = genBuffer(createFloatByteBuffer(this.createQuadVUv(0, 0, display_width, display_height, display_width, display_height/*, 1.0F, 1.0F*/)/*, true*/));
+//        BACK_ARRAY_BUFFER = genBuffer(createFloatByteBuffer(this.createQuadVUv(0, 0, display_width, display_height, display_width, display_height/*, 1.0F, 1.0F*/)/*, true*/));
     }
 
 //    @Override
@@ -49,7 +48,8 @@ public class PageBack extends Page
         int v = rs.attriblocation_int_array[0];
         GL20.glEnableVertexAttribArray(v);
 //        this.drawStaticBlur();
-        this.drawQuadStatic/*Blur*/(rs, BACK_ARRAY_BUFFER, SMALLGUI.mc.getFramebuffer().framebufferTexture);
+//        this.drawQuadStatic/*Blur*/(rs, BACK_ARRAY_BUFFER, SMALLGUI.mc.getFramebuffer().framebufferTexture);
+        this.drawQuadStatic/*Blur*/(rs, FULL_ARRAY_BUFFER, SMALLGUI.mc.getFramebuffer().framebufferTexture);
         GL20.glDisableVertexAttribArray(v);
     }
 

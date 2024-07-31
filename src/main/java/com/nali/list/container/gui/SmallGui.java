@@ -1,5 +1,6 @@
 package com.nali.list.container.gui;
 
+import com.nali.Nali;
 import com.nali.list.container.SmallContainer;
 import com.nali.small.SmallConfig;
 import com.nali.small.gui.key.KeyMenu;
@@ -27,6 +28,7 @@ import java.nio.IntBuffer;
 import static com.nali.small.gui.key.Key.KEY;
 import static com.nali.small.gui.mouse.Mouse.*;
 import static com.nali.small.gui.page.Page.*;
+import static com.nali.system.opengl.memo.client.MemoA1.genBuffer;
 import static com.nali.system.opengl.memo.client.MemoC.*;
 
 @SideOnly(Side.CLIENT)
@@ -36,18 +38,19 @@ public class SmallGui extends GuiContainer
     public static Page[] PAGE_ARRAY;
     public static float
     SCALE,
-    WIDTH, HEIGHT,
-    LEFT, RIGHT, TOP, DOWN, WO, HO;
+    WIDTH, HEIGHT;
+//    LEFT, RIGHT, TOP, DOWN, WO, HO;
 //    public static List<Integer>
 //    TEXTURE_INT_LIST = new ArrayList(),
 //    ARRAY_BUFFER_INT_LIST = new ArrayList();
     public static byte FLAG;
     public static int
+    FULL_ARRAY_BUFFER = -1,
     OFFSET_RENDER_BUFFER = -1,
 //    OFFSET_CUTOFF_FRAMEBUFFER = -1,
 //    OFFSET_CUTOFF_FRAMEBUFFER_TEXTURE = -1,
-    OFFSET_FRAMEBUFFER = -1,
-    OFFSET_FRAMEBUFFER_TEXTURE = -1;
+    OFFSET_FRAMEBUFFER = -1,/* OFFSET_FRAMEBUFFER_0 = -1,*/
+    OFFSET_FRAMEBUFFER_TEXTURE = -1, OFFSET_FRAMEBUFFER_TEXTURE_0 = -1;
 
 //    public byte
 ////    state,//on_hit new_page back_page init
@@ -157,21 +160,38 @@ public class SmallGui extends GuiContainer
             SCALE = FONT / (this.height / (float)this.mc.displayHeight);
             H = (int)(MAX_TH * SCALE);
 
-            LEFT = 0;
-            RIGHT = 0;
-            TOP = 0;
-            DOWN = 0;
-            WO = 0;
-            HO = 0;
+//            LEFT = 0;
+//            RIGHT = 0;
+//            TOP = 0;
+//            DOWN = 0;
+//            WO = 0;
+//            HO = 0;
 
             if (OFFSET_FRAMEBUFFER == -1)
             {
 //                OFFSET_CUTOFF_FRAMEBUFFER = OpenGlHelper.glGenFramebuffers();
 //                OFFSET_CUTOFF_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
                 OFFSET_FRAMEBUFFER = OpenGlHelper.glGenFramebuffers();
+//                OFFSET_FRAMEBUFFER_0 = OpenGlHelper.glGenFramebuffers();
                 OFFSET_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
+                OFFSET_FRAMEBUFFER_TEXTURE_0 = GL11.glGenTextures();
 
                 OFFSET_RENDER_BUFFER = OpenGlHelper.glGenRenderbuffers();
+
+//                if (FULL_ARRAY_BUFFER != -1)
+//                {
+//                    OpenGlHelper.glDeleteBuffers(FULL_ARRAY_BUFFER);
+//                }
+                FULL_ARRAY_BUFFER = genBuffer(createFloatByteBuffer(new float[]
+                {
+                    -1, 1, 0.0F, 1.0F,
+                    -1, -1, 0.0F, 0.0F,
+                    1, -1, 1.0F, 0.0F,
+
+                    -1, 1, 0.0F, 1.0F,
+                    1, -1, 1.0F, 0.0F,
+                    1, 1, 1.0F, 1.0F
+                }));
 
 //                GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
 //                int draw_frame_buffer = OPENGL_INTBUFFER.get(0);
@@ -426,8 +446,11 @@ public class SmallGui extends GuiContainer
 //        this.hit = (byte)OPENGL_INTBUFFER.get(0);
 //        MOUSE.detect();
         HIT = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(0) * 255.0F);
+//        HIT = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
+//        HIT = (int)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(0) * Integer.MAX_VALUE);
         if ((STATE & 1) == 1)
         {
+            Nali.LOGGER.info("HIT " + HIT);
             PAGE = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(1) * 255.0F);
             STATE &= 255-1;
         }
