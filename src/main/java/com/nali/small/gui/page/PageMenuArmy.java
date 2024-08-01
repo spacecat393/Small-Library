@@ -38,8 +38,8 @@ public class PageMenuArmy extends PageMenu
 //        {
 //            box_width = i;
 //        }
-//        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, h, display_width - box_width - RIGHT - 4.0F * 0.005F * display_width, 2.0F * 0.005F * display_height, scale);
-        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, i, h, display_width - i - RIGHT - 4.0F * 0.005F * display_width, 2.0F * 0.005F * display_height, scale);
+//        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, h, display_width - box_width - RIGHT - 4.0F * 0.005F * display_width, 2.0F * 0.005F * display_height, scale);
+        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, i, h, display_width - i - RIGHT - 4.0F * 0.005F * display_width, 2.0F * 0.005F * display_height, scale);
 //        RIGHT += box_width;
         RIGHT += i;
     }

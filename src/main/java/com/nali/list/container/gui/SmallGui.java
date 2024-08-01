@@ -49,7 +49,7 @@ public class SmallGui extends GuiContainer
     OFFSET_RENDER_BUFFER = -1,
 //    OFFSET_CUTOFF_FRAMEBUFFER = -1,
 //    OFFSET_CUTOFF_FRAMEBUFFER_TEXTURE = -1,
-    OFFSET_FRAMEBUFFER = -1,/* OFFSET_FRAMEBUFFER_0 = -1,*/
+    OFFSET_FRAMEBUFFER = -1, OFFSET_FRAMEBUFFER_0 = -1,
     OFFSET_FRAMEBUFFER_TEXTURE = -1, OFFSET_FRAMEBUFFER_TEXTURE_0 = -1;
 
 //    public byte
@@ -172,7 +172,7 @@ public class SmallGui extends GuiContainer
 //                OFFSET_CUTOFF_FRAMEBUFFER = OpenGlHelper.glGenFramebuffers();
 //                OFFSET_CUTOFF_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
                 OFFSET_FRAMEBUFFER = OpenGlHelper.glGenFramebuffers();
-//                OFFSET_FRAMEBUFFER_0 = OpenGlHelper.glGenFramebuffers();
+                OFFSET_FRAMEBUFFER_0 = OpenGlHelper.glGenFramebuffers();
                 OFFSET_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
                 OFFSET_FRAMEBUFFER_TEXTURE_0 = GL11.glGenTextures();
 
@@ -406,6 +406,7 @@ public class SmallGui extends GuiContainer
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE);
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, this.mc.displayWidth, this.mc.displayHeight, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
         OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE, 0);
+//        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 
 //        //
 //        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D_0);
@@ -482,6 +483,11 @@ public class SmallGui extends GuiContainer
 //        OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER_BINDING);
 
 //        this.drawText(rs);
+        for (Page page : PAGE_ARRAY)
+        {
+            page.preDraw();
+        }
+
         for (Page page : PAGE_ARRAY)
         {
             page.draw();

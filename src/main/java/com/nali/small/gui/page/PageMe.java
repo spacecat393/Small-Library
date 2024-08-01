@@ -19,6 +19,12 @@ public class PageMe extends Page
     }
 
     @Override
+    public void preDraw()
+    {
+
+    }
+
+    @Override
     public void detect()
     {
 

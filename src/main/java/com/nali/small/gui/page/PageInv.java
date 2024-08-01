@@ -19,6 +19,12 @@ public class PageInv extends Page
     }
 
     @Override
+    public void preDraw()
+    {
+
+    }
+
+    @Override
     public void detect()
     {
 

@@ -54,6 +54,12 @@ public class PageBack extends Page
     }
 
     @Override
+    public void preDraw()
+    {
+
+    }
+
+    @Override
     public void detect()
     {
 

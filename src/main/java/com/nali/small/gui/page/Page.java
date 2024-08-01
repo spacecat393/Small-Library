@@ -144,7 +144,7 @@ public abstract class Page
     }
 
     //    public void preDrawText(/*int framebuffer, */String string, int texture_index)
-    public void preDrawTextHorizontal(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, /*int framebuffer, */String string/*, boolean shadow*//*, int texture_index*/, int width, int height, float x, float y, float scale)
+    public void initTextHorizontal(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, /*int framebuffer, */String string/*, boolean shadow*//*, int texture_index*/, int width, int height, float x, float y, float scale)
     {
         Minecraft minecraft = SMALLGUI.mc;
 //        if (this.framebuffer == -1)
@@ -247,7 +247,7 @@ public abstract class Page
 //        OpenGlHelper.glDeleteFramebuffers(framebuffer);
     }
 
-    public void preDrawTextVertical(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, String string/*, boolean shadow*//*, int texture_index*/, int width, int height, float x, float y, float scale)
+    public void initTextVertical(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, String string/*, boolean shadow*//*, int texture_index*/, int width, int height, float x, float y, float scale)
     {
         Minecraft minecraft = SMALLGUI.mc;
         array_buffer_integer_list.add(genBuffer(createFloatByteBuffer(this.createQuadVUv(x, -height + y, width + x, y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F*//* / (this.mc.displayWidth / (float)this.width)*//*, 1.0F*/)/*, true*/)));
@@ -435,6 +435,7 @@ public abstract class Page
 //    }
 
     public abstract void draw(/*MemoS rs*/);
+    public abstract void preDraw(/*MemoS rs*/);
     public abstract void detect(/*MemoS rs*/);
 //    public abstract void change();
 

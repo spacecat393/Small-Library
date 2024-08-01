@@ -65,8 +65,8 @@ public class PageMenu extends Page
 //        {
 //            box_width = i;
 //        }
-//        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, h, display_width - box_width - 2.0F * 0.005F * display_width, 2.0F * 0.005F * display_height, scale);
-        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, i, h, display_width - i - 2.0F * 0.005F * display_width, 2.0F * 0.005F * display_height, scale);
+//        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, h, display_width - box_width - 2.0F * 0.005F * display_width, 2.0F * 0.005F * display_height, scale);
+        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, i, h, display_width - i - 2.0F * 0.005F * display_width, 2.0F * 0.005F * display_height, scale);
 //        RIGHT += box_width;
         RIGHT += i;
     }
@@ -156,6 +156,12 @@ public class PageMenu extends Page
     }
 
     @Override
+    public void preDraw()
+    {
+
+    }
+
+    @Override
     public void detect()
     {
     }
@@ -206,7 +212,7 @@ public class PageMenu extends Page
 //        this.preDrawTextVertical(string, true, index, max_w, box_height, (H - max_w) / 2.0F, 0.0F, SCALE);
 //        LEFT = 2.0F * 0.005F * minecraft.displayWidth;
 //        this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, STRING/*, true*//*, index*/, H, box_height, 2.0F * 0.005F * minecraft.displayWidth, 0.0F, SCALE);
-        this.preDrawTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, STRING/*, true*//*, index*/, H, i, 2.0F * 0.005F * minecraft.displayWidth, 0.0F, SCALE);
+        this.initTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, STRING/*, true*//*, index*/, H, i, 2.0F * 0.005F * minecraft.displayWidth, 0.0F, SCALE);
 //        this.preDrawTextVertical(string, false, index, H, (int)(box_height * SCALE * 1.1F), 0.0F, -(SCALE * 1.1F)/* / 2.0F*/, SCALE * 1.1F);
 //        TOP -= box_height;
 //        TOP -= i;
@@ -229,14 +235,14 @@ public class PageMenu extends Page
 //        {
 //            box_width = i;
 //        }
-//        this.preDrawTextHorizontal(string, false, index, (int)(box_width * SCALE), H, H, this.mc.displayHeight - H, SCALE);
+//        this.initTextHorizontal(string, false, index, (int)(box_width * SCALE), H, H, this.mc.displayHeight - H, SCALE);
 //        LEFT = LEFT * 4 + H;
 //        LEFT += H + 4.0F * 0.005F * display_width;
 //        TOP += display_height - H - 2.0F * 0.005F * display_height;
-//        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, index*/, box_width, H, H + 4.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
-        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, index*/, i, H, H + 4.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
-//        this.preDrawTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*/, index, -box_width + i, H, H + 4.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
-//        this.preDrawTextHorizontal(string, false, index, (int)(box_width * SCALE * 1.1F), H, H + -(SCALE * 1.1F)/* / 2.0F*/, this.mc.displayHeight - H, SCALE * 1.1F);
+//        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, index*/, box_width, H, H + 4.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
+        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, index*/, i, H, H + 4.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
+//        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*/, index, -box_width + i, H, H + 4.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
+//        this.initTextHorizontal(string, false, index, (int)(box_width * SCALE * 1.1F), H, H + -(SCALE * 1.1F)/* / 2.0F*/, this.mc.displayHeight - H, SCALE * 1.1F);
 //        LEFT += box_width;
         LEFT += i;
     }
