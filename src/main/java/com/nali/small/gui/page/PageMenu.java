@@ -34,10 +34,12 @@ public class PageMenu extends Page
     {
         STRING = string;
         this.vec2_2d_float_array = new float[2][2];
-        this.color_vec4_2d_float_array = new float[3][4];
+        this.color_vec4_2d_float_array = new float[4][4];
         this.color_vec4_2d_float_array[0] = new float[]{1.0F, 0.5F, 0.5F, 1.0F};
         this.color_vec4_2d_float_array[1] = new float[]{1.0F, 1.0F, 1.0F, 1.0F};
         this.color_vec4_2d_float_array[2] = new float[]{0.5F, 0.5F, 1.0F, 1.0F};
+
+        this.color_vec4_2d_float_array[3] = new float[]{0.0F, 0.0F, 0.0F, 1.0F};
     }
 
     @Override
@@ -121,44 +123,25 @@ public class PageMenu extends Page
     @Override
     public void draw()
     {
+//        byte sakura = SMALLGUI.mc.player.getEntityData().getByte("Nali_sakura");
+//        if (SAKURA != sakura)
+//        {
+//            FLAG |= 1;
+//        }
+
+        this.draw(null);
+    }
+
+    @Override
+    public void preDraw()
+    {
         byte sakura = SMALLGUI.mc.player.getEntityData().getByte("Nali_sakura");
         if (SAKURA != sakura)
         {
             FLAG |= 1;
         }
 
-        MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 3);
-        OpenGlHelper.glUseProgram(rs.program);
-        int v = rs.attriblocation_int_array[0];
-        GL20.glEnableVertexAttribArray(v);
-
-        this.vec2_2d_float_array[0][1] = Y;
-        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(0), TEXTURE_INTEGER_LIST.get(0));
-        this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[1], ARRAY_BUFFER_INTEGER_LIST.get(1), TEXTURE_INTEGER_LIST.get(1));
-//        if ((SMALLGUI.state & 4) == 4)
-//        {
-//            BT = 5.0F;
-//        }
-        boolean bt = BT > 0.0F;
-        this.drawQuadVUv(rs, this.vec2_2d_float_array[1], bt ? this.color_vec4_2d_float_array[2] : this.color_vec4_2d_float_array[1], ARRAY_BUFFER_INTEGER_LIST.get(2), TEXTURE_INTEGER_LIST.get(2));
-        if (bt)
-        {
-            BT -= SMALLGUI.partial_ticks;
-        }
-
-        Y += 0.025F * SMALLGUI.partial_ticks;
-        if (Y > MAX_Y)
-        {
-            Y = 0;
-        }
-
-        GL20.glDisableVertexAttribArray(v);
-    }
-
-    @Override
-    public void preDraw()
-    {
-
+        this.draw(this.color_vec4_2d_float_array[3]);
     }
 
     @Override
@@ -182,6 +165,36 @@ public class PageMenu extends Page
     public List<Integer> getTextureIntegerList()
     {
         return TEXTURE_INTEGER_LIST;
+    }
+
+    public void draw(float[] color_float_array)
+    {
+        MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 3);
+        OpenGlHelper.glUseProgram(rs.program);
+        int v = rs.attriblocation_int_array[0];
+        GL20.glEnableVertexAttribArray(v);
+
+        this.vec2_2d_float_array[0][1] = Y;
+        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], /*color_float_array == null ? */this.color_vec4_2d_float_array[0]/* : color_float_array*/, ARRAY_BUFFER_INTEGER_LIST.get(0), TEXTURE_INTEGER_LIST.get(0));
+        this.drawQuadVUv(rs, this.vec2_2d_float_array[1], color_float_array == null ? this.color_vec4_2d_float_array[1] : color_float_array, ARRAY_BUFFER_INTEGER_LIST.get(1), TEXTURE_INTEGER_LIST.get(1));
+//        if ((SMALLGUI.state & 4) == 4)
+//        {
+//            BT = 5.0F;
+//        }
+        boolean bt = BT > 0.0F;
+        this.drawQuadVUv(rs, this.vec2_2d_float_array[1], bt ? this.color_vec4_2d_float_array[2] : color_float_array == null ? this.color_vec4_2d_float_array[1] : color_float_array, ARRAY_BUFFER_INTEGER_LIST.get(2), TEXTURE_INTEGER_LIST.get(2));
+        if (bt)
+        {
+            BT -= SMALLGUI.partial_ticks;
+        }
+
+        Y += 0.025F * SMALLGUI.partial_ticks;
+        if (Y > MAX_Y)
+        {
+            Y = 0;
+        }
+
+        GL20.glDisableVertexAttribArray(v);
     }
 
     public void initPath(/*int index*/)

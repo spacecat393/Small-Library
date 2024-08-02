@@ -1,6 +1,7 @@
 package com.nali.small.gui.page;
 
 import com.nali.list.data.SmallData;
+import com.nali.small.gui.mouse.MouseSmall;
 import com.nali.system.opengl.memo.client.MemoS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -33,12 +34,14 @@ public class PageSmall extends Page
     {
         PAGE = page;
         this.vec2_2d_float_array = new float[1][2];
-        this.color_vec4_2d_float_array = new float[4][4];
+        this.color_vec4_2d_float_array = new float[5][4];
         this.color_vec4_2d_float_array[0] = new float[]{1.0F, 1.0F, 1.0F, 1.0F};
         this.color_vec4_2d_float_array[1] = new float[]{0.5F, 1.0F, 0.5F, 1.0F};
 
         this.color_vec4_2d_float_array[2] = new float[]{1.0F/* / Integer.MAX_VALUE*//255.0F, PAGE/255.0F, 0.0F, 1.0F};
         this.color_vec4_2d_float_array[3] = new float[]{2.0F/* / Integer.MAX_VALUE*//255.0F, PAGE/255.0F, 0.0F, 1.0F};
+
+        this.color_vec4_2d_float_array[4] = new float[]{0.0F, 0.0F, 0.0F, 1.0F};
     }
 
     @Override
@@ -85,8 +88,8 @@ public class PageSmall extends Page
         int v = rs.attriblocation_int_array[0];
         GL20.glEnableVertexAttribArray(v);
 
-        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], HIT == 1 ? this.color_vec4_2d_float_array[1] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(0), TEXTURE_INTEGER_LIST.get(0));
-        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], HIT == 2 ? this.color_vec4_2d_float_array[1] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(1), TEXTURE_INTEGER_LIST.get(1));
+        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], MouseSmall.E_PAGE == PAGE && HIT == 1 ? this.color_vec4_2d_float_array[1] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(0), TEXTURE_INTEGER_LIST.get(0));
+        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], MouseSmall.E_PAGE == PAGE && HIT == 2 ? this.color_vec4_2d_float_array[1] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(1), TEXTURE_INTEGER_LIST.get(1));
 
         GL20.glDisableVertexAttribArray(v);
 
@@ -110,7 +113,15 @@ public class PageSmall extends Page
     @Override
     public void preDraw()
     {
+        MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 3);
+        OpenGlHelper.glUseProgram(rs.program);
+        int v = rs.attriblocation_int_array[0];
+        GL20.glEnableVertexAttribArray(v);
 
+        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], MouseSmall.E_PAGE == PAGE && HIT == 1 ? this.color_vec4_2d_float_array[1] : this.color_vec4_2d_float_array[4], ARRAY_BUFFER_INTEGER_LIST.get(0), TEXTURE_INTEGER_LIST.get(0));
+        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], MouseSmall.E_PAGE == PAGE && HIT == 2 ? this.color_vec4_2d_float_array[1] : this.color_vec4_2d_float_array[4], ARRAY_BUFFER_INTEGER_LIST.get(1), TEXTURE_INTEGER_LIST.get(1));
+
+        GL20.glDisableVertexAttribArray(v);
     }
 
     @Override

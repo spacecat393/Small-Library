@@ -1,14 +1,16 @@
 package com.nali.small.gui.mouse;
 
 import com.nali.small.gui.key.KeyMenuArmy;
-import com.nali.small.gui.page.PageArmy;
+import com.nali.small.gui.key.KeyMenuMe;
+import com.nali.small.gui.page.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.nali.list.container.gui.SmallGui.SMALLGUI;
+import static com.nali.list.container.gui.SmallGui.*;
+import static com.nali.small.gui.key.Key.KEY;
 import static com.nali.small.gui.page.Page.H;
-import static com.nali.small.gui.page.PageArmy.MAX_Y;
-import static com.nali.small.gui.page.PageArmy.MAX_Y_STAR;
+import static com.nali.small.gui.page.Page.STRING_ARRAY;
+import static com.nali.small.gui.page.PageArmy.*;
 
 @SideOnly(Side.CLIENT)
 public class MouseArmy extends Mouse
@@ -162,9 +164,27 @@ public class MouseArmy extends Mouse
 //        float ye = display_height - MAX_TH * FONT * 2.0F + 8.0F * 0.005F * display_height + (offset * 2.0F);
 //        int max_l = (int)(Math.ceil(ye / (MAX_TH * FONT)))/* + 1*/;
 //        float max_y_star = (((max_l * MAX_TH * FONT) + (offset * 2.0F))) / (display_height - (offset * 2.0F));
-        if (PageArmy.PAGE == PAGE && HIT > 2)
+        if (PageArmy.PAGE == PAGE)//126 -126 /2
         {
+            int id = (int)(Y / MAX_Y_OFFSET) + HIT - 3;
+            if (HIT > 2 + 62)//re
+            {
+            }
+            else if (HIT > 2)//me
+            {
+                PageMe.UUID = PageArmy.UUID_ARRAY[id];
 
+                KeyMenuMe.ME |= 1;
+                PAGE_ARRAY = new Page[]
+                {
+                    new PageBlur(),
+                    new PageMenu(STRING_ARRAY[14] + "|" + STRING_ARRAY[0] + "|" + PageArmy.UUID_ARRAY[id]),
+                    new PageMe()
+                };
+                KEY = new KeyMenuMe();
+                MOUSE = new Mouse();
+                FLAG |= 1;
+            }
         }
 
         if (PageArmy.PAGE == PAGE && HIT == 1)

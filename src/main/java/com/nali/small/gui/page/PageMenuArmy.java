@@ -45,9 +45,9 @@ public class PageMenuArmy extends PageMenu
     }
 
     @Override
-    public void draw()
+    public void draw(float[] color_float_array)
     {
-        super.draw();
+        super.draw(color_float_array);
 
         MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 3);
         OpenGlHelper.glUseProgram(rs.program);
@@ -55,7 +55,7 @@ public class PageMenuArmy extends PageMenu
         GL20.glEnableVertexAttribArray(v);
 
         boolean bt = BT27 > 0.0F;
-        this.drawQuadVUv(rs, this.vec2_2d_float_array[1], bt ? this.color_vec4_2d_float_array[2] : this.color_vec4_2d_float_array[1], ARRAY_BUFFER_INTEGER_LIST.get(3), TEXTURE_INTEGER_LIST.get(3));
+        this.drawQuadVUv(rs, this.vec2_2d_float_array[1], bt ? this.color_vec4_2d_float_array[2] : color_float_array == null ? this.color_vec4_2d_float_array[1] : color_float_array, ARRAY_BUFFER_INTEGER_LIST.get(3), TEXTURE_INTEGER_LIST.get(3));
         if (bt)
         {
             BT27 -= SMALLGUI.partial_ticks;

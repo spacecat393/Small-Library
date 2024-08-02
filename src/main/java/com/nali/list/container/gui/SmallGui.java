@@ -6,7 +6,7 @@ import com.nali.small.SmallConfig;
 import com.nali.small.gui.key.KeyMenu;
 import com.nali.small.gui.mouse.MouseSmall;
 import com.nali.small.gui.page.Page;
-import com.nali.small.gui.page.PageBack;
+import com.nali.small.gui.page.PageBlur;
 import com.nali.small.gui.page.PageMenu;
 import com.nali.small.gui.page.PageSmall;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -77,12 +77,13 @@ public class SmallGui extends GuiContainer
     {
         PAGE_ARRAY = new Page[]
         {
-            new PageBack(),
+            new PageBlur(),
             new PageMenu(STRING_ARRAY[14]),
             new PageSmall((byte)1)
         };
         KEY = new KeyMenu();
         MOUSE = new MouseSmall();
+        FLAG |= 1;
     }
 
     public static SmallGui get(EntityPlayer entityplayer, World world, int x, int y, int z)
@@ -449,10 +450,12 @@ public class SmallGui extends GuiContainer
         HIT = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(0) * 255.0F);
 //        HIT = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
 //        HIT = (int)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(0) * Integer.MAX_VALUE);
+//        PAGE = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(1) * 255.0F);
+        E_PAGE = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(1) * 255.0F);
         if ((STATE & 1) == 1)
         {
             Nali.LOGGER.info("HIT " + HIT);
-            PAGE = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(1) * 255.0F);
+            PAGE = E_PAGE;
             STATE &= 255-1;
         }
 //        this.hit = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(0) * 255.0F);

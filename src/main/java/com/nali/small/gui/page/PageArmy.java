@@ -38,7 +38,7 @@ public class PageArmy extends Page
 //    public static float i;
 
     A_W, A_H;
-    public static float MAX_Y, MAX_Y_STAR;
+    public static float MAX_Y, MAX_Y_OFFSET, MAX_Y_STAR;
     public static byte[] MOVE_BYTE_ARRAY;
     public static List<Integer> INDEX_INTEGER_LIST = new ArrayList();
     public static UUID[] UUID_ARRAY;
@@ -52,7 +52,7 @@ public class PageArmy extends Page
         PAGE = page;
 //        STATE = 0;
         this.vec2_2d_float_array = new float[4][2];
-        this.color_vec4_2d_float_array = new float[4][4];
+        this.color_vec4_2d_float_array = new float[5][4];
         this.color_vec4_2d_float_array[0] = new float[]{1.0F, 1.0F, 1.0F, 1.0F};
 
         this.color_vec4_2d_float_array[1] = new float[]{1.0F/* / Integer.MAX_VALUE*//255.0F, PAGE/255.0F, 0.0F, 1.0F};
@@ -60,6 +60,7 @@ public class PageArmy extends Page
 //        this.color_vec4_2d_float_array[3] = new float[]{3.0F/255.0F, PAGE/255.0F, 0.0F, 1.0F};
 
         this.color_vec4_2d_float_array[3] = new float[]{0.0F, 0.0F, 0.0F, 1.0F};
+        this.color_vec4_2d_float_array[4] = new float[]{0.5F, 1.0F, 0.5F, 1.0F};
     }
 
     @Override
@@ -195,7 +196,11 @@ public class PageArmy extends Page
 ////            Nali.LOGGER.info("max " + (size-3));
             for (int i : INDEX_INTEGER_LIST)
             {
-                this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
+                byte b = (byte)(i % 7);
+                if (b != 0)
+                {
+                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], (b == 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (i / 7) % 62 + 62 + 3) || (b != 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (i / 7) % 62 + 3) ? this.color_vec4_2d_float_array[4] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
+                }
             }
 
 //            this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(size - 3), TEXTURE_INTEGER_LIST.get(size - 3));
@@ -225,7 +230,7 @@ public class PageArmy extends Page
 
             index = size - 3;
             this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(index), TEXTURE_INTEGER_LIST.get(index));
-            this.vec2_2d_float_array[2][1] = -Y_STAR;
+//            this.vec2_2d_float_array[2][1] = -Y_STAR;
             index = size - 2;
             this.drawQuadVUv(rs, this.vec2_2d_float_array[2], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(index), TEXTURE_INTEGER_LIST.get(index));
 
@@ -260,6 +265,11 @@ public class PageArmy extends Page
             int v = rs.attriblocation_int_array[0];
             OpenGlHelper.glUseProgram(rs.program);
             GL20.glEnableVertexAttribArray(v);
+
+            int size = ARRAY_BUFFER_INTEGER_LIST.size();
+            int index = size - 1;
+            this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[3], ARRAY_BUFFER_INTEGER_LIST.get(index), TEXTURE_INTEGER_LIST.get(index));
+
     //        OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_FRAMEBUFFER_0);
             OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_FRAMEBUFFER);
     //        GL11.glBindTexture(GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE_0);
@@ -270,10 +280,18 @@ public class PageArmy extends Page
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
             for (int i : INDEX_INTEGER_LIST)
             {
-                if (i % 7 != 0)
+                float[] color_float_array;
+                byte b = (byte)(i % 7);
+                if (b == 0)
                 {
-                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[3], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
+                    color_float_array = this.color_vec4_2d_float_array[0];
                 }
+                else
+                {
+                    color_float_array = (b == 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (i / 7) % 62 + 62 + 3) || (b != 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (i / 7) % 62 + 3) ? this.color_vec4_2d_float_array[4] : this.color_vec4_2d_float_array[3];
+                }
+
+                this.drawQuadVUv(rs, this.vec2_2d_float_array[0], color_float_array, ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
             }
             GL11.glViewport(0, 0, A_W, A_H);
             OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, GL_READ_FRAMEBUFFER_BINDING);
@@ -281,6 +299,12 @@ public class PageArmy extends Page
     //        this.drawQuadVUv(rs, this.vec2_2d_float_array[3], this.color_vec4_2d_float_array[0], FULL_ARRAY_BUFFER, OFFSET_FRAMEBUFFER_TEXTURE_0);
             this.drawQuadVUv(rs, this.vec2_2d_float_array[3], this.color_vec4_2d_float_array[0], FULL_ARRAY_BUFFER, OFFSET_FRAMEBUFFER_TEXTURE);
             GL11.glViewport(0, 0, minecraft.displayWidth, minecraft.displayHeight);
+
+            index = size - 3;
+            this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[3], ARRAY_BUFFER_INTEGER_LIST.get(index), TEXTURE_INTEGER_LIST.get(index));
+            this.vec2_2d_float_array[2][1] = -Y_STAR;
+            index = size - 2;
+            this.drawQuadVUv(rs, this.vec2_2d_float_array[2], this.color_vec4_2d_float_array[3], ARRAY_BUFFER_INTEGER_LIST.get(index), TEXTURE_INTEGER_LIST.get(index));
             GL20.glDisableVertexAttribArray(v);
             //shadow
         }
@@ -367,11 +391,11 @@ public class PageArmy extends Page
 //                    if (check == 3)
                     if (i % 7 == 3)
                     {
-                        color_float_array = new float[]{((int)new_id % 126 + 126 + 3.0F) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
+                        color_float_array = new float[]{((int)new_id % 62 + 62 + 3.0F) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
                     }
                     else
                     {
-                        color_float_array = new float[]{((int)new_id % 126 + 3.0F) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
+                        color_float_array = new float[]{((int)new_id % 62 + 3.0F) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
                     }
 
 //                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[id + 3], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
@@ -478,13 +502,14 @@ public class PageArmy extends Page
         w_offset = display_width - (LEFT + H + 6.0F * 0.005F * display_width);
 
         MAX_Y = (((height_f + h2) * SIZE - (display_height - h_offset_y2)) / display_height) * 2.0F;
+        MAX_Y_OFFSET = (((height_f + h2) * 62 - (display_height - h_offset_y2)) / display_height) * 2.0F;
 //        MAX_Y_STAR = ((display_height - h_offset_y - (H * 2.0F)/* + *//*h_offset*//*(h_offset * 2.0F)*/) / /*(*/display_height/* - h_offset * 2.0F)*/) * 2.0F;
         MAX_Y_STAR = ((display_height/* - h_offset_y*/ - h_offset_y2 - H) / display_height) * 2.0F;
 //        MAX_Y_STAR = -WO / (SMALLGUI.width / (float)display_width) * 2.0F;
 
         int height = (int)height_f;
 
-        MOVE_BYTE_ARRAY = new byte[(int)Math.ceil(SIZE * 4.0F / 8.0F)];
+        MOVE_BYTE_ARRAY = new byte[(int)Math.ceil(SIZE * 4.0F / 8.0F)];//limit box
         UUID_ARRAY = new UUID[SIZE];
 
         Set<UUID> keys_set = new HashSet(C_MAP.keySet());

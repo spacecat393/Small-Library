@@ -20,21 +20,25 @@ public class MouseSmall extends Mouse
         {
             if (HIT == 1)
             {
-                PAGE_ARRAY = new Page[]
-                {
-                    new PageBack(),
-                    new PageMenuArmy(STRING_ARRAY[14] + "|" + STRING_ARRAY[0]),
-                    new PageArmy((byte)1)
-                };
-                KEY = new KeyMenuArmy();
-                MOUSE = new MouseArmy();
-                FLAG |= 1;
+                openPageArmy();
             }
         }
 
         super.run();
     }
 
+    public static void openPageArmy()
+    {
+        PAGE_ARRAY = new Page[]
+        {
+            new PageBlur(),
+            new PageMenuArmy(STRING_ARRAY[14] + "|" + STRING_ARRAY[0]),
+            new PageArmy((byte)1)
+        };
+        KEY = new KeyMenuArmy();
+        MOUSE = new MouseArmy();
+        FLAG |= 1;
+    }
 //    @Override
 //    public void detect()
 //    {
