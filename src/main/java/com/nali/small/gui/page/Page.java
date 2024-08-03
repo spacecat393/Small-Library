@@ -1,5 +1,7 @@
 package com.nali.small.gui.page;
 
+import com.nali.render.RenderO;
+import com.nali.small.entity.memo.client.ClientE;
 import com.nali.system.opengl.memo.client.MemoS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -8,11 +10,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL20;
 
+import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.List;
 
+import static com.nali.list.container.gui.SmallGui.OFFSET_RENDER_BUFFER;
 import static com.nali.list.container.gui.SmallGui.SMALLGUI;
 import static com.nali.system.opengl.memo.client.MemoA1.genBuffer;
 import static com.nali.system.opengl.memo.client.MemoC.*;
@@ -433,6 +438,117 @@ public abstract class Page
 //    {
 //        SMALLGUI.state &= 255-2;
 //    }
+
+    public void initModel(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, ClientE c/*, int texture_index*/, int width, int height, float x, float y, float scale)
+    {
+//        int render_buffer = OpenGlHelper.glGenRenderbuffers();
+//        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, render_buffer);
+
+        Minecraft minecraft = SMALLGUI.mc;
+        array_buffer_integer_list.add(genBuffer(createFloatByteBuffer(this.createQuadVUv(x, y, width + x, height + y, minecraft.displayWidth, minecraft.displayHeight/*, 1.0F, 1.0F*/)/*, true*/)));
+        OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
+
+        int texture = GL11.glGenTextures();
+//        if (texture_index == -1)
+//        {
+        texture_integer_list.add(texture);
+//        }
+//        else
+//        {
+//            GL11.glDeleteTextures(texture_integer_list.get(texture_index));
+//            texture_integer_list.set(texture_index, texture);
+//        }
+
+        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
+        GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
+
+        GL11.glGetInteger(GL13.GL_ACTIVE_TEXTURE, OPENGL_INTBUFFER);
+        GL_ACTIVE_TEXTURE = OPENGL_INTBUFFER.get(0);
+        OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
+        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
+        GL_TEXTURE_BINDING_2D_0 = OPENGL_INTBUFFER.get(0);
+
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
+        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
+        GL11.glViewport(0, 0, width, height);
+        OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, texture, 0);
+
+        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, OFFSET_RENDER_BUFFER);
+//        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, render_buffer);
+        OpenGlHelper.glRenderbufferStorage(OpenGlHelper.GL_RENDERBUFFER, GL14.GL_DEPTH_COMPONENT24, width, height);
+        OpenGlHelper.glFramebufferRenderbuffer(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_DEPTH_ATTACHMENT, OpenGlHelper.GL_RENDERBUFFER, OFFSET_RENDER_BUFFER);
+//        OpenGlHelper.glFramebufferRenderbuffer(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_DEPTH_ATTACHMENT, OpenGlHelper.GL_RENDERBUFFER, render_buffer);
+
+        GL11.glClear(/*GL11.GL_COLOR_BUFFER_BIT | */GL11.GL_DEPTH_BUFFER_BIT);
+
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D_0);
+
+        OpenGlHelper.setActiveTexture(GL_ACTIVE_TEXTURE);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
+
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
+        GL11.glLoadIdentity();
+        GL11.glOrtho(0.0D, width, height, 0.0D, 1000.0D, 3000.0D);
+
+//        GL11.glGetInteger(GL11.GL_CULL_FACE_MODE, OPENGL_INTBUFFER);
+//        int gl_cull_face_mode = OPENGL_INTBUFFER.get(0);
+//        GL11.glCullFace(GL11.GL_FRONT);
+//        GL11.glFrontFace(GL11.GL_CW);
+//        GL11.glCullFace(GL11.GL_BACK);
+//        GL11.glEnable(GL11.GL_DEPTH_TEST);
+//        GL11.glDepthFunc(GL11.GL_ALWAYS);
+
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+        GL11.glPushMatrix();
+        float p = -scale / 2.0F;
+        float fx = (SMALLGUI.width / (float)minecraft.displayWidth);
+        float fy = (SMALLGUI.height / (float)minecraft.displayHeight);
+        GL11.glTranslatef(p / fx, (p - (scale / 4.0F)) / fy, /*-scale * 4.0F*/0);
+//        GL11.glTranslatef(SMALLGUI.getGuiLeft(), SMALLGUI.getGuiTop(), 50.0F);
+//            GL11.glTranslatef(SMALLGUI.getGuiLeft(), SMALLGUI.getGuiTop(), 0.0F);
+//        GL11.glScalef(scale, scale, scale);
+        GL11.glScalef((scale - (scale / 2.5F)) / fx, (scale - (scale / 2.5F)) / fy, scale);
+//            GL11.glScalef(25.0F, 25.0F, 25.0F);
+        GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
+//        GL11.glRotatef(i, 0.0F, 0.0F, 1.0F);
+        RenderO r = c.r;
+        r.lig_b = -1.0F;
+        c.initFakeFrame();
+        r.draw();//blend program -texture
+        //draw to framebuffer need correct projection
+        GL11.glPopMatrix();
+
+//        GL11.glCullFace(gl_cull_face_mode);
+
+//        GL11.glClear(/*GL11.GL_COLOR_BUFFER_BIT | */GL11.GL_DEPTH_BUFFER_BIT);
+        OpenGlHelper.glFramebufferRenderbuffer(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_DEPTH_ATTACHMENT, OpenGlHelper.GL_RENDERBUFFER, 0);
+        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, 0);
+
+//        OpenGlHelper.glDeleteRenderbuffers(render_buffer);
+    }
+
+    public void initBox(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list, float x, float y, int width, int height, ByteBuffer bytebuffer)
+    {
+        Minecraft minecraft = SMALLGUI.mc;
+        int texture = GL11.glGenTextures();
+        array_buffer_integer_list.add(genBuffer(createFloatByteBuffer(this.createQuadVUv(x, y, width + x, height + y, minecraft.displayWidth, minecraft.displayHeight))));
+        texture_integer_list.add(texture);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
+
+//        ByteBuffer bytebuffer = BufferUtils.createByteBuffer(4);
+//        bytebuffer.put((byte)0);
+//        bytebuffer.put((byte)0);
+//        bytebuffer.put((byte)0);
+//        bytebuffer.put((byte)(255/2.0F));
+//        bytebuffer.flip();
+
+        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, 1, 1, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, bytebuffer);
+        GL11.glViewport(0, 0, width, height);
+        OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, texture, 0);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D_0);
+        OpenGlHelper.setActiveTexture(GL_ACTIVE_TEXTURE);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
+    }
 
     public abstract void draw(/*MemoS rs*/);
     public abstract void preDraw(/*MemoS rs*/);

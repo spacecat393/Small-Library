@@ -3,9 +3,8 @@ package com.nali.small.gui.key;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.nali.list.container.gui.SmallGui.FLAG;
-import static com.nali.list.container.gui.SmallGui.SMALLGUI;
-import static com.nali.small.gui.mouse.MouseSmall.openPageArmy;
+import static com.nali.list.container.gui.SmallGui.*;
+import static com.nali.small.gui.page.PageArmy.openPageArmy;
 
 @SideOnly(Side.CLIENT)
 public class KeyMenuMe extends KeyMenu
@@ -29,7 +28,7 @@ public class KeyMenuMe extends KeyMenu
             }
             else
             {
-                SMALLGUI.defaultPage();
+                openPageSmall();
             }
         }
         if ((STATE & 2) == 2)

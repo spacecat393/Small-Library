@@ -7,8 +7,7 @@ import com.nali.small.gui.page.PageMenuArmy;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.nali.list.container.gui.SmallGui.FLAG;
-import static com.nali.list.container.gui.SmallGui.SMALLGUI;
+import static com.nali.list.container.gui.SmallGui.*;
 
 @SideOnly(Side.CLIENT)
 public class KeyMenuArmy extends KeyMenu
@@ -25,7 +24,7 @@ public class KeyMenuArmy extends KeyMenu
     {
         if ((STATE & 1) == 1)
         {
-            SMALLGUI.defaultPage();
+            openPageSmall();
 //            super.run();
         }
         if ((STATE & 2) == 2)

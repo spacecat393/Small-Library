@@ -14,6 +14,6 @@ public class SOpenSmallGui
 ////        entityplayermp.closeScreen();
 ////        NetworksRegistry.I.sendTo(new ClientMessage(new byte[]{2}), entityplayermp);
 //        entityplayermp.openGui(Small.I, PlayerContainer.ID, entityplayermp.world, 0, 0, 0);
-        entityplayermp.openGui(Small.I, SmallContainer.ID, entityplayermp.world, 0, 0, 0);
+        entityplayermp.openGui(Small.I, SmallContainer.ID, entityplayermp.world, -1, 0, 0);
     }
 }

@@ -1,14 +1,10 @@
 package com.nali.small.gui.mouse;
 
-import com.nali.small.gui.key.KeyMenuArmy;
-import com.nali.small.gui.page.*;
+import com.nali.small.gui.page.PageSmall;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.nali.list.container.gui.SmallGui.FLAG;
-import static com.nali.list.container.gui.SmallGui.PAGE_ARRAY;
-import static com.nali.small.gui.key.Key.KEY;
-import static com.nali.small.gui.page.Page.STRING_ARRAY;
+import static com.nali.small.gui.page.PageArmy.openPageArmy;
 
 @SideOnly(Side.CLIENT)
 public class MouseSmall extends Mouse
@@ -27,18 +23,6 @@ public class MouseSmall extends Mouse
         super.run();
     }
 
-    public static void openPageArmy()
-    {
-        PAGE_ARRAY = new Page[]
-        {
-            new PageBlur(),
-            new PageMenuArmy(STRING_ARRAY[14] + "|" + STRING_ARRAY[0]),
-            new PageArmy((byte)1)
-        };
-        KEY = new KeyMenuArmy();
-        MOUSE = new MouseArmy();
-        FLAG |= 1;
-    }
 //    @Override
 //    public void detect()
 //    {

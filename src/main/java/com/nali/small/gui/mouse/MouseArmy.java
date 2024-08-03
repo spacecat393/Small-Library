@@ -1,16 +1,19 @@
 package com.nali.small.gui.mouse;
 
+import com.nali.list.network.message.ServerMessage;
+import com.nali.list.network.method.server.SEToC;
+import com.nali.network.NetworkRegistry;
 import com.nali.small.gui.key.KeyMenuArmy;
 import com.nali.small.gui.key.KeyMenuMe;
-import com.nali.small.gui.page.*;
+import com.nali.small.gui.page.PageArmy;
+import com.nali.system.bytes.ByteWriter;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.nali.list.container.gui.SmallGui.*;
-import static com.nali.small.gui.key.Key.KEY;
+import static com.nali.list.container.gui.SmallGui.SMALLGUI;
 import static com.nali.small.gui.page.Page.H;
-import static com.nali.small.gui.page.Page.STRING_ARRAY;
 import static com.nali.small.gui.page.PageArmy.*;
+import static com.nali.small.gui.page.PageMe.openPageMe;
 
 @SideOnly(Side.CLIENT)
 public class MouseArmy extends Mouse
@@ -27,7 +30,7 @@ public class MouseArmy extends Mouse
     @Override
     public void run()
     {
-        float drag = 0;
+//        float drag = 0;
         if (PageArmy.PAGE == PAGE && HIT == 2)
         {
             KeyMenuArmy.STATE |= 4;
@@ -43,12 +46,11 @@ public class MouseArmy extends Mouse
 //            float v = (this.mouse_y - MOUSE_Y) * 0.05F * SMALLGUI.partial_ticks;
 //            Y -= v;
 //            Y_STAR -= v;
-            drag = (this.mouse_y - MOUSE_Y) * 0.5F * SMALLGUI.partial_ticks;
+            float drag = (this.mouse_y - MOUSE_Y)/* * 0.1F*//* * SMALLGUI.partial_ticks*/;
 //            STATE &= 255-2;
-        }
 
-        if (drag != 0)
-        {
+//            if (drag != 0)
+//            {
             if (DRAG > 0 && drag < 0)
             {
                 DRAG = 0;
@@ -57,19 +59,20 @@ public class MouseArmy extends Mouse
             {
                 DRAG = 0;
             }
-            DRAG += drag;
-            STATE |= 4;
+            DRAG += drag * 0.1F;
+//            STATE |= 4;
+//            }
         }
 
-        Y += DRAG * 0.01F;
+        Y += DRAG * SMALLGUI.partial_ticks * 0.005F;
 
         if (DRAG > 0)
         {
-            DRAG -= SMALLGUI.partial_ticks;
+            DRAG -= SMALLGUI.partial_ticks/* * 0.05F*/;
         }
-        else
+        else if (DRAG < 0)
         {
-            DRAG += SMALLGUI.partial_ticks;
+            DRAG += SMALLGUI.partial_ticks/* * 0.05F*/;
         }
 
         if ((int)DRAG == 0)
@@ -92,27 +95,27 @@ public class MouseArmy extends Mouse
 //        Y += v;
 //        Y_STAR += v;
         Y -= EVENTDWHEEL * 0.05F * SMALLGUI.partial_ticks;
-        if ((STATE & 4) == 4)
+//        if ((STATE & 4) == 4)
+//        {
+//            STATE &= 255-4;
+//        }
+//        else
+//        {
+        if (EVENTDWHEEL > 0)
         {
-            STATE &= 255-4;
+            EVENTDWHEEL -= /*5.0F * */SMALLGUI.partial_ticks;
         }
         else
         {
-            if (EVENTDWHEEL > 0)
-            {
-                EVENTDWHEEL -= /*5.0F * */SMALLGUI.partial_ticks;
-            }
-            else
-            {
-                EVENTDWHEEL += /*5.0F * */SMALLGUI.partial_ticks;
-            }
+            EVENTDWHEEL += /*5.0F * */SMALLGUI.partial_ticks;
+        }
 
 //            if (EVENTDWHEEL < 1 || EVENTDWHEEL > -1)
-            if ((int)EVENTDWHEEL == 0)
-            {
-                EVENTDWHEEL = 0;
-            }
+        if ((int)EVENTDWHEEL == 0)
+        {
+            EVENTDWHEEL = 0;
         }
+//        }
 //        Y += SMALLGUI.mc.mouseHelper.getDwheel * 0.05F * SMALLGUI.partial_ticks;
 
 //        if (Y < -0.25F)
@@ -166,24 +169,18 @@ public class MouseArmy extends Mouse
 //        float max_y_star = (((max_l * MAX_TH * FONT) + (offset * 2.0F))) / (display_height - (offset * 2.0F));
         if (PageArmy.PAGE == PAGE)//126 -126 /2
         {
-            int id = (int)(Y / MAX_Y_OFFSET) + HIT - 3;
+            int id = (int)(Y / MAX_Y_OFFSET) * 62 + HIT - 3;
             if (HIT > 2 + 62)//re
             {
+                byte[] byte_array = new byte[1 + 16];
+                byte_array[0] = SEToC.ID;
+                ByteWriter.set(byte_array, PageArmy.UUID_ARRAY[id], 1);
+                NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
             }
             else if (HIT > 2)//me
             {
-                PageMe.UUID = PageArmy.UUID_ARRAY[id];
-
                 KeyMenuMe.ME |= 1;
-                PAGE_ARRAY = new Page[]
-                {
-                    new PageBlur(),
-                    new PageMenu(STRING_ARRAY[14] + "|" + STRING_ARRAY[0] + "|" + PageArmy.UUID_ARRAY[id]),
-                    new PageMe()
-                };
-                KEY = new KeyMenuMe();
-                MOUSE = new Mouse();
-                FLAG |= 1;
+                openPageMe(PageArmy.UUID_ARRAY[id]);
             }
         }
 

@@ -52,7 +52,8 @@ public abstract class ClientE<RC extends IClientDaO, R extends RenderO<RC>, SD, 
     public UUID uuid;
 
     public boolean fake;
-    public byte state;//regen outline/glowing
+    public String name_string = "";
+    public byte state;//regen outline/glowing die
     public int dimension = -1;
     public float x, y, z;
 
