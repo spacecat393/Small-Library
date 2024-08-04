@@ -1,6 +1,6 @@
 package com.nali.small.gui.key;
 
-import com.nali.small.gui.page.PageMenu;
+import com.nali.small.gui.page.PageKey;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
@@ -26,7 +26,7 @@ public class KeyMenu extends Key
     {
         if (typedChar == 'q' || keyCode == Keyboard.KEY_LEFT)
         {
-            PageMenu.BT = 5.0F;
+            PageKey.BT = 5.0F;
             STATE |= 1;
         }
     }

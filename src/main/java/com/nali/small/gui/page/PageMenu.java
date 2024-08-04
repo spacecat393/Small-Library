@@ -25,52 +25,38 @@ public class PageMenu extends Page
     public float[][] color_vec4_2d_float_array;
 
     public static String STRING;
-    public static byte SAKURA = -1;
-    public static float /*X, */Y, MAX_Y,
-    LEFT, RIGHT,
-    BT;
+    public static byte BYTE = 1;
+    public static float
+    /*X,*/
+    Y,
+    MAX_Y;
 
     public PageMenu(String string)
     {
         STRING = string;
-        this.vec2_2d_float_array = new float[2][2];
-        this.color_vec4_2d_float_array = new float[4][4];
+        this.vec2_2d_float_array = new float[1][2];
+        this.color_vec4_2d_float_array = new float[1][4];
         this.color_vec4_2d_float_array[0] = new float[]{1.0F, 0.5F, 0.5F, 1.0F};
-        this.color_vec4_2d_float_array[1] = new float[]{1.0F, 1.0F, 1.0F, 1.0F};
-        this.color_vec4_2d_float_array[2] = new float[]{0.5F, 0.5F, 1.0F, 1.0F};
-
-        this.color_vec4_2d_float_array[3] = new float[]{0.0F, 0.0F, 0.0F, 1.0F};
     }
 
     @Override
     public void init()
     {
-        LEFT = 0;
-        RIGHT = 0;
+//        if ((BYTE & 1) == 1)
+//        byte b = this.getByte();
+//        if ((b & 1) == 1)
+        if ((BYTE & 1) == 1)
+        {
+            Y = 0;
 
-        super.init();
+//            super.init();
+            this.clear(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST);
 
-        Minecraft minecraft = SMALLGUI.mc;
-        int display_width = minecraft.displayWidth,
-        display_height = minecraft.displayHeight;
+            this.initPath(/*-1*/);
 
-        Y = 0;
-        this.initPath(/*-1*/);
-        this.initSakura(minecraft.player.getEntityData().getByte("Nali_sakura")/*, -1*/);
-
-        float scale = SCALE * 0.5F;
-        int h = (int)(MAX_TH * scale);
-        String string = STRING_ARRAY[18];
-        int i = (int)(minecraft.fontRenderer.getStringWidth(string) * scale);
-//        box_width = i - display_width;
-//        if (i < display_width)
-//        {
-//            box_width = i;
-//        }
-//        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, h, display_width - box_width - 2.0F * 0.005F * display_width, 2.0F * 0.005F * display_height, scale);
-        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, i, h, display_width - i - 2.0F * 0.005F * display_width, 2.0F * 0.005F * display_height, scale);
-//        RIGHT += box_width;
-        RIGHT += i;
+//            this.setByte((byte)(b & 255-1));
+            BYTE &= 255-1;
+        }
     }
 
 //    @Override
@@ -123,25 +109,38 @@ public class PageMenu extends Page
     @Override
     public void draw()
     {
-//        byte sakura = SMALLGUI.mc.player.getEntityData().getByte("Nali_sakura");
-//        if (SAKURA != sakura)
-//        {
-//            FLAG |= 1;
-//        }
+        MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 3);
+        OpenGlHelper.glUseProgram(rs.program);
+        int v = rs.attriblocation_int_array[0];
+        GL20.glEnableVertexAttribArray(v);
 
-        this.draw(null);
+        this.vec2_2d_float_array[0][1] = Y;
+        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], /*color_float_array == null ? */this.color_vec4_2d_float_array[0]/* : color_float_array*/, ARRAY_BUFFER_INTEGER_LIST.get(0), TEXTURE_INTEGER_LIST.get(0));
+//        if ((SMALLGUI.state & 4) == 4)
+//        {
+//            BT = 5.0F;
+//        }
+        Y += 0.025F * SMALLGUI.partial_ticks;
+        if (Y > MAX_Y)
+        {
+            Y = 0;
+        }
+
+        GL20.glDisableVertexAttribArray(v);
+////        byte sakura = SMALLGUI.mc.player.getEntityData().getByte("Nali_sakura");
+////        if (SAKURA != sakura)
+////        {
+////            FLAG |= 1;
+////        }
+//
+//        this.draw(null);
     }
 
     @Override
     public void preDraw()
     {
-        byte sakura = SMALLGUI.mc.player.getEntityData().getByte("Nali_sakura");
-        if (SAKURA != sakura)
-        {
-            FLAG |= 1;
-        }
-
-        this.draw(this.color_vec4_2d_float_array[3]);
+//        this.draw(this.color_vec4_2d_float_array[3]);
+        this.draw();
     }
 
     @Override
@@ -150,52 +149,56 @@ public class PageMenu extends Page
     }
 
 //    @Override
+//    public byte getByte()
+//    {
+//        return BYTE;
+//    }
+//
+//    @Override
+//    public void setByte(byte b)
+//    {
+//        BYTE = b;
+//    }
+
+//    @Override
 //    public void change()
 //    {
 //
 //    }
 
-    @Override
-    public List<Integer> getArrayBufferIntegerList()
-    {
-        return ARRAY_BUFFER_INTEGER_LIST;
-    }
+//    @Override
+//    public List<Integer> getArrayBufferIntegerList()
+//    {
+//        return ARRAY_BUFFER_INTEGER_LIST;
+//    }
+//
+//    @Override
+//    public List<Integer> getTextureIntegerList()
+//    {
+//        return TEXTURE_INTEGER_LIST;
+//    }
 
-    @Override
-    public List<Integer> getTextureIntegerList()
-    {
-        return TEXTURE_INTEGER_LIST;
-    }
-
-    public void draw(float[] color_float_array)
-    {
-        MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 3);
-        OpenGlHelper.glUseProgram(rs.program);
-        int v = rs.attriblocation_int_array[0];
-        GL20.glEnableVertexAttribArray(v);
-
-        this.vec2_2d_float_array[0][1] = Y;
-        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], /*color_float_array == null ? */this.color_vec4_2d_float_array[0]/* : color_float_array*/, ARRAY_BUFFER_INTEGER_LIST.get(0), TEXTURE_INTEGER_LIST.get(0));
-        this.drawQuadVUv(rs, this.vec2_2d_float_array[1], color_float_array == null ? this.color_vec4_2d_float_array[1] : color_float_array, ARRAY_BUFFER_INTEGER_LIST.get(1), TEXTURE_INTEGER_LIST.get(1));
-//        if ((SMALLGUI.state & 4) == 4)
+//    public void drawPlus(/*float[] color_float_array*/)
+//    {
+//        MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 3);
+//        OpenGlHelper.glUseProgram(rs.program);
+//        int v = rs.attriblocation_int_array[0];
+//        GL20.glEnableVertexAttribArray(v);
+//
+//        this.vec2_2d_float_array[0][1] = Y;
+//        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], /*color_float_array == null ? */this.color_vec4_2d_float_array[0]/* : color_float_array*/, ARRAY_BUFFER_INTEGER_LIST.get(0), TEXTURE_INTEGER_LIST.get(0));
+////        if ((SMALLGUI.state & 4) == 4)
+////        {
+////            BT = 5.0F;
+////        }
+//        Y += 0.025F * SMALLGUI.partial_ticks;
+//        if (Y > MAX_Y)
 //        {
-//            BT = 5.0F;
+//            Y = 0;
 //        }
-        boolean bt = BT > 0.0F;
-        this.drawQuadVUv(rs, this.vec2_2d_float_array[1], bt ? this.color_vec4_2d_float_array[2] : color_float_array == null ? this.color_vec4_2d_float_array[1] : color_float_array, ARRAY_BUFFER_INTEGER_LIST.get(2), TEXTURE_INTEGER_LIST.get(2));
-        if (bt)
-        {
-            BT -= SMALLGUI.partial_ticks;
-        }
-
-        Y += 0.025F * SMALLGUI.partial_ticks;
-        if (Y > MAX_Y)
-        {
-            Y = 0;
-        }
-
-        GL20.glDisableVertexAttribArray(v);
-    }
+//
+//        GL20.glDisableVertexAttribArray(v);
+//    }
 
     public void initPath(/*int index*/)
     {
@@ -231,32 +234,8 @@ public class PageMenu extends Page
 //        TOP -= i;
     }
 
-    public void initSakura(byte sakura/*, int index*/)
+    public void initPlus()
     {
-        Minecraft minecraft = SMALLGUI.mc;
-        int display_width = minecraft.displayWidth;
-        int display_height = minecraft.displayHeight;
 
-        SAKURA = sakura;//(byte)this.mc.player.getEntityData().getInteger("Nali_sakura");
-
-        String string = STRING_ARRAY[11] + " " + SAKURA;
-//        String string = STRING;
-//        string += " > ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        int i = (int)(minecraft.fontRenderer.getStringWidth(string) * SCALE);
-//        box_width = i - display_width;
-//        if (i < display_width)
-//        {
-//            box_width = i;
-//        }
-//        this.initTextHorizontal(string, false, index, (int)(box_width * SCALE), H, H, this.mc.displayHeight - H, SCALE);
-//        LEFT = LEFT * 4 + H;
-//        LEFT += H + 4.0F * 0.005F * display_width;
-//        TOP += display_height - H - 2.0F * 0.005F * display_height;
-//        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, index*/, box_width, H, H + 4.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
-        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, index*/, i, H, H + 4.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
-//        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*/, index, -box_width + i, H, H + 4.0F * 0.005F * display_width, display_height - H - 2.0F * 0.005F * display_height, SCALE);
-//        this.initTextHorizontal(string, false, index, (int)(box_width * SCALE * 1.1F), H, H + -(SCALE * 1.1F)/* / 2.0F*/, this.mc.displayHeight - H, SCALE * 1.1F);
-//        LEFT += box_width;
-        LEFT += i;
     }
 }

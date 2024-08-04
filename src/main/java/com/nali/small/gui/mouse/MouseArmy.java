@@ -49,6 +49,15 @@ public class MouseArmy extends Mouse
             float drag = (this.mouse_y - MOUSE_Y)/* * 0.1F*//* * SMALLGUI.partial_ticks*/;
 //            STATE &= 255-2;
 
+            if (drag > 45)
+            {
+                drag = 45;
+            }
+            else if (drag < -45)
+            {
+                drag = -45;
+            }
+
 //            if (drag != 0)
 //            {
             if (DRAG > 0 && drag < 0)
@@ -94,7 +103,16 @@ public class MouseArmy extends Mouse
 //        float v = EVENTDWHEEL * 0.05F * SMALLGUI.partial_ticks;
 //        Y += v;
 //        Y_STAR += v;
-        Y -= EVENTDWHEEL * 0.05F * SMALLGUI.partial_ticks;
+//        if (EVENTDWHEEL > 2)
+//        {
+//            EVENTDWHEEL = 2;
+//        }
+//        else if (EVENTDWHEEL < -2)
+//        {
+//            EVENTDWHEEL = -2;
+//        }
+
+        Y -= EVENTDWHEEL * SMALLGUI.partial_ticks * 0.005F;
 //        if ((STATE & 4) == 4)
 //        {
 //            STATE &= 255-4;
@@ -184,7 +202,7 @@ public class MouseArmy extends Mouse
             }
         }
 
-        if (PageArmy.PAGE == PAGE && HIT == 1)
+        if ((STATE & 2) == 2 && /*PageArmy.PAGE == PAGE && */HIT == 1)
         {
             float
             display_height = SMALLGUI.mc.displayHeight,

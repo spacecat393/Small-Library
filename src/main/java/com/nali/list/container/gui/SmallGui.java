@@ -2,13 +2,8 @@ package com.nali.list.container.gui;
 
 import com.nali.list.container.SmallContainer;
 import com.nali.small.SmallConfig;
-import com.nali.small.gui.key.KeyMenu;
 import com.nali.small.gui.key.KeyMenuMe;
-import com.nali.small.gui.mouse.MouseSmall;
 import com.nali.small.gui.page.Page;
-import com.nali.small.gui.page.PageBlur;
-import com.nali.small.gui.page.PageMenu;
-import com.nali.small.gui.page.PageSmall;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -24,7 +19,10 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.*;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.IntBuffer;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import static com.nali.small.entity.memo.client.ClientE.UUID_MAP;
@@ -32,6 +30,7 @@ import static com.nali.small.gui.key.Key.KEY;
 import static com.nali.small.gui.mouse.Mouse.*;
 import static com.nali.small.gui.page.Page.*;
 import static com.nali.small.gui.page.PageMe.openPageMe;
+import static com.nali.small.gui.page.PageSmall.openPageSmall;
 import static com.nali.system.opengl.memo.client.MemoA1.genBuffer;
 import static com.nali.system.opengl.memo.client.MemoC.*;
 
@@ -40,6 +39,7 @@ public class SmallGui extends GuiContainer
 {
     public static SmallGui SMALLGUI;
     public static Page[] PAGE_ARRAY;
+    public static Set<Class> PAGE_CLASS_SET = new HashSet();
     public static float
     SCALE,
     WIDTH, HEIGHT;
@@ -47,13 +47,13 @@ public class SmallGui extends GuiContainer
 //    public static List<Integer>
 //    TEXTURE_INT_LIST = new ArrayList(),
 //    ARRAY_BUFFER_INT_LIST = new ArrayList();
-    public static byte FLAG;
+//    public static byte FLAG;
     public static int
     FULL_ARRAY_BUFFER = -1,
     OFFSET_RENDER_BUFFER = -1,
 //    OFFSET_CUTOFF_FRAMEBUFFER = -1,
 //    OFFSET_CUTOFF_FRAMEBUFFER_TEXTURE = -1,
-    OFFSET_FRAMEBUFFER = -1, OFFSET_FRAMEBUFFER_0 = -1,
+    OFFSET_FRAMEBUFFER = -1, OFFSET_FRAMEBUFFER_0 = -1, OFFSET_FRAMEBUFFER_1 = -1,
     OFFSET_FRAMEBUFFER_TEXTURE = -1, OFFSET_FRAMEBUFFER_TEXTURE_0 = -1;
 
 //    public byte
@@ -75,19 +75,6 @@ public class SmallGui extends GuiContainer
         {
             openPageSmall();
         }
-    }
-
-    public static void openPageSmall()
-    {
-        PAGE_ARRAY = new Page[]
-        {
-            new PageBlur(),
-            new PageMenu(STRING_ARRAY[14]),
-            new PageSmall((byte)1)
-        };
-        KEY = new KeyMenu();
-        MOUSE = new MouseSmall();
-        FLAG |= 1;
     }
 
     public static SmallGui get(EntityPlayer entityplayer, World world, int x, int y, int z)
@@ -112,6 +99,14 @@ public class SmallGui extends GuiContainer
             openPageMe(uuid);
         }
         return new SmallGui(new SmallContainer());
+    }
+
+    public static void addSet()
+    {
+        for (Page page : PAGE_ARRAY)
+        {
+            PAGE_CLASS_SET.add(page.getClass());
+        }
     }
 
     @Override
@@ -175,7 +170,7 @@ public class SmallGui extends GuiContainer
 //        int read_frame_buffer = OPENGL_INTBUFFER.get(0);
         GL_READ_FRAMEBUFFER_BINDING = OPENGL_INTBUFFER.get(0);
 
-        if (WIDTH != this.mc.displayWidth || HEIGHT != this.mc.displayHeight || FONT != SmallConfig.CLIENT.font.scale || (FLAG & 1) == 1/* || (this.state & 8) == 8*//* || MAIN_FRAMEBUFFER == -1*/)
+        if (WIDTH != this.mc.displayWidth || HEIGHT != this.mc.displayHeight || FONT != SmallConfig.CLIENT.font.scale/* || (FLAG & 1) == 1*//* || (this.state & 8) == 8*//* || MAIN_FRAMEBUFFER == -1*/)
         {
             WIDTH = this.mc.displayWidth;
             HEIGHT = this.mc.displayHeight;
@@ -197,6 +192,7 @@ public class SmallGui extends GuiContainer
 //                OFFSET_CUTOFF_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
                 OFFSET_FRAMEBUFFER = OpenGlHelper.glGenFramebuffers();
                 OFFSET_FRAMEBUFFER_0 = OpenGlHelper.glGenFramebuffers();
+                OFFSET_FRAMEBUFFER_1 = OpenGlHelper.glGenFramebuffers();
                 OFFSET_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
                 OFFSET_FRAMEBUFFER_TEXTURE_0 = GL11.glGenTextures();
 
@@ -259,7 +255,7 @@ public class SmallGui extends GuiContainer
 ////        ARRAY_BUFFER_INT_ARRAY = new int[size];
 //        TEXTURE_INT_LIST.clear();
 //        ARRAY_BUFFER_INT_LIST.clear();
-            int framebuffer = OpenGlHelper.glGenFramebuffers();
+//            int framebuffer = OpenGlHelper.glGenFramebuffers();
 
             //genQuad
 //            GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
@@ -303,7 +299,7 @@ public class SmallGui extends GuiContainer
 //        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
 //        //
 
-            OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, framebuffer);
+//            OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, framebuffer);
 
 //        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
 //        GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
@@ -338,24 +334,64 @@ public class SmallGui extends GuiContainer
 //        }
 //        BACK_ARRAY_BUFFER = OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVUv(0, 0, this.mc.displayWidth, this.mc.displayHeight, this.mc.displayWidth, this.mc.displayHeight, 1.0F, 1.0F), true));
 //        this.initBuffer();
-            for (Page page : PAGE_ARRAY)
-            {
-                page.init();
-            }
+//            for (Page page : PAGE_ARRAY)
+//            {
+//                page.init();
+//            }
 
-            //genQuad
-            OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, gl_array_buffer_binding);
-            //genQuad
+//            //genQuad
+//            OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, gl_array_buffer_binding);
+//            //genQuad
 
-            OpenGlHelper.glDeleteFramebuffers(framebuffer);
-
-            GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
+//            OpenGlHelper.glDeleteFramebuffers(framebuffer);
+//
+//            GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
 //        }
             //init
 //            this.init();
 //            this.state &= 255-8;
-            FLAG &= 255-1;
+//            FLAG &= 255-1;
+//            FLAG |= 1;
+//            for (Page page : PAGE_ARRAY)
+            for (Class clasz : PAGE_CLASS_SET)
+            {
+//                page.state |= 1;
+//                page.setByte((byte)(page.getByte() | 1));
+                try
+                {
+                    Field byte_field = clasz.getField("BYTE");
+                    byte_field.set(null, (byte)((byte)byte_field.get(null) | 1));
+                }
+                catch (NoSuchFieldException | IllegalAccessException e)
+                {
+//                    error(e);
+                }
+            }
         }
+
+        OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_FRAMEBUFFER_1);
+//        if ((FLAG & 1) == 1)
+        for (Page page : PAGE_ARRAY)
+        {
+//            if ((page.state & 1) == 1)
+//            if ((page.getByte() & 1) == 1)
+//            {
+//                int framebuffer = OpenGlHelper.glGenFramebuffers();
+//                OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, framebuffer);
+//                OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_FRAMEBUFFER_1);
+//            for (Page page : PAGE_ARRAY)
+//            {
+            page.init();
+//            }
+//                OpenGlHelper.glDeleteFramebuffers(framebuffer);
+//                GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
+//            FLAG &= 255-1;
+//                page.state &= 255-1;
+//            page.setByte((byte)(page.getByte() & 255-1));
+//            Nali.LOGGER.info("init");
+//            }
+        }
+        GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
 
         //takeDefault
 //        GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
@@ -606,7 +642,18 @@ public class SmallGui extends GuiContainer
         MOUSE_Y = Mouse.getEventY();
 //        int dwheel = Mouse.getDWheel();
 //        EVENTDWHEEL = /*Integer.signum(*/Mouse.getEventDWheel()/*)*/;
-        int eventdwheel = Integer.signum(Mouse.getEventDWheel());
+        int mouse = Mouse.getEventDWheel();
+//        int eventdwheel = Integer.signum(Mouse.getEventDWheel());
+        float eventdwheel = 0;
+        if (mouse > 0)
+        {
+            eventdwheel = 1.5F;
+        }
+        else if (mouse < 0)
+        {
+            eventdwheel = -1.5F;
+        }
+
         if (eventdwheel != 0)
         {
             if (EVENTDWHEEL > 0 && eventdwheel < 0)

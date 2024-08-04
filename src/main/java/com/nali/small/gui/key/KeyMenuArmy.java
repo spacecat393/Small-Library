@@ -3,21 +3,20 @@ package com.nali.small.gui.key;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SSToC;
 import com.nali.network.NetworkRegistry;
-import com.nali.small.gui.page.PageMenuArmy;
+import com.nali.small.gui.page.PageKeyArmy;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.nali.list.container.gui.SmallGui.*;
+import static com.nali.small.gui.page.PageSmall.openPageSmall;
+import static com.nali.small.gui.page.PageText.STRINGBUFFER;
 
 @SideOnly(Side.CLIENT)
 public class KeyMenuArmy extends KeyMenu
 {
-    public static StringBuffer STRINGBUFFER;
-
-    public KeyMenuArmy()
-    {
-        STRINGBUFFER = new StringBuffer();
-    }
+//    public KeyMenuArmy()
+//    {
+//        STRINGBUFFER = new StringBuffer();
+//    }
 
     @Override
     public void run()
@@ -29,7 +28,7 @@ public class KeyMenuArmy extends KeyMenu
         }
         if ((STATE & 2) == 2)
         {
-            FLAG |= 1;
+//            FLAG |= 1;
             STATE &= 255-2;
         }
     }
@@ -44,7 +43,7 @@ public class KeyMenuArmy extends KeyMenu
         }
         else if (typedChar == 'r')
         {
-            PageMenuArmy.BT27 = 5.0F;
+            PageKeyArmy.BT27 = 5.0F;
             NetworkRegistry.I.sendToServer(new ServerMessage(new byte[]{SSToC.ID}));
             STATE |= 2;
         }

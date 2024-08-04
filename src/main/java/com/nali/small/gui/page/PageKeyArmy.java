@@ -1,30 +1,23 @@
 package com.nali.small.gui.page;
 
-import com.nali.list.data.SmallData;
 import com.nali.system.opengl.memo.client.MemoS;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL20;
 
-import static com.nali.list.container.gui.SmallGui.*;
-import static com.nali.system.ClientLoader.S_LIST;
+import static com.nali.list.container.gui.SmallGui.SCALE;
+import static com.nali.list.container.gui.SmallGui.SMALLGUI;
 
 @SideOnly(Side.CLIENT)
-public class PageMenuArmy extends PageMenu
+public class PageKeyArmy extends PageKey
 {
+    public static byte BYTE = 1;
     public static float BT27;
 
-    public PageMenuArmy(String string)
-    {
-        super(string);
-    }
-
     @Override
-    public void init()
+    public void initPlus()
     {
-        super.init();
+        super.initPlus();
         Minecraft minecraft = SMALLGUI.mc;
         int display_width = minecraft.displayWidth,
         display_height = minecraft.displayHeight;
@@ -45,22 +38,27 @@ public class PageMenuArmy extends PageMenu
     }
 
     @Override
-    public void draw(float[] color_float_array)
+    public void drawPlus(MemoS rs, float[] color_float_array)
     {
-        super.draw(color_float_array);
-
-        MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 3);
-        OpenGlHelper.glUseProgram(rs.program);
-        int v = rs.attriblocation_int_array[0];
-        GL20.glEnableVertexAttribArray(v);
+        super.drawPlus(rs, color_float_array);
 
         boolean bt = BT27 > 0.0F;
-        this.drawQuadVUv(rs, this.vec2_2d_float_array[1], bt ? this.color_vec4_2d_float_array[2] : color_float_array == null ? this.color_vec4_2d_float_array[1] : color_float_array, ARRAY_BUFFER_INTEGER_LIST.get(3), TEXTURE_INTEGER_LIST.get(3));
+        this.drawQuadVUv(rs, this.vec2_2d_float_array[0], bt ? this.color_vec4_2d_float_array[1] : color_float_array == null ? this.color_vec4_2d_float_array[0] : color_float_array, ARRAY_BUFFER_INTEGER_LIST.get(1), TEXTURE_INTEGER_LIST.get(1));
         if (bt)
         {
             BT27 -= SMALLGUI.partial_ticks;
         }
-
-        GL20.glDisableVertexAttribArray(v);
     }
+
+//    @Override
+//    public byte getByte()
+//    {
+//        return BYTE;
+//    }
+//
+//    @Override
+//    public void setByte(byte b)
+//    {
+//        BYTE = b;
+//    }
 }

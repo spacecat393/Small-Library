@@ -7,9 +7,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL20;
 
-import java.util.Collections;
-import java.util.List;
-
 import static com.nali.list.container.gui.SmallGui.FULL_ARRAY_BUFFER;
 import static com.nali.list.container.gui.SmallGui.SMALLGUI;
 import static com.nali.system.ClientLoader.S_LIST;
@@ -17,6 +14,7 @@ import static com.nali.system.ClientLoader.S_LIST;
 @SideOnly(Side.CLIENT)
 public class PageBlur extends Page
 {
+//    public static byte BYTE = 1;
 //    public static int BACK_ARRAY_BUFFER = -1;
 
 //    @Override
@@ -38,6 +36,12 @@ public class PageBlur extends Page
 //    {
 ////        super.preDraw();
 //    }
+
+    @Override
+    public void init()
+    {
+
+    }
 
     @Override
     public void draw()
@@ -65,20 +69,32 @@ public class PageBlur extends Page
     }
 
 //    @Override
+//    public byte getByte()
+//    {
+//        return BYTE;
+//    }
+//
+//    @Override
+//    public void setByte(byte b)
+//    {
+//        BYTE = b;
+//    }
+
+//    @Override
 //    public void change()
 //    {
 //
 //    }
 
-    @Override
-    public List<Integer> getArrayBufferIntegerList()
-    {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Integer> getTextureIntegerList()
-    {
-        return Collections.emptyList();
-    }
+//    @Override
+//    public List<Integer> getArrayBufferIntegerList()
+//    {
+//        return Collections.emptyList();
+//    }
+//
+//    @Override
+//    public List<Integer> getTextureIntegerList()
+//    {
+//        return Collections.emptyList();
+//    }
 }

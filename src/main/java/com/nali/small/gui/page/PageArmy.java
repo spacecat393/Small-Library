@@ -4,7 +4,6 @@ import com.nali.list.data.SmallData;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.gui.key.KeyMenuArmy;
-import com.nali.small.gui.mouse.Mouse;
 import com.nali.small.gui.mouse.MouseArmy;
 import com.nali.system.opengl.memo.client.MemoS;
 import net.minecraft.client.Minecraft;
@@ -25,9 +24,10 @@ import java.util.*;
 import static com.nali.list.container.gui.SmallGui.*;
 import static com.nali.small.entity.memo.client.ClientE.C_MAP;
 import static com.nali.small.gui.key.Key.KEY;
+import static com.nali.small.gui.mouse.Mouse.MOUSE;
 import static com.nali.small.gui.mouse.MouseArmy.Y;
 import static com.nali.small.gui.mouse.MouseArmy.Y_STAR;
-import static com.nali.small.gui.page.PageMenu.LEFT;
+import static com.nali.small.gui.page.PageSakura.LEFT;
 import static com.nali.system.ClientLoader.S_LIST;
 import static com.nali.system.opengl.memo.client.MemoC.GL_DRAW_FRAMEBUFFER_BINDING;
 import static com.nali.system.opengl.memo.client.MemoC.GL_READ_FRAMEBUFFER_BINDING;
@@ -47,7 +47,8 @@ public class PageArmy extends Page
     public static byte[] MOVE_BYTE_ARRAY;
     public static List<Integer> INDEX_INTEGER_LIST = new ArrayList();
     public static UUID[] UUID_ARRAY;
-    public static byte PAGE, STATE;
+    public static byte PAGE, STATE,
+    BYTE = 1;
 
     public float[][] vec2_2d_float_array;
     public float[][] color_vec4_2d_float_array;
@@ -70,23 +71,35 @@ public class PageArmy extends Page
 
     public static void openPageArmy()
     {
+        PageMenu.BYTE |= 1;
         PAGE_ARRAY = new Page[]
         {
             new PageBlur(),
-            new PageMenuArmy(STRING_ARRAY[14] + "|" + STRING_ARRAY[0]),
+            new PageMenu(STRING_ARRAY[14] + "|" + STRING_ARRAY[0]),
+            new PageSakura(),
+            new PageKeyArmy(),
             new PageArmy((byte)1)
         };
         KEY = new KeyMenuArmy();
-        Mouse.MOUSE = new MouseArmy();
-        FLAG |= 1;
+        MOUSE = new MouseArmy();
+//        FLAG |= 1;
+        addSet();
     }
 
     @Override
     public void init()
     {
-        super.init();
+//        byte b = this.getByte();
+//        if ((b & 1) == 1)
+        if ((BYTE & 1) == 1)
+        {
+            this.clear(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST);
+//            super.init();
 //        NetworkRegistry.I.sendToServer(new ServerMessage(new byte[]{SSToC.ID}));
-        this.initC();
+            this.initC();
+//            this.setByte((byte)(b & 255-1));
+            BYTE &= 255-1;
+        }
     }
 
 //    @Override
@@ -333,8 +346,10 @@ public class PageArmy extends Page
     {
         if (SIZE != C_MAP.size())
         {
-            FLAG |= 1;
+//            FLAG |= 1;
 //            SMALLGUI.state |= 8;
+//            this.state |= 1;
+            BYTE |= 1;
         }
 
         if (SIZE > 0 && SIZE == C_MAP.size())
@@ -470,22 +485,34 @@ public class PageArmy extends Page
     }
 
 //    @Override
+//    public byte getByte()
+//    {
+//        return BYTE;
+//    }
+//
+//    @Override
+//    public void setByte(byte b)
+//    {
+//        BYTE = b;
+//    }
+
+//    @Override
 //    public void change()
 //    {
 //
 //    }
 
-    @Override
-    public List<Integer> getArrayBufferIntegerList()
-    {
-        return ARRAY_BUFFER_INTEGER_LIST;
-    }
-
-    @Override
-    public List<Integer> getTextureIntegerList()
-    {
-        return TEXTURE_INTEGER_LIST;
-    }
+//    @Override
+//    public List<Integer> getArrayBufferIntegerList()
+//    {
+//        return ARRAY_BUFFER_INTEGER_LIST;
+//    }
+//
+//    @Override
+//    public List<Integer> getTextureIntegerList()
+//    {
+//        return TEXTURE_INTEGER_LIST;
+//    }
 
     public void initC()
     {

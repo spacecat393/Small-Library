@@ -37,11 +37,13 @@ public abstract class Page
 //        SMALLGUI.state |= 2;
 //    }
 
-    public void init()
+//    public byte state = 1;//init
+
+    public void clear(List<Integer> array_buffer_integer_list, List<Integer> texture_integer_list)
     {
-        List<Integer> array_buffer_integer_list = this.getArrayBufferIntegerList();
-        List<Integer> texture_integer_list = this.getTextureIntegerList();
-        this.getTextureIntegerList();
+//        List<Integer> array_buffer_integer_list = this.getArrayBufferIntegerList();
+//        List<Integer> texture_integer_list = this.getTextureIntegerList();
+//        this.getTextureIntegerList();
         for (int texture : texture_integer_list)
         {
             GL11.glDeleteTextures(texture);
@@ -550,11 +552,15 @@ public abstract class Page
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
     }
 
+    public abstract void init();
     public abstract void draw(/*MemoS rs*/);
     public abstract void preDraw(/*MemoS rs*/);
     public abstract void detect(/*MemoS rs*/);
 //    public abstract void change();
 
-    public abstract List<Integer> getArrayBufferIntegerList();
-    public abstract List<Integer> getTextureIntegerList();
+//    public abstract byte getByte();
+//    public abstract void setByte(byte b);
+
+//    public abstract List<Integer> getArrayBufferIntegerList();
+//    public abstract List<Integer> getTextureIntegerList();
 }
