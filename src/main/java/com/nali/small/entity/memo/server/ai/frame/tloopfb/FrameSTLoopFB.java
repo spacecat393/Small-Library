@@ -22,16 +22,17 @@ public class FrameSTLoopFB<SD, BD extends IBothDaNe, E extends Entity, I extends
         byte[] frame_byte_array = this.s.getFrameByteArray();
         byte frame = frame_byte_array[this.index];
         byte index = frame_byte_array[this.index + 1];
-        if (this.s.frame_int_array[frame] < frame_2d_int_array[index][0] || this.s.frame_int_array[frame] > frame_2d_int_array[index][1])
+        int[] frame_int_array = this.s.getFrameIntArray();
+        if (frame_int_array[frame] < frame_2d_int_array[index][0] || frame_int_array[frame] > frame_2d_int_array[index][1])
         {
             this.step = 0;
-            this.s.frame_int_array[frame] = frame_2d_int_array[index][0];
+            frame_int_array[frame] = frame_2d_int_array[index][0];
         }
-        else if (this.s.frame_int_array[frame] == frame_2d_int_array[index][0])
+        else if (frame_int_array[frame] == frame_2d_int_array[index][0])
         {
             this.step = 1;
         }
-        else if (this.s.frame_int_array[frame] == frame_2d_int_array[index][1])
+        else if (frame_int_array[frame] == frame_2d_int_array[index][1])
         {
             this.step = -1;
         }

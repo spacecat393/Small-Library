@@ -11,13 +11,14 @@ import static com.nali.list.container.gui.SmallGui.SMALLGUI;
 @SideOnly(Side.CLIENT)
 public class PageKeyArmy extends PageKey
 {
-    public static byte BYTE = 1;
+//    public static byte BYTE = 1;
     public static float BT27;
 
     @Override
     public void initPlus()
     {
         super.initPlus();
+//        Nali.LOGGER.info("initP");
         Minecraft minecraft = SMALLGUI.mc;
         int display_width = minecraft.displayWidth,
         display_height = minecraft.displayHeight;

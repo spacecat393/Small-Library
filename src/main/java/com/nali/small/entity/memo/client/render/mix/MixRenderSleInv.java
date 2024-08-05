@@ -85,26 +85,26 @@ public abstract class MixRenderSleInv<RC extends IClientDaS, R extends RenderS<B
         {
             GL11.glPushMatrix();
 
-            GL_TEXTURE_2D = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
+            boolean gl_texture_2d = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
             GL11.glDisable(GL11.GL_TEXTURE_2D);
 
-            GL_BLEND = GL11.glIsEnabled(GL11.GL_BLEND);
+            boolean gl_blend = GL11.glIsEnabled(GL11.GL_BLEND);
             GL11.glEnable(GL11.GL_BLEND);
 
             GL11.glGetInteger(GL20.GL_BLEND_EQUATION_RGB, OPENGL_INTBUFFER);
-            GL_BLEND_EQUATION_RGB = OPENGL_INTBUFFER.get(0);
+            int gl_blend_equation_rgb = OPENGL_INTBUFFER.get(0);
             GL11.glGetInteger(GL20.GL_BLEND_EQUATION_ALPHA, OPENGL_INTBUFFER);
-            GL_BLEND_EQUATION_ALPHA = OPENGL_INTBUFFER.get(0);
+            int gl_blend_equation_alpha = OPENGL_INTBUFFER.get(0);
             GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
 
             GL11.glGetInteger(GL14.GL_BLEND_SRC_RGB, OPENGL_INTBUFFER);
-            GL_BLEND_SRC_RGB = OPENGL_INTBUFFER.get(0);
+            int gl_blend_src_rgb = OPENGL_INTBUFFER.get(0);
             GL11.glGetInteger(GL14.GL_BLEND_SRC_ALPHA, OPENGL_INTBUFFER);
-            GL_BLEND_SRC_ALPHA = OPENGL_INTBUFFER.get(0);
+            int gl_blend_src_alpha = OPENGL_INTBUFFER.get(0);
             GL11.glGetInteger(GL14.GL_BLEND_DST_RGB, OPENGL_INTBUFFER);
-            GL_BLEND_DST_RGB = OPENGL_INTBUFFER.get(0);
+            int gl_blend_dst_rgb = OPENGL_INTBUFFER.get(0);
             GL11.glGetInteger(GL14.GL_BLEND_DST_ALPHA, OPENGL_INTBUFFER);
-            GL_BLEND_DST_ALPHA = OPENGL_INTBUFFER.get(0);
+            int gl_blend_dst_alpha = OPENGL_INTBUFFER.get(0);
             GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 
             GL11.glTranslated(-e.posX, -e.posY, -e.posZ);
@@ -130,7 +130,7 @@ public abstract class MixRenderSleInv<RC extends IClientDaS, R extends RenderS<B
             }
 //            }
 
-            if (GL_BLEND)
+            if (gl_blend)
             {
                 GL11.glEnable(GL11.GL_BLEND);
             }
@@ -139,12 +139,12 @@ public abstract class MixRenderSleInv<RC extends IClientDaS, R extends RenderS<B
                 GL11.glDisable(GL11.GL_BLEND);
             }
 
-            GL20.glBlendEquationSeparate(GL_BLEND_EQUATION_RGB, GL_BLEND_EQUATION_ALPHA);
-            GL14.glBlendFuncSeparate(GL_BLEND_SRC_RGB, GL_BLEND_DST_RGB, GL_BLEND_SRC_ALPHA, GL_BLEND_DST_ALPHA);
+            GL20.glBlendEquationSeparate(gl_blend_equation_rgb, gl_blend_equation_alpha);
+            GL14.glBlendFuncSeparate(gl_blend_src_rgb, gl_blend_dst_rgb, gl_blend_src_alpha, gl_blend_dst_alpha);
 
             GL11.glLineWidth(GL_LINE_WIDTH);
 
-            if (GL_TEXTURE_2D)
+            if (gl_texture_2d)
             {
                 GL11.glEnable(GL11.GL_TEXTURE_2D);
             }

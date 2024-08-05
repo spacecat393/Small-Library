@@ -34,6 +34,7 @@ public abstract class ClientE<RC extends IClientDaO, R extends RenderO<RC>, SD, 
 {
     public static Map<UUID, ClientE> C_MAP = new HashMap();
     public static Map<Integer, UUID> UUID_MAP = new HashMap();
+    public static String EMPTY_STRING = "---";
 
     public I i;
     public R r;
@@ -52,10 +53,10 @@ public abstract class ClientE<RC extends IClientDaO, R extends RenderO<RC>, SD, 
     public UUID uuid;
 
     public boolean fake;
-    public String name_string = "";
+    public String name_string = EMPTY_STRING;
     public byte state;//regen outline/glowing die
-    public int dimension = -1;
-    public float x, y, z;
+    public Integer dimension;
+    public float x, y, z, hp;
 
     public byte[] sync_byte_array;//remove later?
 

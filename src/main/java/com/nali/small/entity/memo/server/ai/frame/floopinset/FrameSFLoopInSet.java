@@ -23,7 +23,8 @@ public class FrameSFLoopInSet<SD, BD extends IBothDaNe, E extends Entity, I exte
         byte frame = frame_byte_array[this.index];
         byte index = frame_byte_array[this.index + 1];
         byte index1 = frame_byte_array[this.index + 2];
-        boolean result = this.s.frame_int_array[frame] >= frame_2d_int_array[index][1] && this.s.frame_int_array[frame] < frame_2d_int_array[index1][1];
+        int[] frame_int_array = this.s.getFrameIntArray();
+        boolean result = frame_int_array[frame] >= frame_2d_int_array[index][1] && frame_int_array[frame] < frame_2d_int_array[index1][1];
 
         if (result)
         {

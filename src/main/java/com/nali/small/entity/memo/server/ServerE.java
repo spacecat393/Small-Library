@@ -39,7 +39,7 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
     //    public byte[] server_state_byte_array;
 //    public byte[] current_work_byte_array;
 //    public byte[] current_server_work_byte_array;
-    public int[] frame_int_array;
+//    public int[] frame_int_array;
 //    public boolean sus_init;
 //    public SkinningEntities skinningentities;
 
@@ -56,7 +56,7 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 //        int size = (int)Math.ceil(this.i.getAI().length / 8.0F);
 //        this.work_byte_array = new byte[(int)Math.ceil(this.i.getAI().length / 8.0F)/*size*/];// /8
 //        this.current_work_byte_array = new byte[size];
-        this.frame_int_array = new int[i.getIntegerDataParameterArray().length];
+//        this.frame_int_array = new int[i.getIntegerDataParameterArray().length];
         this.sync_byte_array = new byte[this.i.getBD().MaxSync()];
     }
 
@@ -66,7 +66,7 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
         E e = this.i.getE();
         EntityDataManager entitydatamanager = e.getDataManager();
         DataParameter<Byte>[] byte_dataparameter_array = this.i.getByteDataParameterArray();
-        DataParameter<Integer>[] integer_dataparameter = this.i.getIntegerDataParameterArray();
+//        DataParameter<Integer>[] integer_dataparameter = this.i.getIntegerDataParameterArray();
 
         for (int i = 0; i < byte_dataparameter_array.length; ++i)
         {
@@ -90,10 +90,10 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 
 //        System.arraycopy(this.main_work_byte_array, 0, this.current_work_byte_array, 0, this.current_work_byte_array.length);
 
-        for (int i = 0; i < this.frame_int_array.length; ++i)
-        {
-            this.frame_int_array[i] = entitydatamanager.get(integer_dataparameter[i]);
-        }
+//        for (int i = 0; i < this.frame_int_array.length; ++i)
+//        {
+//            this.frame_int_array[i] = entitydatamanager.get(integer_dataparameter[i]);
+//        }
 
         this.updateServer();
         e.width = 0.5F;

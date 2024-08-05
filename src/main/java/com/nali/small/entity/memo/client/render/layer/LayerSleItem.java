@@ -34,8 +34,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
-import static com.nali.system.opengl.memo.client.MemoC.GL_CULL_FACE;
-
 @SideOnly(Side.CLIENT)
 public class LayerSleItem<RC extends IClientDaS, R extends RenderS<BD, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixLe<SD, BD, E>, MR extends MixRenderSe<RC, R, SD, BD, E, I, MB, C>, MB extends MixBoxSle<RC, R, SD, BD, E, I, MR, C>, C extends ClientSle<RC, R, SD, BD, E, I, MB, MR>> extends LayerE<RC, R, SD, BD, E, I, MR, MB, C>
 {
@@ -148,7 +146,7 @@ public class LayerSleItem<RC extends IClientDaS, R extends RenderS<BD, RC>, SD e
             R r = this.c.r;
 
             ItemStack itemstack = e.getItemStackFromSlot(entityequipmentslot);
-            GL_CULL_FACE = GL11.glIsEnabled(GL11.GL_CULL_FACE);
+            boolean gl_cull_face = GL11.glIsEnabled(GL11.GL_CULL_FACE);
             GL11.glDisable(GL11.GL_CULL_FACE);
 
             float[] c_vec4 = r.get3DSkinning(this.x, this.y, this.z, 0, 0, 0, i, v);
@@ -245,7 +243,7 @@ public class LayerSleItem<RC extends IClientDaS, R extends RenderS<BD, RC>, SD e
 
             GL11.glPopMatrix();
 
-            if (GL_CULL_FACE)
+            if (gl_cull_face)
             {
                 GL11.glEnable(GL11.GL_CULL_FACE);
             }

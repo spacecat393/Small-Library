@@ -35,7 +35,7 @@ public class MouseArmy extends Mouse
         {
             KeyMenuArmy.STATE |= 4;
         }
-        else if (HIT == 0)
+        else if ((STATE & 1) == 1 && PAGE == 0 && HIT == 0)
         {
             KeyMenuArmy.STATE &= 255-4;
         }
@@ -192,7 +192,7 @@ public class MouseArmy extends Mouse
             {
                 byte[] byte_array = new byte[1 + 16];
                 byte_array[0] = SEToC.ID;
-                ByteWriter.set(byte_array, PageArmy.UUID_ARRAY[id], 1);
+                ByteWriter.set(byte_array, PageArmy.UUID_ARRAY[id - 62], 1);
                 NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
             }
             else if (HIT > 2)//me

@@ -26,24 +26,25 @@ public abstract class FrameSFLoopFree<SD, BD extends IBothDaNe, E extends Entity
             byte[] frame_byte_array = this.s.getFrameByteArray();
             byte frame = frame_byte_array[this.index];
             byte index = this.getIndex();
-            if (this.s.frame_int_array[frame] == frame_2d_int_array[index][1] - 1)
+            int[] frame_int_array = this.s.getFrameIntArray();
+            if (frame_int_array[frame] == frame_2d_int_array[index][1] - 1)
             {
                 this.free();
     //            this.s.statentitiesmemory.stat &= 255 - this.id_pack;
 
-                this.s.frame_int_array[frame] = frame_2d_int_array[index][1] - 1;
+                frame_int_array[frame] = frame_2d_int_array[index][1] - 1;
                 this.step = 0;
                 return true;
             }
-            else if (this.s.frame_int_array[frame] < frame_2d_int_array[index][0] || this.s.frame_int_array[frame] > frame_2d_int_array[index][1])
+            else if (frame_int_array[frame] < frame_2d_int_array[index][0] || frame_int_array[frame] > frame_2d_int_array[index][1])
             {
-                this.s.frame_int_array[frame] = frame_2d_int_array[index][0];
+                frame_int_array[frame] = frame_2d_int_array[index][0];
                 this.step = 0;
                 return true;
             }
 
             this.step = 1;
-            return this.s.frame_int_array[frame] < frame_2d_int_array[index][1];
+            return frame_int_array[frame] < frame_2d_int_array[index][1];
         }
 
         return false;

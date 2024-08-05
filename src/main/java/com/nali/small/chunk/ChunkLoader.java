@@ -57,9 +57,10 @@ public class ChunkLoader
                 }
             }
 
-            byte[] byte_array = new byte[4 + 8];
+            byte[] byte_array = new byte[4 + 8/* + 4*/];
             ByteWriter.set(byte_array, world.getWorldType().getId(), 0);
             ByteWriter.set(byte_array, e.getPosition().toLong(), 4);
+//            ByteWriter.set(byte_array, world.provider.getDimension(), 4 + 8);
             try
             {
                 Files.write(new File(world.getSaveHandler().getWorldDirectory() + "/nali/entity/" + uuid).toPath(), byte_array);

@@ -28,9 +28,9 @@ import static com.nali.small.gui.mouse.Mouse.MOUSE;
 import static com.nali.small.gui.mouse.MouseArmy.Y;
 import static com.nali.small.gui.mouse.MouseArmy.Y_STAR;
 import static com.nali.small.gui.page.PageSakura.LEFT;
+import static com.nali.small.gui.page.PageText.SEARCH_L;
+import static com.nali.small.gui.page.PageText.STRINGBUFFER;
 import static com.nali.system.ClientLoader.S_LIST;
-import static com.nali.system.opengl.memo.client.MemoC.GL_DRAW_FRAMEBUFFER_BINDING;
-import static com.nali.system.opengl.memo.client.MemoC.GL_READ_FRAMEBUFFER_BINDING;
 
 @SideOnly(Side.CLIENT)
 public class PageArmy extends Page
@@ -45,10 +45,16 @@ public class PageArmy extends Page
     A_W, A_H;
     public static float MAX_Y, MAX_Y_OFFSET, MAX_Y_STAR;
     public static byte[] MOVE_BYTE_ARRAY;
+//    public static byte[] ALL_MOVE_BYTE_ARRAY;
+//    public static byte[] FINAL_MOVE_BYTE_ARRAY;
     public static List<Integer> INDEX_INTEGER_LIST = new ArrayList();
+//    public static String[][] STRING_2D_ARRAY;
     public static UUID[] UUID_ARRAY;
+//    public static UUID[] ALL_UUID_ARRAY;
+//    public static UUID[] FINAL_UUID_ARRAY;
     public static byte PAGE, STATE,
-    BYTE = 1;
+    BYTE = 1;//init lock
+    public static String STRING;
 
     public float[][] vec2_2d_float_array;
     public float[][] color_vec4_2d_float_array;
@@ -72,13 +78,19 @@ public class PageArmy extends Page
     public static void openPageArmy()
     {
         PageMenu.BYTE |= 1;
+        if (PageKeyArmy.ARRAY_BUFFER_INTEGER_LIST.size() != 2)
+        {
+            PageKeyArmy.BYTE |= 1;
+        }
+
         PAGE_ARRAY = new Page[]
         {
             new PageBlur(),
             new PageMenu(STRING_ARRAY[14] + "|" + STRING_ARRAY[0]),
             new PageSakura(),
             new PageKeyArmy(),
-            new PageArmy((byte)1)
+            new PageArmy((byte)1),
+            new PageText()
         };
         KEY = new KeyMenuArmy();
         MOUSE = new MouseArmy();
@@ -89,17 +101,32 @@ public class PageArmy extends Page
     @Override
     public void init()
     {
+        String string = STRINGBUFFER.toString();
+        if (!string.equals(STRING))
+        {
+            BYTE |= 1;
+        }
+        STRING = string;
+
 //        byte b = this.getByte();
 //        if ((b & 1) == 1)
         if ((BYTE & 1) == 1)
         {
-            this.clear(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST);
+            if ((BYTE & 2) == 0)
+            {
+                BYTE |= 2;
+                this.clear(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST);
 //            super.init();
 //        NetworkRegistry.I.sendToServer(new ServerMessage(new byte[]{SSToC.ID}));
-            this.initC();
+                this.initC();
 //            this.setByte((byte)(b & 255-1));
-            BYTE &= 255-1;
+                BYTE &= 255-1-2;
+            }
         }
+//        else if ((BYTE & 2) == 2)
+//        {
+//            BYTE &= 255-2;
+//        }
     }
 
 //    @Override
@@ -168,11 +195,6 @@ public class PageArmy extends Page
             OpenGlHelper.glUseProgram(rs.program);
             int v = rs.attriblocation_int_array[0];
             GL20.glEnableVertexAttribArray(v);
-
-            int size = ARRAY_BUFFER_INTEGER_LIST.size();
-
-            int index = size - 1;
-            this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(index), TEXTURE_INTEGER_LIST.get(index));
 //
 ////            if (y - < display_height)
 ////            {
@@ -258,6 +280,11 @@ public class PageArmy extends Page
 
 //            GL11.glViewport(0, 0, display_width, display_height);
             GL11.glViewport(0, 0, minecraft.displayWidth, minecraft.displayHeight);
+
+            int size = ARRAY_BUFFER_INTEGER_LIST.size();
+
+            int index = size - 1;
+            this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(index), TEXTURE_INTEGER_LIST.get(index));
 
             index = size - 3;
             this.drawQuadVUv(rs, this.vec2_2d_float_array[1], this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(index), TEXTURE_INTEGER_LIST.get(index));
@@ -544,7 +571,8 @@ public class PageArmy extends Page
         y = display_height - scale / (SMALLGUI.height / (float)display_height) - 4.0F * 0.005F * display_height - H - h_offset/* * 2.0F*//* - (8.0F * 0.005F * display_height) * 2.0F*/,
 //        int max_l = (int)(display_width - y);
         h_offset_y2 = h_offset_y * 2.0F,
-        w_offset = display_width - (LEFT + H + 6.0F * 0.005F * display_width);
+//        w_offset = display_width - (LEFT + H + 6.0F * 0.005F * display_width);
+        w_offset = display_width - x;
 
         MAX_Y = (((height_f + h2) * SIZE - (display_height - h_offset_y2)) / display_height) * 2.0F;
         MAX_Y_OFFSET = (((height_f + h2) * 62 - (display_height - h_offset_y2)) / display_height) * 2.0F;
@@ -566,21 +594,25 @@ public class PageArmy extends Page
             if (c != null)
             {
                 String[] string_array = new String[4];
-//            int[] int_array = new int[5];
-//            int in_index = 0;
+////            int[] int_array = new int[5];
+////            int in_index = 0;
+//
+//    //            this.preDrawModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c, -1, (int)(25 / (SMALLGUI.width / (float)display_width)), (int)(25 / (SMALLGUI.height / (float)display_height)), LEFT + H + 4.0F * 0.005F * display_width/* + 25.0F / (SMALLGUI.width / (float)display_width)*/, display_height - H * 2.0F - h2/* - 25.0F / (SMALLGUI.height / (float)display_height)*/, -25.0F/* / (SMALLGUI.height / (float)display_height)*/);
+////                this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, text_height, x, y, text_scale);
+//                ByteBuffer bytebuffer = ByteBuffer.allocateDirect(4).order(ByteOrder.nativeOrder());
+//                bytebuffer.put((byte)0);
+//                bytebuffer.put((byte)0);
+//                bytebuffer.put((byte)0);
+//                bytebuffer.put((byte)(255/4.0F));
+//                bytebuffer.flip();
+////                this.createBox(x, y, (int)(width + display_width / 2.0F), (int)(height / 2.0F), bytebuffer);
+//                this.initBox(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, x, y, (int)(display_width - LEFT - H - 8.0F * 0.005F * display_width - x), (int)(height / 2.0F), bytebuffer);
+//
+//                this.initModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c/*, -1*/, width, height, x, y, -scale);
 
-    //            this.preDrawModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c, -1, (int)(25 / (SMALLGUI.width / (float)display_width)), (int)(25 / (SMALLGUI.height / (float)display_height)), LEFT + H + 4.0F * 0.005F * display_width/* + 25.0F / (SMALLGUI.width / (float)display_width)*/, display_height - H * 2.0F - h2/* - 25.0F / (SMALLGUI.height / (float)display_height)*/, -25.0F/* / (SMALLGUI.height / (float)display_height)*/);
-//                this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, text_height, x, y, text_scale);
-                ByteBuffer bytebuffer = ByteBuffer.allocateDirect(4).order(ByteOrder.nativeOrder());
-                bytebuffer.put((byte)0);
-                bytebuffer.put((byte)0);
-                bytebuffer.put((byte)0);
-                bytebuffer.put((byte)(255/4.0F));
-                bytebuffer.flip();
-//                this.createBox(x, y, (int)(width + display_width / 2.0F), (int)(height / 2.0F), bytebuffer);
-                this.initBox(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, x, y, (int)(display_width - LEFT - H - 8.0F * 0.005F * display_width - x), (int)(height / 2.0F), bytebuffer);
-
-                this.initModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c/*, -1*/, width, height, x, y, -scale);
+                //state leak
+//                //need to free lock
+//                GlStateManager.bindTexture(0);
 
                 IMixE i = c.i;
 //                String statp_string = "";
@@ -590,12 +622,33 @@ public class PageArmy extends Page
                 {
                     string_array[0] = id + " " + c.name_string;
 
+                    if (c.hp > 0)
+                    {
+                        //sync
+                        if (false)//negative
+                        {
+                            string_array[1] += STRING_ARRAY[21];
+                        }
+                        else if (false)//teamup
+                        {
+                            string_array[1] += STRING_ARRAY[17];
+                        }
+                        else
+                        {
+                            string_array[1] += STRING_ARRAY[22];
+                        }
+                    }
+                    else
+                    {
+                        string_array[1] += STRING_ARRAY[20];
+                    }
+
                     if ((c.state & 1) == 1)
                     {
                         string_array[1] += " " + STRING_ARRAY[25];
                     }
 
-                    string_array[2] = c.dimension == -1 ? "" : DimensionManager.getProviderType(c.dimension).getName();
+                    string_array[2] = c.dimension == null ? ClientE.EMPTY_STRING : DimensionManager.getProviderType(c.dimension).getName();
                     string_array[3] = "X " + String.format("%.4f", c.x) + " Y " + String.format("%.4f", c.y) + " Z " + String.format("%.4f", c.z);
                 }
                 else
@@ -621,6 +674,11 @@ public class PageArmy extends Page
                     else
                     {
                         string_array[1] += STRING_ARRAY[20];
+                    }
+
+                    if (false)
+                    {
+                        string_array[1] += " " + STRING_ARRAY[25];
                     }
 
                     string_array[0] = id + " " + e.getName()/* + " "*/;
@@ -650,6 +708,36 @@ public class PageArmy extends Page
 //    //            x += ;
 //                y -= scale / (SMALLGUI.height / (float)display_height) + h2;
 
+                UUID_ARRAY[id] = uuid;
+                ++id;
+
+                boolean out = false;
+                for (String string : string_array)
+                {
+                    if (string.contains(STRINGBUFFER.toString()))
+                    {
+                        out = false;
+                        break;
+                    }
+                    else
+                    {
+                        out = true;
+                    }
+                }
+                if (out)
+                {
+                    continue;
+                }
+
+                ByteBuffer bytebuffer = ByteBuffer.allocateDirect(4).order(ByteOrder.nativeOrder());
+                bytebuffer.put((byte)0);
+                bytebuffer.put((byte)0);
+                bytebuffer.put((byte)0);
+                bytebuffer.put((byte)(255/4.0F));
+                bytebuffer.flip();
+                this.initBox(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, x, y, (int)(display_width - LEFT - H - 8.0F * 0.005F * display_width - x), (int)(height / 2.0F), bytebuffer);
+                this.initModel(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, c/*, -1*/, width, height, x, y, -scale);
+
                 String string = string_array[0];
                 int l = (int)(minecraft.fontRenderer.getStringWidth(string) * SCALE);
                 MOVE_BYTE_ARRAY[(int)(m++ / 8.0F)] |= l > w_offset ? 1 : 0;
@@ -676,9 +764,6 @@ public class PageArmy extends Page
                 this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, text_height, x_offset, y, text_scale);
 //            HO = y;
                 y -= scale / (SMALLGUI.height / (float)display_height) + h2;
-
-                UUID_ARRAY[id] = uuid;
-                ++id;
             }
         }
 
@@ -712,8 +797,18 @@ public class PageArmy extends Page
         this.initTextVertical(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, STRING_ARRAY[29], H, H, display_width - LEFT - H - 6.0F * 0.005F * display_width, display_height - H - 4.0F * 0.005F * display_height/* - H*/, SCALE);
 
         //search
-        String string = "________" + STRING_ARRAY[28];
-        int l = (int)(minecraft.fontRenderer.getStringWidth(string) * SCALE);
-        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, H, display_width - l - 2.0F * 0.005F * display_width, display_height - H - h2, SCALE);
+        String string = "________________" + STRING_ARRAY[28];
+        SEARCH_L = minecraft.fontRenderer.getStringWidth(string) * SCALE;
+//        SEARCH_L = w_offset - 2.0F * 0.005F * display_width;
+//        SEARCH_L = x;
+//        stringbuilder = new StringBuilder();
+//        max_l = (int)(Math.ceil((w_offset - 2.0F * 0.005F * display_width - LEFT) / SCALE));
+//        for (int i = 0; i < max_l - 1; ++i)
+//        {
+//            stringbuilder.append("_");
+//        }
+//        stringbuilder.append(STRING_ARRAY[28]);
+        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, (int)SEARCH_L, H, display_width - SEARCH_L - 2.0F * 0.005F * display_width, display_height - H - h2, SCALE);
+//        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, stringbuilder.toString(), max_l, H, SEARCH_L, display_height - H - h2, SCALE);
     }
 }

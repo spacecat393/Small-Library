@@ -364,6 +364,15 @@ public class SmallGui extends GuiContainer
                 }
                 catch (NoSuchFieldException | IllegalAccessException e)
                 {
+                    try
+                    {
+                        Field byte_field = clasz.getDeclaredField("BYTE");
+                        byte_field.set(null, (byte)((byte)byte_field.get(null) | 1));
+                    }
+                    catch (NoSuchFieldException | IllegalAccessException ex)
+                    {
+//                        Nali.LOGGER.info("BYTE " + clasz);
+                    }
 //                    error(e);
                 }
             }

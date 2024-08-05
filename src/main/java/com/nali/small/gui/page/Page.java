@@ -26,7 +26,18 @@ import static com.nali.system.opengl.memo.client.MemoC.*;
 public abstract class Page
 {
     public static String[] STRING_ARRAY;
-    public static int H, FONT;
+    public static int H, FONT,
+    //current
+    GL_MATRIX_MODE,
+    GL_DRAW_FRAMEBUFFER_BINDING,
+    GL_READ_FRAMEBUFFER_BINDING,
+    GL_ARRAY_BUFFER_BINDING,
+    GL_TEXTURE_BINDING_2D,
+    GL_ACTIVE_TEXTURE,
+    GL_TEXTURE_BINDING_2D_0,
+    GL_TEXTURE_MIN_FILTER_0,
+    GL_TEXTURE_MAG_FILTER_0;
+
     public static byte
 //    INDEX,
 //    MAX_TW,
@@ -535,6 +546,16 @@ public abstract class Page
         int texture = GL11.glGenTextures();
         array_buffer_integer_list.add(genBuffer(createFloatByteBuffer(this.createQuadVUv(x, y, width + x, height + y, minecraft.displayWidth, minecraft.displayHeight))));
         texture_integer_list.add(texture);
+
+        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
+        GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
+
+        GL11.glGetInteger(GL13.GL_ACTIVE_TEXTURE, OPENGL_INTBUFFER);
+        GL_ACTIVE_TEXTURE = OPENGL_INTBUFFER.get(0);
+        OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
+        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
+        GL_TEXTURE_BINDING_2D_0 = OPENGL_INTBUFFER.get(0);
+
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
 
 //        ByteBuffer bytebuffer = BufferUtils.createByteBuffer(4);

@@ -23,19 +23,20 @@ public class FrameSFLoopOffSet<SD, BD extends IBothDaNe, E extends Entity, I ext
         byte frame = frame_byte_array[this.index];
         byte index = frame_byte_array[this.index + 1];
         byte index1 = frame_byte_array[this.index + 2];
-        boolean result = this.s.frame_int_array[frame] > frame_2d_int_array[index][0] && this.s.frame_int_array[frame] < frame_2d_int_array[index1][1];
+        int[] frame_int_array = this.s.getFrameIntArray();
+        boolean result = frame_int_array[frame] > frame_2d_int_array[index][0] && frame_int_array[frame] < frame_2d_int_array[index1][1];
 
         if (result)
         {
-            if (this.s.frame_int_array[frame] > frame_2d_int_array[index][1] - 1 && this.s.frame_int_array[frame] < frame_2d_int_array[index1][0])
+            if (frame_int_array[frame] > frame_2d_int_array[index][1] - 1 && frame_int_array[frame] < frame_2d_int_array[index1][0])
             {
-                this.s.frame_int_array[frame] = frame_2d_int_array[index1][0];
+                frame_int_array[frame] = frame_2d_int_array[index1][0];
                 this.step = 0;
                 return true;
             }
 
             this.step = 1;
-            return this.s.frame_int_array[frame] < frame_2d_int_array[index1][1];
+            return frame_int_array[frame] < frame_2d_int_array[index1][1];
         }
 
         return result;

@@ -54,8 +54,11 @@ public abstract class FrameS<SD, BD extends IBothDaNe, E extends Entity, I exten
     public void stepFrame()
     {
         I i = this.s.getI();
-        byte frame = this.s.getFrameByteArray()[this.index];
-        i.getE().getDataManager().set(i.getIntegerDataParameterArray()[this.s.getFrameByteArray()[frame]], this.s.frame_int_array[frame] + this.step);
+        byte[] frame_byte_array = this.s.getFrameByteArray();
+        int[] frame_int_array = this.s.getFrameIntArray();
+        byte frame = frame_byte_array[this.index];
+        frame_int_array[frame] += this.step;
+        i.getE().getDataManager().set(i.getIntegerDataParameterArray()[frame_byte_array[frame]], frame_int_array[frame]);
     }
 
     public void init()

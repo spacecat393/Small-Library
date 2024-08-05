@@ -80,13 +80,13 @@ public class PageKey extends Page
     @Override
     public void draw()
     {
-
+        this.draw(null);
     }
 
     @Override
     public void preDraw()
     {
-
+        this.draw(this.color_vec4_2d_float_array[2]);
     }
 
     @Override
