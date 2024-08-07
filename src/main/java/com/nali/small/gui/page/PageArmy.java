@@ -31,6 +31,7 @@ import static com.nali.small.gui.page.PageSakura.LEFT;
 import static com.nali.small.gui.page.PageText.SEARCH_L;
 import static com.nali.small.gui.page.PageText.STRINGBUFFER;
 import static com.nali.system.ClientLoader.S_LIST;
+import static com.nali.system.opengl.memo.client.MemoC.FULL_ARRAY_BUFFER;
 
 @SideOnly(Side.CLIENT)
 public class PageArmy extends Page
@@ -43,11 +44,15 @@ public class PageArmy extends Page
 //    public static float i;
 
     A_W, A_H;
-    public static float MAX_Y, MAX_Y_OFFSET, MAX_Y_STAR;
+    public static float MAX_Y/*, MAX_Y_OFFSET*/, MAX_Y_STAR;
     public static byte[] MOVE_BYTE_ARRAY;
 //    public static byte[] ALL_MOVE_BYTE_ARRAY;
 //    public static byte[] FINAL_MOVE_BYTE_ARRAY;
     public static List<Integer> INDEX_INTEGER_LIST = new ArrayList();
+//    public static List<Integer> SEARCH_INTEGER_LIST = new ArrayList();
+    public static List<UUID> SEARCH_UUID_LIST = new ArrayList();
+    public static int[] INDEX_INT_ARRAY;
+//    public static UUID[] INDEX_UUID_ARRAY;
 //    public static String[][] STRING_2D_ARRAY;
     public static UUID[] UUID_ARRAY;
 //    public static UUID[] ALL_UUID_ARRAY;
@@ -247,12 +252,15 @@ public class PageArmy extends Page
 //            }
 ////            Nali.LOGGER.info("debug " + debug);
 ////            Nali.LOGGER.info("max " + (size-3));
-            for (int i : INDEX_INTEGER_LIST)
+//            for (int i : INDEX_INTEGER_LIST)
+            for (int x = 0; x < INDEX_INTEGER_LIST.size(); ++x)
             {
+                int i = INDEX_INTEGER_LIST.get(x);
                 byte b = (byte)(i % 7);
                 if (b != 0)
                 {
-                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], (b == 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (i / 7) % 62 + 62 + 3) || (b != 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (i / 7) % 62 + 3) ? this.color_vec4_2d_float_array[4] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
+//                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], (b == 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (i / 7) % 62 + 62 + 3) || (b != 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (i / 7) % 62 + 3) ? this.color_vec4_2d_float_array[4] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
+                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], (b == 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (x / 7) + 62 + 3) || (b != 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (x / 7) + 3) ? this.color_vec4_2d_float_array[4] : this.color_vec4_2d_float_array[0], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
                 }
             }
 
@@ -336,8 +344,10 @@ public class PageArmy extends Page
     //        OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE_0, 0);
             OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE, 0);
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-            for (int i : INDEX_INTEGER_LIST)
+//            for (int i : INDEX_INTEGER_LIST)
+            for (int x = 0; x < INDEX_INTEGER_LIST.size(); ++x)
             {
+                int i = INDEX_INTEGER_LIST.get(x);
                 float[] color_float_array;
                 byte b = (byte)(i % 7);
                 if (b == 0)
@@ -346,7 +356,8 @@ public class PageArmy extends Page
                 }
                 else
                 {
-                    color_float_array = (b == 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (i / 7) % 62 + 62 + 3) || (b != 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (i / 7) % 62 + 3) ? this.color_vec4_2d_float_array[4] : this.color_vec4_2d_float_array[3];
+//                    color_float_array = (b == 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (i / 7) % 62 + 62 + 3) || (b != 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (i / 7) % 62 + 3) ? this.color_vec4_2d_float_array[4] : this.color_vec4_2d_float_array[3];
+                    color_float_array = (b == 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (x / 7) + 62 + 3) || (b != 3 && MouseArmy.E_PAGE == PAGE && MouseArmy.HIT == (x / 7) + 3) ? this.color_vec4_2d_float_array[4] : this.color_vec4_2d_float_array[3];
                 }
 
                 this.drawQuadVUv(rs, this.vec2_2d_float_array[0], color_float_array, ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
@@ -410,7 +421,7 @@ public class PageArmy extends Page
             py = display_height - (h_offset * 2.0F),
             y0 = scale + 2.0F * 0.005F * display_height,
             y = (MouseArmy.Y / 2.0F * display_height + py) / y0;
-            float max_y = y + 1.0F, min_y = (y - py / y0 - 1.0F)/*, id = 0*/;
+            float max_y = y + 1.0F, min_y = (y - py / y0 - 0.5F)/*, id = 0*/;
 
             float offset = H + 4.0F * 0.005F * display_height;
             A_H = (int)(display_height - offset);
@@ -432,7 +443,7 @@ public class PageArmy extends Page
 //            int id = 0;
             for (int i = 0; i < size - 3; ++i)
             {
-                float new_id = i / 7.0F;
+//                float new_id = i / 7.0F;
 //                int id_int =  i % 7;
 //                if (id_int != id)
 //                {
@@ -445,28 +456,89 @@ public class PageArmy extends Page
 //                y2 = y0 * /*(*/i/* + 3)*/;
 //
 //                if (y >= y1 && y <= y2)
-                if (new_id >= min_y && new_id <= max_y)
+                float last_id = ((i -(i - 7 * (i / 7 + 1)) - 1) / 7.0F);
+                if (/*(new_id >= min_y && new_id <= max_y) || */(last_id >= min_y && last_id <= max_y))
                 {
-                    float[] color_float_array;
-//                    if (check == 3)
-                    if (i % 7 == 3)
-                    {
-                        color_float_array = new float[]{((int)new_id % 62 + 62 + 3.0F) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
-                    }
-                    else
-                    {
-                        color_float_array = new float[]{((int)new_id % 62 + 3.0F) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
-                    }
-
-//                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[id + 3], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
-                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], color_float_array, ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
-//                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[1], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
-//                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], new float[]{10.0F/255.0F, PAGE/255.0F, 0, 1}, ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
-//                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[3], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
                     INDEX_INTEGER_LIST.add(i);
-//                    ++debug;
                 }
-//                ++check;
+//
+////                if (new_id >= min_y && new_id <= max_y)
+//                for (int x = 0; x < INDEX_INTEGER_LIST.size(); ++x)
+//                {
+//                    float[] color_float_array;
+////                    if (check == 3)
+//                    int index = x / 7 + 3;
+//                    if (i % 7 == 3)
+//                    {
+////                        color_float_array = new float[]{((int)new_id % 62 + 62 + 3.0F) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
+//                        color_float_array = new float[]{(index + 62/* + 3.0F*/) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
+//                    }
+//                    else
+//                    {
+////                        color_float_array = new float[]{((int)new_id % 62 + 3.0F) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
+//                        color_float_array = new float[]{(index/* + 3.0F*/) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
+//                    }
+//
+////                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[id + 3], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
+//                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], color_float_array, ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
+//////                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[1], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
+//////                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], new float[]{10.0F/255.0F, PAGE/255.0F, 0, 1}, ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
+//////                    this.drawQuadVUv(rs, this.vec2_2d_float_array[0], this.color_vec4_2d_float_array[3], ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
+////                    INDEX_INTEGER_LIST.add(i);
+//////                    ++debug;
+//                }
+////                ++check;
+            }
+//            boolean should_run = true;
+            int index_size = INDEX_INTEGER_LIST.size();
+            INDEX_INT_ARRAY = new int[index_size / 7];
+//            byte should_run = (byte)(index_size / 7);
+//            Nali.LOGGER.info("SIZE " + index_size);
+            for (int x = 0; x < index_size; ++x)
+            {
+                int i = INDEX_INTEGER_LIST.get(x);
+                float[] color_float_array;
+
+//                if (/*(x == 0) || */should_run)
+//                {
+//                    color_float_array = new float[]{3.0F/255.0F, PAGE/255.0F, 0.0F, 1.0F};
+//                    should_run = i / 7.0F != 0;
+//                }
+//                else
+//                {
+//                if (should_run-- > 0)
+//                {
+//                    if (i % 7 == 3)
+//                    {
+//                        color_float_array = new float[]{62 / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
+//                    }
+//                    else
+//                    {
+//                        color_float_array = new float[]{3 / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
+//                    }
+//                }
+//                else
+//                {
+//                if (index_size / 7 == index_size / 7.0F)
+//                {
+                int index = x / 7 + 3;
+                if (i % 7 == 3)
+                {
+                    color_float_array = new float[]{(index + 62/* + 3.0F*/) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
+                }
+                else
+                {
+                    color_float_array = new float[]{(index/* + 3.0F*/) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
+                }
+                if (i % 7 == 0)
+                {
+                    INDEX_INT_ARRAY[x / 7] = i;
+                }
+//                }
+//                }
+
+                this.drawQuadVUv(rs, this.vec2_2d_float_array[0], color_float_array, ARRAY_BUFFER_INTEGER_LIST.get(i), TEXTURE_INTEGER_LIST.get(i));
+//                }
             }
 //            Nali.LOGGER.info("debug " + debug);
 //            Nali.LOGGER.info("max " + (size-3));
@@ -550,6 +622,7 @@ public class PageArmy extends Page
 //        OFFSET_CUTOFF_ARRAY_BUFFER = genBuffer(createFloatByteBuffer(this.createQuadVUv(0, 0, 1, 1, 1, 1)));
 
         SIZE = C_MAP.size();
+        SEARCH_UUID_LIST.clear();
         Minecraft minecraft = SMALLGUI.mc;
         float scale = 75.0F, text_scale = SCALE / 2.0F;
         int
@@ -573,12 +646,6 @@ public class PageArmy extends Page
         h_offset_y2 = h_offset_y * 2.0F,
 //        w_offset = display_width - (LEFT + H + 6.0F * 0.005F * display_width);
         w_offset = display_width - x;
-
-        MAX_Y = (((height_f + h2) * SIZE - (display_height - h_offset_y2)) / display_height) * 2.0F;
-        MAX_Y_OFFSET = (((height_f + h2) * 62 - (display_height - h_offset_y2)) / display_height) * 2.0F;
-//        MAX_Y_STAR = ((display_height - h_offset_y - (H * 2.0F)/* + *//*h_offset*//*(h_offset * 2.0F)*/) / /*(*/display_height/* - h_offset * 2.0F)*/) * 2.0F;
-        MAX_Y_STAR = ((display_height/* - h_offset_y*/ - h_offset_y2 - H) / display_height) * 2.0F;
-//        MAX_Y_STAR = -WO / (SMALLGUI.width / (float)display_width) * 2.0F;
 
         int height = (int)height_f;
 
@@ -729,6 +796,9 @@ public class PageArmy extends Page
                     continue;
                 }
 
+//                SEARCH_INTEGER_LIST.add(id - 1);
+                SEARCH_UUID_LIST.add(uuid);
+
                 ByteBuffer bytebuffer = ByteBuffer.allocateDirect(4).order(ByteOrder.nativeOrder());
                 bytebuffer.put((byte)0);
                 bytebuffer.put((byte)0);
@@ -766,6 +836,13 @@ public class PageArmy extends Page
                 y -= scale / (SMALLGUI.height / (float)display_height) + h2;
             }
         }
+
+//        MAX_Y = (((height_f + h2) * SIZE - (display_height - h_offset_y2)) / display_height) * 2.0F;
+        MAX_Y = (((height_f + h2) * (ARRAY_BUFFER_INTEGER_LIST.size() / 7) - (display_height - h_offset_y2)) / display_height) * 2.0F;
+//        MAX_Y_OFFSET = (((height_f + h2) * 62 - (display_height - h_offset_y2)) / display_height) * 2.0F;
+//        MAX_Y_STAR = ((display_height - h_offset_y - (H * 2.0F)/* + *//*h_offset*//*(h_offset * 2.0F)*/) / /*(*/display_height/* - h_offset * 2.0F)*/) * 2.0F;
+        MAX_Y_STAR = ((display_height/* - h_offset_y*/ - h_offset_y2 - H) / display_height) * 2.0F;
+//        MAX_Y_STAR = -WO / (SMALLGUI.width / (float)display_width) * 2.0F;
 
         float ye = display_height - (H/* * 2.0F*/ + 4.0F * 0.005F * display_height) * 2.0F/*, ys = 0*/;
         StringBuilder stringbuilder = new StringBuilder();

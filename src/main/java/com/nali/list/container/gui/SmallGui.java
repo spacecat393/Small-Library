@@ -31,7 +31,6 @@ import static com.nali.small.gui.mouse.Mouse.*;
 import static com.nali.small.gui.page.Page.*;
 import static com.nali.small.gui.page.PageMe.openPageMe;
 import static com.nali.small.gui.page.PageSmall.openPageSmall;
-import static com.nali.system.opengl.memo.client.MemoA1.genBuffer;
 import static com.nali.system.opengl.memo.client.MemoC.*;
 
 @SideOnly(Side.CLIENT)
@@ -49,7 +48,7 @@ public class SmallGui extends GuiContainer
 //    ARRAY_BUFFER_INT_LIST = new ArrayList();
 //    public static byte FLAG;
     public static int
-    FULL_ARRAY_BUFFER = -1,
+//    FULL_ARRAY_BUFFER = -1,
     OFFSET_RENDER_BUFFER = -1,
 //    OFFSET_CUTOFF_FRAMEBUFFER = -1,
 //    OFFSET_CUTOFF_FRAMEBUFFER_TEXTURE = -1,
@@ -161,7 +160,10 @@ public class SmallGui extends GuiContainer
         GL11.glGetInteger(GL30.GL_RENDERBUFFER_BINDING, OPENGL_INTBUFFER);
         int renderbuffer_binding = OPENGL_INTBUFFER.get(0);
 
-        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, 0);
+        boolean gl_depth_test = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+
+//        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, 0);
 
         GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
 //        int draw_frame_buffer = OPENGL_INTBUFFER.get(0);
@@ -178,181 +180,181 @@ public class SmallGui extends GuiContainer
             FONT = SmallConfig.CLIENT.font.scale;
             SCALE = FONT / (this.height / (float)this.mc.displayHeight);
             H = (int)(MAX_TH * SCALE);
-
-//            LEFT = 0;
-//            RIGHT = 0;
-//            TOP = 0;
-//            DOWN = 0;
-//            WO = 0;
-//            HO = 0;
-
-            if (OFFSET_FRAMEBUFFER == -1)
-            {
-//                OFFSET_CUTOFF_FRAMEBUFFER = OpenGlHelper.glGenFramebuffers();
-//                OFFSET_CUTOFF_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
-                OFFSET_FRAMEBUFFER = OpenGlHelper.glGenFramebuffers();
-                OFFSET_FRAMEBUFFER_0 = OpenGlHelper.glGenFramebuffers();
-                OFFSET_FRAMEBUFFER_1 = OpenGlHelper.glGenFramebuffers();
-                OFFSET_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
-                OFFSET_FRAMEBUFFER_TEXTURE_0 = GL11.glGenTextures();
-
-                OFFSET_RENDER_BUFFER = OpenGlHelper.glGenRenderbuffers();
-
-//                if (FULL_ARRAY_BUFFER != -1)
-//                {
-//                    OpenGlHelper.glDeleteBuffers(FULL_ARRAY_BUFFER);
-//                }
-                FULL_ARRAY_BUFFER = genBuffer(createFloatByteBuffer(new float[]
-                {
-                    -1, 1, 0.0F, 1.0F,
-                    -1, -1, 0.0F, 0.0F,
-                    1, -1, 1.0F, 0.0F,
-
-                    -1, 1, 0.0F, 1.0F,
-                    1, -1, 1.0F, 0.0F,
-                    1, 1, 1.0F, 1.0F
-                }));
-
-//                GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
-//                int draw_frame_buffer = OPENGL_INTBUFFER.get(0);
-//                GL11.glGetInteger(GL30.GL_READ_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
-//                int read_frame_buffer = OPENGL_INTBUFFER.get(0);
-
-//                OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_FRAMEBUFFER);
-//                OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE, 0);
-
-//                OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, read_frame_buffer);
-//                OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, draw_frame_buffer);
-            }
-//            GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
-//            int draw_frame_buffer = OPENGL_INTBUFFER.get(0);
-//            GL11.glGetInteger(GL30.GL_READ_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
-//            int read_frame_buffer = OPENGL_INTBUFFER.get(0);
 //
-//            OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_FRAMEBUFFER);
-//            GL11.glBindTexture(GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE);
-//            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, this.mc.displayWidth, this.mc.displayHeight, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
-//            OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE, 0);
+////            LEFT = 0;
+////            RIGHT = 0;
+////            TOP = 0;
+////            DOWN = 0;
+////            WO = 0;
+////            HO = 0;
 //
-//            OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, read_frame_buffer);
-//            OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, draw_frame_buffer);
-
-            //init
-            ////        if (this.texture_int_array != null)
-////        {
-//        for (int texture : TEXTURE_INT_LIST)
-//        {
-//            GL11.glDeleteTextures(texture);
-//        }
-//        for (int array_buffer : ARRAY_BUFFER_INT_LIST)
-//        {
-//            OpenGlHelper.glDeleteBuffers(array_buffer);
-//        }
-//
-////        INDEX = 0;
-////        byte size = (byte)STRING_ARRAY.length;
-////        TEXTURE_INT_ARRAY = new int[size];
-////        ARRAY_BUFFER_INT_ARRAY = new int[size];
-//        TEXTURE_INT_LIST.clear();
-//        ARRAY_BUFFER_INT_LIST.clear();
-//            int framebuffer = OpenGlHelper.glGenFramebuffers();
-
-            //genQuad
-//            GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
-//            int gl_array_buffer_binding = OPENGL_INTBUFFER.get(0);
-            //genQuad
-
-            //preDraw
-//        GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
-//        int draw_frame_buffer = OPENGL_INTBUFFER.get(0);
-//        GL11.glGetInteger(GL30.GL_READ_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
-//        int read_frame_buffer = OPENGL_INTBUFFER.get(0);
-//        GL11.glGetInteger(GL30.GL_RENDERBUFFER_BINDING, OPENGL_INTBUFFER);
-//        int renderbuffer_binding = OPENGL_INTBUFFER.get(0);
-
-//        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, 0);
-
-//        //
-//        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
-//        GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
-//
-//        GL11.glGetInteger(GL13.GL_ACTIVE_TEXTURE, OPENGL_INTBUFFER);
-//        GL_ACTIVE_TEXTURE = OPENGL_INTBUFFER.get(0);
-//        OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
-//        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
-//        GL_TEXTURE_BINDING_2D_0 = OPENGL_INTBUFFER.get(0);
-//        GL_TEXTURE_MIN_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER);
-//        GL_TEXTURE_MAG_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER);
-//        //
-//
-//        OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_FRAMEBUFFER);
-//        GL11.glBindTexture(GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE);
-//        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, this.mc.displayWidth, this.mc.displayHeight, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
-//        OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE, 0);
-//
-//        //
-//        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D_0);
-//        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_FILTER_0);
-//        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAG_FILTER_0);
-//
-//        OpenGlHelper.setActiveTexture(GL_ACTIVE_TEXTURE);
-//        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
-//        //
-
-//            OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, framebuffer);
-
-//        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
-//        GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
-//
-//        GL11.glGetInteger(GL13.GL_ACTIVE_TEXTURE, OPENGL_INTBUFFER);
-//        GL_ACTIVE_TEXTURE = OPENGL_INTBUFFER.get(0);
-//        OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
-//        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
-//        GL_TEXTURE_BINDING_2D_0 = OPENGL_INTBUFFER.get(0);
-//        GL_TEXTURE_MIN_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER);
-//        GL_TEXTURE_MAG_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER);
-
-//        GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
-//        GL_ARRAY_BUFFER_BINDING = OPENGL_INTBUFFER.get(0);
-            //preDraw
-
-//        for (String string : STRING_ARRAY)
-//        {
-//            this.preDrawText(string, -1);
-//        }
-
-            //preDraw
-//        OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
-
-//        OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, GL_READ_FRAMEBUFFER_BINDING);
-//        OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER_BINDING);
-//        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, renderbuffer_binding);
-            //preDraw
-//        if (BACK_ARRAY_BUFFER != -1)
-//        {
-//            OpenGlHelper.glDeleteBuffers(BACK_ARRAY_BUFFER);
-//        }
-//        BACK_ARRAY_BUFFER = OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVUv(0, 0, this.mc.displayWidth, this.mc.displayHeight, this.mc.displayWidth, this.mc.displayHeight, 1.0F, 1.0F), true));
-//        this.initBuffer();
-//            for (Page page : PAGE_ARRAY)
+//            if (OFFSET_FRAMEBUFFER == -1)
 //            {
-//                page.init();
-//            }
-
-//            //genQuad
-//            OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, gl_array_buffer_binding);
-//            //genQuad
-
-//            OpenGlHelper.glDeleteFramebuffers(framebuffer);
+////                OFFSET_CUTOFF_FRAMEBUFFER = OpenGlHelper.glGenFramebuffers();
+////                OFFSET_CUTOFF_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
+//                OFFSET_FRAMEBUFFER = OpenGlHelper.glGenFramebuffers();
+//                OFFSET_FRAMEBUFFER_0 = OpenGlHelper.glGenFramebuffers();
+//                OFFSET_FRAMEBUFFER_1 = OpenGlHelper.glGenFramebuffers();
+//                OFFSET_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
+//                OFFSET_FRAMEBUFFER_TEXTURE_0 = GL11.glGenTextures();
 //
-//            GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
-//        }
-            //init
-//            this.init();
-//            this.state &= 255-8;
-//            FLAG &= 255-1;
-//            FLAG |= 1;
-//            for (Page page : PAGE_ARRAY)
+//                OFFSET_RENDER_BUFFER = OpenGlHelper.glGenRenderbuffers();
+//
+////                if (FULL_ARRAY_BUFFER != -1)
+////                {
+////                    OpenGlHelper.glDeleteBuffers(FULL_ARRAY_BUFFER);
+////                }
+////                FULL_ARRAY_BUFFER = genBuffer(createFloatByteBuffer(new float[]
+////                {
+////                    -1, 1, 0.0F, 1.0F,
+////                    -1, -1, 0.0F, 0.0F,
+////                    1, -1, 1.0F, 0.0F,
+////
+////                    -1, 1, 0.0F, 1.0F,
+////                    1, -1, 1.0F, 0.0F,
+////                    1, 1, 1.0F, 1.0F
+////                }));
+//
+////                GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
+////                int draw_frame_buffer = OPENGL_INTBUFFER.get(0);
+////                GL11.glGetInteger(GL30.GL_READ_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
+////                int read_frame_buffer = OPENGL_INTBUFFER.get(0);
+//
+////                OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_FRAMEBUFFER);
+////                OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE, 0);
+//
+////                OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, read_frame_buffer);
+////                OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, draw_frame_buffer);
+//            }
+////            GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
+////            int draw_frame_buffer = OPENGL_INTBUFFER.get(0);
+////            GL11.glGetInteger(GL30.GL_READ_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
+////            int read_frame_buffer = OPENGL_INTBUFFER.get(0);
+////
+////            OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_FRAMEBUFFER);
+////            GL11.glBindTexture(GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE);
+////            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, this.mc.displayWidth, this.mc.displayHeight, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
+////            OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE, 0);
+////
+////            OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, read_frame_buffer);
+////            OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, draw_frame_buffer);
+//
+//            //init
+//            ////        if (this.texture_int_array != null)
+//////        {
+////        for (int texture : TEXTURE_INT_LIST)
+////        {
+////            GL11.glDeleteTextures(texture);
+////        }
+////        for (int array_buffer : ARRAY_BUFFER_INT_LIST)
+////        {
+////            OpenGlHelper.glDeleteBuffers(array_buffer);
+////        }
+////
+//////        INDEX = 0;
+//////        byte size = (byte)STRING_ARRAY.length;
+//////        TEXTURE_INT_ARRAY = new int[size];
+//////        ARRAY_BUFFER_INT_ARRAY = new int[size];
+////        TEXTURE_INT_LIST.clear();
+////        ARRAY_BUFFER_INT_LIST.clear();
+////            int framebuffer = OpenGlHelper.glGenFramebuffers();
+//
+//            //genQuad
+////            GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
+////            int gl_array_buffer_binding = OPENGL_INTBUFFER.get(0);
+//            //genQuad
+//
+//            //preDraw
+////        GL11.glGetInteger(GL30.GL_DRAW_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
+////        int draw_frame_buffer = OPENGL_INTBUFFER.get(0);
+////        GL11.glGetInteger(GL30.GL_READ_FRAMEBUFFER_BINDING, OPENGL_INTBUFFER);
+////        int read_frame_buffer = OPENGL_INTBUFFER.get(0);
+////        GL11.glGetInteger(GL30.GL_RENDERBUFFER_BINDING, OPENGL_INTBUFFER);
+////        int renderbuffer_binding = OPENGL_INTBUFFER.get(0);
+//
+////        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, 0);
+//
+////        //
+////        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
+////        GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
+////
+////        GL11.glGetInteger(GL13.GL_ACTIVE_TEXTURE, OPENGL_INTBUFFER);
+////        GL_ACTIVE_TEXTURE = OPENGL_INTBUFFER.get(0);
+////        OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
+////        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
+////        GL_TEXTURE_BINDING_2D_0 = OPENGL_INTBUFFER.get(0);
+////        GL_TEXTURE_MIN_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER);
+////        GL_TEXTURE_MAG_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER);
+////        //
+////
+////        OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_FRAMEBUFFER);
+////        GL11.glBindTexture(GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE);
+////        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, this.mc.displayWidth, this.mc.displayHeight, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
+////        OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE, 0);
+////
+////        //
+////        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D_0);
+////        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_FILTER_0);
+////        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAG_FILTER_0);
+////
+////        OpenGlHelper.setActiveTexture(GL_ACTIVE_TEXTURE);
+////        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D);
+////        //
+//
+////            OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, framebuffer);
+//
+////        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
+////        GL_TEXTURE_BINDING_2D = OPENGL_INTBUFFER.get(0);
+////
+////        GL11.glGetInteger(GL13.GL_ACTIVE_TEXTURE, OPENGL_INTBUFFER);
+////        GL_ACTIVE_TEXTURE = OPENGL_INTBUFFER.get(0);
+////        OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
+////        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, OPENGL_INTBUFFER);
+////        GL_TEXTURE_BINDING_2D_0 = OPENGL_INTBUFFER.get(0);
+////        GL_TEXTURE_MIN_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER);
+////        GL_TEXTURE_MAG_FILTER_0 = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER);
+//
+////        GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING, OPENGL_INTBUFFER);
+////        GL_ARRAY_BUFFER_BINDING = OPENGL_INTBUFFER.get(0);
+//            //preDraw
+//
+////        for (String string : STRING_ARRAY)
+////        {
+////            this.preDrawText(string, -1);
+////        }
+//
+//            //preDraw
+////        OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, GL_ARRAY_BUFFER_BINDING);
+//
+////        OpenGlHelper.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, GL_READ_FRAMEBUFFER_BINDING);
+////        OpenGlHelper.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER_BINDING);
+////        OpenGlHelper.glBindRenderbuffer(OpenGlHelper.GL_RENDERBUFFER, renderbuffer_binding);
+//            //preDraw
+////        if (BACK_ARRAY_BUFFER != -1)
+////        {
+////            OpenGlHelper.glDeleteBuffers(BACK_ARRAY_BUFFER);
+////        }
+////        BACK_ARRAY_BUFFER = OpenGLBuffer.loadFloatBuffer(OpenGLBuffer.createFloatByteBuffer(this.createQuadVUv(0, 0, this.mc.displayWidth, this.mc.displayHeight, this.mc.displayWidth, this.mc.displayHeight, 1.0F, 1.0F), true));
+////        this.initBuffer();
+////            for (Page page : PAGE_ARRAY)
+////            {
+////                page.init();
+////            }
+//
+////            //genQuad
+////            OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, gl_array_buffer_binding);
+////            //genQuad
+//
+////            OpenGlHelper.glDeleteFramebuffers(framebuffer);
+////
+////            GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
+////        }
+//            //init
+////            this.init();
+////            this.state &= 255-8;
+////            FLAG &= 255-1;
+////            FLAG |= 1;
+////            for (Page page : PAGE_ARRAY)
             for (Class clasz : PAGE_CLASS_SET)
             {
 //                page.state |= 1;
@@ -612,6 +614,16 @@ public class SmallGui extends GuiContainer
 
         GL20.glBlendEquationSeparate(gl_blend_equation_rgb, gl_blend_equation_alpha);
         GL14.glBlendFuncSeparate(gl_blend_src_rgb, gl_blend_dst_rgb, gl_blend_src_alpha, gl_blend_dst_alpha);
+
+        if (gl_depth_test)
+        {
+            GL11.glEnable(GL11.GL_DEPTH_TEST);
+        }
+        else
+        {
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
+        }
+
         this.defaultState(mouseX, mouseY);
     }
 

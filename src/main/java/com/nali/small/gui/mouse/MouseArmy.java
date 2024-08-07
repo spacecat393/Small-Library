@@ -187,18 +187,36 @@ public class MouseArmy extends Mouse
 //        float max_y_star = (((max_l * MAX_TH * FONT) + (offset * 2.0F))) / (display_height - (offset * 2.0F));
         if (PageArmy.PAGE == PAGE)//126 -126 /2
         {
-            int id = (int)(Y / MAX_Y_OFFSET) * 62 + HIT - 3;
+            int id = /*(int)(Y / MAX_Y_OFFSET) * 62 + */HIT - 3;
             if (HIT > 2 + 62)//re
             {
+//                Nali.LOGGER.info("ID R " + (id - 62));
+////                Nali.LOGGER.info("ID FR " + (INDEX_INTEGER_LIST.get((id - 62) * 7) / 7));
+//                Nali.LOGGER.info("ID FR " + (INDEX_INT_ARRAY[(id - 62)/* * 7*/] / 7));
+//                Nali.LOGGER.info("UUID " + SEARCH_UUID_LIST.get(INDEX_INT_ARRAY[id - 62] / 7));
+////                Nali.LOGGER.info("ID FR " + (SEARCH_INTEGER_LIST.get(INDEX_INT_ARRAY[id - 62/* * 7*/] / 7)/* / 7*/));
                 byte[] byte_array = new byte[1 + 16];
                 byte_array[0] = SEToC.ID;
-                ByteWriter.set(byte_array, PageArmy.UUID_ARRAY[id - 62], 1);
+//                ByteWriter.set(byte_array, PageArmy.UUID_ARRAY[id - 62], 1);
+//                ByteWriter.set(byte_array, PageArmy.UUID_ARRAY[INDEX_INTEGER_LIST.get((id - 62) * 7) / 7], 1);
+//                ByteWriter.set(byte_array, PageArmy.UUID_ARRAY[INDEX_INT_ARRAY[(id - 62)/* * 7*/] / 7], 1);
+//                ByteWriter.set(byte_array, PageArmy.UUID_ARRAY[SEARCH_INTEGER_LIST.get(INDEX_INT_ARRAY[id - 62/* * 7*/] / 7)/* / 7*/], 1);
+                ByteWriter.set(byte_array, SEARCH_UUID_LIST.get(INDEX_INT_ARRAY[id - 62] / 7), 1);
                 NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
             }
             else if (HIT > 2)//me
             {
+//                Nali.LOGGER.info("ID M " + id);
+////                Nali.LOGGER.info("ID FM " + (INDEX_INTEGER_LIST.get(id * 7) / 7));
+//                Nali.LOGGER.info("ID FM " + (INDEX_INT_ARRAY[id/* * 7*/] / 7));
+//                Nali.LOGGER.info("UUID " + SEARCH_UUID_LIST.get(INDEX_INT_ARRAY[id] / 7));
+////                Nali.LOGGER.info("ID FM " + (SEARCH_INTEGER_LIST.get(INDEX_INT_ARRAY[id/* * 7*/] / 7)/* / 7*/));
                 KeyMenuMe.ME |= 1;
-                openPageMe(PageArmy.UUID_ARRAY[id]);
+//                openPageMe(PageArmy.UUID_ARRAY[id]);
+//                openPageMe(PageArmy.UUID_ARRAY[INDEX_INTEGER_LIST.get(id * 7) / 7]);
+//                openPageMe(PageArmy.UUID_ARRAY[INDEX_INT_ARRAY[id/* * 7*/] / 7]);
+//                openPageMe(PageArmy.UUID_ARRAY[SEARCH_INTEGER_LIST.get(INDEX_INT_ARRAY[id/* * 7*/] / 7)/* / 7*/]);
+                openPageMe(SEARCH_UUID_LIST.get(INDEX_INT_ARRAY[id] / 7));
             }
         }
 
