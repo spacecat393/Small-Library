@@ -26,13 +26,13 @@ public class RenderStorage<RC extends IClientDaO> extends SmallRenderO<RC>
 
     public static void setTextureMap()
     {
-        TEXTURE_MAP.put((G_LIST.get(ICLIENTDAO.StartPart())).element_array_buffer, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/obsidian.png")));
-        TEXTURE_MAP.put((G_LIST.get(ICLIENTDAO.StartPart() + 1)).element_array_buffer, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/diamond_block.png")));
+        TEXTURE_MAP.put((G_LIST.get(ICLIENTDAO.StartPart())).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/obsidian.png")));
+        TEXTURE_MAP.put((G_LIST.get(ICLIENTDAO.StartPart() + 1)).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/diamond_block.png")));
     }
 
     @Override
     public int getTextureBuffer(MemoG rg)
     {
-        return TEXTURE_MAP.get(rg.element_array_buffer);
+        return TEXTURE_MAP.get(rg.ebo);
     }
 }

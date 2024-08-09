@@ -24,20 +24,20 @@ public class RenderBox<RC extends IClientDaO> extends SmallRenderO<RC>
 //    public static int ID;
 //    public static DataLoader DATALOADER = RenderHelper.DATALOADER;
     public static IClientDaO ICLIENTDAO = new BoxClient();
-    public Map<Integer, Integer> color_map = new HashMap();//element_array_buffer hex
+    public Map<Integer, Integer> color_map = new HashMap();//ebo hex
     public byte extra_bit;
 
     public RenderBox(RC rc)
     {
         super(rc);
-        color_map.put((G_LIST.get(ICLIENTDAO.StartPart() + 1)).element_array_buffer, 0xFFffc196);
-        color_map.put((G_LIST.get(ICLIENTDAO.StartPart() + 2)).element_array_buffer, 0xFFffc196);
+        color_map.put((G_LIST.get(ICLIENTDAO.StartPart() + 1)).ebo, 0xFFffc196);
+        color_map.put((G_LIST.get(ICLIENTDAO.StartPart() + 2)).ebo, 0xFFffc196);
     }
 
     @Override
     public void setTextureUniform(MemoG rg, MemoS rs)
     {
-        Integer integer = this.color_map.get(rg.element_array_buffer);
+        Integer integer = this.color_map.get(rg.ebo);
         if (integer == null)
         {
             this.extra_bit = 0;
@@ -61,7 +61,7 @@ public class RenderBox<RC extends IClientDaO> extends SmallRenderO<RC>
     @Override
     public int getTextureID(MemoG rg)
     {
-        Integer integer = this.color_map.get(rg.element_array_buffer);
+        Integer integer = this.color_map.get(rg.ebo);
         if (integer == null)
         {
             this.extra_bit = 0;

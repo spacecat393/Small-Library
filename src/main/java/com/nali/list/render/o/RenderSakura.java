@@ -21,7 +21,7 @@ public class RenderSakura<RC extends IClientDaO> extends SmallRenderO<RC>
 //    public static int ID;
 //    public static DataLoader DATALOADER = RenderHelper.DATALOADER;
     public static IClientDaO ICLIENTDAO = new SakuraClient();
-    public Map<Integer, Integer> color_map = new HashMap();//element_array_buffer hex
+    public Map<Integer, Integer> color_map = new HashMap();//ebo hex
     public byte extra_bit;
 
     public RenderSakura(RC rc)
@@ -31,8 +31,8 @@ public class RenderSakura<RC extends IClientDaO> extends SmallRenderO<RC>
 //        this.objectscreendraw.sx = s;
 //        this.objectscreendraw.sy = s;
 //        this.objectscreendraw.sz = s;
-        color_map.put((G_LIST.get(ICLIENTDAO.StartPart())).element_array_buffer, 0xFFFFACDF);//ffd4e9
-//        color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 1)).element_array_buffer, 0xFFffacdf);
+        color_map.put((G_LIST.get(ICLIENTDAO.StartPart())).ebo, 0xFFFFACDF);//ffd4e9
+//        color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 1)).ebo, 0xFFffacdf);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class RenderSakura<RC extends IClientDaO> extends SmallRenderO<RC>
     @Override
     public void setTextureUniform(MemoG rg, MemoS rs)
     {
-        Integer integer = this.color_map.get(rg.element_array_buffer);
+        Integer integer = this.color_map.get(rg.ebo);
         if (integer == null)
         {
             this.extra_bit = 0;
@@ -72,7 +72,7 @@ public class RenderSakura<RC extends IClientDaO> extends SmallRenderO<RC>
     @Override
     public int getTextureID(MemoG rg)
     {
-        Integer integer = this.color_map.get(rg.element_array_buffer);
+        Integer integer = this.color_map.get(rg.ebo);
         if (integer == null)
         {
             this.extra_bit = 0;
