@@ -41,4 +41,10 @@ public class RenderTPBase<BD extends IBothDaSn, RC extends IClientDaS> extends S
     {
         return TEXTURE_MAP.get(rg.ebo);
     }
+
+    @Override
+    public byte getExtraBit(MemoG rg)
+    {
+        return (byte)(super.getExtraBit(rg) | 16);
+    }
 }

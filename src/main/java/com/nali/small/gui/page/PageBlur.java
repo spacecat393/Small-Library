@@ -1,6 +1,6 @@
 package com.nali.small.gui.page;
 
-import com.nali.list.data.NaliData;
+import com.nali.list.data.SmallData;
 import com.nali.system.opengl.memo.client.MemoS;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -46,7 +46,7 @@ public class PageBlur extends Page
     @Override
     public void draw()
     {
-        MemoS rs = S_LIST.get(NaliData.SHADER_STEP/* + 0*/);
+        MemoS rs = S_LIST.get(SmallData.SHADER_STEP/* + 0*/);
         OpenGlHelper.glUseProgram(rs.program);
         int v = rs.attriblocation_int_array[0];
         GL20.glEnableVertexAttribArray(v);

@@ -25,12 +25,12 @@ public abstract class EntityLe extends EntityLivingBase implements IMixLe
         super(worldIn);
     }
 
-    @Override
-    public boolean isGlowing()
-    {
-        this.getB().setGlowing(this.world.isRemote && this.getFlag(6));
-        return this.glowing;
-    }
+//    @Override
+//    public boolean isGlowing()
+//    {
+//        this.getB().setGlowing(this.world.isRemote && this.getFlag(6));
+//        return this.glowing;
+//    }
 
     @Override
     public double getYOffset()

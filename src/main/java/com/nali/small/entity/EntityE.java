@@ -15,12 +15,12 @@ public abstract class EntityE extends Entity implements IMixE
         this.Einit(this, world);
     }
 
-    @Override
-    public boolean isGlowing()
-    {
-        this.getB().setGlowing(this.world.isRemote && this.getFlag(6));
-        return this.glowing;//this.glowing || this.world.isRemote && this.getFlag(6);
-    }
+//    @Override
+//    public boolean isGlowing()
+//    {
+//        this.getB().setGlowing(this.world.isRemote && this.getFlag(6));
+//        return this.glowing;//this.glowing || this.world.isRemote && this.getFlag(6);
+//    }
 
     @Override
     public double getYOffset()

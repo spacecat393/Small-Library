@@ -65,7 +65,7 @@ public class RenderSakura<RC extends IClientDaO> extends SmallRenderO<RC>
             OPENGL_FIXED_PIPE_FLOATBUFFER.put((color & 0xFF) / 255.0F);
             OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
             OPENGL_FIXED_PIPE_FLOATBUFFER.flip();
-            OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4], OPENGL_FIXED_PIPE_FLOATBUFFER);
+            OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4/*+1*/], OPENGL_FIXED_PIPE_FLOATBUFFER);
         }
     }
 

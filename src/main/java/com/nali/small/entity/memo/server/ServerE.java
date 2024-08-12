@@ -266,11 +266,11 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 //        this.initWorkBytes();
 //    }
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void setGlowing(boolean b)
-    {
-    }
+//    @SideOnly(Side.CLIENT)
+//    @Override
+//    public void setGlowing(boolean b)
+//    {
+//    }
 
     @SideOnly(Side.CLIENT)
     @Override

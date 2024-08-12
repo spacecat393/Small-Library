@@ -1,7 +1,7 @@
 #version 460 core
 
-uniform sampler2D texture_sampler;
 //uniform sampler2D framebuffer_sampler;
+uniform sampler2D texture_sampler;
 uniform sampler2D lightmap_sampler;
 
 uniform vec4 Color;
@@ -20,15 +20,13 @@ void main()
     vec4 texture_color = texture(texture_sampler, fragment_texcoord);
     //vec4 frame_color = vec4(1, 1, 1, 1);
 
-    if (texture_color.a == 0.0 || Color.a == 0.0)
-    {
-        discard;
-    }
-    /*else if (texture_color.a != 1.0 || Color.a != 1.0)
-    {
-        frame_color = texture(framebuffer_sampler, screen_coords);
-    }*/
-
+//    if (texture_color.a == 0.0 || Color.a == 0.0)
+//    {
+////        discard;
+//        fragColor = vec4(0, 0, 0, 0);
+//    }
+//    else
+//    {
     vec3 lightmap_color = vec3(0);
     if (ligcoord.x == -1)
     {
@@ -48,5 +46,17 @@ void main()
         rgb_color *= 0.9;
     }
 
+//        if (texture_color.a < 1 || Color.a < 1)
+//        {
+//            fragColor = vec4((rgb_color * Color.rgb * lightmap_color + texture(framebuffer_sampler, gl_FragCoord.xy / vec2(1920, 1080)).rgb) / 2.0, texture_color.a * Color.a);
+//        }
+//        else
+//        {
     fragColor = vec4(rgb_color * Color.rgb * lightmap_color, texture_color.a * Color.a);
+//        }
+//    }
+    /*else if (texture_color.a != 1.0 || Color.a != 1.0)
+    {
+        frame_color = texture(framebuffer_sampler, screen_coords);
+    }*/
 }

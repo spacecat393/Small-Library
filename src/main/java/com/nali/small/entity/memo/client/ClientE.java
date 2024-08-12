@@ -187,19 +187,19 @@ public abstract class ClientE<RC extends IClientDaO, R extends RenderO<RC>, SD, 
 //    {
 //    }
 
-    @Override
-    public void setGlowing(boolean b)
-    {
-//        this.glowing = b;
-        if (b)
-        {
-            this.state |= 2;
-        }
-        else
-        {
-            this.state &= 255-2;
-        }
-    }
+//    @Override
+//    public void setGlowing(boolean b)
+//    {
+////        this.glowing = b;
+//        if (b)
+//        {
+//            this.state |= 2;
+//        }
+//        else
+//        {
+//            this.state &= 255-2;
+//        }
+//    }
 
     @Override
     public I getI()

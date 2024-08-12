@@ -34,6 +34,8 @@ public abstract class MixRenderSe<RC extends IClientDaS, R extends RenderS<BD, R
     @Override
     public void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
     {
+//        Nali.LOGGER.info("START");
+
         R r = this.c.r;
         E e = this.c.i.getE();
 

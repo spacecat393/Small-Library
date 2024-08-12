@@ -35,4 +35,10 @@ public class RenderStorage<RC extends IClientDaO> extends SmallRenderO<RC>
     {
         return TEXTURE_MAP.get(rg.ebo);
     }
+
+    @Override
+    public byte getExtraBit(MemoG rg)
+    {
+        return (byte)(super.getExtraBit(rg) | 16);
+    }
 }

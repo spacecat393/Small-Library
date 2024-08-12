@@ -3,6 +3,7 @@ package com.nali.small.render;
 import com.nali.da.IBothDaNe;
 import com.nali.da.IBothDaSn;
 import com.nali.da.client.IClientDaS;
+import com.nali.draw.DrawWorldData;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
@@ -51,5 +52,17 @@ public class RenderSe<E extends Entity, I extends IMixE<SD, BD, E>, MB extends M
 
         E e = i.getE();
         return result/* || e == null*/ || e.isInvisible() || e.isInvisibleToPlayer(Minecraft.getMinecraft().player);
+    }
+
+    @Override
+    public void updateDataLater(DrawWorldData drawworlddata)
+    {
+        super.updateDataLater(drawworlddata);
+    }
+
+    @Override
+    public byte getExtraBit(MemoG rg)
+    {
+        return (byte)(super.getExtraBit(rg) | (this.c.i.getE().isGlowing() ? 8 : 0));
     }
 }

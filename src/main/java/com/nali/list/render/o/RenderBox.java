@@ -54,7 +54,7 @@ public class RenderBox<RC extends IClientDaO> extends SmallRenderO<RC>
             OPENGL_FIXED_PIPE_FLOATBUFFER.put((color & 0xFF) / 255.0F);
             OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
             OPENGL_FIXED_PIPE_FLOATBUFFER.flip();
-            OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4], OPENGL_FIXED_PIPE_FLOATBUFFER);
+            OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4/*+1*/], OPENGL_FIXED_PIPE_FLOATBUFFER);
         }
     }
 
@@ -79,7 +79,7 @@ public class RenderBox<RC extends IClientDaO> extends SmallRenderO<RC>
     {
         if (this.extra_bit == 4)
         {
-            OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[5], 1);
+            OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[5/*+1*/], 1);
             OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE1);
             setLightMapBuffer(((IMixinEntityRenderer) Minecraft.getMinecraft().entityRenderer).lightmapTexture().getGlTextureId());
         }
