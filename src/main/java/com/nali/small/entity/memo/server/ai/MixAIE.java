@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ public abstract class MixAIE<SD, BD extends IBothDaNe, E extends Entity, I exten
     static
     {
         AI_CLASS_LIST = Reflect.getClasses("com.nali.list.entity.ai");
+        AI_CLASS_LIST.sort(Comparator.comparing(Class::getName));
         for (byte i = 0; i < AI_CLASS_LIST.size(); ++i)
         {
             try

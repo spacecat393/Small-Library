@@ -3,7 +3,6 @@ package com.nali.list.network.handler;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.system.Reflect;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -12,7 +11,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import static com.nali.Nali.*;
+import static com.nali.Nali.error;
+import static com.nali.Nali.warn;
 
 public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
 {
@@ -45,18 +45,18 @@ public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
     public IMessage onMessage(ServerMessage servermessage, MessageContext messagecontext)
     {
         EntityPlayerMP entityplayermp = messagecontext.getServerHandler().player;
-        ((WorldServer)entityplayermp.world).addScheduledTask(() ->
+//        ((WorldServer)entityplayermp.world).addScheduledTask(() ->
+//        {
+        try
         {
-            try
-            {
-                METHOD_ARRAY[servermessage.data[0]].invoke(null, entityplayermp, servermessage);
-            }
-            catch (IllegalAccessException | InvocationTargetException e)
-            {
-                warn(e);
+            METHOD_ARRAY[servermessage.data[0]].invoke(null, entityplayermp, servermessage);
+        }
+        catch (IllegalAccessException | InvocationTargetException e)
+        {
+            warn(e);
 //                Small.error(e);
-            }
-        });
+        }
+//        });
 
         return null;
     }

@@ -4,6 +4,7 @@ import com.nali.list.container.SmallContainer;
 import com.nali.small.SmallConfig;
 import com.nali.small.gui.key.KeyMenuMe;
 import com.nali.small.gui.page.Page;
+import com.nali.small.gui.page.PageMe;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -95,7 +96,8 @@ public class SmallGui extends GuiContainer
             }
 
             KeyMenuMe.ME &= 255-1;
-            openPageMe(uuid);
+            PageMe.UUID = uuid;
+            openPageMe();
         }
         return new SmallGui(new SmallContainer());
     }
@@ -499,8 +501,8 @@ public class SmallGui extends GuiContainer
 //        GL11.glGetInteger(GL11.GL_PACK_ALIGNMENT, OPENGL_INTBUFFER);
 //        int gl_pack_alignment = OPENGL_INTBUFFER.get(0);
 //        GL11.glPixelStorei(GL11.GL_PACK_ALIGNMENT, 2);
-        OPENGL_FIXED_PIPE_FLOATBUFFER.limit(4);
-        GL11.glReadPixels(MOUSE_X, MOUSE_Y, 1, 1, GL11.GL_RGBA, GL11.GL_FLOAT, OPENGL_FIXED_PIPE_FLOATBUFFER);
+        OPENGL_BYTEBUFFER.limit(4);
+        GL11.glReadPixels(MOUSE_X, MOUSE_Y, 1, 1, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, OPENGL_BYTEBUFFER);
 //        OPENGL_FIXED_PIPE_FLOATBUFFER.limit(4);
 //        GL11.glReadPixels(this.mouse_x, this.mouse_y, 1, 1, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, OPENGL_FIXED_PIPE_FLOATBUFFER);
 
@@ -517,17 +519,23 @@ public class SmallGui extends GuiContainer
 //        this.hit = (byte)r;
 //        this.hit = (byte)OPENGL_INTBUFFER.get(0);
 //        MOUSE.detect();
-        HIT = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(0) * 255.0F);
+//        HIT = (byte)(OPENGL_BYTEBUFFER.get(0) * 255.0F);
+        HIT = OPENGL_BYTEBUFFER.get(0);
 //        HIT = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
 //        HIT = (int)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(0) * Integer.MAX_VALUE);
 //        PAGE = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(1) * 255.0F);
-        E_PAGE = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(1) * 255.0F);
+//        E_PAGE = (byte)(OPENGL_BYTEBUFFER.get(1) * 255.0F);
+        E_PAGE = OPENGL_BYTEBUFFER.get(1);
         if ((STATE & 1) == 1)
         {
 //            Nali.LOGGER.info("HIT " + HIT);
             PAGE = E_PAGE;
             STATE &= 255-1;
         }
+//        Nali.LOGGER.info("BB " + OPENGL_BYTEBUFFER.get(0));
+//        Nali.LOGGER.info("HIT " + HIT);
+//        Nali.LOGGER.info("E_PAGE " + E_PAGE);
+//        Nali.LOGGER.info("PAGE " + PAGE);
 //        this.hit = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(0) * 255.0F);
 //        if ((this.state & 1) == 1)
 //        {

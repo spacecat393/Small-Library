@@ -6,6 +6,7 @@ import com.nali.network.NetworkRegistry;
 import com.nali.small.gui.key.KeyMenuArmy;
 import com.nali.small.gui.key.KeyMenuMe;
 import com.nali.small.gui.page.PageArmy;
+import com.nali.small.gui.page.PageMe;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -216,7 +217,8 @@ public class MouseArmy extends Mouse
 //                openPageMe(PageArmy.UUID_ARRAY[INDEX_INTEGER_LIST.get(id * 7) / 7]);
 //                openPageMe(PageArmy.UUID_ARRAY[INDEX_INT_ARRAY[id/* * 7*/] / 7]);
 //                openPageMe(PageArmy.UUID_ARRAY[SEARCH_INTEGER_LIST.get(INDEX_INT_ARRAY[id/* * 7*/] / 7)/* / 7*/]);
-                openPageMe(SEARCH_UUID_LIST.get(INDEX_INT_ARRAY[id] / 7));
+                PageMe.UUID = SEARCH_UUID_LIST.get(INDEX_INT_ARRAY[id] / 7);
+                openPageMe();
             }
         }
 

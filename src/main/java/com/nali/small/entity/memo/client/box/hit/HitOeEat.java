@@ -3,9 +3,6 @@ package com.nali.small.entity.memo.client.box.hit;
 import com.nali.da.IBothDaNe;
 import com.nali.da.client.IClientDaO;
 import com.nali.list.entity.ai.AILeEat;
-import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.SAIE;
-import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
@@ -38,9 +35,9 @@ public class HitOeEat<RC extends IClientDaO, R extends RenderO<RC>, SD, BD exten
 
         if (item instanceof ItemFood || milk_bucket)
         {
-            byte[] byte_array = new byte[1 + 16 + 1];
+            byte[] byte_array/* = new byte[1 + 16 + 1]*/;
 //            this.c.sendSAIE(new byte[1 + 16 + 1], AILeEat.ID);
-            byte_array[0] = SAIE.ID;
+//            byte_array[0] = SAIE.ID;
             if (milk_bucket)
             {
                 byte_array = new byte[1 + 16 + 1/* + 1*/];
@@ -58,8 +55,9 @@ public class HitOeEat<RC extends IClientDaO, R extends RenderO<RC>, SD, BD exten
                 ByteWriter.set(byte_array, (float)(axisalignedbb.maxZ + (axisalignedbb.minZ - axisalignedbb.maxZ) / 2.0D), 1 + 16 + 1 + 4 + 4);
             }
             ByteWriter.set(byte_array, this.c.uuid, 1);
-            byte_array[17] = AILeEat.ID;
-            NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+//            byte_array[17] = AILeEat.ID;
+//            NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+            this.c.sendSAIE(byte_array, AILeEat.ID);
         }
     }
 

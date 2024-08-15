@@ -45,7 +45,7 @@ public class PageArmy extends Page
 
     A_W, A_H;
     public static float MAX_Y/*, MAX_Y_OFFSET*/, MAX_Y_STAR;
-    public static byte[] MOVE_BYTE_ARRAY;
+//    public static byte[] MOVE_BYTE_ARRAY;
 //    public static byte[] ALL_MOVE_BYTE_ARRAY;
 //    public static byte[] FINAL_MOVE_BYTE_ARRAY;
     public static List<Integer> INDEX_INTEGER_LIST = new ArrayList();
@@ -54,12 +54,12 @@ public class PageArmy extends Page
     public static int[] INDEX_INT_ARRAY;
 //    public static UUID[] INDEX_UUID_ARRAY;
 //    public static String[][] STRING_2D_ARRAY;
-    public static UUID[] UUID_ARRAY;
+//    public static UUID[] UUID_ARRAY;
 //    public static UUID[] ALL_UUID_ARRAY;
 //    public static UUID[] FINAL_UUID_ARRAY;
-    public static byte PAGE, STATE,
+    public static byte PAGE/*, STATE*/,
     BYTE = 1;//init lock
-    public static String STRING;
+    public static String STRING = "";
 
     public float[][] vec2_2d_float_array;
     public float[][] color_vec4_2d_float_array;
@@ -67,6 +67,7 @@ public class PageArmy extends Page
     public PageArmy(byte page)
     {
         PAGE = page;
+        STRINGBUFFER = new StringBuffer(STRING);
 //        STATE = 0;
         this.vec2_2d_float_array = new float[4][2];
         this.color_vec4_2d_float_array = new float[5][4];
@@ -117,16 +118,16 @@ public class PageArmy extends Page
 //        if ((b & 1) == 1)
         if ((BYTE & 1) == 1)
         {
-            if ((BYTE & 2) == 0)
-            {
-                BYTE |= 2;
-                this.clear(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST);
+//            if ((BYTE & 2) == 0)
+//            {
+//                BYTE |= 2;
+            this.clear(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST);
 //            super.init();
 //        NetworkRegistry.I.sendToServer(new ServerMessage(new byte[]{SSToC.ID}));
-                this.initC();
+            this.initC();
 //            this.setByte((byte)(b & 255-1));
-                BYTE &= 255-1-2;
-            }
+            BYTE &= 255-1/*-2*/;
+//            }
         }
 //        else if ((BYTE & 2) == 2)
 //        {
@@ -187,7 +188,7 @@ public class PageArmy extends Page
 //        }
 ////        GL20.glEnableVertexAttribArray(0);
 
-        if ((STATE & 1) == 1)
+        if ((BYTE & 2) == 2)
         {
             Minecraft minecraft = SMALLGUI.mc;
 //            int
@@ -323,7 +324,7 @@ public class PageArmy extends Page
     @Override
     public void preDraw()
     {
-        if ((STATE & 1) == 1)
+        if ((BYTE & 2) == 2)
         {
             //shadow->blur->predraw
             Minecraft minecraft = SMALLGUI.mc;
@@ -392,10 +393,14 @@ public class PageArmy extends Page
 
         if (SIZE > 0 && SIZE == C_MAP.size())
         {
-            STATE |= 1;
+            BYTE |= 2;
+        }
+        else
+        {
+            BYTE &= 255-2;
         }
 
-        if ((STATE & 1) == 1)
+        if ((BYTE & 2) == 2)
         {
 //            MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 4);
 //
@@ -413,17 +418,20 @@ public class PageArmy extends Page
             Minecraft minecraft = SMALLGUI.mc;
             //            int debug = 0;
             float
-            display_width = minecraft.displayWidth,
-            display_height = SMALLGUI.mc.displayHeight,
-            scale = 75.0F / ((float)SMALLGUI.height / display_height),
-            h_offset = H + 4.0F * 0.005F * display_height,
-//            y = MouseArmy.Y / 2.0F * display_height + (display_height - (h_offset * 2.0F)),
-            py = display_height - (h_offset * 2.0F),
-            y0 = scale + 2.0F * 0.005F * display_height,
-            y = (MouseArmy.Y / 2.0F * display_height + py) / y0;
-            float max_y = y + 1.0F, min_y = (y - py / y0 - 0.5F)/*, id = 0*/;
+                display_width = minecraft.displayWidth,
+                display_height = SMALLGUI.mc.displayHeight,
+                scale = 75.0F / ((float)SMALLGUI.height / display_height),
+                h_offset = H + 4.0F * 0.005F * display_height,
+    //            y = MouseArmy.Y / 2.0F * display_height + (display_height - (h_offset * 2.0F)),
+                py = display_height - (h_offset * 2.0F),
+                y0 = scale + 2.0F * 0.005F * display_height,
+                y = (MouseArmy.Y / 2.0F * display_height + py) / y0;
+            float
+                max_y = y + 1.0F,
+                min_y = (y - py / y0 - 0.5F)/*, id = 0*/;
 
             float offset = H + 4.0F * 0.005F * display_height;
+
             A_H = (int)(display_height - offset);
 
             INDEX_INTEGER_LIST.clear();
@@ -626,34 +634,34 @@ public class PageArmy extends Page
         Minecraft minecraft = SMALLGUI.mc;
         float scale = 75.0F, text_scale = SCALE / 2.0F;
         int
-        text_height = (int)(MAX_TH * text_scale),
-        display_width = minecraft.displayWidth,
-        display_height = minecraft.displayHeight,
-        width = (int)(scale / (SMALLGUI.width / (float)display_width)),
-//        height = (int)(scale / (SMALLGUI.height / (float)display_height)),
-        id = 0;
+            text_height = (int)(MAX_TH * text_scale),
+            display_width = minecraft.displayWidth,
+            display_height = minecraft.displayHeight,
+            width = (int)(scale / (SMALLGUI.width / (float)display_width)),
+    //        height = (int)(scale / (SMALLGUI.height / (float)display_height)),
+            id = 0;
         float
-        h2 = 2.0F * 0.005F * display_height,
-        h_offset_y = H + 4.0F * 0.005F * display_height,
-        height_f = scale / (SMALLGUI.height / (float)display_height),
-        h_offset = H/* + h2*/ - h2,
-        x = LEFT + H + 6.0F * 0.005F * display_width,
-//        x = -(LEFT + H + 6.0F * 0.005F * display_width),
-//        x = 0,
-        x_offset = x + scale / (SMALLGUI.width / (float)display_width) + 2.0F * 0.005F * display_width,
-        y = display_height - scale / (SMALLGUI.height / (float)display_height) - 4.0F * 0.005F * display_height - H - h_offset/* * 2.0F*//* - (8.0F * 0.005F * display_height) * 2.0F*/,
-//        int max_l = (int)(display_width - y);
-        h_offset_y2 = h_offset_y * 2.0F,
-//        w_offset = display_width - (LEFT + H + 6.0F * 0.005F * display_width);
-        w_offset = display_width - x;
+            h2 = 2.0F * 0.005F * display_height,
+            h_offset_y = H + 4.0F * 0.005F * display_height,
+            height_f = scale / (SMALLGUI.height / (float)display_height),
+            h_offset = H/* + h2*/ - h2,
+            x = LEFT + H + 6.0F * 0.005F * display_width,
+    //        x = -(LEFT + H + 6.0F * 0.005F * display_width),
+    //        x = 0,
+            x_offset = x + scale / (SMALLGUI.width / (float)display_width) + 2.0F * 0.005F * display_width,
+            y = display_height - scale / (SMALLGUI.height / (float)display_height) - 4.0F * 0.005F * display_height - H - h_offset/* * 2.0F*//* - (8.0F * 0.005F * display_height) * 2.0F*/,
+    //        int max_l = (int)(display_width - y);
+            h_offset_y2 = h_offset_y * 2.0F;
+//    //        w_offset = display_width - (LEFT + H + 6.0F * 0.005F * display_width);
+//            w_offset = display_width - x;
 
         int height = (int)height_f;
 
-        MOVE_BYTE_ARRAY = new byte[(int)Math.ceil(SIZE * 4.0F / 8.0F)];//limit box
-        UUID_ARRAY = new UUID[SIZE];
+//        MOVE_BYTE_ARRAY = new byte[(int)Math.ceil(SIZE * 4.0F / 8.0F)];//limit box
+//        UUID_ARRAY = new UUID[SIZE];
 
         Set<UUID> keys_set = new HashSet(C_MAP.keySet());
-        int m = 0;
+//        int m = 0;
         for (UUID uuid : keys_set)
         {
             ClientE c = C_MAP.get(uuid);
@@ -775,7 +783,7 @@ public class PageArmy extends Page
 //    //            x += ;
 //                y -= scale / (SMALLGUI.height / (float)display_height) + h2;
 
-                UUID_ARRAY[id] = uuid;
+//                UUID_ARRAY[id] = uuid;
                 ++id;
 
                 boolean out = false;
@@ -810,7 +818,7 @@ public class PageArmy extends Page
 
                 String string = string_array[0];
                 int l = (int)(minecraft.fontRenderer.getStringWidth(string) * SCALE);
-                MOVE_BYTE_ARRAY[(int)(m++ / 8.0F)] |= l > w_offset ? 1 : 0;
+//                MOVE_BYTE_ARRAY[(int)(m++ / 8.0F)] |= l > w_offset ? 1 : 0;
                 this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, H, x_offset, y + text_height * 2.0F + 4.0F * 0.005F * display_width, SCALE);
 
                 string = STRING_ARRAY[26];//string_array[1];
@@ -819,17 +827,17 @@ public class PageArmy extends Page
                 this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, text_height, x + width - l, y, text_scale);
 
                 string = string_array[1];
-                MOVE_BYTE_ARRAY[(int)(m++ / 8.0F)] |= l > w_offset ? 1 : 0;
+//                MOVE_BYTE_ARRAY[(int)(m++ / 8.0F)] |= l > w_offset ? 1 : 0;
                 l = (int)(minecraft.fontRenderer.getStringWidth(string) * SCALE);
                 this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, H, x, y + height - H, SCALE);
 
                 string = string_array[2];
-                MOVE_BYTE_ARRAY[(int)(m++ / 8.0F)] |= l > w_offset ? 1 : 0;
+//                MOVE_BYTE_ARRAY[(int)(m++ / 8.0F)] |= l > w_offset ? 1 : 0;
                 l = (int)(minecraft.fontRenderer.getStringWidth(string) * text_scale);
                 this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, text_height, x_offset, y + text_height + 2.0F * 0.005F * display_width, text_scale);
 
                 string = string_array[3];
-                MOVE_BYTE_ARRAY[(int)(m++ / 8.0F)] |= l > w_offset ? 1 : 0;
+//                MOVE_BYTE_ARRAY[(int)(m++ / 8.0F)] |= l > w_offset ? 1 : 0;
                 l = (int)(minecraft.fontRenderer.getStringWidth(string) * text_scale);
                 this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string, l, text_height, x_offset, y, text_scale);
 //            HO = y;

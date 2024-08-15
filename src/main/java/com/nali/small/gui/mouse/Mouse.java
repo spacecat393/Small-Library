@@ -13,8 +13,10 @@ public class Mouse
 
 //    public static int HIT;
     public static byte
-    HIT, PAGE, E_PAGE,
-    STATE;//rc cme scroll ?cms
+        HIT,
+        PAGE,
+        E_PAGE,
+        STATE;//rc cme scroll ?cms
 
     public Mouse()
     {

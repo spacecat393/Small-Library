@@ -19,6 +19,6 @@ CableConnect -2 small 0 0 1 0 1
 CableBody -2 small 0 0 1 0 0
 BatteryOut -2 small 0 0 1 0 0
 BatteryIn -2 small 0 0 1 0 1
-TPBaseBase -2 small 5 0 1 0 0 1
-TPBaseLight.001 -2 small 5 0 1 0 1 1
-TPBaseLight.000 -2 small 5 0 1 0 1 1
+TPBaseBase -2 small 6 0 1 0 0 1
+TPBaseLight.001 -2 small 6 0 1 0 1 1
+TPBaseLight.000 -2 small 6 0 1 0 1 1

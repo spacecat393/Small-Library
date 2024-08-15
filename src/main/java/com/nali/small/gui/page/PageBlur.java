@@ -46,7 +46,7 @@ public class PageBlur extends Page
     @Override
     public void draw()
     {
-        MemoS rs = S_LIST.get(SmallData.SHADER_STEP/* + 0*/);
+        MemoS rs = S_LIST.get(SmallData.SHADER_STEP + 5/* + 0*/);
         OpenGlHelper.glUseProgram(rs.program);
         int v = rs.attriblocation_int_array[0];
         GL20.glEnableVertexAttribArray(v);

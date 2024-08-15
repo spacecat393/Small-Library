@@ -59,10 +59,10 @@ public class AILeEat<SD extends ISoundDaLe, BD extends IBothDaNe, E extends Enti
 
     public void eat(ItemStack itemstack)
     {
-        EntityPlayerMP entityplayermp = this.s.a.entityplayermp;
 //        ItemStack itemstack = entityplayermp.getHeldItemMainhand();
         if (itemstack.getItem() instanceof ItemFood)
         {
+            EntityPlayerMP entityplayermp = this.s.a.entityplayermp;
             E e = this.s.i.getE();
             byte[] byte_array = this.s.a.byte_array;
             WorldServer worldserver = this.s.worldserver;
@@ -85,17 +85,17 @@ public class AILeEat<SD extends ISoundDaLe, BD extends IBothDaNe, E extends Enti
 
 //                        Vec3d view_vec3d = skinningentities.getLookVec().scale(0.25F);
             e.playSound(SoundEvents.ENTITY_GENERIC_EAT, e.getSoundVolume(), e.getSoundPitch());
-            float x = ByteReader.getFloat(byte_array, 1 + 16 + 1);
-            float y = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 4);
-            float z = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 4 + 4);
-            if (itemstack.getHasSubtypes())
-            {
-                this.s.worldserver.spawnParticle(EnumParticleTypes.ITEM_CRACK, x, y, z, 0, 0.0D, 0.0D, 0.0D, Item.getIdFromItem(itemstack.getItem()), itemstack.getMetadata());
-            }
-            else
-            {
-                this.s.worldserver.spawnParticle(EnumParticleTypes.ITEM_CRACK, x, y, z, 0.0D, 0.0D, 0.0D, Item.getIdFromItem(itemstack.getItem()));
-            }
+            double x = /*e.posX + */ByteReader.getFloat(byte_array, 1 + 16 + 1);
+            double y = /*e.posY + */ByteReader.getFloat(byte_array, 1 + 16 + 1 + 4);
+            double z = /*e.posZ + */ByteReader.getFloat(byte_array, 1 + 16 + 1 + 4 + 4);
+//            if (itemstack.getHasSubtypes())
+//            {
+            this.s.worldserver.spawnParticle(EnumParticleTypes.ITEM_CRACK, x, y, z, 0, 0.0D, 0.0D, 0.0D, 0.0D, Item.getIdFromItem(itemstack.getItem()), itemstack.getMetadata());
+//            }
+//            else
+//            {
+//                this.s.worldserver.spawnParticle(EnumParticleTypes.ITEM_CRACK, x, y, z, 0.0D, 0.0D, 0.0D, Item.getIdFromItem(itemstack.getItem()), itemstack.getMetadata());
+//            }
 //            byte[] byte_array = new byte[1 + 4 + 4 + 4 + 4];
 //            byte_array[0] = CRenderFood.ID;
 //            ByteWriter.set(byte_array, ByteReader.getFloat(a_byte_array, 1 + 16 + 1), 1);

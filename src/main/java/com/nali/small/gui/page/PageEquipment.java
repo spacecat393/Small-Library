@@ -4,9 +4,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SideOnly(Side.CLIENT)
-public class PageInv extends Page
+public class PageEquipment extends Page
 {
+    public static List<Integer>
+    TEXTURE_INTEGER_LIST = new ArrayList(),
+    ARRAY_BUFFER_INTEGER_LIST = new ArrayList();
+
+    public float[][] vec2_2d_float_array;
+    public float[][] color_vec4_2d_float_array;
+
     public static byte BYTE = 1;
     public static ItemStack[] ITEMSTACK_ARRAY;
 
@@ -15,7 +25,8 @@ public class PageInv extends Page
     {
         if ((BYTE & 1) == 1)
         {
-//            this.clear(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST);
+            this.clear(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST);
+
             BYTE &= 255-1;
         }
     }

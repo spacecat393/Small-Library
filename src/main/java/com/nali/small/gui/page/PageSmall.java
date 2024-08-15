@@ -78,25 +78,41 @@ public class PageSmall extends Page
             int display_width = minecraft.displayWidth;
             int display_height = minecraft.displayHeight;
 
-            String string = STRING_ARRAY[0];
-            int i = (int)(fontrenderer.getStringWidth(string) * SCALE);
+            String[] string_array = new String[]
+            {
+                STRING_ARRAY[0],
+                STRING_ARRAY[3],
+            };
+
+            int max = 0;
+            for (String s : string_array)
+            {
+                int new_max = (int)(fontrenderer.getStringWidth(s) * SCALE);
+                if (max < new_max)
+                {
+                    max = new_max;
+                }
+            }
+
+            String string = string_array[0];
+//            int i = (int)(fontrenderer.getStringWidth(string) * SCALE);
     //        box_width = i - SMALLGUI.mc.displayWidth;
     //        if (i < SMALLGUI.mc.displayWidth)
     //        {
     //            box_width = i;
     //        }
     //        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, H, display_width / 2.0F - box_width / 2.0F, display_height / 2.0F/* - H / 2.0F*/ + 2.0F * 0.005F * display_height, SCALE);
-            this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, i, H, display_width / 2.0F - i / 2.0F, display_height / 2.0F/* - H / 2.0F*/ + 2.0F * 0.005F * display_height, SCALE);
+            this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, max, H, display_width / 2.0F - max / 2.0F, display_height / 2.0F/* - H / 2.0F*//* + 2.0F * 0.005F * display_height*/, SCALE);
 
-            string = STRING_ARRAY[3];
-            i = (int)(fontrenderer.getStringWidth(string) * SCALE);
+            string = string_array[1];
+//            i = (int)(fontrenderer.getStringWidth(string) * SCALE);
     //        box_width = i - SMALLGUI.mc.displayWidth;
     //        if (i < SMALLGUI.mc.displayWidth)
     //        {
     //            box_width = i;
     //        }
     //        this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, box_width, H, display_width / 2.0F - box_width / 2.0F, display_height / 2.0F - H/* / 2.0F*/ - 2.0F * 0.005F * display_height, SCALE);
-            this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, i, H, display_width / 2.0F - i / 2.0F, display_height / 2.0F - H/* / 2.0F*/ - 2.0F * 0.005F * display_height, SCALE);
+            this.initTextHorizontal(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST, string/*, true*//*, -1*/, max, H, display_width / 2.0F - max / 2.0F, display_height / 2.0F - H/* / 2.0F*/ - 2.0F * 0.005F * display_height, SCALE);
 //            this.setByte((byte)(b & 255-1));
             BYTE &= 255-1;
         }
