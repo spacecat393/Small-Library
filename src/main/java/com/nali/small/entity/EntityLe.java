@@ -241,11 +241,11 @@ public abstract class EntityLe extends EntityLivingBase implements IMixE
 		super.playEquipSound(itemstack);
 	}
 
-	@Override
-	public IMixE getI()
-	{
-		return this;
-	}
+//	@Override
+//	public IMixE getI()
+//	{
+//		return this;
+//	}
 
 	public abstract IBothLe getB();
 }

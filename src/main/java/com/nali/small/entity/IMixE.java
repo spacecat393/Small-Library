@@ -122,7 +122,7 @@ public interface IMixE<SD, BD extends IBothDaNe, E extends Entity>
 
 	BD getBD();
 	SD getSD();
-	IMixE getI();
+//	IMixE getI();
 	E getE();
 	IBothE getB();
 }

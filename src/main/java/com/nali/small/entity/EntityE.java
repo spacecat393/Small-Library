@@ -81,9 +81,9 @@ public abstract class EntityE extends Entity implements IMixE
 		return this;
 	}
 
-	@Override
-	public IMixE getI()
-	{
-		return this;
-	}
+//	@Override
+//	public IMixE getI()
+//	{
+//		return this;
+//	}
 }
