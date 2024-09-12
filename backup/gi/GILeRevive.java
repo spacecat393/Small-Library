@@ -2,7 +2,7 @@ package com.nali.list.entity.gi;
 
 import com.nali.data.IBothDaE;
 import com.nali.data.client.IClientDaO;
-import com.nali.list.entity.ai.AILeRevive;
+import com.nali.list.entity.si.AILeRevive;
 import com.nali.list.network.method.server.SSetOwner;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;

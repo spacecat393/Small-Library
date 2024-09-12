@@ -9,6 +9,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(EntityPlayer.class)
 public interface IMixinEntityPlayer
 {
-    @Accessor("spawnPos")
-    BlockPos spawnPos();
+	@Accessor("spawnPos")
+	BlockPos spawnPos();
 }

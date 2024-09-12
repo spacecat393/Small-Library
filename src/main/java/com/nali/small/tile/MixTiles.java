@@ -6,15 +6,15 @@
 //
 //public interface MixTiles extends IMixRender
 //{
-//    default void init(Block block, String name, String mod_id, CreativeTabs creativetabs)
-//    {
-//        block.setRegistryName(mod_id, name);
-//        block.setCreativeTab(creativetabs);
-//        block.setTranslationKey(mod_id + '.' + name);
-//    }
+//	default void init(Block block, String name, String mod_id, CreativeTabs creativetabs)
+//	{
+//		block.setRegistryName(mod_id, name);
+//		block.setCreativeTab(creativetabs);
+//		block.setTranslationKey(mod_id + '.' + name);
+//	}
 //
-////    default Item getNewItem(Block block)
-////    {
-////        return new ItemBlock(block);
-////    }
+////	default Item getNewItem(Block block)
+////	{
+////		return new ItemBlock(block);
+////	}
 //}

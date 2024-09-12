@@ -1,33 +1,33 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
-        "ODO",
-        "RGR",
-        "ORO"
-    ],
-    "key":
-    {
-        "O":
-        {
-            "item": "minecraft:obsidian"
-        },
-        "G":
-        {
-            "item": "minecraft:glowstone"
-        },
-        "D":
-        {
-            "item": "minecraft:diamond_block"
-        },
-        "R":
-        {
-            "item": "minecraft:redstone_block"
-        }
-    },
-    "result":
-    {
-        "item": "small:battery",
-        "count": 1
-    }
+	"type": "minecraft:crafting_shaped",
+	"pattern":
+	[
+		"ODO",
+		"RGR",
+		"ORO"
+	],
+	"key":
+	{
+		"O":
+		{
+			"item": "minecraft:obsidian"
+		},
+		"G":
+		{
+			"item": "minecraft:glowstone"
+		},
+		"D":
+		{
+			"item": "minecraft:diamond_block"
+		},
+		"R":
+		{
+			"item": "minecraft:redstone_block"
+		}
+	},
+	"result":
+	{
+		"item": "small:battery",
+		"count": 1
+	}
 }

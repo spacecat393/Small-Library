@@ -7,9 +7,9 @@
 //@Mixin(GuiContainer.class)
 //public interface IMixinGuiContainer
 //{
-//    @Accessor("lastClickButton")
-//    int lastClickButton();
+//	@Accessor("lastClickButton")
+//	int lastClickButton();
 //
-//    @Accessor("lastClickButton")
-//    void lastClickButton(int i);
+//	@Accessor("lastClickButton")
+//	void lastClickButton(int i);
 //}

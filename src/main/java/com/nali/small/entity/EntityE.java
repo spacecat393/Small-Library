@@ -9,73 +9,81 @@ import net.minecraft.world.World;
 
 public abstract class EntityE extends Entity implements IMixE
 {
-    public EntityE(World world)
-    {
-        super(world);
-        this.Einit(this, world);
-    }
+	public EntityE(World world)
+	{
+		super(world);
+		this.Einit(this, world);
+	}
 
-//    @Override
-//    public boolean isGlowing()
-//    {
-//        this.getB().setGlowing(this.world.isRemote && this.getFlag(6));
-//        return this.glowing;//this.glowing || this.world.isRemote && this.getFlag(6);
-//    }
+//	@Override
+//	public boolean isGlowing()
+//	{
+//		this.getB().setGlowing(this.world.isRemote && this.getFlag(6));
+//		return this.glowing;//this.glowing || this.world.isRemote && this.getFlag(6);
+//	}
 
-    @Override
-    public double getYOffset()
-    {
-        return 0.3D;
-    }
+	@Override
+	public double getYOffset()
+	{
+		return 0.3D;
+	}
 
-    @Override
-    public BlockPos getPosition()
-    {
-        return new BlockPos(this.posX, this.posY, this.posZ);
-    }
+	@Override
+	public BlockPos getPosition()
+	{
+		return new BlockPos(this.posX, this.posY, this.posZ);
+	}
 
-    @Override
-    public void entityInit()
-    {
-        this.EentityInit();
-    }
+	@Override
+	public void entityInit()
+	{
+		this.EentityInit();
+	}
 
-    @Override
-    public void writeEntityToNBT(NBTTagCompound nbttagcompound)
-    {
-        this.EwriteEntityToNBT(nbttagcompound);
-        this.getB().writeEntityToNBT(nbttagcompound);
-    }
+//	@Override
+//	public void writeEntityToNBT(NBTTagCompound nbttagcompound)
+//	{
+//		this.EwriteEntityToNBT(nbttagcompound);
+//		this.getB().writeEntityToNBT(nbttagcompound);
+//	}
 
-    @Override
-    public void readEntityFromNBT(NBTTagCompound nbttagcompound)
-    {
-        this.EreadEntityFromNBT(nbttagcompound);
-        this.getB().readEntityFromNBT(nbttagcompound);
-    }
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbttagcompound)
+	{
+		this.getB().onReadNBT();
+//		this.EreadEntityFromNBT(nbttagcompound);
+//		this.getB().readEntityFromNBT(nbttagcompound);
+	}
 
-    @Override
-    public boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
-    {
-        return this.getB().processInitialInteract(entityplayer, enumhand);
-    }
+	@Override
+	public void readFromNBT(NBTTagCompound nbttagcompound)
+	{
+		super.readFromNBT(nbttagcompound);
+		this.getB().readFile();
+	}
 
-    @Override
-    public void onUpdate()
-    {
-        super.onUpdate();
-        this.getB().onUpdate();
-    }
+	@Override
+	public boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
+	{
+		return this.getB().processInitialInteract(entityplayer, enumhand);
+	}
 
-    @Override
-    public Entity getE()
-    {
-        return this;
-    }
+	@Override
+	public void onUpdate()
+	{
+		super.onUpdate();
+		this.getB().onUpdate();
+	}
 
-    @Override
-    public IMixE getI()
-    {
-        return this;
-    }
+	@Override
+	public Entity getE()
+	{
+		return this;
+	}
+
+	@Override
+	public IMixE getI()
+	{
+		return this;
+	}
 }

@@ -10,9 +10,9 @@
 //@Mixin(NetHandlerPlayClient.class)
 //public abstract class MixinNetHandlerPlayClient
 //{
-//    @Inject(method = "handleSpawnObject", at = @At("HEAD"))
-//    private void handleSpawnObject(SPacketSpawnObject packetIn, CallbackInfo ci)
-//    {
+//	@Inject(method = "handleSpawnObject", at = @At("HEAD"))
+//	private void handleSpawnObject(SPacketSpawnObject packetIn, CallbackInfo ci)
+//	{
 //
-//    }
+//	}
 //}

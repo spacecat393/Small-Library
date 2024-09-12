@@ -8,6 +8,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IMixB<B extends IBothB<T, E>, T extends TileEntity, E extends Block> extends IMixN<B, E>
 {
-    @SideOnly(Side.CLIENT)
-    void render(T t, double x, double y, double z, float partialTicks, int destroyStage, float alpha);
+	@SideOnly(Side.CLIENT)
+	void render(T t, double x, double y, double z, float partialTicks, int destroyStage, float alpha);
 }

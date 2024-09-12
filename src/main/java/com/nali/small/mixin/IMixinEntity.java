@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(Entity.class)
 public interface IMixinEntity
 {
-    @Invoker("markVelocityChanged")
-    void GOmarkVelocityChanged();
-    @Invoker("applyEnchantments")
-    void GOapplyEnchantments(EntityLivingBase entityLivingBaseIn, Entity entityIn);
+	@Invoker("markVelocityChanged")
+	void GOmarkVelocityChanged();
+	@Invoker("applyEnchantments")
+	void GOapplyEnchantments(EntityLivingBase entityLivingBaseIn, Entity entityIn);
 }

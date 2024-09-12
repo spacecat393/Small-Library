@@ -5,14 +5,14 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class ClientMessage extends NetworkMessage
 {
-    public static Side SIDE = Side.CLIENT;
-    public ClientMessage()
-    {
+	public static Side SIDE = Side.CLIENT;
+	public ClientMessage()
+	{
 
-    }
+	}
 
-    public ClientMessage(byte[] data)
-    {
-        this.data = data;
-    }
+	public ClientMessage(byte[] data)
+	{
+		this.data = data;
+	}
 }

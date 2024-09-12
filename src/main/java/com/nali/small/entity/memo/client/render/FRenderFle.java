@@ -14,28 +14,28 @@ import javax.annotation.Nullable;
 @SideOnly(Side.CLIENT)
 public class FRenderFle<E extends EntityLivingBase> extends RenderLivingBase<E>
 {
-    public FRenderFle()
-    {
-        super(Minecraft.getMinecraft().getRenderManager(), new ModelBase()
-        {
-            @Override
-            public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
-            {
-                super.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-            }
-        }, 0.0F);
-    }
+	public FRenderFle()
+	{
+		super(Minecraft.getMinecraft().getRenderManager(), new ModelBase()
+		{
+			@Override
+			public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
+			{
+				super.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+			}
+		}, 0.0F);
+	}
 
-    @Nullable
-    @Override
-    public ResourceLocation getEntityTexture(E e)
-    {
-        return null;
-    }
+	@Nullable
+	@Override
+	public ResourceLocation getEntityTexture(E e)
+	{
+		return null;
+	}
 
-    @Override
-    public float handleRotationFloat(E e, float partialTicks)
-    {
-        return super.handleRotationFloat(e, partialTicks);
-    }
+	@Override
+	public float handleRotationFloat(E e, float partialTicks)
+	{
+		return super.handleRotationFloat(e, partialTicks);
+	}
 }

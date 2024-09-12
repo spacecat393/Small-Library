@@ -1,9 +1,9 @@
 {
-    "variants":
-    {
-        "normal":
-        {
-            "model": "small:tpbase"
-        }
-    }
+	"variants":
+	{
+		"normal":
+		{
+			"model": "small:tpbase"
+		}
+	}
 }

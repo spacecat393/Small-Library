@@ -13,7 +13,7 @@ import java.util.UUID;
 @Mixin(WorldServer.class)
 public interface IMixinWorldServer
 {
-    @Accessor("entitiesByUuid")
-    @Final
-    Map<UUID, Entity> entitiesByUuid();
+	@Accessor("entitiesByUuid")
+	@Final
+	Map<UUID, Entity> entitiesByUuid();
 }

@@ -16,29 +16,29 @@ import static com.nali.system.ClientLoader.G_LIST;
 @SideOnly(Side.CLIENT)
 public class RenderStorage<RC extends IClientDaO> extends SmallRenderO<RC>
 {
-    public static IClientDaO ICLIENTDAO = new StorageClient();
-    public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
+	public static IClientDaO ICLIENTDAO = new StorageClient();
+	public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
 
-    public RenderStorage(RC rc)
-    {
-        super(rc);
-    }
+	public RenderStorage(RC rc)
+	{
+		super(rc);
+	}
 
-    public static void setTextureMap()
-    {
-        TEXTURE_MAP.put((G_LIST.get(ICLIENTDAO.StartPart())).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/obsidian.png")));
-        TEXTURE_MAP.put((G_LIST.get(ICLIENTDAO.StartPart() + 1)).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/diamond_block.png")));
-    }
+	public static void setTextureMap()
+	{
+		TEXTURE_MAP.put((G_LIST.get(ICLIENTDAO.StartPart())).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/obsidian.png")));
+		TEXTURE_MAP.put((G_LIST.get(ICLIENTDAO.StartPart() + 1)).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/diamond_block.png")));
+	}
 
-    @Override
-    public int getTextureBuffer(MemoG rg)
-    {
-        return TEXTURE_MAP.get(rg.ebo);
-    }
+	@Override
+	public int getTextureBuffer(MemoG rg)
+	{
+		return TEXTURE_MAP.get(rg.ebo);
+	}
 
-    @Override
-    public byte getExtraBit(MemoG rg)
-    {
-        return (byte)(super.getExtraBit(rg) | 16);
-    }
+	@Override
+	public byte getExtraBit(MemoG rg)
+	{
+		return (byte)(super.getExtraBit(rg) | 16);
+	}
 }

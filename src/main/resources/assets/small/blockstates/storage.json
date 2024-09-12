@@ -1,9 +1,9 @@
 {
-    "variants":
-    {
-        "normal":
-        {
-            "model": "small:storage"
-        }
-    }
+	"variants":
+	{
+		"normal":
+		{
+			"model": "small:storage"
+		}
+	}
 }

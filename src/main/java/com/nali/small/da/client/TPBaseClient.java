@@ -9,21 +9,21 @@ import static com.nali.list.data.SmallData.*;
 @SideOnly(Side.CLIENT)
 public class TPBaseClient implements IClientDaS
 {
-    @Override
-    public int StartPart()
-    {
-        return MODEL_STEP + 21;
-    }
+	@Override
+	public int StartPart()
+	{
+		return MODEL_STEP + 21;
+	}
 
-    @Override
-    public int EndPart()
-    {
-        return MODEL_STEP + 24;
-    }
+	@Override
+	public int EndPart()
+	{
+		return MODEL_STEP + 24;
+	}
 
-    @Override
-    public int FrameID()
-    {
-        return FRAME_STEP/* + 0*/;
-    }
+	@Override
+	public int FrameID()
+	{
+		return FRAME_STEP/* + 0*/;
+	}
 }

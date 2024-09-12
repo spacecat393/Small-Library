@@ -21,77 +21,77 @@ import static com.nali.system.opengl.memo.client.MemoC.OPENGL_FIXED_PIPE_FLOATBU
 @SideOnly(Side.CLIENT)
 public class RenderBox<RC extends IClientDaO> extends SmallRenderO<RC>
 {
-//    public static int ID;
-//    public static DataLoader DATALOADER = RenderHelper.DATALOADER;
-    public static IClientDaO ICLIENTDAO = new BoxClient();
-    public Map<Integer, Integer> color_map = new HashMap();//ebo hex
-    public byte extra_bit;
+//	public static int ID;
+//	public static DataLoader DATALOADER = RenderHelper.DATALOADER;
+	public static IClientDaO ICLIENTDAO = new BoxClient();
+	public Map<Integer, Integer> color_map = new HashMap();//ebo hex
+	public byte extra_bit;
 
-    public RenderBox(RC rc)
-    {
-        super(rc);
-        color_map.put((G_LIST.get(ICLIENTDAO.StartPart() + 1)).ebo, 0xFFffc196);
-        color_map.put((G_LIST.get(ICLIENTDAO.StartPart() + 2)).ebo, 0xFFffc196);
-    }
+	public RenderBox(RC rc)
+	{
+		super(rc);
+		color_map.put((G_LIST.get(ICLIENTDAO.StartPart() + 1)).ebo, 0xFFffc196);
+		color_map.put((G_LIST.get(ICLIENTDAO.StartPart() + 2)).ebo, 0xFFffc196);
+	}
 
-    @Override
-    public void setTextureUniform(MemoG rg, MemoS rs)
-    {
-        Integer integer = this.color_map.get(rg.ebo);
-        if (integer == null)
-        {
-            this.extra_bit = 0;
-            super.setTextureUniform(rg, rs);
-        }
-        else
-        {
-            this.extra_bit = 4;
-            int color = this.getTextureID(rg);
-            OPENGL_FIXED_PIPE_FLOATBUFFER.limit(3);
-            OPENGL_FIXED_PIPE_FLOATBUFFER.clear();
-            OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
-            OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
-            OPENGL_FIXED_PIPE_FLOATBUFFER.put((color & 0xFF) / 255.0F);
-            OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
-            OPENGL_FIXED_PIPE_FLOATBUFFER.flip();
-            OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4/*+1*/], OPENGL_FIXED_PIPE_FLOATBUFFER);
-        }
-    }
+	@Override
+	public void setTextureUniform(MemoG rg, MemoS rs)
+	{
+		Integer integer = this.color_map.get(rg.ebo);
+		if (integer == null)
+		{
+			this.extra_bit = 0;
+			super.setTextureUniform(rg, rs);
+		}
+		else
+		{
+			this.extra_bit = 4;
+			int color = this.getTextureID(rg);
+			OPENGL_FIXED_PIPE_FLOATBUFFER.limit(3);
+			OPENGL_FIXED_PIPE_FLOATBUFFER.clear();
+			OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
+			OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
+			OPENGL_FIXED_PIPE_FLOATBUFFER.put((color & 0xFF) / 255.0F);
+			OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
+			OPENGL_FIXED_PIPE_FLOATBUFFER.flip();
+			OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4/*+1*/], OPENGL_FIXED_PIPE_FLOATBUFFER);
+		}
+	}
 
-    @Override
-    public int getTextureID(MemoG rg)
-    {
-        Integer integer = this.color_map.get(rg.ebo);
-        if (integer == null)
-        {
-            this.extra_bit = 0;
-            return super.getTextureID(rg);
-        }
-        else
-        {
-            this.extra_bit = 4;
-            return integer;
-        }
-    }
+	@Override
+	public int getTextureID(MemoG rg)
+	{
+		Integer integer = this.color_map.get(rg.ebo);
+		if (integer == null)
+		{
+			this.extra_bit = 0;
+			return super.getTextureID(rg);
+		}
+		else
+		{
+			this.extra_bit = 4;
+			return integer;
+		}
+	}
 
-    @Override
-    public void setLightMapUniform(MemoS rs)
-    {
-        if (this.extra_bit == 4)
-        {
-            OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[5/*+1*/], 1);
-            OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE1);
-            setLightMapBuffer(((IMixinEntityRenderer) Minecraft.getMinecraft().entityRenderer).lightmapTexture().getGlTextureId());
-        }
-        else
-        {
-            super.setLightMapUniform(rs);
-        }
-    }
+	@Override
+	public void setLightMapUniform(MemoS rs)
+	{
+		if (this.extra_bit == 4)
+		{
+			OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[5/*+1*/], 1);
+			OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE1);
+			setLightMapBuffer(((IMixinEntityRenderer) Minecraft.getMinecraft().entityRenderer).lightmapTexture().getGlTextureId());
+		}
+		else
+		{
+			super.setLightMapUniform(rs);
+		}
+	}
 
-    @Override
-    public byte getExtraBit(MemoG rg)
-    {
-        return this.extra_bit;
-    }
+	@Override
+	public byte getExtraBit(MemoG rg)
+	{
+		return this.extra_bit;
+	}
 }

@@ -11,12 +11,12 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(InventoryCrafting.class)
 public interface MixinInventoryCrafting
 {
-    @Accessor("eventHandler")
-    Container eventHandler();
+	@Accessor("eventHandler")
+	Container eventHandler();
 
-    @Accessor("eventHandler")
-    void eventHandler(Container container);
+	@Accessor("eventHandler")
+	void eventHandler(Container container);
 
-    @Accessor("stackList")
-    NonNullList<ItemStack> stackList();
+	@Accessor("stackList")
+	NonNullList<ItemStack> stackList();
 }

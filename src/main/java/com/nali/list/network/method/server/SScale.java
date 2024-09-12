@@ -12,24 +12,24 @@
 //
 //public class SScale
 //{
-//    public static byte ID;
+//	public static byte ID;
 //
-//    public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
-//    {
-//        EntityLeInv skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
-//        float s = BytesReader.getFloat(servermessage.data, 1 + 16);
-//        if (skinningentities != null && s >= 0.5F && canPass(skinningentities, entityplayermp))
-//        {
-//            int need = (int)s;
+//	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
+//	{
+//		EntityLeInv skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
+//		float s = BytesReader.getFloat(servermessage.data, 1 + 16);
+//		if (skinningentities != null && s >= 0.5F && canPass(skinningentities, entityplayermp))
+//		{
+//			int need = (int)s;
 //
-//            SmallSakuraType smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
-//            byte value = smallsakuratypes.get();
+//			SmallSakuraType smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+//			byte value = smallsakuratypes.get();
 //
-//            if (value >= need)
-//            {
-//                smallsakuratypes.set((byte)(value - need));
-//                skinningentities.getDataManager().set(skinningentities.getFloatDataParameterArray()[0], s);
-//            }
-//        }
-//    }
+//			if (value >= need)
+//			{
+//				smallsakuratypes.set((byte)(value - need));
+//				skinningentities.getDataManager().set(skinningentities.getFloatDataParameterArray()[0], s);
+//			}
+//		}
+//	}
 //}

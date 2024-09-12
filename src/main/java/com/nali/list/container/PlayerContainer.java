@@ -6,16 +6,16 @@
 //
 //public class PlayerContainer extends Container
 //{
-//    public static int ID;
+//	public static int ID;
 //
-//    @Override
-//    public boolean canInteractWith(EntityPlayer playerIn)
-//    {
-//        return true;
-//    }
+//	@Override
+//	public boolean canInteractWith(EntityPlayer playerIn)
+//	{
+//		return true;
+//	}
 //
-//    public static PlayerContainer get(EntityPlayer entityplayer, World world, int x, int y, int z)
-//    {
-//        return new PlayerContainer();
-//    }
+//	public static PlayerContainer get(EntityPlayer entityplayer, World world, int x, int y, int z)
+//	{
+//		return new PlayerContainer();
+//	}
 //}

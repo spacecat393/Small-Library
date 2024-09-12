@@ -13,16 +13,16 @@
 //
 //public class SResetBytes
 //{
-//    public static byte ID;
+//	public static byte ID;
 //
-//    public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
-//    {
-//        EntityLeInv skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
-//        if (skinningentities != null && canPass(skinningentities, entityplayermp))
-//        {
-//            ServerE serverentitiesmemory = (ServerE)skinningentities.bothentitiesmemory;
-//            Arrays.fill(serverentitiesmemory.main_work_byte_array, (byte)0);
-//            serverentitiesmemory.initWorkBytes();
-//        }
-//    }
+//	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
+//	{
+//		EntityLeInv skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
+//		if (skinningentities != null && canPass(skinningentities, entityplayermp))
+//		{
+//			ServerE serverentitiesmemory = (ServerE)skinningentities.bothentitiesmemory;
+//			Arrays.fill(serverentitiesmemory.main_work_byte_array, (byte)0);
+//			serverentitiesmemory.initWorkBytes();
+//		}
+//	}
 //}

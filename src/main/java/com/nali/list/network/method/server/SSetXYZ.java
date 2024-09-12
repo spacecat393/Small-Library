@@ -10,14 +10,14 @@
 //
 //public class SSetXYZ
 //{
-//    public static byte ID;
+//	public static byte ID;
 //
-//    public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
-//    {
-//        EntityLeInv skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
-//        if (skinningentities != null && canPass(skinningentities, entityplayermp))
-//        {
-//            skinningentities.setPositionAndUpdate(BytesReader.getFloat(servermessage.data, 1 + 16), BytesReader.getFloat(servermessage.data, 1 + 16 + 4), BytesReader.getFloat(servermessage.data, 1 + 16 + 4 + 4));
-//        }
-//    }
+//	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
+//	{
+//		EntityLeInv skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
+//		if (skinningentities != null && canPass(skinningentities, entityplayermp))
+//		{
+//			skinningentities.setPositionAndUpdate(BytesReader.getFloat(servermessage.data, 1 + 16), BytesReader.getFloat(servermessage.data, 1 + 16 + 4), BytesReader.getFloat(servermessage.data, 1 + 16 + 4 + 4));
+//		}
+//	}
 //}

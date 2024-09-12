@@ -13,48 +13,48 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class ItemI extends Item implements IMixN
 {
-    public IBothI ibothi;
+	public IBothI ibothi;
 
-    public ItemI(String[] string_array)
-    {
-        this.Ninit();
-        this.ibothi.init(this, string_array[0], string_array[1], SmallTab.TAB);
-    }
+	public ItemI(String[] string_array)
+	{
+		this.Ninit();
+		this.ibothi.init(this, string_array[0], string_array[1], SmallTab.TAB);
+	}
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void render()
-    {
-        this.ibothi.render();
-    }
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void render()
+	{
+		this.ibothi.render();
+	}
 
-    @Override
-    public void updateLight(World world, BlockPos blockpos)
-    {
-        this.ibothi.updateLight(world, blockpos);
-    }
+	@Override
+	public void updateLight(World world, BlockPos blockpos)
+	{
+		this.ibothi.updateLight(world, blockpos);
+	}
 
-    @Override
-    public void light()
-    {
-        this.ibothi.light();
-    }
+	@Override
+	public void light()
+	{
+		this.ibothi.light();
+	}
 
-    @Override
-    public void newS()
-    {
-        this.ibothi = new ServerI();
-    }
+	@Override
+	public void newS()
+	{
+		this.ibothi = new ServerI();
+	}
 
-    @Override
-    public IBothN getB()
-    {
-        return this.ibothi;
-    }
+	@Override
+	public IBothN getB()
+	{
+		return this.ibothi;
+	}
 
-    @Override
-    public Item getE()
-    {
-        return this;
-    }
+	@Override
+	public Item getE()
+	{
+		return this;
+	}
 }

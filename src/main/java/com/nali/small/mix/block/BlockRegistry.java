@@ -18,42 +18,42 @@ import static com.nali.Nali.error;
 @Mod.EventBusSubscriber(modid = Small.ID)
 public class BlockRegistry
 {
-    public static Item[] ITEM_ARRAY;
-    public static Block[] BLOCK_ARRAY;
-    static
-    {
-        List<Class> block_class_list = Reflect.getClasses("com.nali.list.block");
-        int size = block_class_list.size();
-        BLOCK_ARRAY = new Block[size];
-        ITEM_ARRAY = new Item[size];
+	public static Item[] ITEM_ARRAY;
+	public static Block[] BLOCK_ARRAY;
+	static
+	{
+		List<Class> block_class_list = Reflect.getClasses("com.nali.list.block");
+		int size = block_class_list.size();
+		BLOCK_ARRAY = new Block[size];
+		ITEM_ARRAY = new Item[size];
 
-        for (int i = 0; i < size; ++i)
-        {
-            try
-            {
-                Class clasz = block_class_list.get(i);
-                Block block = (Block)clasz.getConstructor(String[].class).newInstance((Object)StringReader.get(clasz));
-                clasz.getField("ID").set(null, i);
-                BLOCK_ARRAY[i] = block;
-                ITEM_ARRAY[i] = ((Item)clasz.getMethod("getNewItem").invoke(block)).setRegistryName(block.getRegistryName());
-            }
-            catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | NoSuchFieldException e)
-            {
-                error(e);
-            }
-        }
-    }
+		for (int i = 0; i < size; ++i)
+		{
+			try
+			{
+				Class clasz = block_class_list.get(i);
+				Block block = (Block)clasz.getConstructor(String[].class).newInstance((Object)StringReader.get(clasz));
+				clasz.getField("ID").set(null, i);
+				BLOCK_ARRAY[i] = block;
+				ITEM_ARRAY[i] = ((Item)clasz.getMethod("getNewItem").invoke(block)).setRegistryName(block.getRegistryName());
+			}
+			catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | NoSuchFieldException e)
+			{
+				error(e);
+			}
+		}
+	}
 
-    @SubscribeEvent
-    public static void onBlockRegister(RegistryEvent.Register<Block> event)
-    {
-//        for (int i = 0; i < BLOCK_ARRAY.length; ++i)
-        for (Block block : BLOCK_ARRAY)
-        {
-//            Block block = BLOCK_ARRAY[i];
-            event.getRegistry().register(block);
-//            ITEM_ARRAY[i] = ((MixBlocks)block).getNewItem(block).setRegistryName(block.getRegistryName());
-        }
-        TileRegistry.onBlockRegister(event);
-    }
+	@SubscribeEvent
+	public static void onBlockRegister(RegistryEvent.Register<Block> event)
+	{
+//		for (int i = 0; i < BLOCK_ARRAY.length; ++i)
+		for (Block block : BLOCK_ARRAY)
+		{
+//			Block block = BLOCK_ARRAY[i];
+			event.getRegistry().register(block);
+//			ITEM_ARRAY[i] = ((MixBlocks)block).getNewItem(block).setRegistryName(block.getRegistryName());
+		}
+		TileRegistry.onBlockRegister(event);
+	}
 }

@@ -6,7 +6,7 @@ import net.minecraftforge.common.ForgeChunkManager;
 
 public class ChunkData
 {
-    public World world;
-    public ChunkPos chunkpos;
-    public ForgeChunkManager.Ticket ticket;
+	public World world;
+	public ChunkPos chunkpos;
+	public ForgeChunkManager.Ticket ticket;
 }

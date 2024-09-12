@@ -10,6 +10,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(ItemFood.class)
 public interface IMixinItemFood
 {
-    @Invoker("onFoodEaten")
-    void GOonFoodEaten(ItemStack stack, World worldIn, EntityPlayer player);
+	@Invoker("onFoodEaten")
+	void GOonFoodEaten(ItemStack stack, World worldIn, EntityPlayer player);
 }

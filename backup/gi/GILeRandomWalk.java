@@ -2,7 +2,7 @@ package com.nali.list.entity.gi;
 
 import com.nali.data.IBothDaE;
 import com.nali.data.client.IClientDaO;
-import com.nali.list.entity.ai.AILeRandomWalk;
+import com.nali.list.entity.si.AILeRandomWalk;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;

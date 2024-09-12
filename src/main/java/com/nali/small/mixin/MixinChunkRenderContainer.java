@@ -16,23 +16,23 @@
 //@Mixin(ChunkRenderContainer.class)
 //public abstract class MixinChunkRenderContainer
 //{
-//    @Inject(method = "addRenderChunk", at = @At(value = "HEAD"))
-//    private void addRenderChunk(RenderChunk renderChunkIn, BlockRenderLayer layer, CallbackInfo callbackinfo)
-//    {
-//        //need to find block in chunk
-//        Block block = renderChunkIn.getWorld().getBlockState(renderChunkIn.getPosition()).getBlock();
-//        Nali.LOGGER.info("Ya! " + block);
-//        if (block instanceof MixBlocks)
-//        {
-//            Nali.LOGGER.info("Ya!");
-//            GL11.glPushMatrix();
-////            GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-//            MixBlocks mixblocks = (MixBlocks)block;
-////            ObjectRender objectrender = mixblocks.getObjectRender();
-//            mixblocks.render();
-////            objectrender.draw();
-////            objectrender.lig_b = -1.0F;
-//            GL11.glPopMatrix();
-//        }
-//    }
+//	@Inject(method = "addRenderChunk", at = @At(value = "HEAD"))
+//	private void addRenderChunk(RenderChunk renderChunkIn, BlockRenderLayer layer, CallbackInfo callbackinfo)
+//	{
+//		//need to find block in chunk
+//		Block block = renderChunkIn.getWorld().getBlockState(renderChunkIn.getPosition()).getBlock();
+//		Nali.LOGGER.info("Ya! " + block);
+//		if (block instanceof MixBlocks)
+//		{
+//			Nali.LOGGER.info("Ya!");
+//			GL11.glPushMatrix();
+////			GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+//			MixBlocks mixblocks = (MixBlocks)block;
+////			ObjectRender objectrender = mixblocks.getObjectRender();
+//			mixblocks.render();
+////			objectrender.draw();
+////			objectrender.lig_b = -1.0F;
+//			GL11.glPopMatrix();
+//		}
+//	}
 //}

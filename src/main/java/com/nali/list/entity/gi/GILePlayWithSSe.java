@@ -10,42 +10,42 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GILePlayWithSSe extends Page
 {
-    @Override
-    public void init()
-    {
+	@Override
+	public void init()
+	{
 
-    }
+	}
 
-    @Override
-    public void draw()
-    {
+	@Override
+	public void draw()
+	{
 
-    }
+	}
 
-    @Override
-    public void preDraw()
-    {
+	@Override
+	public void preDraw()
+	{
 
-    }
+	}
 
-    @Override
-    public void detect()
-    {
+	@Override
+	public void detect()
+	{
 
-    }
+	}
 
-    public static Key getKey()
-    {
-        return new KeyMenuGI();
-    }
+	public static Key getKey()
+	{
+		return new KeyMenuGI();
+	}
 
-    public static Mouse getMouse()
-    {
-        return new MouseGI();
-    }
+	public static Mouse getMouse()
+	{
+		return new MouseGI();
+	}
 
-    public static class MouseGI extends Mouse
-    {
+	public static class MouseGI extends Mouse
+	{
 
-    }
+	}
 }

@@ -12,7 +12,7 @@
 //@Mixin(EntityRegistry.class)
 //public interface IMixinEntityRegistry
 //{
-//    @Accessor("entityClassEntries")
-//    @Final
-//    Map<Class<? extends Entity>, EntityEntry> entityClassEntries();
+//	@Accessor("entityClassEntries")
+//	@Final
+//	Map<Class<? extends Entity>, EntityEntry> entityClassEntries();
 //}

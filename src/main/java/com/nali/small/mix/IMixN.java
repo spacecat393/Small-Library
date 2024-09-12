@@ -9,30 +9,30 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IMixN<B extends IBothN, E>
 {
-    default void Ninit()
-    {
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
-        {
-            this.newC();
-        }
-        else
-        {
-            this.newS();
-        }
-    }
+	default void Ninit()
+	{
+		if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+		{
+			this.newC();
+		}
+		else
+		{
+			this.newS();
+		}
+	}
 
-    @SideOnly(Side.CLIENT)
-    void render();
-    @SideOnly(Side.CLIENT)
-    void updateLight(World world, BlockPos blockpos);
-    @SideOnly(Side.CLIENT)
-    void light();
+	@SideOnly(Side.CLIENT)
+	void render();
+	@SideOnly(Side.CLIENT)
+	void updateLight(World world, BlockPos blockpos);
+	@SideOnly(Side.CLIENT)
+	void light();
 
-    @SideOnly(Side.CLIENT)
-    void newC();
+	@SideOnly(Side.CLIENT)
+	void newC();
 
-    void newS();
+	void newS();
 
-    B getB();
-    E getE();
+	B getB();
+	E getE();
 }

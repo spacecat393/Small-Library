@@ -1,27 +1,27 @@
 {
-    "display":
-    {
-        "icon":
-        {
-            "item": "small:box"
-        },
-        "title":
-        {
-            "translate": "advancements.small.root.title"
-        },
-        "description":
-        {
-            "translate": "advancements.small.root.description"
-        },
-        "background": "minecraft:textures/blocks/cauldron_bottom.png",
-        "show_toast": true,
-        "announce_to_chat": true
-    },
-    "criteria":
-    {
-        "tick":
-        {
-            "trigger": "minecraft:tick"
-        }
-    }
+	"display":
+	{
+		"icon":
+		{
+			"item": "small:box"
+		},
+		"title":
+		{
+			"translate": "advancements.small.root.title"
+		},
+		"description":
+		{
+			"translate": "advancements.small.root.description"
+		},
+		"background": "minecraft:textures/blocks/cauldron_bottom.png",
+		"show_toast": true,
+		"announce_to_chat": true
+	},
+	"criteria":
+	{
+		"tick":
+		{
+			"trigger": "minecraft:tick"
+		}
+	}
 }

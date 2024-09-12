@@ -7,6 +7,6 @@
 //@Mixin(GuiScreen.class)
 //public interface IMixinGuiScreen
 //{
-//    @Accessor("eventButton")
-//    int eventButton();
+//	@Accessor("eventButton")
+//	int eventButton();
 //}

@@ -15,29 +15,29 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EntityPlayer.class)
 public abstract class MixinEntityPlayer extends EntityLivingBase
 {
-    private static final DataParameter<Byte> SAKURA_BYTE_DATAPARAMETER = EntityDataManager.<Byte>createKey(MixinEntityPlayer.class, DataSerializers.BYTE);
+	private static final DataParameter<Byte> SAKURA_BYTE_DATAPARAMETER = EntityDataManager.<Byte>createKey(MixinEntityPlayer.class, DataSerializers.BYTE);
 
-    public MixinEntityPlayer(World worldIn)
-    {
-        super(worldIn);
-    }
+	public MixinEntityPlayer(World worldIn)
+	{
+		super(worldIn);
+	}
 
-    @Inject(method = "entityInit", at = @At("HEAD"))
-    private void nali_small_entityInit(CallbackInfo ci)
-    {
-        this.dataManager.register(SAKURA_BYTE_DATAPARAMETER, (byte)0);
-    }
+	@Inject(method = "entityInit", at = @At("HEAD"))
+	private void nali_small_entityInit(CallbackInfo ci)
+	{
+		this.dataManager.register(SAKURA_BYTE_DATAPARAMETER, (byte)0);
+	}
 
-    @Inject(method = "onUpdate", at = @At("HEAD"))
-    private void nali_small_onUpdate(CallbackInfo ci)
-    {
-        if (!this.world.isRemote)
-        {
-            this.dataManager.set(SAKURA_BYTE_DATAPARAMETER, this.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null).get());
-        }
-        else
-        {
-            this.getEntityData().setByte("Nali_sakura", this.dataManager.get(SAKURA_BYTE_DATAPARAMETER));
-        }
-    }
+	@Inject(method = "onUpdate", at = @At("HEAD"))
+	private void nali_small_onUpdate(CallbackInfo ci)
+	{
+		if (!this.world.isRemote)
+		{
+			this.dataManager.set(SAKURA_BYTE_DATAPARAMETER, this.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null).get());
+		}
+		else
+		{
+			this.getEntityData().setByte("Nali_sakura", this.dataManager.get(SAKURA_BYTE_DATAPARAMETER));
+		}
+	}
 }

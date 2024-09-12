@@ -9,15 +9,15 @@ import static com.nali.list.data.SmallData.MODEL_STEP;
 @SideOnly(Side.CLIENT)
 public class SakuraClient implements IClientDaO
 {
-    @Override
-    public int StartPart()
-    {
-        return MODEL_STEP + 3;
-    }
+	@Override
+	public int StartPart()
+	{
+		return MODEL_STEP + 3;
+	}
 
-    @Override
-    public int EndPart()
-    {
-        return MODEL_STEP + 4;
-    }
+	@Override
+	public int EndPart()
+	{
+		return MODEL_STEP + 4;
+	}
 }

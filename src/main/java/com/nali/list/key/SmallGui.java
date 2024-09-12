@@ -12,19 +12,19 @@ import org.lwjgl.input.Keyboard;
 @SideOnly(Side.CLIENT)
 public class SmallGui extends MixKeyBinding
 {
-    public static int ID;
-    public SmallGui(String[] string_array, Integer key)
-    {
-        super(string_array, key == null ? Keyboard.KEY_P : key);
-//        this.setKeyConflictContext(KeyConflictContext.IN_GAME);
-    }
+	public static int ID;
+	public SmallGui(String[] string_array, Integer key)
+	{
+		super(string_array, key == null ? Keyboard.KEY_P : key);
+//		this.setKeyConflictContext(KeyConflictContext.IN_GAME);
+	}
 
-    public static void detect()
-    {
-        if (Minecraft.getMinecraft().currentScreen == null)
-        {
-//            PlayerGui.PAGE = 0;
-            NetworkRegistry.I.sendToServer(new ServerMessage(new byte[]{SOpenSmallGui.ID}));
-        }
-    }
+	public static void detect()
+	{
+		if (Minecraft.getMinecraft().currentScreen == null)
+		{
+//			PlayerGui.PAGE = 0;
+			NetworkRegistry.I.sendToServer(new ServerMessage(new byte[]{SOpenSmallGui.ID}));
+		}
+	}
 }

@@ -12,15 +12,15 @@
 //@Mixin(Minecraft.class)
 //public abstract class MixinMinecraft
 //{
-//    @Inject(method = "runTickKeyboard", at = @At("HEAD"))
-//    private void runTickKeyboard(CallbackInfo ci)
-//    {
-//        FUNCTION.apply(null);
-//    }
+//	@Inject(method = "runTickKeyboard", at = @At("HEAD"))
+//	private void runTickKeyboard(CallbackInfo ci)
+//	{
+//		FUNCTION.apply(null);
+//	}
 //
-//    @Inject(method = "dispatchKeypresses", at = @At("HEAD"))
-//    private void dispatchKeypresses(CallbackInfo ci)
-//    {
-//        FUNCTION.apply(null);
-//    }
+//	@Inject(method = "dispatchKeypresses", at = @At("HEAD"))
+//	private void dispatchKeypresses(CallbackInfo ci)
+//	{
+//		FUNCTION.apply(null);
+//	}
 //}

@@ -10,12 +10,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(WorldProvider.class)
 public abstract class MixinWorldProvider
 {
-    @Inject(method = "getRespawnDimension", at = @At(value = "HEAD"), cancellable = true, remap = false)
-    private void nali_small_getRespawnDimension(EntityPlayerMP player, CallbackInfoReturnable<Integer> cir)
-    {
-        if (player.getEntityData().hasKey("Nali_revive"))
-        {
-            cir.setReturnValue(player.dimension);
-        }
-    }
+	@Inject(method = "getRespawnDimension", at = @At(value = "HEAD"), cancellable = true, remap = false)
+	private void nali_small_getRespawnDimension(EntityPlayerMP player, CallbackInfoReturnable<Integer> cir)
+	{
+		if (player.getEntityData().hasKey("Nali_revive"))
+		{
+			cir.setReturnValue(player.dimension);
+		}
+	}
 }

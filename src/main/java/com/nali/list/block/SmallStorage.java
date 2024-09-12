@@ -22,101 +22,101 @@ import javax.annotation.Nullable;
 
 public class SmallStorage extends BlockB implements ITileEntityProvider
 {
-    public static int ID;
+	public static int ID;
 
-//    @SideOnly(Side.CLIENT)
-//    public StorageRender storagerender;
-//    @SideOnly(Side.CLIENT)
-//    public static DrawScreen DRAWSCREEN;
+//	@SideOnly(Side.CLIENT)
+//	public StorageRender storagerender;
+//	@SideOnly(Side.CLIENT)
+//	public static DrawScreen DRAWSCREEN;
 
-    public SmallStorage(String[] string_array)
-    {
-        super(string_array, Material.ROCK);
-//        this.ibothb.init(this, string_array[0], string_array[1], SmallTab.TAB);
-        this.setResistance(2000.0F);
-        this.setHardness(50.0F);
-        this.setSoundType(SoundType.STONE);
-        this.setLightLevel(0.1F);
-    }
+	public SmallStorage(String[] string_array)
+	{
+		super(string_array, Material.ROCK);
+//		this.ibothb.init(this, string_array[0], string_array[1], SmallTab.TAB);
+		this.setResistance(2000.0F);
+		this.setHardness(50.0F);
+		this.setSoundType(SoundType.STONE);
+		this.setLightLevel(0.1F);
+	}
 
-//    @Override
-//    @SideOnly(Side.CLIENT)
-//    public void renderInit()
-//    {
-//        this.storagerender = new StorageRender();
-//        DRAWSCREEN = new DrawScreen();
-//        DRAWSCREEN.scale(0.25F);
-//        DRAWSCREEN.z = 0.0F;
-//    }
+//	@Override
+//	@SideOnly(Side.CLIENT)
+//	public void renderInit()
+//	{
+//		this.storagerender = new StorageRender();
+//		DRAWSCREEN = new DrawScreen();
+//		DRAWSCREEN.scale(0.25F);
+//		DRAWSCREEN.z = 0.0F;
+//	}
 
-    @Nullable
-    @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
-        return new com.nali.list.block.tile.SmallStorage();
-    }
+	@Nullable
+	@Override
+	public TileEntity createNewTileEntity(World worldIn, int meta)
+	{
+		return new com.nali.list.block.tile.SmallStorage();
+	}
 
-    public Item getNewItem()
-    {
-        return new ItemB(this);
-    }
+	public Item getNewItem()
+	{
+		return new ItemB(this);
+	}
 
-//    @Override
-//    @SideOnly(Side.CLIENT)
-//    public ObjectRender getObjectRender()
-//    {
-////        if (this.tpbaserender == null)
-////        {
-////            this.tpbaserender = new TPBaseRender(this);
-////        }
-//        return this.storagerender;
-//    }
+//	@Override
+//	@SideOnly(Side.CLIENT)
+//	public ObjectRender getObjectRender()
+//	{
+////		if (this.tpbaserender == null)
+////		{
+////			this.tpbaserender = new TPBaseRender(this);
+////		}
+//		return this.storagerender;
+//	}
 //
-//    @Override
-//    @SideOnly(Side.CLIENT)
-//    public DrawScreen getDrawScreen()
-//    {
-//        return DRAWSCREEN;
-//    }
+//	@Override
+//	@SideOnly(Side.CLIENT)
+//	public DrawScreen getDrawScreen()
+//	{
+//		return DRAWSCREEN;
+//	}
 
-    @Override
-    public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face)
-    {
-        return false;
-    }
+	@Override
+	public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face)
+	{
+		return false;
+	}
 
-    @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
-        return false;
-    }
+	@Override
+	public boolean isOpaqueCube(IBlockState state)
+	{
+		return false;
+	}
 
-    @Override
-    public boolean isFullCube(IBlockState state)
-    {
-        return false;
-    }
+	@Override
+	public boolean isFullCube(IBlockState state)
+	{
+		return false;
+	}
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void newC()
-    {
-        RenderStorage r = new RenderStorage(RenderStorage.ICLIENTDAO);
-//        DrawScreen d = new DrawScreen(r);
-//        d.scale(0.25F);
-//        d.z = 0.0F;
-        this.ibothb = new ClientB(r/*, d*/, this);
-    }
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void newC()
+	{
+		RenderStorage r = new RenderStorage(RenderStorage.ICLIENTDAO);
+//		DrawScreen d = new DrawScreen(r);
+//		d.scale(0.25F);
+//		d.z = 0.0F;
+		this.ibothb = new ClientB(r/*, d*/, this);
+	}
 
-    @Override
-    public IBothN getB()
-    {
-        return this.ibothb;
-    }
+	@Override
+	public IBothN getB()
+	{
+		return this.ibothb;
+	}
 
-    @Override
-    public Object getE()
-    {
-        return this;
-    }
+	@Override
+	public Object getE()
+	{
+		return this;
+	}
 }

@@ -5,14 +5,14 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class ServerMessage extends NetworkMessage
 {
-    public static Side SIDE = Side.SERVER;
-    public ServerMessage()
-    {
+	public static Side SIDE = Side.SERVER;
+	public ServerMessage()
+	{
 
-    }
+	}
 
-    public ServerMessage(byte[] data)
-    {
-        this.data = data;
-    }
+	public ServerMessage(byte[] data)
+	{
+		this.data = data;
+	}
 }

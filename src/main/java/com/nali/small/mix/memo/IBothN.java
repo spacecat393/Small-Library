@@ -7,10 +7,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IBothN
 {
-    @SideOnly(Side.CLIENT)
-    void render();
-    @SideOnly(Side.CLIENT)
-    void updateLight(World world, BlockPos blockpos);
-    @SideOnly(Side.CLIENT)
-    void light();
+	@SideOnly(Side.CLIENT)
+	void render();
+	@SideOnly(Side.CLIENT)
+	void updateLight(World world, BlockPos blockpos);
+	@SideOnly(Side.CLIENT)
+	void light();
 }

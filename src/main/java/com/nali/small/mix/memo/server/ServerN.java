@@ -8,21 +8,21 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ServerN implements IBothN
 {
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void render()
-    {
-    }
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void render()
+	{
+	}
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void updateLight(World world, BlockPos blockpos)
-    {
-    }
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void updateLight(World world, BlockPos blockpos)
+	{
+	}
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void light()
-    {
-    }
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void light()
+	{
+	}
 }

@@ -13,20 +13,20 @@
 //
 //public class SPutToBox
 //{
-//    public static byte ID;
+//	public static byte ID;
 //
-//    public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
-//    {
-//        EntityLeInv skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
-//        if (skinningentities != null && canPass(skinningentities, entityplayermp))
-//        {
-//            ItemStack itemstack = entityplayermp.getHeldItemMainhand();
+//	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
+//	{
+//		EntityLeInv skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
+//		if (skinningentities != null && canPass(skinningentities, entityplayermp))
+//		{
+//			ItemStack itemstack = entityplayermp.getHeldItemMainhand();
 //
-//            if (itemstack.getItem() == ITEM_ARRAY[SmallBox.ID] && itemstack.getTagCompound() == null)
-//            {
-//                SmallBox.putToBox(skinningentities, itemstack);
-//                entityplayermp.closeScreen();
-//            }
-//        }
-//    }
+//			if (itemstack.getItem() == ITEM_ARRAY[SmallBox.ID] && itemstack.getTagCompound() == null)
+//			{
+//				SmallBox.putToBox(skinningentities, itemstack);
+//				entityplayermp.closeScreen();
+//			}
+//		}
+//	}
 //}

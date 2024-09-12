@@ -8,9 +8,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ServerB<T extends TileEntity, E extends Block> extends ServerN implements IBothB<T, E>
 {
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void render(T t, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
-    {
-    }
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void render(T t, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
+	{
+	}
 }

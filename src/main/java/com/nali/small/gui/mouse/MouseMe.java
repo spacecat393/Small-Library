@@ -9,17 +9,17 @@ import static com.nali.small.gui.page.PageAI.openPageAI;
 @SideOnly(Side.CLIENT)
 public class MouseMe extends Mouse
 {
-    @Override
-    public void run()
-    {
-        if (PageSmall.PAGE == PAGE)
-        {
-            if (HIT == 1)
-            {
-                openPageAI();
-            }
-        }
+	@Override
+	public void run()
+	{
+		if (PageSmall.PAGE == PAGE)
+		{
+			if (HIT == 1)
+			{
+				openPageAI();
+			}
+		}
 
-        super.run();
-    }
+		super.run();
+	}
 }

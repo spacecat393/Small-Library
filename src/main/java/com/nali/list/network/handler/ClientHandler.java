@@ -14,40 +14,40 @@ import static com.nali.Nali.*;
 
 public class ClientHandler implements IMessageHandler<ClientMessage, IMessage>
 {
-    public static Method[] METHOD_ARRAY;
-    static
-    {
-        List<Class> clientmessage_class_list = Reflect.getClasses("com.nali.list.network.method.client");
-        METHOD_ARRAY = new Method[clientmessage_class_list.size()];
+	public static Method[] METHOD_ARRAY;
+	static
+	{
+		List<Class> clientmessage_class_list = Reflect.getClasses("com.nali.list.network.method.client");
+		METHOD_ARRAY = new Method[clientmessage_class_list.size()];
 
-        for (byte i = 0; i < clientmessage_class_list.size(); ++i)
-        {
-            try
-            {
-                Class clientmessage_class = clientmessage_class_list.get(i);
-                METHOD_ARRAY[i] = clientmessage_class.getDeclaredMethod("run", ClientMessage.class);
-                clientmessage_class.getDeclaredField("ID").set(null, i);
-            }
-            catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException e)
-            {
-                error(e);
-            }
-        }
-    }
+		for (byte i = 0; i < clientmessage_class_list.size(); ++i)
+		{
+			try
+			{
+				Class clientmessage_class = clientmessage_class_list.get(i);
+				METHOD_ARRAY[i] = clientmessage_class.getDeclaredMethod("run", ClientMessage.class);
+				clientmessage_class.getDeclaredField("ID").set(null, i);
+			}
+			catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException e)
+			{
+				error(e);
+			}
+		}
+	}
 
-    @Override
-    public IMessage onMessage(ClientMessage clientmessage, MessageContext messagecontext)
-    {
-        try
-        {
-            METHOD_ARRAY[clientmessage.data[0]].invoke(null, clientmessage);
-        }
-        catch (IllegalAccessException | InvocationTargetException e)
-        {
-            warn(e);
-//            Small.error(e);
-        }
+	@Override
+	public IMessage onMessage(ClientMessage clientmessage, MessageContext messagecontext)
+	{
+		try
+		{
+			METHOD_ARRAY[clientmessage.data[0]].invoke(null, clientmessage);
+		}
+		catch (IllegalAccessException | InvocationTargetException e)
+		{
+			warn(e);
+//			Small.error(e);
+		}
 
-        return null;
-    }
+		return null;
+	}
 }

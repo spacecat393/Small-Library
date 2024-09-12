@@ -19,50 +19,50 @@
 //
 //public class SetWorkByte
 //{
-//    public static byte ID;
+//	public static byte ID;
 //
-//    public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
-//    {
-//        UUID uuid = ByteReader.getUUID(servermessage.data, 1);
-//        ServerE servere = S_MAP.get(uuid);
+//	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
+//	{
+//		UUID uuid = ByteReader.getUUID(servermessage.data, 1);
+//		ServerE servere = S_MAP.get(uuid);
 //
-//        if (skinningentities != null && ServerHandler.canPass(skinningentities, entityplayermp))
-//        {
-////            int id = BytesReader.getInt(servermessage.data, 17);
+//		if (skinningentities != null && ServerHandler.canPass(skinningentities, entityplayermp))
+//		{
+////			int id = BytesReader.getInt(servermessage.data, 17);
 //
-//            byte id = servermessage.data[17];
-//            byte index = (byte)(id / 8);
-//            byte bit = (byte)(id % 8);
+//			byte id = servermessage.data[17];
+//			byte index = (byte)(id / 8);
+//			byte bit = (byte)(id % 8);
 //
-////            {
-////                byte[] byte_array = new byte[1 + 4 + 4];
-////                byte_array[0] = PlaySound.ID;
-////                ByteWriter.set(byte_array, skinningentities.getEntityId(), 1);
-////                if (((servere.main_work_byte_array[index] >> bit) & 1) == 1)
-////                {
-////                    servere.statentitiesmemory.stat &= 255-4;
-////                    servere.statentitiesmemory.stat |= 2;
+////			{
+////				byte[] byte_array = new byte[1 + 4 + 4];
+////				byte_array[0] = PlaySound.ID;
+////				ByteWriter.set(byte_array, skinningentities.getEntityId(), 1);
+////				if (((servere.main_work_byte_array[index] >> bit) & 1) == 1)
+////				{
+////					servere.statentitiesmemory.stat &= 255-4;
+////					servere.statentitiesmemory.stat |= 2;
 ////
-////                    ByteWriter.set(byte_array, skinningentities.bothentitiesmemory.sounds.SOFT_READY(), 1 + 4);
-////                }
-////                else
-////                {
-////                    servere.statentitiesmemory.stat |= 4;
-////                    servere.statentitiesmemory.stat &= 255-2;
+////					ByteWriter.set(byte_array, skinningentities.bothentitiesmemory.sounds.SOFT_READY(), 1 + 4);
+////				}
+////				else
+////				{
+////					servere.statentitiesmemory.stat |= 4;
+////					servere.statentitiesmemory.stat &= 255-2;
 ////
-////                    ByteWriter.set(byte_array, skinningentities.bothentitiesmemory.sounds.HARD_READY(), 1 + 4);
-////                }
-////                NetworkRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
-////            }
+////					ByteWriter.set(byte_array, skinningentities.bothentitiesmemory.sounds.HARD_READY(), 1 + 4);
+////				}
+////				NetworkRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
+////			}
 //
-////            servere.a.aie_map.get(index).flip();
-////            servere.main_work_byte_array[index] ^= (byte)Math.pow(2, bit);
+////			servere.ms.si_map.get(index).flip();
+////			servere.main_work_byte_array[index] ^= (byte)Math.pow(2, bit);
 //
-////            byte[] byte_array = new byte[1 + 4 + servere.main_work_byte_array.length];
-////            byte_array[0] = SetWorkBytes.ID;
-////            ByteWriter.set(byte_array, skinningentities.getEntityId(), 1);
-////            System.arraycopy(servere.main_work_byte_array, 0, byte_array, 1 + 4, servere.main_work_byte_array.length);
-////            NetworkRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
-//        }
-//    }
+////			byte[] byte_array = new byte[1 + 4 + servere.main_work_byte_array.length];
+////			byte_array[0] = SetWorkBytes.ID;
+////			ByteWriter.set(byte_array, skinningentities.getEntityId(), 1);
+////			System.arraycopy(servere.main_work_byte_array, 0, byte_array, 1 + 4, servere.main_work_byte_array.length);
+////			NetworkRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
+//		}
+//	}
 //}

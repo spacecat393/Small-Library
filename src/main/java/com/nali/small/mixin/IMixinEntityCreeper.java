@@ -8,6 +8,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(EntityCreeper.class)
 public interface IMixinEntityCreeper
 {
-    @Accessor("timeSinceIgnited")
-    void timeSinceIgnited(int i);
+	@Accessor("timeSinceIgnited")
+	void timeSinceIgnited(int i);
 }

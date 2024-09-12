@@ -10,6 +10,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(LayerArmorBase.class)
 public interface IMixinLayerArmorBase
 {
-    @Invoker("renderArmorLayer")
-    void GOrenderArmorLayer(EntityLivingBase entityLivingBaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale, EntityEquipmentSlot slotIn);
+	@Invoker("renderArmorLayer")
+	void GOrenderArmorLayer(EntityLivingBase entityLivingBaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale, EntityEquipmentSlot slotIn);
 }

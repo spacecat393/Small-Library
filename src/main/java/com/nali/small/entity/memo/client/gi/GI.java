@@ -19,10 +19,10 @@
 //@SideOnly(Side.CLIENT)
 //public abstract class GI<G extends GuiContainer, RC extends IClientDaO, R extends RenderO<RC>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MR extends MixRenderE<RC, R, SD, BD, E, I, MB, C>, MB extends MixBoxE<RC, R, SD, BD, E, I, MR, C>, C extends ClientE<RC, R, SD, BD, E, I, MB, MR>>
 //{
-//    //change to framebuffer later
-//    public int
-//    x, y,
-//    width, height;
+//	//change to framebuffer later
+//	public int
+//	x, y,
+//	width, height;
 //
-//    public abstract void text(G g);
+//	public abstract void text(G g);
 //}

@@ -13,20 +13,20 @@ import static com.nali.list.data.SmallData.TEXTURE_STEP;
 @SideOnly(Side.CLIENT)
 public class SmallRenderS<BD extends IBothDaSn, RC extends IClientDaS> extends RenderS<BD, RC>
 {
-    public SmallRenderS(RC rc, BD bd)
-    {
-        super(rc, bd);
-    }
+	public SmallRenderS(RC rc, BD bd)
+	{
+		super(rc, bd);
+	}
 
-    @Override
-    public int getTextureID(MemoG rg)
-    {
-        return TEXTURE_STEP + super.getTextureID(rg);
-    }
+	@Override
+	public int getTextureID(MemoG rg)
+	{
+		return TEXTURE_STEP + super.getTextureID(rg);
+	}
 
-    @Override
-    public int getShaderID(MemoG rg)
-    {
-        return SHADER_STEP + super.getShaderID(rg);
-    }
+	@Override
+	public int getShaderID(MemoG rg)
+	{
+		return SHADER_STEP + super.getShaderID(rg);
+	}
 }

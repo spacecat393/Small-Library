@@ -8,12 +8,12 @@ import static com.nali.small.gui.page.PageMe.openPageMe;
 @SideOnly(Side.CLIENT)
 public class KeyMenuAI extends KeyMenu
 {
-    @Override
-    public void run()
-    {
-        if ((STATE & 1) == 1)
-        {
-            openPageMe();
-        }
-    }
+	@Override
+	public void run()
+	{
+		if ((STATE & 1) == 1)
+		{
+			openPageMe();
+		}
+	}
 }

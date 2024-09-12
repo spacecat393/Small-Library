@@ -13,37 +13,37 @@
 //
 //public class SSetAttribute
 //{
-//    public static byte ID;
+//	public static byte ID;
 //
-//    public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
-//    {
-//        EntityLeInv skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
-//        if (skinningentities != null && canPass(skinningentities, entityplayermp))
-//        {
-//            int id = (int)BytesReader.getFloat(servermessage.data, 1 + 16);
-//            float f = BytesReader.getFloat(servermessage.data, 1 + 16 + 4);
-//            int need = (int)f;
+//	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
+//	{
+//		EntityLeInv skinningentities = ENTITIES_MAP.get(BytesReader.getUUID(servermessage.data, 1));
+//		if (skinningentities != null && canPass(skinningentities, entityplayermp))
+//		{
+//			int id = (int)BytesReader.getFloat(servermessage.data, 1 + 16);
+//			float f = BytesReader.getFloat(servermessage.data, 1 + 16 + 4);
+//			int need = (int)f;
 //
-//            SmallSakuraType smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
-//            byte value = smallsakuratypes.get();
+//			SmallSakuraType smallsakuratypes = entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+//			byte value = smallsakuratypes.get();
 //
-//            if (value >= need)
-//            {
-//                if (need > 0)
-//                {
-//                    smallsakuratypes.set((byte)(value - need));
-//                }
+//			if (value >= need)
+//			{
+//				if (need > 0)
+//				{
+//					smallsakuratypes.set((byte)(value - need));
+//				}
 //
-//                int index = 0;
-//                for (IAttributeInstance iattributeinstance : skinningentities.getAttributeMap().getAllAttributes())
-//                {
-//                    if (id == index++)
-//                    {
-//                        iattributeinstance.setBaseValue(f);
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//    }
+//				int index = 0;
+//				for (IAttributeInstance iattributeinstance : skinningentities.getAttributeMap().getAllAttributes())
+//				{
+//					if (id == index++)
+//					{
+//						iattributeinstance.setBaseValue(f);
+//						break;
+//					}
+//				}
+//			}
+//		}
+//	}
 //}

@@ -18,33 +18,33 @@ import static com.nali.system.ClientLoader.G_LIST;
 @SideOnly(Side.CLIENT)
 public class RenderTPBase<BD extends IBothDaSn, RC extends IClientDaS> extends SmallRenderS<BD, RC>
 {
-    public static IClientDaS ICLIENTDAS = new TPBaseClient();
-    public static IBothDaSn IBOTHDASN = new TPBaseBothDaS();
+	public static IClientDaS ICLIENTDAS = new TPBaseClient();
+	public static IBothDaSn IBOTHDASN = new TPBaseBothDaS();
 
-    public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
+	public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
 
-    public RenderTPBase(RC rc, BD bd)
-    {
-        super(rc, bd);
-    }
+	public RenderTPBase(RC rc, BD bd)
+	{
+		super(rc, bd);
+	}
 
-    public static void setTextureMap()
-    {
-        int diamond_block = com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/diamond_block.png"));
-        TEXTURE_MAP.put(G_LIST.get(ICLIENTDAS.StartPart()).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/obsidian.png")));
-        TEXTURE_MAP.put(G_LIST.get(ICLIENTDAS.StartPart() + 1).ebo, diamond_block);
-        TEXTURE_MAP.put(G_LIST.get(ICLIENTDAS.StartPart() + 2).ebo, diamond_block);
-    }
+	public static void setTextureMap()
+	{
+		int diamond_block = com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/diamond_block.png"));
+		TEXTURE_MAP.put(G_LIST.get(ICLIENTDAS.StartPart()).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/obsidian.png")));
+		TEXTURE_MAP.put(G_LIST.get(ICLIENTDAS.StartPart() + 1).ebo, diamond_block);
+		TEXTURE_MAP.put(G_LIST.get(ICLIENTDAS.StartPart() + 2).ebo, diamond_block);
+	}
 
-    @Override
-    public int getTextureBuffer(MemoG rg)
-    {
-        return TEXTURE_MAP.get(rg.ebo);
-    }
+	@Override
+	public int getTextureBuffer(MemoG rg)
+	{
+		return TEXTURE_MAP.get(rg.ebo);
+	}
 
-    @Override
-    public byte getExtraBit(MemoG rg)
-    {
-        return (byte)(super.getExtraBit(rg) | 16);
-    }
+	@Override
+	public byte getExtraBit(MemoG rg)
+	{
+		return (byte)(super.getExtraBit(rg) | 16);
+	}
 }

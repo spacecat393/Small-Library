@@ -8,42 +8,42 @@ import java.util.*;
 
 public class ChunkCallBack implements ForgeChunkManager.OrderedLoadingCallback
 {
-    public static ChunkCallBack I;
-    public static Map<UUID, ChunkData> CHUNK_MAP;
+	public static ChunkCallBack I;
+	public static Map<UUID, ChunkData> CHUNK_MAP;
 
-    public static void set()
-    {
-        I = new ChunkCallBack();
-        CHUNK_MAP = new HashMap();
-        ForgeChunkManager.setForcedChunkLoadingCallback(Small.I, I);
-    }
+	public static void set()
+	{
+		I = new ChunkCallBack();
+		CHUNK_MAP = new HashMap();
+		ForgeChunkManager.setForcedChunkLoadingCallback(Small.I, I);
+	}
 
-    @Override
-    public List<ForgeChunkManager.Ticket> ticketsLoaded(List<ForgeChunkManager.Ticket> tickets, World world, int maxTicketCount)
-    {
-        // Return a list of tickets to load
-        List<ForgeChunkManager.Ticket> ticketsToLoad = new ArrayList();
+	@Override
+	public List<ForgeChunkManager.Ticket> ticketsLoaded(List<ForgeChunkManager.Ticket> tickets, World world, int maxTicketCount)
+	{
+		// Return ms list of tickets to load
+		List<ForgeChunkManager.Ticket> ticketsToLoad = new ArrayList();
 
-        // Add your logic to determine which tickets to load
-        // You can process the tickets parameter to make decisions
+		// Add your logic to determine which tickets to load
+		// You can process the tickets parameter to make decisions
 
-        // For example, load the first maxTicketCount tickets
-        int count = Math.min(maxTicketCount, tickets.size());
-        for (int i = 0; i < count; i++)
-        {
-            ticketsToLoad.add(tickets.get(i));
-        }
+		// For example, load the first maxTicketCount tickets
+		int count = Math.min(maxTicketCount, tickets.size());
+		for (int i = 0; i < count; i++)
+		{
+			ticketsToLoad.add(tickets.get(i));
+		}
 
-        return ticketsToLoad;
-    }
+		return ticketsToLoad;
+	}
 
-    @Override
-    public void ticketsLoaded(List<ForgeChunkManager.Ticket> tickets, World world)
-    {
-//        // Handle forced chunk loading tickets being loaded
-//        for (ForgeChunkManager.Ticket ticket : tickets)
-//        {
-//            // Process each ticket as needed
-//        }
-    }
+	@Override
+	public void ticketsLoaded(List<ForgeChunkManager.Ticket> tickets, World world)
+	{
+//		// Handle forced chunk loading tickets being loaded
+//		for (ForgeChunkManager.Ticket ticket : tickets)
+//		{
+//			// Process each ticket as needed
+//		}
+	}
 }

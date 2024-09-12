@@ -18,76 +18,76 @@ import static com.nali.system.opengl.memo.client.MemoC.OPENGL_FIXED_PIPE_FLOATBU
 @SideOnly(Side.CLIENT)
 public class RenderSakura<RC extends IClientDaO> extends SmallRenderO<RC>
 {
-//    public static int ID;
-//    public static DataLoader DATALOADER = RenderHelper.DATALOADER;
-    public static IClientDaO ICLIENTDAO = new SakuraClient();
-    public Map<Integer, Integer> color_map = new HashMap();//ebo hex
-    public byte extra_bit;
+//	public static int ID;
+//	public static DataLoader DATALOADER = RenderHelper.DATALOADER;
+	public static IClientDaO ICLIENTDAO = new SakuraClient();
+	public Map<Integer, Integer> color_map = new HashMap();//ebo hex
+	public byte extra_bit;
 
-    public RenderSakura(RC rc)
-    {
-        super(rc);
-//        float s = -5.0F;
-//        this.objectscreendraw.sx = s;
-//        this.objectscreendraw.sy = s;
-//        this.objectscreendraw.sz = s;
-        color_map.put((G_LIST.get(ICLIENTDAO.StartPart())).ebo, 0xFFFFACDF);//ffd4e9
-//        color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 1)).ebo, 0xFFffacdf);
-    }
+	public RenderSakura(RC rc)
+	{
+		super(rc);
+//		float s = -5.0F;
+//		this.objectscreendraw.sx = s;
+//		this.objectscreendraw.sy = s;
+//		this.objectscreendraw.sz = s;
+		color_map.put((G_LIST.get(ICLIENTDAO.StartPart())).ebo, 0xFFFFACDF);//ffd4e9
+//		color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 1)).ebo, 0xFFffacdf);
+	}
 
-    @Override
-    public void setLightCoord(MemoS rs)
-    {
-    }
+	@Override
+	public void setLightCoord(MemoS rs)
+	{
+	}
 
-//    @Override
-//    public void setLightMapUniform(OpenGLObjectShaderMemory openglobjectshadermemory)
-//    {
-//    }
+//	@Override
+//	public void setLightMapUniform(OpenGLObjectShaderMemory openglobjectshadermemory)
+//	{
+//	}
 
-    @Override
-    public void setTextureUniform(MemoG rg, MemoS rs)
-    {
-        Integer integer = this.color_map.get(rg.ebo);
-        if (integer == null)
-        {
-            this.extra_bit = 0;
-            super.setTextureUniform(rg, rs);
-        }
-        else
-        {
-            this.extra_bit = 4;
-            int color = this.getTextureID(rg);
-            OPENGL_FIXED_PIPE_FLOATBUFFER.limit(3);
-            OPENGL_FIXED_PIPE_FLOATBUFFER.clear();
-            OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
-            OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
-            OPENGL_FIXED_PIPE_FLOATBUFFER.put((color & 0xFF) / 255.0F);
-            OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
-            OPENGL_FIXED_PIPE_FLOATBUFFER.flip();
-            OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4/*+1*/], OPENGL_FIXED_PIPE_FLOATBUFFER);
-        }
-    }
+	@Override
+	public void setTextureUniform(MemoG rg, MemoS rs)
+	{
+		Integer integer = this.color_map.get(rg.ebo);
+		if (integer == null)
+		{
+			this.extra_bit = 0;
+			super.setTextureUniform(rg, rs);
+		}
+		else
+		{
+			this.extra_bit = 4;
+			int color = this.getTextureID(rg);
+			OPENGL_FIXED_PIPE_FLOATBUFFER.limit(3);
+			OPENGL_FIXED_PIPE_FLOATBUFFER.clear();
+			OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
+			OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
+			OPENGL_FIXED_PIPE_FLOATBUFFER.put((color & 0xFF) / 255.0F);
+			OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
+			OPENGL_FIXED_PIPE_FLOATBUFFER.flip();
+			OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4/*+1*/], OPENGL_FIXED_PIPE_FLOATBUFFER);
+		}
+	}
 
-    @Override
-    public int getTextureID(MemoG rg)
-    {
-        Integer integer = this.color_map.get(rg.ebo);
-        if (integer == null)
-        {
-            this.extra_bit = 0;
-            return super.getTextureID(rg);
-        }
-        else
-        {
-            this.extra_bit = 4;
-            return integer;
-        }
-    }
+	@Override
+	public int getTextureID(MemoG rg)
+	{
+		Integer integer = this.color_map.get(rg.ebo);
+		if (integer == null)
+		{
+			this.extra_bit = 0;
+			return super.getTextureID(rg);
+		}
+		else
+		{
+			this.extra_bit = 4;
+			return integer;
+		}
+	}
 
-    @Override
-    public byte getExtraBit(MemoG rg)
-    {
-        return this.extra_bit;
-    }
+	@Override
+	public byte getExtraBit(MemoG rg)
+	{
+		return this.extra_bit;
+	}
 }

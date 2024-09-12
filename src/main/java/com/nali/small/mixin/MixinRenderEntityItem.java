@@ -12,22 +12,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(RenderEntityItem.class)
 public class MixinRenderEntityItem
 {
-    @Inject(method = "doRender(Lnet/minecraft/entity/item/EntityItem;DDDFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderItem;renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/renderer/block/model/IBakedModel;)V", shift = At.Shift.BEFORE))
-    private void nali_small_doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci)
-    {
-        Item item = entity.getItem().getItem();
-        if (item instanceof IMixN)
-        {
-            ((IMixN)item).updateLight(entity.world, entity.getPosition());
-        }
-    }
+	@Inject(method = "doRender(Lnet/minecraft/entity/item/EntityItem;DDDFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderItem;renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/renderer/block/model/IBakedModel;)V", shift = At.Shift.BEFORE))
+	private void nali_small_doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci)
+	{
+		Item item = entity.getItem().getItem();
+		if (item instanceof IMixN)
+		{
+			((IMixN)item).updateLight(entity.world, entity.getPosition());
+		}
+	}
 
-//    @Inject(method = "doRender(Lnet/minecraft/entity/item/EntityItem;DDDFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderItem;renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/renderer/block/model/IBakedModel;)V", shift = At.Shift.AFTER))
-//    private void afterRenderItem(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci)
-//    {
-//        ItemStack itemstack = entity.getItem();
-//        if (itemstack.getItem() instanceof MixItems)
-//        {
-//        }
-//    }
+//	@Inject(method = "doRender(Lnet/minecraft/entity/item/EntityItem;DDDFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderItem;renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/renderer/block/model/IBakedModel;)V", shift = At.Shift.AFTER))
+//	private void afterRenderItem(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci)
+//	{
+//		ItemStack itemstack = entity.getItem();
+//		if (itemstack.getItem() instanceof MixItems)
+//		{
+//		}
+//	}
 }

@@ -6,18 +6,18 @@ import net.minecraft.world.World;
 
 public class SmallContainer extends Container
 {
-    public static int ID;
+	public static int ID;
 
-//    public static List<Integer> INTEGER_LIST;
+//	public static List<Integer> INTEGER_LIST;
 
-    @Override
-    public boolean canInteractWith(EntityPlayer entityplayer)
-    {
-        return true;
-    }
+	@Override
+	public boolean canInteractWith(EntityPlayer entityplayer)
+	{
+		return true;
+	}
 
-    public static SmallContainer get(EntityPlayer entityplayer, World world, int x, int y, int z)
-    {
-        return new SmallContainer();
-    }
+	public static SmallContainer get(EntityPlayer entityplayer, World world, int x, int y, int z)
+	{
+		return new SmallContainer();
+	}
 }
