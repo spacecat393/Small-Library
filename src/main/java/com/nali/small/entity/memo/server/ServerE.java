@@ -112,7 +112,6 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 		SIData sidata = new SIData();
 
 		Entity e = this.i.getE();
-		String path = this.worldserver.getSaveHandler().getWorldDirectory() + "/nali/entity";
 		byte[] chunk_byte_array = new byte[4 + 8/* + 4*/];
 		ByteWriter.set(chunk_byte_array, this.worldserver.getWorldType().getId(), 0);
 		ByteWriter.set(chunk_byte_array, e.getPosition().toLong(), 4);
@@ -145,8 +144,15 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 
 		try
 		{
-			Files.write(new File(path + "/" + e.getUniqueID()).toPath(), chunk_byte_array);
-			Files.write(new File(path + "/data/" + e.getUniqueID()).toPath(), sidata.byte_array);
+			int dimension = this.worldserver.provider.getDimension();
+			File file = new File(this.worldserver.getSaveHandler().getWorldDirectory() + "/nali/entity/" + dimension);
+			if (!file.isDirectory())
+			{
+				file.mkdirs();
+			}
+
+			Files.write(new File(file + "/" + e.getUniqueID()).toPath(), chunk_byte_array);
+			Files.write(new File(file + "/data/" + e.getUniqueID()).toPath(), sidata.byte_array);
 		}
 		catch (IOException ex)
 		{

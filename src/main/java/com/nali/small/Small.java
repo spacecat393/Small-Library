@@ -27,7 +27,9 @@ import org.lwjgl.opengl.GL11;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.nali.Nali.warn;
 import static com.nali.list.container.gui.SmallGui.*;
@@ -126,34 +128,40 @@ public class Small
 		{
 			file.mkdirs();
 		}
-		File[] file_array = file.listFiles();
-		if (file_array != null)
+
+		File[] d_file_array = file.listFiles();
+		if (d_file_array != null)
 		{
-			for (File f : file_array)
+			for (File d_file : d_file_array)
 			{
-				try
+				File[] i_file_array = d_file.listFiles();
+				if (i_file_array != null)
 				{
-					byte[] byte_array = Files.readAllBytes(f.toPath());
-//					UUID uuid = UUID.fromString(f.getName());
-					WorldServer worldserver = worldserver_array[ByteReader.getInt(byte_array, 0)];
-					BlockPos blockpos = BlockPos.fromLong(ByteReader.getLong(byte_array, 4));
-
-					ChunkData chunkdata = new ChunkData();
-					chunkdata.world = worldserver;
-					chunkdata.chunkpos = new ChunkPos(blockpos);
-					chunkdata.ticket = ForgeChunkManager.requestTicket(Small.I, chunkdata.world, ForgeChunkManager.Type.NORMAL);
-
-					if (chunkdata.ticket != null)
+					for (File i_file : i_file_array)
 					{
-						ForgeChunkManager.forceChunk(chunkdata.ticket, chunkdata.chunkpos);
-//						CHUNK_MAP.put(uuid, chunkdata);
-						CHUNK_LIST.add(chunkdata);
+						try
+						{
+							byte[] byte_array = Files.readAllBytes(i_file.toPath());
+							WorldServer worldserver = worldserver_array[ByteReader.getInt(byte_array, 0)];
+							BlockPos blockpos = BlockPos.fromLong(ByteReader.getLong(byte_array, 4));
+
+							ChunkData chunkdata = new ChunkData();
+							chunkdata.world = worldserver;
+							chunkdata.chunkpos = new ChunkPos(blockpos);
+							chunkdata.ticket = ForgeChunkManager.requestTicket(Small.I, chunkdata.world, ForgeChunkManager.Type.NORMAL);
+
+							if (chunkdata.ticket != null)
+							{
+								ForgeChunkManager.forceChunk(chunkdata.ticket, chunkdata.chunkpos);
+								CHUNK_LIST.add(chunkdata);
+							}
+						}
+						catch (IOException e)
+						{
+							warn(e);
+							i_file.delete();
+						}
 					}
-				}
-				catch (IOException e)
-				{
-					warn(e);
-					f.delete();
 				}
 			}
 		}
@@ -162,8 +170,27 @@ public class Small
 	@EventHandler
 	public void onFMLServerStoppingEvent(FMLServerStoppingEvent event)
 	{
-		//clear all save and write new save
-		for (ServerE servere : ServerE.S_MAP.values())
+		List<ServerE> s_collection = new ArrayList(ServerE.S_MAP.values());
+		File[] d_file_array = new File(s_collection.get(0).worldserver.getSaveHandler().getWorldDirectory() + "/nali/entity").listFiles();
+
+		if (d_file_array != null)
+		{
+			for (File d_file : d_file_array)
+			{
+				File[] i_file_array = d_file.listFiles();
+				if (i_file_array != null)
+				{
+					for (File i_file : i_file_array)
+					{
+						i_file.delete();
+					}
+				}
+
+				d_file.delete();
+			}
+		}
+
+		for (ServerE servere : s_collection)
 		{
 			servere.writeFile();
 		}
