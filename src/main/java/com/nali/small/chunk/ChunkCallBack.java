@@ -9,12 +9,15 @@ import java.util.*;
 public class ChunkCallBack implements ForgeChunkManager.OrderedLoadingCallback
 {
 	public static ChunkCallBack I;
-	public static Map<UUID, ChunkData> CHUNK_MAP;
+//	public static Map<UUID, ChunkData> CHUNK_MAP;
+	public static Map<Long, ChunkData> CHUNK_MAP;
+	public static List<ChunkData> CHUNK_LIST;//need to clear later
 
 	public static void set()
 	{
 		I = new ChunkCallBack();
 		CHUNK_MAP = new HashMap();
+		CHUNK_LIST = new ArrayList();
 		ForgeChunkManager.setForcedChunkLoadingCallback(Small.I, I);
 	}
 

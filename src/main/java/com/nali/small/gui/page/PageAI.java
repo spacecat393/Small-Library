@@ -76,7 +76,7 @@ public class PageAI extends Page
 		PAGE_ARRAY = new Page[]
 		{
 			new PageBlur(),
-			new PageMenu(STRING_ARRAY[14] + ((KeyMenuMe.ME & 1) == 1 ? "|" + STRING_ARRAY[0] : "") + "|" + PageMe.UUID + "|" + STRING_ARRAY[1]),
+			new PageMenu(STRING_ARRAY[14] + ((KeyMenuMe.ME & 1) == 1 ? "|" + STRING_ARRAY[0] : "") + "|I" + (int)PageMe.ID_KEY + "D" + (int)(PageMe.ID_KEY >> 32) + "|" + STRING_ARRAY[1]),
 			new PageSakura(),
 			new PageKey(),
 			new PageAI((byte)1)
@@ -313,7 +313,8 @@ public class PageAI extends Page
 	{
 		SEARCH_AI_BYTE_LIST.clear();
 
-		ClientE c = C_MAP.get(PageMe.UUID);
+//		ClientE c = C_MAP.get(PageMe.UUID);
+		ClientE c = C_MAP.get(PageMe.ID_KEY);
 		byte[] ai_byte_array = c.i.getSI();
 		SIZE = ai_byte_array.length;
 		Minecraft minecraft = SMALLGUI.mc;

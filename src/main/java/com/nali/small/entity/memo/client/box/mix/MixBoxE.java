@@ -92,7 +92,7 @@ public abstract class MixBoxE<RC extends IClientDaO, R extends RenderO<RC>, SD, 
 			return;
 		}
 
-		this.c.sendSAIE(new byte[1 + 16 + 1], SIESit.ID);
+		this.c.sendSSI(new byte[1 + 8 + 1], SIESit.ID);
 //		this.c.sendPacketUUID(AIESit.ID);
 	}
 

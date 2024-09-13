@@ -19,13 +19,17 @@ public class ChunkLoader
 		if (servere != null && CHUNK_MAP != null)
 		{
 			Entity e = servere.i.getE();
-			UUID uuid = e.getUniqueID();
+//			UUID uuid = e.getUniqueID();
 			ChunkPos chunkpos = new ChunkPos(e.getPosition());
 			World world = e.world;
 
-			if (CHUNK_MAP.containsKey(uuid))
+			long key = (long)world.provider.getDimension() << 32 | e.getEntityId();
+
+//			if (CHUNK_MAP.containsKey(uuid))
+			if (CHUNK_MAP.containsKey(key))
 			{
-				ChunkData chunkdata = CHUNK_MAP.get(uuid);
+//				ChunkData chunkdata = CHUNK_MAP.get(uuid);
+				ChunkData chunkdata = CHUNK_MAP.get(key);
 
 				if (!world.equals(chunkdata.world) || !chunkpos.equals(chunkdata.chunkpos))
 				{
@@ -49,7 +53,8 @@ public class ChunkLoader
 				{
 					chunkdata.ticket.bindEntity(e);
 					ForgeChunkManager.forceChunk(chunkdata.ticket, chunkdata.chunkpos);
-					CHUNK_MAP.put(uuid, chunkdata);
+//					CHUNK_MAP.put(uuid, chunkdata);
+					CHUNK_MAP.put(key, chunkdata);
 				}
 			}
 //			//read on memory and write on stop

@@ -28,7 +28,7 @@ public class SIEInvOpenInv<SD, BD extends IBothDaNe, E extends Entity, I extends
 	@Override
 	public void call()
 	{
-		this.s.ms.entityplayermp.openGui(Small.I, SmallContainer.ID, this.s.ms.entityplayermp.world, this.s.i.getE().getEntityId(), 0, 0);
+		this.s.ms.entityplayermp.openGui(Small.I, SmallContainer.ID, this.s.ms.entityplayermp.world, this.s.i.getE().getEntityId(), this.s.worldserver.provider.getDimension(), 0);
 	}
 
 	@Override

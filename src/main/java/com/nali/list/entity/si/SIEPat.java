@@ -31,7 +31,7 @@ public class SIEPat<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<
 	{
 		this.state |= 1;
 		E e = this.s.i.getE();
-		this.s.worldserver.spawnParticle(EnumParticleTypes.HEART, e.posX, ByteReader.getFloat(this.s.ms.byte_array, 1 + 16 + 1), e.posZ, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+		this.s.worldserver.spawnParticle(EnumParticleTypes.HEART, e.posX, ByteReader.getFloat(this.s.ms.byte_array, 1 + 8 + 1), e.posZ, 1, 0.0D, 0.0D, 0.0D, 0.0D);
 	}
 
 	@Override

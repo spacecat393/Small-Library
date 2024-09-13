@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public abstract class ClientLe<RC extends IClientDaO, R extends RenderO<RC>, SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, MR, ?>, MB extends MixBoxE<RC, R, SD, BD, E, I, MC, MR, ?>, MR extends MixRenderE<RC, R, SD, BD, E, I, MC, MB, ?>> extends ClientE<RC, R, SD, BD, E, I, MC, MB, MR> implements IBothLe<SD, BD, E, I>, IClientSound
+public abstract class ClientLe<RC extends IClientDaO, R extends RenderO<RC>, SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, MR, ?>, MB extends MixBoxE<RC, R, SD, BD, E, I, MC, MR, ?>, MR extends MixRenderE<RC, R, SD, BD, E, I, MC, MB, ?>> extends ClientE<RC, R, SD, BD, E, I, MC, MB, MR> implements IBothLe<SD, BD, E, I>
 {
 	public WorkEBodyYaw workebodyyaw;
 
@@ -33,13 +33,13 @@ public abstract class ClientLe<RC extends IClientDaO, R extends RenderO<RC>, SD 
 	@Override
 	public void getHurtSound(DamageSource damagesource)
 	{
-		this.getSound().play(this.i.getSD().HURT());
+//		this.getSound().play(this.i.getSD().HURT());
 	}
 
 	@Override
 	public void getDeathSound()
 	{
-		this.getSound().play(this.i.getSD().DEATH());
+//		this.getSound().play(this.i.getSD().DEATH());
 	}
 
 	@Override

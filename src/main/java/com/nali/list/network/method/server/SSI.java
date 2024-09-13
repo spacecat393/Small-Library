@@ -13,11 +13,13 @@ public class SSI
 
 	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
 	{
-		ServerE s = S_MAP.get(ByteReader.getUUID(servermessage.data, 1));
-		if (s != null && (s.ms.state & 8) == 8)
+//		ServerE s = S_MAP.get(ByteReader.getUUID(servermessage.data, 1));
+		ServerE s = S_MAP.get(ByteReader.getLong(servermessage.data, 1));
+		if (s != null/* && (s.ms.state & 8) == 8*/)
 		{
 			s.ms.set(entityplayermp, servermessage.data);
-			s.ms.call(servermessage.data[1 + 16]);
+//			s.ms.call(servermessage.data[1 + 16]);
+			s.ms.call(servermessage.data[1 + 8]);
 			s.ms.clear();
 		}
 	}

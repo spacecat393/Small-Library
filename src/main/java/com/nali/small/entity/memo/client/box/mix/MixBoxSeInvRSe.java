@@ -29,11 +29,11 @@ public class MixBoxSeInvRSe<RC extends IClientDaO, R extends RenderO<RC>, SD, BD
 	{
 		if (player_entity.isSneaking())
 		{
-			this.c.sendSAIE(new byte[1 + 16 + 1], SIEInvOpenInv.ID);
+			this.c.sendSSI(new byte[1 + 8 + 1], SIEInvOpenInv.ID);
 		}
 		else
 		{
-			this.c.sendSAIE(new byte[1 + 16 + 1], SIEPlayWithRSe.ID);
+			this.c.sendSSI(new byte[1 + 8 + 1], SIEPlayWithRSe.ID);
 		}
 	}
 

@@ -9,7 +9,7 @@ import com.nali.small.entity.IMixE;
 import com.nali.small.entity.inv.InvLe;
 import com.nali.small.entity.memo.IBothNInv;
 import com.nali.small.entity.memo.client.ClientLe;
-import com.nali.small.entity.memo.client.IClientInvE;
+import com.nali.small.entity.memo.client.IClientRsInv;
 import com.nali.small.entity.memo.client.box.mix.MixBoxSleInv;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.FRenderFle;
@@ -39,7 +39,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class LayerSleInvItem<IE extends InvLe, RC extends IClientDaS, R extends RenderS<BD, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, MR, C>, MR extends MixRenderSe<RC, R, SD, BD, E, I, MC, MB, C>, MB extends MixBoxSleInv<RC, R, SD, BD, E, I, MC, MR, C>, C extends ClientLe<RC, R, SD, BD, E, I, MC, MB, MR> & IClientInvE & IBothNInv<IE>> extends LayerE<RC, R, SD, BD, E, I, MC, MR, MB, C>
+public class LayerSleInvItem<IE extends InvLe, RC extends IClientDaS, R extends RenderS<BD, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, MR, C>, MR extends MixRenderSe<RC, R, SD, BD, E, I, MC, MB, C>, MB extends MixBoxSleInv<RC, R, SD, BD, E, I, MC, MR, C>, C extends ClientLe<RC, R, SD, BD, E, I, MC, MB, MR> & IClientRsInv & IBothNInv<IE>> extends LayerE<RC, R, SD, BD, E, I, MC, MR, MB, C>
 {
 	public static FRenderFle FRENDERFLE = new FRenderFle();
 	public static LayerBipedArmor LAYERBIPEDARMOR = new LayerBipedArmor(FRENDERFLE);

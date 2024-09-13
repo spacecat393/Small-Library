@@ -6,7 +6,7 @@ import com.nali.da.client.IClientDaS;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientLe;
-import com.nali.small.entity.memo.client.IClientInvE;
+import com.nali.small.entity.memo.client.IClientRsInv;
 import com.nali.small.entity.memo.client.box.mix.MixBoxSleInv;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.FRenderE;
@@ -29,7 +29,7 @@ import java.util.Random;
 import static com.nali.system.ClientLoader.A2_MAP;
 
 @SideOnly(Side.CLIENT)
-public class LayerSleInvArrow<RC extends IClientDaS, R extends RenderS<BD, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, MR, C>, MR extends MixRenderSe<RC, R, SD, BD, E, I, MC, MB, C>, MB extends MixBoxSleInv<RC, R, SD, BD, E, I, MC, MR, C>, C extends ClientLe<RC, R, SD, BD, E, I, MC, MB, MR> & IClientInvE> extends LayerE<RC, R, SD, BD, E, I, MC, MR, MB, C>
+public class LayerSleInvArrow<RC extends IClientDaS, R extends RenderS<BD, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, MR, C>, MR extends MixRenderSe<RC, R, SD, BD, E, I, MC, MB, C>, MB extends MixBoxSleInv<RC, R, SD, BD, E, I, MC, MR, C>, C extends ClientLe<RC, R, SD, BD, E, I, MC, MB, MR> & IClientRsInv> extends LayerE<RC, R, SD, BD, E, I, MC, MR, MB, C>
 {
 	public List<int[]> index_int_array_list = new ArrayList();
 	public List<float[]> float_array_list = new ArrayList();

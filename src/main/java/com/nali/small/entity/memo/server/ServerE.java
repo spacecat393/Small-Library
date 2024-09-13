@@ -1,12 +1,12 @@
 package com.nali.small.entity.memo.server;
 
 import com.nali.da.IBothDaNe;
-import com.nali.small.chunk.ChunkLoader;
+import com.nali.list.network.method.client.CCI;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothE;
 import com.nali.small.entity.memo.client.render.FRenderE;
-import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.small.entity.memo.server.si.MixSIE;
+import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.block.material.Material;
@@ -23,22 +23,21 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Map;
-import java.util.UUID;
 
 import static com.nali.Nali.error;
 import static com.nali.Nali.warn;
-import static com.nali.small.chunk.ChunkCallBack.CHUNK_MAP;
 
 public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MS extends MixSIE<SD, BD, E, I, ?>> implements IBothE<SD, BD, E, I>
 {
-	public static Map<UUID, ServerE> S_MAP;
+//	public static Map<UUID, ServerE> S_MAP;
+	public static Map<Long, ServerE> S_MAP;
 
 	public I i;
 	public MS ms;
 
 	public WorldServer worldserver;
 
-	public UUID uuid;
+//	public UUID uuid;
 	public byte[] sync_byte_array;
 
 //	THREAD.start();
@@ -82,27 +81,27 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 			entitydatamanager.set(byte_dataparameter_array[i], this.sync_byte_array[i]);
 		}
 
-		if (!CHUNK_MAP.containsKey(this.uuid))
-		{
-			ChunkLoader.updateChunk(this);
-		}
+//		if (!CHUNK_MAP.containsKey(this.uuid))
+//		{
+//			ChunkLoader.updateChunk(this);
+//		}
 
 		this.updateServer();
 		e.width = 0.5F;
 		e.height = 0.5F;
 
-		UUID uuid = e.getUniqueID();
-
-		if (!uuid.equals(this.uuid))
-		{
-			if (this.uuid != null)
-			{
-				S_MAP.remove(this.uuid);
-			}
-
-			S_MAP.put(uuid, this);
-			this.uuid = uuid;
-		}
+//		UUID uuid = e.getUniqueID();
+//
+//		if (!uuid.equals(this.uuid))
+//		{
+//			if (this.uuid != null)
+//			{
+//				S_MAP.remove(this.uuid);
+//			}
+//
+//			S_MAP.put(uuid, this);
+//			this.uuid = uuid;
+//		}
 
 		this.ms.update();
 	}
@@ -158,48 +157,54 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 	@Override
 	public void readFile()
 	{
-		SIData sidata = new SIData();
-		Entity e = this.i.getE();
-		File file = new File(this.worldserver.getSaveHandler().getWorldDirectory() + "/nali/entity/data/" + e.getUniqueID());
-		try
+		if ((this.ms.state & 4) == 0)
 		{
-			if (file.exists())
+			SIData sidata = new SIData();
+			Entity e = this.i.getE();
+			File file = new File(this.worldserver.getSaveHandler().getWorldDirectory() + "/nali/entity/data/" + e.getUniqueID());
+
+			S_MAP.put((long)e.world.provider.getDimension() << 32 | e.getEntityId(), this);
+
+			try
 			{
-				EntityDataManager entitydatamanager = e.getDataManager();
-				DataParameter<Byte>[] byte_dataparameter_array = this.i.getByteDataParameterArray();
-				DataParameter<Float>[] float_dataparameter_array = this.i.getFloatDataParameterArray();
-				DataParameter<Integer>[] integer_dataparameter_array = this.i.getIntegerDataParameterArray();
-
-				sidata.byte_array = Files.readAllBytes(file.toPath());
-
-				for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
+				if (file.exists())
 				{
-					entitydatamanager.set(byte_dataparameter, sidata.byte_array[sidata.index++]);
-				}
+					EntityDataManager entitydatamanager = e.getDataManager();
+					DataParameter<Byte>[] byte_dataparameter_array = this.i.getByteDataParameterArray();
+					DataParameter<Float>[] float_dataparameter_array = this.i.getFloatDataParameterArray();
+					DataParameter<Integer>[] integer_dataparameter_array = this.i.getIntegerDataParameterArray();
 
-				for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
+					sidata.byte_array = Files.readAllBytes(file.toPath());
+
+					for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
+					{
+						entitydatamanager.set(byte_dataparameter, sidata.byte_array[sidata.index++]);
+					}
+
+					for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
+					{
+						entitydatamanager.set(float_dataparameter, ByteReader.getFloat(sidata.byte_array, sidata.index));
+						sidata.index += 4;
+					}
+
+					for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
+					{
+						entitydatamanager.set(integer_dataparameter, ByteReader.getInt(sidata.byte_array, sidata.index));
+						sidata.index += 4;
+					}
+
+					this.ms.readFile(sidata);
+				}
+				else
 				{
-					entitydatamanager.set(float_dataparameter, ByteReader.getFloat(sidata.byte_array, sidata.index));
-					sidata.index += 4;
+					this.ms.initFile();
 				}
-
-				for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
-				{
-					entitydatamanager.set(integer_dataparameter, ByteReader.getInt(sidata.byte_array, sidata.index));
-					sidata.index += 4;
-				}
-
-				this.ms.readFile(sidata);
 			}
-			else
+			catch (IOException ex)
 			{
-				this.ms.initFile();
+				warn(ex);
+				file.delete();
 			}
-		}
-		catch (IOException ex)
-		{
-			warn(ex);
-			file.delete();
 		}
 	}
 
@@ -305,6 +310,14 @@ public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I exte
 	{
 		IBlockState temp_iblockstate = this.i.getE().world.getBlockState(blockpos);
 		return temp_iblockstate.getMaterial();
+	}
+
+	public void setCCI(byte[] byte_array, byte i)
+	{
+		E e = this.i.getE();
+		byte_array[0] = CCI.ID;
+		ByteWriter.set(byte_array, (long)e.world.provider.getDimension() << 32 | e.getEntityId(), 1);
+		byte_array[1 + 8] = i;
 	}
 
 //	public boolean isWork(byte index)

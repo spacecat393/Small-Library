@@ -3,6 +3,7 @@ package com.nali.small.entity.memo.client.box.hit;
 import com.nali.da.IBothDaNe;
 import com.nali.da.client.IClientDaO;
 import com.nali.list.entity.si.SIEPat;
+import com.nali.list.entity.si.SIESound;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderO;
@@ -44,15 +45,18 @@ public class HitOlePat<RC extends IClientDaO, R extends RenderO<RC>, SD extends 
 			this.pat_time = (byte)e.world.rand.nextInt(16);
 
 //			this.c.sendSAIE(new byte[1 + 16 + 1], AIEPat.ID);
-			byte[] byte_array = new byte[1 + 16 + 1 + 4];
-			ByteWriter.set(byte_array, (float)e.getEntityBoundingBox().maxY, 1 + 16 + 1);
-			this.c.sendSAIE(byte_array, SIEPat.ID);
+			byte[] byte_array = new byte[1 + 8 + 1 + 4];
+			ByteWriter.set(byte_array, (float)e.getEntityBoundingBox().maxY, 1 + 8 + 1);
+			this.c.sendSSI(byte_array, SIEPat.ID);
 //			byte_array[0] = SAIE.ID;
 //			ByteWriter.set(byte_array, this.c.uuid, 1);
 //			byte_array[1 + 16] = AIEPat.ID;
 			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 
 //			this.c.sound.play(this.c.i.getSD().PAT());
+			byte[] s_byte_array = new byte[1 + 8 + 1 + 4];
+			ByteWriter.set(s_byte_array, this.c.i.getSD().PAT(), 1 + 8 + 1);
+			this.c.sendSSI(s_byte_array, SIESound.ID);
 
 //			serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ON_PAT()] = 1;
 //			this.skinningentities.world.spawnEntity(new EntityXPOrb(this.skinningentities.world, this.skinningentities.posX, this.skinningentities.posY, this.skinningentities.posZ, 10));

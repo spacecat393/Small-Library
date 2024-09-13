@@ -9,7 +9,6 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
@@ -24,9 +23,7 @@ import java.lang.reflect.Field;
 import java.nio.IntBuffer;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
-import static com.nali.small.entity.memo.client.ClientE.UUID_MAP;
 import static com.nali.small.gui.key.Key.KEY;
 import static com.nali.small.gui.mouse.Mouse.*;
 import static com.nali.small.gui.page.Page.*;
@@ -77,26 +74,27 @@ public class SmallGui extends GuiContainer
 		}
 	}
 
-	public static SmallGui get(EntityPlayer entityplayer, World world, int x, int y, int z)
+	public static SmallGui get(EntityPlayer entityplayer, World world, int x, int y, int z)//x_eID y_dID
 	{
 		if (x != -1)
 		{
-			Entity entity = world.getEntityByID(x);
-			UUID uuid = null;
+//			Entity entity = world.getEntityByID(x);
+//			UUID uuid = null;
+//
+//			if (entity != null)
+//			{
+//				uuid = entity.getUniqueID();
+//			}
 
-			if (entity != null)
-			{
-				uuid = entity.getUniqueID();
-			}
-
-			if (uuid == null)
-			{
-				uuid = UUID_MAP.get(x);
-//				ClientE.C_MAP.get(uuid);
-			}
+//			if (uuid == null)
+//			{
+//				uuid = UUID_MAP.get(x);
+////				ClientE.C_MAP.get(uuid);
+//			}
 
 			KeyMenuMe.ME &= 255-1;
-			PageMe.UUID = uuid;
+//			PageMe.UUID = uuid;
+			PageMe.ID_KEY = (long)y << 32 | x;
 			openPageMe();
 		}
 		return new SmallGui(new SmallContainer());

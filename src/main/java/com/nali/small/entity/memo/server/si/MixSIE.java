@@ -38,7 +38,7 @@ public abstract class MixSIE<SD, BD extends IBothDaNe, E extends Entity, I exten
 
 	public S s;
 	public Map<Byte, SI/*<SD, BD, E, I, S, ?>*/> si_map = new HashMap();
-	public byte state = (byte)255;//main_work sub_work init ai-lock0 !read_file0! ?map chunk ?regen
+	public byte state = (byte)255;//main_work sub_work init !ai-lock0! !read_file0! ?map chunk ?regen
 
 	public EntityPlayerMP entityplayermp;
 	public byte[] byte_array;
@@ -115,14 +115,11 @@ public abstract class MixSIE<SD, BD extends IBothDaNe, E extends Entity, I exten
 
 	public void readFile(SIData sidata)
 	{
-		if ((this.state & 4) == 0)
-		{
-			this.state = (byte)(sidata.byte_array[sidata.index++] & 255-8);
+		this.state = (byte)(sidata.byte_array[sidata.index++] & 255/*-8*/);
 
-			for (byte b : this.s.i.getSI())
-			{
-				this.si_map.get(b).readFile(sidata);
-			}
+		for (byte b : this.s.i.getSI())
+		{
+			this.si_map.get(b).readFile(sidata);
 		}
 	}
 

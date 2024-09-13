@@ -26,8 +26,6 @@ public interface IBothLe<SD, BD extends IBothDaNe, E extends EntityLivingBase, I
 	//server
 	boolean attackEntityAsMob(Entity entity);
 	boolean attackEntityFrom(DamageSource damagesource, float amount);
-
-	//client
 	void getHurtSound(DamageSource damagesource);
 	void getDeathSound();
 }

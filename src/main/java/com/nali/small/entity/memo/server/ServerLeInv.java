@@ -5,7 +5,6 @@ import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.inv.InvLe;
 import com.nali.small.entity.memo.IBothLeInv;
-import com.nali.small.entity.memo.IBothNInv;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.sound.ISoundDaLe;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -15,8 +14,10 @@ import net.minecraft.network.datasync.EntityDataManager;
 
 import static com.nali.small.entity.EntityLeInv.MOUTH_ITEMSTACK_DATAPARAMETER;
 
-public abstract class ServerLeInv<IE extends InvLe, SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLeInv, I extends IMixE<SD, BD, E>, MS extends MixSIE<SD, BD, E, I, ?>> extends ServerLe<SD, BD, E, I, MS> implements IBothLeInv<SD, BD, E, I>, IBothNInv<IE>
+public abstract class ServerLeInv<IE extends InvLe, SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLeInv, I extends IMixE<SD, BD, E>, MS extends MixSIE<SD, BD, E, I, ?>> extends ServerLe<SD, BD, E, I, MS> implements IBothLeInv<IE, SD, BD, E, I>
 {
+	public IE ie;
+
 	public ServerLeInv(I i)
 	{
 		super(i);
@@ -62,39 +63,6 @@ public abstract class ServerLeInv<IE extends InvLe, SD extends ISoundDaLe, BD ex
 	}
 
 	@Override
-	public Iterable<ItemStack> getHeldEquipment()
-	{
-		return this.getIE().hands_itemstack_nonnulllist;
-	}
-
-	@Override
-	public Iterable<ItemStack> getArmorInventoryList()
-	{
-		return this.getIE().armor_itemstack_nonnulllist;
-	}
-
-	@Override
-	public ItemStack getItemStackFromSlot(EntityEquipmentSlot entityequipmentslot)
-	{
-		IE ie = this.getIE();
-		switch (entityequipmentslot.getSlotType())
-		{
-			case HAND:
-			{
-				return ie.hands_itemstack_nonnulllist.get(entityequipmentslot.getIndex());
-			}
-			case ARMOR:
-			{
-				return ie.armor_itemstack_nonnulllist.get(entityequipmentslot.getIndex());
-			}
-			default:
-			{
-				return ItemStack.EMPTY;
-			}
-		}
-	}
-
-	@Override
 	public void setItemStackToSlot(EntityEquipmentSlot entityequipmentslot, ItemStack itemstack)
 	{
 		this.i.getE().playEquipSound(itemstack);
@@ -116,5 +84,11 @@ public abstract class ServerLeInv<IE extends InvLe, SD extends ISoundDaLe, BD ex
 				break;
 			}
 		}
+	}
+
+	@Override
+	public IE getIE()
+	{
+		return this.ie;
 	}
 }

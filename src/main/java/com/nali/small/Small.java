@@ -28,11 +28,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
-import java.util.UUID;
 
 import static com.nali.Nali.warn;
 import static com.nali.list.container.gui.SmallGui.*;
-import static com.nali.small.chunk.ChunkCallBack.CHUNK_MAP;
+import static com.nali.small.chunk.ChunkCallBack.CHUNK_LIST;
 import static com.nali.small.gui.page.Page.STRING_ARRAY;
 
 @Mod(modid = Small.ID)
@@ -135,7 +134,7 @@ public class Small
 				try
 				{
 					byte[] byte_array = Files.readAllBytes(f.toPath());
-					UUID uuid = UUID.fromString(f.getName());
+//					UUID uuid = UUID.fromString(f.getName());
 					WorldServer worldserver = worldserver_array[ByteReader.getInt(byte_array, 0)];
 					BlockPos blockpos = BlockPos.fromLong(ByteReader.getLong(byte_array, 4));
 
@@ -147,7 +146,8 @@ public class Small
 					if (chunkdata.ticket != null)
 					{
 						ForgeChunkManager.forceChunk(chunkdata.ticket, chunkdata.chunkpos);
-						CHUNK_MAP.put(uuid, chunkdata);
+//						CHUNK_MAP.put(uuid, chunkdata);
+						CHUNK_LIST.add(chunkdata);
 					}
 				}
 				catch (IOException e)
@@ -162,6 +162,7 @@ public class Small
 	@EventHandler
 	public void onFMLServerStoppingEvent(FMLServerStoppingEvent event)
 	{
+		//clear all save and write new save
 		for (ServerE servere : ServerE.S_MAP.values())
 		{
 			servere.writeFile();

@@ -14,7 +14,6 @@ import org.lwjgl.opengl.GL20;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static com.nali.list.container.gui.SmallGui.*;
 import static com.nali.small.gui.key.Key.KEY;
@@ -32,7 +31,8 @@ public class PageMe extends Page
 	public float[][] vec2_2d_float_array;
 	public float[][] color_vec4_2d_float_array;
 
-	public static UUID UUID;
+//	public static UUID UUID;
+	public static long ID_KEY;
 
 	public static byte PAGE,
 	BYTE = 1;
@@ -58,7 +58,7 @@ public class PageMe extends Page
 		PAGE_ARRAY = new Page[]
 		{
 			new PageBlur(),
-			new PageMenu(STRING_ARRAY[14] + ((KeyMenuMe.ME & 1) == 1 ? "|" + STRING_ARRAY[0] : "") + "|" + PageMe.UUID),
+			new PageMenu(STRING_ARRAY[14] + ((KeyMenuMe.ME & 1) == 1 ? "|" + STRING_ARRAY[0] : "") + "|I" + (int)PageMe.ID_KEY + "D" + (int)(PageMe.ID_KEY >> 32)),
 			new PageSakura(),
 			new PageKey(),
 			new PageMe((byte)1)

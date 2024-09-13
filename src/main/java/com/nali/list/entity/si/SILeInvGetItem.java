@@ -57,8 +57,8 @@ public class SILeInvGetItem<IE extends InvLe, SD extends ISoundDaLe, BD extends 
 	public void set()
 	{
 		byte[] byte_array = this.s.ms.byte_array;
-		float id = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1);
-		float f = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4);
+		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
+		float f = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
 
 		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
 		byte value = smallsakuratypes.get();

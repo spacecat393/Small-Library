@@ -14,15 +14,19 @@ public class CCI
 
 	public static void run(ClientMessage clientmessage)
 	{
-		Entity entity = Minecraft.getMinecraft().world.getEntityByID(ByteReader.getInt(clientmessage.data, 1));
-		if (entity instanceof IMixE)
+		long key = ByteReader.getLong(clientmessage.data, 1);
+		if (Minecraft.getMinecraft().world.provider.getDimension() == (int)(key >> 32))
 		{
-			IBothE b = ((IMixE)entity).getB();
-			if (b instanceof ClientE)
+			Entity entity = Minecraft.getMinecraft().world.getEntityByID((int)key);
+			if (entity instanceof IMixE)
 			{
-				ClientE c = (ClientE)b;
-				c.mc.byte_array = clientmessage.data;
-				c.mc.call(c.mc.byte_array[1 + 4]);
+				IBothE b = ((IMixE)entity).getB();
+				if (b instanceof ClientE)
+				{
+					ClientE c = (ClientE)b;
+					c.mc.byte_array = clientmessage.data;
+					c.mc.call(c.mc.byte_array[1 + 8]);
+				}
 			}
 		}
 	}

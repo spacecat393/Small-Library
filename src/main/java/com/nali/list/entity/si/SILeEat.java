@@ -85,9 +85,9 @@ public class SILeEat<SD extends ISoundDaLe, BD extends IBothDaNe, E extends Enti
 
 //						Vec3d view_vec3d = skinningentities.getLookVec().scale(0.25F);
 			e.playSound(SoundEvents.ENTITY_GENERIC_EAT, e.getSoundVolume(), e.getSoundPitch());
-			double x = /*e.posX + */ByteReader.getFloat(byte_array, 1 + 16 + 1);
-			double y = /*e.posY + */ByteReader.getFloat(byte_array, 1 + 16 + 1 + 4);
-			double z = /*e.posZ + */ByteReader.getFloat(byte_array, 1 + 16 + 1 + 4 + 4);
+			double x = /*e.posX + */ByteReader.getFloat(byte_array, 1 + 8 + 1);
+			double y = /*e.posY + */ByteReader.getFloat(byte_array, 1 + 8 + 1 + 4);
+			double z = /*e.posZ + */ByteReader.getFloat(byte_array, 1 + 8 + 1 + 4 + 4);
 //			if (itemstack.getHasSubtypes())
 //			{
 			this.s.worldserver.spawnParticle(EnumParticleTypes.ITEM_CRACK, x, y, z, 0, 0.0D, 0.0D, 0.0D, 0.0D, Item.getIdFromItem(itemstack.getItem()), itemstack.getMetadata());

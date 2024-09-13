@@ -3,7 +3,6 @@ package com.nali.small.gui.page;
 import com.nali.list.data.SmallData;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
-import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.gui.key.KeyMenuArmy;
 import com.nali.small.gui.mouse.MouseArmy;
 import com.nali.system.opengl.memo.client.MemoS;
@@ -51,7 +50,8 @@ public class PageArmy extends Page
 //	public static byte[] FINAL_MOVE_BYTE_ARRAY;
 	public static List<Integer> INDEX_INTEGER_LIST = new ArrayList();
 //	public static List<Integer> SEARCH_INTEGER_LIST = new ArrayList();
-	public static List<UUID> SEARCH_UUID_LIST = new ArrayList();
+//	public static List<UUID> SEARCH_UUID_LIST = new ArrayList();
+	public static List<Long> SEARCH_ID_KEY_LIST = new ArrayList();
 	public static int[] INDEX_INT_ARRAY;
 //	public static UUID[] INDEX_UUID_ARRAY;
 //	public static String[][] STRING_2D_ARRAY;
@@ -631,7 +631,8 @@ public class PageArmy extends Page
 //		OFFSET_CUTOFF_ARRAY_BUFFER = genBuffer(createFloatByteBuffer(this.createQuadVUv(0, 0, 1, 1, 1, 1)));
 
 		SIZE = C_MAP.size();
-		SEARCH_UUID_LIST.clear();
+//		SEARCH_UUID_LIST.clear();
+		SEARCH_ID_KEY_LIST.clear();
 		Minecraft minecraft = SMALLGUI.mc;
 		float scale = 75.0F, text_scale = SCALE / 2.0F;
 		int
@@ -661,11 +662,14 @@ public class PageArmy extends Page
 //		MOVE_BYTE_ARRAY = new byte[(int)Math.ceil(SIZE * 4.0F / 8.0F)];//limit box
 //		UUID_ARRAY = new UUID[SIZE];
 
-		Set<UUID> keys_set = new HashSet(C_MAP.keySet());
+//		Set<UUID> keys_set = new HashSet(C_MAP.keySet());
+		Set<Long> keys_set = new HashSet(C_MAP.keySet());
 //		int m = 0;
-		for (UUID uuid : keys_set)
+//		for (UUID uuid : keys_set)
+		for (long id_key : keys_set)
 		{
-			ClientE c = C_MAP.get(uuid);
+//			ClientE c = C_MAP.get(uuid);
+			ClientE c = C_MAP.get(id_key);
 
 			if (c != null)
 			{
@@ -724,7 +728,8 @@ public class PageArmy extends Page
 						string_array[1] += " " + STRING_ARRAY[25];
 					}
 
-					string_array[2] = c.mc.dimension == null ? MixCIE.EMPTY_STRING : DimensionManager.getProviderType(c.mc.dimension).getName();
+//					int dimension = (int)(c.key >> 32);
+					string_array[2] = DimensionManager.getProviderType((int)(c.key >> 32)).getName();
 					string_array[3] = "X " + String.format("%.4f", c.mc.x) + " Y " + String.format("%.4f", c.mc.y) + " Z " + String.format("%.4f", c.mc.z);
 				}
 				else
@@ -806,7 +811,8 @@ public class PageArmy extends Page
 				}
 
 //				SEARCH_INTEGER_LIST.add(id - 1);
-				SEARCH_UUID_LIST.add(uuid);
+//				SEARCH_UUID_LIST.add(uuid);
+				SEARCH_ID_KEY_LIST.add(id_key);
 
 				ByteBuffer bytebuffer = ByteBuffer.allocateDirect(4).order(ByteOrder.nativeOrder());
 				bytebuffer.put((byte)0);

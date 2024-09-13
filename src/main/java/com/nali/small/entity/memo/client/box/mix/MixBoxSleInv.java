@@ -7,8 +7,8 @@ import com.nali.list.entity.si.SIEInvOpenInv;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientLe;
-import com.nali.small.entity.memo.client.IClientInvE;
-import com.nali.small.entity.memo.client.box.hit.HitOeEat;
+import com.nali.small.entity.memo.client.IClientRsInv;
+import com.nali.small.entity.memo.client.box.hit.HitOleEat;
 import com.nali.small.entity.memo.client.box.hit.HitOlePat;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class MixBoxSleInv<RC extends IClientDaS, R extends RenderS<BD, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, ?, MR, C>, MR extends MixRenderSe<RC, R, SD, BD, E, I, MC, ?, C>, C extends ClientLe<RC, R, SD, BD, E, I, MC, ?, MR> & IClientInvE> extends MixBoxE<RC, R, SD, BD, E, I, MC, MR, C>
+public class MixBoxSleInv<RC extends IClientDaS, R extends RenderS<BD, RC>, SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, ?, MR, C>, MR extends MixRenderSe<RC, R, SD, BD, E, I, MC, ?, C>, C extends ClientLe<RC, R, SD, BD, E, I, MC, ?, MR> & IClientRsInv> extends MixBoxE<RC, R, SD, BD, E, I, MC, MR, C>
 {
 	public MixBoxSleInv(C c)
 	{
@@ -45,7 +45,7 @@ public class MixBoxSleInv<RC extends IClientDaS, R extends RenderS<BD, RC>, SD e
 	{
 //		super.init(c);
 		this.sehit_list.add(new HitOlePat(this.c));
-		this.sehit_list.add(new HitOeEat(this.c));
+		this.sehit_list.add(new HitOleEat(this.c));
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class MixBoxSleInv<RC extends IClientDaS, R extends RenderS<BD, RC>, SD e
 	{
 		if (player_entity.isSneaking())
 		{
-			this.c.sendSAIE(new byte[1 + 16 + 1], SIEInvOpenInv.ID);
+			this.c.sendSSI(new byte[1 + 8 + 1], SIEInvOpenInv.ID);
 		}
 		else
 		{

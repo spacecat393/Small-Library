@@ -196,13 +196,14 @@ public class MouseArmy extends Mouse
 //				Nali.LOGGER.info("ID FR " + (INDEX_INT_ARRAY[(id - 62)/* * 7*/] / 7));
 //				Nali.LOGGER.info("UUID " + SEARCH_UUID_LIST.get(INDEX_INT_ARRAY[id - 62] / 7));
 ////				Nali.LOGGER.info("ID FR " + (SEARCH_INTEGER_LIST.get(INDEX_INT_ARRAY[id - 62/* * 7*/] / 7)/* / 7*/));
-				byte[] byte_array = new byte[1 + 16];
+				byte[] byte_array = new byte[1 + 8];
 				byte_array[0] = SEToC.ID;
 //				ByteWriter.set(byte_array, PageArmy.UUID_ARRAY[id - 62], 1);
 //				ByteWriter.set(byte_array, PageArmy.UUID_ARRAY[INDEX_INTEGER_LIST.get((id - 62) * 7) / 7], 1);
 //				ByteWriter.set(byte_array, PageArmy.UUID_ARRAY[INDEX_INT_ARRAY[(id - 62)/* * 7*/] / 7], 1);
 //				ByteWriter.set(byte_array, PageArmy.UUID_ARRAY[SEARCH_INTEGER_LIST.get(INDEX_INT_ARRAY[id - 62/* * 7*/] / 7)/* / 7*/], 1);
-				ByteWriter.set(byte_array, SEARCH_UUID_LIST.get(INDEX_INT_ARRAY[id - 62] / 7), 1);
+//				ByteWriter.set(byte_array, SEARCH_UUID_LIST.get(INDEX_INT_ARRAY[id - 62] / 7), 1);
+				ByteWriter.set(byte_array, SEARCH_ID_KEY_LIST.get(INDEX_INT_ARRAY[id - 62] / 7), 1);
 				NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 			}
 			else if (HIT > 2)//me
@@ -217,7 +218,9 @@ public class MouseArmy extends Mouse
 //				openPageMe(PageArmy.UUID_ARRAY[INDEX_INTEGER_LIST.get(id * 7) / 7]);
 //				openPageMe(PageArmy.UUID_ARRAY[INDEX_INT_ARRAY[id/* * 7*/] / 7]);
 //				openPageMe(PageArmy.UUID_ARRAY[SEARCH_INTEGER_LIST.get(INDEX_INT_ARRAY[id/* * 7*/] / 7)/* / 7*/]);
-				PageMe.UUID = SEARCH_UUID_LIST.get(INDEX_INT_ARRAY[id] / 7);
+//				PageMe.UUID = SEARCH_UUID_LIST.get(INDEX_INT_ARRAY[id] / 7);
+//				PageMe.ID_KEY = SEARCH_UUID_LIST.get(INDEX_INT_ARRAY[id] / 7);
+				PageMe.ID_KEY = SEARCH_ID_KEY_LIST.get(INDEX_INT_ARRAY[id] / 7);
 				openPageMe();
 			}
 		}

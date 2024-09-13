@@ -49,14 +49,14 @@ public class SILeSetLocation<SD extends ISoundDaLe, BD extends IBothDaNe, E exte
 	public void set()
 	{
 		byte[] byte_array = this.s.ms.byte_array;
-		int id = (int) ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1);
+		int id = (int) ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
 		if (id == 1)
 		{
-			this.far = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4);
+			this.far = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
 		}
 		else
 		{
-			this.blockpos_long = new BlockPos(ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4), ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4 + 4), ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4 + 4 + 4)).toLong();
+			this.blockpos_long = new BlockPos(ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4), ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4 + 4), ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4 + 4 + 4)).toLong();
 		}
 	}
 

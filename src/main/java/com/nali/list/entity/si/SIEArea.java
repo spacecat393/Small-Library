@@ -87,7 +87,7 @@ public class SIEArea<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE
 	public void addTarget()
 	{
 		byte[] byte_array = this.s.ms.byte_array;
-		for (int index = 1 + 16 + 1 + 1; index < byte_array.length; index += 4)
+		for (int index = 1 + 8 + 1 + 1; index < byte_array.length; index += 4)
 		{
 			int id = ByteReader.getInt(byte_array, index);
 //							int id = Integer.parseInt(new_string);
@@ -121,7 +121,7 @@ public class SIEArea<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE
 
 //						for (String new_string : string_array)
 		byte[] byte_array = this.s.ms.byte_array;
-		for (int x = 1 + 16 + 1 + 1; x < byte_array.length; x += 4)
+		for (int x = 1 + 8 + 1 + 1; x < byte_array.length; x += 4)
 		{
 			int id = ByteReader.getInt(byte_array, x);
 //							int id = Integer.parseInt(new_string);
@@ -151,7 +151,7 @@ public class SIEArea<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE
 //						String[] string_array = string.split(" ");
 
 //						for (String new_string : string_array)
-		for (int index = 1 + 16 + 1 + 1; index < byte_array.length; index += 4)
+		for (int index = 1 + 8 + 1 + 1; index < byte_array.length; index += 4)
 		{
 			int id = ByteReader.getInt(byte_array, index);
 //							int id = Integer.parseInt(new_string);
@@ -185,7 +185,7 @@ public class SIEArea<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE
 
 //						for (String new_string : string_array)
 		byte[] byte_array = this.s.ms.byte_array;
-		for (int x = 1 + 16 + 1 + 1; x < byte_array.length; x += 4)
+		for (int x = 1 + 8 + 1 + 1; x < byte_array.length; x += 4)
 		{
 			int id = ByteReader.getInt(byte_array, x);
 //							int id = Integer.parseInt(new_string);
@@ -211,8 +211,8 @@ public class SIEArea<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE
 	public void set()
 	{
 		byte[] byte_array = this.s.ms.byte_array;
-		float id = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1);
-		float x = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4);
+		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
+		float x = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
 
 		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
 		byte value = smallsakuratypes.get();

@@ -2,16 +2,12 @@ package com.nali.small.entity.memo.client.ci;
 
 import com.nali.da.IBothDaNe;
 import com.nali.da.client.IClientDaO;
-import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.SSUUID;
-import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.system.Reflect;
-import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -58,7 +54,7 @@ public abstract class MixCIE<RC extends IClientDaO, R extends RenderO<RC>, SD, B
 	public boolean fake;
 	public String name_string = EMPTY_STRING;
 	public byte state;//regen outline/glowing die
-	public Integer dimension;
+//	public Integer dimension;
 	public float x, y, z, hp;
 
 	public MixCIE(C c)
@@ -101,19 +97,21 @@ public abstract class MixCIE<RC extends IClientDaO, R extends RenderO<RC>, SD, B
 
 	public void onUpdate()
 	{
-		I i = this.c.i;
-		E e = i.getE();
-		EntityDataManager entitydatamanager = e.getDataManager();
-		DataParameter<Byte>[] byte_dataparameter_array = i.getByteDataParameterArray();
-
 		if (!this.fake)
 		{
+			I i = this.c.i;
+			E e = i.getE();
+
+			EntityDataManager entitydatamanager = e.getDataManager();
+			DataParameter<Byte>[] byte_dataparameter_array = i.getByteDataParameterArray();
+
 			for (int x = 0; x < byte_dataparameter_array.length; ++x)
 			{
 				this.c.sync_byte_array[x] = entitydatamanager.get(byte_dataparameter_array[x]);
 			}
 
-			this.updateNotFake();
+//			this.updateNotFake();
+			this.updateBox();
 		}
 
 		for (byte b : this.c.getCI())
@@ -122,18 +120,18 @@ public abstract class MixCIE<RC extends IClientDaO, R extends RenderO<RC>, SD, B
 		}
 	}
 
-	public void updateNotFake()
-	{
-		if (this.c.uuid == null)
-		{
-			byte[] byte_array = new byte[5];
-			byte_array[0] = SSUUID.ID;
-			ByteWriter.set(byte_array, this.c.i.getE().getEntityId(), 1);
-			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
-		}
-
-		this.updateBox();
-	}
+//	public void updateNotFake()
+//	{
+////		if (this.c.uuid == null)
+////		{
+////			byte[] byte_array = new byte[5];
+////			byte_array[0] = SSUUID.ID;
+////			ByteWriter.set(byte_array, this.c.i.getE().getEntityId(), 1);
+////			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+////		}
+//
+//		this.updateBox();
+//	}
 
 	public void updateBox()
 	{

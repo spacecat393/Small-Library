@@ -21,13 +21,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @SideOnly(Side.CLIENT)
 public abstract class ClientE<RC extends IClientDaO, R extends RenderO<RC>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, MR, ?>, MB extends MixBoxE<RC, R, SD, BD, E, I, MC, MR, ?>, MR extends MixRenderE<RC, R, SD, BD, E, I, MC, MB, ?>> implements IBothE<SD, BD, E, I>
 {
-	public static Map<UUID, ClientE> C_MAP = new HashMap();
-	public static Map<Integer, UUID> UUID_MAP = new HashMap();
+//	public static Map<UUID, ClientE> C_MAP = new HashMap();
+	public static Map<Long, ClientE> C_MAP = new HashMap();
+//	public static Map<Integer, UUID> UUID_MAP = new HashMap();
 
 	public I i;
 	public R r;
@@ -36,7 +36,8 @@ public abstract class ClientE<RC extends IClientDaO, R extends RenderO<RC>, SD, 
 	public MR mr;
 
 	public boolean should_render;
-	public UUID uuid;
+//	public UUID uuid;
+	public long key;
 	public byte[] sync_byte_array;//remove later?
 
 	public ClientE(I i, R r)
@@ -102,11 +103,12 @@ public abstract class ClientE<RC extends IClientDaO, R extends RenderO<RC>, SD, 
 ////		UUID_MAP.put(this.i.getE().getEntityId(), this.uuid);
 //	}
 
-	public void sendSAIE(byte[] byte_array, byte i)
+	public void sendSSI(byte[] byte_array, byte i)
 	{
+		E e = this.i.getE();
 		byte_array[0] = SSI.ID;
-		ByteWriter.set(byte_array, this.uuid, 1);
-		byte_array[17] = i;
+		ByteWriter.set(byte_array, (long)e.world.provider.getDimension() << 32 | e.getEntityId(), 1);
+		byte_array[1 + 8] = i;
 		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 	}
 

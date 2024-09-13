@@ -54,14 +54,14 @@ public class SILeInvManageItem<IE extends InvLe, SD extends ISoundDaLe, BD exten
 	public void set()
 	{
 		byte[] byte_array = this.s.ms.byte_array;
-		float id = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1);
+		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
 		BlockPos blockpos = null;
 
-		float x = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4);
-		if (byte_array.length > 1 + 16 + 1 + 1 + 4 + 4)
+		float x = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
+		if (byte_array.length > 1 + 8 + 1 + 1 + 4 + 4)
 		{
-			float y = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4 + 4);
-			float z = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 1 + 4 + 4 + 4);
+			float y = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4 + 4);
+			float z = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4 + 4 + 4);
 			blockpos = new BlockPos(x, y, z);
 		}
 

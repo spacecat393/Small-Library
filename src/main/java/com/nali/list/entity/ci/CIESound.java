@@ -3,9 +3,6 @@ package com.nali.list.entity.ci;
 import com.nali.da.IBothDaNe;
 import com.nali.da.IBothDaSn;
 import com.nali.da.client.IClientDaS;
-import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.SSound;
-import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
@@ -15,7 +12,6 @@ import com.nali.small.entity.memo.client.ci.CI;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
 import com.nali.system.bytes.ByteReader;
-import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -39,12 +35,7 @@ public class CIESound<RC extends IClientDaS, R extends RenderS<BD, RC>, SD, BD e
 	@Override
 	public void call()
 	{
-		byte[] byte_array = new byte[1 + 4 + 4];
-		byte_array[0] = SSound.ID;
-		ByteWriter.set(byte_array, this.c.i.getE().getEntityId(), 1);
-		ByteWriter.set(byte_array, ByteReader.getInt(this.c.mc.byte_array, 1 + 4 + 1), 5);
-		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
-//		this.sound.play(i);
+		this.c.getSound().play(ByteReader.getInt(this.c.mc.byte_array, 1 + 8 + 1));
 	}
 
 	@Override

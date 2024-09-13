@@ -41,8 +41,8 @@ public class SILeLook<SD extends ISoundDaLe, BD extends IBothDaNe, E extends Ent
 	public void call()
 	{
 		byte[] byte_array = this.s.ms.byte_array;
-		int id = (int)ByteReader.getFloat(byte_array, 1 + 16 + 1);
-		float f = ByteReader.getFloat(byte_array, 1 + 16 + 1 + 4);
+		int id = (int)ByteReader.getFloat(byte_array, 1 + 8 + 1);
+		float f = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 4);
 
 		E e = this.s.i.getE();
 		if (id == 1)
