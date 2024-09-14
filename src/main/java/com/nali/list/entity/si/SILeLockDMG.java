@@ -2,6 +2,7 @@ package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaNe;
 import com.nali.small.entity.IMixE;
+import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
@@ -23,11 +24,19 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 
-public class SILeLockDMG<SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, S extends ServerLe<SD, BD, E, I, MS>, MS extends MixSIE<SD, BD, E, I, S>> extends SI<SD, BD, E, I, S, MS>
+public class SILeLockDMG
+<
+	SD extends ISoundDaLe,
+	BD extends IBothDaNe,
+	E extends EntityLivingBase,
+	I extends IMixE<BD, E> & IMixESoundDa<SD>,
+	S extends ServerLe<SD, BD, E, I, MS>,
+	MS extends MixSIE<BD, E, I, S>
+> extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
-	public SIEOwner<SD, BD, E, I, S, MS> sieowner;
+	public SIEOwner<BD, E, I, S, MS> sieowner;
 
 	public byte state;//on
 
@@ -39,7 +48,7 @@ public class SILeLockDMG<SD extends ISoundDaLe, BD extends IBothDaNe, E extends 
 	@Override
 	public void init()
 	{
-		this.sieowner = (SIEOwner<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SIEOwner.ID);
+		this.sieowner = (SIEOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEOwner.ID);
 	}
 
 	@Override

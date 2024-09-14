@@ -23,7 +23,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SideOnly(Side.CLIENT)
-public abstract class ClientE<RC extends IClientDaO, R extends RenderO<RC>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, MR, ?>, MB extends MixBoxE<RC, R, SD, BD, E, I, MC, MR, ?>, MR extends MixRenderE<RC, R, SD, BD, E, I, MC, MB, ?>> implements IBothE<SD, BD, E, I>
+public abstract class ClientE
+<
+	RC extends IClientDaO,
+	R extends RenderO<RC>,
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	MC extends MixCIE<RC, R, BD, E, I, MB, MR, ?>,
+	MB extends MixBoxE<RC, R, BD, E, I, MC, MR, ?>,
+	MR extends MixRenderE<RC, R, BD, E, I, MC, MB, ?>
+> implements IBothE<E>
 {
 //	public static Map<UUID, ClientE> C_MAP = new HashMap();
 	public static Map<Long, ClientE> C_MAP = new HashMap();

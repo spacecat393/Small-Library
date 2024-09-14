@@ -21,7 +21,17 @@ import java.util.List;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 
 @SideOnly(Side.CLIENT)
-public abstract class MixBoxE<RC extends IClientDaO, R extends RenderO<RC>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, ?, MR, C>, MR extends MixRenderE<RC, R, SD, BD, E, I, MC, ?, C>, C extends ClientE<RC, R, SD, BD, E, I, MC, ?, MR>>
+public abstract class MixBoxE
+<
+	RC extends IClientDaO,
+	R extends RenderO<RC>,
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	MC extends MixCIE<RC, R, BD, E, I, ?, MR, C>,
+	MR extends MixRenderE<RC, R, BD, E, I, MC, ?, C>,
+	C extends ClientE<RC, R, BD, E, I, MC, ?, MR>
+>
 {
 	public C c;
 	public List<HitE> sehit_list = new ArrayList();

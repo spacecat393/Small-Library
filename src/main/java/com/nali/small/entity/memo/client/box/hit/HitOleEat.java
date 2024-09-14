@@ -6,6 +6,7 @@ import com.nali.list.entity.si.SIESound;
 import com.nali.list.entity.si.SILeEat;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
+import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.client.ClientLe;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.MixCIE;
@@ -22,7 +23,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class HitOleEat<RC extends IClientDaO, R extends RenderO<RC>, SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, MR, C>, MR extends MixRenderE<RC, R, SD, BD, E, I, MC, MB, C>, MB extends MixBoxE<RC, R, SD, BD, E, I, MC, MR, C>, C extends ClientLe<RC, R, SD, BD, E, I, MC, MB, MR>> extends HitE<RC, R, SD, BD, E, I, MC, MR, MB, C>
+public class HitOleEat
+<
+	RC extends IClientDaO,
+	R extends RenderO<RC>,
+	SD extends ISoundDaLe,
+	BD extends IBothDaNe,
+	E extends EntityLivingBase,
+	I extends IMixE<BD, E> & IMixESoundDa<SD>,
+	MC extends MixCIE<RC, R, BD, E, I, MB, MR, C>,
+	MR extends MixRenderE<RC, R, BD, E, I, MC, MB, C>,
+	MB extends MixBoxE<RC, R, BD, E, I, MC, MR, C>,
+	C extends ClientLe<RC, R, SD, BD, E, I, MC, MB, MR>
+> extends HitE<RC, R, BD, E, I, MC, MR, MB, C>
 {
 	public HitOleEat(C c)
 	{

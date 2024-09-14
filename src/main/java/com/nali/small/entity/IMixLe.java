@@ -5,7 +5,7 @@
 //import net.minecraft.entity.EntityLivingBase;
 //import net.minecraft.world.World;
 //
-//public interface IMixLe<SD, BD extends IBothDaNe, E extends EntityLivingBase> extends IMixE<SD, BD, E>
+//public interface IMixLe<SD, BD extends IBothDaNe, E extends EntityLivingBase> extends IMixE<BD, E>
 //{
 //	@Override
 //	default void Einit(E e, World world)

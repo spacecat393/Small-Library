@@ -8,9 +8,16 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import net.minecraft.entity.Entity;
 
-public class FrameSTLoopInSetSit<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, MS> & IServerS, MS extends MixSIE<SD, BD, E, I, S>> extends FrameSTLoopInSet<SD, BD, E, I, S, MS>
+public class FrameSTLoopInSetSit
+<
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	S extends ServerE<BD, E, I, MS> & IServerS,
+	MS extends MixSIE<BD, E, I, S>
+> extends FrameSTLoopInSet<BD, E, I, S, MS>
 {
-	public SIESit<SD, BD, E, I, S, MS> siesit;
+	public SIESit<BD, E, I, S, MS> siesit;
 
 	public FrameSTLoopInSetSit(S s, int index)
 	{
@@ -21,7 +28,7 @@ public class FrameSTLoopInSetSit<SD, BD extends IBothDaNe, E extends Entity, I e
 	public void init()
 	{
 		super.init();
-		this.siesit = (SIESit<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SIESit.ID);
+		this.siesit = (SIESit<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESit.ID);
 	}
 
 	@Override

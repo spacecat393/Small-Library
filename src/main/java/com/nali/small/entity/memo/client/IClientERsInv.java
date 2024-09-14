@@ -4,7 +4,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public interface IClientRsInv
+public interface IClientERsInv
 {
 	int[] getIVIntArray();
 	float[] getRotationFloatArray();

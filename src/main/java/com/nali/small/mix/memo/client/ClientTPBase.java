@@ -10,7 +10,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ClientTPBase</*SD, */BD extends IBothDaSn, RC extends IClientDaS, R extends RenderS<BD, RC>, I extends IMixN<?, E>, E extends Block, T extends TileEntity> extends ClientSb</*SD, */BD, RC, R, I, E, T>
+public class ClientTPBase
+<
+	BD extends IBothDaSn,
+	RC extends IClientDaS,
+	R extends RenderS<BD, RC>,
+	I extends IMixN<?, E>,
+	E extends Block,
+	T extends TileEntity
+> extends ClientSb<BD, RC, R, I, E, T>
 {
 	public ClientTPBase(R r, I i)
 	{

@@ -8,9 +8,16 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import net.minecraft.entity.Entity;
 
-public class FrameSFLoopFreePat<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, MS> & IServerS, MS extends MixSIE<SD, BD, E, I, S>> extends FrameSFLoopFree<SD, BD, E, I, S, MS>
+public class FrameSFLoopFreePat
+<
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	S extends ServerE<BD, E, I, MS> & IServerS,
+	MS extends MixSIE<BD, E, I, S>
+> extends FrameSFLoopFree<BD, E, I, S, MS>
 {
-	public SIEPat<SD, BD, E, I, S, MS> siepat;
+	public SIEPat<BD, E, I, S, MS> siepat;
 
 	public FrameSFLoopFreePat(S s, int index)
 	{
@@ -21,7 +28,7 @@ public class FrameSFLoopFreePat<SD, BD extends IBothDaNe, E extends Entity, I ex
 	public void init()
 	{
 		super.init();
-		this.siepat = (SIEPat<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SIEPat.ID);
+		this.siepat = (SIEPat<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEPat.ID);
 	}
 
 	@Override

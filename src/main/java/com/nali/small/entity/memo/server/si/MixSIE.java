@@ -15,7 +15,13 @@ import java.util.Map;
 
 import static com.nali.Nali.error;
 
-public abstract class MixSIE<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, ?>>
+public abstract class MixSIE
+<
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	S extends ServerE<BD, E, I, ?>
+>
 {
 	public static List<Class> SI_CLASS_LIST;
 

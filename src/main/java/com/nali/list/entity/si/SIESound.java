@@ -13,7 +13,14 @@ import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
 
-public class SIESound<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, MS>, MS extends MixSIE<SD, BD, E, I, S>> extends SI<SD, BD, E, I, S, MS>
+public class SIESound
+<
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	S extends ServerE<BD, E, I, MS>,
+	MS extends MixSIE<BD, E, I, S>
+> extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 

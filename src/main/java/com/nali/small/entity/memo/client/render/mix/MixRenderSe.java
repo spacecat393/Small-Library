@@ -20,7 +20,17 @@ import static com.nali.system.opengl.memo.client.MemoC.GL_CURRENT_COLOR;
 import static com.nali.system.opengl.memo.client.MemoC.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
-public abstract class MixRenderSe<RC extends IClientDaS, R extends RenderS<BD, RC>, SD, BD extends IBothDaNe & IBothDaSn, E extends Entity, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, ?, C>, MB extends MixBoxE<RC, R, SD, BD, E, I, MC, ?, C>, C extends ClientE<RC, R, SD, BD, E, I, MC, MB, ?>> extends MixRenderE<RC, R, SD, BD, E, I, MC, MB, C>
+public abstract class MixRenderSe
+<
+	RC extends IClientDaS,
+	R extends RenderS<BD, RC>,
+	BD extends IBothDaNe & IBothDaSn,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	MC extends MixCIE<RC, R, BD, E, I, MB, ?, C>,
+	MB extends MixBoxE<RC, R, BD, E, I, MC, ?, C>,
+	C extends ClientE<RC, R, BD, E, I, MC, MB, ?>
+> extends MixRenderE<RC, R, BD, E, I, MC, MB, C>
 {
 	public float
 	head_rot,

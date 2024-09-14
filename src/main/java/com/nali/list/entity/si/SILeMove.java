@@ -2,6 +2,7 @@ package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaNe;
 import com.nali.small.entity.IMixE;
+import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
@@ -13,13 +14,21 @@ import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.math.Vec3d;
 
-public class SILeMove<SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, S extends ServerLe<SD, BD, E, I, MS>, MS extends MixSIE<SD, BD, E, I, S>> extends SI<SD, BD, E, I, S, MS>
+public class SILeMove
+<
+	SD extends ISoundDaLe,
+	BD extends IBothDaNe,
+	E extends EntityLivingBase,
+	I extends IMixE<BD, E> & IMixESoundDa<SD>,
+	S extends ServerLe<SD, BD, E, I, MS>,
+	MS extends MixSIE<BD, E, I, S>
+> extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
 	public SILeLook<SD, BD, E, I, S, MS> silelook;
 	public SILeJump<SD, BD, E, I, S, MS> silejump;
-	public SIESit<SD, BD, E, I, S, MS> siesit;
+	public SIESit<BD, E, I, S, MS> siesit;
 
 	public double x, y, z;
 //	public double ox, oy, oz;
@@ -36,7 +45,7 @@ public class SILeMove<SD extends ISoundDaLe, BD extends IBothDaNe, E extends Ent
 	{
 		this.silelook = (SILeLook<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeLook.ID);
 		this.silejump = (SILeJump<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeJump.ID);
-		this.siesit = (SIESit<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SIESit.ID);
+		this.siesit = (SIESit<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESit.ID);
 	}
 
 	@Override

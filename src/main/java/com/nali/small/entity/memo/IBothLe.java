@@ -1,13 +1,14 @@
 package com.nali.small.entity.memo;
 
-import com.nali.da.IBothDaNe;
-import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.work.WorkEBodyYaw;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 
-public interface IBothLe<SD, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixE<SD, BD, E>> extends IBothE<SD, BD, E, I>
+public interface IBothLe
+<
+	E extends EntityLivingBase
+> extends IBothE<E>
 {
 	@Override
 	default boolean isMove(E e)

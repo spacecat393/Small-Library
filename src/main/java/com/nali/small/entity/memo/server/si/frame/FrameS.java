@@ -8,7 +8,14 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import net.minecraft.entity.Entity;
 
-public abstract class FrameS<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, MS> & IServerS, MS extends MixSIE<SD, BD, E, I, S>>
+public abstract class FrameS
+<
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	S extends ServerE<BD, E, I, MS> & IServerS,
+	MS extends MixSIE<BD, E, I, S>
+>
 {
 	public S s;
 
@@ -20,7 +27,7 @@ public abstract class FrameS<SD, BD extends IBothDaNe, E extends Entity, I exten
 	public int index;
 //	public boolean lock;
 //	public Supplier<Boolean>[] condition_boolean_supplier_array;
-	public SIEFrame<SD, BD, E, I, S, MS> sieframe;
+	public SIEFrame<BD, E, I, S, MS> sieframe;
 
 	public FrameS(S s, int index/*, byte[] byte_array*//*, int main_integer_index*//*, byte frame*//*, byte index*//*, int[][] int_2d_array*/)
 	{
@@ -32,7 +39,7 @@ public abstract class FrameS<SD, BD extends IBothDaNe, E extends Entity, I exten
 //		this.index = index;
 //		this.int_2d_array = int_2d_array;
 		this.init();
-		this.sieframe = (SIEFrame<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFrame.ID);
+		this.sieframe = (SIEFrame<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFrame.ID);
 	}
 
 //	@Override

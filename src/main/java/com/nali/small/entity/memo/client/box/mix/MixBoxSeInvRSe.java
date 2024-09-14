@@ -17,7 +17,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class MixBoxSeInvRSe<RC extends IClientDaO, R extends RenderO<RC>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, ?, MR, C>, MR extends MixRenderE<RC, R, SD, BD, E, I, MC, ?, C>, C extends ClientE<RC, R, SD, BD, E, I, MC, ?, MR>> extends MixBoxE<RC, R, SD, BD, E, I, MC, MR, C>
+public class MixBoxSeInvRSe
+<
+	RC extends IClientDaO,
+	R extends RenderO<RC>,
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	MC extends MixCIE<RC, R, BD, E, I, ?, MR, C>,
+	MR extends MixRenderE<RC, R, BD, E, I, MC, ?, C>,
+	C extends ClientE<RC, R, BD, E, I, MC, ?, MR>
+> extends MixBoxE<RC, R, BD, E, I, MC, MR, C>
 {
 	public MixBoxSeInvRSe(C c)
 	{

@@ -8,7 +8,19 @@ import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import net.minecraft.entity.Entity;
 
-public abstract class SIEPlayWithRSe<S2 extends ServerE<SD2, BD2, E2, I2, A2>, SD2, BD2 extends IBothDaNe, E2 extends Entity, I2 extends IMixE<SD2, BD2, E2>, A2 extends MixSIE<SD2, BD2, E2, I2, S2>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, MS>, MS extends MixSIE<SD, BD, E, I, S>> extends SI<SD, BD, E, I, S, MS>
+public abstract class SIEPlayWithRSe
+<
+	S2 extends ServerE<BD2, E2, I2, A2>,
+	BD2 extends IBothDaNe,
+	E2 extends Entity,
+	I2 extends IMixE<BD2, E2>,
+	A2 extends MixSIE<BD2, E2, I2, S2>,
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	S extends ServerE<BD, E, I, MS>,
+	MS extends MixSIE<BD, E, I, S>
+> extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 

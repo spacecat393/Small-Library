@@ -8,7 +8,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public abstract class FRenderSeInv<E extends Entity & IMixE> extends FRenderE<E>
+public abstract class FRenderSeInv
+<
+	E extends Entity & IMixE
+> extends FRenderE<E>
 {
 	public FRenderSeInv(RenderManager rendermanager)
 	{

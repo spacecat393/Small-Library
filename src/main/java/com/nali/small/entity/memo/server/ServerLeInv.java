@@ -3,6 +3,7 @@ package com.nali.small.entity.memo.server;
 import com.nali.da.IBothDaNe;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixE;
+import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.inv.InvLe;
 import com.nali.small.entity.memo.IBothLeInv;
 import com.nali.small.entity.memo.server.si.MixSIE;
@@ -14,7 +15,15 @@ import net.minecraft.network.datasync.EntityDataManager;
 
 import static com.nali.small.entity.EntityLeInv.MOUTH_ITEMSTACK_DATAPARAMETER;
 
-public abstract class ServerLeInv<IE extends InvLe, SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLeInv, I extends IMixE<SD, BD, E>, MS extends MixSIE<SD, BD, E, I, ?>> extends ServerLe<SD, BD, E, I, MS> implements IBothLeInv<IE, SD, BD, E, I>
+public abstract class ServerLeInv
+<
+	IE extends InvLe,
+	SD extends ISoundDaLe,
+	BD extends IBothDaNe,
+	E extends EntityLeInv,
+	I extends IMixE<BD, E> & IMixESoundDa<SD>,
+	MS extends MixSIE<BD, E, I, ?>
+> extends ServerLe<SD, BD, E, I, MS> implements IBothLeInv<IE, E>
 {
 	public IE ie;
 

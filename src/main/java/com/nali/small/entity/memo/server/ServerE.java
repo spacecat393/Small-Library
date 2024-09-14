@@ -27,7 +27,13 @@ import java.util.Map;
 import static com.nali.Nali.error;
 import static com.nali.Nali.warn;
 
-public abstract class ServerE<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MS extends MixSIE<SD, BD, E, I, ?>> implements IBothE<SD, BD, E, I>
+public abstract class ServerE
+<
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	MS extends MixSIE<BD, E, I, ?>
+> implements IBothE<E>
 {
 //	public static Map<UUID, ServerE> S_MAP;
 	public static Map<Long, ServerE> S_MAP;

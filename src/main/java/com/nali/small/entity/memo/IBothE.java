@@ -1,7 +1,5 @@
 package com.nali.small.entity.memo;
 
-import com.nali.da.IBothDaNe;
-import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.render.FRenderE;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,7 +7,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface IBothE<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>>
+public interface IBothE
+<
+	E extends Entity
+>
 {
 	default boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
 	{

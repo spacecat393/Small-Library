@@ -7,7 +7,11 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface IMixN<B extends IBothN, E>
+public interface IMixN
+<
+	B extends IBothN,
+	E
+>
 {
 	default void Ninit()
 	{

@@ -11,7 +11,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public abstract class ClientSb</*SD, */BD extends IBothDaSn, RC extends IClientDaS, R extends RenderS<BD, RC>, I extends IMixN<?, E>, E extends Block, T extends TileEntity> extends ClientB<RC, R, I, E, T>
+public abstract class ClientSb
+<
+	BD extends IBothDaSn,
+	RC extends IClientDaS,
+	R extends RenderS<BD, RC>,
+	I extends IMixN<?, E>,
+	E extends Block,
+	T extends TileEntity
+> extends ClientB<RC, R, I, E, T>
 {
 	public ClientSb(R r, I i)
 	{

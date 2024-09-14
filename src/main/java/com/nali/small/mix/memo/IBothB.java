@@ -6,7 +6,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface IBothB<T extends TileEntity, E extends Block> extends IBothN
+public interface IBothB
+<
+	T extends TileEntity,
+	E extends Block
+> extends IBothN
 {
 	default void init(E e, String name, String mod_id, CreativeTabs creativetabs)
 	{

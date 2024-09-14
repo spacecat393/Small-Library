@@ -12,7 +12,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
-public class FRenderFle<E extends EntityLivingBase> extends RenderLivingBase<E>
+public class FRenderFle
+<
+	E extends EntityLivingBase
+> extends RenderLivingBase<E>
 {
 	public FRenderFle()
 	{

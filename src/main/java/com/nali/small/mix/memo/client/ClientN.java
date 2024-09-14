@@ -12,7 +12,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class ClientN<RC extends IClientDaO, R extends RenderO<RC>, I extends IMixN<?, E>, E> implements IBothN
+public class ClientN
+<
+	RC extends IClientDaO,
+	R extends RenderO<RC>,
+	I extends IMixN<?, E>,
+	E
+> implements IBothN
 {
 	public R r;
 	public I i;

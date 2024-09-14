@@ -19,7 +19,10 @@ import static com.nali.system.ClientLoader.G_LIST;
 import static com.nali.system.opengl.memo.client.MemoC.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
-public class RenderBox<RC extends IClientDaO> extends SmallRenderO<RC>
+public class RenderBox
+<
+	RC extends IClientDaO
+> extends SmallRenderO<RC>
 {
 //	public static int ID;
 //	public static DataLoader DATALOADER = RenderHelper.DATALOADER;

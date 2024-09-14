@@ -8,6 +8,7 @@ import com.nali.list.network.method.client.CSetManageItem;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixE;
+import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.inv.InvLe;
 import com.nali.small.entity.memo.server.ServerLeInv;
 import com.nali.small.entity.memo.server.si.SI;
@@ -22,7 +23,16 @@ import net.minecraft.util.math.BlockPos;
 
 import static com.nali.list.entity.si.SILeInvGetItem.isSameItemSameTags;
 
-public class SILeInvManageItem<IE extends InvLe, SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLeInv, I extends IMixE<SD, BD, E>, S extends ServerLeInv<IE, SD, BD, E, I, MS>, MS extends MixSIE<SD, BD, E, I, S>> extends SI<SD, BD, E, I, S, MS>
+public class SILeInvManageItem
+<
+	IE extends InvLe,
+	SD extends ISoundDaLe,
+	BD extends IBothDaNe,
+	E extends EntityLeInv,
+	I extends IMixE<BD, E> & IMixESoundDa<SD>,
+	S extends ServerLeInv<IE, SD, BD, E, I, MS>,
+	MS extends MixSIE<BD, E, I, S>
+> extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 

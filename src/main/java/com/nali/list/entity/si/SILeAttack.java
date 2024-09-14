@@ -7,6 +7,7 @@ import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetAttack;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.IMixE;
+import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
@@ -23,11 +24,19 @@ import java.util.List;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class SILeAttack<SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, S extends ServerLe<SD, BD, E, I, MS>, MS extends MixSIE<SD, BD, E, I, S>> extends SI<SD, BD, E, I, S, MS>
+public class SILeAttack
+<
+	SD extends ISoundDaLe,
+	BD extends IBothDaNe,
+	E extends EntityLivingBase,
+	I extends IMixE<BD, E> & IMixESoundDa<SD>,
+	S extends ServerLe<SD, BD, E, I, MS>,
+	MS extends MixSIE<BD, E, I, S>
+> extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
-	public SIEArea<SD, BD, E, I, S, MS> siearea;
+	public SIEArea<BD, E, I, S, MS> siearea;
 	public SILeSetLocation<SD, BD, E, I, S, MS> silesetlocation;
 	public SILeFindMove<SD, BD, E, I, S, MS> silefindmove;
 	public SILeLook<SD, BD, E, I, S, MS> silelook;
@@ -48,7 +57,7 @@ public class SILeAttack<SD extends ISoundDaLe, BD extends IBothDaNe, E extends E
 	@Override
 	public void init()
 	{
-		this.siearea = (SIEArea<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
+		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
 		this.silesetlocation = (SILeSetLocation<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
 		this.silefindmove = (SILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
 		this.silelook = (SILeLook<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeLook.ID);

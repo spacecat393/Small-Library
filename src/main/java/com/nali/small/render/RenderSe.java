@@ -17,7 +17,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderSe<E extends Entity, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, ?, SD, BD, E, I, MB, MR, C>, MB extends MixBoxE<RC, ?, SD, BD, E, I, MC, MR, C>, MR extends MixRenderSe<RC, ?, SD, BD, E, I, MC, MB, C>, C extends ClientE<RC, ?, SD, BD, E, I, MC, MB, MR>, SD, BD extends IBothDaNe & IBothDaSn, RC extends IClientDaS> extends RenderS<BD, RC>
+public class RenderSe
+<
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	MC extends MixCIE<RC, ?, BD, E, I, MB, MR, C>,
+	MB extends MixBoxE<RC, ?, BD, E, I, MC, MR, C>,
+	MR extends MixRenderSe<RC, ?, BD, E, I, MC, MB, C>,
+	C extends ClientE<RC, ?, BD, E, I, MC, MB, MR>,
+	BD extends IBothDaNe & IBothDaSn,
+	RC extends IClientDaS
+> extends RenderS<BD, RC>
 {
 	public C c;
 

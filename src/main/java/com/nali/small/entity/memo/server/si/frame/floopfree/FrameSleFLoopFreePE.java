@@ -6,14 +6,23 @@ import com.nali.list.entity.si.SIEPat;
 import com.nali.list.entity.si.SILeEat;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
+import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.IServerS;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.sound.ISoundDaLe;
 
-public class FrameSleFLoopFreePE<SD extends ISoundDaLe, BD extends IBothDaNe & IBothDaSn, E extends EntityLe, I extends IMixE<SD, BD, E>, S extends ServerLe<SD, BD, E, I, MS> & IServerS, MS extends MixSIE<SD, BD, E, I, S>> extends FrameSFLoopFree<SD, BD, E, I, S, MS>
+public class FrameSleFLoopFreePE
+<
+	SD extends ISoundDaLe,
+	BD extends IBothDaNe & IBothDaSn,
+	E extends EntityLe,
+	I extends IMixE<BD, E> & IMixESoundDa<SD>,
+	S extends ServerLe<SD, BD, E, I, MS> & IServerS,
+	MS extends MixSIE<BD, E, I, S>
+> extends FrameSFLoopFree<BD, E, I, S, MS>
 {
-	public SIEPat<SD, BD, E, I, S, MS> siepat;
+	public SIEPat<BD, E, I, S, MS> siepat;
 	public SILeEat<SD, BD, E, I, S, MS> sileeat;
 
 	public FrameSleFLoopFreePE(S s, int index)
@@ -25,7 +34,7 @@ public class FrameSleFLoopFreePE<SD extends ISoundDaLe, BD extends IBothDaNe & I
 	public void init()
 	{
 		super.init();
-		this.siepat = (SIEPat<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SIEPat.ID);
+		this.siepat = (SIEPat<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEPat.ID);
 		this.sileeat = (SILeEat<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeEat.ID);
 	}
 

@@ -1,13 +1,15 @@
 package com.nali.small.entity.memo;
 
-import com.nali.da.IBothDaNe;
-import com.nali.small.entity.IMixE;
 import com.nali.small.entity.inv.InvLe;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 
-public interface IBothLeInv<IE extends InvLe, SD, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixE<SD, BD, E>> extends IBothLe<SD, BD, E, I>, IBothNInv<IE>
+public interface IBothLeInv
+<
+	IE extends InvLe,
+	E extends EntityLivingBase
+> extends IBothLe<E>, IBothEInv<IE>
 {
 	void damageArmor(float damage);
 

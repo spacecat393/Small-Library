@@ -6,7 +6,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ServerB<T extends TileEntity, E extends Block> extends ServerN implements IBothB<T, E>
+public class ServerB
+<
+	T extends TileEntity,
+	E extends Block
+> extends ServerN implements IBothB<T, E>
 {
 	@SideOnly(Side.CLIENT)
 	@Override

@@ -5,7 +5,14 @@ import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import net.minecraft.entity.Entity;
 
-public abstract class SI<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, MS>, MS extends MixSIE<SD, BD, E, I, S>>
+public abstract class SI
+<
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	S extends ServerE<BD, E, I, MS>,
+	MS extends MixSIE<BD, E, I, S>
+>
 {
 	public S s;
 

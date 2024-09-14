@@ -11,7 +11,11 @@ import static com.nali.list.data.SmallData.SHADER_STEP;
 import static com.nali.list.data.SmallData.TEXTURE_STEP;
 
 @SideOnly(Side.CLIENT)
-public class SmallRenderS<BD extends IBothDaSn, RC extends IClientDaS> extends RenderS<BD, RC>
+public class SmallRenderS
+<
+	BD extends IBothDaSn,
+	RC extends IClientDaS
+> extends RenderS<BD, RC>
 {
 	public SmallRenderS(RC rc, BD bd)
 	{

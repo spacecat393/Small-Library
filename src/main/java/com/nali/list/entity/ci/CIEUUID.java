@@ -17,7 +17,7 @@
 //import net.minecraftforge.fml.relauncher.SideOnly;
 //
 //@SideOnly(Side.CLIENT)
-//public class CIEUUID<RC extends IClientDaS, R extends RenderS<BD, RC>, SD, BD extends IBothDaNe & IBothDaSn, E extends Entity, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, MR, C>, MB extends MixBoxE<RC, R, SD, BD, E, I, MC, MR, C>, MR extends MixRenderSe<RC, R, SD, BD, E, I, MC, MB, C>, C extends ClientE<RC, R, SD, BD, E, I, MC, MB, MR> & IClientSound> extends CI<RC, R, SD, BD, E, I, MC, MB, MR, C>
+//public class CIEUUID<RC extends IClientDaS, R extends RenderS<BD, RC>, SD, BD extends IBothDaNe & IBothDaSn, E extends Entity, I extends IMixE<BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, MR, C>, MB extends MixBoxE<RC, R, SD, BD, E, I, MC, MR, C>, MR extends MixRenderSe<RC, R, SD, BD, E, I, MC, MB, C>, C extends ClientE<RC, R, SD, BD, E, I, MC, MB, MR> & IClientSound> extends CI<RC, R, SD, BD, E, I, MC, MB, MR, C>
 //{
 //	public static byte ID;
 //

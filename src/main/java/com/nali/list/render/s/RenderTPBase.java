@@ -16,7 +16,11 @@ import java.util.Map;
 import static com.nali.system.ClientLoader.G_LIST;
 
 @SideOnly(Side.CLIENT)
-public class RenderTPBase<BD extends IBothDaSn, RC extends IClientDaS> extends SmallRenderS<BD, RC>
+public class RenderTPBase
+<
+	BD extends IBothDaSn,
+	RC extends IClientDaS
+> extends SmallRenderS<BD, RC>
 {
 	public static IClientDaS ICLIENTDAS = new TPBaseClient();
 	public static IBothDaSn IBOTHDASN = new TPBaseBothDaS();

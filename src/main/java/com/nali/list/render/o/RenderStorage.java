@@ -14,7 +14,10 @@ import java.util.Map;
 import static com.nali.system.ClientLoader.G_LIST;
 
 @SideOnly(Side.CLIENT)
-public class RenderStorage<RC extends IClientDaO> extends SmallRenderO<RC>
+public class RenderStorage
+<
+	RC extends IClientDaO
+> extends SmallRenderO<RC>
 {
 	public static IClientDaO ICLIENTDAO = new StorageClient();
 	public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();

@@ -23,7 +23,17 @@ import java.util.Map;
 import static com.nali.Nali.error;
 
 @SideOnly(Side.CLIENT)
-public abstract class MixCIE<RC extends IClientDaO, R extends RenderO<RC>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MB extends MixBoxE<RC, R, SD, BD, E, I, ?, MR, C>, MR extends MixRenderE<RC, R, SD, BD, E, I, ?, MB, C>, C extends ClientE<RC, R, SD, BD, E, I, ?, MB, MR>>
+public abstract class MixCIE
+<
+	RC extends IClientDaO,
+	R extends RenderO<RC>,
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	MB extends MixBoxE<RC, R, BD, E, I, ?, MR, C>,
+	MR extends MixRenderE<RC, R, BD, E, I, ?, MB, C>,
+	C extends ClientE<RC, R, BD, E, I, ?, MB, MR>
+>
 {
 	public static String EMPTY_STRING = "---";
 	public static List<Class> CI_CLASS_LIST;

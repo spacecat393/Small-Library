@@ -10,7 +10,14 @@ import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.small.entity.memo.server.si.MixSIEInv;
 import net.minecraft.entity.Entity;
 
-public class SIEInvOpenInv<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, MS>, MS extends MixSIEInv<SD, BD, E, I, S>> extends SI<SD, BD, E, I, S, MS>
+public class SIEInvOpenInv
+<
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	S extends ServerE<BD, E, I, MS>,
+	MS extends MixSIEInv<BD, E, I, S>
+> extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 

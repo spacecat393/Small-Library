@@ -28,11 +28,18 @@ import java.util.*;
 
 import static com.nali.Nali.warn;
 
-public class SIEArea<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, MS>, MS extends MixSIE<SD, BD, E, I, S>> extends SI<SD, BD, E, I, S, MS>
+public class SIEArea
+<
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	S extends ServerE<BD, E, I, MS>,
+	MS extends MixSIE<BD, E, I, S>
+> extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
-	public SIEOwner<SD, BD, E, I, S, MS> sieowner;
+	public SIEOwner<BD, E, I, S, MS> sieowner;
 	public Map<UUID, Entity> entity_map;
 	public Collection<Entity> entity_collection;
 
@@ -55,7 +62,7 @@ public class SIEArea<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE
 	@Override
 	public void init()
 	{
-		this.sieowner = (SIEOwner<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SIEOwner.ID);
+		this.sieowner = (SIEOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEOwner.ID);
 		this.entity_map = ((IMixinWorldServer)this.s.i.getE().world).entitiesByUuid();
 	}
 

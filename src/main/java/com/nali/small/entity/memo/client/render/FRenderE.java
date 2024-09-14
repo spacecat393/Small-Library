@@ -8,7 +8,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public abstract class FRenderE<E extends Entity> extends Render<E>
+public abstract class FRenderE
+<
+	E extends Entity
+> extends Render<E>
 {
 	public FRenderE(RenderManager renderManager)
 	{

@@ -9,7 +9,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface IMixE<SD, BD extends IBothDaNe, E extends Entity>
+public interface IMixE
+<
+	BD extends IBothDaNe,
+	E extends Entity
+>
 {
 	default void Einit(E e, World world)
 	{
@@ -121,8 +125,6 @@ public interface IMixE<SD, BD extends IBothDaNe, E extends Entity>
 	void newS();
 
 	BD getBD();
-	SD getSD();
-//	IMixE getI();
 	E getE();
 	IBothE getB();
 }

@@ -7,6 +7,7 @@ import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetFollow;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.IMixE;
+import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
@@ -23,11 +24,19 @@ import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 import static com.nali.small.entity.memo.server.si.path.PathMath.PATH_BYTE_ARRAY;
 
-public class SILeFollow<SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, S extends ServerLe<SD, BD, E, I, MS>, MS extends MixSIE<SD, BD, E, I, S>> extends SI<SD, BD, E, I, S, MS>
+public class SILeFollow
+<
+	SD extends ISoundDaLe,
+	BD extends IBothDaNe,
+	E extends EntityLivingBase,
+	I extends IMixE<BD, E> & IMixESoundDa<SD>,
+	S extends ServerLe<SD, BD, E, I, MS>,
+	MS extends MixSIE<BD, E, I, S>
+> extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
-	public SIEOwner<SD, BD, E, I, S, MS> sieowner;
+	public SIEOwner<BD, E, I, S, MS> sieowner;
 	public SILeSetLocation<SD, BD, E, I, S, MS> silesetlocation;
 	public SILeFindMove<SD, BD, E, I, S, MS> silefindmove;
 
@@ -43,7 +52,7 @@ public class SILeFollow<SD extends ISoundDaLe, BD extends IBothDaNe, E extends E
 	@Override
 	public void init()
 	{
-		this.sieowner = (SIEOwner<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SIEOwner.ID);
+		this.sieowner = (SIEOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEOwner.ID);
 		this.silesetlocation = (SILeSetLocation<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
 		this.silefindmove = (SILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
 	}

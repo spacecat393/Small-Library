@@ -4,6 +4,7 @@ import com.nali.da.IBothDaNe;
 import com.nali.list.entity.si.SIESound;
 import com.nali.list.entity.si.SILeLockDMG;
 import com.nali.small.entity.IMixE;
+import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.IBothLe;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.work.WorkEBodyYaw;
@@ -13,7 +14,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 
-public abstract class ServerLe<SD extends ISoundDaLe, BD extends IBothDaNe, E extends EntityLivingBase, I extends IMixE<SD, BD, E>, MS extends MixSIE<SD, BD, E, I, ?>> extends ServerE<SD, BD, E, I, MS> implements IBothLe<SD, BD, E, I>
+public abstract class ServerLe
+<
+	SD extends ISoundDaLe,
+	BD extends IBothDaNe,
+	E extends EntityLivingBase,
+	I extends IMixE<BD, E> & IMixESoundDa<SD>,
+	MS extends MixSIE<BD, E, I, ?>
+> extends ServerE<BD, E, I, MS> implements IBothLe<E>
 {
 	public WorkEBodyYaw workebodyyaw;
 	public byte serverle_state;//attackEntityAsMob attackEntityFrom attackEntityAsMob_trigger attackEntityFrom_trigger

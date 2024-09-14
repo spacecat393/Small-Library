@@ -13,7 +13,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public abstract class MixRenderE<RC extends IClientDaO, R extends RenderO<RC>, SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, ?, C>, MB extends MixBoxE<RC, R, SD, BD, E, I, MC, ?, C>, C extends ClientE<RC, R, SD, BD, E, I, MC, MB, ?>>
+public abstract class MixRenderE
+<
+	RC extends IClientDaO,
+	R extends RenderO<RC>,
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	MC extends MixCIE<RC, R, BD, E, I, MB, ?, C>,
+	MB extends MixBoxE<RC, R, BD, E, I, MC, ?, C>,
+	C extends ClientE<RC, R, BD, E, I, MC, MB, ?>
+>
 {
 	public C c;
 

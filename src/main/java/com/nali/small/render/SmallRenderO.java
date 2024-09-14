@@ -10,7 +10,10 @@ import static com.nali.list.data.SmallData.SHADER_STEP;
 import static com.nali.list.data.SmallData.TEXTURE_STEP;
 
 @SideOnly(Side.CLIENT)
-public class SmallRenderO<RC extends IClientDaO> extends RenderO<RC>
+public class SmallRenderO
+<
+	RC extends IClientDaO
+> extends RenderO<RC>
 {
 	public SmallRenderO(RC rc)
 	{

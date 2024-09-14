@@ -8,11 +8,18 @@ import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.small.entity.memo.server.si.MixSIEInv;
 import net.minecraft.entity.Entity;
 
-public class SIEInvLockInv<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, MS>, MS extends MixSIEInv<SD, BD, E, I, S>> extends SI<SD, BD, E, I, S, MS>
+public class SIEInvLockInv
+<
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	S extends ServerE<BD, E, I, MS>,
+	MS extends MixSIEInv<BD, E, I, S>
+> extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
-	public SIEOwner<SD, BD, E, I, S, MS> sieowner;
+	public SIEOwner<BD, E, I, S, MS> sieowner;
 
 	public byte state;//on
 
@@ -24,7 +31,7 @@ public class SIEInvLockInv<SD, BD extends IBothDaNe, E extends Entity, I extends
 	@Override
 	public void init()
 	{
-		this.sieowner = (SIEOwner<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SIEOwner.ID);
+		this.sieowner = (SIEOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEOwner.ID);
 	}
 
 	@Override

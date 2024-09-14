@@ -10,7 +10,14 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.frame.FrameS;
 import net.minecraft.entity.Entity;
 
-public class SIEFrame<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, MS> & IServerS, MS extends MixSIE<SD, BD, E, I, S>> extends SI<SD, BD, E, I, S, MS>
+public class SIEFrame
+<
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	S extends ServerE<BD, E, I, MS> & IServerS,
+	MS extends MixSIE<BD, E, I, S>
+> extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 

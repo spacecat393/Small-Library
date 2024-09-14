@@ -8,7 +8,14 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.frame.FrameS;
 import net.minecraft.entity.Entity;
 
-public class FrameSFLoopInSet<SD, BD extends IBothDaNe, E extends Entity, I extends IMixE<SD, BD, E>, S extends ServerE<SD, BD, E, I, MS> & IServerS, MS extends MixSIE<SD, BD, E, I, S>> extends FrameS<SD, BD, E, I, S, MS>
+public class FrameSFLoopInSet
+<
+	BD extends IBothDaNe,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	S extends ServerE<BD, E, I, MS> & IServerS,
+	MS extends MixSIE<BD, E, I, S>
+> extends FrameS<BD, E, I, S, MS>
 {
 	public FrameSFLoopInSet(S s, int index)
 	{

@@ -17,7 +17,18 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class CIEFrame<RC extends IClientDaS, R extends RenderS<BD, RC>, SD, BD extends IBothDaNe & IBothDaSn, E extends Entity, I extends IMixE<SD, BD, E>, MC extends MixCIE<RC, R, SD, BD, E, I, MB, MR, C>, MB extends MixBoxE<RC, R, SD, BD, E, I, MC, MR, C>, MR extends MixRenderSe<RC, R, SD, BD, E, I, MC, MB, C>, C extends ClientE<RC, R, SD, BD, E, I, MC, MB, MR>> extends CI<RC, R, SD, BD, E, I, MC, MB, MR, C>
+public class CIEFrame
+<
+	RC extends IClientDaS,
+	R extends RenderS<BD, RC>,
+	BD extends IBothDaNe & IBothDaSn,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	MC extends MixCIE<RC, R, BD, E, I, MB, MR, C>,
+	MB extends MixBoxE<RC, R, BD, E, I, MC, MR, C>,
+	MR extends MixRenderSe<RC, R, BD, E, I, MC, MB, C>,
+	C extends ClientE<RC, R, BD, E, I, MC, MB, MR>
+> extends CI<RC, R, BD, E, I, MC, MB, MR, C>
 {
 	public static byte ID;
 
