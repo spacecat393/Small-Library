@@ -61,7 +61,7 @@ public class CIEFrame
 			DataParameter<Integer>[] integer_dataparameter = i.getIntegerDataParameterArray();
 
 			int[] frame_int_array = r.frame_int_array;
-			for (int x = 0; x < frame_int_array.length; ++x)
+			for (int x = 0; x < this.c.i.getBD().MaxFrame(); ++x)
 			{
 				frame_int_array[x] = entitydatamanager.get(integer_dataparameter[x++]);
 			}

@@ -22,7 +22,7 @@ public class SILeRandomLook
 {
 	public static byte ID;
 
-	public SILeLook<SD, BD, E, I, S, MS> silelook;
+	public SIELook<BD, E, I, S, MS> sielook;
 
 	public int tick;
 	public byte state;//on look
@@ -37,7 +37,7 @@ public class SILeRandomLook
 	@Override
 	public void init()
 	{
-		this.silelook = (SILeLook<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeLook.ID);
+		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class SILeRandomLook
 //				if (this.look)
 				if ((this.state & 2) == 2)
 				{
-					this.silelook.set(this.x, this.y, this.z, 1.0F);
+					this.sielook.set(this.x, this.y, this.z, 1.0F);
 				}
 	//			this.look = false;
 				this.s.ms.state &= 255-2;

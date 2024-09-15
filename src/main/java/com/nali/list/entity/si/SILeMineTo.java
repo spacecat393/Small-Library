@@ -35,7 +35,7 @@ public class SILeMineTo
 
 	public SILeSetLocation<SD, BD, E, I, S, MS> silesetlocation;
 	public SILeFindMove<SD, BD, E, I, S, MS> silefindmove;
-	public SILeLook<SD, BD, E, I, S, MS> silelook;
+	public SIELook<BD, E, I, S, MS> sielook;
 
 	public byte state;//on //| remote1 x2-4 y8-16 z32-64 +-
 	public BlockPos blockpos/*, start_blockpos, end_blockpos*/;
@@ -53,7 +53,7 @@ public class SILeMineTo
 	{
 		this.silesetlocation = (SILeSetLocation<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
 		this.silefindmove = (SILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
-		this.silelook = (SILeLook<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeLook.ID);
+		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class SILeMineTo
 					}
 					else
 					{
-						this.silelook.set(this.blockpos.getX() + 0.5D, this.blockpos.getY(), this.blockpos.getZ() + 0.5D, 5.0F);
+						this.sielook.set(this.blockpos.getX() + 0.5D, this.blockpos.getY(), this.blockpos.getZ() + 0.5D, 5.0F);
 						this.silefindmove.endGoal();
 
 						FakePlayer fakeplayer = new FakePlayer(this.s.worldserver, new GameProfile(null, "!"));
@@ -269,7 +269,7 @@ public class SILeMineTo
 //			}
 //			else
 //			{
-//				this.silelook.set(this.blockpos.getX() + 0.5D, this.blockpos.getY(), this.blockpos.getZ() + 0.5D, 5.0F);
+//				this.sielook.set(this.blockpos.getX() + 0.5D, this.blockpos.getY(), this.blockpos.getZ() + 0.5D, 5.0F);
 //				this.silefindmove.endGoal();
 //
 //				FakePlayer fakeplayer = new FakePlayer(worldserver, new GameProfile(null, "!"));

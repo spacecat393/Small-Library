@@ -25,7 +25,7 @@ public class SILeLookTo
 	public static byte ID;
 
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SILeLook<SD, BD, E, I, S, MS> silelook;
+	public SIELook<BD, E, I, S, MS> sielook;
 
 	public byte state;//on
 	public Entity entity;
@@ -42,7 +42,7 @@ public class SILeLookTo
 	public void init()
 	{
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silelook = (SILeLook<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeLook.ID);
+		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
 	}
 
 	@Override
@@ -102,11 +102,11 @@ public class SILeLookTo
 				{
 					if (this.blockpos != null)
 					{
-						this.silelook.set(this.blockpos.getX(), this.blockpos.getY(), this.blockpos.getZ(), 5.0F);
+						this.sielook.set(this.blockpos.getX(), this.blockpos.getY(), this.blockpos.getZ(), 5.0F);
 					}
 					else if (this.entity != null)
 					{
-						this.silelook.set(this.entity.posX, this.entity.posY + this.entity.getEyeHeight(), this.entity.posZ, 5.0F);
+						this.sielook.set(this.entity.posX, this.entity.posY + this.entity.getEyeHeight(), this.entity.posZ, 5.0F);
 					}
 				}
 				else

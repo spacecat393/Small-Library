@@ -23,7 +23,7 @@ import java.util.Map;
 import static com.nali.Nali.error;
 
 @SideOnly(Side.CLIENT)
-public abstract class MixCIE
+public class MixCIE
 <
 	RC extends IClientDaO,
 	R extends RenderO<RC>,

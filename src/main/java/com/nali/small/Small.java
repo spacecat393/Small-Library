@@ -170,29 +170,32 @@ public class Small
 	@EventHandler
 	public void onFMLServerStoppingEvent(FMLServerStoppingEvent event)
 	{
-		List<ServerE> s_collection = new ArrayList(ServerE.S_MAP.values());
-		File[] d_file_array = new File(s_collection.get(0).worldserver.getSaveHandler().getWorldDirectory() + "/nali/entity").listFiles();
-
-		if (d_file_array != null)
+		List<ServerE> s_list = new ArrayList(ServerE.S_MAP.values());
+		if (!s_list.isEmpty())
 		{
-			for (File d_file : d_file_array)
+			File[] d_file_array = new File(s_list.get(0).worldserver.getSaveHandler().getWorldDirectory() + "/nali/entity").listFiles();
+
+			if (d_file_array != null)
 			{
-				File[] i_file_array = d_file.listFiles();
-				if (i_file_array != null)
+				for (File d_file : d_file_array)
 				{
-					for (File i_file : i_file_array)
+					File[] i_file_array = d_file.listFiles();
+					if (i_file_array != null)
 					{
-						i_file.delete();
+						for (File i_file : i_file_array)
+						{
+							i_file.delete();
+						}
 					}
+
+					d_file.delete();
 				}
-
-				d_file.delete();
 			}
-		}
 
-		for (ServerE servere : s_collection)
-		{
-			servere.writeFile();
+			for (ServerE servere : s_list)
+			{
+				servere.writeFile();
+			}
 		}
 
 		ServerE.S_MAP = null;

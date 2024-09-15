@@ -26,7 +26,7 @@ public class SILeMove
 {
 	public static byte ID;
 
-	public SILeLook<SD, BD, E, I, S, MS> silelook;
+	public SIELook<BD, E, I, S, MS> sielook;
 	public SILeJump<SD, BD, E, I, S, MS> silejump;
 	public SIESit<BD, E, I, S, MS> siesit;
 
@@ -43,7 +43,7 @@ public class SILeMove
 	@Override
 	public void init()
 	{
-		this.silelook = (SILeLook<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeLook.ID);
+		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
 		this.silejump = (SILeJump<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeJump.ID);
 		this.siesit = (SIESit<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESit.ID);
 	}
@@ -176,8 +176,8 @@ public class SILeMove
 		//			float f9 = (float)(MathHelper.atan2(d1, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
 		//			e.rotationYaw = this.limitAngle(e.rotationYaw, f9, 90.0F);
 		//			e.rotationYawHead = e.rotationYaw;
-		//			Nali.LOGGER.info("DONE " + this.silelook.done);
-					if (this.silelook.done/* || d1 != 0*/)
+		//			Nali.LOGGER.info("DONE " + this.sielook.done);
+					if (this.sielook.done/* || d1 != 0*/)
 					{
 						Entity riding_entity = e.getRidingEntity();
 						if (riding_entity != null)
@@ -191,10 +191,10 @@ public class SILeMove
 						}
 					}
 
-					this.silelook.set(this.x, this.y, this.z, 4.5F);
+					this.sielook.set(this.x, this.y, this.z, 4.5F);
 		//			if (this.ox == this.x && this.oy == this.y && this.oz == this.z)
 		//			{
-		//			this.silelook.done = true;
+		//			this.sielook.done = true;
 		//			}
 		//
 		//			this.ox = this.x;

@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class MixBoxSeInvRSe
+public class MixBoxSeRSe
 <
 	RC extends IClientDaO,
 	R extends RenderO<RC>,
@@ -29,7 +29,7 @@ public class MixBoxSeInvRSe
 	C extends ClientE<RC, R, BD, E, I, MC, ?, MR>
 > extends MixBoxE<RC, R, BD, E, I, MC, MR, C>
 {
-	public MixBoxSeInvRSe(C c)
+	public MixBoxSeRSe(C c)
 	{
 		super(c);
 	}

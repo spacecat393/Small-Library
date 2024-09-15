@@ -2,24 +2,20 @@ package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaNe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.IMixESoundDa;
-import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.ServerE;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.MixSIE;
-import com.nali.sound.ISoundDaLe;
 import com.nali.system.bytes.ByteReader;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
 
-public class SILeLook
+public class SIELook
 <
-	SD extends ISoundDaLe,
 	BD extends IBothDaNe,
-	E extends EntityLivingBase,
-	I extends IMixE<BD, E> & IMixESoundDa<SD>,
-	S extends ServerLe<SD, BD, E, I, MS>,
+	E extends Entity,
+	I extends IMixE<BD, E>,
+	S extends ServerE<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
@@ -35,7 +31,7 @@ public class SILeLook
 	public float max;
 	public boolean done;
 
-	public SILeLook(S s)
+	public SIELook(S s)
 	{
 		super(s);
 	}
