@@ -112,7 +112,9 @@ public interface IMixE
 //			entitydatamanager.set(float_dataparameter, nbttagcompound.getFloat("float_" + i++));
 //		}
 //	}
+//	void initID();
 
+	byte[] getCI();
 	byte[] getSI();
 
 	DataParameter<Byte>[] getByteDataParameterArray();

@@ -152,13 +152,14 @@ public abstract class ServerE
 		{
 			int dimension = this.worldserver.provider.getDimension();
 			File file = new File(this.worldserver.getSaveHandler().getWorldDirectory() + "/nali/entity/" + dimension);
-			if (!file.isDirectory())
-			{
-				file.mkdirs();
-			}
+			file.mkdirs();
 
 			Files.write(new File(file + "/" + e.getUniqueID()).toPath(), chunk_byte_array);
-			Files.write(new File(file + "/data/" + e.getUniqueID()).toPath(), sidata.byte_array);
+
+			file = new File(file + "/data");
+			file.mkdirs();
+
+			Files.write(new File(file + "/" + e.getUniqueID()).toPath(), sidata.byte_array);
 		}
 		catch (IOException ex)
 		{
@@ -175,6 +176,11 @@ public abstract class ServerE
 			Entity e = this.i.getE();
 			File file = new File(this.worldserver.getSaveHandler().getWorldDirectory() + "/nali/entity/data/" + e.getUniqueID());
 
+			warn("world " + e.world);
+			warn("world.provider " + e.world.provider);
+			warn("S_MAP " + S_MAP);
+			warn("e " + e);
+			warn("this " + this);
 			S_MAP.put((long)e.world.provider.getDimension() << 32 | e.getEntityId(), this);
 
 			try
@@ -384,7 +390,7 @@ public abstract class ServerE
 //	{
 //	}
 
-	@SideOnly(Side.CLIENT)
+//	@SideOnly(Side.CLIENT)
 	@Override
 	public void onReadNBT()
 	{

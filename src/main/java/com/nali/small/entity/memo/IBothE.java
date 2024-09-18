@@ -36,7 +36,7 @@ public interface IBothE
 
 	//	@SideOnly(Side.CLIENT)
 //	void setGlowing(boolean b);
-	@SideOnly(Side.CLIENT)
+//	@SideOnly(Side.CLIENT)
 	void onReadNBT();//need check again
 	@SideOnly(Side.CLIENT)
 	void setShouldRender(boolean result);

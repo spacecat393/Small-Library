@@ -11,8 +11,6 @@ import com.nali.system.Reflect;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
@@ -22,7 +20,7 @@ import java.util.Map;
 
 import static com.nali.Nali.error;
 
-@SideOnly(Side.CLIENT)
+//@SideOnly(Side.CLIENT)
 public class MixCIE
 <
 	RC extends IClientDaO,
@@ -37,23 +35,6 @@ public class MixCIE
 {
 	public static String EMPTY_STRING = "---";
 	public static List<Class> CI_CLASS_LIST;
-
-	static
-	{
-		CI_CLASS_LIST = Reflect.getClasses("com.nali.list.entity.ci");
-		CI_CLASS_LIST.sort(Comparator.comparing(Class::getName));
-		for (byte i = 0; i < CI_CLASS_LIST.size(); ++i)
-		{
-			try
-			{
-				CI_CLASS_LIST.get(i).getField("ID").set(null, i);
-			}
-			catch (IllegalAccessException | NoSuchFieldException e)
-			{
-				error(e);
-			}
-		}
-	}
 
 	public C c;
 	public Map<Byte, CI> ci_map = new HashMap();
@@ -70,14 +51,31 @@ public class MixCIE
 	public MixCIE(C c)
 	{
 		this.c = c;
-		byte[] ai_byte_array = this.c.getCI();
-		for (byte b : ai_byte_array)
+		byte[] ci_byte_array = this.c.i.getCI();
+		for (byte b : ci_byte_array)
 		{
 			try
 			{
 				this.ci_map.put(b, (CI) CI_CLASS_LIST.get(b).getConstructors()[0].newInstance(this.c));
 			}
 			catch (InstantiationException | IllegalAccessException | InvocationTargetException e)
+			{
+				error(e);
+			}
+		}
+	}
+
+	public static void initID()
+	{
+		CI_CLASS_LIST = Reflect.getClasses("com.nali.list.entity.ci");
+		CI_CLASS_LIST.sort(Comparator.comparing(Class::getName));
+		for (byte i = 0; i < CI_CLASS_LIST.size(); ++i)
+		{
+			try
+			{
+				CI_CLASS_LIST.get(i).getField("ID").set(null, i);
+			}
+			catch (IllegalAccessException | NoSuchFieldException e)
 			{
 				error(e);
 			}
@@ -94,7 +92,7 @@ public class MixCIE
 
 	public void onReadNBT()
 	{
-		for (byte b : this.c.getCI())
+		for (byte b : this.c.i.getCI())
 		{
 			this.ci_map.get(b).onReadNBT();
 		}
@@ -124,7 +122,7 @@ public class MixCIE
 			this.updateBox();
 		}
 
-		for (byte b : this.c.getCI())
+		for (byte b : this.c.i.getCI())
 		{
 			this.ci_map.get(b).onUpdate();
 		}

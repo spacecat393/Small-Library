@@ -111,23 +111,21 @@ public class Small
 	}
 
 	@EventHandler
-	public void onFMLServerStartedEvent(FMLServerStartedEvent event)
+	public void onFMLServerAboutToStartEvent(FMLServerAboutToStartEvent event)
 	{
 		ServerE.S_MAP = new HashMap();
 		ChunkCallBack.set();
+	}
 
+	@EventHandler
+	public void onFMLServerStartedEvent(FMLServerStartedEvent event)
+	{
 		WorldServer[] worldserver_array = FMLCommonHandler.instance().getMinecraftServerInstance().worlds;
 		File file = new File(worldserver_array[0].getSaveHandler().getWorldDirectory() + "/nali");
-		if (!file.isDirectory())
-		{
-			file.mkdirs();
-		}
+		file.mkdirs();
 
 		file = new File(file + "/entity");
-		if (!file.isDirectory())
-		{
-			file.mkdirs();
-		}
+		file.mkdirs();
 
 		File[] d_file_array = file.listFiles();
 		if (d_file_array != null)
@@ -139,27 +137,30 @@ public class Small
 				{
 					for (File i_file : i_file_array)
 					{
-						try
+						if (i_file.isFile())
 						{
-							byte[] byte_array = Files.readAllBytes(i_file.toPath());
-							WorldServer worldserver = worldserver_array[ByteReader.getInt(byte_array, 0)];
-							BlockPos blockpos = BlockPos.fromLong(ByteReader.getLong(byte_array, 4));
-
-							ChunkData chunkdata = new ChunkData();
-							chunkdata.world = worldserver;
-							chunkdata.chunkpos = new ChunkPos(blockpos);
-							chunkdata.ticket = ForgeChunkManager.requestTicket(Small.I, chunkdata.world, ForgeChunkManager.Type.NORMAL);
-
-							if (chunkdata.ticket != null)
+							try
 							{
-								ForgeChunkManager.forceChunk(chunkdata.ticket, chunkdata.chunkpos);
-								CHUNK_LIST.add(chunkdata);
+								byte[] byte_array = Files.readAllBytes(i_file.toPath());
+								WorldServer worldserver = worldserver_array[ByteReader.getInt(byte_array, 0)];
+								BlockPos blockpos = BlockPos.fromLong(ByteReader.getLong(byte_array, 4));
+
+								ChunkData chunkdata = new ChunkData();
+								chunkdata.world = worldserver;
+								chunkdata.chunkpos = new ChunkPos(blockpos);
+								chunkdata.ticket = ForgeChunkManager.requestTicket(Small.I, chunkdata.world, ForgeChunkManager.Type.NORMAL);
+
+								if (chunkdata.ticket != null)
+								{
+									ForgeChunkManager.forceChunk(chunkdata.ticket, chunkdata.chunkpos);
+									CHUNK_LIST.add(chunkdata);
+								}
 							}
-						}
-						catch (IOException e)
-						{
-							warn(e);
-							i_file.delete();
+							catch (IOException e)
+							{
+								warn(e);
+								i_file.delete();
+							}
 						}
 					}
 				}
@@ -184,6 +185,14 @@ public class Small
 					{
 						for (File i_file : i_file_array)
 						{
+							File[] id_file_array = i_file.listFiles();
+							if (id_file_array != null)
+							{
+								for (File id_file : id_file_array)
+								{
+									id_file.delete();
+								}
+							}
 							i_file.delete();
 						}
 					}

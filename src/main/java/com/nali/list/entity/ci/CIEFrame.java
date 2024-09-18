@@ -13,10 +13,8 @@ import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
+//@SideOnly(Side.CLIENT)
 public class CIEFrame
 <
 	RC extends IClientDaS,

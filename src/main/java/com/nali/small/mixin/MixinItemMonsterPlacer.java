@@ -11,16 +11,15 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(ItemMonsterPlacer.class)
 public abstract class MixinItemMonsterPlacer
 {
-//	@Inject(method = "spawnCreature", at = @At(value = "JUMP", target = "Lnet/minecraft/entity/EntityList;createEntityByIDFromName(Lnet/minecraft/util/ResourceLocation;Lnet/minecraft/world/World;)Lnet/minecraft/entity/Entity;", ordinal = 1))
-	@Inject(method = "spawnCreature", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityList;createEntityByIDFromName(Lnet/minecraft/util/ResourceLocation;Lnet/minecraft/world/World;)Lnet/minecraft/entity/Entity;", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILSOFT)
-	private static void nali_small_spawnCreature(World worldIn, ResourceLocation entityID, double x, double y, double z, CallbackInfoReturnable<Entity> cir, Entity entity)
+	@Inject(method = "spawnCreature", at = @At(value = "RETURN"))
+	private static void nali_small_spawnCreature(World worldIn, ResourceLocation entityID, double x, double y, double z, CallbackInfoReturnable<Entity> cir)
 	{
-//		Entity entity = EntityList.createEntityByIDFromName(entityID, worldIn);
+		Entity entity = cir.getReturnValue();
+
 		if (entity instanceof IMixE)
 		{
 			NBTTagCompound nbttagcompound = new NBTTagCompound();

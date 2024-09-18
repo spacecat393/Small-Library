@@ -15,7 +15,7 @@ import java.util.Map;
 
 import static com.nali.Nali.error;
 
-public abstract class MixSIE
+public class MixSIE
 <
 	BD extends IBothDaNe,
 	E extends Entity,
@@ -25,7 +25,31 @@ public abstract class MixSIE
 {
 	public static List<Class> SI_CLASS_LIST;
 
-	static
+	public S s;
+	public Map<Byte, SI/*<SD, BD, E, I, S, ?>*/> si_map = new HashMap();
+	public byte state = (byte)255-4;//main_work sub_work init !ai-lock0! !read_file0! ?map chunk ?regen
+
+	public EntityPlayerMP entityplayermp;
+	public byte[] byte_array;
+
+	public MixSIE(S s)
+	{
+		this.s = s;
+		byte[] ai_byte_array = this.s.i.getSI();
+		for (byte b : ai_byte_array)
+		{
+			try
+			{
+				this.si_map.put(b, (SI) SI_CLASS_LIST.get(b).getConstructors()[0].newInstance(this.s));
+			}
+			catch (InstantiationException | IllegalAccessException | InvocationTargetException e)
+			{
+				error(e);
+			}
+		}
+	}
+
+	public static void initID()
 	{
 		SI_CLASS_LIST = Reflect.getClasses("com.nali.list.entity.si");
 		SI_CLASS_LIST.sort(Comparator.comparing(Class::getName));
@@ -36,31 +60,6 @@ public abstract class MixSIE
 				SI_CLASS_LIST.get(i).getField("ID").set(null, i);
 			}
 			catch (IllegalAccessException | NoSuchFieldException e)
-			{
-				error(e);
-			}
-		}
-	}
-
-	public S s;
-	public Map<Byte, SI/*<SD, BD, E, I, S, ?>*/> si_map = new HashMap();
-	public byte state = (byte)255;//main_work sub_work init !ai-lock0! !read_file0! ?map chunk ?regen
-
-	public EntityPlayerMP entityplayermp;
-	public byte[] byte_array;
-
-	public MixSIE(S s)
-	{
-		this.s = s;
-
-		byte[] ai_byte_array = this.s.i.getSI();
-		for (byte b : ai_byte_array)
-		{
-			try
-			{
-				this.si_map.put(b, (SI) SI_CLASS_LIST.get(b).getConstructors()[0].newInstance(this.s));
-			}
-			catch (InstantiationException | IllegalAccessException | InvocationTargetException e)
 			{
 				error(e);
 			}

@@ -6,7 +6,7 @@ import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import net.minecraft.entity.Entity;
 
-public abstract class MixSIEInv
+public class MixSIEInv
 <
 	BD extends IBothDaNe,
 	E extends Entity,

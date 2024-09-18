@@ -1,6 +1,8 @@
 package com.nali.small.entity;
 
 import com.nali.small.Small;
+import com.nali.small.entity.memo.client.ci.MixCIE;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.system.Reflect;
 import com.nali.system.StringReader;
 import net.minecraft.client.renderer.entity.Render;
@@ -30,6 +32,8 @@ public class EntityRegistry
 	static
 	{
 		ENTITIES_CLASS_LIST.sort(Comparator.comparing(Class::getName));
+		MixSIE.initID();
+		MixCIE.initID();
 	}
 
 	public static void set()
@@ -42,6 +46,7 @@ public class EntityRegistry
 //			String name = clasz.getSimpleName().toLowerCase();
 				String[] string_array = StringReader.get(clasz);
 				String name = string_array[0];
+				clasz.getMethod("initID").invoke(null);
 //				String mod_id = string_array[1];
 //				Class<?> mod_class = Class.forName("com.nali." + mod_id + "." + Character.toUpperCase(mod_id.charAt(0)) + new String(mod_id.getBytes(), 1, mod_id.length() - 1));
 
@@ -49,7 +54,7 @@ public class EntityRegistry
 				net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation(string_array[1], name), clasz, name, index++, Small.I, 64, 1, true, (int)clasz.getField("eggPrimary").get(null), (int)clasz.getField("eggSecondary").get(null));
 //				clasz.getField("ID").set(null, index++);
 			}
-			catch (NoSuchFieldException | IllegalAccessException/* | ClassNotFoundException*/ e)
+			catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException | InvocationTargetException/* | ClassNotFoundException*/ e)
 			{
 				error(e);
 			}

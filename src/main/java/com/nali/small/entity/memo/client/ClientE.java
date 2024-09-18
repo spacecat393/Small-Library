@@ -142,5 +142,5 @@ public abstract class ClientE
 //		return this.i;
 //	}
 
-	public abstract byte[] getCI();
+//	public abstract byte[] getCI();
 }
