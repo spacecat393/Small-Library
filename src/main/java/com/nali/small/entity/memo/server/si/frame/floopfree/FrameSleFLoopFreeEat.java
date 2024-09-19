@@ -26,14 +26,16 @@ public class FrameSleFLoopFreeEat
 	public FrameSleFLoopFreeEat(S s, int index)
 	{
 		super(s, index);
-	}
 
-	@Override
-	public void init()
-	{
-		super.init();
 		this.sileeat = (SILeEat<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeEat.ID);
 	}
+//
+//	@Override
+//	public void init()
+//	{
+//		super.init();
+//		this.sileeat = (SILeEat<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeEat.ID);
+//	}
 
 	@Override
 	public boolean step()

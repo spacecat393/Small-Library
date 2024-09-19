@@ -24,15 +24,17 @@ public class FrameSleTLoopAttackStand
 
 	public FrameSleTLoopAttackStand(S s, int index)
 	{
-	super(s, index);
-	}
+		super(s, index);
 
-	@Override
-	public void init()
-	{
-		super.init();
 		this.sileattack = (SILeAttack<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeAttack.ID);
 	}
+//
+//	@Override
+//	public void init()
+//	{
+//		super.init();
+//		this.sileattack = (SILeAttack<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeAttack.ID);
+//	}
 
 	@Override
 	public boolean onUpdate()

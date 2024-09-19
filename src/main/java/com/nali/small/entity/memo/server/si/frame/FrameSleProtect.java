@@ -25,102 +25,109 @@ public class FrameSleProtect
 	public FrameSleProtect(S s, int index)
 	{
 		super(s, index);
-	}
 
-	@Override
-	public void init()
-	{
-		super.init();
 		this.sileprotect = (SILeProtect<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeProtect.ID);
 	}
+//
+//	@Override
+//	public void init()
+//	{
+//		super.init();
+//		this.sileprotect = (SILeProtect<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeProtect.ID);
+//	}
 
 	@Override
 	public boolean onUpdate()
 	{
-		int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
-		byte[] frame_byte_array = this.s.getFrameByteArray();
-		this.step = 1;
-		byte frame = frame_byte_array[this.index];
-		byte index = frame_byte_array[this.index + 1];
-		byte index1 = frame_byte_array[this.index + 2];
-		switch (this.sileprotect.state & (4+8))
+		if ((this.sileprotect.state & 1) == 1)
 		{
-			case 0:
+			int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
+			byte[] frame_byte_array = this.s.getFrameByteArray();
+			this.step = 1;
+			byte frame = frame_byte_array[this.index];
+			byte index = frame_byte_array[this.index + 1];
+			byte index1 = frame_byte_array[this.index + 2];
+			switch (this.sileprotect.state & (4+8))
 			{
-				if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index][1])
+				case 0:
 				{
-					this.sieframe.frame_int_array[frame] = frame_2d_int_array[index][0];
-					this.step = 0;
-				}
-				else if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index][1])
-				{
-					this.sieframe.frame_int_array[frame] = frame_2d_int_array[index1][0];
-					this.step = 0;
-//					this.sileprotect.main_state = 1;
-					this.sileprotect.state |= 4;
-				}
+					if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index][1])
+					{
+						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index][0];
+						this.step = 0;
+					}
+					else if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index][1])
+					{
+						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index1][0];
+						this.step = 0;
+		//					this.sileprotect.main_state = 1;
+						this.sileprotect.state |= 4;
+					}
 
-				break;
-			}
-			case 4:
-			{
-				if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index1][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index1][1])
-				{
-					this.sieframe.frame_int_array[frame] = frame_2d_int_array[index1][0];
-					this.step = 0;
+					break;
 				}
-				else if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index1][1])
+				case 4:
 				{
-					this.sieframe.frame_int_array[frame] = frame_2d_int_array[index1][0];
-					this.step = 0;
-				}
+					if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index1][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index1][1])
+					{
+						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index1][0];
+						this.step = 0;
+					}
+					else if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index1][1])
+					{
+						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index1][0];
+						this.step = 0;
+					}
 
-				break;
-			}
-			case 8:
-			{
-				byte index2 = frame_byte_array[this.index + 3];
-				if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index2][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index2][1])
-				{
-					this.sieframe.frame_int_array[frame] = frame_2d_int_array[index2][0];
-					this.step = 0;
+					break;
 				}
-				else if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index2][1])
+				case 8:
 				{
-					this.sieframe.frame_int_array[frame] = frame_2d_int_array[index2][0];
-					this.step = 0;
-//					this.sileprotect.main_state = 1;
-//					this.sileprotect.state |= 4;
-//					this.sileprotect.state &= 255-(8);
-					this.sileprotect.state ^= 4+8;
-				}
+					byte index2 = frame_byte_array[this.index + 3];
+					if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index2][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index2][1])
+					{
+						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index2][0];
+						this.step = 0;
+					}
+					else if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index2][1])
+					{
+						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index2][0];
+						this.step = 0;
+		//					this.sileprotect.main_state = 1;
+		//					this.sileprotect.state |= 4;
+		//					this.sileprotect.state &= 255-(8);
+						this.sileprotect.state ^= 4+8;
+					}
 
-				break;
-			}
-			case 4+8:
-			{
-				byte index3 = frame_byte_array[this.index + 4];
-				if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index3][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index3][1])
-				{
-					this.sieframe.frame_int_array[frame] = frame_2d_int_array[index3][0];
-					this.step = 0;
+					break;
 				}
-				else if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index3][1])
+				case 4+8:
 				{
-//					this.sieframe.frame_int_array[frame] = frame_2d_int_array[index3][0];
-					this.step = 0;
-//					this.sileprotect.main_state = -2;
-					this.sileprotect.state &= 255-(4+8);
-					return true;
+					byte index3 = frame_byte_array[this.index + 4];
+					if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index3][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index3][1])
+					{
+						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index3][0];
+						this.step = 0;
+					}
+					else if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index3][1])
+					{
+		//					this.sieframe.frame_int_array[frame] = frame_2d_int_array[index3][0];
+						this.step = 0;
+		//					this.sileprotect.main_state = -2;
+						this.sileprotect.state &= 255-(4+8);
+						return true;
+					}
+					break;
 				}
-				break;
+				default:
+				{
+					break;
+				}
 			}
-			default:
-			{
-				break;
-			}
+
+			return true;
 		}
 
-		return this.sileprotect.state > -1;
+		return false;
 	}
 }

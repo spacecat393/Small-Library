@@ -105,7 +105,6 @@ public class MixSIE
 		I i = this.s.i;
 		i.getE().getDataManager().set(i.getFloatDataParameterArray()[0], i.getBD().Scale());
 		this.init();
-		this.state |= 4;
 	}
 
 	public void writeFile(SIData sidata)

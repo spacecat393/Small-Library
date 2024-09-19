@@ -34,14 +34,16 @@ public class FrameSleFLoopSSeRSePlay
 	public FrameSleFLoopSSeRSePlay(S s, int index)
 	{
 		super(s, index);
-	}
 
-	@Override
-	public void init()
-	{
-		super.init();
 		this.sileplaywithsse = (SILePlayWithSSe<R2, S2, BD2, E2, I2, A2, SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILePlayWithSSe.ID);
 	}
+//
+//	@Override
+//	public void init()
+//	{
+//		super.init();
+//		this.sileplaywithsse = (SILePlayWithSSe<R2, S2, BD2, E2, I2, A2, SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILePlayWithSSe.ID);
+//	}
 
 	@Override
 	public boolean onUpdate()

@@ -28,15 +28,18 @@ public class FrameSleFLoopFreePE
 	public FrameSleFLoopFreePE(S s, int index)
 	{
 		super(s, index);
-	}
 
-	@Override
-	public void init()
-	{
-		super.init();
 		this.siepat = (SIEPat<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEPat.ID);
 		this.sileeat = (SILeEat<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeEat.ID);
 	}
+//
+//	@Override
+//	public void init()
+//	{
+//		super.init();
+//		this.siepat = (SIEPat<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEPat.ID);
+//		this.sileeat = (SILeEat<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeEat.ID);
+//	}
 
 	@Override
 	public boolean step()

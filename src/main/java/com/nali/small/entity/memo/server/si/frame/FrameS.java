@@ -38,7 +38,7 @@ public abstract class FrameS
 //		this.frame = frame;
 //		this.index = index;
 //		this.int_2d_array = int_2d_array;
-		this.init();
+//		this.init();
 		this.sieframe = (SIEFrame<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFrame.ID);
 	}
 
@@ -68,12 +68,12 @@ public abstract class FrameS
 		int[] frame_int_array = this.sieframe.frame_int_array;
 		byte frame = frame_byte_array[this.index];
 		frame_int_array[frame] += this.step;
-		i.getE().getDataManager().set(i.getIntegerDataParameterArray()[frame_byte_array[frame]], frame_int_array[frame]);
+		i.getE().getDataManager().set(i.getIntegerDataParameterArray()[frame_byte_array[this.index]], frame_int_array[frame]);
 	}
 
-	public void init()
-	{
-	}
+//	public void init()
+//	{
+//	}
 
 	public abstract boolean onUpdate();
 }

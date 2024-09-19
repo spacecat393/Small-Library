@@ -8,7 +8,7 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.sound.ISoundDaLe;
 import net.minecraft.entity.EntityLivingBase;
 
-public abstract class SILePlayWithSSle
+public class SILePlayWithSSle
 <
 	R2 extends SIEPlayWithRSe<S, BD, E, I, MS, BD2, E2, I2, S2, A2>,
 	S2 extends ServerLe<SD2, BD2, E2, I2, A2>,

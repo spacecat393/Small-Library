@@ -13,7 +13,7 @@ import net.minecraft.entity.EntityLivingBase;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public abstract class SILePlayWithSSe
+public class SILePlayWithSSe
 <
 	R2 extends SIEPlayWithRSe<S, BD, E, I, MS, BD2, E2, I2, S2, A2>,
 	S2 extends ServerE<BD2, E2, I2, A2>,

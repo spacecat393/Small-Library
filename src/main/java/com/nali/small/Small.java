@@ -8,7 +8,6 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.gui.GuiHandler;
 import com.nali.small.tile.TileRegistry;
 import com.nali.system.bytes.ByteReader;
-import com.nali.system.opengl.memo.client.MemoC;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -21,7 +20,6 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.GL11;
 
 import java.io.File;
@@ -40,17 +38,6 @@ import static com.nali.small.gui.page.Page.STRING_ARRAY;
 public class Small
 {
 	public final static String ID = "small";
-	static
-	{
-		if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
-		{
-			int max_bone = 16 * 2;
-			if (MemoC.MAX_BONE < max_bone)
-			{
-				MemoC.MAX_BONE = max_bone;
-			}
-		}
-	}
 
 	@Instance
 	public static Small I;

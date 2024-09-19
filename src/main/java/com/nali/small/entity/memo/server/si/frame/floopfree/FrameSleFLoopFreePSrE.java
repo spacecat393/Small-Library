@@ -30,21 +30,25 @@ public class FrameSleFLoopFreePSrE
 	public FrameSleFLoopFreePSrE(S s, int index)
 	{
 		super(s, index);
-	}
 
-	@Override
-	public void init()
-	{
-		super.init();
 		this.siepat = (SIEPat<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEPat.ID);
 		this.siesit = (SIESit<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESit.ID);
 		this.sileeat = (SILeEat<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeEat.ID);
 	}
+//
+//	@Override
+//	public void init()
+//	{
+//		super.init();
+//		this.siepat = (SIEPat<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEPat.ID);
+//		this.siesit = (SIESit<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESit.ID);
+//		this.sileeat = (SILeEat<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeEat.ID);
+//	}
 
 	@Override
 	public boolean step()
 	{
-		return (this.siepat.state & 1) == 1 || (this.siesit.state & 4) == 4 || (this.sileeat.state & 1) == 1;
+		return (this.siepat.state & 1) == 1 || (this.siesit.state & 4) == 4 || (this.sileeat.state & 1+2) != 0;
 	}
 
 	@Override
@@ -52,6 +56,6 @@ public class FrameSleFLoopFreePSrE
 	{
 		this.siepat.state &= 255-1;
 		this.siesit.state &= 255-4;
-		this.sileeat.state &= 255-1;
+		this.sileeat.state &= 255-(1+2);
 	}
 }

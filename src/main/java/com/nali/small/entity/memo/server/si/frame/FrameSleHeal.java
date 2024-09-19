@@ -29,21 +29,24 @@ public class FrameSleHeal
 	{
 		super(s, index);
 //		index = index;
-	}
 
-	@Override
-	public void init()
-	{
-		super.init();
 		this.sileheal = (SILeHeal<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeHeal.ID);
 	}
+//
+//	@Override
+//	public void init()
+//	{
+//		super.init();
+//		this.sileheal = (SILeHeal<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeHeal.ID);
+//	}
 
 	@Override
 	public boolean onUpdate()
 	{
-		this.step = 1;
-		if (this.sileheal.state == 0 || this.sileheal.state == 1)
+		if ((this.sileheal.state & 1) == 1)
 		{
+			this.step = 1;
+
 			int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
 			byte[] frame_byte_array = this.s.getFrameByteArray();
 			byte frame = frame_byte_array[this.index];
@@ -51,7 +54,7 @@ public class FrameSleHeal
 			{
 				if (this.sieframe.frame_int_array[frame] == heal_frame)
 				{
-					this.sileheal.state = 1;
+					this.sileheal.state |= 4;
 					break;
 				}
 			}

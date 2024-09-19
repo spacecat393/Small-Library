@@ -23,29 +23,37 @@ public class FrameSFLoopFreeRSePlay
 > extends FrameSFLoopFree<BD, E, I, S, MS>
 {
 	public SIEPlayWithRSe<S2, BD2, E2, I2, A2, BD, E, I, S, MS> sieplaywithrse;
-	public S2 s2;
+//	public S2 s2;
+	public byte s2_id;
 
-	public FrameSFLoopFreeRSePlay(S s, int index)
+	public FrameSFLoopFreeRSePlay(S s, int index, byte s2_id)
 	{
 		super(s, index);
-	}
+		this.s2_id = s2_id;
 
-	@Override
-	public void init()
-	{
-		super.init();
-		this.sieplaywithrse = (SIEPlayWithRSe<S2, BD2, E2, I2, A2, BD, E, I, S, MS>)this.s2.ms.si_map.get(SIEPlayWithRSe.ID);
+		this.sieplaywithrse = (SIEPlayWithRSe<S2, BD2, E2, I2, A2, BD, E, I, S, MS>)this.s.ms.si_map.get(SIEPlayWithRSe.ID);
 	}
+//
+//	@Override
+//	public void init()
+//	{
+//		super.init();
+////		this.sieplaywithrse = (SIEPlayWithRSe<S2, BD2, E2, I2, A2, BD, E, I, S, MS>)this.s2.ms.si_map.get(SIEPlayWithRSe.ID);
+//		this.sieplaywithrse = (SIEPlayWithRSe<S2, BD2, E2, I2, A2, BD, E, I, S, MS>)this.s.ms.si_map.get(SIEPlayWithRSe.ID);
+//	}
 
 	@Override
 	public boolean step()
 	{
-		return (this.sieplaywithrse.state & 2) == 2;
+		return this.sieplaywithrse.s2 == null ? false : (((SIEPlayWithRSe)this.sieplaywithrse.s2.ms.si_map.get(this.s2_id)).state & 2) == 2;
 	}
 
 	@Override
 	public void free()
 	{
-		this.sieplaywithrse.state &= 255-2;
+		if (this.sieplaywithrse.s2 != null)
+		{
+			((SIEPlayWithRSe)this.sieplaywithrse.s2.ms.si_map.get(this.s2_id)).state &= 255-2;
+		}
 	}
 }

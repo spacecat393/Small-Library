@@ -8,7 +8,7 @@ import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import net.minecraft.entity.Entity;
 
-public abstract class SIEPlayWithRSe
+public class SIEPlayWithRSe
 <
 	S2 extends ServerE<BD2, E2, I2, A2>,
 	BD2 extends IBothDaNe,
@@ -36,6 +36,12 @@ public abstract class SIEPlayWithRSe
 		super(s);
 	}
 
+	@Override
+	public void init()
+	{
+
+	}
+
 //	@Override
 //	public void init()
 //	{
@@ -58,6 +64,12 @@ public abstract class SIEPlayWithRSe
 	public void call()
 	{
 		this.state |= 2;
+	}
+
+	@Override
+	public void onUpdate()
+	{
+
 	}
 
 	@Override

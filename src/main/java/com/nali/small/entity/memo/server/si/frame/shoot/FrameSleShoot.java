@@ -29,12 +29,13 @@ public class FrameSleShoot
 	public FrameSleShoot(S s, int index)
 	{
 		super(s, index);
+		this.init();
 	}
 
-	@Override
+//	@Override
 	public void init()
 	{
-		super.init();
+//		super.init();
 		this.sileattack = (SILeAttack<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeAttack.ID);
 		this.silefindmove = (SILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
 	}

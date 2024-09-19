@@ -172,15 +172,17 @@ public abstract class ServerE
 	{
 		if ((this.ms.state & 4) == 0)
 		{
+			this.ms.state |= 4;
+
 			SIData sidata = new SIData();
 			Entity e = this.i.getE();
 			File file = new File(this.worldserver.getSaveHandler().getWorldDirectory() + "/nali/entity/data/" + e.getUniqueID());
 
-			warn("world " + e.world);
-			warn("world.provider " + e.world.provider);
-			warn("S_MAP " + S_MAP);
-			warn("e " + e);
-			warn("this " + this);
+//			warn("world " + e.world);
+//			warn("world.provider " + e.world.provider);
+//			warn("S_MAP " + S_MAP);
+//			warn("e " + e);
+//			warn("this " + this);
 			S_MAP.put((long)e.world.provider.getDimension() << 32 | e.getEntityId(), this);
 
 			try
