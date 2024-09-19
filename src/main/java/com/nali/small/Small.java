@@ -23,7 +23,6 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.lwjgl.opengl.GL11;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,7 +142,7 @@ public class Small
 									CHUNK_LIST.add(chunkdata);
 								}
 							}
-							catch (IOException e)
+							catch (Exception e)
 							{
 								warn(e);
 								i_file.delete();
