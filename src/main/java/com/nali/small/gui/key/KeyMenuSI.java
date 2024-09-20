@@ -6,7 +6,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import static com.nali.small.gui.page.PageMe.openPageMe;
 
 @SideOnly(Side.CLIENT)
-public class KeyMenuAI extends KeyMenu
+public class KeyMenuSI extends KeyMenu
 {
 	@Override
 	public void run()

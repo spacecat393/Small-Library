@@ -18,13 +18,13 @@ import static com.nali.list.container.gui.SmallGui.SMALLGUI;
 import static com.nali.list.container.gui.SmallGui.addSet;
 import static com.nali.small.gui.key.Key.KEY;
 import static com.nali.small.gui.page.Page.H;
-import static com.nali.small.gui.page.PageAI.INDEX_INT_ARRAY;
-import static com.nali.small.gui.page.PageAI.SEARCH_AI_BYTE_LIST;
+import static com.nali.small.gui.page.PageSI.INDEX_INT_ARRAY;
+import static com.nali.small.gui.page.PageSI.SEARCH_AI_BYTE_LIST;
 import static com.nali.small.gui.page.PageArmy.MAX_Y;
 import static com.nali.small.gui.page.PageArmy.MAX_Y_STAR;
 
 @SideOnly(Side.CLIENT)
-public class MouseAI extends Mouse
+public class MouseSI extends Mouse
 {
 	public static List<Class> GI_CLASS_LIST;
 
@@ -37,7 +37,7 @@ public class MouseAI extends Mouse
 	public static float Y, Y_STAR, DRAG;
 	public float mouse_y;
 
-	public MouseAI()
+	public MouseSI()
 	{
 		Y = 0;
 	}

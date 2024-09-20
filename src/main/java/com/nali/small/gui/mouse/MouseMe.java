@@ -4,7 +4,7 @@ import com.nali.small.gui.page.PageSmall;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.nali.small.gui.page.PageAI.openPageAI;
+import static com.nali.small.gui.page.PageSI.openPageAI;
 
 @SideOnly(Side.CLIENT)
 public class MouseMe extends Mouse

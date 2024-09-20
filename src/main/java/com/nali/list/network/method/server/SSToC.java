@@ -13,7 +13,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 import static com.nali.small.entity.memo.server.ServerE.S_MAP;
 
@@ -34,14 +33,16 @@ public class SSToC
 		{
 			int index = 1;
 			//					Set<UUID> keys_set = new HashSet<>(entity_map.keySet());
-			Set<UUID> keys_set = new HashSet(S_MAP.keySet());
+//			Set<UUID> keys_set = new HashSet(S_MAP.keySet());
+			Set<Long> keys_set = new HashSet(S_MAP.keySet());
 			int size = keys_set.size();
 			byte[] byte_array = new byte[1 + size * 8/*16*/ + size * (4+4/*+4*/)];
 			byte_array[0] = CSToC.ID;
 
-			for (UUID uuid : keys_set)
+//			for (UUID uuid : keys_set)
+			for (long l : keys_set)
 			{
-				ServerE s = S_MAP.get(uuid);
+				ServerE s = S_MAP.get(l);
 //							entityplayermp.connection.sendPacket(new SPacketSpawnObject(skinningentities, EntityList.getID(skinningentities.getClass())));
 				if (s != null)
 				{

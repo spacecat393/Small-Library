@@ -1,6 +1,7 @@
 package com.nali.small.gui.page;
 
 import com.nali.list.data.SmallData;
+import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.gui.key.KeyMenuMe;
 import com.nali.small.gui.mouse.MouseMe;
 import com.nali.small.gui.mouse.MouseSmall;
@@ -33,6 +34,8 @@ public class PageMe extends Page
 
 //	public static UUID UUID;
 	public static long ID_KEY;
+	public static int E_KEY;
+	public static ClientE CLIENTE;
 
 	public static byte PAGE,
 	BYTE = 1;

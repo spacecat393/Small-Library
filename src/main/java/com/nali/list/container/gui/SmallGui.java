@@ -2,13 +2,18 @@ package com.nali.list.container.gui;
 
 import com.nali.list.container.SmallContainer;
 import com.nali.small.SmallConfig;
+import com.nali.small.entity.IMixE;
+import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.gui.key.KeyMenuMe;
 import com.nali.small.gui.page.Page;
 import com.nali.small.gui.page.PageMe;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
@@ -20,10 +25,12 @@ import org.lwjgl.opengl.*;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.IntBuffer;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.nali.Nali.error;
 import static com.nali.small.gui.key.Key.KEY;
 import static com.nali.small.gui.mouse.Mouse.*;
 import static com.nali.small.gui.page.Page.*;
@@ -95,6 +102,25 @@ public class SmallGui extends GuiContainer
 			KeyMenuMe.ME &= 255-1;
 //			PageMe.UUID = uuid;
 			PageMe.ID_KEY = (long)y << 32 | x;
+			PageMe.E_KEY = z;
+
+			Entity entity = Minecraft.getMinecraft().world.getEntityByID(z);
+			if (entity == null)
+			{
+				try
+				{
+					PageMe.CLIENTE = (ClientE)EntityList.getClassFromID(PageMe.E_KEY).getMethod("getC").invoke(null);
+				}
+				catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
+				{
+					error(e);
+				}
+			}
+			else/* if (entity instanceof IMixE)*/
+			{
+				PageMe.CLIENTE = (ClientE)((IMixE)entity).getB();
+			}
+
 			openPageMe();
 		}
 		return new SmallGui(new SmallContainer());

@@ -1,10 +1,9 @@
 package com.nali.small.gui.page;
 
 import com.nali.list.data.SmallData;
-import com.nali.small.entity.memo.client.ClientE;
-import com.nali.small.gui.key.KeyMenuAI;
+import com.nali.small.gui.key.KeyMenuSI;
 import com.nali.small.gui.key.KeyMenuMe;
-import com.nali.small.gui.mouse.MouseAI;
+import com.nali.small.gui.mouse.MouseSI;
 import com.nali.small.gui.mouse.MouseArmy;
 import com.nali.system.opengl.memo.client.MemoS;
 import net.minecraft.client.Minecraft;
@@ -32,7 +31,7 @@ import static com.nali.system.ClientLoader.S_LIST;
 import static com.nali.system.opengl.memo.client.MemoC.FULL_ARRAY_BUFFER;
 
 @SideOnly(Side.CLIENT)
-public class PageAI extends Page
+public class PageSI extends Page
 {
 	public static List<Integer>
 	TEXTURE_INTEGER_LIST = new ArrayList(),
@@ -58,7 +57,7 @@ public class PageAI extends Page
 	public static int[] INDEX_INT_ARRAY;
 	public static List<Byte> SEARCH_AI_BYTE_LIST = new ArrayList();
 
-	public PageAI(byte page)
+	public PageSI(byte page)
 	{
 		PAGE = page;
 		this.vec2_2d_float_array = new float[1][2];
@@ -79,10 +78,10 @@ public class PageAI extends Page
 			new PageMenu(STRING_ARRAY[14] + ((KeyMenuMe.ME & 1) == 1 ? "|" + STRING_ARRAY[0] : "") + "|I" + (int)PageMe.ID_KEY + "D" + (int)(PageMe.ID_KEY >> 32) + "|" + STRING_ARRAY[1]),
 			new PageSakura(),
 			new PageKey(),
-			new PageAI((byte)1)
+			new PageSI((byte)1)
 		};
-		KEY = new KeyMenuAI();
-		MOUSE = new MouseAI();
+		KEY = new KeyMenuSI();
+		MOUSE = new MouseSI();
 		addSet();
 	}
 
@@ -314,10 +313,11 @@ public class PageAI extends Page
 		SEARCH_AI_BYTE_LIST.clear();
 
 //		ClientE c = C_MAP.get(PageMe.UUID);
-		ClientE c = C_MAP.get(PageMe.ID_KEY);
-		byte[] ai_byte_array = c.i.getSI();
-		SIZE = ai_byte_array.length;
+//		ClientE c = C_MAP.get(PageMe.ID_KEY);
 		Minecraft minecraft = SMALLGUI.mc;
+
+		byte[] ai_byte_array = PageMe.CLIENTE.i.getSI();
+		SIZE = ai_byte_array.length;
 		int
 			display_width = minecraft.displayWidth,
 			display_height = minecraft.displayHeight;
@@ -332,7 +332,7 @@ public class PageAI extends Page
 		for (byte b = 0; b < SIZE; ++b)
 		{
 			byte ai = ai_byte_array[b];
-			String string = MouseAI.GI_CLASS_LIST.get(ai).getSimpleName();
+			String string = MouseSI.GI_CLASS_LIST.get(ai).getSimpleName();
 			string_array[b] = string;
 			int new_max = (int)(minecraft.fontRenderer.getStringWidth(string) * SCALE);
 			if (A_W < new_max)
