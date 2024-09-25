@@ -19,12 +19,12 @@ public class CEToC
 //			c.i.getBD()
 //			c.mc.dimension = ByteReader.getInt(clientmessage.data, 1 + 16);
 			//1 + 8 as 4
-			c.mc.x = ByteReader.getFloat(clientmessage.data, 1 + 8 + 4);
-			c.mc.y = ByteReader.getFloat(clientmessage.data, 1 + 8 + 4 + 4);
-			c.mc.z = ByteReader.getFloat(clientmessage.data, 1 + 8 + 4 + 4 + 4);
+			c.x = ByteReader.getFloat(clientmessage.data, 1 + 8 + 4);
+			c.y = ByteReader.getFloat(clientmessage.data, 1 + 8 + 4 + 4);
+			c.z = ByteReader.getFloat(clientmessage.data, 1 + 8 + 4 + 4 + 4);
 			String string = new String(clientmessage.data, 1 + 8 + 4 + 4 + 4 + 4, clientmessage.data.length - (1 + 8 + 4 + 4 + 4 + 4)/* - frame*/ - 1 - 4);
-			c.mc.name_string = string;
-			c.mc.hp = ByteReader.getInt(clientmessage.data, 1 + 8 + 4 + 4 + 4 + 4 + string.getBytes().length/* + frame*/ + 1);
+			c.name_string = string;
+			c.hp = ByteReader.getInt(clientmessage.data, 1 + 8 + 4 + 4 + 4 + 4 + string.getBytes().length/* + frame*/ + 1);
 //			PageArmy.BYTE |= 2;
 			PageArmy.BYTE |= 1;
 		}

@@ -42,6 +42,11 @@ public abstract class ClientLe
 //		this.work_byte_array = new byte[workbytes.MAX_WORKS()];
 	}
 
+	public ClientLe(R r)
+	{
+		super(r);
+	}
+
 	@Override
 	public void getHurtSound(DamageSource damagesource)
 	{

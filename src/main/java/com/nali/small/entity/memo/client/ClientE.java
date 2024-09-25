@@ -35,6 +35,8 @@ public abstract class ClientE
 	MR extends MixRenderE<RC, R, BD, E, I, MC, MB, ?>
 > implements IBothE<E>
 {
+	public static String EMPTY_STRING = "---";
+
 //	public static Map<UUID, ClientE> C_MAP = new HashMap();
 	public static Map<Long, ClientE> C_MAP = new HashMap();
 //	public static Map<Integer, UUID> UUID_MAP = new HashMap();
@@ -45,15 +47,29 @@ public abstract class ClientE
 	public MB mb;
 	public MR mr;
 
+	//not fake
+	public byte[] sync_byte_array;
 	public boolean should_render;
-//	public UUID uuid;
+
+	//fake
 	public long key;
-	public byte[] sync_byte_array;//remove later?
+	public int e_id;
+	public boolean fake;
+	public String name_string = EMPTY_STRING;
+	public byte state;//regen outline/glowing die
+	//	public Integer dimension;
+	public float x, y, z, hp;
+
+	public ClientE(R r)
+	{
+		this.r = r;
+	}
 
 	public ClientE(I i, R r)
 	{
+		this(r);
 		this.i = i;
-		this.r = r;
+
 		this.sync_byte_array = new byte[this.i.getBD().MaxSync()];
 	}
 

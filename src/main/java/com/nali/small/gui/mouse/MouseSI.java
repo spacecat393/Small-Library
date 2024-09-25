@@ -1,6 +1,7 @@
 package com.nali.small.gui.mouse;
 
 import com.nali.Nali;
+import com.nali.list.container.gui.SmallGui;
 import com.nali.small.gui.key.Key;
 import com.nali.small.gui.key.KeyMenuArmy;
 import com.nali.small.gui.page.Page;
@@ -17,9 +18,9 @@ import java.util.List;
 import static com.nali.list.container.gui.SmallGui.SMALLGUI;
 import static com.nali.list.container.gui.SmallGui.addSet;
 import static com.nali.small.gui.key.Key.KEY;
-import static com.nali.small.gui.page.Page.H;
+import static com.nali.small.gui.page.Page.FONT_MH_SH;
 import static com.nali.small.gui.page.PageSI.INDEX_INT_ARRAY;
-import static com.nali.small.gui.page.PageSI.SEARCH_AI_BYTE_LIST;
+import static com.nali.small.gui.page.PageSI.SEARCH_SI_BYTE_LIST;
 import static com.nali.small.gui.page.PageArmy.MAX_Y;
 import static com.nali.small.gui.page.PageArmy.MAX_Y_STAR;
 
@@ -128,11 +129,11 @@ public class MouseSI extends Mouse
 
 				try
 				{
-					Class gi_class = GI_CLASS_LIST.get(SEARCH_AI_BYTE_LIST.get(INDEX_INT_ARRAY[id]));
+					Class gi_class = GI_CLASS_LIST.get(SEARCH_SI_BYTE_LIST.get(INDEX_INT_ARRAY[id]));
 					Page page = (Page)gi_class.newInstance();
 					Nali.LOGGER.info("id " + id);
 					Nali.LOGGER.info("INDEX_INT_ARRAY " + INDEX_INT_ARRAY[id]);
-					Nali.LOGGER.info("SEARCH_AI_BYTE_LIST " + SEARCH_AI_BYTE_LIST.get(INDEX_INT_ARRAY[id]));
+					Nali.LOGGER.info("SEARCH_SI_BYTE_LIST " + SEARCH_SI_BYTE_LIST.get(INDEX_INT_ARRAY[id]));
 					Nali.LOGGER.info("Page " + gi_class.getSimpleName());
 					KEY = (Key)gi_class.getMethod("getKey").invoke(null);//new KeyMenuGI();
 					MOUSE = (Mouse)gi_class.getMethod("getMouse").invoke(null);//new Mouse();
@@ -157,11 +158,10 @@ public class MouseSI extends Mouse
 		if ((STATE & 2) == 2 && HIT == 1)
 		{
 			float
-			display_height = SMALLGUI.mc.displayHeight,
-			mouse_y = display_height - MOUSE_Y,
-			h_offset_y = H + 4.0F * 0.005F * display_height;
+			mouse_y = SmallGui.HEIGHT - MOUSE_Y,
+			h_offset_y = FONT_MH_SH + 4.0F * 0.005F * SmallGui.HEIGHT;
 
-			Y_STAR = (mouse_y - h_offset_y) / (display_height) * 2.0F;
+			Y_STAR = (mouse_y - h_offset_y) / (SmallGui.HEIGHT) * 2.0F;
 			Y = MAX_Y * (Y_STAR / MAX_Y_STAR);
 		}
 		else

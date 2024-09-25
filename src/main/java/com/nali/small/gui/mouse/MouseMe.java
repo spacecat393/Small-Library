@@ -4,7 +4,7 @@ import com.nali.small.gui.page.PageSmall;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.nali.small.gui.page.PageSI.openPageAI;
+import static com.nali.small.gui.page.PageSI.openPageSI;
 
 @SideOnly(Side.CLIENT)
 public class MouseMe extends Mouse
@@ -16,7 +16,7 @@ public class MouseMe extends Mouse
 		{
 			if (HIT == 1)
 			{
-				openPageAI();
+				openPageSI();
 			}
 		}
 

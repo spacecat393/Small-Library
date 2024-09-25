@@ -36,7 +36,7 @@ public class SSToC
 //			Set<UUID> keys_set = new HashSet(S_MAP.keySet());
 			Set<Long> keys_set = new HashSet(S_MAP.keySet());
 			int size = keys_set.size();
-			byte[] byte_array = new byte[1 + size * 8/*16*/ + size * (4+4/*+4*/)];
+			byte[] byte_array = new byte[1 + size * 8/*16*/ + size * (4/*+4*//*+4*/)];
 			byte_array[0] = CSToC.ID;
 
 //			for (UUID uuid : keys_set)
@@ -54,8 +54,8 @@ public class SSToC
 //					index += 16;
 					ByteWriter.set(byte_array, (long)e.world.provider.getDimension() << 32 | e.getEntityId(), index);
 					index += 8;
-					ByteWriter.set(byte_array, e.getEntityId(), index);
-					index += 4;
+//					ByteWriter.set(byte_array, e.getEntityId(), index);
+//					index += 4;
 //					ByteWriter.set(byte_array, e.dimension, index);
 //					index += 4;
 					ByteWriter.set(byte_array, EntityList.getID(e.getClass()), index);

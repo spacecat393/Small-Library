@@ -27,16 +27,17 @@ public class CSToC
 		{
 //			UUID uuid = ByteReader.getUUID(clientmessage.data, i);
 //			i += 16;
-			long key = ByteReader.getLong(clientmessage.data, i);
+			long id_key = ByteReader.getLong(clientmessage.data, i);
 			i += 8;
 
-			int list_id = ByteReader.getInt(clientmessage.data, i);
-			i += 4;
+			int e_id = ByteReader.getInt(clientmessage.data, i);
+//			int list_id = ByteReader.getInt(clientmessage.data, i);
+//			i += 4;
 
 			World world = Minecraft.getMinecraft().player.world;
 
 			ClientE cliente;
-			Entity entity = world.getEntityByID(list_id);
+			Entity entity = world.getEntityByID((int)id_key);
 
 			if (entity instanceof IMixE)
 			{
@@ -47,12 +48,10 @@ public class CSToC
 			{
 				try
 				{
-					int entity_id = ByteReader.getInt(clientmessage.data, i);
-					cliente = (ClientE)EntityList.getClassFromID(entity_id).getMethod("getC").invoke(null);
-					cliente.mc.fake = true;
+					cliente = (ClientE)EntityList.getClassFromID(e_id).getMethod("getC").invoke(null);
+					cliente.fake = true;
 //					cliente.uuid = uuid;
-					cliente.key = key;
-					cliente.onReadNBT();
+//					cliente.onReadNBT();
 				}
 				catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
 				{
@@ -61,10 +60,13 @@ public class CSToC
 				}
 			}
 
+			cliente.key = id_key;
+			cliente.e_id = e_id;
+
 //			ClientE.UUID_MAP.put(list_id, uuid);
 
 //			C_MAP.put(uuid, cliente);
-			C_MAP.put(key, cliente);
+			C_MAP.put(id_key, cliente);
 		}
 	}
 }

@@ -33,7 +33,6 @@ public class MixCIE
 	C extends ClientE<RC, R, BD, E, I, ?, MB, MR>
 >
 {
-	public static String EMPTY_STRING = "---";
 	public static List<Class> CI_CLASS_LIST;
 
 	public C c;
@@ -41,12 +40,6 @@ public class MixCIE
 
 //	public int packet_int;//sound_id
 	public byte[] byte_array;
-
-	public boolean fake;
-	public String name_string = EMPTY_STRING;
-	public byte state;//regen outline/glowing die
-//	public Integer dimension;
-	public float x, y, z, hp;
 
 	public MixCIE(C c)
 	{
@@ -105,7 +98,7 @@ public class MixCIE
 
 	public void onUpdate()
 	{
-		if (!this.fake)
+		if (!this.c.fake)
 		{
 			I i = this.c.i;
 			E e = i.getE();

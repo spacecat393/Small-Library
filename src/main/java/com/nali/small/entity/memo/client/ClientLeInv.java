@@ -39,6 +39,11 @@ public abstract class ClientLeInv
 		super(i, r);
 	}
 
+	public ClientLeInv(R r)
+	{
+		super(r);
+	}
+
 	@Override
 	public void damageArmor(float damage)
 	{

@@ -48,7 +48,7 @@ public class CIEFrame
 	@Override
 	public void onUpdate()
 	{
-		if (!this.c.mc.fake)
+		if (!this.c.fake)
 		{
 			I i = this.c.i;
 			R r = this.c.r;
