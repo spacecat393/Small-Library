@@ -30,4 +30,33 @@ public class KeyMenu extends Key
 			STATE |= 1;
 		}
 	}
+
+	public static void type(StringBuffer stringbuffer, char typed_char, int key_code)
+	{
+		switch (typed_char)
+		{
+			case '\b':
+				int length = stringbuffer.length();
+				if (length > 0)
+				{
+					stringbuffer.deleteCharAt(length - 1);
+				}
+				break;
+//				case '\r':
+////					if (GUINETLOADER != null)
+////					{
+////						GUINETLOADER.run();
+////					}
+////
+////					STRINGBUFFER.setLength(0);
+//					break;
+			default:
+//					if (keyCode != Keyboard.KEY_ESCAPE)
+				boolean isShiftKeyDown = (key_code == Keyboard.KEY_LSHIFT || key_code == Keyboard.KEY_RSHIFT);
+				if (!isShiftKeyDown)
+				{
+					stringbuffer.append(typed_char);
+				}
+		}
+	}
 }

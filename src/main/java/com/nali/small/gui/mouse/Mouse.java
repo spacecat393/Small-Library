@@ -8,13 +8,20 @@ public class Mouse
 {
 	public static Mouse MOUSE;
 
-	public static int MOUSE_X, MOUSE_Y/*, EVENTDWHEEL*//*, DY*//*, DWHEEL*/;
+	public static int
+		MOUSE_X,
+		MOUSE_Y;
+
+	public static short
+		HIT,
+		PAGE;
+
 	public static float EVENTDWHEEL;
 
 //	public static int HIT;
 	public static byte
-		HIT,
-		PAGE,
+//		HIT,
+//		PAGE,
 		E_PAGE,
 		STATE;//rc cme scroll ?cms
 

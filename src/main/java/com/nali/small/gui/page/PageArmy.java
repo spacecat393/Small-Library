@@ -2,6 +2,7 @@ package com.nali.small.gui.page;
 
 import com.nali.list.container.gui.SmallGui;
 import com.nali.list.data.SmallData;
+import com.nali.list.network.method.client.CSToC;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.gui.key.KeyMenuArmy;
@@ -29,9 +30,6 @@ import static com.nali.list.container.gui.SmallGui.*;
 import static com.nali.small.entity.memo.client.ClientE.C_MAP;
 import static com.nali.small.gui.key.Key.KEY;
 import static com.nali.small.gui.mouse.Mouse.MOUSE;
-import static com.nali.small.gui.page.PageSakura.LEFT;
-import static com.nali.small.gui.page.PageText.SEARCH_L;
-import static com.nali.small.gui.page.PageText.STRINGBUFFER;
 import static com.nali.system.ClientLoader.S_LIST;
 import static com.nali.system.opengl.memo.client.MemoC.FULL_ARRAY_BUFFER;
 
@@ -63,7 +61,7 @@ public class PageArmy extends Page
 	public PageArmy(byte page)
 	{
 		PAGE = page;
-		STRINGBUFFER = new StringBuffer(STRING);
+		PageText.STRINGBUFFER = new StringBuffer(STRING);
 
 		C_COLOR_VEC4_2D_FLOAT_ARRAY = new float[][]
 		{
@@ -97,15 +95,18 @@ public class PageArmy extends Page
 	@Override
 	public void init()
 	{
-		String string = STRINGBUFFER.toString();
+		String string = PageText.STRINGBUFFER.toString();
 		if (!string.equals(STRING))
 		{
 			BYTE |= 1;
+			CSToC.STATE |= 4;
 		}
 		STRING = string;
 
-		if ((BYTE & 1) == 1)
+		if ((BYTE & 1) == 1 && (CSToC.STATE & 1+4) != 0)
 		{
+			CSToC.STATE &= 255-1;
+
 			this.clear(ARRAY_BUFFER_INTEGER_LIST, TEXTURE_INTEGER_LIST);
 			//s0-initC
 			SIZE = C_MAP.size();
@@ -118,10 +119,13 @@ public class PageArmy extends Page
 				id = 0;
 			float
 				h2 = 2.0F * 0.005F * SmallGui.HEIGHT,
-				h_offset_y = FONT_MH_SH + 4.0F * 0.005F * SmallGui.HEIGHT,
+				h_offset_y = FONT_MH_SH +
+					4.0F * 0.005F * SmallGui.HEIGHT,
 				height_f = scale / Page.SCREEN_RH,
 				h_offset = FONT_MH_SH/* + h2*/ - h2,
-				x = LEFT + FONT_MH_SH + 6.0F * 0.005F * SmallGui.WIDTH,
+				x = PageSakura.LEFT +
+					FONT_MH_SH +
+					6.0F * 0.005F * SmallGui.WIDTH,
 				x_offset = x + scale / Page.SCREEN_RW + 2.0F * 0.005F * SmallGui.WIDTH,
 				y = SmallGui.HEIGHT - scale / Page.SCREEN_RH - 4.0F * 0.005F * SmallGui.HEIGHT - FONT_MH_SH - h_offset,
 				h_offset_y2 = h_offset_y * 2.0F;
@@ -211,7 +215,7 @@ public class PageArmy extends Page
 					boolean out = false;
 					for (String text_string : string_array)
 					{
-						if (text_string.contains(STRINGBUFFER.toString()))
+						if (text_string.contains(PageText.STRINGBUFFER.toString()))
 						{
 							out = false;
 							break;
@@ -241,7 +245,7 @@ public class PageArmy extends Page
 						x,
 						y,
 						(int)(SmallGui.WIDTH -
-							LEFT -
+							PageSakura.LEFT -
 							FONT_MH_SH -
 							8.0F * 0.005F * SmallGui.WIDTH -
 							x),
@@ -351,11 +355,12 @@ public class PageArmy extends Page
 
 			//s0-initScroll
 			MAX_Y = (((height_f + h2) * (ARRAY_BUFFER_INTEGER_LIST.size() / 7) - (SmallGui.HEIGHT - h_offset_y2)) / SmallGui.HEIGHT) * 2.0F;
-			MAX_Y_STAR = ((SmallGui.HEIGHT/* - h_offset_y*/ - h_offset_y2 - FONT_MH_SH) / SmallGui.HEIGHT) * 2.0F;
+			MAX_Y_STAR = ((SmallGui.HEIGHT - h_offset_y2 - FONT_MH_SH) / SmallGui.HEIGHT) * 2.0F;
 
-			float ye = SmallGui.HEIGHT - (FONT_MH_SH/* * 2.0F*/ + 4.0F * 0.005F * SmallGui.HEIGHT) * 2.0F/*, ys = 0*/;
+			float ye = SmallGui.HEIGHT - (FONT_MH_SH + 4.0F * 0.005F * SmallGui.HEIGHT) * 2.0F;
 			StringBuilder stringbuilder = new StringBuilder();
-			int max_l = (int)(Math.ceil(ye / (FONT_MH * FONT_SH)))/* + 1*/;
+
+			int max_l = (int)(Math.ceil(ye / (FONT_MH * FONT_SH)));
 			for (int i = 0; i < max_l; ++i)
 			{
 				stringbuilder.append("|");
@@ -368,8 +373,13 @@ public class PageArmy extends Page
 				stringbuilder.toString(),
 				FONT_MH_SH,
 				(int)(max_l * FONT_MH * FONT_SH),
-				SmallGui.WIDTH - LEFT - FONT_MH_SH - 6.0F * 0.005F * SmallGui.WIDTH,
-				SmallGui.HEIGHT - FONT_MH_SH - 4.0F * 0.005F * SmallGui.HEIGHT,
+				SmallGui.WIDTH -
+					PageSakura.LEFT -
+					FONT_MH_SH -
+					6.0F * 0.005F * SmallGui.WIDTH,
+				SmallGui.HEIGHT -
+					FONT_MH_SH -
+					4.0F * 0.005F * SmallGui.HEIGHT,
 				FONT_SH
 			);
 
@@ -381,7 +391,7 @@ public class PageArmy extends Page
 				FONT_MH_SH,
 				FONT_MH_SH,
 				SmallGui.WIDTH -
-					LEFT -
+					PageSakura.LEFT -
 					FONT_MH_SH -
 					6.0F * 0.005F * SmallGui.WIDTH,
 				SmallGui.HEIGHT -
@@ -393,23 +403,25 @@ public class PageArmy extends Page
 
 			//s0-initSearch
 			string = "________________" + STRING_ARRAY[28];
-			SEARCH_L = minecraft.fontRenderer.getStringWidth(string) * FONT_SH;
+			PageText.SEARCH_L = minecraft.fontRenderer.getStringWidth(string) * FONT_SH;
 
 			this.initTextHorizontal
 			(
 				ARRAY_BUFFER_INTEGER_LIST,
 				TEXTURE_INTEGER_LIST,
 				string,
-				(int)SEARCH_L,
+				(int)PageText.SEARCH_L,
 				FONT_MH_SH,
 				SmallGui.WIDTH -
-					SEARCH_L -
+					PageText.SEARCH_L -
 					2.0F * 0.005F * SmallGui.WIDTH,
 				SmallGui.HEIGHT -
 					FONT_MH_SH -
 					h2,
 				FONT_SH
 			);
+			CSToC.STATE |= 2;
+			CSToC.STATE &= 255-4;
 			//e0-initSearch
 
 			BYTE &= 255-1/*-2*/;
@@ -451,7 +463,7 @@ public class PageArmy extends Page
 				y = (MouseArmy.Y / 2.0F * SmallGui.HEIGHT + py) / y0;
 			float
 				max_y = y + 1.0F,
-				min_y = (y - py / y0 - 0.5F)/*, id = 0*/;
+				min_y = (y - py / y0 - 0.5F);
 
 			float offset = FONT_MH_SH + 4.0F * 0.005F * SmallGui.HEIGHT;
 
@@ -460,7 +472,10 @@ public class PageArmy extends Page
 			INDEX_INTEGER_LIST.clear();
 			M_VEC2_2D_FLOAT_ARRAY[0][1] = MouseArmy.Y;
 
-			A_W = (int)(SmallGui.WIDTH - LEFT + FONT_MH_SH + 6.0F * 0.005F * SmallGui.WIDTH);
+			A_W = (int)(SmallGui.WIDTH -
+				PageSakura.LEFT +
+				FONT_MH_SH +
+				6.0F * 0.005F * SmallGui.WIDTH);
 			OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, OFFSET_FRAMEBUFFER_0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, OFFSET_FRAMEBUFFER_TEXTURE_0);
 			GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, A_W, A_H, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (IntBuffer)null);
@@ -484,11 +499,11 @@ public class PageArmy extends Page
 				int index = x / 7 + 3;
 				if (i % 7 == 3)
 				{
-					color_float_array = new float[]{(index + 62/* + 3.0F*/) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
+					color_float_array = new float[]{(index + 62) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
 				}
 				else
 				{
-					color_float_array = new float[]{(index/* + 3.0F*/) / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
+					color_float_array = new float[]{index / 255.0F, PAGE/255.0F, 0.0F, 1.0F};
 				}
 				if (i % 7 == 0)
 				{

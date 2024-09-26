@@ -204,11 +204,11 @@ public class SmallGui extends GuiContainer
 
 		OPENGL_BYTEBUFFER.limit(4);
 		GL11.glReadPixels(MOUSE_X, MOUSE_Y, 1, 1, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, OPENGL_BYTEBUFFER);
-		HIT = OPENGL_BYTEBUFFER.get(0);
+		HIT = (short)(OPENGL_BYTEBUFFER.get(0) & 0xFF);
 		E_PAGE = OPENGL_BYTEBUFFER.get(1);
 		if ((STATE & 1) == 1)
 		{
-			PAGE = E_PAGE;
+			PAGE = (short)(E_PAGE & 0xFF);
 			STATE &= 255-1;
 		}
 		//e0-OFFSET_FRAMEBUFFER

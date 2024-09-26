@@ -2,27 +2,20 @@ package com.nali.small.gui.mouse;
 
 import com.nali.Nali;
 import com.nali.list.container.gui.SmallGui;
-import com.nali.small.gui.key.Key;
-import com.nali.small.gui.key.KeyMenuArmy;
+import com.nali.small.gui.key.KeyMenuSI;
 import com.nali.small.gui.page.Page;
-import com.nali.small.gui.page.PageArmy;
 import com.nali.small.gui.page.PageMenu;
+import com.nali.small.gui.page.PageSI;
 import com.nali.system.Reflect;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.List;
 
 import static com.nali.list.container.gui.SmallGui.SMALLGUI;
 import static com.nali.list.container.gui.SmallGui.addSet;
-import static com.nali.small.gui.key.Key.KEY;
 import static com.nali.small.gui.page.Page.FONT_MH_SH;
-import static com.nali.small.gui.page.PageSI.INDEX_INT_ARRAY;
-import static com.nali.small.gui.page.PageSI.SEARCH_SI_BYTE_LIST;
-import static com.nali.small.gui.page.PageArmy.MAX_Y;
-import static com.nali.small.gui.page.PageArmy.MAX_Y_STAR;
 
 @SideOnly(Side.CLIENT)
 public class MouseSI extends Mouse
@@ -46,13 +39,13 @@ public class MouseSI extends Mouse
 	@Override
 	public void run()
 	{
-		if (PageArmy.PAGE == PAGE && HIT == 2)
+		if (PageSI.PAGE == PAGE && HIT == 2)
 		{
-			KeyMenuArmy.STATE |= 4;
+			KeyMenuSI.STATE |= 4;
 		}
 		else if ((STATE & 1) == 1 && PAGE == 0 && HIT == 0)
 		{
-			KeyMenuArmy.STATE &= 255-4;
+			KeyMenuSI.STATE &= 255-4;
 		}
 
 		if ((STATE & 2) == 2)
@@ -115,28 +108,32 @@ public class MouseSI extends Mouse
 			Y = 0;
 		}
 
-		if (Y > MAX_Y)
+		if (Y > PageSI.MAX_Y)
 		{
-			Y = MAX_Y;
+			Y = PageSI.MAX_Y;
 		}
 
-		if (PageArmy.PAGE == PAGE)
+		if (PageSI.PAGE == PAGE)
 		{
+//			Nali.warn("PAGE " + PAGE);
+
 			int id = HIT - 3;
-			if (HIT > 2 + 62)
+
+//			Nali.warn("id " + id);
+			if (HIT > 2)
 			{
 				PageMenu.BYTE |= 1;
 
 				try
 				{
-					Class gi_class = GI_CLASS_LIST.get(SEARCH_SI_BYTE_LIST.get(INDEX_INT_ARRAY[id]));
+					Class gi_class = GI_CLASS_LIST.get(PageSI.SEARCH_SI_BYTE_LIST.get(PageSI.INDEX_INT_ARRAY[id]));
 					Page page = (Page)gi_class.newInstance();
 					Nali.LOGGER.info("id " + id);
-					Nali.LOGGER.info("INDEX_INT_ARRAY " + INDEX_INT_ARRAY[id]);
-					Nali.LOGGER.info("SEARCH_SI_BYTE_LIST " + SEARCH_SI_BYTE_LIST.get(INDEX_INT_ARRAY[id]));
+					Nali.LOGGER.info("INDEX_INT_ARRAY " + PageSI.INDEX_INT_ARRAY[id]);
+					Nali.LOGGER.info("SEARCH_SI_BYTE_LIST " + PageSI.SEARCH_SI_BYTE_LIST.get(PageSI.INDEX_INT_ARRAY[id]));
 					Nali.LOGGER.info("Page " + gi_class.getSimpleName());
-					KEY = (Key)gi_class.getMethod("getKey").invoke(null);//new KeyMenuGI();
-					MOUSE = (Mouse)gi_class.getMethod("getMouse").invoke(null);//new Mouse();
+//					KEY = (Key)gi_class.getMethod("getKey").invoke(null);//new KeyMenuGI();
+//					MOUSE = (Mouse)gi_class.getMethod("getMouse").invoke(null);//new Mouse();
 //					PAGE_ARRAY = new Page[]
 //					{
 //						new PageBlur(),
@@ -146,7 +143,7 @@ public class MouseSI extends Mouse
 //						(Page)gi_class.newInstance()
 //					};
 				}
-				catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e)
+				catch (IllegalAccessException | InstantiationException/* | NoSuchMethodException | InvocationTargetException*/ e)
 				{
 //					error(e);
 				}
@@ -155,6 +152,7 @@ public class MouseSI extends Mouse
 			}
 		}
 
+//		warn("HIT " + HIT);
 		if ((STATE & 2) == 2 && HIT == 1)
 		{
 			float
@@ -162,11 +160,11 @@ public class MouseSI extends Mouse
 			h_offset_y = FONT_MH_SH + 4.0F * 0.005F * SmallGui.HEIGHT;
 
 			Y_STAR = (mouse_y - h_offset_y) / (SmallGui.HEIGHT) * 2.0F;
-			Y = MAX_Y * (Y_STAR / MAX_Y_STAR);
+			Y = PageSI.MAX_Y * (Y_STAR / PageSI.MAX_Y_STAR);
 		}
 		else
 		{
-			Y_STAR = MAX_Y_STAR * (Y / MAX_Y);
+			Y_STAR = PageSI.MAX_Y_STAR * (Y / PageSI.MAX_Y);
 		}
 
 		this.mouse_y = MOUSE_Y;

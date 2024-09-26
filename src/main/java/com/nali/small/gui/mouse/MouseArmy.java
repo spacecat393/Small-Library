@@ -15,7 +15,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import static com.nali.list.container.gui.SmallGui.SMALLGUI;
 import static com.nali.small.entity.memo.client.ClientE.C_MAP;
 import static com.nali.small.gui.page.Page.FONT_MH_SH;
-import static com.nali.small.gui.page.PageArmy.*;
 import static com.nali.small.gui.page.PageMe.openPageMe;
 
 @SideOnly(Side.CLIENT)
@@ -102,30 +101,35 @@ public class MouseArmy extends Mouse
 			Y = 0;
 		}
 
-		if (Y > MAX_Y)
+		if (Y > PageArmy.MAX_Y)
 		{
-			Y = MAX_Y;
+			Y = PageArmy.MAX_Y;
 		}
 
 		if (PageArmy.PAGE == PAGE)//126 -126 /2
 		{
+//			Nali.warn("PAGE " + PAGE);
+
 			int id = /*(int)(Y / MAX_Y_OFFSET) * 62 + */HIT - 3;
+
+//			Nali.warn("id " + id);
 			if (HIT > 2 + 62)//re
 			{
 				byte[] byte_array = new byte[1 + 8];
 				byte_array[0] = SEToC.ID;
-				ByteWriter.set(byte_array, SEARCH_ID_KEY_LIST.get(INDEX_INT_ARRAY[id - 62] / 7), 1);
+				ByteWriter.set(byte_array, PageArmy.SEARCH_ID_KEY_LIST.get(PageArmy.INDEX_INT_ARRAY[id - 62] / 7), 1);
 				NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 			}
 			else if (HIT > 2)//me
 			{
 				KeyMenuMe.ME |= 1;
-				PageMe.ID_KEY = SEARCH_ID_KEY_LIST.get(INDEX_INT_ARRAY[id] / 7);
+				PageMe.ID_KEY = PageArmy.SEARCH_ID_KEY_LIST.get(PageArmy.INDEX_INT_ARRAY[id] / 7);
 				PageMe.E_ID = C_MAP.get(PageMe.ID_KEY).e_id;
 				openPageMe();
 			}
 		}
 
+//		warn("HIT " + HIT);
 		if ((STATE & 2) == 2 && /*PageArmy.PAGE == PAGE && */HIT == 1)
 		{
 			float
@@ -133,11 +137,11 @@ public class MouseArmy extends Mouse
 			h_offset_y = FONT_MH_SH + 4.0F * 0.005F * SmallGui.HEIGHT;
 
 			Y_STAR = (mouse_y - h_offset_y) / (SmallGui.HEIGHT) * 2.0F;
-			Y = MAX_Y * (Y_STAR / MAX_Y_STAR);
+			Y = PageArmy.MAX_Y * (Y_STAR / PageArmy.MAX_Y_STAR);
 		}
 		else
 		{
-			Y_STAR = MAX_Y_STAR * (Y / MAX_Y);
+			Y_STAR = PageArmy.MAX_Y_STAR * (Y / PageArmy.MAX_Y);
 		}
 
 		this.mouse_y = MOUSE_Y;

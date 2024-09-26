@@ -5,12 +5,11 @@ import com.nali.list.network.method.server.SSToC;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.gui.page.PageArmy;
 import com.nali.small.gui.page.PageKeyArmy;
+import com.nali.small.gui.page.PageText;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
 
 import static com.nali.small.gui.page.PageSmall.openPageSmall;
-import static com.nali.small.gui.page.PageText.STRINGBUFFER;
 
 @SideOnly(Side.CLIENT)
 public class KeyMenuArmy extends KeyMenu
@@ -36,38 +35,14 @@ public class KeyMenuArmy extends KeyMenu
 	}
 
 	@Override
-	public void detect(char typedChar, int keyCode)
+	public void detect(char typed_char, int key_code)
 	{
-		super.detect(typedChar, keyCode);
+		super.detect(typed_char, key_code);
 		if ((STATE & 4) == 4)
 		{
-			switch (typedChar)
-			{
-				case '\b':
-					int length = STRINGBUFFER.length();
-					if (length > 0)
-					{
-						STRINGBUFFER.deleteCharAt(length - 1);
-					}
-					break;
-//				case '\r':
-////					if (GUINETLOADER != null)
-////					{
-////						GUINETLOADER.run();
-////					}
-////
-////					STRINGBUFFER.setLength(0);
-//					break;
-				default:
-//					if (keyCode != Keyboard.KEY_ESCAPE)
-					boolean isShiftKeyDown = (keyCode == Keyboard.KEY_LSHIFT || keyCode == Keyboard.KEY_RSHIFT);
-					if (!isShiftKeyDown)
-					{
-						STRINGBUFFER.append(typedChar);
-					}
-			}
+			type(PageText.STRINGBUFFER, typed_char, key_code);
 		}
-		else if (typedChar == 'r')
+		else if (typed_char == 'r')
 		{
 			PageKeyArmy.BT27 = 5.0F;
 			NetworkRegistry.I.sendToServer(new ServerMessage(new byte[]{SSToC.ID}));
