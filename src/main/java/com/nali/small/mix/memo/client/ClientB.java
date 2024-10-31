@@ -1,6 +1,7 @@
 package com.nali.small.mix.memo.client;
 
 import com.nali.da.client.IClientDaO;
+import com.nali.draw.DrawWorldData;
 import com.nali.render.RenderO;
 import com.nali.small.mix.IMixN;
 import com.nali.small.mix.memo.IBothB;
@@ -32,7 +33,9 @@ public class ClientB
 		this.translate(x, y, z);
 		GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
 		this.scale();
-		this.r.drawLater();
+		DrawWorldData drawworlddata = new DrawWorldData();
+		this.r.startDrawLater(drawworlddata);
+		this.r.endDrawLater(drawworlddata);
 		GL11.glPopMatrix();
 	}
 

@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.nali.system.ClientLoader.G_LIST;
-import static com.nali.system.opengl.memo.client.MemoC.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
 public class RenderSakura
@@ -61,14 +60,14 @@ public class RenderSakura
 		{
 			this.extra_bit = 4;
 			int color = this.getTextureID(rg);
-			OPENGL_FIXED_PIPE_FLOATBUFFER.limit(3);
-			OPENGL_FIXED_PIPE_FLOATBUFFER.clear();
-			OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
-			OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
-			OPENGL_FIXED_PIPE_FLOATBUFFER.put((color & 0xFF) / 255.0F);
-			OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
-			OPENGL_FIXED_PIPE_FLOATBUFFER.flip();
-			OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4/*+1*/], OPENGL_FIXED_PIPE_FLOATBUFFER);
+//			FLOATBUFFER.limit(3);
+			FLOATBUFFER.clear();
+			FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
+			FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
+			FLOATBUFFER.put((color & 0xFF) / 255.0F);
+			FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
+			FLOATBUFFER.flip();
+			OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4/*+1*/], FLOATBUFFER);
 		}
 	}
 

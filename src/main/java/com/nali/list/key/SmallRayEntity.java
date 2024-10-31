@@ -1,7 +1,7 @@
 package com.nali.list.key;
 
 import com.nali.Nali;
-import com.nali.key.MixKeyBinding;
+import com.nali.key.Key;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
@@ -17,21 +17,17 @@ import java.util.List;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 
 @SideOnly(Side.CLIENT)
-public class SmallRayEntity extends MixKeyBinding
+public class SmallRayEntity extends Key
 {
-	public static int ID;
+//	public static byte ID;
 	public static int SELECT_ENTITY;
 
-	public SmallRayEntity(String[] string_array, Integer key)
-	{
-		super(string_array, key == null ? Keyboard.KEY_T : key);
-	}
-
-	public static void detect()
+	@Override
+	public void run()
 	{
 		Minecraft minecraft = Minecraft.getMinecraft();
 		World world = minecraft.world;
-		if (Minecraft.getMinecraft().currentScreen == null && world != null)
+		if (Minecraft.getMinecraft().currentScreen == null && world != null && Keyboard.isKeyDown(Keyboard.KEY_T))
 		{
 			List<Entity> entity_list = world.loadedEntityList;
 			EntityPlayerSP entityplayersp = minecraft.player;

@@ -3,6 +3,7 @@ package com.nali.small.entity.memo.client.render.mix;
 import com.nali.da.IBothDaNe;
 import com.nali.da.IBothDaSn;
 import com.nali.da.client.IClientDaS;
+import com.nali.draw.DrawWorldData;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
@@ -16,8 +17,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import static com.nali.small.entity.memo.client.render.FRenderSeMath.interpolateRotation;
-import static com.nali.system.opengl.memo.client.MemoC.GL_CURRENT_COLOR;
-import static com.nali.system.opengl.memo.client.MemoC.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
 public abstract class MixRenderSe
@@ -56,31 +55,37 @@ public abstract class MixRenderSe
 
 		GL11.glTranslated(ox, oy, oz);
 
-		this.renderHitBox(rendere);
+//		this.renderHitBox(rendere);
 
 		GL11.glScalef(r.scale, r.scale, r.scale);
 		rendere.setShadowOpaque(this.shadow_opaque * r.scale);
 		rendere.setShadowSize(this.shadow_size * r.scale);
 
-		boolean invisible = e.isInvisible() || e.isInvisibleToPlayer(Minecraft.getMinecraft().player);
-		if (invisible)
-		{
-			OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
-			GL11.glGetFloat(GL11.GL_CURRENT_COLOR, OPENGL_FIXED_PIPE_FLOATBUFFER);
-			GL_CURRENT_COLOR[0] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
-			GL_CURRENT_COLOR[1] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(1);
-			GL_CURRENT_COLOR[2] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(2);
-			GL_CURRENT_COLOR[3] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(3);
-			GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], 0.25F);
-		}
+//		boolean invisible = e.isInvisible() || e.isInvisibleToPlayer(Minecraft.getMinecraft().player);
+//		if (invisible)
+//		{
+//			OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
+//			GL11.glGetFloat(GL11.GL_CURRENT_COLOR, OPENGL_FIXED_PIPE_FLOATBUFFER);
+//			GL_CURRENT_COLOR[0] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
+//			GL_CURRENT_COLOR[1] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(1);
+//			GL_CURRENT_COLOR[2] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(2);
+//			GL_CURRENT_COLOR[3] = OPENGL_FIXED_PIPE_FLOATBUFFER.get(3);
+//			GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], 0.25F);
+//		}
 		GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
 		r.updateLightCoord(e.world, e.getPosition());
 //		r.draw(/*ox, oy, oz*/);
-		r.drawLater(/*ox, oy, oz*/);
-		if (invisible)
+		DrawWorldData drawworlddata = new DrawWorldData();
+		r.startDrawLater(drawworlddata);
+		if (e.isInvisible() || e.isInvisibleToPlayer(Minecraft.getMinecraft().player))
 		{
-			GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
+			drawworlddata.color_v4_float[3] *= 0.25F;
 		}
+		r.endDrawLater(drawworlddata);
+//		if (invisible)
+//		{
+//			GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
+//		}
 
 		GL11.glPopMatrix();
 //		this.renderLayer(t, ox, oy, oz, partialTicks);
@@ -111,9 +116,9 @@ public abstract class MixRenderSe
 		r.setSkinning(/*memoanimation*/);
 	}
 
-	public void renderHitBox(FRenderE<E> rendere)
-	{
-	}
+//	public void renderHitBox(FRenderE<E> rendere)
+//	{
+//	}
 
 	public abstract void multiplyAnimation(/*RenderE<E> rendere*/);
 }

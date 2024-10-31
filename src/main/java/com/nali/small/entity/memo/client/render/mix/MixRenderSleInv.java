@@ -13,24 +13,13 @@ import com.nali.small.entity.memo.client.IClientERsInv;
 import com.nali.small.entity.memo.client.box.mix.MixBoxSleInv;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.FRenderE;
-import com.nali.small.entity.memo.client.render.layer.LayerSleInvArrow;
-import com.nali.small.entity.memo.client.render.layer.LayerSleInvItem;
 import com.nali.sound.ISoundDaLe;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL14;
-import org.lwjgl.opengl.GL20;
 
-import java.awt.*;
-
-import static com.nali.key.KeyHelper.generateRainbowColor;
 import static com.nali.small.entity.memo.client.render.FRenderSeMath.interpolateRotation;
-import static com.nali.system.opengl.memo.client.MemoC.*;
 
 @SideOnly(Side.CLIENT)
 public abstract class MixRenderSleInv
@@ -47,8 +36,8 @@ public abstract class MixRenderSleInv
 	C extends ClientLe<RC, R, SD, BD, E, I, MC, MB, ?> & IClientERsInv & IBothEInv<IE>
 > extends MixRenderSe<RC, R, BD, E, I, MC, MB, C>
 {
-	public LayerSleInvArrow<RC, R, SD, BD, E, I, MC, ?, MB, C> layersleinvarrow;
-	public LayerSleInvItem<IE, RC, R, SD, BD, E, I, MC, ?, MB, C> layersleinvitem;
+//	public LayerSleInvArrow<RC, R, SD, BD, E, I, MC, ?, MB, C> layersleinvarrow;
+//	public LayerSleInvItem<IE, RC, R, SD, BD, E, I, MC, ?, MB, C> layersleinvitem;
 
 	public float
 	body_rot,
@@ -57,8 +46,8 @@ public abstract class MixRenderSleInv
 	public MixRenderSleInv(C c)
 	{
 		super(c);
-		this.layersleinvarrow = new LayerSleInvArrow(c);
-		this.layersleinvitem = new LayerSleInvItem(c);
+//		this.layersleinvarrow = new LayerSleInvArrow(c);
+//		this.layersleinvitem = new LayerSleInvItem(c);
 	}
 
 	@Override
@@ -85,92 +74,92 @@ public abstract class MixRenderSleInv
 		GL11.glTranslated(ox, oy, oz);
 		GL11.glScalef(r.scale, r.scale, r.scale);
 		GL11.glTranslated(-ox, -oy, -oz);
-		this.layersleinvitem.x = (float)ox;
-		this.layersleinvitem.y = (float)oy;
-		this.layersleinvitem.z = (float)oz;
-		this.layersleinvitem.layer(partialTicks);
-		this.layersleinvarrow.layer(rendere, (float)ox, (float)oy, (float)oz, partialTicks);
+//		this.layersleinvitem.x = (float)ox;
+//		this.layersleinvitem.y = (float)oy;
+//		this.layersleinvitem.z = (float)oz;
+//		this.layersleinvitem.layer(partialTicks);
+//		this.layersleinvarrow.layer(rendere, (float)ox, (float)oy, (float)oz, partialTicks);
 
 		GL11.glPopMatrix();
 	}
 
-	@Override
-	public void renderHitBox(FRenderE<E> rendere)
-	{
-		E e = this.c.i.getE();
-		if (rendere.getRenderManager().isDebugBoundingBox() && !e.isInvisible() && !Minecraft.getMinecraft().isReducedDebug())
-		{
-			GL11.glPushMatrix();
-
-			boolean gl_texture_2d = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
-
-			boolean gl_blend = GL11.glIsEnabled(GL11.GL_BLEND);
-			GL11.glEnable(GL11.GL_BLEND);
-
-			GL11.glGetInteger(GL20.GL_BLEND_EQUATION_RGB, OPENGL_INTBUFFER);
-			int gl_blend_equation_rgb = OPENGL_INTBUFFER.get(0);
-			GL11.glGetInteger(GL20.GL_BLEND_EQUATION_ALPHA, OPENGL_INTBUFFER);
-			int gl_blend_equation_alpha = OPENGL_INTBUFFER.get(0);
-			GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
-
-			GL11.glGetInteger(GL14.GL_BLEND_SRC_RGB, OPENGL_INTBUFFER);
-			int gl_blend_src_rgb = OPENGL_INTBUFFER.get(0);
-			GL11.glGetInteger(GL14.GL_BLEND_SRC_ALPHA, OPENGL_INTBUFFER);
-			int gl_blend_src_alpha = OPENGL_INTBUFFER.get(0);
-			GL11.glGetInteger(GL14.GL_BLEND_DST_RGB, OPENGL_INTBUFFER);
-			int gl_blend_dst_rgb = OPENGL_INTBUFFER.get(0);
-			GL11.glGetInteger(GL14.GL_BLEND_DST_ALPHA, OPENGL_INTBUFFER);
-			int gl_blend_dst_alpha = OPENGL_INTBUFFER.get(0);
-			GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
-
-			GL11.glTranslated(-e.posX, -e.posY, -e.posZ);
-			Color color = generateRainbowColor();
-			float r = color.getRed() / 255.0F, g = color.getGreen() / 255.0F, b = color.getBlue() / 255.0F;
-
-			OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
-			GL11.glGetFloat(GL11.GL_LINE_WIDTH, OPENGL_FIXED_PIPE_FLOATBUFFER);
-			GL_LINE_WIDTH = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
-			GL11.glLineWidth(5.0F);
-
-//			AxisAlignedBB[] axisalignedbb_array = new AxisAlignedBB[]
-//			{
-//				t.getHeadAxisAlignedBB(),
-//				t.getMouthAxisAlignedBB()
-//			};
-//			for (AxisAlignedBB axisalignedbb : axisalignedbb_array)
-//			if (cliententitiesmemory.mixboxentitiesmemory.axisalignedbb_array != null)
-//			{
-			for (AxisAlignedBB axisalignedbb : this.c.mb.get()/*cliententitiesmemory.mixboxentitiesmemory.axisalignedbb_array*/)
-			{
-				RenderGlobal.drawSelectionBoundingBox(axisalignedbb, r, g, b, 1.0F);
-			}
-//			}
-
-			if (gl_blend)
-			{
-				GL11.glEnable(GL11.GL_BLEND);
-			}
-			else
-			{
-				GL11.glDisable(GL11.GL_BLEND);
-			}
-
-			GL20.glBlendEquationSeparate(gl_blend_equation_rgb, gl_blend_equation_alpha);
-			GL14.glBlendFuncSeparate(gl_blend_src_rgb, gl_blend_dst_rgb, gl_blend_src_alpha, gl_blend_dst_alpha);
-
-			GL11.glLineWidth(GL_LINE_WIDTH);
-
-			if (gl_texture_2d)
-			{
-				GL11.glEnable(GL11.GL_TEXTURE_2D);
-			}
-			else
-			{
-				GL11.glDisable(GL11.GL_TEXTURE_2D);
-			}
-
-			GL11.glPopMatrix();
-		}
-	}
+//	@Override
+//	public void renderHitBox(FRenderE<E> rendere)
+//	{
+////		E e = this.c.i.getE();
+////		if (rendere.getRenderManager().isDebugBoundingBox() && !e.isInvisible() && !Minecraft.getMinecraft().isReducedDebug())
+////		{
+////			GL11.glPushMatrix();
+////
+////			boolean gl_texture_2d = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
+////			GL11.glDisable(GL11.GL_TEXTURE_2D);
+////
+////			boolean gl_blend = GL11.glIsEnabled(GL11.GL_BLEND);
+////			GL11.glEnable(GL11.GL_BLEND);
+////
+////			GL11.glGetInteger(GL20.GL_BLEND_EQUATION_RGB, RenderO.INTBUFFER);
+////			int gl_blend_equation_rgb = RenderO.INTBUFFER.get(0);
+////			GL11.glGetInteger(GL20.GL_BLEND_EQUATION_ALPHA, OPENGL_INTBUFFER);
+////			int gl_blend_equation_alpha = OPENGL_INTBUFFER.get(0);
+////			GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
+////
+////			GL11.glGetInteger(GL14.GL_BLEND_SRC_RGB, OPENGL_INTBUFFER);
+////			int gl_blend_src_rgb = OPENGL_INTBUFFER.get(0);
+////			GL11.glGetInteger(GL14.GL_BLEND_SRC_ALPHA, OPENGL_INTBUFFER);
+////			int gl_blend_src_alpha = OPENGL_INTBUFFER.get(0);
+////			GL11.glGetInteger(GL14.GL_BLEND_DST_RGB, OPENGL_INTBUFFER);
+////			int gl_blend_dst_rgb = OPENGL_INTBUFFER.get(0);
+////			GL11.glGetInteger(GL14.GL_BLEND_DST_ALPHA, OPENGL_INTBUFFER);
+////			int gl_blend_dst_alpha = OPENGL_INTBUFFER.get(0);
+////			GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+////
+////			GL11.glTranslated(-e.posX, -e.posY, -e.posZ);
+////			Color color = generateRainbowColor();
+////			float r = color.getRed() / 255.0F, g = color.getGreen() / 255.0F, b = color.getBlue() / 255.0F;
+////
+////			OPENGL_FIXED_PIPE_FLOATBUFFER.limit(16);
+////			GL11.glGetFloat(GL11.GL_LINE_WIDTH, OPENGL_FIXED_PIPE_FLOATBUFFER);
+////			GL_LINE_WIDTH = OPENGL_FIXED_PIPE_FLOATBUFFER.get(0);
+////			GL11.glLineWidth(5.0F);
+////
+//////			AxisAlignedBB[] axisalignedbb_array = new AxisAlignedBB[]
+//////			{
+//////				t.getHeadAxisAlignedBB(),
+//////				t.getMouthAxisAlignedBB()
+//////			};
+//////			for (AxisAlignedBB axisalignedbb : axisalignedbb_array)
+//////			if (cliententitiesmemory.mixboxentitiesmemory.axisalignedbb_array != null)
+//////			{
+////			for (AxisAlignedBB axisalignedbb : this.c.mb.get()/*cliententitiesmemory.mixboxentitiesmemory.axisalignedbb_array*/)
+////			{
+////				RenderGlobal.drawSelectionBoundingBox(axisalignedbb, r, g, b, 1.0F);
+////			}
+//////			}
+////
+////			if (gl_blend)
+////			{
+////				GL11.glEnable(GL11.GL_BLEND);
+////			}
+////			else
+////			{
+////				GL11.glDisable(GL11.GL_BLEND);
+////			}
+////
+////			GL20.glBlendEquationSeparate(gl_blend_equation_rgb, gl_blend_equation_alpha);
+////			GL14.glBlendFuncSeparate(gl_blend_src_rgb, gl_blend_dst_rgb, gl_blend_src_alpha, gl_blend_dst_alpha);
+////
+////			GL11.glLineWidth(GL_LINE_WIDTH);
+////
+////			if (gl_texture_2d)
+////			{
+////				GL11.glEnable(GL11.GL_TEXTURE_2D);
+////			}
+////			else
+////			{
+////				GL11.glDisable(GL11.GL_TEXTURE_2D);
+////			}
+////
+////			GL11.glPopMatrix();
+////		}
+//	}
 }

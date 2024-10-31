@@ -1,22 +1,18 @@
 package com.nali.list.render.o;
 
 import com.nali.da.client.IClientDaO;
-import com.nali.mixin.IMixinEntityRenderer;
 import com.nali.small.da.client.BoxClient;
 import com.nali.small.render.SmallRenderO;
 import com.nali.system.opengl.memo.client.MemoG;
 import com.nali.system.opengl.memo.client.MemoS;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL13;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.nali.system.ClientLoader.G_LIST;
-import static com.nali.system.opengl.memo.client.MemoC.OPENGL_FIXED_PIPE_FLOATBUFFER;
 
 @SideOnly(Side.CLIENT)
 public class RenderBox
@@ -50,14 +46,14 @@ public class RenderBox
 		{
 			this.extra_bit = 4;
 			int color = this.getTextureID(rg);
-			OPENGL_FIXED_PIPE_FLOATBUFFER.limit(3);
-			OPENGL_FIXED_PIPE_FLOATBUFFER.clear();
-			OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
-			OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
-			OPENGL_FIXED_PIPE_FLOATBUFFER.put((color & 0xFF) / 255.0F);
-			OPENGL_FIXED_PIPE_FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
-			OPENGL_FIXED_PIPE_FLOATBUFFER.flip();
-			OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4/*+1*/], OPENGL_FIXED_PIPE_FLOATBUFFER);
+//			FLOATBUFFER.limit(3);
+			FLOATBUFFER.clear();
+			FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
+			FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
+			FLOATBUFFER.put((color & 0xFF) / 255.0F);
+			FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
+			FLOATBUFFER.flip();
+			OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4/*+1*/], FLOATBUFFER);
 		}
 	}
 
@@ -83,8 +79,8 @@ public class RenderBox
 		if (this.extra_bit == 4)
 		{
 			OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[5/*+1*/], 1);
-			OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE1);
-			setLightMapBuffer(((IMixinEntityRenderer) Minecraft.getMinecraft().entityRenderer).lightmapTexture().getGlTextureId());
+//			OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE1);
+//			setLightMapBuffer(((IMixinEntityRenderer) Minecraft.getMinecraft().entityRenderer).lightmapTexture().getGlTextureId());
 		}
 		else
 		{

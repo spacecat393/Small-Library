@@ -2,7 +2,7 @@ package com.nali.list.render.s;
 
 import com.nali.da.IBothDaSn;
 import com.nali.da.client.IClientDaS;
-import com.nali.small.da.both.TPBaseBothDaS;
+import com.nali.small.da.both.BothDaTPBase;
 import com.nali.small.da.client.TPBaseClient;
 import com.nali.small.render.SmallRenderS;
 import com.nali.system.opengl.memo.client.MemoG;
@@ -23,7 +23,7 @@ public class RenderTPBase
 > extends SmallRenderS<BD, RC>
 {
 	public static IClientDaS ICLIENTDAS = new TPBaseClient();
-	public static IBothDaSn IBOTHDASN = new TPBaseBothDaS();
+	public static IBothDaSn IBOTHDASN = new BothDaTPBase();
 
 	public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
 

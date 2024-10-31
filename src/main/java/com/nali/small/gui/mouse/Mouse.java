@@ -10,18 +10,12 @@ public class Mouse
 
 	public static int
 		MOUSE_X,
-		MOUSE_Y;
-
-	public static short
-		HIT,
-		PAGE;
+		MOUSE_Y,
+		HIT;
 
 	public static float EVENTDWHEEL;
 
-//	public static int HIT;
 	public static byte
-//		HIT,
-//		PAGE,
 		E_PAGE,
 		STATE;//rc cme scroll ?cms
 
@@ -30,19 +24,50 @@ public class Mouse
 		STATE = 0;
 	}
 
-//	public void detect()
-//	{
-//		HIT = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(0) * 255.0F);
-//		if ((STATE & 1) == 1)
-//		{
-//			PAGE = (byte)(OPENGL_FIXED_PIPE_FLOATBUFFER.get(1) * 255.0F);
-//		}
-//	}
-
 	public void run()
 	{
 		HIT = -1;
-		PAGE = 0;
-//		STATE &= 255-1;
+	}
+
+	public void handleMouseInput()
+	{
+		MOUSE_X = org.lwjgl.input.Mouse.getEventX();
+		MOUSE_Y = org.lwjgl.input.Mouse.getEventY();
+
+		int k = org.lwjgl.input.Mouse.getEventButton();
+		int mouse = org.lwjgl.input.Mouse.getEventDWheel();
+		float eventdwheel = 0;
+
+		if (mouse > 0)
+		{
+			eventdwheel = 1.5F;
+		}
+		else if (mouse < 0)
+		{
+			eventdwheel = -1.5F;
+		}
+
+		if (eventdwheel != 0)
+		{
+			if (EVENTDWHEEL > 0 && eventdwheel < 0)
+			{
+				EVENTDWHEEL = 0;
+			}
+			else if (EVENTDWHEEL < 0 && eventdwheel > 0)
+			{
+				EVENTDWHEEL = 0;
+			}
+			EVENTDWHEEL += eventdwheel;
+		}
+
+		if (org.lwjgl.input.Mouse.getEventButtonState())//c
+		{
+			STATE |= 2;
+		}
+		else if (k != -1)//r
+		{
+			STATE |= 1;
+			STATE &= 255-2;
+		}
 	}
 }

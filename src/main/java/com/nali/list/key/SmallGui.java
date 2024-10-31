@@ -1,6 +1,6 @@
 package com.nali.list.key;
 
-import com.nali.key.MixKeyBinding;
+import com.nali.key.Key;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SOpenSmallGui;
 import com.nali.network.NetworkRegistry;
@@ -10,18 +10,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 @SideOnly(Side.CLIENT)
-public class SmallGui extends MixKeyBinding
+public class SmallGui extends Key
 {
-	public static int ID;
-	public SmallGui(String[] string_array, Integer key)
+//	public static byte ID;
+	@Override
+	public void run()
 	{
-		super(string_array, key == null ? Keyboard.KEY_P : key);
-//		this.setKeyConflictContext(KeyConflictContext.IN_GAME);
-	}
-
-	public static void detect()
-	{
-		if (Minecraft.getMinecraft().currentScreen == null)
+		if (Minecraft.getMinecraft().currentScreen == null && Keyboard.isKeyDown(Keyboard.KEY_P))
 		{
 //			PlayerGui.PAGE = 0;
 			NetworkRegistry.I.sendToServer(new ServerMessage(new byte[]{SOpenSmallGui.ID}));

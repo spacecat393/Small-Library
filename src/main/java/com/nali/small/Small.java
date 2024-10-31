@@ -8,7 +8,6 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.gui.GuiHandler;
 import com.nali.small.tile.TileRegistry;
 import com.nali.system.bytes.ByteReader;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.translation.I18n;
@@ -20,7 +19,6 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import org.lwjgl.opengl.GL11;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -29,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.nali.Nali.warn;
-import static com.nali.list.container.gui.SmallGui.*;
 import static com.nali.small.chunk.ChunkCallBack.CHUNK_LIST;
 import static com.nali.small.gui.page.Page.STRING_ARRAY;
 
@@ -41,23 +38,14 @@ public class Small
 	@Instance
 	public static Small I;
 
-	@EventHandler
-	public void onFMLPreInitializationEvent(FMLPreInitializationEvent event)
-	{
-		if (event.getSide().isClient())
-		{
-			OFFSET_FRAMEBUFFER = OpenGlHelper.glGenFramebuffers();
-			OFFSET_FRAMEBUFFER_0 = OpenGlHelper.glGenFramebuffers();
-			OFFSET_FRAMEBUFFER_1 = OpenGlHelper.glGenFramebuffers();
-			OFFSET_FRAMEBUFFER_TEXTURE = GL11.glGenTextures();
-			OFFSET_FRAMEBUFFER_TEXTURE_0 = GL11.glGenTextures();
-
-			OFFSET_RENDER_BUFFER = OpenGlHelper.glGenRenderbuffers();
-//////			DataLoader.setModels(RenderHelper.DATALOADER, Small.ID);
-//////			CapabilitiesRegistryHelper.update();
-////			OpenGUIHelper.set();
-		}
-	}
+//	@EventHandler
+//	public void onFMLPreInitializationEvent(FMLPreInitializationEvent event)
+//	{
+//		if (event.getSide().isClient())
+//		{
+//			Page.genState();
+//		}
+//	}
 
 	@EventHandler
 	public void onFMLInitializationEvent(FMLInitializationEvent event)
@@ -74,7 +62,7 @@ public class Small
 
 		if (event.getSide().isClient())
 		{
-			byte size = 30;
+			byte size = 31;
 			String t_string = "info." + Small.ID + ".t";
 			STRING_ARRAY = new String[size];
 //			FontRenderer fontrenderer = Minecraft.getMinecraft().fontRenderer;

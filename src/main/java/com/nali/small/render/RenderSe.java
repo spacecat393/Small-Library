@@ -65,12 +65,6 @@ public class RenderSe
 	}
 
 	@Override
-	public void updateDataLater(DrawWorldData drawworlddata)
-	{
-		super.updateDataLater(drawworlddata);
-	}
-
-	@Override
 	public byte getExtraBit(MemoG rg)
 	{
 		return (byte)(super.getExtraBit(rg) | (this.c.i.getE().isGlowing() ? 8 : 0));
