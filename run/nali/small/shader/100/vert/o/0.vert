@@ -13,7 +13,7 @@ varying vec3 fragment_normal;
 
 void main()
 {
-    gl_Position = ProjectionMatrix * ModelViewMatrix * vec4(vertex, 1.0);
-    fragment_texcoord = texcoord;
-    fragment_normal = normal;
+	gl_Position = ProjectionMatrix * ModelViewMatrix * vec4(vertex, 1.0);
+	fragment_texcoord = texcoord;
+	fragment_normal = normal;
 }

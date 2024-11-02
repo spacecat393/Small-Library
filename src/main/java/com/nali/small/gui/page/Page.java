@@ -227,7 +227,7 @@ public abstract class Page
 		FontRenderer fontrenderer = minecraft.fontRenderer;
 		for (int i = 0; i < string.length(); ++i)
 		{
-			String c_string = "" + string.charAt(i);
+			String c_string = Character.toString(string.charAt(i));
 			float w = (FONT_MH - fontrenderer.getStringWidth(c_string)) / 2.0F;
 			float fy = FONT_MH * i;
 			int color = 0xFFFFFFFF;
