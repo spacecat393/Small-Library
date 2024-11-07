@@ -10,5 +10,5 @@ public class SmallData
 		FRAME_STEP,
 //		SOUND_STEP
 		MAX_BONE = 16 * 2;
-//	public static byte STATE = 0;//preload
+	public static byte ORDINAL = 1;
 }

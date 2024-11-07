@@ -10,7 +10,6 @@ import com.nali.small.tile.TileRegistry;
 import com.nali.system.bytes.ByteReader;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -28,7 +27,6 @@ import java.util.List;
 
 import static com.nali.Nali.warn;
 import static com.nali.small.chunk.ChunkCallBack.CHUNK_LIST;
-import static com.nali.small.gui.page.Page.STRING_ARRAY;
 
 @Mod(modid = Small.ID)
 public class Small
@@ -58,29 +56,29 @@ public class Small
 	@EventHandler
 	public void onFMLPostInitializationEvent(FMLPostInitializationEvent event)
 	{
-//		EntityRegistry.ENTITY_KEY_ARRAY = new HashSet(ENTITY_CLASS_ENTRIES.keySet()).toArray();
-
-		if (event.getSide().isClient())
-		{
-			byte size = 31;
-			String t_string = "info." + Small.ID + ".t";
-			STRING_ARRAY = new String[size];
-//			FontRenderer fontrenderer = Minecraft.getMinecraft().fontRenderer;
-			for (byte i = 0; i < size; ++i)
-			{
-//				String string = I18n.translateToLocal(t_string + i);
-//				STRING_ARRAY[i] = string;
-//				byte tw = (byte)fontrenderer.getStringWidth(string);
-//				if (MAX_TW < tw)
-//				{
-//					MAX_TW = tw;
-//				}
-				STRING_ARRAY[i] = I18n.translateToLocal(t_string + i);
-			}
-//			RenderHelper.init();
-		}
-
-//		EntitiesRegistry.ENTITIES_CLASS_LIST = null;
+////		EntityRegistry.ENTITY_KEY_ARRAY = new HashSet(ENTITY_CLASS_ENTRIES.keySet()).toArray();
+//
+//		if (event.getSide().isClient())
+//		{
+//			byte size = 31;
+//			String t_string = "info." + Small.ID + ".t";
+//			STRING_ARRAY = new String[size];
+////			FontRenderer fontrenderer = Minecraft.getMinecraft().fontRenderer;
+//			for (byte i = 0; i < size; ++i)
+//			{
+////				String string = I18n.translateToLocal(t_string + i);
+////				STRING_ARRAY[i] = string;
+////				byte tw = (byte)fontrenderer.getStringWidth(string);
+////				if (MAX_TW < tw)
+////				{
+////					MAX_TW = tw;
+////				}
+//				STRING_ARRAY[i] = I18n.translateToLocal(t_string + i);
+//			}
+////			RenderHelper.init();
+//		}
+//
+////		EntitiesRegistry.ENTITIES_CLASS_LIST = null;
 		TileRegistry.TILES_CLASS_LIST = null;
 	}
 
