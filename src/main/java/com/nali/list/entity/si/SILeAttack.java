@@ -1,17 +1,16 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaNe;
-import com.nali.list.capability.serializable.SmallSakuraSerializable;
-import com.nali.list.capability.type.SmallSakuraType;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetAttack;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.MixSIE;
+import com.nali.small.entity.player.PlayerData;
 import com.nali.sound.ISoundDaLe;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
@@ -20,6 +19,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumHand;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
@@ -76,8 +76,10 @@ public class SILeAttack
 		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
 		float x = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
 
-		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
-		byte value = smallsakuratypes.get();
+//		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+//		byte value = smallsakuratypes.get();
+		UUID player_uuid = this.s.ms.entityplayermp.getUniqueID();
+		byte value = PlayerData.SAKURA_MAP.getOrDefault(player_uuid, (byte)0);
 
 		if (id == 1.1F)
 		{
@@ -85,7 +87,8 @@ public class SILeAttack
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.flag |= 16;
 				}
 			}
@@ -100,7 +103,8 @@ public class SILeAttack
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.flag |= 8;
 				}
 			}
@@ -114,7 +118,8 @@ public class SILeAttack
 			int v = (int)x;
 			if (value >= v)
 			{
-				smallsakuratypes.set((byte)(value - v));
+//				smallsakuratypes.set((byte)(value - v));
+				PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - v));
 				this.minimum_distance = x;
 			}
 		}
@@ -123,7 +128,8 @@ public class SILeAttack
 			int v = (int)x;
 			if (value >= v)
 			{
-				smallsakuratypes.set((byte)(value - v));
+//				smallsakuratypes.set((byte)(value - v));
+				PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - v));
 				this.max_magic_point = v;
 			}
 		}

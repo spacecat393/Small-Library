@@ -1,8 +1,6 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaNe;
-import com.nali.list.capability.serializable.SmallSakuraSerializable;
-import com.nali.list.capability.type.SmallSakuraType;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetManageItem;
 import com.nali.network.NetworkRegistry;
@@ -11,15 +9,18 @@ import com.nali.small.entity.IMixE;
 import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.inv.InvLe;
 import com.nali.small.entity.memo.server.ServerLeInv;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.MixSIE;
+import com.nali.small.entity.player.PlayerData;
 import com.nali.sound.ISoundDaLe;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.UUID;
 
 import static com.nali.list.entity.si.SILeInvGetItem.isSameItemSameTags;
 
@@ -78,8 +79,10 @@ public class SILeInvManageItem
 //			Small.LOGGER.info("ID " + id);
 //			Small.LOGGER.info("X " + x);
 
-		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
-		byte value = smallsakuratypes.get();
+//		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+//		byte value = smallsakuratypes.get();
+		UUID player_uuid = this.s.ms.entityplayermp.getUniqueID();
+		byte value = PlayerData.SAKURA_MAP.getOrDefault(player_uuid, (byte)0);
 
 //			if (id >= 2)
 //			{
@@ -89,7 +92,8 @@ public class SILeInvManageItem
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.state |= 32;
 				}
 			}
@@ -104,7 +108,8 @@ public class SILeInvManageItem
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.state |= 2;
 				}
 			}
@@ -118,7 +123,8 @@ public class SILeInvManageItem
 			int v = (int)x;
 			if (value >= v)
 			{
-				smallsakuratypes.set((byte)(value - v));
+//				smallsakuratypes.set((byte)(value - v));
+				PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - v));
 				this.out_random = v;
 			}
 		}
@@ -143,7 +149,8 @@ public class SILeInvManageItem
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.state |= 16;
 				}
 			}
@@ -158,7 +165,8 @@ public class SILeInvManageItem
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.state |= 1;
 				}
 			}
@@ -172,7 +180,8 @@ public class SILeInvManageItem
 			int v = (int)x;
 			if (value >= v)
 			{
-				smallsakuratypes.set((byte)(value - v));
+//				smallsakuratypes.set((byte)(value - v));
+				PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - v));
 				this.in_random = v;
 			}
 		}

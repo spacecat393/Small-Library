@@ -1,8 +1,6 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaNe;
-import com.nali.list.capability.serializable.SmallSakuraSerializable;
-import com.nali.list.capability.type.SmallSakuraType;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetArea;
 import com.nali.list.network.method.client.CSetTarget;
@@ -11,9 +9,10 @@ import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.EntityRegistry;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.MixSIE;
+import com.nali.small.entity.player.PlayerData;
 import com.nali.small.mixin.IMixinWorldServer;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
@@ -221,8 +220,10 @@ public class SIEArea
 		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
 		float x = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
 
-		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
-		byte value = smallsakuratypes.get();
+//		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+//		byte value = smallsakuratypes.get();
+		UUID player_uuid = this.s.ms.entityplayermp.getUniqueID();
+		byte value = PlayerData.SAKURA_MAP.getOrDefault(player_uuid, (byte)0);
 
 		if (id == 0.1F)
 		{
@@ -230,7 +231,8 @@ public class SIEArea
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.flag |= 4;
 				}
 			}
@@ -245,7 +247,8 @@ public class SIEArea
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.flag |= 8;
 				}
 			}
@@ -260,7 +263,8 @@ public class SIEArea
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.flag |= 128;
 				}
 			}
@@ -275,7 +279,8 @@ public class SIEArea
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.flag |= 16;
 				}
 			}
@@ -290,7 +295,8 @@ public class SIEArea
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.flag |= 32;
 				}
 			}
@@ -305,7 +311,8 @@ public class SIEArea
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.flag |= 64;
 				}
 			}

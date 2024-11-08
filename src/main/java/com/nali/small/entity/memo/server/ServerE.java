@@ -151,15 +151,15 @@ public abstract class ServerE
 		try
 		{
 			int dimension = this.worldserver.provider.getDimension();
-			File file = new File(this.worldserver.getSaveHandler().getWorldDirectory() + "/nali/entity/" + dimension);
+			File file = new File(this.worldserver.getSaveHandler().getWorldDirectory(), "nali/entity/" + dimension);
 			file.mkdirs();
 
-			Files.write(new File(file + "/" + e.getUniqueID()).toPath(), chunk_byte_array);
+			Files.write(new File(file, e.getUniqueID().toString()).toPath(), chunk_byte_array);
 
-			file = new File(file + "/data");
+			file = new File(file, "data");
 			file.mkdirs();
 
-			Files.write(new File(file + "/" + e.getUniqueID()).toPath(), sidata.byte_array);
+			Files.write(new File(file, e.getUniqueID().toString()).toPath(), sidata.byte_array);
 		}
 		catch (IOException ex)
 		{
@@ -176,7 +176,7 @@ public abstract class ServerE
 
 			SIData sidata = new SIData();
 			Entity e = this.i.getE();
-			File file = new File(this.worldserver.getSaveHandler().getWorldDirectory() + "/nali/entity/" + e.world.provider.getDimension() + "/data/" + e.getUniqueID());
+			File file = new File(this.worldserver.getSaveHandler().getWorldDirectory(), "nali/entity/" + e.world.provider.getDimension() + "/data/" + e.getUniqueID());
 
 //			warn("world " + e.world);
 //			warn("world.provider " + e.world.provider);

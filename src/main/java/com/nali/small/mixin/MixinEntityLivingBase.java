@@ -1,7 +1,7 @@
 package com.nali.small.mixin;
 
-import com.nali.list.capability.serializable.SmallSakuraSerializable;
 import com.nali.small.Small;
+import com.nali.small.entity.player.PlayerData;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.entity.Entity;
@@ -32,7 +32,8 @@ public abstract class MixinEntityLivingBase extends Entity
 		if (entity instanceof EntityPlayerMP)
 		{
 			EntityPlayerMP entityplayermp = (EntityPlayerMP)entity;
-			entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null).add((byte)1);
+			PlayerData.SAKURA_MAP.put(entityplayermp.getUniqueID(), (byte)(1 + PlayerData.SAKURA_MAP.getOrDefault(entityplayermp.getUniqueID(), (byte)0)));
+//			entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null).add((byte)1);
 
 			Advancement advancement = entityplayermp.getServer().getAdvancementManager().getAdvancement(new ResourceLocation(Small.ID, "small/sakura"));
 			AdvancementProgress advancementprogress = entityplayermp.getAdvancements().getProgress(advancement);

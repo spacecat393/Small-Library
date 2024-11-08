@@ -15,7 +15,6 @@
 		"IMixinWorldServer",
 		"MixinCommandSummon",
 		"MixinEntityLivingBase",
-		"MixinEntityPlayer",
 		"MixinInventoryCrafting",
 		"MixinItemMonsterPlacer",
 		"MixinWorldProvider"

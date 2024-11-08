@@ -1,53 +1,53 @@
-info.small.t0=Army
-info.small.t1=SI
-info.small.t2=Equipment
-
-info.small.t3=Team
-info.small.t4=Chat
-
-info.small.t5=Stat
-#HP
-info.small.t6=❤
-#MP
-info.small.t7=⭐
-#SP
-info.small.t8=⚡
-info.small.t9=XP
-info.small.t10=Lv
-#Sakura
-info.small.t11=❀
-info.small.t12=World
-info.small.t13=Time
-info.small.t14=MENU
-#Check
-info.small.t15=⬚
-#Uncheck
-info.small.t16=⧄
-#TeamUp
-info.small.t17=☻
-info.small.t18=⬅Left Arrow / Q
-#Item/Slot
-info.small.t19=❃
-#Death
-info.small.t20=†
-#Negative
-info.small.t21=×
-#TeamReady
-info.small.t22=☺
-#Wait
-info.small.t23=⌛
-#Terminal
-info.small.t24=⎀
-#Regen
-info.small.t25=☕
-#Reload/Call
-info.small.t26=✆
-info.small.t27=↺R
-#Search
-info.small.t28=✍
-#Scroll
-info.small.t29=❉
-info.small.t30=♪
+#info.small.t0=Army
+#info.small.t1=SI
+#info.small.t2=Equipment
+#
+#info.small.t3=Team
+#info.small.t4=Chat
+#
+#info.small.t5=Stat
+##HP
+#info.small.t6=❤
+##MP
+#info.small.t7=⭐
+##SP
+#info.small.t8=⚡
+#info.small.t9=XP
+#info.small.t10=Lv
+##Sakura
+#info.small.t11=❀
+#info.small.t12=World
+#info.small.t13=Time
+#info.small.t14=MENU
+##Check
+#info.small.t15=⬚
+##Uncheck
+#info.small.t16=⧄
+##TeamUp
+#info.small.t17=☻
+#info.small.t18=⬅Left Arrow / Q
+##Item/Slot
+#info.small.t19=❃
+##Death
+#info.small.t20=†
+##Negative
+#info.small.t21=×
+##TeamReady
+#info.small.t22=☺
+##Wait
+#info.small.t23=⌛
+##Terminal
+#info.small.t24=⎀
+##Regen
+#info.small.t25=☕
+##Reload/Call
+#info.small.t26=✆
+#info.small.t27=↺R
+##Search
+#info.small.t28=✍
+##Scroll
+#info.small.t29=❉
+#info.small.t30=♪
 
 #info.small.b0=Current
 #info.small.b1=XP
@@ -243,11 +243,11 @@ tile.small.storage.name=Storage
 #info.small.box0=Box's name wasn't changed, quickly unbox before world save. [When Player TP to Entity from Other Dimension]
 #info.small.box1=You can use on Inventory GUI to put Our Entity to Box.
 
-key.categories.small=Small
-key.small.gui=Small GUI
-#key.small.playergui=Player GUI
-#key.small.quickinventorygui=Quick Inventory GUI
-key.small.rayentity=Ray Entity
+#key.categories.small=Small
+#key.small.gui=Small GUI
+##key.small.playergui=Player GUI
+##key.small.quickinventorygui=Quick Inventory GUI
+#key.small.rayentity=Ray Entity
 
 advancements.small.root.title=Small
 advancements.small.root.description=Try feature here

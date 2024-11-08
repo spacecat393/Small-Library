@@ -1,11 +1,10 @@
 package com.nali.small;
 
-import com.nali.small.capability.CapabilityRegistry;
 import com.nali.small.chunk.ChunkCallBack;
 import com.nali.small.chunk.ChunkData;
 import com.nali.small.entity.EntityRegistry;
 import com.nali.small.entity.memo.server.ServerE;
-import com.nali.small.gui.GuiHandler;
+import com.nali.small.entity.player.PlayerData;
 import com.nali.small.tile.TileRegistry;
 import com.nali.system.bytes.ByteReader;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +16,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.*;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -49,8 +47,8 @@ public class Small
 	public void onFMLInitializationEvent(FMLInitializationEvent event)
 	{
 		EntityRegistry.set();
-		CapabilityRegistry.register();
-		NetworkRegistry.INSTANCE.registerGuiHandler(I, new GuiHandler());
+//		CapabilityRegistry.register();
+//		NetworkRegistry.INSTANCE.registerGuiHandler(I, new GuiHandler());
 	}
 
 	@EventHandler
@@ -92,11 +90,15 @@ public class Small
 	@EventHandler
 	public void onFMLServerStartedEvent(FMLServerStartedEvent event)
 	{
+		//s0-playerdata
+		PlayerData.SAKURA_MAP = new HashMap();
+		//e0-playerdata
+
 		WorldServer[] worldserver_array = FMLCommonHandler.instance().getMinecraftServerInstance().worlds;
-		File file = new File(worldserver_array[0].getSaveHandler().getWorldDirectory() + "/nali");
+		File file = new File(worldserver_array[0].getSaveHandler().getWorldDirectory(), "nali");
 		file.mkdirs();
 
-		file = new File(file + "/entity");
+		file = new File(file, "entity");
 		file.mkdirs();
 
 		File[] d_file_array = file.listFiles();
@@ -143,10 +145,14 @@ public class Small
 	@EventHandler
 	public void onFMLServerStoppingEvent(FMLServerStoppingEvent event)
 	{
+		//s0-playerdata
+		PlayerData.SAKURA_MAP = null;
+		//e0-playerdata
+
 		List<ServerE> s_list = new ArrayList(ServerE.S_MAP.values());
 		if (!s_list.isEmpty())
 		{
-			File[] d_file_array = new File(s_list.get(0).worldserver.getSaveHandler().getWorldDirectory() + "/nali/entity").listFiles();
+			File[] d_file_array = new File(s_list.get(0).worldserver.getSaveHandler().getWorldDirectory(), "nali/entity").listFiles();
 
 			if (d_file_array != null)
 			{

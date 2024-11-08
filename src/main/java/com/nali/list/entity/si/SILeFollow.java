@@ -1,17 +1,16 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaNe;
-import com.nali.list.capability.serializable.SmallSakuraSerializable;
-import com.nali.list.capability.type.SmallSakuraType;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetFollow;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.MixSIE;
+import com.nali.small.entity.player.PlayerData;
 import com.nali.sound.ISoundDaLe;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
@@ -19,6 +18,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.UUID;
 
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
@@ -69,8 +70,10 @@ public class SILeFollow
 		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
 		float x = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
 
-		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
-		byte value = smallsakuratypes.get();
+//		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+//		byte value = smallsakuratypes.get();
+		UUID player_uuid = this.s.ms.entityplayermp.getUniqueID();
+		byte value = PlayerData.SAKURA_MAP.getOrDefault(player_uuid, (byte)0);
 
 		if (id == 1.1F)
 		{
@@ -78,7 +81,8 @@ public class SILeFollow
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.flag |= 4;
 				}
 			}
@@ -93,7 +97,8 @@ public class SILeFollow
 			{
 				if (value >= 1)
 				{
-					smallsakuratypes.set((byte)(value - 1));
+//					smallsakuratypes.set((byte)(value - 1));
+					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
 					this.flag |= 2;
 				}
 			}
