@@ -5,13 +5,11 @@ import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetAttack;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.small.entity.player.PlayerData;
-import com.nali.sound.ISoundDaLe;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
@@ -26,21 +24,20 @@ import static com.nali.small.entity.EntityMath.isInArea;
 
 public class SILeAttack
 <
-	SD extends ISoundDaLe,
 	BD extends IBothDaNe,
 	E extends EntityLivingBase,
-	I extends IMixE<BD, E> & IMixESoundDa<SD>,
-	S extends ServerLe<SD, BD, E, I, MS>,
+	I extends IMixE<BD, E>,
+	S extends ServerLe<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SILeSetLocation<SD, BD, E, I, S, MS> silesetlocation;
-	public SILeFindMove<SD, BD, E, I, S, MS> silefindmove;
+	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
+	public SILeFindMove<BD, E, I, S, MS> silefindmove;
 	public SIELook<BD, E, I, S, MS> sielook;
-	public SILeCareOwner<SD, BD, E, I, S, MS> silecareowner;
+	public SILeCareOwner<BD, E, I, S, MS> silecareowner;
 
 	public int[] attack_frame_int_array;
 
@@ -58,10 +55,10 @@ public class SILeAttack
 	public void init()
 	{
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silesetlocation = (SILeSetLocation<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
-		this.silefindmove = (SILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
+		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
 		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
-		this.silecareowner = (SILeCareOwner<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeCareOwner.ID);
+		this.silecareowner = (SILeCareOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeCareOwner.ID);
 	}
 
 	@Override

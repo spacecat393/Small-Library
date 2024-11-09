@@ -32,8 +32,8 @@ public abstract class MixRenderSe
 > extends MixRenderE<RC, R, BD, E, I, MC, MB, C>
 {
 	public float
-	head_rot,
-	head_pitch;
+		head_rot,
+		head_pitch;
 
 	public MixRenderSe(C c)
 	{

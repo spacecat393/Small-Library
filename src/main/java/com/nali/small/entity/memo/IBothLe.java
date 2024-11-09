@@ -27,6 +27,8 @@ public interface IBothLe
 	//server
 	boolean attackEntityAsMob(Entity entity);
 	boolean attackEntityFrom(DamageSource damagesource, float amount);
+
+	//client
 	void getHurtSound(DamageSource damagesource);
 	void getDeathSound();
 }

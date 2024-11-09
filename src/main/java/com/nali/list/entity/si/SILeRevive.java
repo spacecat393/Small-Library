@@ -6,13 +6,11 @@ import com.nali.list.network.method.client.CRespawnPlayer;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.chunk.ChunkLoader;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.mixin.IMixinEntityPlayer;
-import com.nali.sound.ISoundDaLe;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
@@ -31,11 +29,10 @@ import static com.nali.small.entity.EntityMath.isInArea;
 
 public class SILeRevive
 <
-	SD extends ISoundDaLe,
 	BD extends IBothDaNe,
 	E extends EntityLivingBase,
-	I extends IMixE<BD, E> & IMixESoundDa<SD>,
-	S extends ServerLe<SD, BD, E, I, MS>,
+	I extends IMixE<BD, E>,
+	S extends ServerLe<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
@@ -43,8 +40,8 @@ public class SILeRevive
 
 	public SIEOwner<BD, E, I, S, MS> sieowner;
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SILeSetLocation<SD, BD, E, I, S, MS> silesetlocation;
-	public SILeFindMove<SD, BD, E, I, S, MS> silefindmove;
+	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
+	public SILeFindMove<BD, E, I, S, MS> silefindmove;
 	public SIELook<BD, E, I, S, MS> sielook;
 
 	public byte state;//try_revive-N revive_owner revive_other_entity remote
@@ -69,8 +66,8 @@ public class SILeRevive
 	{
 		this.sieowner = (SIEOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEOwner.ID);
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silesetlocation = (SILeSetLocation<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
-		this.silefindmove = (SILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
+		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
 		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
 	}
 

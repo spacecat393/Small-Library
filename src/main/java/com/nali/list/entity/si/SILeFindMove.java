@@ -2,14 +2,12 @@ package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaNe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.path.PathMath;
 import com.nali.small.entity.memo.server.si.path.SNode;
-import com.nali.sound.ISoundDaLe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockFenceGate;
@@ -24,11 +22,10 @@ import java.util.List;
 
 public class SILeFindMove
 <
-	SD extends ISoundDaLe,
 	BD extends IBothDaNe,
 	E extends EntityLivingBase,
-	I extends IMixE<BD, E> & IMixESoundDa<SD>,
-	S extends ServerLe<SD, BD, E, I, MS>,
+	I extends IMixE<BD, E>,
+	S extends ServerLe<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
@@ -38,9 +35,9 @@ public class SILeFindMove
 
 	public SIESit<BD, E, I, S, MS> siesit;
 //	public AILeSetLocation<E, I, S, MS> silesetlocation;
-	public SILeMove<SD, BD, E, I, S, MS> silemove;
-	public SILeWalkTo<SD, BD, E, I, S, MS> silewalkto;
-	public SILeMineTo<SD, BD, E, I, S, MS> silemineto;
+	public SILeMove<BD, E, I, S, MS> silemove;
+	public SILeWalkTo<BD, E, I, S, MS> silewalkto;
+	public SILeMineTo<BD, E, I, S, MS> silemineto;
 
 //	public int goal_x, goal_y, goal_z;
 	public double goal_x, goal_y, goal_z;
@@ -67,9 +64,9 @@ public class SILeFindMove
 	{
 		this.siesit = (SIESit<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESit.ID);
 //		this.silesetlocation = (AILeSetLocation<E, I, S, MS>)this.s.ms.si_map.get(AILeSetLocation.ID);
-		this.silemove = (SILeMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeMove.ID);
-		this.silewalkto = (SILeWalkTo<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeWalkTo.ID);
-		this.silemineto = (SILeMineTo<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeMineTo.ID);
+		this.silemove = (SILeMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeMove.ID);
+		this.silewalkto = (SILeWalkTo<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeWalkTo.ID);
+		this.silemineto = (SILeMineTo<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeMineTo.ID);
 	}
 
 	@Override

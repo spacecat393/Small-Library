@@ -1,9 +1,9 @@
-package com.nali.small.entity;
-
-public interface IMixESoundDa
-<
-	SD
->
-{
-	SD getSD();
-}
+//package com.nali.small.entity;
+//
+//public interface IMixESoundDa
+//<
+//	SD
+//>
+//{
+//	SD getSD();
+//}

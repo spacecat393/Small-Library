@@ -116,9 +116,9 @@ public abstract class ClientE
 	}
 
 	@Override
-	public void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
+	public void doRender(FRenderE<E> frendere, double ox, double oy, double oz, float partial_ticks)
 	{
-		this.mr.doRender(rendere, ox, oy, oz, partialTicks);
+		this.mr.doRender(frendere, ox, oy, oz, partial_ticks);
 	}
 
 //	@Override

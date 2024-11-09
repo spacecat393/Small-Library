@@ -6,14 +6,12 @@ import com.nali.list.network.method.client.CSetGetItem;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.inv.InvLe;
 import com.nali.small.entity.memo.server.ServerLeInv;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.small.entity.player.PlayerData;
-import com.nali.sound.ISoundDaLe;
 import com.nali.system.bytes.ByteReader;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
@@ -28,19 +26,18 @@ import static com.nali.small.entity.EntityMath.isInArea;
 public class SILeInvGetItem
 <
 	IE extends InvLe,
-	SD extends ISoundDaLe,
 	BD extends IBothDaNe,
 	E extends EntityLeInv,
-	I extends IMixE<BD, E> & IMixESoundDa<SD>,
-	S extends ServerLeInv<IE, SD, BD, E, I, MS>,
+	I extends IMixE<BD, E>,
+	S extends ServerLeInv<IE, BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SILeSetLocation<SD, BD, E, I, S, MS> silesetlocation;
-	public SILeFindMove<SD, BD, E, I, S, MS> silefindmove;
+	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
+	public SILeFindMove<BD, E, I, S, MS> silefindmove;
 
 	public byte flag;//move_to | remote_xp remote_item can_take_xp can_take_item walk_to_xp walk_to_item
 //	public boolean pickup;
@@ -55,8 +52,8 @@ public class SILeInvGetItem
 	public void init()
 	{
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silesetlocation = (SILeSetLocation<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
-		this.silefindmove = (SILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
+		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
 	}
 
 	@Override

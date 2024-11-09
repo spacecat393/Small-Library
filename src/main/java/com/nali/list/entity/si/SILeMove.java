@@ -2,12 +2,10 @@ package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaNe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.MixSIE;
-import com.nali.sound.ISoundDaLe;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
@@ -16,18 +14,17 @@ import net.minecraft.util.math.Vec3d;
 
 public class SILeMove
 <
-	SD extends ISoundDaLe,
 	BD extends IBothDaNe,
 	E extends EntityLivingBase,
-	I extends IMixE<BD, E> & IMixESoundDa<SD>,
-	S extends ServerLe<SD, BD, E, I, MS>,
+	I extends IMixE<BD, E>,
+	S extends ServerLe<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
 	public SIELook<BD, E, I, S, MS> sielook;
-	public SILeJump<SD, BD, E, I, S, MS> silejump;
+	public SILeJump<BD, E, I, S, MS> silejump;
 	public SIESit<BD, E, I, S, MS> siesit;
 
 	public double x, y, z;
@@ -44,7 +41,7 @@ public class SILeMove
 	public void init()
 	{
 		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
-		this.silejump = (SILeJump<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeJump.ID);
+		this.silejump = (SILeJump<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeJump.ID);
 		this.siesit = (SIESit<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESit.ID);
 	}
 

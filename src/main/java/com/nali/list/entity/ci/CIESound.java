@@ -11,7 +11,6 @@ import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.CI;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
-import com.nali.system.bytes.ByteReader;
 import net.minecraft.entity.Entity;
 
 //@SideOnly(Side.CLIENT)
@@ -44,14 +43,15 @@ public class CIESound
 	@Override
 	public void call()
 	{
-		this.c.getSound().play(ByteReader.getInt(this.c.mc.byte_array, 1 + 8 + 1));
+		this.c.getSound().play(this.c.getSound().getSoundBuffer(this.c.mc.byte_array[1 + 8 + 1]));
+		this.onUpdate();
 	}
 
 	@Override
 	public void onUpdate()
 	{
 		E e = this.c.i.getE();
-		this.c.getSound().set((float)e.posX, (float)e.posY, (float)e.posZ);
+		this.c.getSound().set((float)e.posX, (float)e.posY, (float)e.posZ/*, this.c.mr.head_rot, this.c.mr.head_pitch*/);
 	}
 
 	@Override

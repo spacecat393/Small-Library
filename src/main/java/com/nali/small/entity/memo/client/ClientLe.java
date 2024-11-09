@@ -4,13 +4,11 @@ import com.nali.da.IBothDaNe;
 import com.nali.da.client.IClientDaO;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.IBothLe;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.small.entity.memo.work.WorkEBodyYaw;
-import com.nali.sound.ISoundDaLe;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
@@ -22,10 +20,10 @@ public abstract class ClientLe
 <
 	RC extends IClientDaO,
 	R extends RenderO<RC>,
-	SD extends ISoundDaLe,
+//	SD extends ISoundDaLe,
 	BD extends IBothDaNe,
 	E extends EntityLivingBase,
-	I extends IMixE<BD, E> & IMixESoundDa<SD>,
+	I extends IMixE<BD, E>/* & IMixESoundDa<SD>*/,
 	MC extends MixCIE<RC, R, BD, E, I, MB, MR, ?>,
 	MB extends MixBoxE<RC, R, BD, E, I, MC, MR, ?>,
 	MR extends MixRenderE<RC, R, BD, E, I, MC, MB, ?>
@@ -47,17 +45,17 @@ public abstract class ClientLe
 		super(r);
 	}
 
-	@Override
-	public void getHurtSound(DamageSource damagesource)
-	{
+//	@Override
+//	public void getHurtSound(DamageSource damagesource)
+//	{
 //		this.getSound().play(this.i.getSD().HURT());
-	}
-
-	@Override
-	public void getDeathSound()
-	{
+//	}
+//
+//	@Override
+//	public void getDeathSound()
+//	{
 //		this.getSound().play(this.i.getSD().DEATH());
-	}
+//	}
 
 	@Override
 	public boolean attackEntityAsMob(Entity entity)

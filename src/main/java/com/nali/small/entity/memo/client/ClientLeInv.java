@@ -4,13 +4,11 @@ import com.nali.da.IBothDaNe;
 import com.nali.da.client.IClientDaO;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.inv.InvLe;
 import com.nali.small.entity.memo.IBothLeInv;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
-import com.nali.sound.ISoundDaLe;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -23,14 +21,14 @@ public abstract class ClientLeInv
 	IE extends InvLe,
 	RC extends IClientDaO,
 	R extends RenderO<RC>,
-	SD extends ISoundDaLe,
+//	SD extends ISoundDaLe,
 	BD extends IBothDaNe,
 	E extends EntityLivingBase,
-	I extends IMixE<BD, E> & IMixESoundDa<SD>,
+	I extends IMixE<BD, E>/* & IMixESoundDa<SD>*/,
 	MC extends MixCIE<RC, R, BD, E, I, MB, MR, ?>,
 	MB extends MixBoxE<RC, R, BD, E, I, MC, MR, ?>,
 	MR extends MixRenderE<RC, R, BD, E, I, MC, MB, ?>
-> extends ClientLe<RC, R, SD, BD, E, I, MC, MB, MR> implements IBothLeInv<IE, E>
+> extends ClientLe<RC, R/*, SD*/, BD, E, I, MC, MB, MR> implements IBothLeInv<IE, E>
 {
 	public IE ie;
 

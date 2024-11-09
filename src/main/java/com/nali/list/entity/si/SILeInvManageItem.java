@@ -6,14 +6,12 @@ import com.nali.list.network.method.client.CSetManageItem;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.inv.InvLe;
 import com.nali.small.entity.memo.server.ServerLeInv;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.small.entity.player.PlayerData;
-import com.nali.sound.ISoundDaLe;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.inventory.IInventory;
@@ -27,18 +25,17 @@ import static com.nali.list.entity.si.SILeInvGetItem.isSameItemSameTags;
 public class SILeInvManageItem
 <
 	IE extends InvLe,
-	SD extends ISoundDaLe,
 	BD extends IBothDaNe,
 	E extends EntityLeInv,
-	I extends IMixE<BD, E> & IMixESoundDa<SD>,
-	S extends ServerLeInv<IE, SD, BD, E, I, MS>,
+	I extends IMixE<BD, E>,
+	S extends ServerLeInv<IE, BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
-	public SILeSetLocation<SD, BD, E, I, S, MS> silesetlocation;
-	public SILeFindMove<SD, BD, E, I, S, MS> silefindmove;
+	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
+	public SILeFindMove<BD, E, I, S, MS> silefindmove;
 
 	public BlockPos in_blockpos, out_blockpos;
 	public byte state;//remote_in remote_out random_in random_out in out
@@ -52,8 +49,8 @@ public class SILeInvManageItem
 	@Override
 	public void init()
 	{
-		this.silesetlocation = (SILeSetLocation<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
-		this.silefindmove = (SILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
+		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
 	}
 
 	@Override

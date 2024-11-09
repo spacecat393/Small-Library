@@ -2,12 +2,10 @@ package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaNe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.MixSIE;
-import com.nali.sound.ISoundDaLe;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 
@@ -18,18 +16,17 @@ import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 
 public class SILeProtect
 <
-	SD extends ISoundDaLe,
 	BD extends IBothDaNe,
 	E extends EntityLivingBase,
-	I extends IMixE<BD, E> & IMixESoundDa<SD>,
-	S extends ServerLe<SD, BD, E, I, MS>,
+	I extends IMixE<BD, E>,
+	S extends ServerLe<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SILeFindMove<SD, BD, E, I, S, MS> silefindmove;
+	public SILeFindMove<BD, E, I, S, MS> silefindmove;
 
 	public byte state;//on1 protect2 ani4-8
 //	4+8 0
@@ -50,7 +47,7 @@ public class SILeProtect
 	public void init()
 	{
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silefindmove = (SILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
 	}
 
 	@Override

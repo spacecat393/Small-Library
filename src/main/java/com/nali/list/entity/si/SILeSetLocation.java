@@ -5,12 +5,10 @@ import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetLocation;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.sound.ISoundDaLe;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,17 +18,16 @@ import static com.nali.small.entity.EntityMath.isInArea;
 
 public class SILeSetLocation
 <
-	SD extends ISoundDaLe,
 	BD extends IBothDaNe,
 	E extends EntityLivingBase,
-	I extends IMixE<BD, E> & IMixESoundDa<SD>,
-	S extends ServerLe<SD, BD, E, I, MS>,
+	I extends IMixE<BD, E>,
+	S extends ServerLe<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
-	public SILeFindMove<SD, BD, E, I, S, MS> silefindmove;
+	public SILeFindMove<BD, E, I, S, MS> silefindmove;
 
 	public long blockpos_long = -1;
 	public float far;
@@ -46,7 +43,7 @@ public class SILeSetLocation
 	@Override
 	public void init()
 	{
-		this.silefindmove = (SILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
 	}
 
 	@Override

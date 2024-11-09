@@ -5,13 +5,12 @@ import com.nali.da.client.IClientDaO;
 import com.nali.list.entity.si.SIESound;
 import com.nali.list.entity.si.SILeEat;
 import com.nali.render.RenderO;
+import com.nali.small.entity.EntityRefSound;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.client.ClientLe;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
-import com.nali.sound.ISoundDaLe;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,14 +26,13 @@ public class HitOleEat
 <
 	RC extends IClientDaO,
 	R extends RenderO<RC>,
-	SD extends ISoundDaLe,
 	BD extends IBothDaNe,
 	E extends EntityLivingBase,
-	I extends IMixE<BD, E> & IMixESoundDa<SD>,
+	I extends IMixE<BD, E>,
 	MC extends MixCIE<RC, R, BD, E, I, MB, MR, C>,
 	MR extends MixRenderE<RC, R, BD, E, I, MC, MB, C>,
 	MB extends MixBoxE<RC, R, BD, E, I, MC, MR, C>,
-	C extends ClientLe<RC, R, SD, BD, E, I, MC, MB, MR>
+	C extends ClientLe<RC, R, BD, E, I, MC, MB, MR>
 > extends HitE<RC, R, BD, E, I, MC, MR, MB, C>
 {
 	public HitOleEat(C c)
@@ -75,8 +73,8 @@ public class HitOleEat
 //			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 			this.c.sendSSI(byte_array, SILeEat.ID);
 
-			byte[] s_byte_array = new byte[1 + 8 + 1 + 4];
-			ByteWriter.set(s_byte_array, this.c.i.getSD().EAT(), 1 + 8 + 1);
+			byte[] s_byte_array = new byte[1 + 8 + 1 + 1];
+			s_byte_array[1 + 8 + 1] = EntityRefSound.EAT;
 			this.c.sendSSI(s_byte_array, SIESound.ID);
 		}
 	}

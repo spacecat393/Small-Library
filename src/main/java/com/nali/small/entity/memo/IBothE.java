@@ -41,7 +41,7 @@ public interface IBothE
 	@SideOnly(Side.CLIENT)
 	void setShouldRender(boolean result);
 	@SideOnly(Side.CLIENT)
-	void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks);
+	void doRender(FRenderE<E> frendere, double ox, double oy, double oz, float partial_ticks);
 //	@SideOnly(Side.CLIENT)
 //	void doContainer();
 

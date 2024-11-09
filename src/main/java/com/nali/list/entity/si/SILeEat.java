@@ -4,13 +4,11 @@ import com.mojang.authlib.GameProfile;
 import com.nali.da.IBothDaNe;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.IMixESoundDa;
 import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.mixin.IMixinItemFood;
-import com.nali.sound.ISoundDaLe;
 import com.nali.system.bytes.ByteReader;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -29,11 +27,10 @@ import java.util.Collection;
 
 public class SILeEat
 <
-	SD extends ISoundDaLe,
 	BD extends IBothDaNe,
 	E extends EntityLe,
-	I extends IMixE<BD, E> & IMixESoundDa<SD>,
-	S extends ServerLe<SD, BD, E, I, MS>,
+	I extends IMixE<BD, E>,
+	S extends ServerLe<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
