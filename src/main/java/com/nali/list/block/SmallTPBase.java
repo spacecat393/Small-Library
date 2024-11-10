@@ -103,11 +103,13 @@ public class SmallTPBase extends BlockB implements ITileEntityProvider
 		return BlockFaceShape.UNDEFINED;
 	}
 
-	@Override
-	public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face)
-	{
-		return false;
-	}
+//	@Override
+//	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
+//	{
+//		Nali.warn("BlockPos " + pos);
+//		Nali.warn("EnumFacing " + side);
+////		return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+//	}
 
 	@Override
 	public boolean isFullCube(IBlockState state)

@@ -2,8 +2,8 @@ package com.nali.small.entity.memo.client.box.mix;
 
 import com.nali.da.IBothDaNe;
 import com.nali.da.client.IClientDaO;
-import com.nali.list.entity.si.SIEInvOpenInv;
 import com.nali.list.entity.si.SIEPlayWithRSe;
+import com.nali.list.key.SmallGui;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
@@ -39,7 +39,8 @@ public class MixBoxSeRSe
 	{
 		if (player_entity.isSneaking())
 		{
-			this.c.sendSSI(new byte[1 + 8 + 1], SIEInvOpenInv.ID);
+			SmallGui.setSmallPage();
+//			this.c.sendSSI(new byte[1 + 8 + 1], SIEInvOpenInv.ID);
 		}
 		else
 		{

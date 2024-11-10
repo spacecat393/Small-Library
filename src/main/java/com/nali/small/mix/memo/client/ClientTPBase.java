@@ -23,6 +23,7 @@ public class ClientTPBase
 	public ClientTPBase(R r, I i)
 	{
 		super(r, i);
+		this.state |= 1;
 	}
 
 	@Override
@@ -37,4 +38,10 @@ public class ClientTPBase
 			r.frame_int_array[0] = 0;
 		}
 	}
+//
+//	@Override
+//	public boolean doesSideBlockRendering(EnumFacing enumfacing)
+//	{
+//		return enumfacing == EnumFacing.DOWN || super.doesSideBlockRendering(enumfacing);
+//	}
 }

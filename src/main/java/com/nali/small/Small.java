@@ -10,6 +10,7 @@ import com.nali.system.bytes.ByteReader;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -90,16 +91,18 @@ public class Small
 	@EventHandler
 	public void onFMLServerStartedEvent(FMLServerStartedEvent event)
 	{
-		//s0-playerdata
-		PlayerData.SAKURA_MAP = new HashMap();
-		//e0-playerdata
-
 		WorldServer[] worldserver_array = FMLCommonHandler.instance().getMinecraftServerInstance().worlds;
-		File file = new File(worldserver_array[0].getSaveHandler().getWorldDirectory(), "nali");
+		File world_file = worldserver_array[0].getSaveHandler().getWorldDirectory();
+		File file = new File(world_file, "nali");
 		file.mkdirs();
 
 		file = new File(file, "entity");
 		file.mkdirs();
+
+		//s0-playerdata
+		PlayerData.SAKURA_MAP = new HashMap();
+		PlayerData.read(world_file);
+		//e0-playerdata
 
 		File[] d_file_array = file.listFiles();
 		if (d_file_array != null)
@@ -145,14 +148,17 @@ public class Small
 	@EventHandler
 	public void onFMLServerStoppingEvent(FMLServerStoppingEvent event)
 	{
+		File world_file = DimensionManager.getCurrentSaveRootDirectory();
 		//s0-playerdata
+		PlayerData.write(world_file);
 		PlayerData.SAKURA_MAP = null;
 		//e0-playerdata
 
 		List<ServerE> s_list = new ArrayList(ServerE.S_MAP.values());
 		if (!s_list.isEmpty())
 		{
-			File[] d_file_array = new File(s_list.get(0).worldserver.getSaveHandler().getWorldDirectory(), "nali/entity").listFiles();
+//			File[] d_file_array = new File(s_list.get(0).worldserver.getSaveHandler().getWorldDirectory(), "nali/entity").listFiles();
+			File[] d_file_array = new File(world_file, "nali/entity").listFiles();
 
 			if (d_file_array != null)
 			{

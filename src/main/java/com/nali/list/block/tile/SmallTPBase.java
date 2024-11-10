@@ -1,7 +1,7 @@
 package com.nali.list.block.tile;
 
-import net.minecraft.tileentity.TileEntity;
+import com.nali.small.tile.TileEntityT;
 
-public class SmallTPBase extends TileEntity
+public class SmallTPBase extends TileEntityT
 {
 }

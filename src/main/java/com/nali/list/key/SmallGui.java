@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
 
 @SideOnly(Side.CLIENT)
 public class SmallGui extends Key
@@ -35,9 +34,9 @@ public class SmallGui extends Key
 					{
 						PageLoad pageload = new PageLoad();
 						pageload.init();
-						Page.WIDTH = Display.getWidth();
-						Page.HEIGHT = Display.getHeight();
-						pageload.gen(Page.WIDTH, Page.HEIGHT);
+						Page.WIDTH = -1;
+//						Page.WIDTH = Display.getWidth();
+//						Page.HEIGHT = Display.getHeight();
 						Page.PAGE = pageload;
 
 						this.state |= 2;
@@ -50,5 +49,10 @@ public class SmallGui extends Key
 				this.state &= 255-1;
 			}
 		}
+	}
+
+	public static void setSmallPage()
+	{
+
 	}
 }

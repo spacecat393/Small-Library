@@ -16,7 +16,10 @@ public class PlayerData
 
 	public static void read(File world_file)
 	{
-		File[] file_array = new File(world_file, "nali/player").listFiles();
+		File player_file = new File(world_file, "nali/player");
+		player_file.mkdir();
+
+		File[] file_array = player_file.listFiles();
 		for (File file : file_array)
 		{
 			try
@@ -35,14 +38,19 @@ public class PlayerData
 
 	public static void write(File world_file)
 	{
-		File file = new File(world_file, "nali/player");
-		file.mkdirs();
+		File player_file = new File(world_file, "nali/player");
+//		file.mkdirs();
+
+		for (File file : player_file.listFiles())
+		{
+			file.delete();
+		}
 
 		for (UUID uuid : SAKURA_MAP.keySet())
 		{
 			try
 			{
-				Files.write(new File(file, uuid.toString()).toPath(), new byte[]{SAKURA_MAP.get(uuid)});
+				Files.write(new File(player_file, uuid.toString()).toPath(), new byte[]{SAKURA_MAP.get(uuid)});
 			}
 			catch (IOException e)
 			{

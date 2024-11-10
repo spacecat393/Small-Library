@@ -4,6 +4,7 @@ import com.nali.da.client.IClientDaO;
 import com.nali.render.RenderO;
 import com.nali.small.mix.IMixN;
 import com.nali.small.mix.memo.IBothN;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
@@ -20,13 +21,28 @@ public class ClientN
 	E
 > implements IBothN
 {
+//	public static List<ClientN> N_LIST = new ArrayList();
+//	public byte face_byte;
+	public byte state;//1-32 disable face
+
 	public R r;
 	public I i;
 
 	public ClientN(R r, I i)
 	{
+//		N_LIST.add(this);
 		this.r = r;
 		this.i = i;
+	}
+
+	@Override
+	public boolean doesSideBlockRendering(EnumFacing enumfacing)
+	{
+//		Nali.warn("value " + (1 << enumfacing.ordinal()));
+//		this.face_byte |= 1 << enumfacing.ordinal();
+//		Nali.warn("face_byte " + this.face_byte);
+		byte ordinal = (byte)(1 << enumfacing.ordinal());
+		return (this.state & ordinal) == ordinal;
 	}
 
 	@Override
