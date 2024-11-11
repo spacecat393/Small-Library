@@ -3,7 +3,7 @@ package com.nali.small.entity.memo.client.box.mix;
 import com.nali.da.IBothDaNe;
 import com.nali.da.IBothDaSn;
 import com.nali.da.client.IClientDaS;
-import com.nali.list.key.SmallGui;
+import com.nali.list.key.SmallPage;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientLe;
@@ -62,7 +62,7 @@ public class MixBoxSleInv
 	{
 		if (player_entity.isSneaking())
 		{
-			SmallGui.setSmallPage();
+			SmallPage.setSmallPage();
 //			this.c.sendSSI(new byte[1 + 8 + 1], SIEInvOpenInv.ID);
 		}
 		else
