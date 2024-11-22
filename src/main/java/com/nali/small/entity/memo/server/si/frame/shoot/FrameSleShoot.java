@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.server.si.frame.shoot;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.IBothDaSn;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaS;
 import com.nali.list.entity.si.SILeAttack;
 import com.nali.list.entity.si.SILeFindMove;
 import com.nali.small.entity.EntityLe;
@@ -13,7 +13,7 @@ import com.nali.small.entity.memo.server.si.frame.FrameS;
 
 public class FrameSleShoot
 <
-	BD extends IBothDaNe & IBothDaSn,
+	BD extends IBothDaE & IBothDaS,
 	E extends EntityLe,
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS> & IServerS,

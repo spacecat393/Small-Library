@@ -1,7 +1,8 @@
 package com.nali.list.block;
 
-import com.nali.da.client.IClientDaS;
-import com.nali.list.render.s.RenderTPBase;
+import com.nali.da.IBothDaO;
+import com.nali.list.da.BothDaTPBase;
+import com.nali.list.render.RenderTPBase;
 import com.nali.small.mix.block.BlockB;
 import com.nali.small.mix.item.ItemB;
 import com.nali.small.mix.memo.IBothN;
@@ -121,16 +122,22 @@ public class SmallTPBase extends BlockB implements ITileEntityProvider
 	@Override
 	public void newC()
 	{
-		IClientDaS rc = RenderTPBase.ICLIENTDAS;
-		RenderTPBase r = new RenderTPBase(rc, RenderTPBase.IBOTHDASN);
+		BothDaTPBase bd = BothDaTPBase.IDA;
+		RenderTPBase r = new RenderTPBase();
 //		DrawScreen d = new DrawScreen(r);
 //		d.scale(0.25F);
 //		d.z = 0.0F;
 //		MemoAnimation memoanimation = I.clientloader.stores.memoanimation_list.get(iclientdas.AnimationID());
-		r.initSkinning(/*memoanimation*/);
+		r.initSkinning(bd/*memoanimation*/);
 //		r.frame_int_array[0] = 40;
-		r.setSkinning(/*memoanimation*/);
+		r.setSkinning(bd/*memoanimation*/);
 		this.ibothb = new ClientTPBase(r/*, d*/, this);
+	}
+
+	@Override
+	public IBothDaO getBD()
+	{
+		return BothDaTPBase.IDA;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.nali.small.mix.item;
 
+import com.nali.da.IBothDaO;
 import com.nali.small.mix.IMixN;
 import com.nali.small.mix.memo.IBothB;
 import com.nali.small.mix.memo.IBothN;
@@ -16,7 +17,7 @@ public class ItemB extends ItemBlock implements IMixN
 {
 	public IMixN imixn;
 
-	public ItemB(IMixN<IBothB<TileEntity, Block>, Block> imixn)
+	public ItemB(IMixN<IBothDaO, IBothB<TileEntity, Block>, Block> imixn)
 	{
 		super(imixn.getE());
 		this.Ninit();
@@ -53,6 +54,12 @@ public class ItemB extends ItemBlock implements IMixN
 	@Override
 	public void newS()
 	{
+	}
+
+	@Override
+	public IBothDaO getBD()
+	{
+		return this.imixn.getBD();
 	}
 
 	@Override

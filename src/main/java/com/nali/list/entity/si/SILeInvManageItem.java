@@ -1,6 +1,6 @@
 package com.nali.list.entity.si;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetManageItem;
 import com.nali.network.NetworkRegistry;
@@ -25,7 +25,7 @@ import static com.nali.list.entity.si.SILeInvGetItem.isSameItemSameTags;
 public class SILeInvManageItem
 <
 	IE extends InvLe,
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends EntityLeInv,
 	I extends IMixE<BD, E>,
 	S extends ServerLeInv<IE, BD, E, I, MS>,

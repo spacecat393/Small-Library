@@ -1,11 +1,11 @@
 package com.nali.list.entity.si;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.MixSIE;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 
@@ -14,7 +14,7 @@ import static com.nali.small.entity.EntityMath.isInArea;
 
 public class SILeHeal
 <
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends EntityLivingBase,
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS>,

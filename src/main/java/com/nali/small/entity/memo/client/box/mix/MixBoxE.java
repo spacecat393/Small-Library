@@ -1,9 +1,10 @@
 package com.nali.small.entity.memo.client.box.mix;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.client.IClientDaO;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaO;
 import com.nali.list.entity.si.SIESit;
 import com.nali.render.RenderO;
+import com.nali.small.entity.EntityMath;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.box.hit.HitE;
@@ -23,18 +24,18 @@ import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 @SideOnly(Side.CLIENT)
 public abstract class MixBoxE
 <
-	RC extends IClientDaO,
-	R extends RenderO<RC>,
-	BD extends IBothDaNe,
+	BD extends IBothDaE & IBothDaO,
+	R extends RenderO<BD>,
 	E extends Entity,
 	I extends IMixE<BD, E>,
-	MC extends MixCIE<RC, R, BD, E, I, ?, MR, C>,
-	MR extends MixRenderE<RC, R, BD, E, I, MC, ?, C>,
-	C extends ClientE<RC, R, BD, E, I, MC, ?, MR>
+	MC extends MixCIE<BD, R, E, I, ?, MR, C>,
+	MR extends MixRenderE<BD, R, E, I, MC, ?, C>,
+	C extends ClientE<BD, R, E, I, MC, ?, MR>
 >
 {
 	public C c;
-	public List<HitE> sehit_list = new ArrayList();
+
+	public List<HitE> hite_list = new ArrayList();
 
 	public MixBoxE(C c)
 	{
@@ -72,22 +73,22 @@ public abstract class MixBoxE
 //		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 //	}
 
-	public void checkAxisAlignedBB(Entity player_entity)
+	public boolean isOn(Entity entity, Vec3d stand_vec3d, Vec3d look_vec3d)
 	{
-		Vec3d player_vec3d = player_entity.getPositionEyes(1.0f);
-		Vec3d look_vec3d = player_entity.getLookVec();
-
-		Vec3d end_vec3d = player_vec3d.add(look_vec3d.scale(32.0D));
+//		Vec3d player_vec3d = player_entity.getPositionEyes(1.0f);
+//		Vec3d look_vec3d = player_entity.getLookVec();
 
 		double max = Double.MAX_VALUE;
 		int index = -1;
-		List<AxisAlignedBB> axisalignedbb_list = this.get();
+		List<AxisAlignedBB> axisalignedbb_list = this.getAxisAlignedBBList();
 		for (int i = 0; i < axisalignedbb_list.size(); ++i)
 		{
+//			AxisAlignedBB axisalignedbb = box_list.get(i);
+//			if (this.hite_list.get(i).should(player_entity, axisalignedbb) && axisalignedbb.calculateIntercept(player_vec3d, end_vec3d) != null)
 			AxisAlignedBB axisalignedbb = axisalignedbb_list.get(i);
-			if (this.sehit_list.get(i).should(player_entity, axisalignedbb) && axisalignedbb.calculateIntercept(player_vec3d, end_vec3d) != null)
+			if (this.hite_list.get(i).should(entity) && EntityMath.ray(axisalignedbb, stand_vec3d, look_vec3d))
 			{
-				double new_max = getDistanceAABBToAABB(player_entity.getEntityBoundingBox(), axisalignedbb);
+				double new_max = getDistanceAABBToAABB(entity.getEntityBoundingBox(), axisalignedbb);
 				if (new_max < max)
 				{
 					index = i;
@@ -98,15 +99,16 @@ public abstract class MixBoxE
 
 		if (index != -1)
 		{
-			this.sehit_list.get(index).run(player_entity, axisalignedbb_list.get(index));
-			return;
+			this.hite_list.get(index).run(entity);
+			return true;
 		}
 
 		this.c.sendSSI(new byte[1 + 8 + 1], SIESit.ID);
 //		this.c.sendPacketUUID(AIESit.ID);
+		return false;
 	}
 
-	public abstract List<AxisAlignedBB> get();
+	public abstract List<AxisAlignedBB> getAxisAlignedBBList();
 	public abstract void init(C c);
 
 //	public AxisAlignedBB getHeadAxisAlignedBB()

@@ -1,7 +1,7 @@
-package com.nali.list.render.o;
+package com.nali.list.render;
 
-import com.nali.da.client.IClientDaO;
-import com.nali.small.da.client.BoxClient;
+import com.nali.da.IBothDaO;
+import com.nali.list.da.BothDaSakura;
 import com.nali.small.render.SmallRenderO;
 import com.nali.system.opengl.memo.client.MemoG;
 import com.nali.system.opengl.memo.client.MemoS;
@@ -15,23 +15,33 @@ import java.util.Map;
 import static com.nali.system.ClientLoader.G_LIST;
 
 @SideOnly(Side.CLIENT)
-public class RenderBox
+public class RenderSakura
 <
-	RC extends IClientDaO
-> extends SmallRenderO<RC>
+	BD extends IBothDaO
+> extends SmallRenderO<BD>
 {
-//	public static int ID;
-//	public static DataLoader DATALOADER = RenderHelper.DATALOADER;
-	public static IClientDaO ICLIENTDAO = new BoxClient();
 	public Map<Integer, Integer> color_map = new HashMap();//ebo hex
 	public byte extra_bit;
 
-	public RenderBox(RC rc)
+	public RenderSakura()
 	{
-		super(rc);
-		color_map.put((G_LIST.get(ICLIENTDAO.StartPart() + 1)).ebo, 0xFFffc196);
-		color_map.put((G_LIST.get(ICLIENTDAO.StartPart() + 2)).ebo, 0xFFffc196);
+//		float s = -5.0F;
+//		this.objectscreendraw.sx = s;
+//		this.objectscreendraw.sy = s;
+//		this.objectscreendraw.sz = s;
+		color_map.put((G_LIST.get(BothDaSakura.IDA.O_StartPart())).ebo, 0xFFFFACDF);//ffd4e9
+//		color_map.put(((OpenGLObjectMemory)OBJECT_LIST.get(CLIENTDATA.StartPart() + 1)).ebo, 0xFFffacdf);
 	}
+
+	@Override
+	public void setLightCoord(MemoS rs)
+	{
+	}
+
+//	@Override
+//	public void setLightMapUniform(OpenGLObjectShaderMemory openglobjectshadermemory)
+//	{
+//	}
 
 	@Override
 	public void setTextureUniform(MemoG rg, MemoS rs)
@@ -70,21 +80,6 @@ public class RenderBox
 		{
 			this.extra_bit = 4;
 			return integer;
-		}
-	}
-
-	@Override
-	public void setLightMapUniform(MemoS rs)
-	{
-		if (this.extra_bit == 4)
-		{
-			OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[5/*+1*/], 1);
-//			OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE1);
-//			setLightMapBuffer(((IMixinEntityRenderer) Minecraft.getMinecraft().entityRenderer).lightmapTexture().getGlTextureId());
-		}
-		else
-		{
-			super.setLightMapUniform(rs);
 		}
 	}
 

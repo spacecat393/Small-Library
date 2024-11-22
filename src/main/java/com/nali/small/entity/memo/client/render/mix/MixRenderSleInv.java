@@ -1,14 +1,15 @@
 package com.nali.small.entity.memo.client.render.mix;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.IBothDaSn;
-import com.nali.da.client.IClientDaS;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaO;
+import com.nali.da.IBothDaS;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixE;
+import com.nali.small.entity.IMixES;
+import com.nali.small.entity.IMixESInv;
 import com.nali.small.entity.inv.InvLe;
 import com.nali.small.entity.memo.IBothEInv;
 import com.nali.small.entity.memo.client.ClientLe;
-import com.nali.small.entity.memo.client.IClientERsInv;
 import com.nali.small.entity.memo.client.box.mix.MixBoxSleInv;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.FRenderE;
@@ -17,28 +18,25 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
-import static com.nali.small.entity.memo.client.render.FRenderSeMath.interpolateRotation;
-
 @SideOnly(Side.CLIENT)
 public abstract class MixRenderSleInv
 <
 	IE extends InvLe,
-	RC extends IClientDaS,
-	R extends RenderS<BD, RC>,
-	BD extends IBothDaNe & IBothDaSn,
+	BD extends IBothDaE & IBothDaO & IBothDaS,
+	R extends RenderS<BD>,
 	E extends EntityLivingBase,
-	I extends IMixE<BD, E>,
-	MC extends MixCIE<RC, R, BD, E, I, MB, ?, C>,
-	MB extends MixBoxSleInv<RC, R, BD, E, I, MC, ?, C>,
-	C extends ClientLe<RC, R, BD, E, I, MC, MB, ?> & IClientERsInv & IBothEInv<IE>
-> extends MixRenderSe<RC, R, BD, E, I, MC, MB, C>
+	I extends IMixE<BD, E> & IMixES & IMixESInv,
+	MC extends MixCIE<BD, R, E, I, MB, ?, C>,
+	MB extends MixBoxSleInv<BD, R, E, I, MC, ?, C>,
+	C extends ClientLe<BD, R, E, I, MC, MB, ?> & IBothEInv<IE>
+> extends MixRenderSe<BD, R, E, I, MC, MB, C>
 {
 //	public LayerSleInvArrow<RC, R, SD, BD, E, I, MC, ?, MB, C> layersleinvarrow;
 //	public LayerSleInvItem<IE, RC, R, SD, BD, E, I, MC, ?, MB, C> layersleinvitem;
 
-	public float
-	body_rot,
-	net_head_yaw;
+//	public float
+//		body_rot,
+//		net_head_yaw;
 
 	public MixRenderSleInv(C c)
 	{
@@ -47,14 +45,14 @@ public abstract class MixRenderSleInv
 //		this.layersleinvitem = new LayerSleInvItem(c);
 	}
 
-	@Override
-	public void updateData(float partialTicks)
-	{
-		E e = this.c.i.getE();
-		this.body_rot = (float)Math.toRadians(interpolateRotation(e.prevRenderYawOffset, e.renderYawOffset, partialTicks));
-		super.updateData(partialTicks);
-		this.net_head_yaw = this.head_rot - this.body_rot;
-	}
+//	@Override
+//	public void updateData(float partialTicks)
+//	{
+//		E e = this.c.i.getE();
+//		this.body_rot = (float)Math.toRadians(interpolateRotation(e.prevRenderYawOffset, e.renderYawOffset, partialTicks));
+//		super.updateData(partialTicks);
+//		this.net_head_yaw = this.head_rot - this.body_rot;
+//	}
 
 	@Override
 	public void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks)

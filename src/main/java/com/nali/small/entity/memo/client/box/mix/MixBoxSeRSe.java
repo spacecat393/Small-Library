@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.client.box.mix;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.client.IClientDaO;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaO;
 import com.nali.list.entity.si.SIEPlayWithRSe;
 import com.nali.list.key.SmallPage;
 import com.nali.render.RenderO;
@@ -11,6 +11,7 @@ import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -19,15 +20,14 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class MixBoxSeRSe
 <
-	RC extends IClientDaO,
-	R extends RenderO<RC>,
-	BD extends IBothDaNe,
+	BD extends IBothDaE & IBothDaO,
+	R extends RenderO<BD>,
 	E extends Entity,
 	I extends IMixE<BD, E>,
-	MC extends MixCIE<RC, R, BD, E, I, ?, MR, C>,
-	MR extends MixRenderE<RC, R, BD, E, I, MC, ?, C>,
-	C extends ClientE<RC, R, BD, E, I, MC, ?, MR>
-> extends MixBoxE<RC, R, BD, E, I, MC, MR, C>
+	MC extends MixCIE<BD, R, E, I, ?, MR, C>,
+	MR extends MixRenderE<BD, R, E, I, MC, ?, C>,
+	C extends ClientE<BD, R, E, I, MC, ?, MR>
+> extends MixBoxE<BD, R, E, I, MC, MR, C>
 {
 	public MixBoxSeRSe(C c)
 	{
@@ -35,9 +35,9 @@ public class MixBoxSeRSe
 	}
 
 	@Override
-	public void checkAxisAlignedBB(Entity player_entity)
+	public boolean isOn(Entity entity, Vec3d stand_vec3d, Vec3d look_vec3d)
 	{
-		if (player_entity.isSneaking())
+		if (entity.isSneaking())
 		{
 			SmallPage.setSmallPage();
 //			this.c.sendSSI(new byte[1 + 8 + 1], SIEInvOpenInv.ID);
@@ -46,10 +46,12 @@ public class MixBoxSeRSe
 		{
 			this.c.sendSSI(new byte[1 + 8 + 1], SIEPlayWithRSe.ID);
 		}
+
+		return true;
 	}
 
 	@Override
-	public List<AxisAlignedBB> get()
+	public List<AxisAlignedBB> getAxisAlignedBBList()
 	{
 		return null;
 	}

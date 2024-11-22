@@ -1,13 +1,13 @@
 package com.nali.small.entity.memo.server.si;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import net.minecraft.entity.Entity;
 
 public abstract class SI
 <
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends Entity,
 	I extends IMixE<BD, E>,
 	S extends ServerE<BD, E, I, MS>,

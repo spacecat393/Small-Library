@@ -1,11 +1,11 @@
 package com.nali.list.entity.si;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class SIEOwner
 <
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends Entity,
 	I extends IMixE<BD, E>,
 	S extends ServerE<BD, E, I, MS>,

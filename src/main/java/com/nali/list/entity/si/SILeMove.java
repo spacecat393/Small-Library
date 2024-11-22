@@ -1,6 +1,6 @@
 package com.nali.list.entity.si;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.MixSIE;
@@ -14,7 +14,7 @@ import net.minecraft.util.math.Vec3d;
 
 public class SILeMove
 <
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends EntityLivingBase,
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS>,

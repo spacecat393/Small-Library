@@ -1,7 +1,7 @@
-package com.nali.list.render.o;
+package com.nali.list.render;
 
-import com.nali.da.client.IClientDaO;
-import com.nali.small.da.client.StorageClient;
+import com.nali.da.IBothDaO;
+import com.nali.list.da.BothDaStorage;
 import com.nali.small.render.SmallRenderO;
 import com.nali.system.opengl.memo.client.MemoG;
 import net.minecraft.util.ResourceLocation;
@@ -16,21 +16,15 @@ import static com.nali.system.ClientLoader.G_LIST;
 @SideOnly(Side.CLIENT)
 public class RenderStorage
 <
-	RC extends IClientDaO
-> extends SmallRenderO<RC>
+	BD extends IBothDaO
+> extends SmallRenderO<BD>
 {
-	public static IClientDaO ICLIENTDAO = new StorageClient();
 	public static Map<Integer, Integer> TEXTURE_MAP = new HashMap();
-
-	public RenderStorage(RC rc)
-	{
-		super(rc);
-	}
 
 	public static void setTextureMap()
 	{
-		TEXTURE_MAP.put((G_LIST.get(ICLIENTDAO.StartPart())).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/obsidian.png")));
-		TEXTURE_MAP.put((G_LIST.get(ICLIENTDAO.StartPart() + 1)).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/diamond_block.png")));
+		TEXTURE_MAP.put((G_LIST.get(BothDaStorage.IDA.O_StartPart())).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/obsidian.png")));
+		TEXTURE_MAP.put((G_LIST.get(BothDaStorage.IDA.O_StartPart() + 1)).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/diamond_block.png")));
 	}
 
 	@Override

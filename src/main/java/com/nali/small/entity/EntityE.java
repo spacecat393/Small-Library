@@ -1,9 +1,7 @@
 package com.nali.small.entity;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -62,11 +60,11 @@ public abstract class EntityE extends Entity implements IMixE
 		this.getB().readFile();
 	}
 
-	@Override
-	public boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
-	{
-		return this.getB().processInitialInteract(entityplayer, enumhand);
-	}
+//	@Override
+//	public boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
+//	{
+//		return this.getB().processInitialInteract(entityplayer, enumhand);
+//	}
 
 	@Override
 	public void onUpdate()

@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo.server.si.frame.tloop;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.list.entity.si.SIESit;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.IServerS;
@@ -10,7 +10,7 @@ import net.minecraft.entity.Entity;
 
 public class FrameSTLoopSit
 <
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends Entity,
 	I extends IMixE<BD, E>,
 	S extends ServerE<BD, E, I, MS> & IServerS,

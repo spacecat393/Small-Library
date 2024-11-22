@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.server.si.frame;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.IBothDaSn;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaS;
 import com.nali.list.entity.si.SILeHeal;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
@@ -11,7 +11,7 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 
 public class FrameSleHeal
 <
-	BD extends IBothDaNe & IBothDaSn,
+	BD extends IBothDaE & IBothDaS,
 	E extends EntityLe,
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS> & IServerS,

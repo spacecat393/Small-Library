@@ -1,11 +1,12 @@
 package com.nali.small.entity.memo.client.render.mix;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.IBothDaSn;
-import com.nali.da.client.IClientDaS;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaO;
+import com.nali.da.IBothDaS;
 import com.nali.draw.DrawWorldData;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixE;
+import com.nali.small.entity.IMixES;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.MixCIE;
@@ -16,24 +17,21 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
-import static com.nali.small.entity.memo.client.render.FRenderSeMath.interpolateRotation;
-
 @SideOnly(Side.CLIENT)
 public abstract class MixRenderSe
 <
-	RC extends IClientDaS,
-	R extends RenderS<BD, RC>,
-	BD extends IBothDaNe & IBothDaSn,
+	BD extends IBothDaE & IBothDaO & IBothDaS,
+	R extends RenderS<BD>,
 	E extends Entity,
-	I extends IMixE<BD, E>,
-	MC extends MixCIE<RC, R, BD, E, I, MB, ?, C>,
-	MB extends MixBoxE<RC, R, BD, E, I, MC, ?, C>,
-	C extends ClientE<RC, R, BD, E, I, MC, MB, ?>
-> extends MixRenderE<RC, R, BD, E, I, MC, MB, C>
+	I extends IMixE<BD, E> & IMixES,
+	MC extends MixCIE<BD, R, E, I, MB, ?, C>,
+	MB extends MixBoxE<BD, R, E, I, MC, ?, C>,
+	C extends ClientE<BD, R, E, I, MC, MB, ?>
+> extends MixRenderE<BD, R, E, I, MC, MB, C>
 {
-	public float
-		head_rot,
-		head_pitch;
+//	public float
+//		head_rot,
+//		head_pitch;
 
 	public MixRenderSe(C c)
 	{
@@ -50,8 +48,8 @@ public abstract class MixRenderSe
 
 		GL11.glPushMatrix();
 
-		this.updateData(/*rendere, */partialTicks);
-		this.updateSkinning();
+//		this.updateData(/*rendere, */partialTicks);
+		this.updateSkinning(partialTicks);
 
 		GL11.glTranslated(ox, oy, oz);
 
@@ -76,7 +74,7 @@ public abstract class MixRenderSe
 		r.updateLightCoord(e.world, e.getPosition());
 //		r.draw(/*ox, oy, oz*/);
 		DrawWorldData drawworlddata = new DrawWorldData();
-		r.startDrawLater(drawworlddata);
+		r.startDrawLater(this.c.i.getBD(), drawworlddata);
 		if (e.isInvisible() || e.isInvisibleToPlayer(Minecraft.getMinecraft().player))
 		{
 			drawworlddata.color_v4_float[3] *= 0.25F;
@@ -91,34 +89,35 @@ public abstract class MixRenderSe
 //		this.renderLayer(t, ox, oy, oz, partialTicks);
 	}
 
-	public void updateData(/*RenderE<E> rendere, */float partialTicks)
-	{
-		E e = this.c.i.getE();
-		this.head_rot = (float)Math.toRadians(interpolateRotation(e.prevRotationYaw, e.rotationYaw, partialTicks));
-		this.head_pitch = (float)Math.toRadians(e.prevRotationPitch + (e.rotationPitch - e.prevRotationPitch) * partialTicks);
-//		r.timeline = partialTicks;
+//	public void updateData(/*RenderE<E> rendere, */float partialTicks)
+//	{
+//		E e = this.c.i.getE();
+//		this.head_rot = (float)Math.toRadians(interpolateRotation(e.prevRotationYaw, e.rotationYaw, partialTicks));
+//		this.head_pitch = (float)Math.toRadians(e.prevRotationPitch + (e.rotationPitch - e.prevRotationPitch) * partialTicks);
+////		r.timeline = partialTicks;
+//
+////		OpenGLAnimationMemory openglanimationmemory = r.dataloader.openglanimationmemory_list.get(((SkinningClientData)r.clientdata).AnimationID());
+////		OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)r.dataloader.object_array[((SkinningClientData)r.clientdata).AnimationID()];
+////		MemoAnimation memoanimation = r.rst.memoanimation_list.get(r.rc.AnimationID());
+//	}
 
-//		OpenGLAnimationMemory openglanimationmemory = r.dataloader.openglanimationmemory_list.get(((SkinningClientData)r.clientdata).AnimationID());
-//		OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)r.dataloader.object_array[((SkinningClientData)r.clientdata).AnimationID()];
-//		MemoAnimation memoanimation = r.rst.memoanimation_list.get(r.rc.AnimationID());
-	}
-
-	public void updateSkinning()
+	public void updateSkinning(float partial_ticks)
 	{
 		R r = this.c.r;
-		r.initSkinning(/*memoanimation*/);
+		BD bd = this.c.i.getBD();
+		r.initSkinning(bd/*memoanimation*/);
 
 //		if (!this.c.fake)
 //		{
-		this.multiplyAnimation(/*rendere*/);
+		this.c.i.mulFrame(r.skinning_float_array, r.frame_int_array, partial_ticks);
 //		}
 
-		r.setSkinning(/*memoanimation*/);
+		r.setSkinning(bd/*memoanimation*/);
 	}
 
 //	public void renderHitBox(FRenderE<E> rendere)
 //	{
 //	}
 
-	public abstract void multiplyAnimation(/*RenderE<E> rendere*/);
+//	public abstract void multiplyAnimation(/*RenderE<E> rendere*/);
 }

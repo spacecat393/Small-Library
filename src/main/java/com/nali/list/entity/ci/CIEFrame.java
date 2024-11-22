@@ -1,10 +1,11 @@
 package com.nali.list.entity.ci;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.IBothDaSn;
-import com.nali.da.client.IClientDaS;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaO;
+import com.nali.da.IBothDaS;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixE;
+import com.nali.small.entity.IMixES;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.CI;
@@ -17,16 +18,15 @@ import net.minecraft.network.datasync.EntityDataManager;
 //@SideOnly(Side.CLIENT)
 public class CIEFrame
 <
-	RC extends IClientDaS,
-	R extends RenderS<BD, RC>,
-	BD extends IBothDaNe & IBothDaSn,
+	BD extends IBothDaE & IBothDaO & IBothDaS,
+	R extends RenderS<BD>,
 	E extends Entity,
-	I extends IMixE<BD, E>,
-	MC extends MixCIE<RC, R, BD, E, I, MB, MR, C>,
-	MB extends MixBoxE<RC, R, BD, E, I, MC, MR, C>,
-	MR extends MixRenderSe<RC, R, BD, E, I, MC, MB, C>,
-	C extends ClientE<RC, R, BD, E, I, MC, MB, MR>
-> extends CI<RC, R, BD, E, I, MC, MB, MR, C>
+	I extends IMixE<BD, E> & IMixES,
+	MC extends MixCIE<BD, R, E, I, MB, MR, C>,
+	MB extends MixBoxE<BD, R, E, I, MC, MR, C>,
+	MR extends MixRenderSe<BD, R, E, I, MC, MB, C>,
+	C extends ClientE<BD, R, E, I, MC, MB, MR>
+> extends CI<BD, R, E, I, MC, MB, MR, C>
 {
 	public static byte ID;
 
@@ -59,7 +59,7 @@ public class CIEFrame
 			DataParameter<Integer>[] integer_dataparameter = i.getIntegerDataParameterArray();
 
 			int[] frame_int_array = r.frame_int_array;
-			for (int x = 0; x < this.c.i.getBD().MaxFrame(); ++x)
+			for (int x = 0; x < this.c.i.getBD().S_MaxFrame(); ++x)
 			{
 				frame_int_array[x] = entitydatamanager.get(integer_dataparameter[x++]);
 			}
@@ -71,8 +71,8 @@ public class CIEFrame
 	{
 //		if (this.c.mc.fake)
 //		{
-		this.c.r.scale = this.c.i.getBD().Scale();
-		this.c.mr.updateSkinning();
+		this.c.r.scale = this.c.i.getBD().E_Scale();
+//		this.c.mr.updateSkinning();
 //		}
 	}
 }

@@ -1,6 +1,6 @@
 package com.nali.list.entity.si;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.ServerLe;
@@ -15,11 +15,11 @@ public class SILePlayWithSSe
 <
 	R2 extends SIEPlayWithRSe<S, BD, E, I, MS, BD2, E2, I2, S2, A2>,
 	S2 extends ServerE<BD2, E2, I2, A2>,
-	BD2 extends IBothDaNe,
+	BD2 extends IBothDaE,
 	E2 extends Entity,
 	I2 extends IMixE<BD2, E2>,
 	A2 extends MixSIE<BD2, E2, I2, S2>,
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends EntityLivingBase,
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS>,

@@ -1,6 +1,6 @@
 package com.nali.small.render;
 
-import com.nali.da.client.IClientDaO;
+import com.nali.da.IBothDaO;
 import com.nali.render.RenderO;
 import com.nali.system.opengl.memo.client.MemoG;
 import net.minecraftforge.fml.relauncher.Side;
@@ -12,14 +12,9 @@ import static com.nali.list.data.SmallData.TEXTURE_STEP;
 @SideOnly(Side.CLIENT)
 public class SmallRenderO
 <
-	RC extends IClientDaO
-> extends RenderO<RC>
+	BD extends IBothDaO
+> extends RenderO<BD>
 {
-	public SmallRenderO(RC rc)
-	{
-		super(rc);
-	}
-
 	@Override
 	public int getTextureID(MemoG rg)
 	{

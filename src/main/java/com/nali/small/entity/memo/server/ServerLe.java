@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo.server;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.list.entity.si.SILeLockDMG;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothLe;
@@ -13,7 +13,7 @@ import net.minecraft.util.DamageSource;
 public abstract class ServerLe
 <
 //	SD extends ISoundDaLe,
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends EntityLivingBase,
 	I extends IMixE<BD, E>/* & IMixESoundDa<SD>*/,
 	MS extends MixSIE<BD, E, I, ?>
@@ -59,19 +59,19 @@ public abstract class ServerLe
 		return this.workebodyyaw;
 	}
 
-	@Override
-	public void getHurtSound(DamageSource damagesource)
-	{
-//		this.ms.byte_array = new byte[1 + 8 + 1 + 4];
-//		ByteWriter.set(this.ms.byte_array, this.i.getSD().HURT(), 1 + 8 + 1);
-//		this.ms.call(SIESound.ID);
-	}
-
-	@Override
-	public void getDeathSound()
-	{
-//		this.ms.byte_array = new byte[1 + 8 + 1 + 4];
-//		ByteWriter.set(this.ms.byte_array, this.i.getSD().DEATH(), 1 + 8 + 1);
-//		this.ms.call(SIESound.ID);
-	}
+//	@Override
+//	public void getHurtSound(DamageSource damagesource)
+//	{
+////		this.ms.byte_array = new byte[1 + 8 + 1 + 4];
+////		ByteWriter.set(this.ms.byte_array, this.i.getSD().HURT(), 1 + 8 + 1);
+////		this.ms.call(SIESound.ID);
+//	}
+//
+//	@Override
+//	public void getDeathSound()
+//	{
+////		this.ms.byte_array = new byte[1 + 8 + 1 + 4];
+////		ByteWriter.set(this.ms.byte_array, this.i.getSD().DEATH(), 1 + 8 + 1);
+////		this.ms.call(SIESound.ID);
+//	}
 }

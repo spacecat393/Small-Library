@@ -1,5 +1,6 @@
 package com.nali.small.mix;
 
+import com.nali.da.IBothDaO;
 import com.nali.small.mix.memo.IBothN;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -9,6 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IMixN
 <
+	BD extends IBothDaO,
 	B extends IBothN,
 	E
 >
@@ -37,6 +39,7 @@ public interface IMixN
 
 	void newS();
 
+	BD getBD();
 	B getB();
 	E getE();
 }

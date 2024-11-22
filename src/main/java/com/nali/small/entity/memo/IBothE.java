@@ -2,8 +2,6 @@ package com.nali.small.entity.memo;
 
 import com.nali.small.entity.memo.client.render.FRenderE;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -12,11 +10,11 @@ public interface IBothE
 	E extends Entity
 >
 {
-	default boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
-	{
-		entityplayer.swingArm(enumhand);
-		return true;
-	}
+//	default boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
+//	{
+//		entityplayer.swingArm(enumhand);
+//		return true;
+//	}
 
 	default boolean isMove(E e)
 	{

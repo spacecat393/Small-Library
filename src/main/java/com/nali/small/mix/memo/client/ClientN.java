@@ -1,6 +1,6 @@
 package com.nali.small.mix.memo.client;
 
-import com.nali.da.client.IClientDaO;
+import com.nali.da.IBothDaO;
 import com.nali.render.RenderO;
 import com.nali.small.mix.IMixN;
 import com.nali.small.mix.memo.IBothN;
@@ -15,9 +15,9 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class ClientN
 <
-	RC extends IClientDaO,
-	R extends RenderO<RC>,
-	I extends IMixN<?, E>,
+	BD extends IBothDaO,
+	R extends RenderO<BD>,
+	I extends IMixN<BD, ?, E>,
 	E
 > implements IBothN
 {
@@ -58,7 +58,7 @@ public class ClientN
 //		GL11.glRotatef(0.0F, 0.0F, 1.0F, 0.0F);
 //		GL11.glRotatef(0.0F, 0.0F, 0.0F, 1.0F);
 
-		this.r.draw();
+		this.r.draw(this.i.getBD());
 
 		GL11.glPopMatrix();
 	}

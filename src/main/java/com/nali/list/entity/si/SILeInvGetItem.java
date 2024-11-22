@@ -1,6 +1,6 @@
 package com.nali.list.entity.si;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetGetItem;
 import com.nali.network.NetworkRegistry;
@@ -26,7 +26,7 @@ import static com.nali.small.entity.EntityMath.isInArea;
 public class SILeInvGetItem
 <
 	IE extends InvLe,
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends EntityLeInv,
 	I extends IMixE<BD, E>,
 	S extends ServerLeInv<IE, BD, E, I, MS>,

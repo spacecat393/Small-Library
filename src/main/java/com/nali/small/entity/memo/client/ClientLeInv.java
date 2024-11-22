@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.client;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.client.IClientDaO;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaO;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.inv.InvLe;
@@ -19,16 +19,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class ClientLeInv
 <
 	IE extends InvLe,
-	RC extends IClientDaO,
-	R extends RenderO<RC>,
+	BD extends IBothDaE & IBothDaO,
+	R extends RenderO<BD>,
 //	SD extends ISoundDaLe,
-	BD extends IBothDaNe,
 	E extends EntityLivingBase,
 	I extends IMixE<BD, E>/* & IMixESoundDa<SD>*/,
-	MC extends MixCIE<RC, R, BD, E, I, MB, MR, ?>,
-	MB extends MixBoxE<RC, R, BD, E, I, MC, MR, ?>,
-	MR extends MixRenderE<RC, R, BD, E, I, MC, MB, ?>
-> extends ClientLe<RC, R/*, SD*/, BD, E, I, MC, MB, MR> implements IBothLeInv<IE, E>
+	MC extends MixCIE<BD, R, E, I, MB, MR, ?>,
+	MB extends MixBoxE<BD, R, E, I, MC, MR, ?>,
+	MR extends MixRenderE<BD, R, E, I, MC, MB, ?>
+> extends ClientLe<BD, R/*, SD*/, E, I, MC, MB, MR> implements IBothLeInv<IE, E>
 {
 	public IE ie;
 

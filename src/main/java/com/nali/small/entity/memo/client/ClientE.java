@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.client;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.client.IClientDaO;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaO;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SSI;
 import com.nali.network.NetworkRegistry;
@@ -14,8 +14,6 @@ import com.nali.small.entity.memo.client.render.FRenderE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,21 +23,18 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public abstract class ClientE
 <
-	RC extends IClientDaO,
-	R extends RenderO<RC>,
-	BD extends IBothDaNe,
+	BD extends IBothDaE & IBothDaO,
+	R extends RenderO<BD>,
 	E extends Entity,
 	I extends IMixE<BD, E>,
-	MC extends MixCIE<RC, R, BD, E, I, MB, MR, ?>,
-	MB extends MixBoxE<RC, R, BD, E, I, MC, MR, ?>,
-	MR extends MixRenderE<RC, R, BD, E, I, MC, MB, ?>
+	MC extends MixCIE<BD, R, E, I, MB, MR, ?>,
+	MB extends MixBoxE<BD, R, E, I, MC, MR, ?>,
+	MR extends MixRenderE<BD, R, E, I, MC, MB, ?>
 > implements IBothE<E>
 {
 	public static String EMPTY_STRING = "---";
 
-//	public static Map<UUID, ClientE> C_MAP = new HashMap();
 	public static Map<Long, ClientE> C_MAP = new HashMap();
-//	public static Map<Integer, UUID> UUID_MAP = new HashMap();
 
 	public I i;
 	public R r;
@@ -57,7 +52,6 @@ public abstract class ClientE
 	public boolean fake;
 	public String name_string = EMPTY_STRING;
 	public byte state;//regen outline/glowing die
-	//	public Integer dimension;
 	public float x, y, z, hp;
 
 	public ClientE(R r)
@@ -70,15 +64,7 @@ public abstract class ClientE
 		this(r);
 		this.i = i;
 
-		this.sync_byte_array = new byte[this.i.getBD().MaxSync()];
-	}
-
-	@Override
-	public boolean processInitialInteract(EntityPlayer entityplayer, EnumHand enumhand)
-	{
-		this.mb.checkAxisAlignedBB(entityplayer);
-		entityplayer.swingArm(enumhand);
-		return true;
+		this.sync_byte_array = new byte[this.i.getBD().E_MaxSync()];
 	}
 
 	@Override
@@ -90,12 +76,6 @@ public abstract class ClientE
 	public void readFile()
 	{
 	}
-
-//	@Override
-//	public void readEntityFromNBT(NBTTagCompound nbttagcompound)
-//	{
-//		this.initFakeFrame();
-//	}
 
 	@Override
 	public void onReadNBT()
@@ -121,14 +101,6 @@ public abstract class ClientE
 		this.mr.doRender(frendere, ox, oy, oz, partial_ticks);
 	}
 
-//	@Override
-//	public void setUUID(UUID uuid)
-//	{
-//		this.uuid = uuid;
-////		C_MAP.put(this.uuid, this);
-////		UUID_MAP.put(this.i.getE().getEntityId(), this.uuid);
-//	}
-
 	public void sendSSI(byte[] byte_array, byte i)
 	{
 		E e = this.i.getE();
@@ -137,26 +109,4 @@ public abstract class ClientE
 		byte_array[1 + 8] = i;
 		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 	}
-
-//	@Override
-//	public void setGlowing(boolean b)
-//	{
-////		this.glowing = b;
-//		if (b)
-//		{
-//			this.state |= 2;
-//		}
-//		else
-//		{
-//			this.state &= 255-2;
-//		}
-//	}
-
-//	@Override
-//	public I getI()
-//	{
-//		return this.i;
-//	}
-
-//	public abstract byte[] getCI();
 }

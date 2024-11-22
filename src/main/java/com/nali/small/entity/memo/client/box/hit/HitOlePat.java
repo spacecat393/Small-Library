@@ -1,13 +1,13 @@
 package com.nali.small.entity.memo.client.box.hit;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.client.IClientDaO;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaNE;
+import com.nali.da.IBothDaO;
 import com.nali.list.entity.si.SIEPat;
 import com.nali.list.entity.si.SIESound;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.network.NetworkRegistry;
 import com.nali.render.RenderO;
-import com.nali.small.entity.EntityRefSound;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientLe;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
@@ -16,23 +16,21 @@ import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class HitOlePat
 <
-	RC extends IClientDaO,
-	R extends RenderO<RC>,
-	BD extends IBothDaNe,
+	BD extends IBothDaE & IBothDaO & IBothDaNE,
+	R extends RenderO<BD>,
 	E extends EntityLivingBase,
 	I extends IMixE<BD, E>,
-	MC extends MixCIE<RC, R, BD, E, I, MB, MR, C>,
-	MR extends MixRenderE<RC, R, BD, E, I, MC, MB, C>,
-	MB extends MixBoxE<RC, R, BD, E, I, MC, MR, C>,
-	C extends ClientLe<RC, R, BD, E, I, MC, MB, MR>
-> extends HitE<RC, R, BD, E, I, MC, MR, MB, C>
+	MC extends MixCIE<BD, R, E, I, MB, MR, C>,
+	MR extends MixRenderE<BD, R, E, I, MC, MB, C>,
+	MB extends MixBoxE<BD, R, E, I, MC, MR, C>,
+	C extends ClientLe<BD, R, E, I, MC, MB, MR>
+> extends HitE<BD, R, E, I, MC, MR, MB, C>
 {
 	public byte pat_time;
 
@@ -43,7 +41,7 @@ public class HitOlePat
 	}
 
 	@Override
-	public void run(Entity player_entity, AxisAlignedBB axisalignedbb)
+	public void run(Entity player_entity)
 	{
 		E e = this.c.i.getE();
 //					ItemStack itemstack = entityplayer.getHeldItem(enumhand);
@@ -65,8 +63,8 @@ public class HitOlePat
 			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 
 //			this.c.sound.play(this.c.i.getSD().PAT());
-			byte[] s_byte_array = new byte[1 + 8 + 1 + 1];
-			s_byte_array[1 + 8 + 1] = EntityRefSound.PAT;
+			byte[] s_byte_array = new byte[1 + 8 + 1 + 4];
+			ByteWriter.set(s_byte_array, this.c.i.getBD().NE_PAT(), 1 + 8 + 1);
 			this.c.sendSSI(s_byte_array, SIESound.ID);
 
 //			serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ON_PAT()] = 1;
@@ -81,7 +79,7 @@ public class HitOlePat
 	}
 
 	@Override
-	public boolean should(Entity player_entity, AxisAlignedBB axisalignedbb)
+	public boolean should(Entity player_entity)
 	{
 		return ((EntityLivingBase)player_entity).getHeldItemMainhand().isEmpty();
 	}

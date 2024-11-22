@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo.server.si;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.list.entity.si.SIEInvLockInv;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
@@ -8,7 +8,7 @@ import net.minecraft.entity.Entity;
 
 public class MixSIEInv
 <
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends Entity,
 	I extends IMixE<BD, E>,
 	S extends ServerE<BD, E, I, ?>

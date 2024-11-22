@@ -1,6 +1,6 @@
 package com.nali.small.mix.memo.client;
 
-import com.nali.da.client.IClientDaO;
+import com.nali.da.IBothDaO;
 import com.nali.draw.DrawWorldData;
 import com.nali.render.RenderO;
 import com.nali.small.mix.IMixN;
@@ -14,12 +14,12 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class ClientB
 <
-	RC extends IClientDaO,
-	R extends RenderO<RC>,
-	I extends IMixN<?, E>,
+	BD extends IBothDaO,
+	R extends RenderO<BD>,
+	I extends IMixN<BD, ?, E>,
 	E extends Block,
 	T extends TileEntity
-> extends ClientN<RC, R, I, E> implements IBothB<T, E>
+> extends ClientN<BD, R, I, E> implements IBothB<T, E>
 {
 	public ClientB(R r, I i)
 	{
@@ -34,7 +34,7 @@ public class ClientB
 		GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
 		this.scale();
 		DrawWorldData drawworlddata = new DrawWorldData();
-		this.r.startDrawLater(drawworlddata);
+		this.r.startDrawLater(this.i.getBD(), drawworlddata);
 		this.r.endDrawLater(drawworlddata);
 		GL11.glPopMatrix();
 	}

@@ -21,6 +21,7 @@
   "client": [
     "IMixinLayerArmorBase",
     "MixinItemRenderer",
+    "MixinMinecraft",
     "MixinRenderEntityItem",
     "MixinRenderItem"
   ]

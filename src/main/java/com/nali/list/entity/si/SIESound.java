@@ -1,6 +1,6 @@
 package com.nali.list.entity.si;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.list.entity.ci.CIESound;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.network.NetworkRegistry;
@@ -9,11 +9,13 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
+import com.nali.system.bytes.ByteReader;
+import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
 
 public class SIESound
 <
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends Entity,
 	I extends IMixE<BD, E>,
 	S extends ServerE<BD, E, I, MS>,
@@ -41,14 +43,14 @@ public class SIESound
 		byte[] ms_byte_array = this.s.ms.byte_array;
 		if ((this.state & 1) == 1)
 		{
-			byte[] byte_array = new byte[1 + 8 + 1 + 1];
+			byte[] byte_array = new byte[1 + 8 + 1 + 4];
 //			byte_array[0] = CCI.ID;
 //			ByteWriter.set(byte_array, ByteReader.getInt(ms_byte_array, 1 + 8 + 1), 1);
 //			byte_array[1 + 8] = CIESound.ID;
 //			ByteWriter.set(byte_array, this.s.i.getE().getEntityId(), 1 + 8 + 1);
 //			NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
 			this.s.setCCI(byte_array, CIESound.ID);
-			byte_array[1 + 8 + 1] = ms_byte_array[1 + 8 + 1];
+			ByteWriter.set(byte_array, ByteReader.getInt(ms_byte_array, 1 + 8 + 1), 1 + 8 + 1);
 			NetworkRegistry.I.sendToAll(new ClientMessage(byte_array));
 		}
 	}

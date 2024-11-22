@@ -3,6 +3,9 @@ package com.nali.small.entity;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityMath
 {
@@ -23,7 +26,7 @@ public class EntityMath
 		double d0 = x - blockpos.getX() + 0.5;
 		double d1 = y - blockpos.getY() + 0.5;
 		double d2 = z - blockpos.getZ() + 0.5;
-		return (d0 * d0 + d1 * d1 + d2 * d2) < minimum_distance;
+		return d0 * d0 + d1 * d1 + d2 * d2 < minimum_distance;
 	}
 
 	public static boolean isInArea(BlockPos main_blockpos, BlockPos blockpos, double minimum_distance)
@@ -44,14 +47,21 @@ public class EntityMath
 
 	public static double getDistanceAABBToAABB(AxisAlignedBB entity_a_aabb, AxisAlignedBB entity_b_aabb)
 	{
-//		AxisAlignedBB entity_a_aabb = entity_a.getEntityBoundingBox();
-//		AxisAlignedBB entity_b_aabb = entity_b.getEntityBoundingBox();
+//		if
+//		(
+//			entity_a_aabb.minX < entity_b_aabb.maxX &&
+//			entity_a_aabb.minY < entity_b_aabb.maxY &&
+//			entity_a_aabb.minZ < entity_b_aabb.maxZ &&
+//			entity_a_aabb.maxX > entity_b_aabb.minX &&
+//			entity_a_aabb.maxY > entity_b_aabb.minY &&
+//			entity_a_aabb.maxZ > entity_b_aabb.minZ
+//		)
 
 		double dx = getDistanceAxis(entity_a_aabb.minX, entity_a_aabb.maxX, entity_b_aabb.minX, entity_b_aabb.maxX);
 		double dy = getDistanceAxis(entity_a_aabb.minY, entity_a_aabb.maxY, entity_b_aabb.minY, entity_b_aabb.maxY);
 		double dz = getDistanceAxis(entity_a_aabb.minZ, entity_a_aabb.maxZ, entity_b_aabb.minZ, entity_b_aabb.maxZ);
 
-		return /*Math.sqrt(*/dx * dx + dy * dy + dz * dz/*)*/;
+		return dx * dx + dy * dy + dz * dz;
 	}
 
 	public static double getDistanceAxis(double min1, double max1, double min2, double max2)
@@ -70,38 +80,59 @@ public class EntityMath
 		}
 	}
 
-//	public static boolean isTooClose(Entity entity, BlockPos blockpos, double minimum_distance)
-//	{
-//		return entity.getDistanceSq(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5) < getClose(entity, minimum_distance);
-//	}
-//
-//	public static double getClose(Entity entity, double minimum_distance)
-//	{
-//		double width = entity.width / 2.0D;
-//		double height = entity.height / 2.0D;
-//		return (width + height + minimum_distance) * (width + height + minimum_distance);
-//	}
+	@SideOnly(Side.CLIENT)
+	public static boolean ray(AxisAlignedBB box_axisalignedbb, Vec3d stand_vec3d, Vec3d look_vec3d)
+	{
+		//s0-box
+		//min a (x y z)
+		//max b (x y z)
+		//a point to b
+		//scalar = b - a
 
-//	@SideOnly(Side.CLIENT)
-//	public static int rayAllTargetsView(Entity player, AxisAlignedBB[] axisalignedbb_array, byte max)
-//	{
-//		byte step = 0;
-//		Vec3d view_vec3d = player.getLookVec();
-//		Vec3d start_vec3d = new Vec3d(player.posX, player.posY + player.getEyeHeight(), player.posZ);
-//		view_vec3d = view_vec3d.scale(0.05);
-//
-//		for (Vec3d end_vec3d = start_vec3d.add(view_vec3d); step < max; ++step)
-//		{
-//			for (int i = 0; i < axisalignedbb_array.length; ++i)
-//			{
-//				if (axisalignedbb_array[i].contains(end_vec3d))
-//				{
-//					return i;
-//				}
-//			}
-//			end_vec3d = end_vec3d.add(view_vec3d);
-//		}
-//
-//		return -1;
-//	}
+		//scalar can use as center between a b but need / 2 and + to a
+		double box_scalar_x = box_axisalignedbb.maxX - box_axisalignedbb.minX;
+		double box_scalar_y = box_axisalignedbb.maxY - box_axisalignedbb.minY;
+		double box_scalar_z = box_axisalignedbb.maxZ - box_axisalignedbb.minZ;
+
+		double box_center_x = box_axisalignedbb.minX + box_scalar_x / 2;
+		double box_center_y = box_axisalignedbb.minY + box_scalar_y / 2;
+		double box_center_z = box_axisalignedbb.minZ + box_scalar_z / 2;
+		//e0-box
+
+		//s0-player
+		//player_double_array
+		//pos (x y z)
+		//look (x y z)
+//		double player_to_look_scalar_x = player_double_array[3];
+//		double player_to_look_scalar_y = player_double_array[4];
+//		double player_to_look_scalar_z = player_double_array[5];
+
+		double player_to_box_center_scalar_x = box_center_x - stand_vec3d.x;
+		double player_to_box_center_scalar_y = box_center_y - stand_vec3d.y;
+		double player_to_box_center_scalar_z = box_center_z - stand_vec3d.z;
+
+		double player_to_box_center_scalar_length = Math.sqrt(player_to_box_center_scalar_x * player_to_box_center_scalar_x + player_to_box_center_scalar_y * player_to_box_center_scalar_y + player_to_box_center_scalar_z * player_to_box_center_scalar_z);
+		double player_to_look_scalar_length = Math.sqrt(look_vec3d.x * look_vec3d.x + look_vec3d.y * look_vec3d.y + look_vec3d.z * look_vec3d.z);
+
+		double player_scale = player_to_box_center_scalar_length - player_to_look_scalar_length;
+		//e0-player
+
+		double look_to_center_x = stand_vec3d.x + look_vec3d.x * player_scale;
+		double look_to_center_y = stand_vec3d.y + look_vec3d.y * player_scale;
+		double look_to_center_z = stand_vec3d.z + look_vec3d.z * player_scale;
+
+		double final_scalar_x = box_center_x - look_to_center_x;
+		double final_scalar_y = box_center_y - look_to_center_y;
+		double final_scalar_z = box_center_z - look_to_center_z;
+
+//		Minecraft.getMinecraft().world.spawnParticle(EnumParticleTypes.BARRIER, look_to_center_x, look_to_center_y, look_to_center_z, 0.0D, 0.0D, 0.0D, new int[0]);
+
+		return
+			final_scalar_x >= -1 && final_scalar_x <= 1 &&
+			final_scalar_y >= -1 && final_scalar_y <= 1 &&
+			final_scalar_z >= -1 && final_scalar_z <= 1;
+//		return look_to_center_x >= box_double_array[0] && look_to_center_x <= box_double_array[3] &&
+//			look_to_center_y >= box_double_array[1] && look_to_center_y <= box_double_array[4] &&
+//			look_to_center_z >= box_double_array[2] && look_to_center_z <= box_double_array[5];
+	}
 }

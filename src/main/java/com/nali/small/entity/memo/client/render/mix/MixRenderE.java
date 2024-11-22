@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.client.render.mix;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.client.IClientDaO;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaO;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
@@ -15,14 +15,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public abstract class MixRenderE
 <
-	RC extends IClientDaO,
-	R extends RenderO<RC>,
-	BD extends IBothDaNe,
+	BD extends IBothDaE & IBothDaO,
+	R extends RenderO<BD>,
 	E extends Entity,
 	I extends IMixE<BD, E>,
-	MC extends MixCIE<RC, R, BD, E, I, MB, ?, C>,
-	MB extends MixBoxE<RC, R, BD, E, I, MC, ?, C>,
-	C extends ClientE<RC, R, BD, E, I, MC, MB, ?>
+	MC extends MixCIE<BD, R, E, I, MB, ?, C>,
+	MB extends MixBoxE<BD, R, E, I, MC, ?, C>,
+	C extends ClientE<BD, R, E, I, MC, MB, ?>
 >
 {
 	public C c;

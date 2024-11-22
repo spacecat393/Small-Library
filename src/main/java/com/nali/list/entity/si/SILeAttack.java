@@ -1,6 +1,6 @@
 package com.nali.list.entity.si;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetAttack;
 import com.nali.network.NetworkRegistry;
@@ -24,7 +24,7 @@ import static com.nali.small.entity.EntityMath.isInArea;
 
 public class SILeAttack
 <
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends EntityLivingBase,
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS>,

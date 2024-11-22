@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo.server.si;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.system.Reflect;
@@ -17,7 +17,7 @@ import static com.nali.Nali.error;
 
 public class MixSIE
 <
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends Entity,
 	I extends IMixE<BD, E>,
 	S extends ServerE<BD, E, I, ?>
@@ -103,7 +103,7 @@ public class MixSIE
 	public void initFile()
 	{
 		I i = this.s.i;
-		i.getE().getDataManager().set(i.getFloatDataParameterArray()[0], i.getBD().Scale());
+		i.getE().getDataManager().set(i.getFloatDataParameterArray()[0], i.getBD().E_Scale());
 		this.init();
 	}
 

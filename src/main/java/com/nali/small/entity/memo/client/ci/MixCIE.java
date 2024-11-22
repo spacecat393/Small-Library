@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.client.ci;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.client.IClientDaO;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaO;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
@@ -23,14 +23,13 @@ import static com.nali.Nali.error;
 //@SideOnly(Side.CLIENT)
 public class MixCIE
 <
-	RC extends IClientDaO,
-	R extends RenderO<RC>,
-	BD extends IBothDaNe,
+	BD extends IBothDaE & IBothDaO,
+	R extends RenderO<BD>,
 	E extends Entity,
 	I extends IMixE<BD, E>,
-	MB extends MixBoxE<RC, R, BD, E, I, ?, MR, C>,
-	MR extends MixRenderE<RC, R, BD, E, I, ?, MB, C>,
-	C extends ClientE<RC, R, BD, E, I, ?, MB, MR>
+	MB extends MixBoxE<BD, R, E, I, ?, MR, C>,
+	MR extends MixRenderE<BD, R, E, I, ?, MB, C>,
+	C extends ClientE<BD, R, E, I, ?, MB, MR>
 >
 {
 	public static List<Class> CI_CLASS_LIST;
@@ -139,7 +138,7 @@ public class MixCIE
 		BD bd = this.c.i.getBD();
 		E e = this.c.i.getE();
 		float scale = e.getDataManager().get(this.c.i.getFloatDataParameterArray()[0]);
-		e.width = bd.Width() * scale;
-		e.height = bd.Height() * scale;
+		e.width = bd.E_Width() * scale;
+		e.height = bd.E_Height() * scale;
 	}
 }

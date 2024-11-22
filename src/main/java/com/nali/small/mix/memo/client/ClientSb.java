@@ -1,7 +1,7 @@
 package com.nali.small.mix.memo.client;
 
-import com.nali.da.IBothDaSn;
-import com.nali.da.client.IClientDaS;
+import com.nali.da.IBothDaO;
+import com.nali.da.IBothDaS;
 import com.nali.render.RenderS;
 import com.nali.small.mix.IMixN;
 import net.minecraft.block.Block;
@@ -13,13 +13,12 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public abstract class ClientSb
 <
-	BD extends IBothDaSn,
-	RC extends IClientDaS,
-	R extends RenderS<BD, RC>,
-	I extends IMixN<?, E>,
+	BD extends IBothDaO & IBothDaS,
+	R extends RenderS<BD>,
+	I extends IMixN<BD, ?, E>,
 	E extends Block,
 	T extends TileEntity
-> extends ClientB<RC, R, I, E, T>
+> extends ClientB<BD, R, I, E, T>
 {
 	public ClientSb(R r, I i)
 	{
@@ -29,10 +28,12 @@ public abstract class ClientSb
 	@Override
 	public void render(T t, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
 	{
+		BD bd = this.i.getBD();
+
 		this.r.updateLightCoord(t.getWorld(), t.getPos().up());
-		this.r.initSkinning(/*memoanimation*/);
+		this.r.initSkinning(bd/*memoanimation*/);
 		this.updateFrame(this.r);
-		this.r.setSkinning(/*memoanimation*/);
+		this.r.setSkinning(bd/*memoanimation*/);
 
 		super.render(t, x, y, z, partialTicks, destroyStage, alpha);
 //		GL11.glPushMatrix();

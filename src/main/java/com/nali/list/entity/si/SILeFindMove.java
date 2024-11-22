@@ -1,11 +1,11 @@
 package com.nali.list.entity.si;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.path.PathMath;
 import com.nali.small.entity.memo.server.si.path.SNode;
 import net.minecraft.block.Block;
@@ -22,7 +22,7 @@ import java.util.List;
 
 public class SILeFindMove
 <
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends EntityLivingBase,
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS>,

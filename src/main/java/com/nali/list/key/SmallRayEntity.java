@@ -2,10 +2,10 @@ package com.nali.list.key;
 
 import com.nali.Nali;
 import com.nali.key.Key;
+import com.nali.small.entity.EntityMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -14,9 +14,6 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
-import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
-
-//use this
 @SideOnly(Side.CLIENT)
 public class SmallRayEntity extends Key
 {
@@ -28,15 +25,22 @@ public class SmallRayEntity extends Key
 	{
 		Minecraft minecraft = Minecraft.getMinecraft();
 		World world = minecraft.world;
-		if (Minecraft.getMinecraft().currentScreen == null && world != null && Keyboard.isKeyDown(Keyboard.KEY_T))
+		if (minecraft.currentScreen == null && world != null && Keyboard.isKeyDown(Keyboard.KEY_T))
 		{
 			List<Entity> entity_list = world.loadedEntityList;
 			EntityPlayerSP entityplayersp = minecraft.player;
 
-			Vec3d player_vec3d = entityplayersp.getPositionEyes(1.0f);
+			Vec3d player_vec3d = entityplayersp.getPositionEyes(1.0F);
 			Vec3d look_vec3d = entityplayersp.getLookVec();
 
-			Vec3d end_vec3d = player_vec3d.add(look_vec3d.scale(32.0D));
+//			double[] player_double_array = new double[]
+//			{
+////				player_vec3d.x + look_vec3d.x/* * 32.0D*/,
+////				player_vec3d.y + look_vec3d.y/* * 32.0D*/,
+////				player_vec3d.z + look_vec3d.z/* * 32.0D*/,
+//				player_vec3d.x, player_vec3d.y, player_vec3d.z,
+//				look_vec3d.x, look_vec3d.y, look_vec3d.z
+//			};
 
 			int index = -1;
 //			List<Double> far_double_list = new ArrayList();
@@ -50,10 +54,10 @@ public class SmallRayEntity extends Key
 					continue;
 				}
 
-				AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox();
-				if (axisalignedbb.calculateIntercept(player_vec3d, end_vec3d) != null)
+//				if (axisalignedbb.calculateIntercept(player_vec3d, end_vec3d) != null)
+				if (EntityMath.ray(entity.getEntityBoundingBox(), player_vec3d, look_vec3d))
 				{
-					double new_max = getDistanceAABBToAABB(entityplayersp, entity);
+					double new_max = EntityMath.getDistanceAABBToAABB(entityplayersp, entity);
 					if (new_max < max)
 					{
 						index = i;

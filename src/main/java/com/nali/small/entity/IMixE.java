@@ -1,6 +1,6 @@
 package com.nali.small.entity;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.small.entity.memo.IBothE;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.datasync.DataParameter;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IMixE
 <
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends Entity
 >
 {
@@ -22,9 +22,9 @@ public interface IMixE
 			this.newC();
 
 			BD bd = this.getBD();
-			float scale = bd.Scale();
-			e.width = bd.Width() * scale;
-			e.height = bd.Height() * scale;
+			float scale = bd.E_Scale();
+			e.width = bd.E_Width() * scale;
+			e.height = bd.E_Height() * scale;
 		}
 		else
 		{
@@ -33,7 +33,7 @@ public interface IMixE
 			BD bd = this.getBD();
 			e.width = 0.5F;
 			e.height = 0.5F;
-			e.getDataManager().set(this.getFloatDataParameterArray()[0], bd.Scale());
+			e.getDataManager().set(this.getFloatDataParameterArray()[0], bd.E_Scale());
 		}
 	}
 

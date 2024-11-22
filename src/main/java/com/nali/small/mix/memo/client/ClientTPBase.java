@@ -1,7 +1,7 @@
 package com.nali.small.mix.memo.client;
 
-import com.nali.da.IBothDaSn;
-import com.nali.da.client.IClientDaS;
+import com.nali.da.IBothDaO;
+import com.nali.da.IBothDaS;
 import com.nali.render.RenderS;
 import com.nali.small.mix.IMixN;
 import net.minecraft.block.Block;
@@ -12,13 +12,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ClientTPBase
 <
-	BD extends IBothDaSn,
-	RC extends IClientDaS,
-	R extends RenderS<BD, RC>,
-	I extends IMixN<?, E>,
+	BD extends IBothDaO & IBothDaS,
+	R extends RenderS<BD>,
+	I extends IMixN<BD, ?, E>,
 	E extends Block,
 	T extends TileEntity
-> extends ClientSb<BD, RC, R, I, E, T>
+> extends ClientSb<BD, R, I, E, T>
 {
 	public ClientTPBase(R r, I i)
 	{

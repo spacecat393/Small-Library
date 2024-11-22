@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.server.si.frame.shoot;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.IBothDaSn;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaS;
 import com.nali.list.entity.si.SIEPlayWithRSe;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
@@ -13,11 +13,11 @@ import net.minecraft.entity.EntityLivingBase;
 public class FrameSleShootRSe
 <
 	S2 extends ServerLe<BD2, E2, I2, A2>,
-	BD2 extends IBothDaNe,
+	BD2 extends IBothDaE,
 	E2 extends EntityLivingBase,
 	I2 extends IMixE<BD2, E2>,
 	A2 extends MixSIE<BD2, E2, I2, S2>,
-	BD extends IBothDaNe & IBothDaSn,
+	BD extends IBothDaE & IBothDaS,
 	E extends EntityLe,
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS> & IServerS,

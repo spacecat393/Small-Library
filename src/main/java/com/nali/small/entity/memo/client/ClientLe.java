@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.client;
 
-import com.nali.da.IBothDaNe;
-import com.nali.da.client.IClientDaO;
+import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaO;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothLe;
@@ -18,16 +18,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public abstract class ClientLe
 <
-	RC extends IClientDaO,
-	R extends RenderO<RC>,
+	BD extends IBothDaE & IBothDaO,
+	R extends RenderO<BD>,
 //	SD extends ISoundDaLe,
-	BD extends IBothDaNe,
 	E extends EntityLivingBase,
 	I extends IMixE<BD, E>/* & IMixESoundDa<SD>*/,
-	MC extends MixCIE<RC, R, BD, E, I, MB, MR, ?>,
-	MB extends MixBoxE<RC, R, BD, E, I, MC, MR, ?>,
-	MR extends MixRenderE<RC, R, BD, E, I, MC, MB, ?>
-> extends ClientE<RC, R, BD, E, I, MC, MB, MR> implements IBothLe<E>
+	MC extends MixCIE<BD, R, E, I, MB, MR, ?>,
+	MB extends MixBoxE<BD, R, E, I, MC, MR, ?>,
+	MR extends MixRenderE<BD, R, E, I, MC, MB, ?>
+> extends ClientE<BD, R, E, I, MC, MB, MR> implements IBothLe<E>
 {
 	public WorkEBodyYaw workebodyyaw;
 
@@ -45,17 +44,17 @@ public abstract class ClientLe
 		super(r);
 	}
 
-//	@Override
-//	public void getHurtSound(DamageSource damagesource)
-//	{
+	@Override
+	public void getHurtSound(DamageSource damagesource)
+	{
 //		this.getSound().play(this.i.getSD().HURT());
-//	}
-//
-//	@Override
-//	public void getDeathSound()
-//	{
+	}
+
+	@Override
+	public void getDeathSound()
+	{
 //		this.getSound().play(this.i.getSD().DEATH());
-//	}
+	}
 
 	@Override
 	public boolean attackEntityAsMob(Entity entity)

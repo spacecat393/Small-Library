@@ -1,6 +1,6 @@
 package com.nali.small.entity.memo.server;
 
-import com.nali.da.IBothDaNe;
+import com.nali.da.IBothDaE;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.inv.InvLe;
@@ -17,7 +17,7 @@ public abstract class ServerLeInv
 <
 	IE extends InvLe,
 //	SD extends ISoundDaLe,
-	BD extends IBothDaNe,
+	BD extends IBothDaE,
 	E extends EntityLeInv,
 	I extends IMixE<BD, E>/* & IMixESoundDa<SD>*/,
 	MS extends MixSIE<BD, E, I, ?>
