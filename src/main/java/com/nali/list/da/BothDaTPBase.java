@@ -15,13 +15,13 @@ public class BothDaTPBase implements IBothDaO, IBothDaS
 	@Override
 	public int O_StartPart()
 	{
-		return MODEL_STEP + 21;
+		return MODEL_STEP + 5;
 	}
 
 	@Override
 	public int O_EndPart()
 	{
-		return MODEL_STEP + 24;
+		return MODEL_STEP + 8;
 	}
 
 	@Override

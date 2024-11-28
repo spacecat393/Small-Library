@@ -11,12 +11,12 @@ public class BothDaStorage implements IBothDaO
 	@Override
 	public int O_StartPart()
 	{
-		return MODEL_STEP + 4;
+		return MODEL_STEP + 3;
 	}
 
 	@Override
 	public int O_EndPart()
 	{
-		return MODEL_STEP + 6;
+		return MODEL_STEP + 5;
 	}
 }
