@@ -8,7 +8,6 @@ import com.nali.small.entity.memo.IBothLe;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
-import com.nali.small.entity.memo.work.WorkEBodyYaw;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
@@ -28,14 +27,14 @@ public abstract class ClientLe
 	MR extends MixRenderE<BD, R, E, I, MC, MB, ?>
 > extends ClientE<BD, R, E, I, MC, MB, MR> implements IBothLe<E>
 {
-	public WorkEBodyYaw workebodyyaw;
+//	public WorkEBodyYaw workebodyyaw;
 
 //	public byte[] work_byte_array;
 
 	public ClientLe(I i, R r)
 	{
 		super(i, r);
-		this.workebodyyaw = new WorkEBodyYaw();
+//		this.workebodyyaw = new WorkEBodyYaw();
 //		this.work_byte_array = new byte[workbytes.MAX_WORKS()];
 	}
 
@@ -68,9 +67,9 @@ public abstract class ClientLe
 		return false;
 	}
 
-	@Override
-	public WorkEBodyYaw getWorkEBodyYaw()
-	{
-		return this.workebodyyaw;
-	}
+//	@Override
+//	public WorkEBodyYaw getWorkEBodyYaw()
+//	{
+//		return this.workebodyyaw;
+//	}
 }

@@ -115,6 +115,11 @@ public abstract class ServerE
 		this.ms.update();
 	}
 
+	public int size()
+	{
+		return this.i.getByteDataParameterArray().length + this.i.getFloatDataParameterArray().length * 4 + this.i.getIntegerDataParameterArray().length * 4 + this.ms.size();
+	}
+	public abstract void writeFile(SIData sidata);
 	@Override
 	public void writeFile()
 	{
@@ -130,7 +135,7 @@ public abstract class ServerE
 		DataParameter<Float>[] float_dataparameter_array = this.i.getFloatDataParameterArray();
 		DataParameter<Integer>[] integer_dataparameter_array = this.i.getIntegerDataParameterArray();
 
-		sidata.byte_array = new byte[byte_dataparameter_array.length + float_dataparameter_array.length * 4 + integer_dataparameter_array.length * 4 + this.ms.size()];
+		sidata.byte_array = new byte[this.size()];
 
 		for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
 		{
@@ -150,6 +155,7 @@ public abstract class ServerE
 		}
 
 		this.ms.writeFile(sidata);
+		this.writeFile(sidata);
 
 		try
 		{
@@ -170,6 +176,8 @@ public abstract class ServerE
 		}
 	}
 
+	public abstract void readFile(SIData sidata);
+	public abstract void initFile();
 	@Override
 	public void readFile()
 	{
@@ -218,10 +226,12 @@ public abstract class ServerE
 					}
 
 					this.ms.readFile(sidata);
+					this.readFile(sidata);
 				}
 				else
 				{
 					this.ms.initFile();
+					this.initFile();
 				}
 			}
 			catch (Exception ex)

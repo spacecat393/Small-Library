@@ -43,8 +43,9 @@ public class SILeAttack
 
 	public byte flag = 16;//move_to prepare hit | remote walk_to
 	public float minimum_distance = 3.0F;
-	public int magic_point,
-	max_magic_point = 16;
+	public int
+		magic_point,
+		max_magic_point = 16;
 
 	public SILeAttack(S s)
 	{
@@ -186,7 +187,7 @@ public class SILeAttack
 						this.sielook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
 					}
 
-					if ((this.flag & 16+8) == 16 && !(e.canEntityBeSeen(target_entity) && getDistanceAABBToAABB(e, target_entity) <= this.minimum_distance/*isTooClose(e, target_entity, this.minimum_distance)*/))
+					if ((this.flag & 16+8) == 16 && !(e.canEntityBeSeen(target_entity) && getDistanceAABBToAABB(e, target_entity) <= this.minimum_distance))
 					{
 	//					this.silefindmove.setBreakGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
 						this.silefindmove.setGoal(target_entity.posX, target_entity.posY, target_entity.posZ);

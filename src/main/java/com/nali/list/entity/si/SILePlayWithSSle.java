@@ -35,7 +35,8 @@ public class SILePlayWithSSle
 //		I2 i2 = this.s2.i;
 //		E2 e2 = i2.getE();
 		super.onPlay();
-		this.s.i.getE().renderYawOffset = this.s2.i.getE().renderYawOffset;
+//		this.s.i.getE().renderYawOffset = this.s2.i.getE().renderYawOffset;
+		this.s.i.getE().rotationYawHead = this.s2.i.getE().rotationYawHead;
 //		e.renderYawOffset = e2.renderYawOffset;
 //		DataParameter<Byte> byte_dataparameter = i.getByteDataParameterArray()[0];
 //		EntityDataManager entitydatamanager = e.getDataManager();

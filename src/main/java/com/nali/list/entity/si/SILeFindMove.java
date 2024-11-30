@@ -15,6 +15,7 @@ import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -83,22 +84,21 @@ public class SILeFindMove
 		{
 //			if ((serverentitiesmemory.main_work_byte_array[serverentitiesmemory.workbytes.SIT() / 8] >> serverentitiesmemory.workbytes.SIT() % 8 & 1) == 0)
 //			if ((this.s.work_byte_array[serverentitiesmemory.workbytes.SIT() / 8] >> serverentitiesmemory.workbytes.SIT() % 8 & 1) == 0)
-			if ((this.siesit.state & 1) == 1)
+			if ((this.siesit.state & 1) == 0)
 			{
 				BlockPos blockpos = e.getPosition();
 
-		//		World world = this.skinningentities.world;
-		////		if (this.path_blockpos_array != null)
-		////		{
-		//		for (BlockPos bp : this.path_blockpos_list)
+		//		if (this.path_blockpos_array != null)
 		//		{
-		//			if (bp != null)
-		//			{
-		//				((WorldServer) world).spawnParticle(EnumParticleTypes.CRIT, bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, 1, 0.0D, 0.0D, 0.0D, 0.0D);
-		//			}
+				for (BlockPos bp : this.path_blockpos_list)
+				{
+					if (bp != null)
+					{
+						this.s.worldserver.spawnParticle(EnumParticleTypes.CRIT, bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+					}
+				}
+//				Nali.LOGGER.info("TICK " + this.path_tick);
 		//		}
-		//		Nali.LOGGER.info("TICK " + this.path_tick);
-		////		}
 
 				if (this.try_move)
 				{

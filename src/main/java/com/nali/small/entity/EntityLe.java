@@ -205,8 +205,9 @@ public abstract class EntityLe extends EntityLivingBase implements IMixE
 	@Override
 	public float updateDistance(float f0, float f1)
 	{
-		this.getB().getWorkEBodyYaw().run(this);
-		return f1;
+//		this.getB().getWorkEBodyYaw().run(this);
+//		return f1;
+		return 0;
 	}
 
 //	@Override
@@ -244,6 +245,11 @@ public abstract class EntityLe extends EntityLivingBase implements IMixE
 //	public IMixE getI()
 //	{
 //		return this;
+//	}
+
+//	@Override
+//	public void setRotationYawHead(float rotation)
+//	{
 //	}
 
 	public abstract IBothLe getB();
