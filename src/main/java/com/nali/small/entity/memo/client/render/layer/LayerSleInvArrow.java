@@ -71,8 +71,8 @@
 ////				OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)OBJECT_LIST.get(model_i);
 ////				MemoG rg = this.c.r.rst.rg_list.get(model_i);
 //				MemoA2 ra2 = A2_MAP.get(model_i);
-////				this.index_int_array_list.add(new int[]{model_i, random.nextInt(openglskinningmemory.index_int_array.length)});
-//				this.index_int_array_list.add(new int[]{model_i, random.nextInt(ra2.index_int_array.length)});
+////				this.index_int_array_list.add(new int[]{model_i, random.nextInt(openglskinningmemory.key_data_index.length)});
+//				this.index_int_array_list.add(new int[]{model_i, random.nextInt(ra2.key_data_index.length)});
 //				this.float_array_list.add(new float[]{random.nextFloat(), random.nextFloat(), random.nextFloat()});
 //			}
 //			else if (this.index_int_array_list.size() > i)

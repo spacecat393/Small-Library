@@ -1,18 +1,18 @@
 package com.nali.small.entity.memo.server;
 
-import com.nali.small.entity.memo.server.si.frame.FrameS;
+import com.nali.small.entity.memo.server.si.frame.KeyS;
 
 public interface IServerS
 {
 //	default void updateFrame()
 //	{
-//		for (FrameS[] frames_array : this.getFrameS2DArray())
+//		for (FrameS[] frames_array : this.getKeyS2DArray())
 //		{
 //			for (FrameS frames : frames_array)
 //			{
 //				if (frames.onUpdate())
 //				{
-//					frames.stepFrame();
+//					frames.sync();
 //					break;
 //				}
 //			}
@@ -31,9 +31,10 @@ public interface IServerS
 //		}
 //	}
 
-	void initFrame();
-	FrameS[][] getFrameS2DArray();
-	byte[] getFrameByteArray();
-	int[][] getFrame2DIntArray();
+	void initKey();
+	KeyS[][] getKeyS2DArray();
+//	byte[] getFrameByteArray();
+	byte[] getKeyDataByteArray();
+//	int[][] getFrame2DIntArray();
 //	int[] getFrameIntArray();
 }

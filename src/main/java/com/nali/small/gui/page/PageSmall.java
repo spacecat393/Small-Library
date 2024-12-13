@@ -55,7 +55,8 @@ public class PageSmall extends PageSelect
 	@Override
 	public void back()
 	{
-		this.state |= 2;
+		this.exit();
+//		this.state |= 2;
 	}
 
 	@Override

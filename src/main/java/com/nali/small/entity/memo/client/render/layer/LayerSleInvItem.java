@@ -76,9 +76,9 @@
 ////		cliententitiesmemory.objectrender.takeDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
 ////		cliententitiesmemory.objectrender.setDefault((OpenGLSkinningMemory)cliententitiesmemory.objectrender.memory_object_array[1]);
 ////		OpenGLSkinningMemory openglskinningmemory = (OpenGLSkinningMemory)((ClientEntitiesMemory)e.bothentitiesmemory).objectrender.memory_object_array[14];
-////		for (int v = 0; v < openglskinningmemory.index_int_array.length; ++v)
+////		for (int v = 0; v < openglskinningmemory.key_data_index.length; ++v)
 ////		{
-////			int vi = openglskinningmemory.index_int_array[v] * 3;
+////			int vi = openglskinningmemory.key_data_index[v] * 3;
 ////			float x = openglskinningmemory.vertices_float_array[vi];
 ////			float y = openglskinningmemory.vertices_float_array[vi + 1];
 ////			float z = openglskinningmemory.vertices_float_array[vi + 2];

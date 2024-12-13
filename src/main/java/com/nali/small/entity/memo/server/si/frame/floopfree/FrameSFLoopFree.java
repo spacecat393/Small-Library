@@ -5,7 +5,7 @@ import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.IServerS;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
-import com.nali.small.entity.memo.server.si.frame.FrameS;
+import com.nali.small.entity.memo.server.si.frame.KeyS;
 import net.minecraft.entity.Entity;
 
 public abstract class FrameSFLoopFree
@@ -15,7 +15,7 @@ public abstract class FrameSFLoopFree
 	I extends IMixE<BD, E>,
 	S extends ServerE<BD, E, I, MS> & IServerS,
 	MS extends MixSIE<BD, E, I, S>
-> extends FrameS<BD, E, I, S, MS>
+> extends KeyS<BD, E, I, S, MS>
 {
 //	public byte bit;
 	public FrameSFLoopFree(S s, int index)
@@ -33,7 +33,7 @@ public abstract class FrameSFLoopFree
 			byte[] frame_byte_array = this.s.getFrameByteArray();
 			byte frame = frame_byte_array[this.index];
 			byte index = this.getIndex();
-			int[] frame_int_array = this.sieframe.frame_int_array;
+			int[] frame_int_array = this.siekey.frame_int_array;
 			if (frame_int_array[frame] == frame_2d_int_array[index][1] - 1)
 			{
 				this.free();

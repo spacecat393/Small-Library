@@ -23,8 +23,8 @@
 //	//					String[] string_array = string.split(" ");
 //
 //			int max_count = 0, index = 0;
-//			int[] index_int_array = new int[(servermessage.data.length - 1) / 4];
-//			Arrays.fill(index_int_array, -1);
+//			int[] key_data_index = new int[(servermessage.data.length - 1) / 4];
+//			Arrays.fill(key_data_index, -1);
 //			int hand_index = inventoryplayer.mainInventory.size() + inventoryplayer.armorInventory.size();
 //			int armor_index = inventoryplayer.mainInventory.size();
 //	//					for (String new_string : string_array)
@@ -34,7 +34,7 @@
 //	//						int i = Integer.parseInt(new_string);
 //
 //				boolean result = true;
-//				for (int y : index_int_array)
+//				for (int y : key_data_index)
 //				{
 //					if (i == y)
 //					{
@@ -47,7 +47,7 @@
 //				{
 //					if (i < inventoryplayer.mainInventory.size() + inventoryplayer.offHandInventory.size() + inventoryplayer.armorInventory.size())
 //					{
-//						index_int_array[index++] = i;
+//						key_data_index[index++] = i;
 //
 //						if (i >= inventoryplayer.mainInventory.size() + inventoryplayer.armorInventory.size())
 //						{
@@ -67,7 +67,7 @@
 //
 //			if (max_count % 64 == 0)
 //			{
-//				for (int i : index_int_array)
+//				for (int i : key_data_index)
 //				{
 //					if (i != -1)
 //					{

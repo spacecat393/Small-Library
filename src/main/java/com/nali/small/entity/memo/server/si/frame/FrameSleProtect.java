@@ -16,7 +16,7 @@ public class FrameSleProtect
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS> & IServerS,
 	MS extends MixSIE<BD, E, I, S>
-> extends FrameS<BD, E, I, S, MS>
+> extends KeyS<BD, E, I, S, MS>
 {
 	public SILeProtect<BD, E, I, S, MS> sileprotect;
 	public FrameSleProtect(S s, int index)
@@ -48,14 +48,14 @@ public class FrameSleProtect
 			{
 				case 0:
 				{
-					if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index][1])
+					if (this.siekey.frame_int_array[frame] < frame_2d_int_array[index][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[index][1])
 					{
-						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index][0];
+						this.siekey.frame_int_array[frame] = frame_2d_int_array[index][0];
 						this.step = 0;
 					}
-					else if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index][1])
+					else if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index][1])
 					{
-						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index1][0];
+						this.siekey.frame_int_array[frame] = frame_2d_int_array[index1][0];
 						this.step = 0;
 		//					this.sileprotect.main_state = 1;
 						this.sileprotect.state |= 4;
@@ -65,14 +65,14 @@ public class FrameSleProtect
 				}
 				case 4:
 				{
-					if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index1][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index1][1])
+					if (this.siekey.frame_int_array[frame] < frame_2d_int_array[index1][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[index1][1])
 					{
-						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index1][0];
+						this.siekey.frame_int_array[frame] = frame_2d_int_array[index1][0];
 						this.step = 0;
 					}
-					else if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index1][1])
+					else if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index1][1])
 					{
-						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index1][0];
+						this.siekey.frame_int_array[frame] = frame_2d_int_array[index1][0];
 						this.step = 0;
 					}
 
@@ -81,14 +81,14 @@ public class FrameSleProtect
 				case 8:
 				{
 					byte index2 = frame_byte_array[this.index + 3];
-					if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index2][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index2][1])
+					if (this.siekey.frame_int_array[frame] < frame_2d_int_array[index2][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[index2][1])
 					{
-						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index2][0];
+						this.siekey.frame_int_array[frame] = frame_2d_int_array[index2][0];
 						this.step = 0;
 					}
-					else if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index2][1])
+					else if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index2][1])
 					{
-						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index2][0];
+						this.siekey.frame_int_array[frame] = frame_2d_int_array[index2][0];
 						this.step = 0;
 		//					this.sileprotect.main_state = 1;
 		//					this.sileprotect.state |= 4;
@@ -101,14 +101,14 @@ public class FrameSleProtect
 				case 4+8:
 				{
 					byte index3 = frame_byte_array[this.index + 4];
-					if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index3][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index3][1])
+					if (this.siekey.frame_int_array[frame] < frame_2d_int_array[index3][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[index3][1])
 					{
-						this.sieframe.frame_int_array[frame] = frame_2d_int_array[index3][0];
+						this.siekey.frame_int_array[frame] = frame_2d_int_array[index3][0];
 						this.step = 0;
 					}
-					else if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index3][1])
+					else if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index3][1])
 					{
-		//					this.sieframe.frame_int_array[frame] = frame_2d_int_array[index3][0];
+		//					this.siekey.frame_int_array[frame] = frame_2d_int_array[index3][0];
 						this.step = 0;
 		//					this.sileprotect.main_state = -2;
 						this.sileprotect.state &= 255-(4+8);

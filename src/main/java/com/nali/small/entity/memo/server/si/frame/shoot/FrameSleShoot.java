@@ -9,7 +9,7 @@ import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.IServerS;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.MixSIE;
-import com.nali.small.entity.memo.server.si.frame.FrameS;
+import com.nali.small.entity.memo.server.si.frame.KeyS;
 
 public class FrameSleShoot
 <
@@ -18,7 +18,7 @@ public class FrameSleShoot
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS> & IServerS,
 	MS extends MixSIE<BD, E, I, S>
-> extends FrameS<BD, E, I, S, MS>
+> extends KeyS<BD, E, I, S, MS>
 {
 	public SILeAttack<BD, E, I, S, MS> sileattack;
 	public SILeFindMove<BD, E, I, S, MS> silefindmove;
@@ -56,15 +56,18 @@ public class FrameSleShoot
 				byte index3 = this.getReload();
 				this.silefindmove.endGoal();
 
-				if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index3][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index3][1])
+				//if (time == time_set)
+				//key_index_byte_array[i] = key_id
+				//time[i] ++ --
+				if (this.siekey.frame_int_array[frame] < frame_2d_int_array[index3][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[index3][1])
 				{
 					this.step = 0;
-					this.sieframe.frame_int_array[frame] = frame_2d_int_array[index3][0];
+					this.siekey.frame_int_array[frame] = frame_2d_int_array[index3][0];
 //					return true;
 				}
-				else if (this.sieframe.frame_int_array[frame] >= frame_2d_int_array[index3][0] && this.sieframe.frame_int_array[frame] <= frame_2d_int_array[index3][1])
+				else if (this.siekey.frame_int_array[frame] >= frame_2d_int_array[index3][0] && this.siekey.frame_int_array[frame] <= frame_2d_int_array[index3][1])
 				{
-					if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index3][1])
+					if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index3][1])
 					{
 						this.step = 0;
 						this.sileattack.magic_point = this.sileattack.max_magic_point;
@@ -81,13 +84,13 @@ public class FrameSleShoot
 			byte index = this.getStartAttack();
 //			byte index1 = frame_byte_array[this.index + 2];
 			byte index1 = this.getAttack();
-			if (this.sieframe.frame_int_array[frame] >= frame_2d_int_array[index1][0] && this.sieframe.frame_int_array[frame] <= frame_2d_int_array[index1][1])
+			if (this.siekey.frame_int_array[frame] >= frame_2d_int_array[index1][0] && this.siekey.frame_int_array[frame] <= frame_2d_int_array[index1][1])
 			{
 				this.step();
 
 				for (int attack_frame : this.sileattack.attack_frame_int_array)
 				{
-					if (this.sieframe.frame_int_array[frame] == attack_frame)
+					if (this.siekey.frame_int_array[frame] == attack_frame)
 					{
 						this.sileattack.magic_point -= 1;
 						this.sileattack.flag |= 4;
@@ -96,11 +99,11 @@ public class FrameSleShoot
 				}
 				return true;
 			}
-			else if (this.sieframe.frame_int_array[frame] >= frame_2d_int_array[index][0] && this.sieframe.frame_int_array[frame] <= frame_2d_int_array[index][1])
+			else if (this.siekey.frame_int_array[frame] >= frame_2d_int_array[index][0] && this.siekey.frame_int_array[frame] <= frame_2d_int_array[index][1])
 			{
-				if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index][1])
+				if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index][1])
 				{
-					this.sieframe.frame_int_array[frame] = frame_2d_int_array[index1][1];
+					this.siekey.frame_int_array[frame] = frame_2d_int_array[index1][1];
 					this.step = 0;
 					return true;
 				}
@@ -108,9 +111,9 @@ public class FrameSleShoot
 				this.step = 1;
 				return true;
 			}
-			else if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index][1])
+			else if (this.siekey.frame_int_array[frame] < frame_2d_int_array[index][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[index][1])
 			{
-				this.sieframe.frame_int_array[frame] = frame_2d_int_array[index][0];
+				this.siekey.frame_int_array[frame] = frame_2d_int_array[index][0];
 				this.step = 0;
 				return true;
 			}
@@ -135,27 +138,27 @@ public class FrameSleShoot
 		byte index1 = this.getAttack();
 //		byte index2 = frame_byte_array[this.index + 3];
 		byte index2 = this.getEndAttack();
-		if (this.sieframe.frame_int_array[frame] >= frame_2d_int_array[index][0] && this.sieframe.frame_int_array[frame] <= frame_2d_int_array[index][1])
+		if (this.siekey.frame_int_array[frame] >= frame_2d_int_array[index][0] && this.siekey.frame_int_array[frame] <= frame_2d_int_array[index][1])
 		{
 			this.silefindmove.endGoal();
-			if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index][1])
+			if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index][1])
 			{
-				this.sieframe.frame_int_array[frame] = frame_2d_int_array[index2][0];
+				this.siekey.frame_int_array[frame] = frame_2d_int_array[index2][0];
 				this.step = 0;
 			}
 			return true;
 		}
-		else if (this.sieframe.frame_int_array[frame] >= frame_2d_int_array[index1][0] && this.sieframe.frame_int_array[frame] <= frame_2d_int_array[index1][1])
+		else if (this.siekey.frame_int_array[frame] >= frame_2d_int_array[index1][0] && this.siekey.frame_int_array[frame] <= frame_2d_int_array[index1][1])
 		{
 			this.silefindmove.endGoal();
-			if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index1][1])
+			if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index1][1])
 			{
-				this.sieframe.frame_int_array[frame] = frame_2d_int_array[index2][0];
+				this.siekey.frame_int_array[frame] = frame_2d_int_array[index2][0];
 				this.step = 0;
 			}
 			return true;
 		}
-		else if (!try_reload && this.sieframe.frame_int_array[frame] >= frame_2d_int_array[index2][0] && this.sieframe.frame_int_array[frame] < frame_2d_int_array[index2][1])
+		else if (!try_reload && this.siekey.frame_int_array[frame] >= frame_2d_int_array[index2][0] && this.siekey.frame_int_array[frame] < frame_2d_int_array[index2][1])
 		{
 			this.silefindmove.endGoal();
 			return true;
@@ -174,11 +177,11 @@ public class FrameSleShoot
 //		byte index1 = frame_byte_array[this.index + 2];
 		byte index1 = this.getAttack();
 		this.step = 1;
-		if (this.sieframe.frame_int_array[frame] >= frame_2d_int_array[index1][0] && this.sieframe.frame_int_array[frame] <= frame_2d_int_array[index1][1])
+		if (this.siekey.frame_int_array[frame] >= frame_2d_int_array[index1][0] && this.siekey.frame_int_array[frame] <= frame_2d_int_array[index1][1])
 		{
-			if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index1][1])
+			if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index1][1])
 			{
-				this.sieframe.frame_int_array[frame] = frame_2d_int_array[index1][0];
+				this.siekey.frame_int_array[frame] = frame_2d_int_array[index1][0];
 				this.step = 0;
 			}
 		}

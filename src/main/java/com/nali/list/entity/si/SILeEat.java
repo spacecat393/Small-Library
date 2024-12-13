@@ -49,7 +49,7 @@ public class SILeEat
 	public byte state;//t-eat t-drinkMilk
 	public float time;
 
-	public SIEFrame<BD, E, I, S, MS> sieframe;
+	public SIEKey<BD, E, I, S, MS> sieframe;
 
 	public SILeEat(S s)
 	{
@@ -59,7 +59,7 @@ public class SILeEat
 	@Override
 	public void init()
 	{
-		this.sieframe = (SIEFrame<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFrame.ID);
+		this.sieframe = (SIEKey<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEKey.ID);
 	}
 
 	@Override

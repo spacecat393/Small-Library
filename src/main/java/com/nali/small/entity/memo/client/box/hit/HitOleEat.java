@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.client.box.hit;
 
 import com.nali.da.IBothDaE;
-import com.nali.da.IBothDaNE;
+import com.nali.da.IBothDaNe;
 import com.nali.da.IBothDaO;
 import com.nali.list.entity.si.SIESound;
 import com.nali.list.entity.si.SILeEat;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class HitOleEat
 <
-	BD extends IBothDaE & IBothDaO & IBothDaNE,
+	BD extends IBothDaE & IBothDaO & IBothDaNe,
 	R extends RenderO<BD>,
 	E extends EntityLivingBase,
 	I extends IMixE<BD, E>,
@@ -49,7 +49,7 @@ public class HitOleEat
 			this.c.sendSSI(new byte[1 + 8 + 1], SILeEat.ID);
 
 			byte[] s_byte_array = new byte[1 + 8 + 1 + 4];
-			ByteWriter.set(s_byte_array, this.c.i.getBD().NE_EAT(), 1 + 8 + 1);
+			ByteWriter.set(s_byte_array, this.c.i.getBD().Ne_EAT(), 1 + 8 + 1);
 			this.c.sendSSI(s_byte_array, SIESound.ID);
 		}
 	}

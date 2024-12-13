@@ -8,6 +8,7 @@ import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.system.Reflect;
+import com.nali.system.bytes.ByteReader;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -137,7 +138,12 @@ public class MixCIE
 	{
 		BD bd = this.c.i.getBD();
 		E e = this.c.i.getE();
-		float scale = e.getDataManager().get(this.c.i.getFloatDataParameterArray()[0]);
+		byte[] byte_array = new byte[4];
+		for (byte b = 0; b < 4; ++b)
+		{
+			byte_array[b] = e.getDataManager().get(this.c.i.getByteDataParameterArray()[b]);
+		}
+		float scale = ByteReader.getFloat(byte_array, 0);
 		e.width = bd.E_Width() * scale;
 		e.height = bd.E_Height() * scale;
 	}

@@ -30,10 +30,8 @@ public interface IMixE
 		{
 			this.newS();
 
-			BD bd = this.getBD();
 			e.width = 0.5F;
 			e.height = 0.5F;
-			e.getDataManager().set(this.getFloatDataParameterArray()[0], bd.E_Scale());
 		}
 	}
 
@@ -46,17 +44,17 @@ public interface IMixE
 			entitydatamanager.register(byte_dataparameter, (byte)0);
 		}
 
-		DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
-		for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
-		{
-			entitydatamanager.register(integer_dataparameter, 0);
-		}
-
-		DataParameter<Float>[] float_dataparameter_array = this.getFloatDataParameterArray();
-		for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
-		{
-			entitydatamanager.register(float_dataparameter, 0.0F);
-		}
+//		DataParameter<Integer>[] integer_dataparameter_array = this.getIntegerDataParameterArray();
+//		for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
+//		{
+//			entitydatamanager.register(integer_dataparameter, 0);
+//		}
+//
+//		DataParameter<Float>[] float_dataparameter_array = this.getFloatDataParameterArray();
+//		for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
+//		{
+//			entitydatamanager.register(float_dataparameter, 0.0F);
+//		}
 	}
 
 //	default void EwriteEntityToNBT(NBTTagCompound nbttagcompound)
@@ -118,8 +116,8 @@ public interface IMixE
 	byte[] getSI();
 
 	DataParameter<Byte>[] getByteDataParameterArray();
-	DataParameter<Integer>[] getIntegerDataParameterArray();
-	DataParameter<Float>[] getFloatDataParameterArray();
+//	DataParameter<Integer>[] getIntegerDataParameterArray();
+//	DataParameter<Float>[] getFloatDataParameterArray();
 
 	@SideOnly(Side.CLIENT)
 	void newC();

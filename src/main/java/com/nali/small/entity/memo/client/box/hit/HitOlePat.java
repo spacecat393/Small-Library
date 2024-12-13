@@ -1,7 +1,7 @@
 package com.nali.small.entity.memo.client.box.hit;
 
 import com.nali.da.IBothDaE;
-import com.nali.da.IBothDaNE;
+import com.nali.da.IBothDaNe;
 import com.nali.da.IBothDaO;
 import com.nali.list.entity.si.SIEPat;
 import com.nali.list.entity.si.SIESound;
@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class HitOlePat
 <
-	BD extends IBothDaE & IBothDaO & IBothDaNE,
+	BD extends IBothDaE & IBothDaO & IBothDaNe,
 	R extends RenderO<BD>,
 	E extends EntityLivingBase,
 	I extends IMixE<BD, E>,
@@ -64,7 +64,7 @@ public class HitOlePat
 
 //			this.c.sound.play(this.c.i.getSD().PAT());
 			byte[] s_byte_array = new byte[1 + 8 + 1 + 4];
-			ByteWriter.set(s_byte_array, this.c.i.getBD().NE_PAT(), 1 + 8 + 1);
+			ByteWriter.set(s_byte_array, this.c.i.getBD().Ne_PAT(), 1 + 8 + 1);
 			this.c.sendSSI(s_byte_array, SIESound.ID);
 
 //			serverentitiesmemory.current_work_byte_array[serverentitiesmemory.workbytes.ON_PAT()] = 1;

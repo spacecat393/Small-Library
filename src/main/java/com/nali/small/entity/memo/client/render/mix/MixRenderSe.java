@@ -39,7 +39,7 @@ public abstract class MixRenderSe
 	}
 
 	@Override
-	public void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
+	public void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partial_ticks)
 	{
 //		Nali.LOGGER.info("START");
 
@@ -48,8 +48,8 @@ public abstract class MixRenderSe
 
 		GL11.glPushMatrix();
 
-//		this.updateData(/*rendere, */partialTicks);
-		this.updateSkinning(partialTicks);
+//		this.updateData(/*rendere, */partial_ticks);
+		this.updateSkinning(partial_ticks);
 
 		GL11.glTranslated(ox, oy, oz);
 
@@ -86,15 +86,15 @@ public abstract class MixRenderSe
 //		}
 
 		GL11.glPopMatrix();
-//		this.renderLayer(t, ox, oy, oz, partialTicks);
+//		this.renderLayer(t, ox, oy, oz, partial_ticks);
 	}
 
-//	public void updateData(/*RenderE<E> rendere, */float partialTicks)
+//	public void updateData(/*RenderE<E> rendere, */float partial_ticks)
 //	{
 //		E e = this.c.i.getE();
-//		this.head_rot = (float)Math.toRadians(interpolateRotation(e.prevRotationYaw, e.rotationYaw, partialTicks));
-//		this.head_pitch = (float)Math.toRadians(e.prevRotationPitch + (e.rotationPitch - e.prevRotationPitch) * partialTicks);
-////		r.timeline = partialTicks;
+//		this.head_rot = (float)Math.toRadians(interpolateRotation(e.prevRotationYaw, e.rotationYaw, partial_ticks));
+//		this.head_pitch = (float)Math.toRadians(e.prevRotationPitch + (e.rotationPitch - e.prevRotationPitch) * partial_ticks);
+////		r.timeline = partial_ticks;
 //
 ////		OpenGLAnimationMemory openglanimationmemory = r.dataloader.openglanimationmemory_list.get(((SkinningClientData)r.clientdata).AnimationID());
 ////		OpenGLAnimationMemory openglanimationmemory = (OpenGLAnimationMemory)r.dataloader.object_array[((SkinningClientData)r.clientdata).AnimationID()];
@@ -109,7 +109,7 @@ public abstract class MixRenderSe
 
 //		if (!this.c.fake)
 //		{
-		this.c.i.mulFrame(r.skinning_float_array, r.frame_int_array, partial_ticks);
+		this.c.i.mulFrame(r.skinning_float_array, r.key_byte_array, r.time_short_array, partial_ticks);
 //		}
 
 		r.setSkinning(bd/*memoanimation*/);

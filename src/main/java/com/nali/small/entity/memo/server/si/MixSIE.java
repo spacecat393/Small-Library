@@ -4,6 +4,7 @@ import com.nali.da.IBothDaE;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.system.Reflect;
+import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -103,7 +104,12 @@ public class MixSIE
 	public void initFile()
 	{
 		I i = this.s.i;
-		i.getE().getDataManager().set(i.getFloatDataParameterArray()[0], i.getBD().E_Scale());
+		byte[] byte_array = new byte[4];
+		ByteWriter.set(byte_array, i.getBD().E_Scale(), 0);
+		for (byte b = 0; b < 4; ++b)
+		{
+			i.getE().getDataManager().set(i.getByteDataParameterArray()[b], byte_array[b]);
+		}
 		this.init();
 	}
 

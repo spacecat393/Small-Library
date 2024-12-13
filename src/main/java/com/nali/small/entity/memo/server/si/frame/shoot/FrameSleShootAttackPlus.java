@@ -43,16 +43,16 @@ public class FrameSleShootAttackPlus
 		byte[] frame_byte_array = this.s.getFrameByteArray();
 		byte frame = frame_byte_array[this.index];
 		byte attack = this.getAttack();
-		if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[attack][1] - 1)
+		if (this.siekey.frame_int_array[frame] == frame_2d_int_array[attack][1] - 1)
 		{
 //			start_id = 2;
 //			id = 10;
-			this.sieframe.frame_int_array[frame] = frame_2d_int_array[2][0];
+			this.siekey.frame_int_array[frame] = frame_2d_int_array[2][0];
 //			serverentitiesmemory.server_how_attack = false;
 		}
 //		}
 
-		if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[attack][1] - 1)
+		if (this.siekey.frame_int_array[frame] == frame_2d_int_array[attack][1] - 1)
 		{
 //			byte start_attack_size = frame_byte_array[this.index + 1];
 //			byte attack_size = frame_byte_array[this.index + 1 + start_attack_size];

@@ -16,7 +16,7 @@ public class FrameSleHeal
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS> & IServerS,
 	MS extends MixSIE<BD, E, I, S>
-> extends FrameS<BD, E, I, S, MS>
+> extends KeyS<BD, E, I, S, MS>
 {
 	public SILeHeal<BD, E, I, S, MS> sileheal;
 
@@ -49,7 +49,7 @@ public class FrameSleHeal
 			byte frame = frame_byte_array[this.index];
 			for (int heal_frame : this.sileheal.heal_frame_int_array)
 			{
-				if (this.sieframe.frame_int_array[frame] == heal_frame)
+				if (this.siekey.frame_int_array[frame] == heal_frame)
 				{
 					this.sileheal.state |= 4;
 					break;
@@ -57,14 +57,14 @@ public class FrameSleHeal
 			}
 
 			byte index = frame_byte_array[this.index + 1];
-			if (this.sieframe.frame_int_array[frame] < frame_2d_int_array[index][0] || this.sieframe.frame_int_array[frame] > frame_2d_int_array[index][1])
+			if (this.siekey.frame_int_array[frame] < frame_2d_int_array[index][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[index][1])
 			{
-				this.sieframe.frame_int_array[frame] = frame_2d_int_array[index][0];
+				this.siekey.frame_int_array[frame] = frame_2d_int_array[index][0];
 				this.step = 0;
 			}
-			else if (this.sieframe.frame_int_array[frame] == frame_2d_int_array[index][1])
+			else if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index][1])
 			{
-				this.sieframe.frame_int_array[frame] = frame_2d_int_array[index][0];
+				this.siekey.frame_int_array[frame] = frame_2d_int_array[index][0];
 				this.step = 0;
 			}
 

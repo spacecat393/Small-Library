@@ -117,7 +117,7 @@ public abstract class ServerE
 
 	public int size()
 	{
-		return this.i.getByteDataParameterArray().length + this.i.getFloatDataParameterArray().length * 4 + this.i.getIntegerDataParameterArray().length * 4 + this.ms.size();
+		return this.i.getByteDataParameterArray().length/* + this.i.getFloatDataParameterArray().length * 4 + this.i.getIntegerDataParameterArray().length * 4 */+ this.ms.size();
 	}
 	public abstract void writeFile(SIData sidata);
 	@Override
@@ -132,8 +132,8 @@ public abstract class ServerE
 
 		EntityDataManager entitydatamanager = e.getDataManager();
 		DataParameter<Byte>[] byte_dataparameter_array = this.i.getByteDataParameterArray();
-		DataParameter<Float>[] float_dataparameter_array = this.i.getFloatDataParameterArray();
-		DataParameter<Integer>[] integer_dataparameter_array = this.i.getIntegerDataParameterArray();
+//		DataParameter<Float>[] float_dataparameter_array = this.i.getFloatDataParameterArray();
+//		DataParameter<Integer>[] integer_dataparameter_array = this.i.getIntegerDataParameterArray();
 
 		sidata.byte_array = new byte[this.size()];
 
@@ -142,17 +142,17 @@ public abstract class ServerE
 			sidata.byte_array[sidata.index++] = entitydatamanager.get(byte_dataparameter);
 		}
 
-		for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
-		{
-			ByteWriter.set(sidata.byte_array, entitydatamanager.get(float_dataparameter), sidata.index);
-			sidata.index += 4;
-		}
-
-		for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
-		{
-			ByteWriter.set(sidata.byte_array, entitydatamanager.get(integer_dataparameter), sidata.index);
-			sidata.index += 4;
-		}
+//		for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
+//		{
+//			ByteWriter.set(sidata.byte_array, entitydatamanager.get(float_dataparameter), sidata.index);
+//			sidata.index += 4;
+//		}
+//
+//		for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
+//		{
+//			ByteWriter.set(sidata.byte_array, entitydatamanager.get(integer_dataparameter), sidata.index);
+//			sidata.index += 4;
+//		}
 
 		this.ms.writeFile(sidata);
 		this.writeFile(sidata);
@@ -202,28 +202,29 @@ public abstract class ServerE
 				{
 					EntityDataManager entitydatamanager = e.getDataManager();
 					DataParameter<Byte>[] byte_dataparameter_array = this.i.getByteDataParameterArray();
-					DataParameter<Float>[] float_dataparameter_array = this.i.getFloatDataParameterArray();
-					DataParameter<Integer>[] integer_dataparameter_array = this.i.getIntegerDataParameterArray();
+//					DataParameter<Float>[] float_dataparameter_array = this.i.getFloatDataParameterArray();
+//					DataParameter<Integer>[] integer_dataparameter_array = this.i.getIntegerDataParameterArray();
 
 					sidata.byte_array = Files.readAllBytes(file.toPath());
 
+					this.scale = ByteReader.getFloat(sidata.byte_array, sidata.index);
 					for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
 					{
 						entitydatamanager.set(byte_dataparameter, sidata.byte_array[sidata.index++]);
 					}
 
-					this.scale = ByteReader.getFloat(sidata.byte_array, sidata.index);
-					for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
-					{
-						entitydatamanager.set(float_dataparameter, ByteReader.getFloat(sidata.byte_array, sidata.index));
-						sidata.index += 4;
-					}
-
-					for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
-					{
-						entitydatamanager.set(integer_dataparameter, ByteReader.getInt(sidata.byte_array, sidata.index));
-						sidata.index += 4;
-					}
+//					this.scale = ByteReader.getFloat(sidata.byte_array, sidata.index);
+//					for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
+//					{
+//						entitydatamanager.set(float_dataparameter, ByteReader.getFloat(sidata.byte_array, sidata.index));
+//						sidata.index += 4;
+//					}
+//
+//					for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
+//					{
+//						entitydatamanager.set(integer_dataparameter, ByteReader.getInt(sidata.byte_array, sidata.index));
+//						sidata.index += 4;
+//					}
 
 					this.ms.readFile(sidata);
 					this.readFile(sidata);

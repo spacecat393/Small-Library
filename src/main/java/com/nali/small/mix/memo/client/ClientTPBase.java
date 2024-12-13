@@ -28,14 +28,14 @@ public class ClientTPBase
 	@Override
 	public void updateFrame(R r)
 	{
-		if (r.frame_int_array[0] < 78)
-		{
-			++r.frame_int_array[0];
-		}
-		else
-		{
-			r.frame_int_array[0] = 0;
-		}
+//		if (r.frame_int_array[0] < 78)
+//		{
+//			++r.frame_int_array[0];
+//		}
+//		else
+//		{
+//			r.frame_int_array[0] = 0;
+//		}
 	}
 //
 //	@Override

@@ -97,7 +97,7 @@ public class SIELook
 		this.max = max;
 		this.looking = true;
 		this.done = false;
-//		this.onUpdate();//need update done
+//		this.onUpdate();//need sync done
 		this.s.ms.state &= 255-2;
 	}
 

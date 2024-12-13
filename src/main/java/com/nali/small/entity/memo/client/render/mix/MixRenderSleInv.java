@@ -46,22 +46,22 @@ public abstract class MixRenderSleInv
 	}
 
 //	@Override
-//	public void updateData(float partialTicks)
+//	public void updateData(float partial_ticks)
 //	{
 //		E e = this.c.i.getE();
-//		this.body_rot = (float)Math.toRadians(interpolateRotation(e.prevRenderYawOffset, e.renderYawOffset, partialTicks));
-//		super.updateData(partialTicks);
+//		this.body_rot = (float)Math.toRadians(interpolateRotation(e.prevRenderYawOffset, e.renderYawOffset, partial_ticks));
+//		super.updateData(partial_ticks);
 //		this.net_head_yaw = this.head_rot - this.body_rot;
 //	}
 
 	@Override
-	public void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
+	public void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partial_ticks)
 	{
-		this.renderLayer(rendere, ox, oy, oz, partialTicks);
-		super.doRender(rendere, ox, oy, oz, partialTicks);
+		this.renderLayer(rendere, ox, oy, oz, partial_ticks);
+		super.doRender(rendere, ox, oy, oz, partial_ticks);
 	}
 
-	public void renderLayer(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks)
+	public void renderLayer(FRenderE<E> rendere, double ox, double oy, double oz, float partial_ticks)
 	{
 		R r = this.c.r;
 		GL11.glPushMatrix();
@@ -72,8 +72,8 @@ public abstract class MixRenderSleInv
 //		this.layersleinvitem.x = (float)ox;
 //		this.layersleinvitem.y = (float)oy;
 //		this.layersleinvitem.z = (float)oz;
-//		this.layersleinvitem.layer(partialTicks);
-//		this.layersleinvarrow.layer(rendere, (float)ox, (float)oy, (float)oz, partialTicks);
+//		this.layersleinvitem.layer(partial_ticks);
+//		this.layersleinvarrow.layer(rendere, (float)ox, (float)oy, (float)oz, partial_ticks);
 
 		GL11.glPopMatrix();
 	}
