@@ -15,7 +15,7 @@ public class FrameSleTLoopAttackWalk
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS> & IServerS,
 	MS extends MixSIE<BD, E, I, S>
-> extends FrameSTLoop<BD, E, I, S, MS>
+> extends KeySTLoop<BD, E, I, S, MS>
 {
 	public SILeAttack<BD, E, I, S, MS> sileattack;
 

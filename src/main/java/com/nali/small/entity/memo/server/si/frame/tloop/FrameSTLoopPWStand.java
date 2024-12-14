@@ -21,7 +21,7 @@ public class FrameSTLoopPWStand
 	I extends IMixE<BD, E>,
 	S extends ServerE<BD, E, I, MS> & IServerS,
 	MS extends MixSIE<BD, E, I, S>
-> extends FrameSTLoop<BD, E, I, S, MS>
+> extends KeySTLoop<BD, E, I, S, MS>
 {
 	public SIEPlayWithRSe sieplaywithrse;
 	public byte[] s2_id_byte_array;

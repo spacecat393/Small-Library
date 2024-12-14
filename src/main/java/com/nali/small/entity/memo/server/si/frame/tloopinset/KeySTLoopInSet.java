@@ -24,6 +24,7 @@ public class KeySTLoopInSet
 		super(s, index);
 	}
 
+	//+1 +1 0 -> 1 / 1 -> ... / ... -> 1
 	@Override
 	public boolean onUpdate()
 	{
@@ -37,15 +38,21 @@ public class KeySTLoopInSet
 		byte key_index = key_data_byte_array[this.key_data_index + 1];
 		byte key_index1 = key_data_byte_array[this.key_data_index + 2];
 		float key = this.getKey(key_short_array, key_index, time_index);
-		boolean result = key >= key_short_array[key_index + 1] && key <= key_short_array[key_index1 + 1];
+		float step0 = this.getStep(key_short_array, key_index0);
+		float step1 = this.getStep(key_short_array, key_index1);
+		float on_key = key / step0;
 
-		if (result)
+		//check key_index and check time % as id
+		if (key_index_byte_array[time_index] )
 		{
-			float step = this.getStep(key_short_array, key_index);
 
+		}
+
+		if (on_key >= key_short_array[key_index + 1] && on_key <= key_short_array[key_index1 + 1])
+		{
 			key_index_byte_array[time_index] = key_index;
 			key_index_byte_array[time_index + 1] = key_index;
-			if (key >= key_short_array[key_index1 + 1])
+			if (on_key >= key_short_array[key_index1 + 1])
 			{
 				time_short_array[time_index] = key_short_array[key_index];
 				time_short_array[time_index + 1] = (short)(time_short_array[time_index] + step);

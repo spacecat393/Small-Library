@@ -109,7 +109,7 @@ public abstract class MixRenderSe
 
 //		if (!this.c.fake)
 //		{
-		this.c.i.mulFrame(r.skinning_float_array, r.key_byte_array, r.time_short_array, partial_ticks);
+		this.c.i.mulFrame(r.skinning_float_array, r.key_index_byte_array, r.time_short_array, partial_ticks);
 //		}
 
 		r.setSkinning(bd/*memoanimation*/);

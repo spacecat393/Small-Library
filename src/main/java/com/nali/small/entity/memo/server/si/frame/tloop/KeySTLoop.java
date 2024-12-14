@@ -1,6 +1,8 @@
 package com.nali.small.entity.memo.server.si.frame.tloop;
 
 import com.nali.da.IBothDaE;
+import com.nali.da.IBothDaS;
+import com.nali.da.IBothDaSe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.IServerS;
 import com.nali.small.entity.memo.server.ServerE;
@@ -8,20 +10,21 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.frame.KeyS;
 import net.minecraft.entity.Entity;
 
-public class FrameSTLoop
+public class KeySTLoop
 <
-	BD extends IBothDaE,
+	BD extends IBothDaE & IBothDaS & IBothDaSe,
 	E extends Entity,
 	I extends IMixE<BD, E>,
 	S extends ServerE<BD, E, I, MS> & IServerS,
 	MS extends MixSIE<BD, E, I, S>
 > extends KeyS<BD, E, I, S, MS>
 {
-	public FrameSTLoop(S s, int index)
+	public KeySTLoop(S s, byte index)
 	{
 		super(s, index);
 	}
 
+	//normal +1 0 -> ... / ... -> 0
 	@Override
 	public boolean onUpdate()
 	{
