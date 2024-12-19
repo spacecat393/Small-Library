@@ -18,9 +18,9 @@ public class KeySleTLoopInSetWalk
 	MS extends MixSIE<BD, E, I, S>
 > extends KeySTLoopInSet<BD, E, I, S, MS>
 {
-	public KeySleTLoopInSetWalk(S s, byte index)
+	public KeySleTLoopInSetWalk(S s, byte key_data_index)
 	{
-		super(s, index);
+		super(s, key_data_index);
 	}
 
 	@Override

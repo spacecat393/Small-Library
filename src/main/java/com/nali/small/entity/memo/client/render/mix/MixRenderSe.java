@@ -11,6 +11,8 @@ import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.FRenderE;
+import com.nali.system.BothLoader;
+import com.nali.system.opengl.memo.MemoF2;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
@@ -105,14 +107,15 @@ public abstract class MixRenderSe
 	{
 		R r = this.c.r;
 		BD bd = this.c.i.getBD();
-		r.initSkinning(bd/*memoanimation*/);
+		MemoF2 f2 = BothLoader.F2_LIST.get(bd.S_FrameID());
+		f2.initSkinning(bd, r.skinning_float_array/*memoanimation*/);
 
 //		if (!this.c.fake)
 //		{
-		this.c.i.mulFrame(r.skinning_float_array, r.key_index_byte_array, r.time_short_array, partial_ticks);
+		this.c.i.mulFrame(r.skinning_float_array, r.key_short_array, partial_ticks);
 //		}
 
-		r.setSkinning(bd/*memoanimation*/);
+		f2.setSkinning(bd, r.skinning_float_array, r.key_short_array/*memoanimation*/);
 	}
 
 //	public void renderHitBox(FRenderE<E> rendere)

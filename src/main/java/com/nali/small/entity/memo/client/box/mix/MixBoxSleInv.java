@@ -13,6 +13,7 @@ import com.nali.small.entity.memo.client.box.hit.HitOleEat;
 import com.nali.small.entity.memo.client.box.hit.HitOlePat;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
+import com.nali.system.BothLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -22,8 +23,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.nali.system.BothLoader.F2_LIST;
 
 @SideOnly(Side.CLIENT)
 public class MixBoxSleInv
@@ -81,7 +80,7 @@ public class MixBoxSleInv
 
 //		float[] pos_vec4 = skinningrender.getScale3DSkinning((OpenGLSkinningMemory)skinningrender.dataloader.openglobjectmemory_array[iv_int_array[10]], (float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
 //		float[] pos_vec4 = skinningrender.getScale3DSkinning((OpenGLSkinningMemory)skinningrender.dataloader.object_array[iv_int_array[10]], (float)this.posX, (float)this.posY, (float)this.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
-		float[] pos_vec4 = F2_LIST.get(this.c.i.getBD().S_FrameID()).getScale3DSkinning(this.c.r.scale, this.c.r.skinning_float_array, (float)e.posX, (float)e.posY, (float)e.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
+		float[] pos_vec4 = BothLoader.F2_LIST.get(this.c.i.getBD().S_FrameID()).getScale3DSkinning(this.c.r.scale, this.c.r.skinning_float_array, (float)e.posX, (float)e.posY, (float)e.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
 
 		double x = pos_vec4[0] / pos_vec4[3];
 		double y = pos_vec4[1] / pos_vec4[3];

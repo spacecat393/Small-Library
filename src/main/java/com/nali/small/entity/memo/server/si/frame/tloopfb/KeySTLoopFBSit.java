@@ -1,4 +1,4 @@
-package com.nali.small.entity.memo.server.si.frame.tloopinset;
+package com.nali.small.entity.memo.server.si.frame.tloopfb;
 
 import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaS;
@@ -10,18 +10,18 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import net.minecraft.entity.Entity;
 
-public class KeySTLoopInSetSit
+public class KeySTLoopFBSit
 <
 	BD extends IBothDaE & IBothDaS & IBothDaSe,
 	E extends Entity,
 	I extends IMixE<BD, E>,
 	S extends ServerE<BD, E, I, MS> & IServerS,
 	MS extends MixSIE<BD, E, I, S>
-> extends KeySTLoopInSet<BD, E, I, S, MS>
+> extends KeySTLoopFB<BD, E, I, S, MS>
 {
 	public SIESit<BD, E, I, S, MS> siesit;
 
-	public KeySTLoopInSetSit(S s, byte key_data_index)
+	public KeySTLoopFBSit(S s, byte key_data_index)
 	{
 		super(s, key_data_index);
 

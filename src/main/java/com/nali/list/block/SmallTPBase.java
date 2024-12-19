@@ -7,6 +7,8 @@ import com.nali.small.mix.block.BlockB;
 import com.nali.small.mix.item.ItemB;
 import com.nali.small.mix.memo.IBothN;
 import com.nali.small.mix.memo.client.ClientTPBase;
+import com.nali.system.BothLoader;
+import com.nali.system.opengl.memo.MemoF2;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -124,13 +126,14 @@ public class SmallTPBase extends BlockB implements ITileEntityProvider
 	{
 		BothDaTPBase bd = BothDaTPBase.IDA;
 		RenderTPBase r = new RenderTPBase();
+		MemoF2 f2 = BothLoader.F2_LIST.get(bd.S_FrameID());
 //		DrawScreen d = new DrawScreen(r);
 //		d.scale(0.25F);
 //		d.z = 0.0F;
 //		MemoAnimation memoanimation = I.clientloader.stores.memoanimation_list.get(iclientdas.AnimationID());
-		r.initSkinning(bd/*memoanimation*/);
+		f2.initSkinning(bd, r.skinning_float_array/*memoanimation*/);
 //		r.frame_int_array[0] = 40;
-		r.setSkinning(bd/*memoanimation*/);
+		f2.setSkinning(bd, r.skinning_float_array, r.key_short_array/*memoanimation*/);
 		this.ibothb = new ClientTPBase(r/*, d*/, this);
 	}
 

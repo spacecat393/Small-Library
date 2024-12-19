@@ -14,8 +14,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SIEKey
 <
@@ -28,10 +28,11 @@ public class SIEKey
 {
 	public static byte ID;
 
-	public Set<Byte> sync_byte_set = new HashSet();
+	public List<Byte> sync_byte_arraylist = new ArrayList();
 	//max_key * 2
-	public byte[] key_index_byte_array;
-	public short[] time_short_array;
+//	public byte[] key_index_byte_array;
+//	public short[] time_short_array;
+	public short[] key_short_array;
 
 	public SIEKey(S s)
 	{
@@ -41,9 +42,10 @@ public class SIEKey
 	@Override
 	public void init()
 	{
-		short mix_max_frame = (short)(this.s.i.getBD().S_MaxFrame() * 2);
-		this.key_index_byte_array = new byte[mix_max_frame];
-		this.time_short_array = new short[mix_max_frame];
+//		short mix_max_frame = (short)(this.s.i.getBD().S_MaxFrame() * 2);
+//		this.key_index_byte_array = new byte[mix_max_frame];
+//		this.time_short_array = new short[mix_max_frame];
+		this.key_short_array = new short[this.s.i.getBD().S_MaxFrame()];
 	}
 
 	@Override
@@ -75,20 +77,23 @@ public class SIEKey
 		EntityDataManager entitydatamanager = i.getE().getDataManager();
 		DataParameter<Byte>[] byte_dataparameter_array = i.getByteDataParameterArray();
 
-		for (Byte sync_byte : this.sync_byte_set)
+		for (Byte sync_byte : this.sync_byte_arraylist)
 		{
-			int index = sync_index + sync_byte * 6;
-			entitydatamanager.set(byte_dataparameter_array[index], this.key_index_byte_array[sync_byte]);
-			entitydatamanager.set(byte_dataparameter_array[index + 1], (byte)this.time_short_array[sync_byte]);
-			entitydatamanager.set(byte_dataparameter_array[index + 2], (byte)(this.time_short_array[sync_byte] >> 8));
-
-			++sync_byte;
-			entitydatamanager.set(byte_dataparameter_array[index + 3], this.key_index_byte_array[sync_byte]);
-			entitydatamanager.set(byte_dataparameter_array[index + 4], (byte)this.time_short_array[sync_byte]);
-			entitydatamanager.set(byte_dataparameter_array[index + 5], (byte)(this.time_short_array[sync_byte] >> 8));
+//			int index = sync_index + sync_byte * 6;
+//			entitydatamanager.set(byte_dataparameter_array[index], this.key_index_byte_array[sync_byte]);
+//			entitydatamanager.set(byte_dataparameter_array[index + 1], (byte)this.time_short_array[sync_byte]);
+//			entitydatamanager.set(byte_dataparameter_array[index + 2], (byte)(this.time_short_array[sync_byte] >> 8));
+//
+//			++sync_byte;
+//			entitydatamanager.set(byte_dataparameter_array[index + 3], this.key_index_byte_array[sync_byte]);
+//			entitydatamanager.set(byte_dataparameter_array[index + 4], (byte)this.time_short_array[sync_byte]);
+//			entitydatamanager.set(byte_dataparameter_array[index + 5], (byte)(this.time_short_array[sync_byte] >> 8));
+			int index = sync_index + sync_byte;
+			entitydatamanager.set(byte_dataparameter_array[index], (byte)(this.key_short_array[sync_byte] & 0xFF));
+			entitydatamanager.set(byte_dataparameter_array[index + 1], (byte)((this.key_short_array[sync_byte] >> 8) & 0xFF));
 		}
 
-		this.sync_byte_set.clear();
+		this.sync_byte_arraylist.clear();
 	}
 
 	@Override

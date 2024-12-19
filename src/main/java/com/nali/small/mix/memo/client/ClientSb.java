@@ -4,6 +4,8 @@ import com.nali.da.IBothDaO;
 import com.nali.da.IBothDaS;
 import com.nali.render.RenderS;
 import com.nali.small.mix.IMixN;
+import com.nali.system.BothLoader;
+import com.nali.system.opengl.memo.MemoF2;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
@@ -29,11 +31,12 @@ public abstract class ClientSb
 	public void render(T t, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
 	{
 		BD bd = this.i.getBD();
+		MemoF2 f2 = BothLoader.F2_LIST.get(bd.S_FrameID());
 
 		this.r.updateLightCoord(t.getWorld(), t.getPos().up());
-		this.r.initSkinning(bd/*memoanimation*/);
+		f2.initSkinning(bd, this.r.skinning_float_array/*memoanimation*/);
 		this.updateFrame(this.r);
-		this.r.setSkinning(bd/*memoanimation*/);
+		f2.setSkinning(bd, this.r.skinning_float_array, this.r.key_short_array/*memoanimation*/);
 
 		super.render(t, x, y, z, partialTicks, destroyStage, alpha);
 //		GL11.glPushMatrix();

@@ -3,6 +3,7 @@ package com.nali.list.entity.ci;
 import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaO;
 import com.nali.da.IBothDaS;
+import com.nali.da.IBothDaSe;
 import com.nali.render.RenderS;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.IMixES;
@@ -11,14 +12,13 @@ import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.CI;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
+import com.nali.system.bytes.ByteReader;
 import net.minecraft.entity.Entity;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.EntityDataManager;
 
 //@SideOnly(Side.CLIENT)
 public class CIEFrame
 <
-	BD extends IBothDaE & IBothDaO & IBothDaS,
+	BD extends IBothDaE & IBothDaO & IBothDaS & IBothDaSe,
 	R extends RenderS<BD>,
 	E extends Entity,
 	I extends IMixE<BD, E> & IMixES,
@@ -52,16 +52,34 @@ public class CIEFrame
 		{
 			I i = this.c.i;
 			R r = this.c.r;
+			BD bd = i.getBD();
 
-			EntityDataManager entitydatamanager = i.getE().getDataManager();
-			r.scale = entitydatamanager.get(i.getFloatDataParameterArray()[0]);
+//			EntityDataManager entitydatamanager = i.getE().getDataManager();
+//			DataParameter<Byte>[] byte_dataparameter = i.getByteDataParameterArray();
 
-			DataParameter<Integer>[] integer_dataparameter = i.getIntegerDataParameterArray();
+//			int scale = 0;
+//			for (byte b = 0; b < 4; ++b)
+//			{
+////				scale |= (entitydatamanager.get(byte_dataparameter[b]) & 0xFF) << (b * 8);
+//				scale |= (this.c.sync_byte_array[b] & 0xFF) << (b * 8);
+//			}
+//			r.scale = scale;
+			r.scale = ByteReader.getFloat(this.c.sync_byte_array, 0);
 
-			int[] frame_int_array = r.frame_int_array;
-			for (int x = 0; x < this.c.i.getBD().S_MaxFrame(); ++x)
+			short[] key_short_array = r.key_short_array;
+//			short key = 0;
+			for (int x = 0; x < bd.S_MaxFrame(); ++x)
 			{
-				frame_int_array[x] = entitydatamanager.get(integer_dataparameter[x++]);
+//				byte b = (byte)(x % 2);
+////				key |= (entitydatamanager.get(byte_dataparameter[bd.Se_SyncIndex() + x]) & 0xFF) << (b * 8);
+//				key |= (this.c.sync_byte_array[bd.Se_SyncIndex() + x] & 0xFF) << (b * 8);
+//
+//				if (x != 0 && b == 0)
+//				{
+//					key_short_array[x] = key;
+//					key = 0;
+//				}
+				key_short_array[x] = ByteReader.getShort(this.c.sync_byte_array, bd.Se_SyncIndex() + x * 2);
 			}
 		}
 	}

@@ -136,14 +136,16 @@ public class MixCIE
 
 	public void updateBox()
 	{
-		BD bd = this.c.i.getBD();
-		E e = this.c.i.getE();
-		byte[] byte_array = new byte[4];
-		for (byte b = 0; b < 4; ++b)
-		{
-			byte_array[b] = e.getDataManager().get(this.c.i.getByteDataParameterArray()[b]);
-		}
-		float scale = ByteReader.getFloat(byte_array, 0);
+		I i = this.c.i;
+		BD bd = i.getBD();
+		E e = i.getE();
+//		byte[] byte_array = new byte[4];
+//		for (byte b = 0; b < 4; ++b)
+//		{
+////			byte_array[b] = e.getDataManager().get(this.c.i.getByteDataParameterArray()[b]);
+//			byte_array[b] = e.getDataManager().get(this.c.i.getByteDataParameterArray()[b]);
+//		}
+		float scale = ByteReader.getFloat(this.c.sync_byte_array, 0);
 		e.width = bd.E_Width() * scale;
 		e.height = bd.E_Height() * scale;
 	}

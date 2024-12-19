@@ -45,7 +45,7 @@ public abstract class ServerE
 
 //	public UUID uuid;
 	public float scale;
-	public byte[] sync_byte_array;
+//	public byte[] sync_byte_array;
 
 //	THREAD.start();
 //	public static Thread THREAD = new Thread(() ->
@@ -74,7 +74,7 @@ public abstract class ServerE
 		this.i = i;
 		this.worldserver = (WorldServer)i.getE().world;
 		BD bd = this.i.getBD();
-		this.sync_byte_array = new byte[bd.E_MaxSync()];
+//		this.sync_byte_array = new byte[bd.E_MaxSync()];
 		this.scale = bd.E_Scale();
 	}
 
@@ -82,13 +82,13 @@ public abstract class ServerE
 	public void onUpdate()
 	{
 		E e = this.i.getE();
-		EntityDataManager entitydatamanager = e.getDataManager();
-		DataParameter<Byte>[] byte_dataparameter_array = this.i.getByteDataParameterArray();
+//		EntityDataManager entitydatamanager = e.getDataManager();
+//		DataParameter<Byte>[] byte_dataparameter_array = this.i.getByteDataParameterArray();
 
-		for (int i = 0; i < byte_dataparameter_array.length; ++i)
-		{
-			entitydatamanager.set(byte_dataparameter_array[i], this.sync_byte_array[i]);
-		}
+//		for (int i = 0; i < byte_dataparameter_array.length; ++i)
+//		{
+//			entitydatamanager.set(byte_dataparameter_array[i], this.sync_byte_array[i]);
+//		}
 
 //		if (!CHUNK_MAP.containsKey(this.uuid))
 //		{

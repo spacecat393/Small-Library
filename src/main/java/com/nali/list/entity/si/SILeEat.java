@@ -3,7 +3,7 @@ package com.nali.list.entity.si;
 import com.mojang.authlib.GameProfile;
 import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaS;
-import com.nali.math.M4x4;
+import com.nali.da.IBothDaSe;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.IMixES;
@@ -14,6 +14,7 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.small.mixin.IMixinItemFood;
+import com.nali.system.BothLoader;
 import com.nali.system.opengl.memo.MemoF2;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -32,11 +33,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.nali.system.BothLoader.F2_LIST;
-
 public class SILeEat
 <
-	BD extends IBothDaE & IBothDaS,
+	BD extends IBothDaE & IBothDaS & IBothDaSe,
 	E extends EntityLe,
 	I extends IMixE<BD, E> & IMixES & IMixESInv,
 	S extends ServerLe<BD, E, I, MS> & IServerS,
@@ -112,41 +111,17 @@ public class SILeEat
 //			double y = /*e.posY + */ByteReader.getFloat(byte_array, 1 + 8 + 1 + 4);
 //			double z = /*e.posZ + */ByteReader.getFloat(byte_array, 1 + 8 + 1 + 4 + 4);
 
+			BD bd = this.s.i.getBD();
 			int[] iv_int_array = this.s.i.getIVIntArray();
 			//s0-skinning
-			int frame_id = this.s.i.getBD().S_FrameID();
-			MemoF2 bf2 = F2_LIST.get(frame_id);
-			int max_bones = bf2.bone;
+			MemoF2 f2 = BothLoader.F2_LIST.get(bd.S_FrameID());
+			int max_bones = f2.bone;
 			float[] skinning_float_array = new float[max_bones * 16];
-			//s1-init
-			for (int i = 0; i < max_bones; ++i)
-			{
-				System.arraycopy(M4x4.IDENTITY, 0, skinning_float_array, i * 16, 16);
-			}
-			//e1-init
-			//s1-set
-			int max_key = bf2.length;
-
-			int[] frame_int_array = this.sieframe.frame_int_array;
-			for (int i = 0; i < max_bones; ++i)
-			{
-				for (int f : frame_int_array)
-				{
-//					if ((this.frame_byte_array[l / 8] >> l % 8 & 1) == 1)
-					if (f != -1)
-					{
-						M4x4.multiply(bf2.transforms_float_array, skinning_float_array, (f + max_key * i) * 16, i * 16);
-					}
-				}
-
-				M4x4.inverse(skinning_float_array, i * 16);
-			}
-			//e1-set
-			//s1-multiplyAnimation
-			this.s.i.mulFrame(skinning_float_array, this.sieframe.frame_int_array, 1);
-			//e1-multiplyAnimation
+			f2.initSkinning(bd, skinning_float_array);
+			this.s.i.mulFrame(skinning_float_array, this.sieframe.key_short_array, 1);
+			f2.setSkinning(bd, skinning_float_array, this.sieframe.key_short_array);
 			//e0-skinning
-			float[] pos_vec4 = bf2.getScale3DSkinning(this.s.scale, skinning_float_array, (float)e.posX, (float)e.posY, (float)e.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
+			float[] pos_vec4 = f2.getScale3DSkinning(this.s.scale, skinning_float_array, (float)e.posX, (float)e.posY, (float)e.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
 
 			double x = pos_vec4[0] / pos_vec4[3];
 			double y = pos_vec4[1] / pos_vec4[3];

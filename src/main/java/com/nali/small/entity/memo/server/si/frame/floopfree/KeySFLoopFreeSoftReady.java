@@ -1,4 +1,4 @@
-package com.nali.small.entity.memo.server.si.frame.tloopinset;
+package com.nali.small.entity.memo.server.si.frame.floopfree;
 
 import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaS;
@@ -10,18 +10,18 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import net.minecraft.entity.Entity;
 
-public class KeySTLoopInSetSit
+public class KeySFLoopFreeSoftReady
 <
 	BD extends IBothDaE & IBothDaS & IBothDaSe,
 	E extends Entity,
 	I extends IMixE<BD, E>,
 	S extends ServerE<BD, E, I, MS> & IServerS,
 	MS extends MixSIE<BD, E, I, S>
-> extends KeySTLoopInSet<BD, E, I, S, MS>
+> extends KeySFLoopFree<BD, E, I, S, MS>
 {
 	public SIESit<BD, E, I, S, MS> siesit;
 
-	public KeySTLoopInSetSit(S s, byte key_data_index)
+	public KeySFLoopFreeSoftReady(S s, byte key_data_index)
 	{
 		super(s, key_data_index);
 
@@ -36,8 +36,14 @@ public class KeySTLoopInSetSit
 //	}
 
 	@Override
-	public boolean onUpdate()
+	public boolean step()
 	{
-		return (this.siesit.state & 1) == 1 && super.onUpdate();
+		return (this.siesit.state & 4) == 4;
+	}
+
+	@Override
+	public void free()
+	{
+		this.siesit.state &= 255-4;
 	}
 }
