@@ -1,0 +1,8 @@
+BoxOrange 0 small 0 0 1 0 0
+BoxM_001 -1 small 1 1 1 0 0
+BoxM_002 -1 small 1 1 1 0 0
+StorageOut -2 small 0 0 1 0 0
+StorageIn -2 small 0 0 1 0 1
+TPBaseBase -2 small 3 0 1 0 0 1
+TPBaseLight_001 -2 small 3 0 1 0 1 1
+TPBaseLight_000 -2 small 3 0 1 0 1 1

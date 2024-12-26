@@ -13,6 +13,7 @@
     "IMixinItemFood",
     "IMixinWorldServer",
     "MixinCommandSummon",
+    "MixinEntityItem",
     "MixinEntityLivingBase",
     "MixinInventoryCrafting",
     "MixinItemMonsterPlacer",

@@ -50,6 +50,7 @@ public class PageChunkPiece extends PageSelect
 			this.group_byte_array[0 / 8] |= 1 << 0 % 8;
 			this.group_byte_array[4 / 8] |= 1 << 4 % 8;
 			this.select = 6;
+			this.min_select = 6;
 		}
 		else
 		{
@@ -69,6 +70,7 @@ public class PageChunkPiece extends PageSelect
 			this.group_byte_array[0 / 8] |= 1 << 0 % 8;
 			this.group_byte_array[5 / 8] |= 1 << 5 % 8;
 			this.select = 7;
+			this.min_select = 7;
 		}
 	}
 
@@ -110,39 +112,6 @@ public class PageChunkPiece extends PageSelect
 				case 8:
 					this.back();
 					break;
-			}
-		}
-	}
-
-	@Override
-	public void next(byte step)
-	{
-		byte min_select = 7;
-		if (this.i == -1)
-		{
-			min_select = 6;
-		}
-
-		while (true)
-		{
-			if (this.select == min_select && step < 0)
-			{
-				this.select = (byte)(this.boxtextall_array.length - 1);
-			}
-			else if (this.select == this.boxtextall_array.length - 1 && step > 0)
-			{
-				this.select = min_select;
-			}
-			else
-			{
-				this.select += step;
-			}
-
-			byte index = (byte)(this.select - 1);
-			byte bit = (byte)(1 << index % 8);
-			if ((this.group_byte_array[index / 8] & bit) != bit)
-			{
-				return;
 			}
 		}
 	}

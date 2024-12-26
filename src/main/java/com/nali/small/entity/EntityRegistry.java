@@ -28,7 +28,7 @@ public class EntityRegistry
 {
 //	public static Map<Class<? extends Entity>, EntityEntry> ENTITY_CLASS_ENTRIES = GameData.getEntityClassMap();
 	public static List<Class> ENTITIES_CLASS_LIST = Reflect.getClasses("com.nali.list.entity");
-	public static Object[] ENTITY_KEY_ARRAY;
+//	public static Object[] ENTITY_KEY_ARRAY;
 	static
 	{
 		ENTITIES_CLASS_LIST.sort(Comparator.comparing(Class::getName));

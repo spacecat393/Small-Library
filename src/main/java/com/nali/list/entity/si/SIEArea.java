@@ -98,7 +98,7 @@ public class SIEArea
 			int id = ByteReader.getInt(byte_array, index);
 //							int id = Integer.parseInt(new_string);
 
-			if (id >= EntityRegistry.ENTITY_KEY_ARRAY.length)
+			if (id >= EntityRegistry.ENTITIES_CLASS_LIST.size())
 			{
 				continue;
 			}
@@ -162,7 +162,7 @@ public class SIEArea
 			int id = ByteReader.getInt(byte_array, index);
 //							int id = Integer.parseInt(new_string);
 
-			if (id >= EntityRegistry.ENTITY_KEY_ARRAY.length)
+			if (id >= EntityRegistry.ENTITIES_CLASS_LIST.size())
 			{
 				continue;
 			}
@@ -473,7 +473,7 @@ public class SIEArea
 		{
 			for (int id : this.target_list)
 			{
-				if (id < EntityRegistry.ENTITY_KEY_ARRAY.length && entity.getClass().equals(EntityRegistry.ENTITY_KEY_ARRAY[id]))
+				if (id < EntityRegistry.ENTITIES_CLASS_LIST.size() && entity.getClass().equals(EntityRegistry.ENTITIES_CLASS_LIST.get(id)))
 				{
 					result = true;
 					break;
@@ -483,7 +483,7 @@ public class SIEArea
 
 		for (int id : this.troublemaker_list)
 		{
-			if (id < EntityRegistry.ENTITY_KEY_ARRAY.length && entity.getClass().equals(EntityRegistry.ENTITY_KEY_ARRAY[id]))
+			if (id < EntityRegistry.ENTITIES_CLASS_LIST.size() && entity.getClass().equals(EntityRegistry.ENTITIES_CLASS_LIST.get(id)))
 			{
 				return false;
 			}

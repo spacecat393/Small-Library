@@ -7,6 +7,9 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeChunkManager;
 
+import java.io.File;
+import java.util.UUID;
+
 import static com.nali.small.chunk.ChunkCallBack.CHUNK_MAP;
 
 public class ChunkLoader
@@ -70,15 +73,29 @@ public class ChunkLoader
 //		}
 	}
 
+	public static void removeChunk(Long key, UUID uuid)
 //	public static void removeChunk(UUID uuid)
-//	{
-////		if (uuid != null && CHUNK_MAP != null && CHUNK_MAP.containsKey(uuid))
-////		{
-//		ChunkData chunkdata = CHUNK_MAP.get(uuid);
-////			ForgeChunkManager.unforceChunk(chunkdata.ticket, chunkdata.chunkpos);
-//		ForgeChunkManager.releaseTicket(chunkdata.ticket);
-//		CHUNK_MAP.remove(uuid);
-//		new File(chunkdata.world.getSaveHandler().getWorldDirectory() + "/nali/entity/" + uuid).delete();
-////		}
-//	}
+	{
+//		if (uuid != null && CHUNK_MAP != null && CHUNK_MAP.containsKey(uuid))
+//		{
+		ChunkData chunkdata = CHUNK_MAP.get(key);
+//			ForgeChunkManager.unforceChunk(chunkdata.ticket, chunkdata.chunkpos);
+		ForgeChunkManager.releaseTicket(chunkdata.ticket);
+		CHUNK_MAP.remove(key);
+//		new File(chunkdata.world.getSaveHandler().getWorldDirectory() + "/nali/entity/" + (key >> 32)).delete();
+
+		File d_file = new File(chunkdata.world.getSaveHandler().getWorldDirectory() + "nali/entity/" + (key >> 32));
+		File i_file = new File(d_file + "/" + uuid);
+
+		File[] id_file_array = i_file.listFiles();
+		if (id_file_array != null)
+		{
+			for (File id_file : id_file_array)
+			{
+				id_file.delete();
+			}
+		}
+		i_file.delete();
+//		}
+	}
 }

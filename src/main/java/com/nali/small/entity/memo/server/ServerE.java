@@ -2,6 +2,7 @@ package com.nali.small.entity.memo.server;
 
 import com.nali.da.IBothDaE;
 import com.nali.list.network.method.client.CCI;
+import com.nali.small.chunk.ChunkLoader;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothE;
 import com.nali.small.entity.memo.client.render.FRenderE;
@@ -15,6 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -114,18 +116,12 @@ public abstract class ServerE
 	{
 		return this.i.getByteDataParameterArray().length/* + this.i.getFloatDataParameterArray().length * 4 + this.i.getIntegerDataParameterArray().length * 4 */+ this.ms.size();
 	}
-	public abstract void writeFile(SIData sidata);
-	@Override
-	public void writeFile()
+
+	public SIData genSIData()
 	{
 		SIData sidata = new SIData();
 
-		Entity e = this.i.getE();
-		byte[] chunk_byte_array = new byte[4 + 8/* + 4*/];
-		ByteWriter.set(chunk_byte_array, this.worldserver.getWorldType().getId(), 0);
-		ByteWriter.set(chunk_byte_array, e.getPosition().toLong(), 4);
-
-		EntityDataManager entitydatamanager = e.getDataManager();
+		EntityDataManager entitydatamanager = this.i.getE().getDataManager();
 		DataParameter<Byte>[] byte_dataparameter_array = this.i.getByteDataParameterArray();
 //		DataParameter<Float>[] float_dataparameter_array = this.i.getFloatDataParameterArray();
 //		DataParameter<Integer>[] integer_dataparameter_array = this.i.getIntegerDataParameterArray();
@@ -152,17 +148,30 @@ public abstract class ServerE
 		this.ms.writeFile(sidata);
 		this.writeFile(sidata);
 
+		return sidata;
+	}
+
+	public abstract void writeFile(SIData sidata);
+	@Override
+	public void writeFile()
+	{
 		try
 		{
 			int dimension = this.worldserver.provider.getDimension();
 			File file = new File(this.worldserver.getSaveHandler().getWorldDirectory(), "nali/entity/" + dimension);
 			file.mkdirs();
 
+			Entity e = this.i.getE();
+			byte[] chunk_byte_array = new byte[4 + 8/* + 4*/];
+			ByteWriter.set(chunk_byte_array, this.worldserver.getWorldType().getId(), 0);
+			ByteWriter.set(chunk_byte_array, e.getPosition().toLong(), 4);
+
 			Files.write(new File(file, e.getUniqueID().toString()).toPath(), chunk_byte_array);
 
 			file = new File(file, "data");
 			file.mkdirs();
 
+			SIData sidata = this.genSIData();
 			Files.write(new File(file, e.getUniqueID().toString()).toPath(), sidata.byte_array);
 		}
 		catch (IOException ex)
@@ -171,42 +180,19 @@ public abstract class ServerE
 		}
 	}
 
-	public abstract void readFile(SIData sidata);
-	public abstract void initFile();
-	@Override
-	public void readFile()
+	public void readSIData(SIData sidata)
 	{
-		if ((this.ms.state & 4) == 0)
-		{
-			this.ms.state |= 4;
-
-			SIData sidata = new SIData();
-			Entity e = this.i.getE();
-			File file = new File(this.worldserver.getSaveHandler().getWorldDirectory(), "nali/entity/" + e.world.provider.getDimension() + "/data/" + e.getUniqueID());
-
-//			warn("world " + e.world);
-//			warn("world.provider " + e.world.provider);
-//			warn("S_MAP " + S_MAP);
-//			warn("e " + e);
-//			warn("this " + this);
-			S_MAP.put((long)e.world.provider.getDimension() << 32 | e.getEntityId(), this);
-
-			try
-			{
-				if (file.exists())
-				{
-					EntityDataManager entitydatamanager = e.getDataManager();
-					DataParameter<Byte>[] byte_dataparameter_array = this.i.getByteDataParameterArray();
+		E e = this.i.getE();
+		EntityDataManager entitydatamanager = e.getDataManager();
+		DataParameter<Byte>[] byte_dataparameter_array = this.i.getByteDataParameterArray();
 //					DataParameter<Float>[] float_dataparameter_array = this.i.getFloatDataParameterArray();
 //					DataParameter<Integer>[] integer_dataparameter_array = this.i.getIntegerDataParameterArray();
 
-					sidata.byte_array = Files.readAllBytes(file.toPath());
-
-					this.scale = ByteReader.getFloat(sidata.byte_array, sidata.index);
-					for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
-					{
-						entitydatamanager.set(byte_dataparameter, sidata.byte_array[sidata.index++]);
-					}
+		this.scale = ByteReader.getFloat(sidata.byte_array, sidata.index);
+		for (DataParameter<Byte> byte_dataparameter : byte_dataparameter_array)
+		{
+			entitydatamanager.set(byte_dataparameter, sidata.byte_array[sidata.index++]);
+		}
 
 //					this.scale = ByteReader.getFloat(sidata.byte_array, sidata.index);
 //					for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
@@ -221,8 +207,36 @@ public abstract class ServerE
 //						sidata.index += 4;
 //					}
 
-					this.ms.readFile(sidata);
-					this.readFile(sidata);
+		this.ms.readFile(sidata);
+		this.readFile(sidata);
+	}
+
+	public abstract void readFile(SIData sidata);
+	public abstract void initFile();
+	@Override
+	public void readFile()
+	{
+		if ((this.ms.state & 4) == 0)
+		{
+			this.ms.state |= 4;
+
+			Entity e = this.i.getE();
+			File file = new File(this.worldserver.getSaveHandler().getWorldDirectory(), "nali/entity/" + e.world.provider.getDimension() + "/data/" + e.getUniqueID());
+
+//			warn("world " + e.world);
+//			warn("world.provider " + e.world.provider);
+//			warn("S_MAP " + S_MAP);
+//			warn("e " + e);
+//			warn("this " + this);
+			S_MAP.put((long)e.world.provider.getDimension() << 32 | e.getEntityId(), this);
+
+			try
+			{
+				if (file.exists())
+				{
+					SIData sidata = new SIData();
+					sidata.byte_array = Files.readAllBytes(file.toPath());
+					this.readSIData(sidata);
 				}
 				else
 				{
@@ -318,13 +332,17 @@ public abstract class ServerE
 ////		this.statle.readNBT(nbttagcompound);
 //	}
 
-//	//	@Override
-//	public void remove()
-//	{
-////		UUID uuid = this.i.getE().getUniqueID();
-//		ChunkLoader.removeChunk(this.uuid);
-//		S_MAP.remove(this.uuid);
-//	}
+//	@Override
+	public void remove()
+	{
+		Entity e = this.i.getE();
+		World world = e.world;
+		long key = (long)world.provider.getDimension() << 32 | e.getEntityId();
+
+//		UUID uuid = this.i.getE().getUniqueID();
+		ChunkLoader.removeChunk(key, e.getUniqueID());
+		S_MAP.remove(key);
+	}
 
 //	public Entity getOwner()
 //	{
