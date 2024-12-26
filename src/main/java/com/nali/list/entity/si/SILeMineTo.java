@@ -2,6 +2,7 @@ package com.nali.list.entity.si;
 
 import com.mojang.authlib.GameProfile;
 import com.nali.da.IBothDaE;
+import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.MixSIE;
@@ -10,7 +11,6 @@ import com.nali.small.entity.memo.server.si.SIData;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
@@ -22,7 +22,7 @@ import static com.nali.small.entity.EntityMath.isInArea;
 public class SILeMineTo
 <
 	BD extends IBothDaE,
-	E extends EntityLivingBase,
+	E extends EntityLe,
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>

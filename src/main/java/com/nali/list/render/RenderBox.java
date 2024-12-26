@@ -20,19 +20,20 @@ public class RenderBox
 	BD extends IBothDaO
 > extends SmallRenderO<BD>
 {
-	public Map<Integer, Integer> color_map = new HashMap();//ebo hex
+	public static Map<Integer, Integer> COLOR_MAP = new HashMap();//ebo hex
 	public byte extra_bit;
 
-	public RenderBox()
+	public static void setTextureMap()
 	{
-		color_map.put((G_LIST.get(BothDaBox.IDA.O_StartPart() + 1)).ebo, 0xFFffc196);
-		color_map.put((G_LIST.get(BothDaBox.IDA.O_StartPart() + 2)).ebo, 0xFFffc196);
+		COLOR_MAP.clear();
+		COLOR_MAP.put((G_LIST.get(BothDaBox.IDA.O_StartPart() + 1)).ebo, 0xFFffc196);
+		COLOR_MAP.put((G_LIST.get(BothDaBox.IDA.O_StartPart() + 2)).ebo, 0xFFffc196);
 	}
 
 	@Override
 	public void setTextureUniform(MemoG rg, MemoS rs)
 	{
-		Integer integer = this.color_map.get(rg.ebo);
+		Integer integer = COLOR_MAP.get(rg.ebo);
 		if (integer == null)
 		{
 			this.extra_bit = 0;
@@ -56,7 +57,7 @@ public class RenderBox
 	@Override
 	public int getTextureID(MemoG rg)
 	{
-		Integer integer = this.color_map.get(rg.ebo);
+		Integer integer = COLOR_MAP.get(rg.ebo);
 		if (integer == null)
 		{
 			this.extra_bit = 0;

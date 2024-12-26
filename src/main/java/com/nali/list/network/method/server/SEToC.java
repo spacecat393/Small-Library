@@ -24,7 +24,7 @@ public class SEToC
 	{
 		UUID uuid = ByteReader.getUUID(servermessage.data, 1);
 		ServerE s = S_MAP.get(uuid);
-		if (s != null && (s.ms.state & 8) == 8)
+		if (s != null/* && (s.ms.state & 8) == 8*/)
 		{
 //			ChunkLoader.updateChunk(s);
 			Entity e = s.i.getE();

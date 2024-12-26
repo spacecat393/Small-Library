@@ -1,6 +1,7 @@
 package com.nali.list.render;
 
 import com.nali.list.da.BothDaTPBase;
+import com.nali.render.RenderHelper;
 import com.nali.small.render.SmallRenderS;
 import com.nali.system.opengl.memo.client.MemoG;
 import net.minecraft.util.ResourceLocation;
@@ -24,8 +25,9 @@ public class RenderTPBase extends SmallRenderS<BothDaTPBase>
 
 	public static void setTextureMap()
 	{
-		int diamond_block = com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/diamond_block.png"));
-		TEXTURE_MAP.put(G_LIST.get(BothDaTPBase.IDA.O_StartPart()).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/obsidian.png")));
+		TEXTURE_MAP.clear();
+		int diamond_block = RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/diamond_block.png"));
+		TEXTURE_MAP.put(G_LIST.get(BothDaTPBase.IDA.O_StartPart()).ebo, RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/obsidian.png")));
 		TEXTURE_MAP.put(G_LIST.get(BothDaTPBase.IDA.O_StartPart() + 1).ebo, diamond_block);
 		TEXTURE_MAP.put(G_LIST.get(BothDaTPBase.IDA.O_StartPart() + 2).ebo, diamond_block);
 	}

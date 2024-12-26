@@ -4,6 +4,7 @@ import com.nali.da.IBothDaE;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetAttack;
 import com.nali.network.NetworkRegistry;
+import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.MixSIE;
@@ -13,7 +14,6 @@ import com.nali.small.entity.player.PlayerData;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumHand;
 
 import java.util.List;
@@ -25,7 +25,7 @@ import static com.nali.small.entity.EntityMath.isInArea;
 public class SILeAttack
 <
 	BD extends IBothDaE,
-	E extends EntityLivingBase,
+	E extends EntityLe,
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>

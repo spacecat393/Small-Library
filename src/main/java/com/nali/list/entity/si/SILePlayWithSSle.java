@@ -1,21 +1,21 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
+import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.MixSIE;
-import net.minecraft.entity.EntityLivingBase;
 
 public class SILePlayWithSSle
 <
 	R2 extends SIEPlayWithRSe<S, BD, E, I, MS, BD2, E2, I2, S2, A2>,
 	S2 extends ServerLe<BD2, E2, I2, A2>,
 	BD2 extends IBothDaE,
-	E2 extends EntityLivingBase,
+	E2 extends EntityLe,
 	I2 extends IMixE<BD2, E2>,
 	A2 extends MixSIE<BD2, E2, I2, S2>,
 	BD extends IBothDaE,
-	E extends EntityLivingBase,
+	E extends EntityLe,
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>

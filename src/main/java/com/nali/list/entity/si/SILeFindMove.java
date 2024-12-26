@@ -1,6 +1,7 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
+import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.MixSIE;
@@ -14,7 +15,6 @@ import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 
@@ -24,7 +24,7 @@ import java.util.List;
 public class SILeFindMove
 <
 	BD extends IBothDaE,
-	E extends EntityLivingBase,
+	E extends EntityLe,
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>

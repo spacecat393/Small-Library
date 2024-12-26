@@ -105,7 +105,7 @@ public abstract class MixBoxE
 
 		this.c.sendSSI(new byte[1 + 8 + 1], SIESit.ID);
 //		this.c.sendPacketUUID(AIESit.ID);
-		return false;
+		return true;
 	}
 
 	public abstract List<AxisAlignedBB> getAxisAlignedBBList();

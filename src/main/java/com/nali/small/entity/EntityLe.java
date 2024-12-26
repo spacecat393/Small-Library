@@ -20,6 +20,9 @@ import javax.annotation.Nullable;
 
 public abstract class EntityLe extends EntityLivingBase implements IMixE
 {
+	public float rotation_yaw_head;
+	public float prev_rotation_yaw_head;
+
 	public EntityLe(World world)
 	{
 		super(world);

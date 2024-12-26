@@ -58,7 +58,9 @@ public class ClientN
 //		GL11.glRotatef(0.0F, 0.0F, 1.0F, 0.0F);
 //		GL11.glRotatef(0.0F, 0.0F, 0.0F, 1.0F);
 
+		RenderO.take();
 		this.r.draw(this.i.getBD());
+		RenderO.free();
 
 		GL11.glPopMatrix();
 	}

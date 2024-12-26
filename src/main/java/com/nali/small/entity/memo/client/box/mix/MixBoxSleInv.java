@@ -5,6 +5,7 @@ import com.nali.da.IBothDaO;
 import com.nali.da.IBothDaS;
 import com.nali.list.key.SmallPage;
 import com.nali.render.RenderS;
+import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.IMixES;
 import com.nali.small.entity.IMixESInv;
@@ -15,7 +16,6 @@ import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
 import com.nali.system.BothLoader;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
@@ -29,7 +29,7 @@ public class MixBoxSleInv
 <
 	BD extends IBothDaE & IBothDaO & IBothDaS,
 	R extends RenderS<BD>,
-	E extends EntityLivingBase,
+	E extends EntityLe,
 	I extends IMixE<BD, E> & IMixES & IMixESInv,
 	MC extends MixCIE<BD, R, E, I, ?, MR, C>,
 	MR extends MixRenderSe<BD, R, E, I, MC, ?, C>,

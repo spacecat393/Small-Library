@@ -41,6 +41,16 @@ public class PageSmall extends PageSelect
 	{
 		switch (this.select)
 		{
+			case 2:
+				PAGE_LIST.add(this);
+				KEY_LIST.add(Key.KEY);
+				this.set(new PageChunk(), new KeySelect());
+				break;
+			case 3:
+				PAGE_LIST.add(this);
+				KEY_LIST.add(Key.KEY);
+				this.set(new PageEntity(), new KeySelect());
+				break;
 			case 4:
 				PAGE_LIST.add(this);
 				KEY_LIST.add(Key.KEY);
@@ -72,6 +82,6 @@ public class PageSmall extends PageSelect
 		Page.PAGE = null;
 		Key.KEY = null;
 
-		this.state |= 2;
+		super.exit();
 	}
 }

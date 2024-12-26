@@ -6,7 +6,7 @@ import static com.nali.list.data.SmallData.MODEL_STEP;
 
 public class BothDaStorage implements IBothDaO
 {
-	public static BothDaStorage IDA = new BothDaStorage();
+	public static BothDaStorage IDA;
 
 	@Override
 	public int O_StartPart()

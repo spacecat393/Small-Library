@@ -90,11 +90,6 @@ public abstract class ServerE
 //			entitydatamanager.set(byte_dataparameter_array[i], this.sync_byte_array[i]);
 //		}
 
-//		if (!CHUNK_MAP.containsKey(this.uuid))
-//		{
-//			ChunkLoader.updateChunk(this);
-//		}
-
 		this.updateServer();
 		e.width = 0.5F;
 		e.height = 0.5F;

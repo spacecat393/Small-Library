@@ -50,27 +50,58 @@ public class KeySleShoot
 
 		if (this.sileattack.magic_point <= 0)
 		{
-//			if (!this.checkShoot(true))
-//			{
-			byte reload_fix_key_index = this.getReloadFixKeyIndex(key_data_byte_array);
+			byte start_attack_fix_key_index = this.getStartAttackFixKeyIndex(key_data_byte_array);
+			byte attack_fix_key_index = this.getAttackFixKeyIndex(key_data_byte_array);
+			byte end_attack_fix_key_index = this.getEndAttackFixKeyIndex(key_data_byte_array);
+
 			this.silefindmove.endGoal();
 
-			if (key_short_array[key_short_index] < fix_key_short_array[reload_fix_key_index] || key_short_array[key_short_index] > fix_key_short_array[reload_fix_key_index + 1])
+			if (key_short_array[key_short_index] >= fix_key_short_array[start_attack_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[start_attack_fix_key_index + 1])
 			{
-				key_short_array[key_short_index] = fix_key_short_array[reload_fix_key_index];
-			}
-			else if (key_short_array[key_short_index] >= fix_key_short_array[reload_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[reload_fix_key_index + 1])
-			{
-				if (key_short_array[key_short_index] == fix_key_short_array[reload_fix_key_index + 1])
+				if (key_short_array[key_short_index] == fix_key_short_array[start_attack_fix_key_index + 1])
 				{
-					this.sileattack.magic_point = this.sileattack.max_magic_point;
+					key_short_array[key_short_index] = fix_key_short_array[end_attack_fix_key_index];
 				}
 				else
 				{
 					++key_short_array[key_short_index];
 				}
 			}
-//			}
+			else if (key_short_array[key_short_index] >= fix_key_short_array[attack_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[attack_fix_key_index + 1])
+			{
+				if (key_short_array[key_short_index] == fix_key_short_array[attack_fix_key_index + 1])
+				{
+					key_short_array[key_short_index] = fix_key_short_array[end_attack_fix_key_index];
+				}
+				else
+				{
+					++key_short_array[key_short_index];
+				}
+			}
+			else if (key_short_array[key_short_index] >= fix_key_short_array[end_attack_fix_key_index] && key_short_array[key_short_index] < fix_key_short_array[end_attack_fix_key_index + 1])
+			{
+				++key_short_array[key_short_index];
+			}
+			else
+			{
+				byte reload_fix_key_index = this.getReloadFixKeyIndex(key_data_byte_array);
+
+				if (key_short_array[key_short_index] < fix_key_short_array[reload_fix_key_index] || key_short_array[key_short_index] > fix_key_short_array[reload_fix_key_index + 1])
+				{
+					key_short_array[key_short_index] = fix_key_short_array[reload_fix_key_index];
+				}
+				else if (key_short_array[key_short_index] >= fix_key_short_array[reload_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[reload_fix_key_index + 1])
+				{
+					if (key_short_array[key_short_index] == fix_key_short_array[reload_fix_key_index + 1])
+					{
+						this.sileattack.magic_point = this.sileattack.max_magic_point;
+					}
+					else
+					{
+						++key_short_array[key_short_index];
+					}
+				}
+			}
 
 			this.siekey.sync_byte_arraylist.add(key_short_index);
 			return true;

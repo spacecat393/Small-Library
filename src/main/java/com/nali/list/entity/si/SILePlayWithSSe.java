@@ -1,12 +1,12 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
+import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
@@ -20,7 +20,7 @@ public class SILePlayWithSSe
 	I2 extends IMixE<BD2, E2>,
 	A2 extends MixSIE<BD2, E2, I2, S2>,
 	BD extends IBothDaE,
-	E extends EntityLivingBase,
+	E extends EntityLe,
 	I extends IMixE<BD, E>,
 	S extends ServerLe<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>

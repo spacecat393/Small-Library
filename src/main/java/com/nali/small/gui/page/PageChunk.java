@@ -1,6 +1,8 @@
 package com.nali.small.gui.page;
 
 import com.nali.gui.box.text.BoxTextAll;
+import com.nali.gui.key.Key;
+import com.nali.gui.key.KeySelect;
 import com.nali.gui.page.PageSelect;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -8,10 +10,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class PageChunk extends PageSelect
 {
-	public int
-		page,
-		max_page;
-
 	public PageChunk()
 	{
 		this.select = 2;
@@ -20,38 +18,38 @@ public class PageChunk extends PageSelect
 	@Override
 	public void init()
 	{
-		int limit_page = this.max_page;
-		if (limit_page > 251)
+		this.boxtextall_array = new BoxTextAll[]
 		{
-			limit_page = 251;
-		}
-		int max_page = this.max_page / 251;
-		int size = this.max_page - this.page * limit_page * max_page;
-
-		int index = 0;
-		this.boxtextall_array = new BoxTextAll[1 + 1 + size + 1 + 1];
-		this.boxtextall_array[index++] = new BoxTextAll("OPENGL-CONFIG".toCharArray());
-		this.boxtextall_array[index++] = new BoxTextAll(("PAGE " + this.page + " / " + this.max_page).toCharArray());
-
-		//chunk
-
-		this.boxtextall_array[index++] = new BoxTextAll("ACTION".toCharArray());
-		this.boxtextall_array[index] = new BoxTextAll("BACK".toCharArray());
-
+			new BoxTextAll("CHUNK".toCharArray()),
+			new BoxTextAll("MENU".toCharArray()),
+			new BoxTextAll("CHUNK-LIST".toCharArray()),
+			new BoxTextAll("CHUNK-MAP".toCharArray()),
+			new BoxTextAll("ACTION".toCharArray()),
+			new BoxTextAll("DONE".toCharArray())
+		};
 		this.group_byte_array = new byte[(byte)Math.ceil((this.boxtextall_array.length - 1) / 8.0F)];
 		this.group_byte_array[0 / 8] |= 1 << 0 % 8;
-		this.group_byte_array[4 / 8] |= 1 << 4 % 8;
+		this.group_byte_array[3 / 8] |= 1 << 3 % 8;
 	}
 
 	@Override
 	public void enter()
 	{
-
-	}
-
-	@Override
-	public void exit()
-	{
-
+		switch (this.select)
+		{
+			case 2:
+				PAGE_LIST.add(this);
+				KEY_LIST.add(Key.KEY);
+				this.set(new PageChunkList(), new KeySelect());
+				break;
+			case 3:
+				PAGE_LIST.add(this);
+				KEY_LIST.add(Key.KEY);
+				this.set(new PageChunkMap(), new KeySelect());
+				break;
+			case 5:
+				this.back();
+				break;
+		}
 	}
 }

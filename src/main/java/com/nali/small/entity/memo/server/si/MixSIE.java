@@ -1,6 +1,7 @@
 package com.nali.small.entity.memo.server.si;
 
 import com.nali.da.IBothDaE;
+import com.nali.small.chunk.ChunkLoader;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.system.Reflect;
@@ -28,7 +29,7 @@ public class MixSIE
 
 	public S s;
 	public Map<Byte, SI/*<SD, BD, E, I, S, ?>*/> si_map = new HashMap();
-	public byte state = (byte)255-4;//main_work sub_work init !ai-lock0! !read_file0! ?map chunk ?regen
+	public byte state = (byte)255-4;//main_work sub_work init load_chunk !ai-lock0! !read_file0! ?map ?regen
 
 	public EntityPlayerMP entityplayermp;
 	public byte[] byte_array;
@@ -135,6 +136,13 @@ public class MixSIE
 
 	public void update()
 	{
+		//load more chunk with move
+//		E e = this.s.i.getE();
+		if ((this.state & 8) == 8/* && !ChunkCallBack.CHUNK_MAP.containsKey((long)e.world.provider.getDimension() << 32 | e.getEntityId())*/)
+		{
+			ChunkLoader.updateChunk(this.s);
+		}
+
 		for (byte b : this.s.i.getSI())
 		{
 			this.si_map.get(b).onUpdate();

@@ -22,6 +22,7 @@ public interface IMixN
 			this.newC();
 		}
 		else
+//		if (FMLCommonHandler.instance().getSide() == Side.SERVER)
 		{
 			this.newS();
 		}

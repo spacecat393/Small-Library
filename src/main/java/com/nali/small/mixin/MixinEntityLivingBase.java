@@ -1,14 +1,10 @@
 package com.nali.small.mixin;
 
-import com.nali.small.Small;
 import com.nali.small.entity.player.PlayerData;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -35,15 +31,15 @@ public abstract class MixinEntityLivingBase extends Entity
 			PlayerData.SAKURA_MAP.put(entityplayermp.getUniqueID(), (byte)(1 + PlayerData.SAKURA_MAP.getOrDefault(entityplayermp.getUniqueID(), (byte)0)));
 //			entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null).add((byte)1);
 
-			Advancement advancement = entityplayermp.getServer().getAdvancementManager().getAdvancement(new ResourceLocation(Small.ID, "small/sakura"));
-			AdvancementProgress advancementprogress = entityplayermp.getAdvancements().getProgress(advancement);
-			if (!advancementprogress.isDone())
-			{
-				for (String criterion : advancementprogress.getRemaningCriteria())
-				{
-					entityplayermp.getAdvancements().grantCriterion(advancement, criterion);
-				}
-			}
+//			Advancement advancement = entityplayermp.getServer().getAdvancementManager().getAdvancement(new ResourceLocation(Small.ID, "small/sakura"));
+//			AdvancementProgress advancementprogress = entityplayermp.getAdvancements().getProgress(advancement);
+//			if (!advancementprogress.isDone())
+//			{
+//				for (String criterion : advancementprogress.getRemaningCriteria())
+//				{
+//					entityplayermp.getAdvancements().grantCriterion(advancement, criterion);
+//				}
+//			}
 		}
 	}
 

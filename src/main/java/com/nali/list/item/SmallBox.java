@@ -3,20 +3,14 @@ package com.nali.list.item;
 import com.nali.da.IBothDaO;
 import com.nali.list.da.BothDaBox;
 import com.nali.list.render.RenderBox;
-import com.nali.small.Small;
 import com.nali.small.mix.item.ItemI;
 import com.nali.small.mix.memo.client.ClientI;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.translation.I18n;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
+//throw to catch entity
+//will use to clone entity later
 public class SmallBox extends ItemI
 {
 	public static int ID;
@@ -47,13 +41,13 @@ public class SmallBox extends ItemI
 //		DRAWSCREEN.z = 0.0F;
 //	}
 
-	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-	{
-		tooltip.add(I18n.translateToLocal("info." + Small.ID + ".box0"));
-		tooltip.add(I18n.translateToLocal("info." + Small.ID + ".box1"));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
-	}
+//	@Override
+//	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+//	{
+//		tooltip.add(I18n.translateToLocal("info." + Small.ID + ".box0"));
+//		tooltip.add(I18n.translateToLocal("info." + Small.ID + ".box1"));
+//		super.addInformation(stack, worldIn, tooltip, flagIn);
+//	}
 
 //	@Override
 //	@SideOnly(Side.CLIENT)

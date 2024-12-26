@@ -6,7 +6,7 @@
 //
 //public class BothDaSakura implements IBothDaO
 //{
-//	public static BothDaSakura IDA = new BothDaSakura();
+//	public static BothDaSakura IDA;
 //
 //	@Override
 //	public int O_StartPart()

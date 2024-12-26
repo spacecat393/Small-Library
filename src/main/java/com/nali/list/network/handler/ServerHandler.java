@@ -23,16 +23,16 @@ public class ServerHandler implements IMessageHandler<ServerMessage, IMessage>
 
 	static
 	{
-		List<Class> servermessage_class_list = Reflect.getClasses("com.nali.list.network.method.server");
-		METHOD_ARRAY = new Method[servermessage_class_list.size()];
+		List<Class> server_class_list = Reflect.getClasses("com.nali.list.network.method.server");
+		METHOD_ARRAY = new Method[server_class_list.size()];
 
-		for (byte i = 0; i < servermessage_class_list.size(); ++i)
+		for (byte i = 0; i < server_class_list.size(); ++i)
 		{
 			try
 			{
-				Class servermessage_class = servermessage_class_list.get(i);
-				METHOD_ARRAY[i] = servermessage_class.getDeclaredMethod("run", EntityPlayerMP.class, ServerMessage.class);
-				servermessage_class.getDeclaredField("ID").set(null, i);
+				Class server_class = server_class_list.get(i);
+				METHOD_ARRAY[i] = server_class.getDeclaredMethod("run", EntityPlayerMP.class, ServerMessage.class);
+				server_class.getDeclaredField("ID").set(null, i);
 			}
 			catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException e)
 			{

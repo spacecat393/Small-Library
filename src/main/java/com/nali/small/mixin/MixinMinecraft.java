@@ -62,7 +62,6 @@ public abstract class MixinMinecraft
 
 					if (cliente.mb.isOn(entityplayersp, player_vec3d, look_vec3d))
 					{
-//						send to server
 						Minecraft.getMinecraft().player.swingArm(EnumHand.MAIN_HAND);
 					}
 				}

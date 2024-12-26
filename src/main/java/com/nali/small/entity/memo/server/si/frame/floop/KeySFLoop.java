@@ -34,20 +34,26 @@ public class KeySFLoop
 		byte key_short_index = key_data_byte_array[this.key_data_index];
 		byte fix_key_index = this.getFixKeyIndex(key_data_byte_array);
 
+//		Nali.warn("key_short_array[key_short_index] " + key_short_array[key_short_index]);
 		if (key_short_array[key_short_index] < fix_key_short_array[fix_key_index] || key_short_array[key_short_index] > fix_key_short_array[fix_key_index + 1])
 		{
+//			Nali.warn("=");
 			key_short_array[key_short_index] = fix_key_short_array[fix_key_index];
+			this.siekey.sync_byte_arraylist.add(key_short_index);
 		}
 		else if (key_short_array[key_short_index] < fix_key_short_array[fix_key_index + 1])
 		{
+//			Nali.warn("++");
 			++key_short_array[key_short_index];
+			this.siekey.sync_byte_arraylist.add(key_short_index);
 		}
-		else
-		{
-			return false;
-		}
+//		else
+//		{
+////			Nali.warn("Done");
+//			return false;
+//		}
 
-		this.siekey.sync_byte_arraylist.add(key_short_index);
+//		Nali.warn("Sync");
 		return true;
 	}
 

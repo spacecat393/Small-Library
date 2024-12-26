@@ -6,6 +6,7 @@ import com.nali.da.IBothDaO;
 import com.nali.list.entity.si.SIESound;
 import com.nali.list.entity.si.SILeEat;
 import com.nali.render.RenderO;
+import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientLe;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
@@ -25,7 +26,7 @@ public class HitOleEat
 <
 	BD extends IBothDaE & IBothDaO & IBothDaNe,
 	R extends RenderO<BD>,
-	E extends EntityLivingBase,
+	E extends EntityLe,
 	I extends IMixE<BD, E>,
 	MC extends MixCIE<BD, R, E, I, MB, MR, C>,
 	MR extends MixRenderE<BD, R, E, I, MC, MB, C>,

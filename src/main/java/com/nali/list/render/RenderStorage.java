@@ -2,6 +2,7 @@ package com.nali.list.render;
 
 import com.nali.da.IBothDaO;
 import com.nali.list.da.BothDaStorage;
+import com.nali.render.RenderHelper;
 import com.nali.small.render.SmallRenderO;
 import com.nali.system.opengl.memo.client.MemoG;
 import net.minecraft.util.ResourceLocation;
@@ -23,8 +24,9 @@ public class RenderStorage
 
 	public static void setTextureMap()
 	{
-		TEXTURE_MAP.put((G_LIST.get(BothDaStorage.IDA.O_StartPart())).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/obsidian.png")));
-		TEXTURE_MAP.put((G_LIST.get(BothDaStorage.IDA.O_StartPart() + 1)).ebo, com.nali.render.RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/diamond_block.png")));
+		TEXTURE_MAP.clear();
+		TEXTURE_MAP.put(G_LIST.get(BothDaStorage.IDA.O_StartPart()).ebo, RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/obsidian.png")));
+		TEXTURE_MAP.put(G_LIST.get(BothDaStorage.IDA.O_StartPart() + 1).ebo, RenderHelper.getTextureBuffer(new ResourceLocation("textures/blocks/diamond_block.png")));
 	}
 
 	@Override

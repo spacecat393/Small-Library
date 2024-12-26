@@ -1,8 +1,8 @@
 package com.nali.small.entity.memo.server;
 
-import com.nali.Nali;
 import com.nali.da.IBothDaE;
 import com.nali.list.entity.si.SILeLockDMG;
+import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.EntityMath;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothLe;
@@ -11,14 +11,15 @@ import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 
 public abstract class ServerLe
 <
 //	SD extends ISoundDaLe,
 	BD extends IBothDaE,
-	E extends EntityLivingBase,
+	E extends EntityLe,
 	I extends IMixE<BD, E>/* & IMixESoundDa<SD>*/,
 	MS extends MixSIE<BD, E, I, ?>
 > extends ServerE<BD, E, I, MS> implements IBothLe<E>
@@ -60,21 +61,22 @@ public abstract class ServerLe
 		//normal look
 		super.onUpdate();
 		E e = this.i.getE();
+//		++e.rotationYaw;
 //		if (this.fix_yaw_head != 0)
 //		{
-//			e.rotationYawHead = this.fix_yaw_head;
-//			e.prevRotationYawHead = this.fix_yaw_head;
+//			this.rotation_yaw_head = this.fix_yaw_head;
+//			e.prev_rotation_yaw_head = this.fix_yaw_head;
 //		}
 		//normal -180 180 -90 90
 		//yaw move/body
 		//yawhead head
 		e.rotationPitch = EntityMath.normalize(e.rotationPitch, 180.0F);
-//		e.rotationYawHead = EntityMath.normalize(e.rotationYawHead, 360.0F);
+//		this.rotation_yaw_head = EntityMath.normalize(this.rotation_yaw_head, 360.0F);
 
-//		float difference = e.rotationYaw - e.rotationYawHead - 45.0F;
-		float difference = e.rotationYawHead - e.rotationYaw;
+//		float difference = e.rotationYaw - this.rotation_yaw_head - 45.0F;
+		float difference = e.rotation_yaw_head - e.rotationYaw;
 
-		float new_difference = (e.rotationYawHead + 360) % 360 - (e.rotationYaw + 360) % 360;
+		float new_difference = (e.rotation_yaw_head + 360) % 360 - (e.rotationYaw + 360) % 360;
 		if (Math.abs(new_difference) < Math.abs(difference))
 		{
 			difference = ((new_difference + 180) % 360 + 360) % 360 - 180;
@@ -90,12 +92,22 @@ public abstract class ServerLe
 
 		//rotationYawHead not sync in correct
 		//create new rotationYawHead
-		e.rotationYawHead = EntityMath.normalize(e.rotationYaw + difference, 360.0F);
-//		e.rotationYawHead = EntityMath.normalize(e.rotationYawHead + difference, 360.0F);
+		e.rotation_yaw_head = EntityMath.normalize(e.rotationYaw + difference, 360.0F);
+//		this.rotation_yaw_head = EntityMath.normalize(this.rotation_yaw_head + difference, 360.0F);
 		e.rotationYaw = EntityMath.normalize(e.rotationYaw, 360.0F);
-//		e.prevRotationYawHead = e.rotationYawHead;
+//		e.prev_rotation_yaw_head = this.rotation_yaw_head;
 //		e.prevRotationYaw = e.rotationYaw;
-		Nali.warn("YH " + e.rotationYawHead);
+//		Nali.warn("YH " + this.rotation_yaw_head);
+
+		int rotation_yaw_head_int = Float.floatToIntBits(e.rotation_yaw_head);
+		I i = this.i;
+		EntityDataManager entitydatamanager = i.getE().getDataManager();
+		DataParameter<Byte>[] byte_dataparameter_array = i.getByteDataParameterArray();
+
+		entitydatamanager.set(byte_dataparameter_array[4], (byte)(rotation_yaw_head_int & 0xFF));
+		entitydatamanager.set(byte_dataparameter_array[5], (byte)((rotation_yaw_head_int >> 8) & 0xFF));
+		entitydatamanager.set(byte_dataparameter_array[6], (byte)((rotation_yaw_head_int >> 8*2) & 0xFF));
+		entitydatamanager.set(byte_dataparameter_array[7], (byte)((rotation_yaw_head_int >> 8*3) & 0xFF));
 	}
 
 	@Override
@@ -133,8 +145,8 @@ public abstract class ServerLe
 	public void readFile(SIData sidata)
 	{
 		E e = this.i.getE();
-		e.rotationYawHead = ByteReader.getFloat(sidata.byte_array, sidata.index);
-		e.prevRotationYawHead = e.rotationYawHead;
+		e.rotation_yaw_head = ByteReader.getFloat(sidata.byte_array, sidata.index);
+//		e.prev_rotation_yaw_head = e.rotation_yaw_head;
 //		this.fix_yaw_head = ByteReader.getFloat(sidata.byte_array, sidata.index);
 		sidata.index += 4;
 	}
@@ -144,8 +156,8 @@ public abstract class ServerLe
 	{
 		E e = this.i.getE();
 //		this.fix_yaw_head = e.rotationYaw;
-		e.rotationYawHead = e.rotationYaw;
-		e.prevRotationYawHead = e.rotationYaw;
+		e.rotation_yaw_head = e.rotationYaw;
+//		e.prev_rotation_yaw_head = e.rotationYaw;
 	}
 //	@Override
 //	public WorkEBodyYaw getWorkEBodyYaw()

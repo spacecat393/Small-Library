@@ -24,13 +24,8 @@ public class ChunkCallBack implements ForgeChunkManager.OrderedLoadingCallback
 	@Override
 	public List<ForgeChunkManager.Ticket> ticketsLoaded(List<ForgeChunkManager.Ticket> tickets, World world, int maxTicketCount)
 	{
-		// Return ms list of tickets to load
 		List<ForgeChunkManager.Ticket> ticketsToLoad = new ArrayList();
 
-		// Add your logic to determine which tickets to load
-		// You can process the tickets parameter to make decisions
-
-		// For example, load the first maxTicketCount tickets
 		int count = Math.min(maxTicketCount, tickets.size());
 		for (int i = 0; i < count; i++)
 		{
@@ -43,10 +38,5 @@ public class ChunkCallBack implements ForgeChunkManager.OrderedLoadingCallback
 	@Override
 	public void ticketsLoaded(List<ForgeChunkManager.Ticket> tickets, World world)
 	{
-//		// Handle forced chunk loading tickets being loaded
-//		for (ForgeChunkManager.Ticket ticket : tickets)
-//		{
-//			// Process each ticket as needed
-//		}
 	}
 }
