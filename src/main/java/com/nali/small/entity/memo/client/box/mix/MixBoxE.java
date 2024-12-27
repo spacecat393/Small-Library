@@ -10,6 +10,7 @@ import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.box.hit.HitE;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
@@ -33,6 +34,7 @@ public abstract class MixBoxE
 	C extends ClientE<BD, R, E, I, MC, ?, MR>
 >
 {
+	public long last_time;
 	public C c;
 
 	public List<HitE> hite_list = new ArrayList();
@@ -103,7 +105,12 @@ public abstract class MixBoxE
 			return true;
 		}
 
-		this.c.sendSSI(new byte[1 + 8 + 1], SIESit.ID);
+		long new_time = Minecraft.getSystemTime();
+		if (new_time - this.last_time >= 1000)//1sec
+		{
+			this.c.sendSSI(new byte[1 + 8 + 1], SIESit.ID);
+			this.last_time = new_time;
+		}
 //		this.c.sendPacketUUID(AIESit.ID);
 		return true;
 	}

@@ -22,9 +22,11 @@ public class KeySleShoot
 	MS extends MixSIE<BD, E, I, S>
 > extends KeyS<BD, E, I, S, MS>
 {
+//	public byte state;//hold_before_reload
 	public SILeAttack<BD, E, I, S, MS> sileattack;
 	public SILeFindMove<BD, E, I, S, MS> silefindmove;
 
+	//mix
 	public KeySleShoot(S s, byte key_data_index)
 	{
 		super(s, key_data_index);
@@ -50,12 +52,14 @@ public class KeySleShoot
 
 		if (this.sileattack.magic_point <= 0)
 		{
+//			Nali.warn("magic_point <= 0");
 			byte start_attack_fix_key_index = this.getStartAttackFixKeyIndex(key_data_byte_array);
 			byte attack_fix_key_index = this.getAttackFixKeyIndex(key_data_byte_array);
 			byte end_attack_fix_key_index = this.getEndAttackFixKeyIndex(key_data_byte_array);
 
 			this.silefindmove.endGoal();
 
+//			Nali.warn("key_short_array[key_short_index] " + key_short_array[key_short_index]);
 			if (key_short_array[key_short_index] >= fix_key_short_array[start_attack_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[start_attack_fix_key_index + 1])
 			{
 				if (key_short_array[key_short_index] == fix_key_short_array[start_attack_fix_key_index + 1])
@@ -66,6 +70,7 @@ public class KeySleShoot
 				{
 					++key_short_array[key_short_index];
 				}
+				this.siekey.sync_byte_arraylist.add(key_short_index);
 			}
 			else if (key_short_array[key_short_index] >= fix_key_short_array[attack_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[attack_fix_key_index + 1])
 			{
@@ -77,10 +82,12 @@ public class KeySleShoot
 				{
 					++key_short_array[key_short_index];
 				}
+				this.siekey.sync_byte_arraylist.add(key_short_index);
 			}
 			else if (key_short_array[key_short_index] >= fix_key_short_array[end_attack_fix_key_index] && key_short_array[key_short_index] < fix_key_short_array[end_attack_fix_key_index + 1])
 			{
 				++key_short_array[key_short_index];
+				this.siekey.sync_byte_arraylist.add(key_short_index);
 			}
 			else
 			{
@@ -89,6 +96,7 @@ public class KeySleShoot
 				if (key_short_array[key_short_index] < fix_key_short_array[reload_fix_key_index] || key_short_array[key_short_index] > fix_key_short_array[reload_fix_key_index + 1])
 				{
 					key_short_array[key_short_index] = fix_key_short_array[reload_fix_key_index];
+					this.siekey.sync_byte_arraylist.add(key_short_index);
 				}
 				else if (key_short_array[key_short_index] >= fix_key_short_array[reload_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[reload_fix_key_index + 1])
 				{
@@ -99,15 +107,16 @@ public class KeySleShoot
 					else
 					{
 						++key_short_array[key_short_index];
+						this.siekey.sync_byte_arraylist.add(key_short_index);
 					}
 				}
 			}
 
-			this.siekey.sync_byte_arraylist.add(key_short_index);
 			return true;
 		}
 		else if ((this.sileattack.flag & 2) == 2)
 		{
+//			Nali.warn("(this.sileattack.flag & 2) == 2");
 			byte start_attack_fix_key_index = this.getStartAttackFixKeyIndex(key_data_byte_array);
 			byte attack_fix_key_index = this.getAttackFixKeyIndex(key_data_byte_array);
 
@@ -187,6 +196,13 @@ public class KeySleShoot
 					++key_short_array[key_short_index];
 				}
 
+				this.siekey.sync_byte_arraylist.add(key_short_index);
+				return true;
+			}
+			else if (key_short_array[key_short_index] >= fix_key_short_array[end_attack_fix_key_index] && key_short_array[key_short_index] < fix_key_short_array[end_attack_fix_key_index + 1])
+			{
+				this.silefindmove.endGoal();
+				++key_short_array[key_short_index];
 				this.siekey.sync_byte_arraylist.add(key_short_index);
 				return true;
 			}

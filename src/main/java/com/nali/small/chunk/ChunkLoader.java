@@ -84,18 +84,12 @@ public class ChunkLoader
 		CHUNK_MAP.remove(key);
 //		new File(chunkdata.world.getSaveHandler().getWorldDirectory() + "/nali/entity/" + (key >> 32)).delete();
 
-		File d_file = new File(chunkdata.world.getSaveHandler().getWorldDirectory() + "nali/entity/" + (key >> 32));
-		File i_file = new File(d_file + "/" + uuid);
+		File d_file = new File(chunkdata.world.getSaveHandler().getWorldDirectory(), "nali/entity/" + (key >> 32));
+		File i_file = new File(d_file, uuid.toString());
+		File data_file = new File(d_file, "data/" + uuid);
 
-		File[] id_file_array = i_file.listFiles();
-		if (id_file_array != null)
-		{
-			for (File id_file : id_file_array)
-			{
-				id_file.delete();
-			}
-		}
 		i_file.delete();
+		data_file.delete();
 //		}
 	}
 }

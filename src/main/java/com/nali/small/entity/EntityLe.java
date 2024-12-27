@@ -3,6 +3,7 @@ package com.nali.small.entity;
 import com.nali.small.entity.memo.IBothLe;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -244,7 +245,28 @@ public abstract class EntityLe extends EntityLivingBase implements IMixE
 		super.playEquipSound(itemstack);
 	}
 
-//	@Override
+	@Override
+	public void collideWithEntity(Entity entityIn)
+	{
+	}
+
+	@Override
+	public void collideWithNearbyEntities()
+	{
+	}
+
+	@Override
+	public boolean canBeCollidedWith()
+	{
+		return false;
+	}
+
+	@Override
+	public void onCollideWithPlayer(EntityPlayer entityIn)
+	{
+	}
+
+	//	@Override
 //	public IMixE getI()
 //	{
 //		return this;

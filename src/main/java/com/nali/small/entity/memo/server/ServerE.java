@@ -83,7 +83,7 @@ public abstract class ServerE
 	@Override
 	public void onUpdate()
 	{
-		E e = this.i.getE();
+//		E e = this.i.getE();
 //		EntityDataManager entitydatamanager = e.getDataManager();
 //		DataParameter<Byte>[] byte_dataparameter_array = this.i.getByteDataParameterArray();
 
@@ -93,8 +93,8 @@ public abstract class ServerE
 //		}
 
 		this.updateServer();
-		e.width = 0.5F;
-		e.height = 0.5F;
+//		e.width = 0.5F;
+//		e.height = 0.5F;
 
 //		UUID uuid = e.getUniqueID();
 //

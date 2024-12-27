@@ -41,7 +41,7 @@ public class KeySFLoopOffSet
 			this.siekey.sync_byte_arraylist.add(key_short_index);
 			return true;
 		}
-		else if (/*key_short_array[key_short_index] >= fix_key_short_array[fix_key_index0] && */key_short_array[key_short_index] < fix_key_short_array[fix_key_index1 + 1])
+		else if (key_short_array[key_short_index] >= fix_key_short_array[fix_key_index0] && key_short_array[key_short_index] < fix_key_short_array[fix_key_index1 + 1])
 		{
 			++key_short_array[key_short_index];
 			this.siekey.sync_byte_arraylist.add(key_short_index);

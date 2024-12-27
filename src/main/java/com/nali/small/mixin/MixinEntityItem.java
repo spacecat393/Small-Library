@@ -2,10 +2,13 @@ package com.nali.small.mixin;
 
 import com.nali.list.item.SmallBox;
 import com.nali.small.entity.EntityMath;
+import com.nali.small.entity.EntityRegistry;
 import com.nali.small.mix.item.ItemRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.AbstractChestHorse;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventoryChangedListener;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -47,9 +50,10 @@ public abstract class MixinEntityItem extends Entity
 				Map<UUID, Entity> entity_map = ((IMixinWorldServer)this.world).entitiesByUuid();
 				for (Entity entity : entity_map.values())
 				{
+					boolean has_inv = entity instanceof IInventoryChangedListener;
 					if (this != entity && !(entity instanceof EntityPlayer) && EntityMath.getDistanceAABBToAABB(this, entity) <= 0)
 					{
-						if (entity instanceof EntityItem)
+						if (entity instanceof EntityItem || has_inv && !(entity instanceof AbstractChestHorse))
 						{
 							EntityItem entityitem = (EntityItem)entity;
 //							if (itemstack.getCount() < 64)
@@ -59,7 +63,7 @@ public abstract class MixinEntityItem extends Entity
 							{
 								if (itemstack.getTagCompound() == null)
 								{
-									if (itemstack.getCount() == 1)
+									if (itemstack.getCount() == 1 && !EntityRegistry.ENTITIES_CLASS_LIST.isEmpty())
 									{
 										SmallBox.randomToBox(this.world, itemstack);
 										entityitem_itemstack.shrink(1);
@@ -75,7 +79,10 @@ public abstract class MixinEntityItem extends Entity
 						}
 						else if (itemstack.getTagCompound() == null)
 						{
-							SmallBox.putToBox(entity, itemstack);
+							if (!has_inv || entity instanceof AbstractChestHorse && !((AbstractChestHorse)entity).hasChest())
+							{
+								SmallBox.putToBox(entity, itemstack);
+							}
 						}
 						break;
 					}

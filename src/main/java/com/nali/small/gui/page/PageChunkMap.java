@@ -48,7 +48,7 @@ public class PageChunkMap extends PageSelect
 //				i += 4;
 //				int z = ByteReader.getInt(BYTE_ARRAY, i);
 //				i += 4;
-				this.boxtextall_array[index++] = new BoxTextAll(("" + id).toCharArray());
+				this.boxtextall_array[index++] = new BoxTextAll(((int)id + " " + (int)(id >> 32)).toCharArray());
 			}
 
 			this.boxtextall_array[index++] = new BoxTextAll("ACTION".toCharArray());

@@ -48,7 +48,7 @@ public class SILeEat
 	public byte state;//t-eat t-drinkMilk
 	public float time;
 
-	public SIEKey<BD, E, I, S, MS> sieframe;
+	public SIEKey<BD, E, I, S, MS> siekey;
 
 	public SILeEat(S s)
 	{
@@ -58,7 +58,7 @@ public class SILeEat
 	@Override
 	public void init()
 	{
-		this.sieframe = (SIEKey<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEKey.ID);
+		this.siekey = (SIEKey<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEKey.ID);
 	}
 
 	@Override
@@ -118,8 +118,8 @@ public class SILeEat
 			int max_bones = f2.bone;
 			float[] skinning_float_array = new float[max_bones * 16];
 			f2.initSkinning(bd, skinning_float_array);
-			this.s.i.mulFrame(skinning_float_array, this.sieframe.key_short_array, 1);
-			f2.setSkinning(bd, skinning_float_array, this.sieframe.key_short_array);
+			this.s.i.mulFrame(skinning_float_array, this.siekey.key_short_array, 1);
+			f2.setSkinning(bd, skinning_float_array, this.siekey.key_short_array);
 			//e0-skinning
 			float[] pos_vec4 = f2.getScale3DSkinning(this.s.scale, skinning_float_array, (float)e.posX, (float)e.posY, (float)e.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
 

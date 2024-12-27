@@ -64,6 +64,7 @@ public class SIEKey
 			{
 				if (keys.onUpdate())
 				{
+//					Nali.warn(keys.toString());
 //					keys.sync();
 					break;
 				}
