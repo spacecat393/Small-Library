@@ -340,7 +340,7 @@ public abstract class ServerE
 		long key = (long)world.provider.getDimension() << 32 | e.getEntityId();
 
 //		UUID uuid = this.i.getE().getUniqueID();
-		ChunkLoader.removeChunk(key, e.getUniqueID());
+		ChunkLoader.removeChunk(key, e.getUniqueID(), this.worldserver.getSaveHandler().getWorldDirectory());
 		S_MAP.remove(key);
 	}
 

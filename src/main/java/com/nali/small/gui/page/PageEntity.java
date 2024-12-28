@@ -2,7 +2,7 @@ package com.nali.small.gui.page;
 
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.key.Key;
-import com.nali.gui.key.KeySelect;
+import com.nali.gui.key.KeyEdit;
 import com.nali.gui.page.PageSelect;
 import com.nali.list.gui.data.server.SDataEntity;
 import com.nali.list.network.message.ServerMessage;
@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class PageEntity extends PageSelect
 {
 	public static byte[] BYTE_ARRAY;//1+1 (8+4*2)*? +1+1+1
+	public static String[] NAME_STRING_ARRAY;
 
 	public static byte
 		STATE,//enter client init
@@ -40,15 +41,23 @@ public class PageEntity extends PageSelect
 			this.boxtextall_array[index++] = new BoxTextAll(("PAGE " + PAGE + " - " + MAX_MIX_PAGE).toCharArray());
 
 			short i = 2;
+			byte name_index = 0;
+			NAME_STRING_ARRAY = new String[MAX_PAGE];
 			while (i < byte_array_length - 3)
 			{
 				long id = ByteReader.getLong(BYTE_ARRAY, i);
-				i += 8+4+4;
-//				int x = ByteReader.getInt(BYTE_ARRAY, i);
-//				i += 4;
-//				int z = ByteReader.getInt(BYTE_ARRAY, i);
-//				i += 4;
-				this.boxtextall_array[index++] = new BoxTextAll(((int)id + " " + (int)(id >> 32)).toCharArray());
+				i += 8;
+				int name_length = ByteReader.getInt(BYTE_ARRAY, i);
+				i += 4;
+				String name_string = new String(BYTE_ARRAY, i, name_length);
+				NAME_STRING_ARRAY[name_index++] = name_string;
+				String text_string = (int)id + " " + name_string;
+				if (text_string.length() > 20)
+				{
+					text_string = text_string.substring(0, 20) + "...";
+				}
+				i += name_length;
+				this.boxtextall_array[index++] = new BoxTextAll(text_string.toCharArray());
 			}
 
 			this.boxtextall_array[index++] = new BoxTextAll("ACTION".toCharArray());
@@ -142,8 +151,7 @@ public class PageEntity extends PageSelect
 					SELECT = (byte)(this.select - 2);
 					int new_index = 2 + SELECT * (8 + 2 * 4);
 					long id = ByteReader.getLong(BYTE_ARRAY, new_index);
-					int name_length = ByteReader.getInt(BYTE_ARRAY, new_index + 8);
-					this.set(new PageEntityMe((int)id, (int)(id >> 32), new String(BYTE_ARRAY, new_index + 8 + 4, name_length)), new KeySelect());
+					this.set(new PageEntityMe((int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]), new KeyEdit());
 				}
 			}
 			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));

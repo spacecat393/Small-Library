@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.AbstractChestHorse;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventoryChangedListener;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
@@ -59,7 +60,13 @@ public abstract class MixinEntityItem extends Entity
 //							if (itemstack.getCount() < 64)
 //							{
 							ItemStack entityitem_itemstack = entityitem.getItem();
-							if (entityitem_itemstack.getItem() instanceof ItemRecord/* && entityitem_itemstack.getCount() == 64*/)
+							if (entityitem_itemstack.getItem() == Items.GLOWSTONE_DUST)
+							{
+								int count = entityitem_itemstack.getCount();
+								itemstack.grow(count);
+								entityitem_itemstack.shrink(count);
+							}
+							else if (entityitem_itemstack.getItem() instanceof ItemRecord/* && entityitem_itemstack.getCount() == 64*/)
 							{
 								if (itemstack.getTagCompound() == null)
 								{
@@ -69,11 +76,11 @@ public abstract class MixinEntityItem extends Entity
 										entityitem_itemstack.shrink(1);
 									}
 								}
-								else
-								{
-									itemstack.grow(1);
-									entityitem_itemstack.shrink(1);
-								}
+//								else
+//								{
+//									itemstack.grow(1);
+//									entityitem_itemstack.shrink(1);
+//								}
 							}
 //							}
 						}

@@ -80,6 +80,7 @@ public class SIEKey
 
 		for (Byte sync_byte : this.sync_byte_arraylist)
 		{
+//			Nali.warn("sync_byte " + sync_byte);
 //			int index = sync_index + sync_byte * 6;
 //			entitydatamanager.set(byte_dataparameter_array[index], this.key_index_byte_array[sync_byte]);
 //			entitydatamanager.set(byte_dataparameter_array[index + 1], (byte)this.time_short_array[sync_byte]);

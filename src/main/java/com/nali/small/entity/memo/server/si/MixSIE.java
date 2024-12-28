@@ -1,7 +1,6 @@
 package com.nali.small.entity.memo.server.si;
 
 import com.nali.da.IBothDaE;
-import com.nali.small.chunk.ChunkLoader;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.system.Reflect;
@@ -136,12 +135,12 @@ public class MixSIE
 
 	public void update()
 	{
-		//load more chunk with move
-//		E e = this.s.i.getE();
-		if ((this.state & 8) == 8/* && !ChunkCallBack.CHUNK_MAP.containsKey((long)e.world.provider.getDimension() << 32 | e.getEntityId())*/)
-		{
-			ChunkLoader.updateChunk(this.s);
-		}
+//		//load more chunk with move
+////		E e = this.s.i.getE();
+//		if ((this.state & 8) == 8/* && !ChunkCallBack.CHUNK_MAP.containsKey((long)e.world.provider.getDimension() << 32 | e.getEntityId())*/)
+//		{
+//			ChunkLoader.updateChunk(this.s);
+//		}
 
 		for (byte b : this.s.i.getSI())
 		{

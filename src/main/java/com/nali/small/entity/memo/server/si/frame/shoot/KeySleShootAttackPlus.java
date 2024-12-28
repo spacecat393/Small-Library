@@ -54,7 +54,7 @@ public class KeySleShootAttackPlus
 //	}
 
 	@Override
-	public void step(short[] key_short_array, short[] fix_key_short_array, byte key_short_index, byte attack_fix_key_index)
+	public void step(short[] key_short_array, short[] fix_key_short_array, byte key_short_index, byte attack_fix_key_index, byte end_attack_fix_key_index)
 	{
 //		if (key_short_array[key_short_index] == fix_key_short_array[attack_fix_key_index + 1])
 //		{
@@ -80,7 +80,7 @@ public class KeySleShootAttackPlus
 		}
 		else
 		{
-			super.step(key_short_array, fix_key_short_array, key_short_index, attack_fix_key_index);
+			super.step(key_short_array, fix_key_short_array, key_short_index, attack_fix_key_index, end_attack_fix_key_index);
 		}
 	}
 

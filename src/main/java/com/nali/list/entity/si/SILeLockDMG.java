@@ -67,13 +67,13 @@ public class SILeLockDMG
 	public void attackEntityAsMob()//both?
 	{
 		Entity entity = this.s.attack_entity_as_mob_entity;
-		entity.hurtResistantTime = 0;
+//		entity.hurtResistantTime = 0;
 		if (entity instanceof EntityLivingBase)
 		{
 			EntityLivingBase entitylivingbase = (EntityLivingBase)entity;
 			((IMixinEntityLivingBase)entitylivingbase).recentlyHit(20);
-			entitylivingbase.maxHurtTime = 0;
-			entitylivingbase.hurtTime = 0;
+//			entitylivingbase.maxHurtTime = 0;
+//			entitylivingbase.hurtTime = 0;
 		}
 
 		if (entity instanceof EntityCreeper)
@@ -227,7 +227,7 @@ public class SILeLockDMG
 				else
 				{
 					((IMixinEntityLivingBase)entitylivingbase).lastDamage(amount);
-					target.hurtResistantTime = entitylivingbase.maxHurtResistantTime;
+//					target.hurtResistantTime = entitylivingbase.maxHurtResistantTime;
 					((IMixinEntityLivingBase)entitylivingbase).GOdamageEntity(source, amount);
 					entitylivingbase.maxHurtTime = 10;
 					entitylivingbase.hurtTime = entitylivingbase.maxHurtTime;

@@ -1,6 +1,5 @@
 package com.nali.small.entity.memo.server.si.frame.shoot;
 
-import com.nali.Nali;
 import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaS;
 import com.nali.da.IBothDaSe;
@@ -50,6 +49,7 @@ public class KeySleShoot
 
 		byte key_short_index = key_data_byte_array[this.key_data_index];
 
+//		Nali.warn("s0 key_short_array[key_short_index] " + key_short_array[key_short_index]);
 		if (this.sileattack.magic_point <= 0)
 		{
 //			Nali.warn("magic_point <= 0");
@@ -59,7 +59,6 @@ public class KeySleShoot
 
 			this.silefindmove.endGoal();
 
-//			Nali.warn("key_short_array[key_short_index] " + key_short_array[key_short_index]);
 			if (key_short_array[key_short_index] >= fix_key_short_array[start_attack_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[start_attack_fix_key_index + 1])
 			{
 				if (key_short_array[key_short_index] == fix_key_short_array[start_attack_fix_key_index + 1])
@@ -119,6 +118,7 @@ public class KeySleShoot
 //			Nali.warn("(this.sileattack.flag & 2) == 2");
 			byte start_attack_fix_key_index = this.getStartAttackFixKeyIndex(key_data_byte_array);
 			byte attack_fix_key_index = this.getAttackFixKeyIndex(key_data_byte_array);
+			byte end_attack_fix_key_index = this.getEndAttackFixKeyIndex(key_data_byte_array);
 
 			if (key_short_array[key_short_index] >= fix_key_short_array[attack_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[attack_fix_key_index + 1])
 			{
@@ -132,27 +132,31 @@ public class KeySleShoot
 					}
 				}
 
-				this.step(key_short_array, fix_key_short_array, key_short_index, attack_fix_key_index);
+				this.step(key_short_array, fix_key_short_array, key_short_index, attack_fix_key_index, end_attack_fix_key_index);
 			}
 			else if (key_short_array[key_short_index] >= fix_key_short_array[start_attack_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[start_attack_fix_key_index + 1])
 			{
 				if (key_short_array[key_short_index] == fix_key_short_array[start_attack_fix_key_index + 1])
 				{
-					key_short_array[key_short_index] = fix_key_short_array[attack_fix_key_index + 1];
+					key_short_array[key_short_index] = fix_key_short_array[attack_fix_key_index];
 				}
 				else
 				{
 					++key_short_array[key_short_index];
 				}
 			}
+			else if (key_short_array[key_short_index] >= fix_key_short_array[end_attack_fix_key_index] && key_short_array[key_short_index] < fix_key_short_array[end_attack_fix_key_index + 1])
+			{
+				++key_short_array[key_short_index];
+			}
 			else if (key_short_array[key_short_index] < fix_key_short_array[start_attack_fix_key_index] || key_short_array[key_short_index] > fix_key_short_array[start_attack_fix_key_index + 1])
 			{
 				key_short_array[key_short_index] = fix_key_short_array[start_attack_fix_key_index];
 			}
-			else
-			{
-				Nali.error("FALSE");
-			}
+//			else
+//			{
+//				Nali.error("FALSE");
+//			}
 
 			this.siekey.sync_byte_arraylist.add(key_short_index);
 			return true;
@@ -211,6 +215,7 @@ public class KeySleShoot
 //				this.silefindmove.endGoal();
 //			}
 		}
+//		Nali.warn("e0 key_short_array[key_short_index] " + key_short_array[key_short_index]);
 
 //		int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
 //		byte[] frame_byte_array = this.s.getFrameByteArray();
@@ -339,13 +344,13 @@ public class KeySleShoot
 //		}
 //	}
 
-	public void step(short[] key_short_array, short[] fix_key_short_array, byte key_short_index, byte attack_fix_key_index)
+	public void step(short[] key_short_array, short[] fix_key_short_array, byte key_short_index, byte attack_fix_key_index, byte end_attack_fix_key_index)
 	{
 		if (key_short_array[key_short_index] >= fix_key_short_array[attack_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[attack_fix_key_index + 1])
 		{
 			if (key_short_array[key_short_index] == fix_key_short_array[attack_fix_key_index + 1])
 			{
-				key_short_array[key_short_index] = fix_key_short_array[attack_fix_key_index];
+				key_short_array[key_short_index] = fix_key_short_array[end_attack_fix_key_index];
 			}
 			else
 			{

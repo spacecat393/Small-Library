@@ -73,18 +73,21 @@ public class ChunkLoader
 //		}
 	}
 
-	public static void removeChunk(Long key, UUID uuid)
+	public static void removeChunk(Long key, UUID uuid, File file)
 //	public static void removeChunk(UUID uuid)
 	{
 //		if (uuid != null && CHUNK_MAP != null && CHUNK_MAP.containsKey(uuid))
 //		{
 		ChunkData chunkdata = CHUNK_MAP.get(key);
-//			ForgeChunkManager.unforceChunk(chunkdata.ticket, chunkdata.chunkpos);
-		ForgeChunkManager.releaseTicket(chunkdata.ticket);
-		CHUNK_MAP.remove(key);
-//		new File(chunkdata.world.getSaveHandler().getWorldDirectory() + "/nali/entity/" + (key >> 32)).delete();
+		if (chunkdata != null)
+		{
+	//			ForgeChunkManager.unforceChunk(chunkdata.ticket, chunkdata.chunkpos);
+			ForgeChunkManager.releaseTicket(chunkdata.ticket);
+			CHUNK_MAP.remove(key);
+	//		new File(chunkdata.world.getSaveHandler().getWorldDirectory() + "/nali/entity/" + (key >> 32)).delete();
+		}
 
-		File d_file = new File(chunkdata.world.getSaveHandler().getWorldDirectory(), "nali/entity/" + (key >> 32));
+		File d_file = new File(file, "nali/entity/" + (key >> 32));
 		File i_file = new File(d_file, uuid.toString());
 		File data_file = new File(d_file, "data/" + uuid);
 
