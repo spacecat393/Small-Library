@@ -46,10 +46,17 @@ public class PageChunkPiece extends PageSelect
 				new BoxTextAll("DELETE".toCharArray()),
 				new BoxTextAll("DONE".toCharArray())
 			};
+
 			this.group_byte_array = new byte[(byte)Math.ceil((this.boxtextall_array.length - 1) / 8.0F)];
 			this.group_byte_array[0 / 8] |= 1 << 0 % 8;
 			this.group_byte_array[4 / 8] |= 1 << 4 % 8;
-			this.select = 6;
+
+			if ((this.state & 4) == 0)
+			{
+				this.select = 6;
+				this.state |= 4;
+			}
+
 			this.min_select = 6;
 		}
 		else
@@ -69,7 +76,13 @@ public class PageChunkPiece extends PageSelect
 			this.group_byte_array = new byte[(byte)Math.ceil((this.boxtextall_array.length - 1) / 8.0F)];
 			this.group_byte_array[0 / 8] |= 1 << 0 % 8;
 			this.group_byte_array[5 / 8] |= 1 << 5 % 8;
-			this.select = 7;
+
+			if ((this.state & 4) == 0)
+			{
+				this.select = 7;
+				this.state |= 4;
+			}
+
 			this.min_select = 7;
 		}
 	}

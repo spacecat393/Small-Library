@@ -28,7 +28,7 @@ public class MixSIE
 
 	public S s;
 	public Map<Byte, SI/*<SD, BD, E, I, S, ?>*/> si_map = new HashMap();
-	public byte state = (byte)255-4;//main_work sub_work init load_chunk !ai-lock0! !read_file0! ?map ?regen
+	public byte state = (byte)255-(4+8);//main_work sub_work init !load_chunk! !ai-lock0! !read_file0! ?map ?regen
 
 	public EntityPlayerMP entityplayermp;
 	public byte[] byte_array;

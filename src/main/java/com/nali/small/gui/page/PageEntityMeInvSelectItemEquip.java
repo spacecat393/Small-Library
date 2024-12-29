@@ -5,18 +5,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class PageEntityMeState extends PageEdit
+public class PageEntityMeInvSelectItemEquip extends PageEdit
 {
-	public PageEntityMeState()
-	{
-		this.select = 2;
-	}
-
 	@Override
 	public void init()
 	{
-		//edit name
-		//edit state
+		if ((this.state & 4) == 0)
+		{
+			this.select = 2;
+			this.state |= 4;
+		}
 	}
 
 	@Override

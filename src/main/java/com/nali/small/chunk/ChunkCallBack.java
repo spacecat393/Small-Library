@@ -16,9 +16,26 @@ public class ChunkCallBack implements ForgeChunkManager.OrderedLoadingCallback
 	public static void set()
 	{
 		I = new ChunkCallBack();
+		ForgeChunkManager.setForcedChunkLoadingCallback(Small.I, I);
+
 		CHUNK_MAP = new HashMap();
 		CHUNK_LIST = new ArrayList();
-		ForgeChunkManager.setForcedChunkLoadingCallback(Small.I, I);
+	}
+
+	public static void free()
+	{
+		for (ChunkData chunkdata : CHUNK_MAP.values())
+		{
+			ForgeChunkManager.releaseTicket(chunkdata.ticket);
+		}
+
+		for (ChunkData chunkdata : CHUNK_LIST)
+		{
+			ForgeChunkManager.releaseTicket(chunkdata.ticket);
+		}
+
+		CHUNK_MAP = null;
+		CHUNK_LIST = null;
 	}
 
 	@Override

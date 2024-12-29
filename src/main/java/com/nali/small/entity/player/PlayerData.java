@@ -5,41 +5,52 @@ import com.nali.Nali;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import static com.nali.Nali.warn;
 
 public class PlayerData
 {
 	public static Map<UUID, Byte> SAKURA_MAP;
+	public static List<Short> INV_SHORT_LIST;
 
 	public static void read(File world_file)
 	{
-		File player_file = new File(world_file, "nali/player");
-		player_file.mkdir();
+		PlayerData.SAKURA_MAP = new HashMap();
+		PlayerData.INV_SHORT_LIST = new ArrayList();
 
-		File[] file_array = player_file.listFiles();
-		for (File file : file_array)
+		File file = new File(world_file, "nali/player");
+		file.mkdir();
+
+		File[] file_array = file.listFiles();
+		for (File f : file_array)
 		{
 			try
 			{
-				UUID player_uuid = UUID.fromString(file.getName());
-				byte[] byte_array = Files.readAllBytes(file.toPath());
+				UUID player_uuid = UUID.fromString(f.getName());
+				byte[] byte_array = Files.readAllBytes(f.toPath());
 				SAKURA_MAP.put(player_uuid, byte_array[0]);
 			}
 			catch (Exception e)
 			{
 				warn(e);
-				file.delete();
+				f.delete();
 			}
+		}
+
+		file = new File(world_file, "nali/inv");
+		file.mkdir();
+
+		file_array = file.listFiles();
+		for (File f : file_array)
+		{
+			INV_SHORT_LIST.add(Short.parseShort(f.getName()));
 		}
 	}
 
 	public static void write(File world_file)
 	{
 		File player_file = new File(world_file, "nali/player");
-//		file.mkdirs();
 
 		for (File file : player_file.listFiles())
 		{
@@ -57,5 +68,8 @@ public class PlayerData
 				Nali.error(e);
 			}
 		}
+
+		PlayerData.SAKURA_MAP = null;
+		PlayerData.INV_SHORT_LIST = null;
 	}
 }

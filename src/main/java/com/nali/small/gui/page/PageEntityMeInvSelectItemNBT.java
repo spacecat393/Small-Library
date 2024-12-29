@@ -5,7 +5,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class PageEntityMeSI extends PageSelect
+public class PageEntityMeInvSelectItemNBT extends PageSelect
 {
 	@Override
 	public void init()

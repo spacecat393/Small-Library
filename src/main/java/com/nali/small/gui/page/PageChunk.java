@@ -10,11 +10,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class PageChunk extends PageSelect
 {
-	public PageChunk()
-	{
-		this.select = 2;
-	}
-
 	@Override
 	public void init()
 	{
@@ -27,9 +22,16 @@ public class PageChunk extends PageSelect
 			new BoxTextAll("ACTION".toCharArray()),
 			new BoxTextAll("DONE".toCharArray())
 		};
+
 		this.group_byte_array = new byte[(byte)Math.ceil((this.boxtextall_array.length - 1) / 8.0F)];
 		this.group_byte_array[0 / 8] |= 1 << 0 % 8;
 		this.group_byte_array[3 / 8] |= 1 << 3 % 8;
+
+		if ((this.state & 4) == 0)
+		{
+			this.select = 2;
+			this.state |= 4;
+		}
 	}
 
 	@Override

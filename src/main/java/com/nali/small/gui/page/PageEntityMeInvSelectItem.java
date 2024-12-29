@@ -5,11 +5,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class PageEntityMeSI extends PageSelect
+public class PageEntityMeInvSelectItem extends PageSelect
 {
+	//item name size nbt nbt_set
 	@Override
 	public void init()
 	{
+		//move
 		if ((this.state & 4) == 0)
 		{
 			this.select = 2;

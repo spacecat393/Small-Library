@@ -100,7 +100,6 @@ public class Small
 		file.mkdirs();
 
 		//s0-playerdata
-		PlayerData.SAKURA_MAP = new HashMap();
 		PlayerData.read(world_file);
 		//e0-playerdata
 
@@ -151,7 +150,6 @@ public class Small
 		File world_file = DimensionManager.getCurrentSaveRootDirectory();
 		//s0-playerdata
 		PlayerData.write(world_file);
-		PlayerData.SAKURA_MAP = null;
 		//e0-playerdata
 
 		List<ServerE> s_list = new ArrayList(ServerE.S_MAP.values());
@@ -192,5 +190,6 @@ public class Small
 		}
 
 		ServerE.S_MAP = null;
+		ChunkCallBack.free();
 	}
 }

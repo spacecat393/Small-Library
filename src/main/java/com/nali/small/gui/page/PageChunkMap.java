@@ -54,7 +54,13 @@ public class PageChunkMap extends PageSelect
 			this.boxtextall_array[index++] = new BoxTextAll("ACTION".toCharArray());
 			this.boxtextall_array[index++] = new BoxTextAll("MORE".toCharArray());
 			this.boxtextall_array[index++] = new BoxTextAll("LESS".toCharArray());
-			this.select = index;
+
+			if ((this.state & 4) == 0)
+			{
+				this.select = index;
+				this.state |= 4;
+			}
+
 			this.boxtextall_array[index++] = new BoxTextAll("FETCH".toCharArray());
 			this.boxtextall_array[index] = new BoxTextAll("BACK".toCharArray());
 
@@ -80,7 +86,11 @@ public class PageChunkMap extends PageSelect
 			this.group_byte_array = new byte[(byte)Math.ceil((this.boxtextall_array.length - 1) / 8.0F)];
 			this.group_byte_array[0 / 8] |= 1 << 0 % 8;
 
-			this.select = 4;
+			if ((this.state & 4) == 0)
+			{
+				this.select = 4;
+				this.state |= 4;
+			}
 		}
 	}
 
@@ -155,6 +165,7 @@ public class PageChunkMap extends PageSelect
 	{
 		if ((STATE & 4) == 4)
 		{
+			this.state &= 255-4;
 			this.clear();
 			this.init();
 
