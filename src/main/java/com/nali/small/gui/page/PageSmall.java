@@ -2,6 +2,7 @@ package com.nali.small.gui.page;
 
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.key.Key;
+import com.nali.gui.key.KeyEdit;
 import com.nali.gui.key.KeySelect;
 import com.nali.gui.page.Page;
 import com.nali.gui.page.PageConfig;
@@ -20,8 +21,9 @@ public class PageSmall extends PageSelect
 		{
 			new BoxTextAll("SMALL".toCharArray()),
 			new BoxTextAll("GAME".toCharArray()),
-			new BoxTextAll("CHUNK".toCharArray()),
+			new BoxTextAll("INV".toCharArray()),
 			new BoxTextAll("ENTITY".toCharArray()),
+			new BoxTextAll("CHUNK".toCharArray()),
 			new BoxTextAll("CONFIG".toCharArray()),
 			new BoxTextAll("ACTION".toCharArray()),
 			new BoxTextAll("DONE".toCharArray())
@@ -29,7 +31,7 @@ public class PageSmall extends PageSelect
 
 		this.group_byte_array = new byte[(byte)Math.ceil((this.boxtextall_array.length - 1) / 8.0F)];
 		this.group_byte_array[0 / 8] |= 1 << 0 % 8;
-		this.group_byte_array[4 / 8] |= 1 << 4 % 8;
+		this.group_byte_array[5 / 8] |= 1 << 5 % 8;
 
 		if ((this.state & 4) == 0)
 		{
@@ -46,7 +48,7 @@ public class PageSmall extends PageSelect
 			case 2:
 				PAGE_LIST.add(this);
 				KEY_LIST.add(Key.KEY);
-				this.set(new PageChunk(), new KeySelect());
+				this.set(new PageInv(), new KeyEdit());
 				break;
 			case 3:
 				PAGE_LIST.add(this);
@@ -56,9 +58,14 @@ public class PageSmall extends PageSelect
 			case 4:
 				PAGE_LIST.add(this);
 				KEY_LIST.add(Key.KEY);
+				this.set(new PageChunk(), new KeySelect());
+				break;
+			case 5:
+				PAGE_LIST.add(this);
+				KEY_LIST.add(Key.KEY);
 				this.set(new PageConfig(), new KeySelect());
 				break;
-			case 6:
+			case 7:
 				this.back();
 				break;
 		}

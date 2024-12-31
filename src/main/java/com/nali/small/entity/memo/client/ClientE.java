@@ -44,7 +44,7 @@ public abstract class ClientE
 
 	//not fake
 	public byte[] sync_byte_array;
-	public boolean should_render;
+//	public boolean should_render;
 
 	//fake
 	public long key;
@@ -83,11 +83,11 @@ public abstract class ClientE
 		this.mc.onReadNBT();
 	}
 
-	@Override
-	public void setShouldRender(boolean result)
-	{
-		this.should_render = result;
-	}
+//	@Override
+//	public void setShouldRender(boolean result)
+//	{
+//		this.should_render = result;
+//	}
 
 	@Override
 	public void onUpdate()

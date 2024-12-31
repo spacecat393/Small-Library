@@ -41,9 +41,10 @@ public class PageEntityMe extends PageEdit
 			new BoxTextAll("ENTITY-ME".toCharArray()),
 			new BoxTextAll("MENU".toCharArray()),
 			new BoxTextAll(name_string.toCharArray()),
+			//edit inv in si
 			new BoxTextAll("ME-ATTRIBUTE".toCharArray()),
 			new BoxTextAll("ME-SI".toCharArray()),
-			new BoxTextAll("ME-INV".toCharArray()),
+//			new BoxTextAll("ME-INV".toCharArray()),
 			new BoxTextAll("ME-MAP".toCharArray()),
 			new BoxTextAll("ME-EFFECT".toCharArray()),
 			new BoxTextAll("ACTION".toCharArray()),
@@ -52,11 +53,11 @@ public class PageEntityMe extends PageEdit
 
 		this.group_byte_array = new byte[(byte)Math.ceil((this.boxtextall_array.length - 1) / 8.0F)];
 		this.group_byte_array[0 / 8] |= 1 << 0 % 8;
-		this.group_byte_array[7 / 8] |= 1 << 7 % 8;
+		this.group_byte_array[6 / 8] |= 1 << 6 % 8;
 
 		if ((this.state & 4) == 0)
 		{
-			this.select = 9;
+			this.select = 8;
 			this.state |= 4;
 		}
 	}
@@ -102,22 +103,22 @@ public class PageEntityMe extends PageEdit
 				KEY_LIST.add(Key.KEY);
 				this.set(new PageEntityMeSI(), new KeySelect());
 				break;
+//			case 5:
+//				PAGE_LIST.add(this);
+//				KEY_LIST.add(Key.KEY);
+//				this.set(new PageInv(), new KeySelect());
+//				break;
 			case 5:
-				PAGE_LIST.add(this);
-				KEY_LIST.add(Key.KEY);
-				this.set(new PageEntityMeInv(), new KeySelect());
-				break;
-			case 6:
 				PAGE_LIST.add(this);
 				KEY_LIST.add(Key.KEY);
 				this.set(new PageEntityMeMap(), new KeySelect());
 				break;
-			case 7:
+			case 6:
 				PAGE_LIST.add(this);
 				KEY_LIST.add(Key.KEY);
 				this.set(new PageEntityMeEffect(), new KeyEdit());
 				break;
-			case 9:
+			case 8:
 				this.back();
 				break;
 		}

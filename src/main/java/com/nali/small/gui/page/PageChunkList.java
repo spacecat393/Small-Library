@@ -147,13 +147,15 @@ public class PageChunkList extends PageSelect
 				{
 					this.back();
 				}
-				else if (this.select > 1)
+				else/* if (this.select > 1)*/
 				{
 					PAGE_LIST.add(this);
 					KEY_LIST.add(Key.KEY);
 					SELECT = (byte)(this.select - 2);
 					int new_index = 2 + SELECT * 2 * 4;
 					this.set(new PageChunkPiece(ByteReader.getInt(BYTE_ARRAY, new_index), ByteReader.getInt(BYTE_ARRAY, new_index + 4)), new KeySelect());
+					STATE &= 255-1;
+					return;
 				}
 			}
 			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));

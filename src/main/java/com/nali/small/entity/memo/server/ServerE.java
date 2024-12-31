@@ -426,11 +426,11 @@ public abstract class ServerE
 	{
 	}
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void setShouldRender(boolean b)
-	{
-	}
+//	@SideOnly(Side.CLIENT)
+//	@Override
+//	public void setShouldRender(boolean b)
+//	{
+//	}
 
 	@SideOnly(Side.CLIENT)
 	@Override

@@ -12,12 +12,12 @@ import static com.nali.Nali.warn;
 public class PlayerData
 {
 	public static Map<UUID, Byte> SAKURA_MAP;
-	public static List<Short> INV_SHORT_LIST;
+//	public static List<Short> INV_SHORT_LIST;
 
 	public static void read(File world_file)
 	{
 		PlayerData.SAKURA_MAP = new HashMap();
-		PlayerData.INV_SHORT_LIST = new ArrayList();
+//		PlayerData.INV_SHORT_LIST = new ArrayList();
 
 		File file = new File(world_file, "nali/player");
 		file.mkdir();
@@ -38,14 +38,14 @@ public class PlayerData
 			}
 		}
 
-		file = new File(world_file, "nali/inv");
-		file.mkdir();
-
-		file_array = file.listFiles();
-		for (File f : file_array)
-		{
-			INV_SHORT_LIST.add(Short.parseShort(f.getName()));
-		}
+//		file = new File(world_file, "nali/inv");
+//		file.mkdir();
+//
+//		file_array = file.listFiles();
+//		for (File f : file_array)
+//		{
+//			INV_SHORT_LIST.add(Short.parseShort(f.getName()));
+//		}
 	}
 
 	public static void write(File world_file)
@@ -70,6 +70,6 @@ public class PlayerData
 		}
 
 		PlayerData.SAKURA_MAP = null;
-		PlayerData.INV_SHORT_LIST = null;
+//		PlayerData.INV_SHORT_LIST = null;
 	}
 }

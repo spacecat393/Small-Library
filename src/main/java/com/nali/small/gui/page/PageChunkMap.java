@@ -145,7 +145,7 @@ public class PageChunkMap extends PageSelect
 				{
 					this.back();
 				}
-				else if (this.select > 1)
+				else/* if (this.select > 1)*/
 				{
 					PAGE_LIST.add(this);
 					KEY_LIST.add(Key.KEY);
@@ -153,6 +153,8 @@ public class PageChunkMap extends PageSelect
 					int new_index = 2 + SELECT * (8 + 2 * 4);
 					long id = ByteReader.getLong(BYTE_ARRAY, new_index);
 					this.set(new PageChunkPiece((int)id, (int)(id >> 32), ByteReader.getInt(BYTE_ARRAY, new_index + 8), ByteReader.getInt(BYTE_ARRAY, new_index + 8 + 4)), new KeySelect());
+					STATE &= 255-1;
+					return;
 				}
 			}
 			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));

@@ -154,7 +154,7 @@ public class PageEntity extends PageSelect
 				{
 					this.back();
 				}
-				else if (this.select > 1)
+				else/* if (this.select > 1)*/
 				{
 					PAGE_LIST.add(this);
 					KEY_LIST.add(Key.KEY);
@@ -162,6 +162,8 @@ public class PageEntity extends PageSelect
 					int new_index = 2 + SELECT * (8 + 2 * 4);
 					long id = ByteReader.getLong(BYTE_ARRAY, new_index);
 					this.set(new PageEntityMe((int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]), new KeyEdit());
+					STATE &= 255-1;
+					return;
 				}
 			}
 			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));

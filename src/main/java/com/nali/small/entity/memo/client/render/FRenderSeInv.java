@@ -1,7 +1,6 @@
 package com.nali.small.entity.memo.client.render;
 
 import com.nali.small.entity.IMixE;
-import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,13 +17,13 @@ public abstract class FRenderSeInv
 		super(rendermanager);
 	}
 
-	@Override
-	public boolean shouldRender(E e, ICamera camera, double camX, double camY, double camZ)
-	{
-		boolean result = super.shouldRender(e, camera, camX, camY, camZ);
-		e.getB().setShouldRender(result);
-		return result;
-	}
+//	@Override
+//	public boolean shouldRender(E e, ICamera camera, double camX, double camY, double camZ)
+//	{
+//		boolean result = super.shouldRender(e, camera, camX, camY, camZ);
+//		e.getB().setShouldRender(result);
+//		return result;
+//	}
 
 	@Override
 	public void doRender(E e, double ox, double oy, double oz, float entityYaw, float partialTicks)

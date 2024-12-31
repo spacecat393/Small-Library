@@ -1,15 +1,18 @@
 package com.nali.small.gui.page;
 
-import com.nali.gui.page.PageEdit;
+import com.nali.gui.page.PageSelect;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class PageEntityMeInvSelectItemEquip extends PageEdit
+public class PageInvSelectItem extends PageSelect
 {
+	//player inv
+	//item name size nbt nbt_set
 	@Override
 	public void init()
 	{
+		//move
 		if ((this.state & 4) == 0)
 		{
 			this.select = 2;

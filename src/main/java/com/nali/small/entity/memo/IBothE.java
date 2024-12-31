@@ -36,8 +36,8 @@ public interface IBothE
 //	void setGlowing(boolean b);
 //	@SideOnly(Side.CLIENT)
 	void onReadNBT();//need check again
-	@SideOnly(Side.CLIENT)
-	void setShouldRender(boolean result);
+//	@SideOnly(Side.CLIENT)
+//	void setShouldRender(boolean result);
 	@SideOnly(Side.CLIENT)
 	void doRender(FRenderE<E> frendere, double ox, double oy, double oz, float partial_ticks);
 //	@SideOnly(Side.CLIENT)
