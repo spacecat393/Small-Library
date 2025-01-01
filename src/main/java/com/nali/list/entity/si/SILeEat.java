@@ -170,9 +170,8 @@ public class SILeEat
 			this.time -= 0.05F;
 		}
 
-		for (int i = 0; i < this.runnable_list.size(); ++i)
+		for (Runnable runnable : this.runnable_list)
 		{
-			Runnable runnable = this.runnable_list.get(i);
 			runnable.run();
 		}
 		this.runnable_list.clear();

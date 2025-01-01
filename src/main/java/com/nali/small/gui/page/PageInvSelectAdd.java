@@ -2,6 +2,11 @@ package com.nali.small.gui.page;
 
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.page.PageEdit;
+import com.nali.list.gui.data.server.SDataInvSelectAdd;
+import com.nali.list.network.message.ServerMessage;
+import com.nali.list.network.method.server.SPage;
+import com.nali.network.NetworkRegistry;
+import com.nali.system.bytes.ByteWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -60,9 +65,38 @@ public class PageInvSelectAdd extends PageEdit
 	@Override
 	public void enter()
 	{
+//		if ((STATE & 1) == 0)
+//		{
+//			STATE |= 1;
 		if (this.select == this.boxtextall_array.length - 1)
 		{
 			this.back();
 		}
+		else
+		{
+			byte[] byte_array = new byte[1 + 1 + 2 + 1];
+			byte_array[0] = SPage.ID;
+			byte_array[1] = SDataInvSelectAdd.ID;
+			ByteWriter.set(byte_array, PageInv.INV, 2);
+			byte_array[2+2] = (byte)(this.select - 2);
+			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+		}
+//			STATE &= 255-1;
+//		}
+	}
+
+	@Override
+	public void draw()
+	{
+		if ((STATE & 4) == 4)
+		{
+			this.state &= 255-4;
+			this.clear();
+			this.init();
+
+			this.gen();
+			STATE &= 255-(2+4);
+		}
+		super.draw();
 	}
 }

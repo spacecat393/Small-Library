@@ -8,9 +8,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.AbstractChestHorse;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventoryChangedListener;
-import net.minecraft.item.ItemRecord;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -66,7 +67,8 @@ public abstract class MixinEntityItem extends Entity
 								itemstack.grow(count);
 								entityitem_itemstack.shrink(count);
 							}
-							else if (entityitem_itemstack.getItem() instanceof ItemRecord/* && entityitem_itemstack.getCount() == 64*/)
+//							else if (entityitem_itemstack.getItem() instanceof ItemRecord/* && entityitem_itemstack.getCount() == 64*/)
+							else if (entityitem_itemstack.getItem() == Item.getItemFromBlock(Blocks.GLOWSTONE) && entityitem_itemstack.getCount() == 64)
 							{
 								if (itemstack.getTagCompound() == null)
 								{

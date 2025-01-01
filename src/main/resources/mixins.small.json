@@ -17,6 +17,7 @@
     "MixinEntityLivingBase",
     "MixinInventoryCrafting",
     "MixinItemMonsterPlacer",
+    "MixinMinecraftServer",
     "MixinWorldProvider"
   ],
   "client": [

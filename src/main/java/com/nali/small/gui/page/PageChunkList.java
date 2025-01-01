@@ -99,68 +99,68 @@ public class PageChunkList extends PageSelect
 	@Override
 	public void enter()
 	{
-		if ((STATE & 1) == 0)
+//		if ((STATE & 1) == 0)
+//		{
+//			STATE |= 1;
+
+		byte[] byte_array = new byte[1 + 1 + 1 + 1];
+		byte_array[0] = SPage.ID;
+		byte_array[1] = SDataChunkList.ID;
+		byte_array[3] = PAGE;
+
+		byte boxtextall_array_length = (byte)this.boxtextall_array.length;
+		if (boxtextall_array_length == 6)
 		{
-			STATE |= 1;
-
-			byte[] byte_array = new byte[1 + 1 + 1 + 1];
-			byte_array[0] = SPage.ID;
-			byte_array[1] = SDataChunkList.ID;
-			byte_array[3] = PAGE;
-
-			byte boxtextall_array_length = (byte)this.boxtextall_array.length;
-			if (boxtextall_array_length == 6)
+			switch (this.select)
 			{
-				switch (this.select)
-				{
-					case 2:
-						byte_array[2] = 0;
-						break;
-					case 3:
-						byte_array[2] = 1;
-						break;
-					case 4:
-						byte_array[2] = 2;
-						break;
-					case 5:
-						this.back();
-				}
-			}
-			else
-			{
-				if (this.select == (boxtextall_array_length - 4))
-				{
-					//more
+				case 2:
 					byte_array[2] = 0;
-				}
-				else if (this.select == (boxtextall_array_length - 3))
-				{
-					//less
+					break;
+				case 3:
 					byte_array[2] = 1;
-				}
-				else if (this.select == (boxtextall_array_length - 2))
-				{
-					//fetch
+					break;
+				case 4:
 					byte_array[2] = 2;
-				}
-				else if (this.select == (boxtextall_array_length - 1))
-				{
+					break;
+				case 5:
 					this.back();
-				}
-				else/* if (this.select > 1)*/
-				{
-					PAGE_LIST.add(this);
-					KEY_LIST.add(Key.KEY);
-					SELECT = (byte)(this.select - 2);
-					int new_index = 2 + SELECT * 2 * 4;
-					this.set(new PageChunkPiece(ByteReader.getInt(BYTE_ARRAY, new_index), ByteReader.getInt(BYTE_ARRAY, new_index + 4)), new KeySelect());
-					STATE &= 255-1;
-					return;
-				}
 			}
-			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
-			STATE &= 255-1;
 		}
+		else
+		{
+			if (this.select == (boxtextall_array_length - 4))
+			{
+				//more
+				byte_array[2] = 0;
+			}
+			else if (this.select == (boxtextall_array_length - 3))
+			{
+				//less
+				byte_array[2] = 1;
+			}
+			else if (this.select == (boxtextall_array_length - 2))
+			{
+				//fetch
+				byte_array[2] = 2;
+			}
+			else if (this.select == (boxtextall_array_length - 1))
+			{
+				this.back();
+			}
+			else/* if (this.select > 1)*/
+			{
+				PAGE_LIST.add(this);
+				KEY_LIST.add(Key.KEY);
+				SELECT = (byte)(this.select - 2);
+				int new_index = 2 + SELECT * 2 * 4;
+				this.set(new PageChunkPiece(ByteReader.getInt(BYTE_ARRAY, new_index), ByteReader.getInt(BYTE_ARRAY, new_index + 4)), new KeySelect());
+				STATE &= 255-1;
+				return;
+			}
+		}
+		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+//			STATE &= 255-1;
+//		}
 	}
 
 	@Override

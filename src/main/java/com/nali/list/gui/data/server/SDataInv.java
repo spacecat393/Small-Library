@@ -34,7 +34,7 @@ public class SDataInv
 		{
 			Nali.warn(e);
 		}
-		String[] inv_string_array = null;
+//		String[] inv_string_array = null;
 
 		byte page = servermessage.data[3];
 
@@ -110,7 +110,7 @@ public class SDataInv
 
 			servermessage.data[2] = 2;
 			--max_inv_file;
-			inv_string_array = inv_file.list();
+//			inv_string_array = inv_file.list();
 //			else
 //			{
 //				inv_string_array = new String[];
@@ -138,9 +138,10 @@ public class SDataInv
 
 			servermessage.data[2] = 2;
 			++max_inv_file;
-			inv_string_array = inv_file.list();
+//			inv_string_array = inv_file.list();
 			STATE &= 255-1;
 		}
+		String[] inv_string_array = inv_file.list();
 
 		if (servermessage.data[2] == 2)//fetch
 		{

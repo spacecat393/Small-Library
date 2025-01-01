@@ -21,8 +21,10 @@ public class PageInv extends PageEdit
 		STATE,//enter client init
 		PAGE,//0-127
 		MAX_PAGE,//0-118
-		MAX_MIX_PAGE,//0-127
-		SELECT;
+		MAX_MIX_PAGE;//0-127
+//		SELECT;
+
+	public static short INV = -1;
 
 	@Override
 	public void init()
@@ -97,81 +99,82 @@ public class PageInv extends PageEdit
 	@Override
 	public void enter()
 	{
-		if ((STATE & 1) == 0)
+//		if ((STATE & 1) == 0)
+//		{
+//			STATE |= 1;
+
+		byte[] byte_array = new byte[1 + 1 + 1 + 1];
+		byte_array[0] = SPage.ID;
+		byte_array[1] = SDataInv.ID;
+		byte_array[3] = PAGE;
+
+		byte boxtextall_array_length = (byte)this.boxtextall_array.length;
+		if (boxtextall_array_length == 8)
 		{
-			STATE |= 1;
-
-			byte[] byte_array = new byte[1 + 1 + 1 + 1];
-			byte_array[0] = SPage.ID;
-			byte_array[1] = SDataInv.ID;
-			byte_array[3] = PAGE;
-
-			byte boxtextall_array_length = (byte)this.boxtextall_array.length;
-			if (boxtextall_array_length == 8)
+			switch (this.select)
 			{
-				switch (this.select)
-				{
-					case 2:
-						byte_array[2] = 0;
-						break;
-					case 3:
-						byte_array[2] = 1;
-						break;
-					case 4:
-						byte_array[2] = 2;
-						break;
-					case 5:
-						byte_array[2] = 4;
-						break;
-					case 6:
-						break;
-					case 7:
-						this.back();
-				}
-			}
-			else
-			{
-				if (this.select == (boxtextall_array_length - 6))
-				{
-					//more
+				case 2:
 					byte_array[2] = 0;
-				}
-				else if (this.select == (boxtextall_array_length - 5))
-				{
-					//less
+					break;
+				case 3:
 					byte_array[2] = 1;
-				}
-				else if (this.select == (boxtextall_array_length - 4))
-				{
-					//fetch
+					break;
+				case 4:
 					byte_array[2] = 2;
-				}
-				else if (this.select == (boxtextall_array_length - 3))
-				{
-					//add
+					break;
+				case 5:
 					byte_array[2] = 4;
-				}
-				else if (this.select == (boxtextall_array_length - 2))
-				{
-					//command
-				}
-				else if (this.select == (boxtextall_array_length - 1))
-				{
+					break;
+				case 6:
+					break;
+				case 7:
 					this.back();
-				}
-				else/* if (this.select > 1)*/
-				{
-					PAGE_LIST.add(this);
-					KEY_LIST.add(Key.KEY);
-					SELECT = (byte)(this.select - 2);
-					this.set(new PageInvSelect(SELECT), new KeySelect());
-					STATE &= 255-1;
-					return;
-				}
 			}
-			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
-			STATE &= 255-1;
 		}
+		else
+		{
+			if (this.select == (boxtextall_array_length - 6))
+			{
+				//more
+				byte_array[2] = 0;
+			}
+			else if (this.select == (boxtextall_array_length - 5))
+			{
+				//less
+				byte_array[2] = 1;
+			}
+			else if (this.select == (boxtextall_array_length - 4))
+			{
+				//fetch
+				byte_array[2] = 2;
+			}
+			else if (this.select == (boxtextall_array_length - 3))
+			{
+				//add
+				byte_array[2] = 4;
+			}
+			else if (this.select == (boxtextall_array_length - 2))
+			{
+				//command
+			}
+			else if (this.select == (boxtextall_array_length - 1))
+			{
+				this.back();
+			}
+			else/* if (this.select > 1)*/
+			{
+				PAGE_LIST.add(this);
+				KEY_LIST.add(Key.KEY);
+//					SELECT = (byte)(this.select - 2);
+				INV = ByteReader.getShort(BYTE_ARRAY, (this.select - 2) * 2 + 2);
+				this.set(new PageInvSelect(), new KeySelect());
+				STATE &= 255-1;
+				return;
+			}
+		}
+		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+//			STATE &= 255-1;
+//		}
 	}
 
 	@Override
