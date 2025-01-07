@@ -1,6 +1,5 @@
-package com.nali.small.mixin;
+package com.nali.small;
 
-import com.nali.small.Small;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import zone.rong.mixinbooter.IEarlyMixinLoader;
 
@@ -9,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class MixinLoader implements IEarlyMixinLoader, IFMLLoadingPlugin
+public class Core implements IEarlyMixinLoader, IFMLLoadingPlugin
 {
 	@Override
 	public List<String> getMixinConfigs()

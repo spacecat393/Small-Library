@@ -1,6 +1,5 @@
 package com.nali.small.mix.item;
 
-import com.nali.small.SmallTab;
 import com.nali.small.mix.IMixN;
 import com.nali.small.mix.memo.IBothI;
 import com.nali.small.mix.memo.IBothN;
@@ -18,7 +17,7 @@ public abstract class ItemI extends Item implements IMixN
 	public ItemI(String[] string_array)
 	{
 		this.Ninit();
-		this.ibothi.init(this, string_array[0], string_array[1], SmallTab.TAB);
+		this.ibothi.init(this, string_array[0], string_array[1]/*, SmallTab.TAB*/);
 	}
 
 	@SideOnly(Side.CLIENT)

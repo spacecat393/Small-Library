@@ -1,6 +1,5 @@
 package com.nali.small.mix.block;
 
-import com.nali.small.SmallTab;
 import com.nali.small.mix.IMixB;
 import com.nali.small.mix.memo.IBothB;
 import com.nali.small.mix.memo.IBothN;
@@ -24,7 +23,7 @@ public abstract class BlockB extends Block implements IMixB
 	{
 		super(material);
 		this.Ninit();
-		this.ibothb.init(this, string_array[0], string_array[1], SmallTab.TAB);
+		this.ibothb.init(this, string_array[0], string_array[1]/*, SmallTab.TAB*/);
 	}
 
 	@Override
