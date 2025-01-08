@@ -2,15 +2,66 @@
 
 <span style="font-size: large; ">
 
->com/nali/list
-
+>com/nali/list/entity
 ```java
-	//*entity
-	//*block
-	//*item
-		//modid_name
-			//extends ItemI
-			public static int ID;
+//*entity
+
+	//**entity/render
+		@SideOnly(Side.CLIENT)
+```
+>com/nali/list/block
+```java
+//*block
+	//ModidName
+		//extends BlockB
+		public static int ID;
+
+		public ModidName(String[] string_array)
+		{
+			//...
+		}
+
+		@SideOnly(Side.CLIENT)
+		@Override
+		public void newC()
+		{
+			//...
+			this.ibothb = //...
+		}
+
+		public Item getNewItem()
+		{
+			return new ItemB(this);
+		}
+
+	//**block/tile
+		//ModidName
+			//extends TileEntity
+
+		//***block/tile/render
+			//ModidName
+				@SideOnly(Side.CLIENT)
+				//extends RenderT
+```
+>com/nali/list/item
+```java
+//*item
+	//ModidName
+		//extends ItemI
+		public static int ID;
+
+		public ModidName(String[] string_array)
+		{
+			//...
+		}
+
+		@SideOnly(Side.CLIENT)
+		@Override
+		public void newC()
+		{
+			//...
+			this.ibothi = //...
+		}
 ```
 >[Build](../README.md)
 

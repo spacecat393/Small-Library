@@ -76,4 +76,10 @@ public abstract class BlockB extends Block implements IMixB
 	{
 		return this.ibothb;
 	}
+
+	@Override
+	public Object getE()
+	{
+		return this;
+	}
 }
