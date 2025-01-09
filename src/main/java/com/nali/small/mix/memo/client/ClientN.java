@@ -6,7 +6,6 @@ import com.nali.small.mix.IMixN;
 import com.nali.small.mix.memo.IBothN;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -68,18 +67,19 @@ public class ClientN
 	@Override
 	public void updateLight(World world, BlockPos blockpos)
 	{
-		this.r.lig_b = world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
-		this.r.lig_s = world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
-
-		if (this.r.lig_b < 0.1875F)
-		{
-			this.r.lig_b = 0.1875F;
-		}
+		this.r.updateLight(world, blockpos);
+//		this.r.light_b = world.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, blockpos) / 16.0F;
+//		this.r.light_s = world.getLightFromNeighborsFor(EnumSkyBlock.SKY, blockpos) / 16.0F;
+//
+//		if (this.r.light_b < 0.1875F)
+//		{
+//			this.r.light_b = 0.1875F;
+//		}
 	}
 
 	@Override
 	public void light()
 	{
-		this.r.lig_b = -1.0F;
+		this.r.light_b = -1.0F;
 	}
 }

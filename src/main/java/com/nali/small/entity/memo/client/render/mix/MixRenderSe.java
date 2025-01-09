@@ -73,7 +73,7 @@ public abstract class MixRenderSe
 //			GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], 0.25F);
 //		}
 		GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
-		r.updateLightCoord(e.world, e.getPosition());
+		r.updateLight(e.world, e.getPosition());
 //		r.draw(/*ox, oy, oz*/);
 		DrawWorldData drawworlddata = new DrawWorldData();
 		r.startDrawLater(this.c.i.getBD(), drawworlddata);

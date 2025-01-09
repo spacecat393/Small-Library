@@ -13,6 +13,8 @@ import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
 import com.nali.system.opengl.memo.client.MemoG;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -36,17 +38,18 @@ public class RenderSe
 //		this.c = c;
 	}
 
-	public void updateLightCoord()
+	@Override
+	public void updateLight(World world, BlockPos blockpos)
 	{
 		E e = this.c.i.getE();
 		if (e.isBurning())
 		{
-			this.lig_b = -1.0F;
-			this.lig_s = -1.0F;
+			this.light_b = -1.0F;
+			this.light_s = -1.0F;
 			return;
 		}
 
-		this.updateLightCoord(e.world, e.getPosition());
+		super.updateLight(world, blockpos);
 	}
 
 	@Override
