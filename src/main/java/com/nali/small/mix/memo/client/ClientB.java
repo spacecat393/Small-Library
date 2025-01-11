@@ -1,10 +1,11 @@
 package com.nali.small.mix.memo.client;
 
 import com.nali.da.IBothDaO;
-import com.nali.draw.DrawWorldData;
 import com.nali.render.RenderO;
+import com.nali.small.draw.DrawDa;
 import com.nali.small.mix.IMixN;
 import com.nali.small.mix.memo.IBothB;
+import com.nali.small.render.IRenderO;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
@@ -15,7 +16,7 @@ import org.lwjgl.opengl.GL11;
 public class ClientB
 <
 	BD extends IBothDaO,
-	R extends RenderO<BD>,
+	R extends RenderO<BD> & IRenderO<BD, R>,
 	I extends IMixN<BD, ?, E>,
 	E extends Block,
 	T extends TileEntity
@@ -33,9 +34,9 @@ public class ClientB
 		this.translate(x, y, z);
 		GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
 		this.scale();
-		DrawWorldData drawworlddata = new DrawWorldData();
-		this.r.startDrawLater(this.i.getBD(), drawworlddata);
-		this.r.endDrawLater(drawworlddata);
+		DrawDa drawda = new DrawDa();
+		this.r.startDrawLater(this.i.getBD(), this.r, drawda);
+		this.r.endDrawLater(drawda);
 		GL11.glPopMatrix();
 	}
 

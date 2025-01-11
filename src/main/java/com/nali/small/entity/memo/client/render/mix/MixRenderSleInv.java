@@ -14,6 +14,7 @@ import com.nali.small.entity.memo.client.ClientLe;
 import com.nali.small.entity.memo.client.box.mix.MixBoxSleInv;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.FRenderE;
+import com.nali.small.render.IRenderS;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -23,7 +24,7 @@ public abstract class MixRenderSleInv
 <
 	IE extends InvLe,
 	BD extends IBothDaE & IBothDaO & IBothDaS,
-	R extends RenderS<BD>,
+	R extends RenderS<BD> & IRenderS<BD, R>,
 	E extends EntityLe,
 	I extends IMixE<BD, E> & IMixES & IMixESInv,
 	MC extends MixCIE<BD, R, E, I, MB, ?, C>,

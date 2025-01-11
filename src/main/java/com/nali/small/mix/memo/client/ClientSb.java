@@ -4,6 +4,7 @@ import com.nali.da.IBothDaO;
 import com.nali.da.IBothDaS;
 import com.nali.render.RenderS;
 import com.nali.small.mix.IMixN;
+import com.nali.small.render.IRenderS;
 import com.nali.system.BothLoader;
 import com.nali.system.opengl.memo.MemoF2;
 import net.minecraft.block.Block;
@@ -16,7 +17,7 @@ import org.lwjgl.opengl.GL11;
 public abstract class ClientSb
 <
 	BD extends IBothDaO & IBothDaS,
-	R extends RenderS<BD>,
+	R extends RenderS<BD> & IRenderS<BD, R>,
 	I extends IMixN<BD, ?, E>,
 	E extends Block,
 	T extends TileEntity

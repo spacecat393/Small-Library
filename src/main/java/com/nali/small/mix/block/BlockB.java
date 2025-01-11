@@ -26,6 +26,7 @@ public abstract class BlockB extends Block implements IMixB
 		this.ibothb.init(this, string_array[0], string_array[1]/*, SmallTab.TAB*/);
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void render(TileEntity tileEntity, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
 	{
@@ -53,12 +54,14 @@ public abstract class BlockB extends Block implements IMixB
 		this.ibothb.render();
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void updateLight(World world, BlockPos blockpos)
 	{
 		this.ibothb.updateLight(world, blockpos);
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void light()
 	{

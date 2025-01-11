@@ -18,6 +18,7 @@ import com.nali.small.entity.memo.client.box.hit.HitOlePat;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
 import com.nali.small.gui.page.PageEntityMe;
+import com.nali.small.render.IRenderS;
 import com.nali.system.BothLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -32,7 +33,7 @@ import java.util.List;
 public class MixBoxSleInv
 <
 	BD extends IBothDaE & IBothDaO & IBothDaS,
-	R extends RenderS<BD>,
+	R extends RenderS<BD> & IRenderS<BD, R>,
 	E extends EntityLe,
 	I extends IMixE<BD, E> & IMixES & IMixESInv,
 	MC extends MixCIE<BD, R, E, I, ?, MR, C>,

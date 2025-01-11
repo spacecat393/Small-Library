@@ -12,6 +12,7 @@ import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.CI;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
+import com.nali.small.render.IRenderS;
 import com.nali.system.bytes.ByteReader;
 import net.minecraft.entity.Entity;
 
@@ -19,7 +20,7 @@ import net.minecraft.entity.Entity;
 public class CIEFrame
 <
 	BD extends IBothDaE & IBothDaO & IBothDaS & IBothDaSe,
-	R extends RenderS<BD>,
+	R extends RenderS<BD> & IRenderS<BD, R>,
 	E extends Entity,
 	I extends IMixE<BD, E> & IMixES,
 	MC extends MixCIE<BD, R, E, I, MB, MR, C>,

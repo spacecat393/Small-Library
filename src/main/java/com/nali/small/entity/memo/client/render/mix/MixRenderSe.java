@@ -3,14 +3,15 @@ package com.nali.small.entity.memo.client.render.mix;
 import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaO;
 import com.nali.da.IBothDaS;
-import com.nali.draw.DrawWorldData;
 import com.nali.render.RenderS;
+import com.nali.small.draw.DrawDa;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.IMixES;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.FRenderE;
+import com.nali.small.render.IRenderS;
 import com.nali.system.BothLoader;
 import com.nali.system.opengl.memo.MemoF2;
 import net.minecraft.client.Minecraft;
@@ -23,7 +24,7 @@ import org.lwjgl.opengl.GL11;
 public abstract class MixRenderSe
 <
 	BD extends IBothDaE & IBothDaO & IBothDaS,
-	R extends RenderS<BD>,
+	R extends RenderS<BD> & IRenderS<BD, R>,
 	E extends Entity,
 	I extends IMixE<BD, E> & IMixES,
 	MC extends MixCIE<BD, R, E, I, MB, ?, C>,
@@ -75,13 +76,13 @@ public abstract class MixRenderSe
 		GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
 		r.updateLight(e.world, e.getPosition());
 //		r.draw(/*ox, oy, oz*/);
-		DrawWorldData drawworlddata = new DrawWorldData();
-		r.startDrawLater(this.c.i.getBD(), drawworlddata);
+		DrawDa drawda = new DrawDa();
+		r.startDrawLater(this.c.i.getBD(), this.c.r, drawda);
 		if (e.isInvisible() || e.isInvisibleToPlayer(Minecraft.getMinecraft().player))
 		{
-			drawworlddata.color_v4_float[3] *= 0.25F;
+			drawda.color_v4_float[3] *= 0.25F;
 		}
-		r.endDrawLater(drawworlddata);
+		r.endDrawLater(drawda);
 //		if (invisible)
 //		{
 //			GL11.glColor4f(GL_CURRENT_COLOR[0], GL_CURRENT_COLOR[1], GL_CURRENT_COLOR[2], GL_CURRENT_COLOR[3]);
