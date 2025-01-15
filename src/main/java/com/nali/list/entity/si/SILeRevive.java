@@ -42,7 +42,7 @@ public class SILeRevive
 	public SIEArea<BD, E, I, S, MS> siearea;
 	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
 	public SILeFindMove<BD, E, I, S, MS> silefindmove;
-	public SIELook<BD, E, I, S, MS> sielook;
+	public SILeLook<BD, E, I, S, MS> silelook;
 
 	public byte state;//try_revive-N revive_owner revive_other_entity remote
 
@@ -68,7 +68,7 @@ public class SILeRevive
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
 		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
 		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
-		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
+		this.silelook = (SILeLook<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeLook.ID);
 	}
 
 	@Override
@@ -150,8 +150,8 @@ public class SILeRevive
 		//							this.s.main_work_byte_array[this.s.bytele.ON_REVIVE()] = 1;
 		//						}
 
-								this.sielook.set(this.entity.posX, this.entity.posY, this.entity.posZ, 90.0F);
-	//							this.sielook.set(entity.posX, entity.posY, entity.posZ, 90.0F);
+								this.silelook.set(this.entity.posX, this.entity.posY, this.entity.posZ, 90.0F);
+	//							this.silelook.set(entity.posX, entity.posY, entity.posZ, 90.0F);
 	//						++this.tick;
 	//							if (++this.tick >= 60)
 		//				if (this.entity != null)

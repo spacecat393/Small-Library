@@ -6,7 +6,7 @@ public class SNode
 {
 	public BlockPos blockpos;
 //	public float g, h, f;
-	public int g;
+//	public int g;
 //	public boolean walk_able = true/*, close = false*/;
 	public SNode parent_snode;
 	public SNode[] children_snode_array = new SNode[26];
@@ -17,11 +17,11 @@ public class SNode
 		this.blockpos = blockpos;
 	}
 
-	public void calculateG(SNode parent_snode)
-	{
-		this.parent_snode = parent_snode;
-		this.g = parent_snode.g + 1;
-	}
+//	public void calculateG(SNode parent_snode)
+//	{
+//		this.parent_snode = parent_snode;
+////		this.g = parent_snode.g + 1;
+//	}
 //	public void calculateH(int x, int y, int z)
 //	{
 //		// int dx = Math.abs(this.blockpos.getX() - x);

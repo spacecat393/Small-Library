@@ -183,12 +183,12 @@ public abstract class EntityLe extends EntityLivingBase implements IMixE
 		this.getB().readFile();
 	}
 
-	@Override
-	public void setAIMoveSpeed(float speed)
-	{
-		super.setAIMoveSpeed(speed);
-		this.moveForward = speed;
-	}
+//	@Override
+//	public void setAIMoveSpeed(float speed)
+//	{
+//		super.setAIMoveSpeed(speed);
+//		this.moveForward = speed;
+//	}
 
 	@Override
 	public boolean attackEntityFrom(DamageSource damagesource, float amount)
@@ -276,6 +276,16 @@ public abstract class EntityLe extends EntityLivingBase implements IMixE
 //	public void setRotationYawHead(float rotation)
 //	{
 //	}
+
+//	@Override
+//	public void onLivingUpdate()
+//	{
+//	}
+
+	@Override
+	public void travel(float strafe, float vertical, float forward)
+	{
+	}
 
 	public abstract IBothLe getB();
 }

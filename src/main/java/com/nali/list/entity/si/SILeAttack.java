@@ -36,7 +36,7 @@ public class SILeAttack
 	public SIEArea<BD, E, I, S, MS> siearea;
 	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
 	public SILeFindMove<BD, E, I, S, MS> silefindmove;
-	public SIELook<BD, E, I, S, MS> sielook;
+	public SILeLook<BD, E, I, S, MS> silelook;
 	public SILeCareOwner<BD, E, I, S, MS> silecareowner;
 
 	public int[] attack_frame_int_array;
@@ -58,7 +58,7 @@ public class SILeAttack
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
 		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
 		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
-		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
+		this.silelook = (SILeLook<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeLook.ID);
 		this.silecareowner = (SILeCareOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeCareOwner.ID);
 	}
 
@@ -184,7 +184,7 @@ public class SILeAttack
 
 					if (!this.silefindmove.try_move)
 					{
-						this.sielook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
+						this.silelook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
 					}
 
 					if ((this.flag & 16+8) == 16 && !(e.canEntityBeSeen(target_entity) && getDistanceAABBToAABB(e, target_entity) <= this.minimum_distance))

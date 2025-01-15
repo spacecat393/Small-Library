@@ -5,6 +5,7 @@ import com.nali.da.IBothDaS;
 import com.nali.da.IBothDaSe;
 import com.nali.list.entity.si.SIEPlayWithRSe;
 import com.nali.list.entity.si.SILeAttack;
+import com.nali.list.entity.si.SILeFindMove;
 import com.nali.list.entity.si.SILePlayWithSSle;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
@@ -34,6 +35,7 @@ public class KeySleFLoopOffSetAttackEndWalkSSle
 		super(s, key_data_index);
 
 		this.sileplaywithssle = (SILePlayWithSSle<R2, S2, BD2, E2, I2, A2, BD, E, I, S, MS>)this.s.ms.si_map.get(SILePlayWithSSle.ID);
+		;
 	}
 //
 //	@Override
@@ -46,6 +48,7 @@ public class KeySleFLoopOffSetAttackEndWalkSSle
 	@Override
 	public boolean onUpdate()
 	{
-		return this.sileplaywithssle.s2 != null && (((SILeAttack<BD2, E2, I2, S2, A2>)this.sileplaywithssle.s2.ms.si_map.get(SILeAttack.ID)).flag & 16) == 16 && this.sileplaywithssle.s2.i.getE().moveForward == 0 && super.onUpdate();
+		SILeFindMove silefindmove = (SILeFindMove)this.sileplaywithssle.s2.ms.si_map.get(SILeFindMove.ID);
+		return this.sileplaywithssle.s2 != null && (((SILeAttack<BD2, E2, I2, S2, A2>)this.sileplaywithssle.s2.ms.si_map.get(SILeAttack.ID)).flag & 16) == 16 && silefindmove.move_x == 0 && silefindmove.move_z == 0 && super.onUpdate();
 	}
 }
