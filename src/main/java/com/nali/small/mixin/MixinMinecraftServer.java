@@ -1,7 +1,7 @@
 package com.nali.small.mixin;
 
 import com.nali.Nali;
-import com.nali.list.gui.data.server.SDataInvSelect;
+import com.nali.list.gui.da.server.SDaInvSelect;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,7 +14,7 @@ public class MixinMinecraftServer
 	@Inject(method = "tick", at = @At(value = "HEAD"))
 	private void tick(CallbackInfo ci)
 	{
-		for (Runnable runnable : SDataInvSelect.RUNNABLE_LIST)
+		for (Runnable runnable : SDaInvSelect.RUNNABLE_LIST)
 		{
 			try
 			{
@@ -25,6 +25,6 @@ public class MixinMinecraftServer
 				Nali.warn(e);
 			}
 		}
-		SDataInvSelect.RUNNABLE_LIST.clear();
+		SDaInvSelect.RUNNABLE_LIST.clear();
 	}
 }

@@ -34,8 +34,8 @@ public class SILeInvManageItem
 {
 	public static byte ID;
 
-	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
+	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public BlockPos in_blockpos, out_blockpos;
 	public byte state;//remote_in remote_out random_in random_out in out
@@ -49,8 +49,8 @@ public class SILeInvManageItem
 	@Override
 	public void init()
 	{
-		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 
 	@Override
@@ -309,16 +309,16 @@ public class SILeInvManageItem
 //							}
 //						}
 //
-//						this.silefindmove.endGoal();
+//						this.siefindmove.endGoal();
 ////							this.s.current_work_byte_array[this.s.bytele.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, this.s.bytele.MANAGE_ITEM() % 8));
 //					}
 ////						else
 //					else if ((this.s.ms.state & 1) == 1)
 //					{
-////							this.silefindmove.setBreakGoal(this.in_blockpos.getX(), this.in_blockpos.getY(), this.in_blockpos.getZ());
+////							this.siefindmove.setBreakGoal(this.in_blockpos.getX(), this.in_blockpos.getY(), this.in_blockpos.getZ());
 //						if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(this.in_blockpos, this.silesetlocation.blockpos, this.silesetlocation.far))
 //						{
-//							this.silefindmove.setGoal(this.in_blockpos.getX(), this.in_blockpos.getY(), this.in_blockpos.getZ());
+//							this.siefindmove.setGoal(this.in_blockpos.getX(), this.in_blockpos.getY(), this.in_blockpos.getZ());
 //						}
 //					}
 //				}
@@ -373,16 +373,16 @@ public class SILeInvManageItem
 //							}
 //						}
 //
-//						this.silefindmove.endGoal();
+//						this.siefindmove.endGoal();
 ////							this.s.current_work_byte_array[this.s.bytele.MANAGE_ITEM() / 8] &= (byte)(255 - Math.pow(2, this.s.bytele.MANAGE_ITEM() % 8));
 //					}
 ////						else
 //					else if ((this.s.ms.state & 1) == 1)
 //					{
-////							this.silefindmove.setBreakGoal(this.out_blockpos.getX(), this.out_blockpos.getY(), this.out_blockpos.getZ());
+////							this.siefindmove.setBreakGoal(this.out_blockpos.getX(), this.out_blockpos.getY(), this.out_blockpos.getZ());
 //						if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(this.out_blockpos, this.silesetlocation.blockpos, this.silesetlocation.far))
 //						{
-//							this.silefindmove.setGoal(this.out_blockpos.getX(), this.out_blockpos.getY(), this.out_blockpos.getZ());
+//							this.siefindmove.setGoal(this.out_blockpos.getX(), this.out_blockpos.getY(), this.out_blockpos.getZ());
 //						}
 //					}
 //				}

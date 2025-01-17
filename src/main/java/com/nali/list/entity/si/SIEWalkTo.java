@@ -2,9 +2,8 @@ package com.nali.list.entity.si;
 
 import com.mojang.authlib.GameProfile;
 import com.nali.da.IBothDaE;
-import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
@@ -13,6 +12,7 @@ import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -23,12 +23,12 @@ import net.minecraftforge.common.util.FakePlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SILeWalkTo
+public class SIEWalkTo
 <
 	BD extends IBothDaE,
-	E extends EntityLe,
+	E extends Entity,
 	I extends IMixE<BD, E>,
-	S extends ServerLe<BD, E, I, MS>,
+	S extends ServerE<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
@@ -44,7 +44,7 @@ public class SILeWalkTo
 
 //	public int tick;
 
-	public SILeWalkTo(S s)
+	public SIEWalkTo(S s)
 	{
 		super(s);
 	}

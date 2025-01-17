@@ -1,9 +1,8 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
-import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
@@ -15,30 +14,30 @@ import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
-import net.minecraft.init.MobEffects;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 
-public class SILeFindMove
+public class SIEFindMove
 <
 	BD extends IBothDaE,
-	E extends EntityLe,
+	E extends Entity,
 	I extends IMixE<BD, E>,
-	S extends ServerLe<BD, E, I, MS>,
+	S extends ServerE<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
-//	public static int MAX_G = 64*64;
+//	public static int MAX_G = 5;//64*64;
 
 	public SIESit<BD, E, I, S, MS> siesit;
 //	public AILeSetLocation<E, I, S, MS> silesetlocation;
 //	public SILeMove<BD, E, I, S, MS> silemove;
-	public SILeWalkTo<BD, E, I, S, MS> silewalkto;
-	public SILeMineTo<BD, E, I, S, MS> silemineto;
-	public SILeLook<BD, E, I, S, MS> silelook;
+	public SIEWalkTo<BD, E, I, S, MS> siewalkto;
+	public SIEMineTo<BD, E, I, S, MS> siemineto;
+	public SIELook<BD, E, I, S, MS> sielook;
 
 //	public int goal_x, goal_y, goal_z;
 	public double goal_x, goal_y, goal_z;
@@ -52,13 +51,14 @@ public class SILeFindMove
 //	public int path_index;
 //	public int path_tick;
 	public boolean try_move;
-	public byte re_tick = 0;//Byte.MIN_VALUE;
+	//keep finding
+//	public byte re_tick = 0;//Byte.MIN_VALUE;
 	public byte mo_tick = 0;
 
 	public double move_x, move_y, move_z;
 //	public double old_x, old_y, old_z;
 
-	public SILeFindMove(S s)
+	public SIEFindMove(S s)
 	{
 		super(s);//skinningentitiesmove walk_to
 	}
@@ -69,9 +69,13 @@ public class SILeFindMove
 		this.siesit = (SIESit<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESit.ID);
 //		this.silesetlocation = (AILeSetLocation<E, I, S, MS>)this.s.ms.si_map.get(AILeSetLocation.ID);
 //		this.silemove = (SILeMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeMove.ID);
-		this.silewalkto = (SILeWalkTo<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeWalkTo.ID);
-		this.silemineto = (SILeMineTo<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeMineTo.ID);
-		this.silelook = (SILeLook<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeLook.ID);
+		this.siewalkto = (SIEWalkTo<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEWalkTo.ID);
+		this.siemineto = (SIEMineTo<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEMineTo.ID);
+		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
+//		if (this.sielook == null)
+//		{
+//			this.sielook = (SIELook)this.s.ms.si_map.get(SILeLook.ID);
+//		}
 	}
 
 	@Override
@@ -89,15 +93,7 @@ public class SILeFindMove
 		this.move_y = 0;
 		this.move_z = 0;
 
-//		if (!e.onGround)
-		if (!e.isOnLadder())
-		{
-			this.move_y = -0.5F;
-		}
-		if (e.isPotionActive(MobEffects.LEVITATION))
-		{
-			e.motionY += (0.05D * (double)(e.getActivePotionEffect(MobEffects.LEVITATION).getAmplifier() + 1) - e.motionY) * 0.2D;
-		}
+		this.updateMove(e);
 
 		if (this.s.isMove(e))
 		{
@@ -116,6 +112,18 @@ public class SILeFindMove
 					this.s.worldserver.spawnParticle(EnumParticleTypes.CRIT, bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, 1, 0.0D, 0.0D, 0.0D, 0.0D);
 					s_to_goal_snode = s_to_goal_snode.parent_snode;
 				}
+//				if (this.to_goal_snode != null && this.to_goal_snode.final_children_snode_array != null)
+//				{
+//					for (SNode final_children_snode : this.to_goal_snode.final_children_snode_array)
+//					{
+//						while (final_children_snode != null)
+//						{
+//							BlockPos bp = final_children_snode.blockpos;
+//							this.s.worldserver.spawnParticle(EnumParticleTypes.HEART, bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+//							final_children_snode = final_children_snode.parent_snode;
+//						}
+//					}
+//				}
 //				Nali.LOGGER.info("TICK " + this.path_tick);
 		//		}
 
@@ -128,9 +136,9 @@ public class SILeFindMove
 					else
 					{
 //						this.re_tick = 0;
-						this.silemineto.clear();
-		//				this.s.entitiesaimemory.this.silemineto.blockpos = null;
-						this.silewalkto.blockpos_list.clear();
+						this.siemineto.clear();
+		//				this.s.entitiesaimemory.this.siemineto.blockpos = null;
+						this.siewalkto.blockpos_list.clear();
 		//				this.s.entitiesaimemory.skinningentitieswalkto.block_list.clear();
 		//				this.old_x = this.skinningentities.posX;
 		//				this.old_y = this.skinningentities.posY;
@@ -141,6 +149,24 @@ public class SILeFindMove
 //						this.path_tick = 0;
 
 						SNode snode = new SNode(blockpos);
+//						snode.final_children_snode_array = new SNode[26];
+//						byte final_children_snode_array_index = 0;
+//						for (byte x : PathMath.PATH_BYTE_ARRAY)
+//						{
+//							for (byte y : PathMath.PATH_BYTE_ARRAY)
+//							{
+//								for (byte z : PathMath.PATH_BYTE_ARRAY)
+//								{
+//									if (!(x == 0 && y == 0 && z == 0))
+//									{
+////										snode.final_children_snode_array[final_children_snode_array_index++] = new SNode(new BlockPos(blockpos.getX() + x, blockpos.getY() + y, blockpos.getZ() + z));
+//										snode.final_children_snode_array[final_children_snode_array_index] = this.getChild(final_children_snode_array_index, snode, x, y, z);
+//										++final_children_snode_array_index;
+//									}
+//								}
+//							}
+//						}
+						snode.children_snode_array = new SNode[26];
 						SNode temp_snode = this.find(snode);
 
 						if (temp_snode != null)
@@ -190,6 +216,10 @@ public class SILeFindMove
 		}
 	}
 
+	public void updateMove(E e)
+	{
+	}
+
 	public void moveTo(E e)
 	{
 //		if (!this.is_goal)
@@ -200,7 +230,66 @@ public class SILeFindMove
 			SNode temp_snode = this.find(this.to_goal_snode);
 			if (temp_snode == null)
 			{
-				this.endGoal();
+//				if (this.to_goal_snode.final_children_snode_array == null)
+//				{
+					this.endGoal();
+//				}
+//				else
+//				{
+//					boolean should_end = true;
+//					for (byte b = 0; b < this.to_goal_snode.final_children_snode_array.length; ++b)
+//					{
+//						SNode final_children_snode = this.to_goal_snode.final_children_snode_array[b];
+//						if (final_children_snode != null)
+//						{
+//							temp_snode = this.find(final_children_snode);
+//
+//							if (temp_snode == null)
+//							{
+////								final_children_snode.final_children_snode_array = new SNode[26];
+//								byte final_children_snode_array_index = 0;
+//								SNode[] new_final_children_snode_array = new SNode[26];
+//								for (byte x : PathMath.PATH_BYTE_ARRAY)
+//								{
+//									for (byte y : PathMath.PATH_BYTE_ARRAY)
+//									{
+//										for (byte z : PathMath.PATH_BYTE_ARRAY)
+//										{
+//											if (!(x == 0 && y == 0 && z == 0))
+//											{
+//												new_final_children_snode_array[final_children_snode_array_index] = this.getChild(final_children_snode_array_index, final_children_snode, x, y, z);
+//												if (new_final_children_snode_array[final_children_snode_array_index] != null)
+//												{
+//													should_end = false;
+//												}
+//												++final_children_snode_array_index;
+//											}
+//										}
+//									}
+//								}
+//								if (should_end)
+//								{
+//									this.to_goal_snode.final_children_snode_array[b] = null;
+//								}
+//								else
+//								{
+//									this.to_goal_snode.final_children_snode_array = new_final_children_snode_array;
+//								}
+//							}
+//							else
+//							{
+//								this.to_goal_snode = temp_snode;
+//							}
+//							should_end = false;
+//							break;
+//						}
+//					}
+//
+//					if (should_end)
+//					{
+//						this.endGoal();
+//					}
+//				}
 			}
 			else
 			{
@@ -234,13 +323,13 @@ public class SILeFindMove
 			}
 
 //			if (this.mo_tick % 2 == 0 && ++this.re_tick == Byte.MAX_VALUE)
-			if (++this.re_tick == 60)
-			{
-				this.to_goal_snode = null;
-//				this.re_tick = Byte.MIN_VALUE;
-				this.re_tick = 0;
-				return;
-			}
+//			if (++this.re_tick == 60)
+//			{
+//				this.to_goal_snode = null;
+////				this.re_tick = Byte.MIN_VALUE;
+//				this.re_tick = 0;
+//				return;
+//			}
 		}
 //		else
 //		{
@@ -287,9 +376,9 @@ public class SILeFindMove
 		this.move_x += (b_x - e.posX) / 2.0F;
 		this.move_y = (b_y - e.posY) / 2.0F;
 		this.move_z += (b_z - e.posZ) / 2.0F;
-//		this.silelook.set(b_x, b_y, b_z, 45.0F / 2.0F);
-//		this.silelook.set(b_x, b_y, b_z, 1.0F);
-		this.silelook.set(b_x, b_y, b_z, 360.0F);
+//		this.sielook.set(b_x, b_y, b_z, 45.0F / 2.0F);
+//		this.sielook.set(b_x, b_y, b_z, 1.0F);
+		this.sielook.set(b_x, b_y, b_z, 360.0F);
 //		}
 
 		//				double far = this.skinningentities.getDistanceSq(this.goal_x + 0.5D, this.goal_y, this.goal_z + 0.5D);
@@ -399,14 +488,14 @@ public class SILeFindMove
 ////
 ////	public void setBreakGoal(int x, int y, int z)
 ////	{
-//		if (this.silemineto.goal_x != x || this.silemineto.goal_y != y || this.silemineto.goal_z != z)
+//		if (this.siemineto.goal_x != x || this.siemineto.goal_y != y || this.siemineto.goal_z != z)
 //		{
-//			this.silemineto.clear();
+//			this.siemineto.clear();
 //		}
 //		this.setGoal(x, y, z);
-//		this.silemineto.goal_x = x;
-//		this.silemineto.goal_y = y;
-//		this.silemineto.goal_z = z;
+//		this.siemineto.goal_x = x;
+//		this.siemineto.goal_y = y;
+//		this.siemineto.goal_z = z;
 //	}
 
 	public void endGoal()
@@ -415,7 +504,7 @@ public class SILeFindMove
 //		this.path_blockpos_list.clear();
 //		this.silemove.move = false;
 
-		this.silemineto.clear();
+		this.siemineto.clear();
 	}
 
 	public boolean endGoalT()
@@ -453,17 +542,25 @@ public class SILeFindMove
 			new_z = PathMath.signum(to_z / length);
 		}
 
-		int index = PathMath.getIndex(new_x, new_y, new_z);
-		SNode pre_snode = this.setChild(index, start_snode, new_x, new_y, new_z);
-		start_snode.children_snode_array[index] = pre_snode;
-		if (pre_snode != null)
+		byte index = PathMath.getIndex(new_x, new_y, new_z);
+		SNode pre_snode = this.getChild(index, start_snode, new_x, new_y, new_z);
+		if (pre_snode == null)
 		{
+			start_snode.children_snode_array[index] = SNode.SNODE;
+		}
+		else
+		{
+			pre_snode.children_snode_array = new SNode[26];
+//			pre_snode.parent_snode = start_snode;
+			start_snode.children_snode_array[index] = pre_snode;
 			return pre_snode;
 		}
 
 		while (true)
 		{
 			double to_goal = Double.MAX_VALUE;
+			index = 0;
+			byte pre_snode_index = -1;
 			for (byte x : PathMath.PATH_BYTE_ARRAY)
 			{
 				for (byte y : PathMath.PATH_BYTE_ARRAY)
@@ -472,12 +569,16 @@ public class SILeFindMove
 					{
 						if (!(x == 0 && y == 0 && z == 0))
 						{
-							index = PathMath.getIndex(x, y, z);
-							SNode new_pre_snode = this.setChild(index, start_snode, x, y, z);
+							SNode new_pre_snode = this.getChild(index, start_snode, x, y, z);
 //							if (new_pre_snode != null)
 							if (new_pre_snode == null)
 							{
-								start_snode.children_snode_array[index] = new SNode(null);
+//								SNode snode_n = new SNode(null);
+//								snode_n.children_snode_array = null;
+//								snode_n.parent_snode = start_snode.parent_snode;
+//								start_snode.children_snode_array[index] = snode_n;
+//								snode_n.parent_snode = start_snode;
+								start_snode.children_snode_array[index] = SNode.SNODE;
 //								start_snode.children_snode_array[index] = new SNode(new BlockPos(start_snode.blockpos.getX() + x, start_snode.blockpos.getY() + y, start_snode.blockpos.getZ() + z));
 							}
 							else
@@ -490,9 +591,10 @@ public class SILeFindMove
 								{
 									to_goal = new_to_goal;
 									pre_snode = new_pre_snode;
-									start_snode.children_snode_array[index] = new_pre_snode;
+									pre_snode_index = index;
 								}
 							}
+							++index;
 						}
 					}
 				}
@@ -507,12 +609,15 @@ public class SILeFindMove
 			else
 			{
 //				Nali.warn("IN");
+				pre_snode.children_snode_array = new SNode[26];
+//				pre_snode.parent_snode = start_snode;
+				start_snode.children_snode_array[pre_snode_index] = pre_snode;
 				return pre_snode;
 			}
 		}
 	}
 
-	public SNode setChild(int index, SNode start_snode, byte new_x, byte new_y, byte new_z)
+	public SNode getChild(int index, SNode start_snode, byte new_x, byte new_y, byte new_z)
 	{
 //		int index = PathMath.getIndex(new_x, new_y, new_z);
 		if (index != -1 && start_snode.children_snode_array[index] == null)
@@ -520,6 +625,7 @@ public class SILeFindMove
 			BlockPos blockpos = new BlockPos(start_snode.blockpos.getX() + new_x, start_snode.blockpos.getY() + new_y, start_snode.blockpos.getZ() + new_z);
 			SNode children_snode = new SNode(blockpos);
 			children_snode.parent_snode = start_snode;
+//			children_snode.g = children_snode.parent_snode.g + 1;
 //			children_snode.calculateG(start_snode);
 			IBlockState iblockstate = this.s.i.getE().world.getBlockState(blockpos);
 			Material material = iblockstate.getMaterial();
@@ -646,7 +752,7 @@ public class SILeFindMove
 	public boolean isPassWithAct(BlockPos blockpos)
 	{
 //		if ((this.s.main_work_byte_array[this.s.workbytes.WALK_TO() / 8] >> this.s.workbytes.WALK_TO() % 8 & 1) == 0)
-		if ((this.silewalkto.state & 1) == 1)
+		if ((this.siewalkto.state & 1) == 1)
 		{
 			return false;
 		}
@@ -655,17 +761,17 @@ public class SILeFindMove
 		Block block = iblockstate.getBlock();
 		if (iblockstate.getMaterial() != Material.IRON && block instanceof BlockDoor || block instanceof BlockFenceGate || block instanceof BlockTrapDoor)
 		{
-			this.silewalkto.blockpos_list.add(blockpos);
+			this.siewalkto.blockpos_list.add(blockpos);
 //			this.s.entitiesaimemory.skinningentitieswalkto.block_list.add(block);
 			return true;
 		}
 
 //		if ((this.s.main_work_byte_array[this.s.workbytes.MINE() / 8] >> this.s.workbytes.MINE() % 8 & 1) == 1)
-		if ((this.silemineto.state & 1) == 1)
+		if ((this.siemineto.state & 1) == 1)
 		{
-			if (this.silemineto.blockpos == null)
+			if (this.siemineto.blockpos == null)
 			{
-				this.silemineto.blockpos = blockpos;
+				this.siemineto.blockpos = blockpos;
 			}
 
 //			this.endGoal();

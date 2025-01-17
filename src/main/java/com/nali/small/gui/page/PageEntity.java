@@ -4,7 +4,7 @@ import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.key.Key;
 import com.nali.gui.key.KeyEdit;
 import com.nali.gui.page.PageSelect;
-import com.nali.list.gui.data.server.SDataEntity;
+import com.nali.list.gui.da.server.SDaEntity;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPage;
 import com.nali.network.NetworkRegistry;
@@ -112,7 +112,7 @@ public class PageEntity extends PageSelect
 
 		byte[] byte_array = new byte[1 + 1 + 1 + 1];
 		byte_array[0] = SPage.ID;
-		byte_array[1] = SDataEntity.ID;
+		byte_array[1] = SDaEntity.ID;
 		byte_array[3] = PAGE;
 
 		byte boxtextall_array_length = (byte)this.boxtextall_array.length;
@@ -121,13 +121,13 @@ public class PageEntity extends PageSelect
 			switch (this.select)
 			{
 				case 2:
-					byte_array[2] = 0;
+					byte_array[2] = SDaEntity.I_MORE;
 					break;
 				case 3:
-					byte_array[2] = 1;
+					byte_array[2] = SDaEntity.I_LESS;
 					break;
 				case 4:
-					byte_array[2] = 2;
+					byte_array[2] = SDaEntity.I_FETCH;
 					break;
 				case 5:
 					this.back();
@@ -137,18 +137,15 @@ public class PageEntity extends PageSelect
 		{
 			if (this.select == (boxtextall_array_length - 4))
 			{
-				//more
-				byte_array[2] = 0;
+				byte_array[2] = SDaEntity.I_MORE;
 			}
 			else if (this.select == (boxtextall_array_length - 3))
 			{
-				//less
-				byte_array[2] = 1;
+				byte_array[2] = SDaEntity.I_LESS;
 			}
 			else if (this.select == (boxtextall_array_length - 2))
 			{
-				//fetch
-				byte_array[2] = 2;
+				byte_array[2] = SDaEntity.I_FETCH;
 			}
 			else if (this.select == (boxtextall_array_length - 1))
 			{
@@ -162,7 +159,8 @@ public class PageEntity extends PageSelect
 				byte select = (byte)(this.select - 2);
 				int new_index = 2 + select * (8 + 2 * 4);
 				long id = ByteReader.getLong(BYTE_ARRAY, new_index);
-				this.set(new PageEntityMe((int)id, (int)(id >> 32), NAME_STRING_ARRAY[select]), new KeyEdit());
+//				this.set(new PageEntityMe((int)id, (int)(id >> 32), NAME_STRING_ARRAY[select]), new KeyEdit());
+				this.set(new PageEntityMe(id, NAME_STRING_ARRAY[select]), new KeyEdit());
 				STATE &= 255-1;
 				return;
 			}

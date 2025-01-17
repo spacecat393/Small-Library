@@ -25,8 +25,8 @@ public class SILeHeal
 	public static byte ID;
 
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
+	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public int[] heal_frame_int_array;
 
@@ -50,8 +50,8 @@ public class SILeHeal
 	public void init()
 	{
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class SILeHeal
 	//							((EntityLivingBase)entity).heal(this.how_heal);
 	//						}
 	//
-	//						this.silefindmove.endGoal();
+	//						this.siefindmove.endGoal();
 	//					}
 	//					else
 	//					{
@@ -161,13 +161,13 @@ public class SILeHeal
 							((EntityLivingBase)entity).heal(this.how_heal);
 						}
 
-						this.silefindmove.endGoal();
+						this.siefindmove.endGoal();
 					}
 					else
 					{
 						if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(entity, this.silesetlocation.blockpos, this.silesetlocation.far))
 						{
-							this.silefindmove.setGoal(entity.posX, entity.posY, entity.posZ);
+							this.siefindmove.setGoal(entity.posX, entity.posY, entity.posZ);
 						}
 					}
 				}
@@ -180,7 +180,7 @@ public class SILeHeal
 	//			{
 	////				this.s.entitiesaimemory.skinningentitieslook.set(entity.posX, entity.posY, entity.posZ, 20.0F);
 	//			}
-	//			else */if (!this.silefindmove.try_move)
+	//			else */if (!this.siefindmove.try_move)
 	//			{
 	//				this.state = 0;
 	////				this.s.entitiesaimemory.skinningentitieslook.set(entity.posX, entity.posY, entity.posZ, 20.0F);
@@ -188,7 +188,7 @@ public class SILeHeal
 
 	//				if (!isTooClose(e, entity, this.minimum_distance))
 	//				{
-	//				this.silefindmove.setGoal(entity.posX, entity.posY, entity.posZ);
+	//				this.siefindmove.setGoal(entity.posX, entity.posY, entity.posZ);
 	//				this.state = -1;
 	//				}
 	//			}
@@ -212,7 +212,7 @@ public class SILeHeal
 					this.cooldown = 0;
 //					this.state = -1;
 					this.state &= 255-(2+4);
-					this.silefindmove.endGoal();
+					this.siefindmove.endGoal();
 					this.heal = false;
 				}
 

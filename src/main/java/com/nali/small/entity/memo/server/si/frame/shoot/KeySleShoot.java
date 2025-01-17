@@ -4,7 +4,7 @@ import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaS;
 import com.nali.da.IBothDaSe;
 import com.nali.list.entity.si.SILeAttack;
-import com.nali.list.entity.si.SILeFindMove;
+import com.nali.list.entity.si.SIEFindMove;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.IServerS;
@@ -23,7 +23,7 @@ public class KeySleShoot
 {
 //	public byte state;//hold_before_reload
 	public SILeAttack<BD, E, I, S, MS> sileattack;
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	//mix
 	public KeySleShoot(S s, byte key_data_index)
@@ -37,7 +37,7 @@ public class KeySleShoot
 	{
 //		super.init();
 		this.sileattack = (SILeAttack<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeAttack.ID);
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class KeySleShoot
 			byte attack_fix_key_index = this.getAttackFixKeyIndex(key_data_byte_array);
 			byte end_attack_fix_key_index = this.getEndAttackFixKeyIndex(key_data_byte_array);
 
-			this.silefindmove.endGoal();
+			this.siefindmove.endGoal();
 
 			if (key_short_array[key_short_index] >= fix_key_short_array[start_attack_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[start_attack_fix_key_index + 1])
 			{
@@ -175,7 +175,7 @@ public class KeySleShoot
 
 			if (key_short_array[key_short_index] >= fix_key_short_array[start_attack_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[start_attack_fix_key_index + 1])
 			{
-				this.silefindmove.endGoal();
+				this.siefindmove.endGoal();
 				if (key_short_array[key_short_index] == fix_key_short_array[start_attack_fix_key_index + 1])
 				{
 					key_short_array[key_short_index] = fix_key_short_array[end_attack_fix_key_index];
@@ -190,7 +190,7 @@ public class KeySleShoot
 			}
 			else if (key_short_array[key_short_index] >= fix_key_short_array[attack_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[attack_fix_key_index + 1])
 			{
-				this.silefindmove.endGoal();
+				this.siefindmove.endGoal();
 				if (key_short_array[key_short_index] == fix_key_short_array[attack_fix_key_index + 1])
 				{
 					key_short_array[key_short_index] = fix_key_short_array[end_attack_fix_key_index];
@@ -205,14 +205,14 @@ public class KeySleShoot
 			}
 			else if (key_short_array[key_short_index] >= fix_key_short_array[end_attack_fix_key_index] && key_short_array[key_short_index] < fix_key_short_array[end_attack_fix_key_index + 1])
 			{
-				this.silefindmove.endGoal();
+				this.siefindmove.endGoal();
 				++key_short_array[key_short_index];
 				this.siekey.sync_byte_arraylist.add(key_short_index);
 				return true;
 			}
 //			else if (!try_reload && key_short_array[key_short_index] >= fix_key_short_array[end_attack_fix_key_index] && key_short_array[key_short_index] < fix_key_short_array[end_attack_fix_key_index + 1])
 //			{
-//				this.silefindmove.endGoal();
+//				this.siefindmove.endGoal();
 //			}
 		}
 //		Nali.warn("e0 key_short_array[key_short_index] " + key_short_array[key_short_index]);
@@ -231,7 +231,7 @@ public class KeySleShoot
 //			if (!this.checkShoot(true))
 //			{
 //				byte index3 = this.getReload();
-//				this.silefindmove.endGoal();
+//				this.siefindmove.endGoal();
 //
 //				//if (time == time_set)
 //				//key_index_byte_array[i] = key_id
@@ -317,7 +317,7 @@ public class KeySleShoot
 //
 //		if (key_short_array[key_short_index] >= fix_key_short_array[start_attack_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[start_attack_fix_key_index + 1])
 //		{
-//			this.silefindmove.endGoal();
+//			this.siefindmove.endGoal();
 //			if (key_short_array[key_short_index] == fix_key_short_array[start_attack_fix_key_index + 1])
 //			{
 //				key_short_array[key_short_index] = fix_key_short_array[end_attack_fix_key_index];
@@ -326,7 +326,7 @@ public class KeySleShoot
 //		}
 //		else if (key_short_array[key_short_index] >= fix_key_short_array[attack_fix_key_index] && key_short_array[key_short_index] <= fix_key_short_array[attack_fix_key_index + 1])
 //		{
-//			this.silefindmove.endGoal();
+//			this.siefindmove.endGoal();
 //			if (key_short_array[key_short_index] == fix_key_short_array[attack_fix_key_index + 1])
 //			{
 //				key_short_array[key_short_index] = fix_key_short_array[end_attack_fix_key_index];
@@ -335,7 +335,7 @@ public class KeySleShoot
 //		}
 //		else if (!try_reload && key_short_array[key_short_index] >= fix_key_short_array[end_attack_fix_key_index] && key_short_array[key_short_index] < fix_key_short_array[end_attack_fix_key_index + 1])
 //		{
-//			this.silefindmove.endGoal();
+//			this.siefindmove.endGoal();
 //			return true;
 //		}
 //		else
@@ -392,7 +392,7 @@ public class KeySleShoot
 //		byte index2 = this.getEndAttack();
 //		if (this.siekey.frame_int_array[frame] >= frame_2d_int_array[index][0] && this.siekey.frame_int_array[frame] <= frame_2d_int_array[index][1])
 //		{
-//			this.silefindmove.endGoal();
+//			this.siefindmove.endGoal();
 //			if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index][1])
 //			{
 //				this.siekey.frame_int_array[frame] = frame_2d_int_array[index2][0];
@@ -402,7 +402,7 @@ public class KeySleShoot
 //		}
 //		else if (this.siekey.frame_int_array[frame] >= frame_2d_int_array[index1][0] && this.siekey.frame_int_array[frame] <= frame_2d_int_array[index1][1])
 //		{
-//			this.silefindmove.endGoal();
+//			this.siefindmove.endGoal();
 //			if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index1][1])
 //			{
 //				this.siekey.frame_int_array[frame] = frame_2d_int_array[index2][0];
@@ -412,7 +412,7 @@ public class KeySleShoot
 //		}
 //		else if (!try_reload && this.siekey.frame_int_array[frame] >= frame_2d_int_array[index2][0] && this.siekey.frame_int_array[frame] < frame_2d_int_array[index2][1])
 //		{
-//			this.silefindmove.endGoal();
+//			this.siefindmove.endGoal();
 //			return true;
 //		}
 //		else

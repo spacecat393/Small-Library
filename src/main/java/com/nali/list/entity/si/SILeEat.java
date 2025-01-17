@@ -134,7 +134,7 @@ public class SILeEat
 //			}
 //			else
 //			{
-//				this.s.worldserver.spawnParticle(EnumParticleTypes.ITEM_CRACK, x, y, z, 0.0D, 0.0D, 0.0D, Item.getIdFromItem(itemstack.getItem()), itemstack.getMetadata());
+//				this.s.worldserver.spawnParticle(EnumParticleTypes.ITEM_CRACK, x, y, z, 0.0D, 0.0D, 0.0D, Item.getIdFromItem(itemstack.getItemStack()), itemstack.getMetadata());
 //			}
 //			byte[] byte_array = new byte[1 + 4 + 4 + 4 + 4];
 //			byte_array[0] = CRenderFood.ID;
@@ -150,7 +150,7 @@ public class SILeEat
 	{
 //		EntityPlayerMP entityplayermp = this.s.ms.entityplayermp;
 //		ItemStack itemstack = entityplayermp.getHeldItemMainhand();
-//		if (itemstack.getItem() == Items.MILK_BUCKET)
+//		if (itemstack.getItemStack() == Items.MILK_BUCKET)
 //		{
 		E e = this.s.i.getE();
 		e.clearActivePotions();

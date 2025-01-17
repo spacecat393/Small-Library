@@ -22,7 +22,7 @@
 //		{
 //			ItemStack itemstack = entityplayermp.getHeldItemMainhand();
 //
-//			if (itemstack.getItem() == ITEM_ARRAY[SmallBox.ID] && itemstack.getTagCompound() == null)
+//			if (itemstack.getItemStack() == ITEM_ARRAY[SmallBox.ID] && itemstack.getTagCompound() == null)
 //			{
 //				SmallBox.putToBox(skinningentities, itemstack);
 //				entityplayermp.closeScreen();

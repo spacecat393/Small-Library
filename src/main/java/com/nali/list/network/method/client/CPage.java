@@ -17,7 +17,7 @@ public class CPage
 	public static Method[] METHOD_ARRAY;
 	static
 	{
-		List<Class> client_class_list = Reflect.getClasses("com.nali.list.gui.data.client");
+		List<Class> client_class_list = Reflect.getClasses("com.nali.list.gui.da.client");
 		METHOD_ARRAY = new Method[client_class_list.size()];
 
 		for (byte i = 0; i < client_class_list.size(); ++i)

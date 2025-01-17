@@ -22,7 +22,7 @@
 ////	public static byte ID;
 //
 //	public AIEArea<SD, BD, E, I, S, MS> siearea;
-//	public AILeFindMove<SD, BD, E, I, S, MS> silefindmove;
+//	public AILeFindMove<SD, BD, E, I, S, MS> siefindmove;
 //	public AILeSetLocation<SD, BD, E, I, S, MS> silesetlocation;
 //
 //	public Class[] class_array;
@@ -39,7 +39,7 @@
 //	public void init()
 //	{
 //		this.siearea = (AIEArea<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(AIEArea.ID);
-//		this.silefindmove = (AILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(AILeFindMove.ID);
+//		this.siefindmove = (AILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(AILeFindMove.ID);
 //		this.silesetlocation = (AILeSetLocation<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(AILeSetLocation.ID);
 //	}
 //

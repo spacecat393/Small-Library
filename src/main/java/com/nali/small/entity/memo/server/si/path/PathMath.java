@@ -2,7 +2,7 @@ package com.nali.small.entity.memo.server.si.path;
 
 public class PathMath
 {
-	public static byte[] PATH_BYTE_ARRAY = { -1, 0, 1 };
+	public final static byte[] PATH_BYTE_ARRAY = { -1, 0, 1 };
 
 	public static byte getIndex(byte x, byte y, byte z)
 	{

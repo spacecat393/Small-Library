@@ -4,7 +4,7 @@ import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.key.Key;
 import com.nali.gui.key.KeySelect;
 import com.nali.gui.page.PageSelect;
-import com.nali.list.gui.data.server.SDataChunkList;
+import com.nali.list.gui.da.server.SDaChunkList;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPage;
 import com.nali.network.NetworkRegistry;
@@ -105,7 +105,7 @@ public class PageChunkList extends PageSelect
 
 		byte[] byte_array = new byte[1 + 1 + 1 + 1];
 		byte_array[0] = SPage.ID;
-		byte_array[1] = SDataChunkList.ID;
+		byte_array[1] = SDaChunkList.ID;
 		byte_array[3] = PAGE;
 
 		byte boxtextall_array_length = (byte)this.boxtextall_array.length;
@@ -114,13 +114,13 @@ public class PageChunkList extends PageSelect
 			switch (this.select)
 			{
 				case 2:
-					byte_array[2] = 0;
+					byte_array[2] = SDaChunkList.I_MORE;
 					break;
 				case 3:
-					byte_array[2] = 1;
+					byte_array[2] = SDaChunkList.I_LESS;
 					break;
 				case 4:
-					byte_array[2] = 2;
+					byte_array[2] = SDaChunkList.I_FETCH;
 					break;
 				case 5:
 					this.back();
@@ -130,18 +130,15 @@ public class PageChunkList extends PageSelect
 		{
 			if (this.select == (boxtextall_array_length - 4))
 			{
-				//more
-				byte_array[2] = 0;
+				byte_array[2] = SDaChunkList.I_MORE;
 			}
 			else if (this.select == (boxtextall_array_length - 3))
 			{
-				//less
-				byte_array[2] = 1;
+				byte_array[2] = SDaChunkList.I_LESS;
 			}
 			else if (this.select == (boxtextall_array_length - 2))
 			{
-				//fetch
-				byte_array[2] = 2;
+				byte_array[2] = SDaChunkList.I_FETCH;
 			}
 			else if (this.select == (boxtextall_array_length - 1))
 			{

@@ -1,6 +1,7 @@
-package com.nali.list.entity.si;
+package com.nali.small.entity.memo.server.si.play;
 
 import com.nali.da.IBothDaE;
+import com.nali.list.entity.si.SIEPlayWithRSe;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerLe;
@@ -21,7 +22,7 @@ public class SILePlayWithSSle
 	MS extends MixSIE<BD, E, I, S>
 > extends SILePlayWithSSe<R2, S2, BD2, E2, I2, A2, BD, E, I, S, MS>
 {
-	public static byte ID;
+//	public static byte ID;
 
 	public SILePlayWithSSle(S s)
 	{

@@ -15,9 +15,9 @@ public class MixSIEInv
 > extends MixSIE<BD, E, I, S>
 {
 	public SIEInvLockInv<BD, E, I, S, ?> aileinvlockinv;
-	public MixSIEInv(S s)
+	public MixSIEInv(S s, SI[] si_array)
 	{
-		super(s);
+		super(s, si_array);
 		this.aileinvlockinv = (SIEInvLockInv<BD, E, I, S, ?>)this.si_map.get(SIEInvLockInv.ID);
 	}
 

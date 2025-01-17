@@ -48,7 +48,7 @@ public class HitOlePat
 //					ItemStack itemstack = entityplayer.getHeldItem(enumhand);
 ////					this.getEntityData().set(this.getByteEntityDataAccessorArray()[2], (byte)5);
 ////
-////					if (itemstack.getItem() == ItemsRegistry.HAIRBRUSH_ITEM_REGISTRYOBJECT.get())
+////					if (itemstack.getItemStack() == ItemsRegistry.HAIRBRUSH_ITEM_REGISTRYOBJECT.get())
 ////					{
 		if (--this.pat_time <= 0)
 		{

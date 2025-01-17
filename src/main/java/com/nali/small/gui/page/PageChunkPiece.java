@@ -2,8 +2,8 @@ package com.nali.small.gui.page;
 
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.page.PageSelect;
-import com.nali.list.gui.data.server.SDataChunkList;
-import com.nali.list.gui.data.server.SDataChunkMap;
+import com.nali.list.gui.da.server.SDaChunkList;
+import com.nali.list.gui.da.server.SDaChunkMap;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPage;
 import com.nali.network.NetworkRegistry;
@@ -90,15 +90,16 @@ public class PageChunkPiece extends PageSelect
 	@Override
 	public void enter()
 	{
+		byte select = this.select;
 		if (this.i == -1)
 		{
-			switch (this.select)
+			switch (select)
 			{
 				case 6:
 					byte[] byte_array = new byte[1 + 1 + 1 + 1 + 1];
 					byte_array[0] = SPage.ID;
-					byte_array[1] = SDataChunkList.ID;
-					byte_array[2] = 3;
+					byte_array[1] = SDaChunkList.ID;
+					byte_array[2] = SDaChunkList.I_DELETE;
 					byte_array[3] = PageChunkList.PAGE;
 					byte_array[4] = PageChunkList.SELECT;
 					NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
@@ -111,14 +112,14 @@ public class PageChunkPiece extends PageSelect
 		}
 		else
 		{
-			switch (this.select)
+			switch (select)
 			{
 				case 7:
 					byte[] byte_array = new byte[1 + 1 + 1 + 8];
 					ByteWriter.set(byte_array, ByteReader.getLong(PageChunkMap.BYTE_ARRAY, 2 + PageChunkMap.SELECT * (8 + 2 * 4)), 3);
 					byte_array[0] = SPage.ID;
-					byte_array[1] = SDataChunkMap.ID;
-					byte_array[2] = 3;
+					byte_array[1] = SDaChunkMap.ID;
+					byte_array[2] = SDaChunkMap.I_DELETE;
 					NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 					this.back();
 					break;

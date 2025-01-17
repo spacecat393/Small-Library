@@ -4,30 +4,29 @@ import com.nali.da.IBothDaE;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetLocation;
 import com.nali.network.NetworkRegistry;
-import com.nali.small.entity.EntityLe;
+import com.nali.small.entity.EntityMath;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 
-import static com.nali.small.entity.EntityMath.isInArea;
-
-public class SILeSetLocation
+public class SIESetLocation
 <
 	BD extends IBothDaE,
-	E extends EntityLe,
+	E extends Entity,
 	I extends IMixE<BD, E>,
-	S extends ServerLe<BD, E, I, MS>,
+	S extends ServerE<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public long blockpos_long = -1;
 	public float far;
@@ -35,7 +34,7 @@ public class SILeSetLocation
 //	public BlockPos temp_blockpos;
 	public byte state;//on_move
 
-	public SILeSetLocation(S s)
+	public SIESetLocation(S s)
 	{
 		super(s);
 	}
@@ -43,7 +42,7 @@ public class SILeSetLocation
 	@Override
 	public void init()
 	{
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 
 	@Override
@@ -90,16 +89,16 @@ public class SILeSetLocation
 				}
 				else
 				{
-					if (!isInArea(e, this.blockpos, this.far))
+					if (!EntityMath.isInArea(e, this.blockpos, this.far))
 					{
-//						this.silefindmove.setBreakGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
-						this.silefindmove.setGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
+//						this.siefindmove.setBreakGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
+						this.siefindmove.setGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
 //						this.set_location = true;
 					}
 //					else if (this.set_location)
 					else if ((this.state & 1) == 1)
 					{
-						this.silefindmove.endGoal();
+						this.siefindmove.endGoal();
 //						this.set_location = false;
 						this.state &= 255-1;
 					}
@@ -111,7 +110,7 @@ public class SILeSetLocation
 //				if (this.set_location)
 				if ((this.state & 1) == 1)
 				{
-					this.silefindmove.endGoal();
+					this.siefindmove.endGoal();
 //					this.set_location = false;
 					this.blockpos = null;
 				}

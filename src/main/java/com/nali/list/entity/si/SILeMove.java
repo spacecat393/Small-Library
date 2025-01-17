@@ -19,7 +19,7 @@
 //{
 //	public static byte ID;
 //
-//	public SIELook<BD, E, I, S, MS> silelook;
+//	public SIELook<BD, E, I, S, MS> sielook;
 //	public SILeJump<BD, E, I, S, MS> silejump;
 //	public SIESit<BD, E, I, S, MS> siesit;
 //
@@ -35,7 +35,7 @@
 //	@Override
 //	public void init()
 //	{
-//		this.silelook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
+//		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
 //		this.silejump = (SILeJump<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeJump.ID);
 //		this.siesit = (SIESit<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESit.ID);
 //	}
@@ -93,7 +93,7 @@
 ////
 ////				if (this.move)
 ////				{
-////					if (this.silelook.done)
+////					if (this.sielook.done)
 ////					{
 ////						Entity riding_entity = e.getRidingEntity();
 ////						if (riding_entity != null)
@@ -107,7 +107,7 @@
 ////						}
 ////					}
 ////
-////					this.silelook.set(this.x, this.y, this.z, 4.5F);
+////					this.sielook.set(this.x, this.y, this.z, 4.5F);
 ////					if (wy > 0.0D)
 ////					{
 ////						this.silejump.setJumping();

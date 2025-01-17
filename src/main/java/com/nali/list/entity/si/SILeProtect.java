@@ -27,7 +27,7 @@ public class SILeProtect
 	public static byte ID;
 
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public byte state;//on1 protect2 ani4-8
 //	4+8 0
@@ -48,7 +48,7 @@ public class SILeProtect
 	public void init()
 	{
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class SILeProtect
 			{
 //				this.protect = true;
 				this.state |= 2;
-				this.silefindmove.endGoal();
+				this.siefindmove.endGoal();
 //				if (this.main_state != -1)
 //				{
 //					this.state = this.main_state;
@@ -137,7 +137,7 @@ public class SILeProtect
 
 //				if (this.state == 3)
 //				{
-//					this.silefindmove.endGoal();
+//					this.siefindmove.endGoal();
 //				}
 //				else
 //				{

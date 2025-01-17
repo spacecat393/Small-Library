@@ -1,9 +1,9 @@
-package com.nali.list.gui.data.client;
+package com.nali.list.gui.da.client;
 
 import com.nali.list.network.message.ClientMessage;
 import com.nali.small.gui.page.PageInvSelectAdd;
 
-public class CDataInvSelectAdd
+public class CDaInvSelectAdd
 {
 	public static byte ID;
 

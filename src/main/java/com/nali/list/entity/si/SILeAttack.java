@@ -34,9 +34,9 @@ public class SILeAttack
 	public static byte ID;
 
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
-	public SILeLook<BD, E, I, S, MS> silelook;
+	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
+	public SIELook<BD, E, I, S, MS> sielook;
 	public SILeCareOwner<BD, E, I, S, MS> silecareowner;
 
 	public int[] attack_frame_int_array;
@@ -56,9 +56,9 @@ public class SILeAttack
 	public void init()
 	{
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
-		this.silelook = (SILeLook<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeLook.ID);
+		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
+		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
 		this.silecareowner = (SILeCareOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeCareOwner.ID);
 	}
 
@@ -182,15 +182,15 @@ public class SILeAttack
 				{
 					this.flag |= 2;
 
-					if (!this.silefindmove.try_move)
+					if (!this.siefindmove.try_move)
 					{
-						this.silelook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
+						this.sielook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
 					}
 
 					if ((this.flag & 16+8) == 16 && !(e.canEntityBeSeen(target_entity) && getDistanceAABBToAABB(e, target_entity) <= this.minimum_distance))
 					{
-	//					this.silefindmove.setBreakGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
-						this.silefindmove.setGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
+	//					this.siefindmove.setBreakGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
+						this.siefindmove.setGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
 						this.flag |= 1;
 						this.flag &= 255-2;
 					}
@@ -202,7 +202,7 @@ public class SILeAttack
 			{
 				if ((this.flag & 1) == 1)
 				{
-					this.silefindmove.endGoal();
+					this.siefindmove.endGoal();
 	//				this.flag &= 255-(1+2+4);
 				}
 				this.flag &= 255-(1+2+4);
@@ -277,7 +277,7 @@ public class SILeAttack
 						e.attackEntityAsMob(entity);
 					}
 
-					this.silefindmove.endGoal();
+					this.siefindmove.endGoal();
 				}
 			}
 		}

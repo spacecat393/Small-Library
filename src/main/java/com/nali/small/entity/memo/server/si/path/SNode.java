@@ -4,12 +4,15 @@ import net.minecraft.util.math.BlockPos;
 
 public class SNode
 {
+	public static SNode SNODE = new SNode(null);
 	public BlockPos blockpos;
 //	public float g, h, f;
 //	public int g;
 //	public boolean walk_able = true/*, close = false*/;
 	public SNode parent_snode;
-	public SNode[] children_snode_array = new SNode[26];
+	public SNode[] children_snode_array/* = new SNode[26]*/;
+	//use only one children
+//	public SNode[] final_children_snode_array;
 	// public BlockPos[] sub_blockpos_array;
 
 	public SNode(BlockPos blockpos)

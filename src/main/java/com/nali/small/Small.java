@@ -1,6 +1,6 @@
 package com.nali.small;
 
-import com.nali.list.gui.data.server.SDataInvSelect;
+import com.nali.list.gui.da.server.SDaInvSelect;
 import com.nali.small.chunk.ChunkCallBack;
 import com.nali.small.chunk.ChunkData;
 import com.nali.small.entity.EntityRegistry;
@@ -85,7 +85,7 @@ public class Small
 	@EventHandler
 	public void onFMLServerAboutToStartEvent(FMLServerAboutToStartEvent event)
 	{
-		SDataInvSelect.RUNNABLE_LIST = new ArrayList();
+		SDaInvSelect.RUNNABLE_LIST = new ArrayList();
 
 		ServerE.S_MAP = new HashMap();
 		ChunkCallBack.set();
@@ -195,6 +195,6 @@ public class Small
 		ServerE.S_MAP = null;
 		ChunkCallBack.free();
 
-		SDataInvSelect.RUNNABLE_LIST = null;
+		SDaInvSelect.RUNNABLE_LIST = null;
 	}
 }

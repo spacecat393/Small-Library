@@ -2,16 +2,17 @@ package com.nali.list.entity.si;
 
 import com.mojang.authlib.GameProfile;
 import com.nali.da.IBothDaE;
-import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -19,28 +20,28 @@ import net.minecraftforge.common.util.FakePlayer;
 
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class SILeMineTo
+public class SIEMineTo
 <
 	BD extends IBothDaE,
-	E extends EntityLe,
+	E extends Entity,
 	I extends IMixE<BD, E>,
-	S extends ServerLe<BD, E, I, MS>,
+	S extends ServerE<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
 
-	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
-	public SILeLook<BD, E, I, S, MS> silelook;
+	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
+	public SIELook<BD, E, I, S, MS> sielook;
 
 	public byte state;//on //| remote1 x2-4 y8-16 z32-64 +-
 	public BlockPos blockpos/*, start_blockpos, end_blockpos*/;
 	public float hardness;
 //	public float goal_x, goal_y, goal_z;
-	public double goal_x, goal_y, goal_z;
+//	public double goal_x, goal_y, goal_z;
 
-	public SILeMineTo(S s)
+	public SIEMineTo(S s)
 	{
 		super(s);
 	}
@@ -48,9 +49,13 @@ public class SILeMineTo
 	@Override
 	public void init()
 	{
-		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
-		this.silelook = (SILeLook<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeLook.ID);
+		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
+		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
+//		if (this.sielook == null)
+//		{
+//			this.sielook = (SIELook)this.s.ms.si_map.get(SILeLook.ID);
+//		}
 	}
 
 	@Override
@@ -97,17 +102,17 @@ public class SILeMineTo
 	//					BlockPos blockpos = this.blockpos;
 						if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(this.blockpos, this.silesetlocation.blockpos, this.silesetlocation.far))
 						{
-							this.silefindmove.setGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
+							this.siefindmove.setGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
 						}
 	//					this.blockpos = blockpos;
 					}
 					else
 					{
-						this.silelook.set(this.blockpos.getX() + 0.5D, this.blockpos.getY(), this.blockpos.getZ() + 0.5D, 5.0F);
-						this.silefindmove.endGoal();
+						this.sielook.set(this.blockpos.getX() + 0.5D, this.blockpos.getY(), this.blockpos.getZ() + 0.5D, 5.0F);
+						this.siefindmove.endGoal();
 
 						FakePlayer fakeplayer = new FakePlayer(this.s.worldserver, new GameProfile(null, "!"));
-						fakeplayer.setHeldItem(EnumHand.MAIN_HAND, e.getHeldItemMainhand());
+						fakeplayer.setHeldItem(EnumHand.MAIN_HAND, this.getItemStack(e));
 						float f = iblockstate.getPlayerRelativeBlockHardness(fakeplayer, this.s.worldserver, this.blockpos);
 						if (f < 0.005F)
 						{
@@ -134,8 +139,9 @@ public class SILeMineTo
 							if (block.removedByPlayer(iblockstate, this.s.worldserver, this.blockpos, fakeplayer, false))
 							{
 								block.onPlayerDestroy(this.s.worldserver, this.blockpos, iblockstate);
-								block.harvestBlock(this.s.worldserver, fakeplayer, this.blockpos, iblockstate, this.s.worldserver.getTileEntity(this.blockpos), e.getHeldItemMainhand());
-								e.getHeldItemMainhand().damageItem(1, e);
+								block.harvestBlock(this.s.worldserver, fakeplayer, this.blockpos, iblockstate, this.s.worldserver.getTileEntity(this.blockpos), this.getItemStack(e));
+								this.damageItem(e);
+//								this.getItemStack(e).damageItem(1, e);
 							}
 
 	//						worldserver.sendBlockBreakProgress(e.getEntityId(), this.blockpos, -1);
@@ -180,6 +186,17 @@ public class SILeMineTo
 	//		}
 	//		}
 		}
+	}
+
+	public ItemStack getItemStack(E e)
+	{
+		//e.getHeldItemMainhand()
+		return ItemStack.EMPTY;
+	}
+
+	public void damageItem(E e)
+	{
+//		this.getItemStack(e).damageItem(1, e);
 	}
 
 	@Override
@@ -261,13 +278,13 @@ public class SILeMineTo
 //			if (e.getDistanceSq(this.blockpos) > 8.0D)
 //			{
 ////					BlockPos blockpos = this.blockpos;
-//				this.silefindmove.setGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
+//				this.siefindmove.setGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
 ////					this.blockpos = blockpos;
 //			}
 //			else
 //			{
-//				this.silelook.set(this.blockpos.getX() + 0.5D, this.blockpos.getY(), this.blockpos.getZ() + 0.5D, 5.0F);
-//				this.silefindmove.endGoal();
+//				this.sielook.set(this.blockpos.getX() + 0.5D, this.blockpos.getY(), this.blockpos.getZ() + 0.5D, 5.0F);
+//				this.siefindmove.endGoal();
 //
 //				FakePlayer fakeplayer = new FakePlayer(worldserver, new GameProfile(null, "!"));
 //				fakeplayer.setHeldItem(EnumHand.MAIN_HAND, e.getHeldItemMainhand());

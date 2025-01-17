@@ -18,7 +18,7 @@ public class SPage
 	public static Method[] METHOD_ARRAY;
 	static
 	{
-		List<Class> server_class_list = Reflect.getClasses("com.nali.list.gui.data.server");
+		List<Class> server_class_list = Reflect.getClasses("com.nali.list.gui.da.server");
 		METHOD_ARRAY = new Method[server_class_list.size()];
 
 		for (byte i = 0; i < server_class_list.size(); ++i)

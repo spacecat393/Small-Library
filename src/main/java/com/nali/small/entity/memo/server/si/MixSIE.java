@@ -8,7 +8,6 @@ import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -33,20 +32,22 @@ public class MixSIE
 	public EntityPlayerMP entityplayermp;
 	public byte[] byte_array;
 
-	public MixSIE(S s)
+	public MixSIE(S s, SI[] si_array)
 	{
 		this.s = s;
 		byte[] ai_byte_array = this.s.i.getSI();
-		for (byte b : ai_byte_array)
+//		for (byte b : ai_byte_array)
+		for (byte b = 0; b < ai_byte_array.length; ++b)
 		{
-			try
-			{
-				this.si_map.put(b, (SI) SI_CLASS_LIST.get(b).getConstructors()[0].newInstance(this.s));
-			}
-			catch (InstantiationException | IllegalAccessException | InvocationTargetException e)
-			{
-				error(e);
-			}
+//			try
+//			{
+//				this.si_map.put(b, (SI) SI_CLASS_LIST.get(b).getConstructors()[0].newInstance(this.s));
+//			}
+//			catch (InstantiationException | IllegalAccessException | InvocationTargetException e)
+//			{
+//				error(e);
+//			}
+			this.si_map.put(ai_byte_array[b], si_array[b]);
 		}
 	}
 

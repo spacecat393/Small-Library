@@ -2,7 +2,7 @@ package com.nali.small.gui.page;
 
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.page.PageEdit;
-import com.nali.list.gui.data.server.SDataInvSelectAdd;
+import com.nali.list.gui.da.server.SDaInvSelectAdd;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPage;
 import com.nali.network.NetworkRegistry;
@@ -76,7 +76,7 @@ public class PageInvSelectAdd extends PageEdit
 		{
 			byte[] byte_array = new byte[1 + 1 + 2 + 1];
 			byte_array[0] = SPage.ID;
-			byte_array[1] = SDataInvSelectAdd.ID;
+			byte_array[1] = SDaInvSelectAdd.ID;
 			ByteWriter.set(byte_array, PageInv.INV, 2);
 			byte_array[2+2] = (byte)(this.select - 2);
 			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));

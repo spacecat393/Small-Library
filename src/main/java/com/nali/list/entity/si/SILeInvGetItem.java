@@ -36,8 +36,8 @@ public class SILeInvGetItem
 	public static byte ID;
 
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
+	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public byte flag;//move_to | remote_xp remote_item can_take_xp can_take_item walk_to_xp walk_to_item
 //	public boolean pickup;
@@ -52,8 +52,8 @@ public class SILeInvGetItem
 	public void init()
 	{
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 
 	@Override
@@ -222,8 +222,8 @@ public class SILeInvGetItem
 						{
 	//						Nali.LOGGER.info("XP START");
 							this.flag |= 1;
-//							this.silefindmove.setBreakGoal(to_entityxporb.posX, to_entityxporb.posY, to_entityxporb.posZ);
-							this.silefindmove.setGoal(to_entityxporb.posX, to_entityxporb.posY, to_entityxporb.posZ);
+//							this.siefindmove.setBreakGoal(to_entityxporb.posX, to_entityxporb.posY, to_entityxporb.posZ);
+							this.siefindmove.setGoal(to_entityxporb.posX, to_entityxporb.posY, to_entityxporb.posZ);
 						}
 					}
 				}
@@ -236,8 +236,8 @@ public class SILeInvGetItem
 						{
 	//						Nali.LOGGER.info("ITEM START");
 							this.flag |= 1;
-//							this.silefindmove.setBreakGoal(to_entityitem.posX, to_entityitem.posY, to_entityitem.posZ);
-							this.silefindmove.setGoal(to_entityitem.posX, to_entityitem.posY, to_entityitem.posZ);
+//							this.siefindmove.setBreakGoal(to_entityitem.posX, to_entityitem.posY, to_entityitem.posZ);
+							this.siefindmove.setGoal(to_entityitem.posX, to_entityitem.posY, to_entityitem.posZ);
 						}
 					}
 				}
@@ -258,7 +258,7 @@ public class SILeInvGetItem
 							if ((this.flag & 1) == 1)
 							{
 	//							Nali.LOGGER.info("XP END");
-								this.silefindmove.endGoal();
+								this.siefindmove.endGoal();
 								this.flag &= 255-1;
 	//							this.s.current_work_byte_array[this.s.bytele.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, this.s.bytele.GET_ITEM() % 8));
 							}
@@ -294,7 +294,7 @@ public class SILeInvGetItem
 						if ((this.flag & 1) == 1)
 						{
 	//						Nali.LOGGER.info("ITEM END");
-							this.silefindmove.endGoal();
+							this.siefindmove.endGoal();
 							this.flag &= 255-1;
 	//						this.s.current_work_byte_array[this.s.bytele.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, this.s.bytele.GET_ITEM() % 8));
 						}
@@ -355,7 +355,7 @@ public class SILeInvGetItem
 
 	//		if ((this.flag & 1) == 1)
 	//		{
-	//			this.silefindmove.endGoal();
+	//			this.siefindmove.endGoal();
 	//			this.flag &= 255-1;
 	//			this.s.current_work_byte_array[this.s.bytele.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, this.s.bytele.GET_ITEM() % 8));
 	//		}

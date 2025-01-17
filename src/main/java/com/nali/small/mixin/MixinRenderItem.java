@@ -41,9 +41,9 @@ public abstract class MixinRenderItem
 //	@Inject(method = "renderItemModelIntoGUI", at = @At("HEAD"))
 //	private void renderItemModelIntoGUI(ItemStack stack, int x, int y, IBakedModel bakedmodel, CallbackInfo ci)
 //	{
-//		if (stack.getItem() instanceof MixItems)
+//		if (stack.getItemStack() instanceof MixItems)
 //		{
-//			MixItems mixitems = ((MixItems)stack.getItem());
+//			MixItems mixitems = ((MixItems)stack.getItemStack());
 //			ObjectRender objectrender = mixitems.getObjectRender();
 //			objectrender.objectworlddraw.lig_b = -1;
 //		}
@@ -52,27 +52,27 @@ public abstract class MixinRenderItem
 //	@Inject(method = "renderItemIntoGUI", at = @At("HEAD"))
 //	private void renderItemIntoGUI(ItemStack stack, int x, int y, CallbackInfo ci)
 //	{
-//		if (stack.getItem() instanceof MixItems)
+//		if (stack.getItemStack() instanceof MixItems)
 //		{
-//			((MixItems)stack.getItem()).disableLightMap();
+//			((MixItems)stack.getItemStack()).disableLightMap();
 //		}
 //	}
 //
 //	@Inject(method = "renderItemAndEffectIntoGUI(Lnet/minecraft/item/ItemStack;II)V", at = @At("HEAD"))
 //	private void renderItemAndEffectIntoGUI(ItemStack stack, int xPosition, int yPosition, CallbackInfo ci)
 //	{
-//		if (stack.getItem() instanceof MixItems)
+//		if (stack.getItemStack() instanceof MixItems)
 //		{
-//			((MixItems)stack.getItem()).disableLightMap();
+//			((MixItems)stack.getItemStack()).disableLightMap();
 //		}
 //	}
 //
 //	@Inject(method = "renderItemOverlays", at = @At("HEAD"))
 //	private void renderItemOverlayIntoGUI(FontRenderer fr, ItemStack stack, int xPosition, int yPosition, CallbackInfo ci)
 //	{
-//		if (stack.getItem() instanceof MixItems)
+//		if (stack.getItemStack() instanceof MixItems)
 //		{
-//			((MixItems)stack.getItem()).disableLightMap();
+//			((MixItems)stack.getItemStack()).disableLightMap();
 //		}
 //	}
 }

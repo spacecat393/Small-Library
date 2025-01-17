@@ -35,8 +35,8 @@ public class SILeFollow
 	public static byte ID;
 
 	public SIEOwner<BD, E, I, S, MS> sieowner;
-	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
+	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public float max_distance = 196.0F;
 	public float min_distance = 96.0F;
@@ -51,8 +51,8 @@ public class SILeFollow
 	public void init()
 	{
 		this.sieowner = (SIEOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEOwner.ID);
-		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 
 	@Override
@@ -153,7 +153,7 @@ public class SILeFollow
 //			{
 //				if (move_to)
 //				{
-//					this.silefindmove.endGoal();
+//					this.siefindmove.endGoal();
 //					this.flag ^= 1;
 //				}
 //
@@ -185,19 +185,19 @@ public class SILeFollow
 //				if (step <= getClose(e, owner_entity, 1.0D))
 				if (getDistanceAABBToAABB(e, owner_entity) <= 1.0D)
 				{
-					this.silefindmove.endGoal();
+					this.siefindmove.endGoal();
 					this.flag &= 255-1;
 				}
 				else
 				{
-//					this.silefindmove.setBreakGoal(owner_entity.posX, owner_entity.posY, owner_entity.posZ);
-					this.silefindmove.setGoal(owner_entity.posX, owner_entity.posY, owner_entity.posZ);
+//					this.siefindmove.setBreakGoal(owner_entity.posX, owner_entity.posY, owner_entity.posZ);
+					this.siefindmove.setGoal(owner_entity.posX, owner_entity.posY, owner_entity.posZ);
 				}
 			}
 		}
 		else if (move_to)
 		{
-			this.silefindmove.endGoal();
+			this.siefindmove.endGoal();
 			this.flag ^= 1;
 		}
 
@@ -266,14 +266,14 @@ public class SILeFollow
 		BlockPos to_blockpos = new BlockPos(x, y, z);
 		BlockPos down_blockpos = to_blockpos.down();
 
-		if (SILeFindMove.fallBlock(this.s.getMaterial(down_blockpos)) || SILeFindMove.isBlock(this.s.getMaterial(to_blockpos)))
+		if (SIEFindMove.fallBlock(this.s.getMaterial(down_blockpos)) || SIEFindMove.isBlock(this.s.getMaterial(to_blockpos)))
 		{
 			return false;
 		}
 
 		this.s.i.getE().setPositionAndRotation(x + 0.5D, y, z + 0.5D, owner_entity.rotationYaw, owner_entity.rotationPitch);
 //		this.s.current_work_byte_array[this.s.bytele.FOLLOW() / 8] &= (byte)(255 - Math.pow(2, this.s.bytele.FOLLOW() % 8));
-		this.silefindmove.endGoal();
+		this.siefindmove.endGoal();
 
 		return true;
 	}

@@ -40,9 +40,9 @@ public class SILeRevive
 
 	public SIEOwner<BD, E, I, S, MS> sieowner;
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
-	public SILeLook<BD, E, I, S, MS> silelook;
+	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
+	public SIELook<BD, E, I, S, MS> sielook;
 
 	public byte state;//try_revive-N revive_owner revive_other_entity remote
 
@@ -66,9 +66,9 @@ public class SILeRevive
 	{
 		this.sieowner = (SIEOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEOwner.ID);
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
-		this.silelook = (SILeLook<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeLook.ID);
+		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
+		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
 	}
 
 	@Override
@@ -150,8 +150,8 @@ public class SILeRevive
 		//							this.s.main_work_byte_array[this.s.bytele.ON_REVIVE()] = 1;
 		//						}
 
-								this.silelook.set(this.entity.posX, this.entity.posY, this.entity.posZ, 90.0F);
-	//							this.silelook.set(entity.posX, entity.posY, entity.posZ, 90.0F);
+								this.sielook.set(this.entity.posX, this.entity.posY, this.entity.posZ, 90.0F);
+	//							this.sielook.set(entity.posX, entity.posY, entity.posZ, 90.0F);
 	//						++this.tick;
 	//							if (++this.tick >= 60)
 		//				if (this.entity != null)
@@ -233,9 +233,9 @@ public class SILeRevive
 							{
 								if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(this.entity, this.silesetlocation.blockpos, this.silesetlocation.far))
 								{
-									this.silefindmove.setGoal(this.entity.posX, this.entity.posY, this.entity.posZ);
+									this.siefindmove.setGoal(this.entity.posX, this.entity.posY, this.entity.posZ);
 								}
-	//								this.silefindmove.setGoal(entity.posX, entity.posY, entity.posZ);
+	//								this.siefindmove.setGoal(entity.posX, entity.posY, entity.posZ);
 		//						this.s.ms.state &= 255-1;
 							}
 	//					}
@@ -349,7 +349,7 @@ public class SILeRevive
 		//			}
 	//				else if (this.die)
 	//				{
-	//					this.silefindmove.endGoal();
+	//					this.siefindmove.endGoal();
 	//					this.entity = null;
 	////					this.die = false;
 	////					this.current_entity = null;
@@ -367,7 +367,7 @@ public class SILeRevive
 			else if ((this.state & 1) == 1)
 			{
 //				this.clear();
-				this.silefindmove.endGoal();
+				this.siefindmove.endGoal();
 				this.entity = null;
 				this.uuid = null;
 				this.blockpos = null;

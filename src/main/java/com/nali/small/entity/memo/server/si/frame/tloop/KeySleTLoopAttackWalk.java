@@ -4,7 +4,7 @@ import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaS;
 import com.nali.da.IBothDaSe;
 import com.nali.list.entity.si.SILeAttack;
-import com.nali.list.entity.si.SILeFindMove;
+import com.nali.list.entity.si.SIEFindMove;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.IServerS;
@@ -20,7 +20,7 @@ public class KeySleTLoopAttackWalk
 	MS extends MixSIE<BD, E, I, S>
 > extends KeySTLoop<BD, E, I, S, MS>
 {
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 	public SILeAttack<BD, E, I, S, MS> sileattack;
 
 	public KeySleTLoopAttackWalk(S s, byte key_data_index)
@@ -28,7 +28,7 @@ public class KeySleTLoopAttackWalk
 		super(s, key_data_index);
 
 		this.sileattack = (SILeAttack<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeAttack.ID);
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 //
 //	@Override
@@ -41,6 +41,6 @@ public class KeySleTLoopAttackWalk
 	@Override
 	public boolean onUpdate()
 	{
-		return (this.sileattack.flag & 16) == 16 && (this.silefindmove.move_x != 0 || this.silefindmove.move_z != 0) && super.onUpdate();
+		return (this.sileattack.flag & 16) == 16 && (this.siefindmove.move_x != 0 || this.siefindmove.move_z != 0) && super.onUpdate();
 	}
 }

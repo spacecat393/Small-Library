@@ -66,9 +66,9 @@ public class RenderSe
 		return result/* || e == null*/ || e.isInvisible() || e.isInvisibleToPlayer(Minecraft.getMinecraft().player);
 	}
 
-	@Override
-	public byte getExtraBit(MemoG rg)
-	{
-		return (byte)(super.getExtraBit(rg) | (this.c.i.getE().isGlowing() ? 8 : 0));
-	}
+//	@Override
+//	public byte getExtraBit(MemoG rg)
+//	{
+//		return (byte)(super.getExtraBit(rg) | (this.c.i.getE().isGlowing() ? 8 : 0));
+//	}
 }

@@ -182,14 +182,14 @@
 //			GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
 //			GL11.glMultMatrix(MemoC.OPENGL_FLOATBUFFER);
 //
-//			Item item = itemstack.getItem();
+//			Item item = itemstack.getItemStack();
 //			if (item instanceof ItemArmor)
 //			{
 //				this.setArmor(entityequipmentslot.getIndex());
 //				GL11.glScalef(0.08F * 0.5F, 0.08F * 0.5F, 0.08F * 0.5F);
 //				((IMixinLayerArmorBase)LAYERBIPEDARMOR).GOrenderArmorLayer(e, e.limbSwing, e.limbSwingAmount, partialTicks, FRENDERFLE.handleRotationFloat(e, partialTicks), 0.0F, 0.0F, 1.0F, entityequipmentslot);
 //			}
-//			else if (itemstack.getItem() == Items.ELYTRA)
+//			else if (itemstack.getItemStack() == Items.ELYTRA)
 //			{
 //				this.setArmor(entityequipmentslot.getIndex());
 //				GL11.glTranslatef(0.0F, 1.0F * 0.5F, 0.0F);

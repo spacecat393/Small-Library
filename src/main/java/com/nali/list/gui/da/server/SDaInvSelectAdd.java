@@ -1,7 +1,7 @@
-package com.nali.list.gui.data.server;
+package com.nali.list.gui.da.server;
 
 import com.nali.Nali;
-import com.nali.list.gui.data.client.CDataInvSelectAdd;
+import com.nali.list.gui.da.client.CDaInvSelectAdd;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.client.CPage;
@@ -17,18 +17,18 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class SDataInvSelectAdd
+public class SDaInvSelectAdd
 {
 	public static byte ID;
 
 	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
 	{
 		//should support over than long?
-		SDataInvSelect.RUNNABLE_LIST.add(() ->
+		SDaInvSelect.RUNNABLE_LIST.add(() ->
 		{
-			if ((SDataInvSelect.STATE & 1) == 0)
+			if ((SDaInvSelect.STATE & 1) == 0)
 			{
-				SDataInvSelect.STATE |= 1;
+				SDaInvSelect.STATE |= 1;
 				short inv = ByteReader.getShort(servermessage.data, 2);
 				File inv_file = new File(entityplayermp.world.getSaveHandler().getWorldDirectory(), "nali/inv/" + inv);
 
@@ -62,7 +62,7 @@ public class SDataInvSelectAdd
 							count += ByteReader.getLong(byte_array, 0);
 							if ((count & (1L << 63)) != 0)
 							{
-								SDataInvSelect.STATE &= 255-1;
+								SDaInvSelect.STATE &= 255-1;
 								return;
 							}
 						}
@@ -144,10 +144,10 @@ public class SDataInvSelectAdd
 					NetworkRegistry.I.sendTo(new ClientMessage(new byte[]
 					{
 						CPage.ID,
-						CDataInvSelectAdd.ID
+						CDaInvSelectAdd.ID
 					}), entityplayermp);
 				}
-				SDataInvSelect.STATE &= 255-1;
+				SDaInvSelect.STATE &= 255-1;
 			}
 		});
 	}

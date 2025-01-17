@@ -10,6 +10,8 @@ public class PageInvSelectItemEquip extends PageEdit
 	@Override
 	public void init()
 	{
+		super.init();
+
 		if ((this.state & 4) == 0)
 		{
 			this.select = 2;

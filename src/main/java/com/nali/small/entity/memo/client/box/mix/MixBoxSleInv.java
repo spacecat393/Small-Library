@@ -84,7 +84,8 @@ public class MixBoxSleInv
 
 			Page.PAGE_LIST.add(Page.PAGE);
 			Page.KEY_LIST.add(Key.KEY);
-			Page.PAGE.set(new PageEntityMe(e.getEntityId(), e.world.provider.getDimension(), e.getName()), new KeyEdit());
+//			Page.PAGE.set(new PageEntityMe(e.getEntityId(), e.world.provider.getDimension(), e.getName()), new KeyEdit());
+			Page.PAGE.set(new PageEntityMe((long)e.world.provider.getDimension() << 32 | e.getEntityId(), e.getName()), new KeyEdit());
 
 //			this.c.sendSSI(new byte[1 + 8 + 1], SIEInvOpenInv.ID);
 			return true;

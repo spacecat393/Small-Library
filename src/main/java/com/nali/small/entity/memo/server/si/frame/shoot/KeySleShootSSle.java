@@ -5,8 +5,8 @@ import com.nali.da.IBothDaS;
 import com.nali.da.IBothDaSe;
 import com.nali.list.entity.si.SIEPlayWithRSe;
 import com.nali.list.entity.si.SILeAttack;
-import com.nali.list.entity.si.SILeFindMove;
-import com.nali.list.entity.si.SILePlayWithSSle;
+import com.nali.list.entity.si.SIEFindMove;
+import com.nali.small.entity.memo.server.si.play.SILePlayWithSSle;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.IServerS;
@@ -48,7 +48,7 @@ public class KeySleShootSSle
 		if (result)
 		{
 			this.sileattack = (SILeAttack/*<SD2, BD2, E2, I2, S2, A2>*/)this.sileplaywithssle.s2.ms.si_map.get(SILeAttack.ID);
-			this.silefindmove = (SILeFindMove/*<SD2, BD2, E2, I2, S2, A2>*/)this.sileplaywithssle.s2.ms.si_map.get(SILeFindMove.ID);
+			this.siefindmove = (SIEFindMove/*<SD2, BD2, E2, I2, S2, A2>*/)this.sileplaywithssle.s2.ms.si_map.get(SIEFindMove.ID);
 		}
 		return result && super.onUpdate();
 	}

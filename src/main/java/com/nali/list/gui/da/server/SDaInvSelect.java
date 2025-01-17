@@ -1,7 +1,7 @@
-package com.nali.list.gui.data.server;
+package com.nali.list.gui.da.server;
 
 import com.nali.Nali;
-import com.nali.list.gui.data.client.CDataInvSelect;
+import com.nali.list.gui.da.client.CDaInvSelect;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.client.CPage;
@@ -21,11 +21,18 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class SDataInvSelect
+public class SDaInvSelect
 {
 	public static byte ID;
 	public static byte STATE;//delete/add/move
 	public static List<Runnable> RUNNABLE_LIST;
+
+	public final static byte MAX_SIZE = 119;
+	public final static byte I_MORE = 0;
+	public final static byte I_LESS = 1;
+	public final static byte I_FETCH = 2;
+	public final static byte I_DELETE = 3;
+	public final static byte I_MOVE = 4;
 
 	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
 	{
@@ -45,27 +52,27 @@ public class SDataInvSelect
 		}
 		byte page = servermessage.data[3];
 
-		if (servermessage.data[2] == 0)//more
+		if (servermessage.data[2] == I_MORE)
 		{
-			if (((page + 1) * 119) < max_inv_file)
+			if (((page + 1) * MAX_SIZE) < max_inv_file)
 			{
 				++page;
-				servermessage.data[2] = 2;
+				servermessage.data[2] = I_FETCH;
 			}
 		}
-		else if (servermessage.data[2] == 1)//less
+		else if (servermessage.data[2] == I_LESS)
 		{
 			byte new_page = (byte)(page - 1);
 			if (new_page != -1)
 			{
-				if ((new_page * 119) < max_inv_file)
+				if ((new_page * MAX_SIZE) < max_inv_file)
 				{
 					--page;
-					servermessage.data[2] = 2;
+					servermessage.data[2] = I_FETCH;
 				}
 			}
 		}
-		else if (servermessage.data[2] == 3 && (STATE & 1) == 0)//delete
+		else if (servermessage.data[2] == I_DELETE && (STATE & 1) == 0)
 		{
 			STATE |= 1;
 			int delete_item_id = ByteReader.getInt(servermessage.data, 4+2);
@@ -82,14 +89,10 @@ public class SDataInvSelect
 			nbt_n_file.delete();
 			file.delete();
 
+//			servermessage.data[2] = I_FETCH;
 			STATE &= 255-1;
 		}
-//		else if (servermessage.data[2] == 4)//add
-//		{
-//			short add_item_id = ByteReader.getShort(servermessage.data, 4+2);
-//
-//		}
-		else if (servermessage.data[2] == 4)//move
+		else if (servermessage.data[2] == I_MOVE)
 		{
 			RUNNABLE_LIST.add(() ->
 			{
@@ -179,9 +182,9 @@ public class SDataInvSelect
 		}
 		String[] inv_string_array = inv_file.list();
 
-		if (servermessage.data[2] == 2)//fetch
+		if (servermessage.data[2] == I_FETCH)
 		{
-			byte max_mix_page = (byte)Math.ceil(max_inv_file / 119.0F);
+			byte max_mix_page = (byte)Math.ceil(max_inv_file / (float)MAX_SIZE);
 			byte max_page;
 
 			if (max_mix_page > 0)
@@ -191,10 +194,10 @@ public class SDataInvSelect
 
 			if (page == max_mix_page)
 			{
-				byte left = (byte)(max_inv_file % 119);
+				byte left = (byte)(max_inv_file % MAX_SIZE);
 				if (left == 0 && max_inv_file > 0)
 				{
-					max_page = 119;
+					max_page = MAX_SIZE;
 				}
 				else
 				{
@@ -203,16 +206,16 @@ public class SDataInvSelect
 			}
 			else
 			{
-				max_page = 119;
+				max_page = MAX_SIZE;
 			}
 
 			short byte_array_index = 2;
-			int new_page = page * 119;
+			int new_page = page * MAX_SIZE;
 			int i_page = new_page + max_page;
 
 			byte[] byte_array = new byte[1 + 1 + max_page * 4 + 1 + 1 + 1];
 			byte_array[0] = CPage.ID;
-			byte_array[1] = CDataInvSelect.ID;
+			byte_array[1] = CDaInvSelect.ID;
 
 			try
 			{

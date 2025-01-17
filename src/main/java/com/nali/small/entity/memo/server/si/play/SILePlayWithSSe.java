@@ -1,6 +1,10 @@
-package com.nali.list.entity.si;
+package com.nali.small.entity.memo.server.si.play;
 
 import com.nali.da.IBothDaE;
+import com.nali.list.entity.si.SIEArea;
+import com.nali.list.entity.si.SIEFindMove;
+import com.nali.list.entity.si.SIEPlayWithRSe;
+import com.nali.list.entity.si.SIESetLocation;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
@@ -26,11 +30,11 @@ public class SILePlayWithSSe
 	MS extends MixSIE<BD, E, I, S>
 > extends SIEPlayWithRSe<S2, BD2, E2, I2, A2, BD, E, I, S, MS>
 {
-	public static byte ID;
+//	public static byte ID;
 
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
-	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
+	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
 
 //	public AIESit<SD2, BD2, E2, I2, S2, A2> siesit2;
 	public R2 r2;
@@ -47,8 +51,8 @@ public class SILePlayWithSSe
 	public void init()
 	{
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
-		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
+		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
 	}
 
 	@Override
@@ -191,7 +195,7 @@ public class SILePlayWithSSe
 		{
 			if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(e2, this.silesetlocation.blockpos, this.silesetlocation.far))
 			{
-				this.silefindmove.setGoal(e2.posX, e2.posY, e2.posZ);
+				this.siefindmove.setGoal(e2.posX, e2.posY, e2.posZ);
 			}
 		}
 	}

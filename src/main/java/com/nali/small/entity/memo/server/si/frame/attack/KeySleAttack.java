@@ -4,7 +4,7 @@ import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaS;
 import com.nali.da.IBothDaSe;
 import com.nali.list.entity.si.SILeAttack;
-import com.nali.list.entity.si.SILeFindMove;
+import com.nali.list.entity.si.SIEFindMove;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.IServerS;
@@ -22,14 +22,14 @@ public class KeySleAttack
 > extends KeyS<BD, E, I, S, MS>
 {
 	public SILeAttack<BD, E, I, S, MS> sileattack;
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public KeySleAttack(S s, byte key_data_index)
 	{
 		super(s, key_data_index);
 
 		this.sileattack = (SILeAttack<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeAttack.ID);
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 //
 //	@Override
@@ -37,7 +37,7 @@ public class KeySleAttack
 //	{
 //		super.init();
 //		this.sileattack = (SILeAttack<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeAttack.ID);
-//		this.silefindmove = (SILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+//		this.siefindmove = (SILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
 //	}
 
 	@Override

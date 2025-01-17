@@ -2,7 +2,7 @@ package com.nali.small.gui.page;
 
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.page.PageEdit;
-import com.nali.list.gui.data.server.SDataInvSelect;
+import com.nali.list.gui.da.server.SDaInvSelect;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPage;
 import com.nali.network.NetworkRegistry;
@@ -117,8 +117,8 @@ public class PageInvSelectItem extends PageEdit
 			case 7:
 				byte_array = new byte[1 + 1 + 1 + 1 + 2 + 4 + 8];
 				byte_array[0] = SPage.ID;
-				byte_array[1] = SDataInvSelect.ID;
-				byte_array[2] = 4;
+				byte_array[1] = SDaInvSelect.ID;
+				byte_array[2] = SDaInvSelect.I_MOVE;
 				byte_array[3] = PageInvSelect.PAGE;
 				ByteWriter.set(byte_array, PageInv.INV, 4);
 				ByteWriter.set(byte_array, this.item_id, 4+2);
@@ -129,8 +129,8 @@ public class PageInvSelectItem extends PageEdit
 			case 8:
 				byte_array = new byte[1 + 1 + 1 + 1 + 2 + 4];
 				byte_array[0] = SPage.ID;
-				byte_array[1] = SDataInvSelect.ID;
-				byte_array[2] = 3;
+				byte_array[1] = SDaInvSelect.ID;
+				byte_array[2] = SDaInvSelect.I_DELETE;
 				byte_array[3] = PageInvSelect.PAGE;
 				ByteWriter.set(byte_array, PageInv.INV, 4);
 				ByteWriter.set(byte_array, this.item_id, 4+2);

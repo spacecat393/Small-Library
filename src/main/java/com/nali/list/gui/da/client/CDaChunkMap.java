@@ -1,9 +1,9 @@
-package com.nali.list.gui.data.client;
+package com.nali.list.gui.da.client;
 
 import com.nali.list.network.message.ClientMessage;
 import com.nali.small.gui.page.PageChunkMap;
 
-public class CDataChunkMap
+public class CDaChunkMap
 {
 	public static byte ID;
 

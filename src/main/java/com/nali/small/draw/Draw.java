@@ -30,50 +30,56 @@ public class Draw
 	public static int DATA_SIZE;
 
 	public static Map<String, byte[]> KEY_MAP = new HashMap();
-	public static Map<byte[], List<Integer>> E_MODEL_MAP = new HashMap();
-	public static Map<byte[], List<Integer>> E_TRANSLUCENT_MAP = new HashMap();
+//	public static Map<byte[], List<Integer>> E_MODEL_MAP = new HashMap();
+//	public static Map<byte[], List<Integer>> E_TRANSLUCENT_MAP = new HashMap();
+	public static Map<byte[], List<Integer>> MODEL_MAP = new HashMap();
+	public static Map<byte[], List<Integer>> TRANSLUCENT_MAP = new HashMap();
 
-	public static Map<byte[], List<Integer>> E_GLOW_MAP = new HashMap();
+//	public static Map<byte[], List<Integer>> E_GLOW_MAP = new HashMap();
 
-	public static Map<byte[], List<Integer>> T_MODEL_MAP = new HashMap();
-	public static Map<byte[], List<Integer>> T_TRANSLUCENT_MAP = new HashMap();
+//	public static Map<byte[], List<Integer>> T_MODEL_MAP = new HashMap();
+//	public static Map<byte[], List<Integer>> T_TRANSLUCENT_MAP = new HashMap();
 
 	public static void add(byte[] byte_array)
 	{
 		List<Integer> index_integer_list;
 		Map<byte[], List<Integer>> data_map;
 
-		if ((byte_array[4 + 4 + 4] & 16) == 16)
+//		if ((byte_array[4 + 4 + 4] & 16) == 16)
+//		{
+//			if ((byte_array[4 + 4 + 4] & 1) == 1)
+//			{
+//				index_integer_list = T_TRANSLUCENT_MAP.get(byte_array);
+//				data_map = T_TRANSLUCENT_MAP;
+//			}
+//			else
+//			{
+//				index_integer_list = T_MODEL_MAP.get(byte_array);
+//				data_map = T_MODEL_MAP;
+//			}
+//		}
+//		else
+//		{
+			/*if ((byte_array[4 + 4 + 4] & 8) == 8)
+			{
+//				index_integer_list = E_GLOW_MAP.get(byte_array);
+//				data_map = E_GLOW_MAP;
+			}
+		else */if ((byte_array[4 + 4 + 4] & 1) == 1)
 		{
-			if ((byte_array[4 + 4 + 4] & 1) == 1)
-			{
-				index_integer_list = T_TRANSLUCENT_MAP.get(byte_array);
-				data_map = T_TRANSLUCENT_MAP;
-			}
-			else
-			{
-				index_integer_list = T_MODEL_MAP.get(byte_array);
-				data_map = T_MODEL_MAP;
-			}
+//			index_integer_list = E_TRANSLUCENT_MAP.get(byte_array);
+//			data_map = E_TRANSLUCENT_MAP;
+			index_integer_list = TRANSLUCENT_MAP.get(byte_array);
+			data_map = TRANSLUCENT_MAP;
 		}
 		else
 		{
-			if ((byte_array[4 + 4 + 4] & 8) == 8)
-			{
-				index_integer_list = E_GLOW_MAP.get(byte_array);
-				data_map = E_GLOW_MAP;
-			}
-			else if ((byte_array[4 + 4 + 4] & 1) == 1)
-			{
-				index_integer_list = E_TRANSLUCENT_MAP.get(byte_array);
-				data_map = E_TRANSLUCENT_MAP;
-			}
-			else
-			{
-				index_integer_list = E_MODEL_MAP.get(byte_array);
-				data_map = E_MODEL_MAP;
-			}
+//			index_integer_list = E_MODEL_MAP.get(byte_array);
+//			data_map = E_MODEL_MAP;
+			index_integer_list = MODEL_MAP.get(byte_array);
+			data_map = MODEL_MAP;
 		}
+//		}
 
 		if (index_integer_list == null)
 		{
@@ -95,67 +101,94 @@ public class Draw
 		}
 	}
 
-	public static void runE()
+	public static void run()
 	{
 		RenderO.take();
 
-		if (!E_MODEL_MAP.isEmpty())
+		if (!MODEL_MAP.isEmpty())
 		{
-			draw(E_MODEL_MAP);
+			draw(MODEL_MAP);
 		}
 
 		//model texture
-		if (!E_GLOW_MAP.isEmpty())
-		{
-			draw(E_GLOW_MAP);
-		}
+//		if (!E_GLOW_MAP.isEmpty())
+//		{
+//			draw(E_GLOW_MAP);
+//		}
 
-		if (!E_TRANSLUCENT_MAP.isEmpty())
+		if (!TRANSLUCENT_MAP.isEmpty())
 		{
 			GL11.glDepthMask(false);
-			draw(E_TRANSLUCENT_MAP);
+			draw(TRANSLUCENT_MAP);
 		}
 
 		RenderO.free();
+		Draw.clear();
 	}
 
-	public static void runEG()
-	{
-		//outline
-		if (!E_GLOW_MAP.isEmpty())
-		{
-			RenderO.take();
-			draw(E_GLOW_MAP);
-			RenderO.free();
-		}
-	}
+//	public static void runE()
+//	{
+//		RenderO.take();
+//
+//		if (!E_MODEL_MAP.isEmpty())
+//		{
+//			draw(E_MODEL_MAP);
+//		}
+//
+//		//model texture
+////		if (!E_GLOW_MAP.isEmpty())
+////		{
+////			draw(E_GLOW_MAP);
+////		}
+//
+//		if (!E_TRANSLUCENT_MAP.isEmpty())
+//		{
+//			GL11.glDepthMask(false);
+//			draw(E_TRANSLUCENT_MAP);
+//		}
+//
+//		RenderO.free();
+//	}
 
-	public static void runT()
-	{
-		RenderO.take();
+//	public static void runEG()
+//	{
+//		//outline
+//		if (!E_GLOW_MAP.isEmpty())
+//		{
+//			RenderO.take();
+//			draw(E_GLOW_MAP);
+//			RenderO.free();
+//		}
+//	}
 
-		if (!T_MODEL_MAP.isEmpty())
-		{
-			draw(T_MODEL_MAP);
-		}
-
-		if (!T_TRANSLUCENT_MAP.isEmpty())
-		{
-			GL11.glDepthMask(false);
-			draw(T_TRANSLUCENT_MAP);
-		}
-
-		RenderO.free();
-	}
+//	public static void runT()
+//	{
+//		RenderO.take();
+//
+//		if (!T_MODEL_MAP.isEmpty())
+//		{
+//			draw(T_MODEL_MAP);
+//		}
+//
+//		if (!T_TRANSLUCENT_MAP.isEmpty())
+//		{
+//			GL11.glDepthMask(false);
+//			draw(T_TRANSLUCENT_MAP);
+//		}
+//
+//		RenderO.free();
+//	}
 
 	public static void clear()
 	{
 		DATA_SIZE = 0;
-		E_MODEL_MAP.clear();
-		E_TRANSLUCENT_MAP.clear();
-		E_GLOW_MAP.clear();
-		T_MODEL_MAP.clear();
-		T_TRANSLUCENT_MAP.clear();
+		MODEL_MAP.clear();
+		TRANSLUCENT_MAP.clear();
+//		E_MODEL_MAP.clear();
+//		E_TRANSLUCENT_MAP.clear();
+//		E_GLOW_MAP.clear();
+//		T_MODEL_MAP.clear();
+//		T_TRANSLUCENT_MAP.clear();
 		DRAWDA_LIST.clear();
 		KEY_FLOAT_ARRAY_LIST.clear();
 	}

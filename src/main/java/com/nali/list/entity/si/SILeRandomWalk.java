@@ -21,8 +21,8 @@ public class SILeRandomWalk
 {
 	public static byte ID;
 
-	public SILeSetLocation<BD, E, I, S, MS> silesetlocation;
-	public SILeFindMove<BD, E, I, S, MS> silefindmove;
+	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public int tick;
 	public byte state;//on walk
@@ -35,8 +35,8 @@ public class SILeRandomWalk
 	@Override
 	public void init()
 	{
-		this.silesetlocation = (SILeSetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeSetLocation.ID);
-		this.silefindmove = (SILeFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeFindMove.ID);
+		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class SILeRandomWalk
 			{
 				if (e.ticksExisted % 100 == 0)
 				{
-					this.silefindmove.endGoal();
+					this.siefindmove.endGoal();
 					this.state &= 255-2;
 //					this.walk = false;
 				}
@@ -69,7 +69,7 @@ public class SILeRandomWalk
 
 					if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(x, y, z, this.silesetlocation.blockpos, this.silesetlocation.far))
 					{
-						this.silefindmove.setGoal(x, y, z);
+						this.siefindmove.setGoal(x, y, z);
 					}
 					this.tick = e.getRNG().nextInt(100) + 100;
 					this.state |= 2;
@@ -78,7 +78,7 @@ public class SILeRandomWalk
 			}
 			else if ((this.state & 2) == 2)
 			{
-				this.silefindmove.endGoal();
+				this.siefindmove.endGoal();
 				this.state &= 255-2;
 //				this.walk = false;
 			}
