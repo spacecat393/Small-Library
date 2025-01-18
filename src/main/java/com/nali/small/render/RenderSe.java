@@ -63,7 +63,7 @@ public class RenderSe
 		}
 
 		E e = i.getE();
-		return result/* || e == null*/ || e.isInvisible() || e.isInvisibleToPlayer(Minecraft.getMinecraft().player);
+		return result/* || e == null*//* || e.isInvisible()*/ || e.isInvisibleToPlayer(Minecraft.getMinecraft().player);
 	}
 
 //	@Override

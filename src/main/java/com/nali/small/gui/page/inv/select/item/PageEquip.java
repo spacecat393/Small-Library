@@ -1,16 +1,17 @@
-package com.nali.small.gui.page;
+package com.nali.small.gui.page.inv.select.item;
 
 import com.nali.gui.page.PageEdit;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class PageEntityMeEffect extends PageEdit
+public class PageEquip extends PageEdit
 {
 	@Override
 	public void init()
 	{
-		//show effect
+		super.init();
+
 		if ((this.state & 4) == 0)
 		{
 			this.select = 2;

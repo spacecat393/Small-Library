@@ -1,4 +1,4 @@
-package com.nali.small.gui.page;
+package com.nali.small.gui.page.chunk;
 
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.key.Key;
@@ -42,12 +42,12 @@ public class PageChunk extends PageSelect
 			case 2:
 				PAGE_LIST.add(this);
 				KEY_LIST.add(Key.KEY);
-				this.set(new PageChunkList(), new KeySelect());
+				this.set(new PageList(), new KeySelect());
 				break;
 			case 3:
 				PAGE_LIST.add(this);
 				KEY_LIST.add(Key.KEY);
-				this.set(new PageChunkMap(), new KeySelect());
+				this.set(new PageMap(), new KeySelect());
 				break;
 			case 5:
 				this.back();

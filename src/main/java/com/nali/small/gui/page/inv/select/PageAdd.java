@@ -1,4 +1,4 @@
-package com.nali.small.gui.page;
+package com.nali.small.gui.page.inv.select;
 
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.page.PageEdit;
@@ -6,6 +6,7 @@ import com.nali.list.gui.da.server.SDaInvSelectAdd;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPage;
 import com.nali.network.NetworkRegistry;
+import com.nali.small.gui.page.inv.PageInv;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class PageInvSelectAdd extends PageEdit
+public class PageAdd extends PageEdit
 {
 	public static byte STATE;//enter client init
 

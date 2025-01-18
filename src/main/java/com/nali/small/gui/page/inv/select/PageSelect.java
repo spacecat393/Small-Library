@@ -1,13 +1,14 @@
-package com.nali.small.gui.page;
+package com.nali.small.gui.page.inv.select;
 
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.key.Key;
 import com.nali.gui.key.KeyEdit;
-import com.nali.gui.page.PageSelect;
 import com.nali.list.gui.da.server.SDaInvSelect;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPage;
 import com.nali.network.NetworkRegistry;
+import com.nali.small.gui.page.inv.PageInv;
+import com.nali.small.gui.page.inv.select.item.PageItem;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.item.Item;
@@ -16,7 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class PageInvSelect extends PageSelect
+public class PageSelect extends com.nali.gui.page.PageSelect
 {
 	public static byte[] BYTE_ARRAY;//1+1 4*? +1+1+1
 
@@ -134,7 +135,7 @@ public class PageInvSelect extends PageSelect
 //						SELECT = (byte)(this.select - 2);
 //					int new_index = 2 + SELECT * (8 + 2 * 4);
 //					long id = ByteReader.getLong(BYTE_ARRAY, new_index);
-					this.set(new PageInvSelectAdd(/*(int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]*/), new KeyEdit());
+					this.set(new PageAdd(/*(int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]*/), new KeyEdit());
 					STATE &= 255-1;
 					return;
 				case 6:
@@ -163,7 +164,7 @@ public class PageInvSelect extends PageSelect
 //					SELECT = (byte)(this.select - 2);
 //					int new_index = 2 + SELECT * (8 + 2 * 4);
 //					long id = ByteReader.getLong(BYTE_ARRAY, new_index);
-				this.set(new PageInvSelectAdd(/*(int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]*/), new KeyEdit());
+				this.set(new PageAdd(/*(int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]*/), new KeyEdit());
 				STATE &= 255-1;
 				return;
 			}
@@ -178,7 +179,7 @@ public class PageInvSelect extends PageSelect
 //					SELECT = (byte)(this.select - 2);
 //					int new_index = 2 + SELECT * (8 + 2 * 4);
 //					long id = ByteReader.getLong(BYTE_ARRAY, new_index);
-				this.set(new PageInvSelectItem(ByteReader.getInt(BYTE_ARRAY, (byte)(this.select - 2) * 4 + 2)/*(int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]*/), new KeyEdit());
+				this.set(new PageItem(ByteReader.getInt(BYTE_ARRAY, (byte)(this.select - 2) * 4 + 2)/*(int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]*/), new KeyEdit());
 				STATE &= 255-1;
 				return;
 			}

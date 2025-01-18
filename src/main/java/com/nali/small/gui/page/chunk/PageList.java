@@ -1,4 +1,4 @@
-package com.nali.small.gui.page;
+package com.nali.small.gui.page.chunk;
 
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.key.Key;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class PageChunkList extends PageSelect
+public class PageList extends PageSelect
 {
 	public static byte[] BYTE_ARRAY;//1+1 4*2*? +1+1+1
 
@@ -150,7 +150,7 @@ public class PageChunkList extends PageSelect
 				KEY_LIST.add(Key.KEY);
 				SELECT = (byte)(this.select - 2);
 				int new_index = 2 + SELECT * 2 * 4;
-				this.set(new PageChunkPiece(ByteReader.getInt(BYTE_ARRAY, new_index), ByteReader.getInt(BYTE_ARRAY, new_index + 4)), new KeySelect());
+				this.set(new PagePiece(ByteReader.getInt(BYTE_ARRAY, new_index), ByteReader.getInt(BYTE_ARRAY, new_index + 4)), new KeySelect());
 				STATE &= 255-1;
 				return;
 			}

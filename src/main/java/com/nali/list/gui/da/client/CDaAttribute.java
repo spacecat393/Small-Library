@@ -1,7 +1,7 @@
 package com.nali.list.gui.da.client;
 
 import com.nali.list.network.message.ClientMessage;
-import com.nali.small.gui.page.PageAttribute;
+import com.nali.small.gui.page.entity.me.PageAttribute;
 
 public class CDaAttribute
 {

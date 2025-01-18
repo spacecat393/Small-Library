@@ -1,7 +1,7 @@
 package com.nali.list.gui.da.client;
 
 import com.nali.list.network.message.ClientMessage;
-import com.nali.small.gui.page.PageInvSelectAdd;
+import com.nali.small.gui.page.inv.select.PageAdd;
 
 public class CDaInvSelectAdd
 {
@@ -9,10 +9,10 @@ public class CDaInvSelectAdd
 
 	public static void run(ClientMessage clientmessage)
 	{
-		if ((PageInvSelectAdd.STATE & 2) == 0)
+		if ((PageAdd.STATE & 2) == 0)
 		{
-			PageInvSelectAdd.STATE |= 2;
-			PageInvSelectAdd.STATE |= 4;
+			PageAdd.STATE |= 2;
+			PageAdd.STATE |= 4;
 		}
 	}
 }

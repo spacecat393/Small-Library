@@ -1,4 +1,4 @@
-package com.nali.small.gui.page;
+package com.nali.small.gui.page.inv.select.item;
 
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.page.PageEdit;
@@ -6,6 +6,8 @@ import com.nali.list.gui.da.server.SDaInvSelect;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPage;
 import com.nali.network.NetworkRegistry;
+import com.nali.small.gui.page.inv.PageInv;
+import com.nali.small.gui.page.inv.select.PageSelect;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class PageInvSelectItem extends PageEdit
+public class PageItem extends PageEdit
 {
 //	public static byte[] BYTE_ARRAY;//1+1 4*? +1+1+1
 
@@ -27,7 +29,7 @@ public class PageInvSelectItem extends PageEdit
 	public String item_name;
 	public long nbt = -1;
 
-	public PageInvSelectItem(int item_id)
+	public PageItem(int item_id)
 	{
 		this.item_id = item_id;
 	}
@@ -119,7 +121,7 @@ public class PageInvSelectItem extends PageEdit
 				byte_array[0] = SPage.ID;
 				byte_array[1] = SDaInvSelect.ID;
 				byte_array[2] = SDaInvSelect.I_MOVE;
-				byte_array[3] = PageInvSelect.PAGE;
+				byte_array[3] = PageSelect.PAGE;
 				ByteWriter.set(byte_array, PageInv.INV, 4);
 				ByteWriter.set(byte_array, this.item_id, 4+2);
 				ByteWriter.set(byte_array, this.nbt, 4+2+4);
@@ -131,7 +133,7 @@ public class PageInvSelectItem extends PageEdit
 				byte_array[0] = SPage.ID;
 				byte_array[1] = SDaInvSelect.ID;
 				byte_array[2] = SDaInvSelect.I_DELETE;
-				byte_array[3] = PageInvSelect.PAGE;
+				byte_array[3] = PageSelect.PAGE;
 				ByteWriter.set(byte_array, PageInv.INV, 4);
 				ByteWriter.set(byte_array, this.item_id, 4+2);
 				NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));

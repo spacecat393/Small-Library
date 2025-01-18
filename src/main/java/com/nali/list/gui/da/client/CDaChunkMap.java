@@ -1,7 +1,7 @@
 package com.nali.list.gui.da.client;
 
 import com.nali.list.network.message.ClientMessage;
-import com.nali.small.gui.page.PageChunkMap;
+import com.nali.small.gui.page.chunk.PageMap;
 
 public class CDaChunkMap
 {
@@ -9,11 +9,11 @@ public class CDaChunkMap
 
 	public static void run(ClientMessage clientmessage)
 	{
-		if ((PageChunkMap.STATE & 2) == 0)
+		if ((PageMap.STATE & 2) == 0)
 		{
-			PageChunkMap.STATE |= 2;
-			PageChunkMap.BYTE_ARRAY = clientmessage.data;
-			PageChunkMap.STATE |= 4;
+			PageMap.STATE |= 2;
+			PageMap.BYTE_ARRAY = clientmessage.data;
+			PageMap.STATE |= 4;
 		}
 	}
 }

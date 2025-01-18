@@ -150,7 +150,8 @@ public class SILeRevive
 		//							this.s.main_work_byte_array[this.s.bytele.ON_REVIVE()] = 1;
 		//						}
 
-								this.sielook.set(this.entity.posX, this.entity.posY, this.entity.posZ, 90.0F);
+								//!look
+//								this.sielook.set(this.entity.posX, this.entity.posY, this.entity.posZ, 90.0F);
 	//							this.sielook.set(entity.posX, entity.posY, entity.posZ, 90.0F);
 	//						++this.tick;
 	//							if (++this.tick >= 60)

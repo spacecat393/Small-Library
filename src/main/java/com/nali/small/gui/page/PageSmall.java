@@ -8,6 +8,9 @@ import com.nali.gui.page.Page;
 import com.nali.gui.page.PageConfig;
 import com.nali.gui.page.PageSelect;
 import com.nali.list.key.SmallPage;
+import com.nali.small.gui.page.chunk.PageChunk;
+import com.nali.small.gui.page.entity.PageEntity;
+import com.nali.small.gui.page.inv.PageInv;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

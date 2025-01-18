@@ -65,7 +65,8 @@ public class SILeRandomLook
 //				if (this.look)
 				if ((this.state & 2) == 2)
 				{
-					this.sielook.set(this.x, this.y, this.z, 1.0F);
+					//!look
+//					this.sielook.set(this.x, this.y, this.z, 1.0F);
 				}
 	//			this.look = false;
 				this.s.ms.state &= 255-2;

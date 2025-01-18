@@ -1,4 +1,4 @@
-package com.nali.small.gui.page;
+package com.nali.small.gui.page.chunk;
 
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.page.PageSelect;
@@ -13,17 +13,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class PageChunkPiece extends PageSelect
+public class PagePiece extends PageSelect
 {
 	public int i = -1, d, x, z;
 
-	public PageChunkPiece(int x, int z)
+	public PagePiece(int x, int z)
 	{
 		this.x = x;
 		this.z = z;
 	}
 
-	public PageChunkPiece(int i, int d, int x, int z)
+	public PagePiece(int i, int d, int x, int z)
 	{
 		this(x, z);
 		this.i = i;
@@ -39,7 +39,7 @@ public class PageChunkPiece extends PageSelect
 			{
 				new BoxTextAll("CHUNK-PIECE".toCharArray()),
 				new BoxTextAll("DATA".toCharArray()),
-				new BoxTextAll(("ID " + PageChunkList.SELECT).toCharArray()),
+				new BoxTextAll(("ID " + PageList.SELECT).toCharArray()),
 				new BoxTextAll(("X " + this.x).toCharArray()),
 				new BoxTextAll(("Z " + this.z).toCharArray()),
 				new BoxTextAll("ACTION".toCharArray()),
@@ -100,8 +100,8 @@ public class PageChunkPiece extends PageSelect
 					byte_array[0] = SPage.ID;
 					byte_array[1] = SDaChunkList.ID;
 					byte_array[2] = SDaChunkList.I_DELETE;
-					byte_array[3] = PageChunkList.PAGE;
-					byte_array[4] = PageChunkList.SELECT;
+					byte_array[3] = PageList.PAGE;
+					byte_array[4] = PageList.SELECT;
 					NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 					this.back();
 					break;
@@ -116,7 +116,7 @@ public class PageChunkPiece extends PageSelect
 			{
 				case 7:
 					byte[] byte_array = new byte[1 + 1 + 1 + 8];
-					ByteWriter.set(byte_array, ByteReader.getLong(PageChunkMap.BYTE_ARRAY, 2 + PageChunkMap.SELECT * (8 + 2 * 4)), 3);
+					ByteWriter.set(byte_array, ByteReader.getLong(PageMap.BYTE_ARRAY, 2 + PageMap.SELECT * (8 + 2 * 4)), 3);
 					byte_array[0] = SPage.ID;
 					byte_array[1] = SDaChunkMap.ID;
 					byte_array[2] = SDaChunkMap.I_DELETE;

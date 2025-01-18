@@ -1,4 +1,4 @@
-package com.nali.small.gui.page;
+package com.nali.small.gui.page.entity.me;
 
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.key.Key;
@@ -9,18 +9,19 @@ import com.nali.list.gui.da.server.SDaEntity;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPage;
 import com.nali.network.NetworkRegistry;
+import com.nali.small.gui.page.entity.PageEntity;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class PageEntityMe extends PageEdit
+public class PageMe extends PageEdit
 {
 //	public int i, d;
 	public static long ID;
 	public String name;
 
-	public PageEntityMe(long id, String name)
+	public PageMe(long id, String name)
 	{
 //		this.i = i;
 //		this.d = d;
@@ -40,7 +41,7 @@ public class PageEntityMe extends PageEdit
 		}
 		this.boxtextall_array = new BoxTextAll[]
 		{
-			new BoxTextAll("ME".toCharArray()),
+			new BoxTextAll("ENTITY-ME".toCharArray()),
 			new BoxTextAll("MENU".toCharArray()),
 			//i
 			//d
@@ -48,11 +49,11 @@ public class PageEntityMe extends PageEdit
 			//hp
 			//mp
 			//edit inv in si
-			new BoxTextAll("ATTRIBUTE".toCharArray()),
-			new BoxTextAll("SI".toCharArray()),
+			new BoxTextAll("ME-ATTRIBUTE".toCharArray()),
+			new BoxTextAll("ME-SI".toCharArray()),
 //			new BoxTextAll("ME-INV".toCharArray()),
-			new BoxTextAll("MAP".toCharArray()),
-			new BoxTextAll("EFFECT".toCharArray()),
+			new BoxTextAll("ME-MAP".toCharArray()),
+			new BoxTextAll("ME-EFFECT".toCharArray()),
 			new BoxTextAll("ACTION".toCharArray()),
 			new BoxTextAll("DONE".toCharArray())
 		};
@@ -118,12 +119,12 @@ public class PageEntityMe extends PageEdit
 			case 5:
 				PAGE_LIST.add(this);
 				KEY_LIST.add(Key.KEY);
-				this.set(new PageEntityMeMap(), new KeySelect());
+				this.set(new PageMap(), new KeySelect());
 				break;
 			case 6:
 				PAGE_LIST.add(this);
 				KEY_LIST.add(Key.KEY);
-				this.set(new PageEntityMeEffect(), new KeyEdit());
+				this.set(new PageEffect(), new KeyEdit());
 				break;
 			case 8:
 				this.back();

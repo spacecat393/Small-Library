@@ -99,11 +99,13 @@ public class SILeLookTo
 				{
 					if (this.blockpos != null)
 					{
-						this.sielook.set(this.blockpos.getX(), this.blockpos.getY(), this.blockpos.getZ(), 5.0F);
+						//!look
+//						this.sielook.set(this.blockpos.getX(), this.blockpos.getY(), this.blockpos.getZ(), 5.0F);
 					}
 					else if (this.entity != null)
 					{
-						this.sielook.set(this.entity.posX, this.entity.posY + this.entity.getEyeHeight(), this.entity.posZ, 5.0F);
+						//!look
+//						this.sielook.set(this.entity.posX, this.entity.posY + this.entity.getEyeHeight(), this.entity.posZ, 5.0F);
 					}
 				}
 				else

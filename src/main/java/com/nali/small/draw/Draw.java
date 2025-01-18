@@ -118,7 +118,7 @@ public class Draw
 
 		if (!TRANSLUCENT_MAP.isEmpty())
 		{
-			GL11.glDepthMask(false);
+//			GL11.glDepthMask(false);
 			draw(TRANSLUCENT_MAP);
 		}
 

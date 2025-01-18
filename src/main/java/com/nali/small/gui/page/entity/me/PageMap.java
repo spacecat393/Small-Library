@@ -1,11 +1,11 @@
-package com.nali.small.gui.page;
+package com.nali.small.gui.page.entity.me;
 
 import com.nali.gui.page.PageSelect;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class PageInvSelectItemNBT extends PageSelect
+public class PageMap extends PageSelect
 {
 	@Override
 	public void init()
