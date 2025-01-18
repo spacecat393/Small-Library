@@ -1,6 +1,7 @@
 package com.nali.small.entity.memo.server;
 
 import com.nali.da.IBothDaE;
+import com.nali.list.entity.si.SIEFindMove;
 import com.nali.list.network.method.client.CCI;
 import com.nali.small.chunk.ChunkLoader;
 import com.nali.small.entity.IMixE;
@@ -340,6 +341,7 @@ public abstract class ServerE
 		long key = (long)world.provider.getDimension() << 32 | e.getEntityId();
 
 //		UUID uuid = this.i.getE().getUniqueID();
+		SIEFindMove.SIEFINDMOVE_MAP.remove(key);
 		ChunkLoader.removeChunk(key, e.getUniqueID(), this.worldserver.getSaveHandler().getWorldDirectory());
 		S_MAP.remove(key);
 	}

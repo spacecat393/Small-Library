@@ -182,7 +182,7 @@ public class SILeAttack
 				{
 					this.flag |= 2;
 
-					if (!this.siefindmove.try_move)
+					if ((this.siefindmove.state & 1) == 0)
 					{
 						this.sielook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
 					}

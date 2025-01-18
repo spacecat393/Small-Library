@@ -1,6 +1,7 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
+import com.nali.small.Small;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
@@ -18,7 +19,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+
+@Mod.EventBusSubscriber(modid = Small.ID)
 public class SIEFindMove
 <
 	BD extends IBothDaE,
@@ -29,6 +37,7 @@ public class SIEFindMove
 > extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
+	public static Map<Long, SIEFindMove> SIEFINDMOVE_MAP = new HashMap();
 
 //	public static int MAX_G = 5;//64*64;
 
@@ -39,21 +48,27 @@ public class SIEFindMove
 	public SIEMineTo<BD, E, I, S, MS> siemineto;
 	public SIELook<BD, E, I, S, MS> sielook;
 
-//	public int goal_x, goal_y, goal_z;
-	public double goal_x, goal_y, goal_z;
-//	public int temp_goal_x, temp_goal_y, temp_goal_z;
-	public double temp_goal_x, temp_goal_y, temp_goal_z;
+	public int min_goal_x, min_goal_y, min_goal_z;
+	public int max_goal_x, max_goal_y, max_goal_z;
+	public int goal_x, goal_y, goal_z;
+//	public double goal_x, goal_y, goal_z;
+	public double d_goal_x, d_goal_y, d_goal_z;
+	public int temp_goal_x, temp_goal_y, temp_goal_z;
+//	public double temp_goal_x, temp_goal_y, temp_goal_z;
 //	public double far;
 
 //	public List<BlockPos> path_blockpos_list = new ArrayList();
 	public SNode to_goal_snode;
+	public SNode debug_to_goal_snode;
 //	public boolean is_goal;
 //	public int path_index;
 //	public int path_tick;
-	public boolean try_move;
+//	public boolean try_move;
 	//keep finding
 //	public byte re_tick = 0;//Byte.MIN_VALUE;
-	public byte mo_tick = 0;
+	public byte
+		state,//try_move is_goal
+		mo_tick = 0;
 
 	public double move_x, move_y, move_z;
 //	public double old_x, old_y, old_z;
@@ -76,6 +91,8 @@ public class SIEFindMove
 //		{
 //			this.sielook = (SIELook)this.s.ms.si_map.get(SILeLook.ID);
 //		}
+		E e = this.s.i.getE();
+		SIEFINDMOVE_MAP.put((long)e.world.provider.getDimension() << 32 | e.getEntityId(), this);
 	}
 
 	@Override
@@ -105,7 +122,11 @@ public class SIEFindMove
 
 		//		if (this.path_blockpos_array != null)
 		//		{
-				SNode s_to_goal_snode = this.to_goal_snode;
+				if (this.to_goal_snode != null)
+				{
+					this.debug_to_goal_snode = this.to_goal_snode;
+				}
+				SNode s_to_goal_snode = this.debug_to_goal_snode;
 				while (s_to_goal_snode != null)
 				{
 					BlockPos bp = s_to_goal_snode.blockpos;
@@ -127,14 +148,18 @@ public class SIEFindMove
 //				Nali.LOGGER.info("TICK " + this.path_tick);
 		//		}
 
-				if (this.try_move)
+				if ((this.state & 1) == 1)
 				{
+					this.goal_x = (int)this.d_goal_x;
+					this.goal_y = (int)this.d_goal_y;
+					this.goal_z = (int)this.d_goal_z;
 					if (this.temp_goal_x == this.goal_x && this.temp_goal_y == this.goal_y && this.temp_goal_z == this.goal_z && this.to_goal_snode != null/* && !this.path_blockpos_list.isEmpty()*/)
 					{
 						this.moveTo(e);
 					}
 					else
 					{
+						this.state &= 255-2;
 //						this.re_tick = 0;
 						this.siemineto.clear();
 		//				this.s.entitiesaimemory.this.siemineto.blockpos = null;
@@ -143,7 +168,7 @@ public class SIEFindMove
 		//				this.old_x = this.skinningentities.posX;
 		//				this.old_y = this.skinningentities.posY;
 		//				this.old_z = this.skinningentities.posZ;
-						this.to_goal_snode = null;
+//						this.to_goal_snode = null;
 //						this.path_blockpos_list.clear();
 //						this.is_goal = false;
 //						this.path_tick = 0;
@@ -167,6 +192,14 @@ public class SIEFindMove
 //							}
 //						}
 						snode.children_snode_array = new SNode[26];
+						this.min_goal_x = this.goal_x;
+						this.max_goal_x = this.goal_x;
+
+						this.min_goal_y = this.goal_y;
+						this.max_goal_y = this.goal_y;
+
+						this.min_goal_z = this.goal_z;
+						this.max_goal_z = this.goal_z;
 						SNode temp_snode = this.find(snode);
 
 						if (temp_snode != null)
@@ -473,10 +506,13 @@ public class SIEFindMove
 //
 //	public void setGoal(int x, int y, int z)
 //	{
-		this.goal_x = x;
-		this.goal_y = y;
-		this.goal_z = z;
-		this.try_move = true;
+//		this.goal_x = x;
+//		this.goal_y = y;
+//		this.goal_z = z;
+		this.d_goal_x = x;
+		this.d_goal_y = y;
+		this.d_goal_z = z;
+		this.state |= 1;
 		this.s.ms.state &= 255-(1+2);
 	}
 
@@ -500,7 +536,8 @@ public class SIEFindMove
 
 	public void endGoal()
 	{
-		this.try_move = false;
+		this.state &= 255-1;
+		this.to_goal_snode = null;
 //		this.path_blockpos_list.clear();
 //		this.silemove.move = false;
 
@@ -515,21 +552,60 @@ public class SIEFindMove
 
 	public SNode find(SNode start_snode)
 	{
-		if (start_snode.blockpos.getX() == (int)this.goal_x && start_snode.blockpos.getY() == (int)this.goal_y && start_snode.blockpos.getZ() == (int)this.goal_z)
+		BlockPos start_snode_blockpos = start_snode.blockpos;
+		int start_snode_blockpos_x = start_snode_blockpos.getX();
+		int start_snode_blockpos_y = start_snode_blockpos.getY();
+		int start_snode_blockpos_z = start_snode_blockpos.getZ();
+
+//		if (start_snode.blockpos.getX() == (int)this.goal_x && start_snode.blockpos.getY() == (int)this.goal_y && start_snode.blockpos.getZ() == (int)this.goal_z)
+		if ((this.state & 2) == 2 || start_snode_blockpos_x == this.goal_x && start_snode_blockpos_y == this.goal_y && start_snode_blockpos_z == this.goal_z)
 		{
+			this.to_goal_snode = start_snode;
+			this.state |= 2;
 //			this.is_goal = true;
 //			this.endGoal();
 			return null;
 		}
 
+		if (this.min_goal_x > start_snode_blockpos_x)
+		{
+			this.min_goal_x = start_snode_blockpos_x;
+		}
+		else if (this.max_goal_x < start_snode_blockpos_x)
+		{
+			this.max_goal_x = start_snode_blockpos_x;
+		}
+
+		if (this.min_goal_y > start_snode_blockpos_y)
+		{
+			this.min_goal_y = start_snode_blockpos_y;
+		}
+		else if (this.max_goal_y < start_snode_blockpos_y)
+		{
+			this.max_goal_y = start_snode_blockpos_y;
+		}
+
+		if (this.min_goal_z > start_snode_blockpos_z)
+		{
+			this.min_goal_z = start_snode_blockpos_z;
+		}
+		else if (this.max_goal_z < start_snode_blockpos_z)
+		{
+			this.max_goal_z = start_snode_blockpos_z;
+		}
+
 		if (start_snode.children_snode_array == null)
 		{
+			this.find(start_snode.parent_snode);
 			return start_snode.parent_snode;
 		}
 
-		double to_x = ((int)this.goal_x + 0.5D) - (start_snode.blockpos.getX() + 0.5D);
-		double to_y = ((int)this.goal_y + 0.5D) - (start_snode.blockpos.getY() + 0.5D);
-		double to_z = ((int)this.goal_z + 0.5D) - (start_snode.blockpos.getZ() + 0.5D);
+//		double to_x = ((int)this.goal_x + 0.5D) - (start_snode.blockpos.getX() + 0.5D);
+//		double to_y = ((int)this.goal_y + 0.5D) - (start_snode.blockpos.getY() + 0.5D);
+//		double to_z = ((int)this.goal_z + 0.5D) - (start_snode.blockpos.getZ() + 0.5D);
+		double to_x = (this.goal_x + 0.5D) - (start_snode.blockpos.getX() + 0.5D);
+		double to_y = (this.goal_y + 0.5D) - (start_snode.blockpos.getY() + 0.5D);
+		double to_z = (this.goal_z + 0.5D) - (start_snode.blockpos.getZ() + 0.5D);
 		double length = to_x * to_x + to_y * to_y + to_z * to_z;
 		byte new_x = 0;
 		byte new_y = 0;
@@ -554,67 +630,70 @@ public class SIEFindMove
 //			pre_snode.parent_snode = start_snode;
 			start_snode.children_snode_array[index] = pre_snode;
 			return pre_snode;
+//			return this.find(pre_snode);
 		}
 
-		while (true)
+//		while (true)
+//		{
+		double to_goal = Double.MAX_VALUE;
+		index = 0;
+		byte pre_snode_index = -1;
+		for (byte x : PathMath.PATH_BYTE_ARRAY)
 		{
-			double to_goal = Double.MAX_VALUE;
-			index = 0;
-			byte pre_snode_index = -1;
-			for (byte x : PathMath.PATH_BYTE_ARRAY)
+			for (byte y : PathMath.PATH_BYTE_ARRAY)
 			{
-				for (byte y : PathMath.PATH_BYTE_ARRAY)
+				for (byte z : PathMath.PATH_BYTE_ARRAY)
 				{
-					for (byte z : PathMath.PATH_BYTE_ARRAY)
+					if (!(x == 0 && y == 0 && z == 0))
 					{
-						if (!(x == 0 && y == 0 && z == 0))
-						{
-							SNode new_pre_snode = this.getChild(index, start_snode, x, y, z);
+						SNode new_pre_snode = this.getChild(index, start_snode, x, y, z);
 //							if (new_pre_snode != null)
-							if (new_pre_snode == null)
-							{
+						if (new_pre_snode == null)
+						{
 //								SNode snode_n = new SNode(null);
 //								snode_n.children_snode_array = null;
 //								snode_n.parent_snode = start_snode.parent_snode;
 //								start_snode.children_snode_array[index] = snode_n;
 //								snode_n.parent_snode = start_snode;
-								start_snode.children_snode_array[index] = SNode.SNODE;
+							start_snode.children_snode_array[index] = SNode.SNODE;
 //								start_snode.children_snode_array[index] = new SNode(new BlockPos(start_snode.blockpos.getX() + x, start_snode.blockpos.getY() + y, start_snode.blockpos.getZ() + z));
-							}
-							else
-							{
-								double px = to_x - x;
-								double py = to_y - y;
-								double pz = to_z - z;
-								double new_to_goal = px * px + py * py + pz * pz;
-								if (to_goal > new_to_goal)
-								{
-									to_goal = new_to_goal;
-									pre_snode = new_pre_snode;
-									pre_snode_index = index;
-								}
-							}
-							++index;
 						}
+						else
+						{
+							double px = to_x - x;
+							double py = to_y - y;
+							double pz = to_z - z;
+							double new_to_goal = px * px + py * py + pz * pz;
+							if (to_goal > new_to_goal)
+							{
+								to_goal = new_to_goal;
+								pre_snode = new_pre_snode;
+								pre_snode_index = index;
+							}
+						}
+						++index;
 					}
 				}
 			}
-
-			if (to_goal == Double.MAX_VALUE)
-			{
-//				Nali.warn("OUT");
-				start_snode.children_snode_array = null;
-				return start_snode.parent_snode;
-			}
-			else
-			{
-//				Nali.warn("IN");
-				pre_snode.children_snode_array = new SNode[26];
-//				pre_snode.parent_snode = start_snode;
-				start_snode.children_snode_array[pre_snode_index] = pre_snode;
-				return pre_snode;
-			}
 		}
+
+		if (to_goal == Double.MAX_VALUE)
+		{
+//				Nali.warn("OUT");
+			start_snode.children_snode_array = null;
+			this.find(start_snode.parent_snode);
+			return start_snode.parent_snode;
+		}
+		else
+		{
+//				Nali.warn("IN");
+			pre_snode.children_snode_array = new SNode[26];
+//				pre_snode.parent_snode = start_snode;
+			start_snode.children_snode_array[pre_snode_index] = pre_snode;
+//			return this.find(pre_snode);
+			return pre_snode;
+		}
+//		}
 	}
 
 	public SNode getChild(int index, SNode start_snode, byte new_x, byte new_y, byte new_z)
@@ -827,5 +906,27 @@ public class SIEFindMove
 		}
 
 		return false;
+	}
+
+	@SubscribeEvent
+	public static void onBlockEvent(BlockEvent event)
+	{
+//		Nali.warn("B!");
+		BlockPos blockpos = event.getPos();
+		int x = blockpos.getX();
+		int y = blockpos.getY();
+		int z = blockpos.getZ();
+		for (SIEFindMove siefindmove : SIEFINDMOVE_MAP.values())
+		{
+			if
+			(
+				siefindmove.min_goal_x <= x && siefindmove.min_goal_y <= y && siefindmove.min_goal_z <= z &&
+				siefindmove.max_goal_x >= x && siefindmove.max_goal_y >= y && siefindmove.max_goal_z >= z
+			)
+			{
+//				Nali.warn("B T!");
+				siefindmove.endGoal();
+			}
+		}
 	}
 }
