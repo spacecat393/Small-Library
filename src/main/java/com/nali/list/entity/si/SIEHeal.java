@@ -1,9 +1,8 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
-import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
@@ -13,12 +12,12 @@ import net.minecraft.entity.EntityLivingBase;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class SILeHeal
+public class SIEHeal
 <
 	BD extends IBothDaE,
-	E extends EntityLe,
+	E extends Entity,
 	I extends IMixE<BD, E>,
-	S extends ServerLe<BD, E, I, MS>,
+	S extends ServerE<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
@@ -41,7 +40,7 @@ public class SILeHeal
 //	2-4 2-4
 //	public byte state = -1;
 
-	public SILeHeal(S s)
+	public SIEHeal(S s)
 	{
 		super(s);
 	}

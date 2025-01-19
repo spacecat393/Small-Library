@@ -5,9 +5,8 @@ import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CRespawnPlayer;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.chunk.ChunkLoader;
-import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
@@ -27,12 +26,12 @@ import static com.nali.Nali.error;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class SILeRevive
+public class SIERevive
 <
 	BD extends IBothDaE,
-	E extends EntityLe,
+	E extends Entity,
 	I extends IMixE<BD, E>,
-	S extends ServerLe<BD, E, I, MS>,
+	S extends ServerE<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
@@ -56,7 +55,7 @@ public class SILeRevive
 	public BlockPos blockpos;
 	public BlockPos need_blockpos;
 
-	public SILeRevive(S s)
+	public SIERevive(S s)
 	{
 		super(s);
 	}

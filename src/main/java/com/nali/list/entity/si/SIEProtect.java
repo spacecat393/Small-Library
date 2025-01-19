@@ -1,9 +1,8 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
-import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
@@ -15,12 +14,12 @@ import java.util.List;
 
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 
-public class SILeProtect
+public class SIEProtect
 <
 	BD extends IBothDaE,
-	E extends EntityLe,
+	E extends Entity,
 	I extends IMixE<BD, E>,
-	S extends ServerLe<BD, E, I, MS>,
+	S extends ServerE<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
@@ -39,7 +38,7 @@ public class SILeProtect
 	public double minimum_distance = 1.5D;
 //	public byte state = -1, main_state = -1;
 
-	public SILeProtect(S s)
+	public SIEProtect(S s)
 	{
 		super(s);
 	}

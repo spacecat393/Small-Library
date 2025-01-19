@@ -1,21 +1,23 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
-import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
+import net.minecraft.entity.Entity;
+
+import java.util.Random;
 
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class SILeRandomWalk
+public class SIERandomWalk
 <
 	BD extends IBothDaE,
-	E extends EntityLe,
+	E extends Entity,
 	I extends IMixE<BD, E>,
-	S extends ServerLe<BD, E, I, MS>,
+	S extends ServerE<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
@@ -27,7 +29,7 @@ public class SILeRandomWalk
 	public int tick;
 	public byte state;//on walk
 
-	public SILeRandomWalk(S s)
+	public SIERandomWalk(S s)
 	{
 		super(s);
 	}
@@ -63,15 +65,16 @@ public class SILeRandomWalk
 
 				if (--this.tick <= 0)
 				{
-					double x = e.posX + e.getRNG().nextInt(5) - e.getRNG().nextInt(5),
-					y = e.posY + e.getRNG().nextInt(5) - e.getRNG().nextInt(5),
-					z = e.posZ + e.getRNG().nextInt(5) - e.getRNG().nextInt(5);
+					Random random = e.world.rand;
+					double x = e.posX + random.nextInt(5) - random.nextInt(5),
+					y = e.posY + random.nextInt(5) - random.nextInt(5),
+					z = e.posZ + random.nextInt(5) - random.nextInt(5);
 
 					if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(x, y, z, this.silesetlocation.blockpos, this.silesetlocation.far))
 					{
 						this.siefindmove.setGoal(x, y, z);
 					}
-					this.tick = e.getRNG().nextInt(100) + 100;
+					this.tick = random.nextInt(100) + 100;
 					this.state |= 2;
 //					this.walk = true;
 				}

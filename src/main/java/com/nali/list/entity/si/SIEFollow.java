@@ -4,9 +4,8 @@ import com.nali.da.IBothDaE;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetFollow;
 import com.nali.network.NetworkRegistry;
-import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.memo.server.ServerLe;
+import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
@@ -23,12 +22,12 @@ import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
 import static com.nali.small.entity.memo.server.si.path.PathMath.PATH_BYTE_ARRAY;
 
-public class SILeFollow
+public class SIEFollow
 <
 	BD extends IBothDaE,
-	E extends EntityLe,
+	E extends Entity,
 	I extends IMixE<BD, E>,
-	S extends ServerLe<BD, E, I, MS>,
+	S extends ServerE<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
@@ -42,7 +41,7 @@ public class SILeFollow
 	public float min_distance = 96.0F;
 	public byte flag = 4;//move_to | tp_to walk_to
 
-	public SILeFollow(S s)
+	public SIEFollow(S s)
 	{
 		super(s);
 	}

@@ -46,14 +46,16 @@ public class SIEFindMove
 	public SIEMineTo<BD, E, I, S, MS> siemineto;
 	public SIELook<BD, E, I, S, MS> sielook;
 
-	public int min_goal_x, min_goal_y, min_goal_z;
-	public int max_goal_x, max_goal_y, max_goal_z;
-	public int goal_x, goal_y, goal_z;
+	public int
+		min_goal_x, min_goal_y, min_goal_z,
+		max_goal_x, max_goal_y, max_goal_z,
+		goal_x, goal_y, goal_z,
+		temp_goal_x, temp_goal_y, temp_goal_z;
 	public double d_goal_x, d_goal_y, d_goal_z;
-	public int temp_goal_x, temp_goal_y, temp_goal_z;
 
-	public SNode to_goal_snode;
-	public SNode debug_to_goal_snode;
+	public SNode
+		to_goal_snode,
+		debug_to_goal_snode;
 	public byte
 		state,//try_move is_goal
 		mo_tick = 0;
@@ -570,6 +572,14 @@ public class SIEFindMove
 		{
 			if (siefindmove.s.worldserver == event.getWorld())
 			{
+//				//!check mine
+//				if ((siefindmove.siemineto.state | 1) == 1)
+//				{
+//					//check bp
+//					siefindmove.siemineto.clear();
+//					break;
+//				}
+
 				if
 				(
 					siefindmove.min_goal_x <= x && siefindmove.min_goal_y <= y && siefindmove.min_goal_z <= z &&

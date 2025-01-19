@@ -4,32 +4,31 @@ import com.nali.da.IBothDaE;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.method.client.CSetGetItem;
 import com.nali.network.NetworkRegistry;
-import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.inv.InvLe;
-import com.nali.small.entity.memo.server.ServerLeInv;
+import com.nali.small.entity.inv.InvE;
+import com.nali.small.entity.memo.IBothEInv;
+import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.small.entity.player.PlayerData;
 import com.nali.system.bytes.ByteReader;
-import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 
 import java.util.UUID;
 
 import static com.nali.small.entity.EntityMath.isInArea;
 
-public class SILeInvGetItem
+public class SIEInvGetItem
 <
-	IE extends InvLe,
+	IE extends InvE,
 	BD extends IBothDaE,
-	E extends EntityLeInv,
+	E extends Entity,
 	I extends IMixE<BD, E>,
-	S extends ServerLeInv<IE, BD, E, I, MS>,
+	S extends ServerE<BD, E, I, MS> & IBothEInv<IE>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
@@ -43,7 +42,7 @@ public class SILeInvGetItem
 //	public boolean pickup;
 //	public int item_time_out, xp_time_out;
 
-	public SILeInvGetItem(S s)
+	public SIEInvGetItem(S s)
 	{
 		super(s);
 	}
@@ -200,7 +199,8 @@ public class SILeInvGetItem
 			if (xp)
 			{
 				to_entityxporb = this.siearea.xp_entity_list.get(this.siearea.xp_entity_list.size() - 1);
-				xp_itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, e);
+				//!need le
+//				xp_itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, e);
 				should_get_xp = !xp_itemstack.isEmpty()/* && itemstack.isItemStackDamageable()*/ && xp_itemstack.getItemDamage() > 0/* && EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, itemstack) > 0*/;
 			}
 
@@ -266,7 +266,8 @@ public class SILeInvGetItem
 							if ((this.flag & 8) == 8)
 							{
 	//							Nali.LOGGER.info("XP TAKE");
-								e.onItemPickup(entityxporb, 1);
+								//!need le
+//								e.onItemPickup(entityxporb, 1);
 
 								if (!xp_itemstack.isEmpty() && xp_itemstack.isItemDamaged())
 								{

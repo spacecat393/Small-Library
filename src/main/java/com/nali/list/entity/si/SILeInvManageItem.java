@@ -20,7 +20,7 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.UUID;
 
-import static com.nali.list.entity.si.SILeInvGetItem.isSameItemSameTags;
+import static com.nali.list.entity.si.SIEInvGetItem.isSameItemSameTags;
 
 public class SILeInvManageItem
 <

@@ -3,7 +3,7 @@ package com.nali.small.entity.memo.server.si.frame;
 import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaS;
 import com.nali.da.IBothDaSe;
-import com.nali.list.entity.si.SILeProtect;
+import com.nali.list.entity.si.SIEProtect;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.IServerS;
@@ -19,12 +19,12 @@ public class KeySleProtect
 	MS extends MixSIE<BD, E, I, S>
 > extends KeyS<BD, E, I, S, MS>
 {
-	public SILeProtect<BD, E, I, S, MS> sileprotect;
+	public SIEProtect<BD, E, I, S, MS> sileprotect;
 	public KeySleProtect(S s, byte key_data_index)
 	{
 		super(s, key_data_index);
 
-		this.sileprotect = (SILeProtect<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeProtect.ID);
+		this.sileprotect = (SIEProtect<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEProtect.ID);
 	}
 //
 //	@Override

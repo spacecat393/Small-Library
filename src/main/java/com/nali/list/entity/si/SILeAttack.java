@@ -37,7 +37,7 @@ public class SILeAttack
 	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
 	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 	public SIELook<BD, E, I, S, MS> sielook;
-	public SILeCareOwner<BD, E, I, S, MS> silecareowner;
+	public SIECareOwner<BD, E, I, S, MS> silecareowner;
 
 	public int[] attack_frame_int_array;
 
@@ -59,7 +59,7 @@ public class SILeAttack
 		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
 		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
-		this.silecareowner = (SILeCareOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeCareOwner.ID);
+		this.silecareowner = (SIECareOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SIECareOwner.ID);
 	}
 
 	@Override

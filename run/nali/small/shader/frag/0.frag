@@ -35,5 +35,5 @@ void main()
 //		rgb_color *= 0.9;
 //	}
 
-	gl_FragColor = vec4(texture_color * Color * lightmap_color);
+	gl_FragColor = vec4(texture_color.rgb * Color.rgb * lightmap_color.rgb, texture_color.a * Color.a);
 }

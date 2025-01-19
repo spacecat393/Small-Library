@@ -3,7 +3,7 @@ package com.nali.small.entity.memo.server.si.frame;
 import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaS;
 import com.nali.da.IBothDaSe;
-import com.nali.list.entity.si.SILeHeal;
+import com.nali.list.entity.si.SIEHeal;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.IServerS;
@@ -19,7 +19,7 @@ public class KeySleHeal
 	MS extends MixSIE<BD, E, I, S>
 > extends KeyS<BD, E, I, S, MS>
 {
-	public SILeHeal<BD, E, I, S, MS> sileheal;
+	public SIEHeal<BD, E, I, S, MS> sileheal;
 
 //	public byte index;
 
@@ -28,7 +28,7 @@ public class KeySleHeal
 		super(s, key_data_index);
 //		index = index;
 
-		this.sileheal = (SILeHeal<BD, E, I, S, MS>)this.s.ms.si_map.get(SILeHeal.ID);
+		this.sileheal = (SIEHeal<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEHeal.ID);
 	}
 //
 //	@Override
