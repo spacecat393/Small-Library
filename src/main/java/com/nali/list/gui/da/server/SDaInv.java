@@ -69,7 +69,7 @@ public class SDaInv
 		{
 			STATE |= 1;
 			short index = (short)(servermessage.data[4] + page * MAX_SIZE);
-//			PlayerData.INV_SHORT_LIST.remove(index);
+//			PlayerData.INV_SHORT_LIST.remove(rg);
 
 			File inv_i_file = new File(inv_file, "" + index);
 			File nbt_file = new File(inv_i_file, "nbt");

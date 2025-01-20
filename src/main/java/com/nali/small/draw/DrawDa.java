@@ -14,4 +14,5 @@ public class DrawDa
 	public float
 		light_b,
 		light_s;
+//	public double x, y, z;
 }

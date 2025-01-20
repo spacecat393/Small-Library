@@ -45,6 +45,6 @@ public class KeySleShootReloadPlus
 //	@Override
 //	public byte getReload()
 //	{
-//		return this.s.getFrameByteArray()[this.index + 4 + 1 + this.reload];
+//		return this.s.getFrameByteArray()[this.rg + 4 + 1 + this.reload];
 //	}
 }

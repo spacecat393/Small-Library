@@ -21,12 +21,12 @@ public class KeySleHeal
 {
 	public SIEHeal<BD, E, I, S, MS> sileheal;
 
-//	public byte index;
+//	public byte rg;
 
 	public KeySleHeal(S s, byte key_data_index)
 	{
 		super(s, key_data_index);
-//		index = index;
+//		rg = rg;
 
 		this.sileheal = (SIEHeal<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEHeal.ID);
 	}
@@ -79,7 +79,7 @@ public class KeySleHeal
 //
 //			int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
 //			byte[] frame_byte_array = this.s.getFrameByteArray();
-//			byte frame = frame_byte_array[this.index];
+//			byte frame = frame_byte_array[this.rg];
 //			for (int heal_frame : this.sileheal.heal_frame_int_array)
 //			{
 //				if (this.siekey.frame_int_array[frame] == heal_frame)
@@ -89,15 +89,15 @@ public class KeySleHeal
 //				}
 //			}
 //
-//			byte index = frame_byte_array[this.index + 1];
-//			if (this.siekey.frame_int_array[frame] < frame_2d_int_array[index][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[index][1])
+//			byte rg = frame_byte_array[this.rg + 1];
+//			if (this.siekey.frame_int_array[frame] < frame_2d_int_array[rg][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[rg][1])
 //			{
-//				this.siekey.frame_int_array[frame] = frame_2d_int_array[index][0];
+//				this.siekey.frame_int_array[frame] = frame_2d_int_array[rg][0];
 //				this.step = 0;
 //			}
-//			else if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index][1])
+//			else if (this.siekey.frame_int_array[frame] == frame_2d_int_array[rg][1])
 //			{
-//				this.siekey.frame_int_array[frame] = frame_2d_int_array[index][0];
+//				this.siekey.frame_int_array[frame] = frame_2d_int_array[rg][0];
 //				this.step = 0;
 //			}
 //

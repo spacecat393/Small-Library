@@ -4,7 +4,6 @@ import com.nali.NaliConfig;
 import com.nali.NaliGL;
 import com.nali.render.RenderO;
 import com.nali.render.RenderS;
-import com.nali.system.bytes.ByteReader;
 import com.nali.system.opengl.memo.client.MemoA;
 import com.nali.system.opengl.memo.client.MemoG;
 import com.nali.system.opengl.memo.client.MemoS;
@@ -27,65 +26,33 @@ public class Draw
 {
 	public static List<DrawDa> DRAWDA_LIST = new ArrayList();
 	public static Map<Integer, float[]> KEY_FLOAT_ARRAY_LIST = new HashMap();
+//	public static Map<Integer, double[]> FAR_DOUBLE_ARRAY_LIST = new HashMap();
 	public static int DATA_SIZE;
 
-	public static Map<String, byte[]> KEY_MAP = new HashMap();
-//	public static Map<byte[], List<Integer>> E_MODEL_MAP = new HashMap();
-//	public static Map<byte[], List<Integer>> E_TRANSLUCENT_MAP = new HashMap();
-	public static Map<byte[], List<Integer>> MODEL_MAP = new HashMap();
-	public static Map<byte[], List<Integer>> TRANSLUCENT_MAP = new HashMap();
+	public static Map<DrawMap, List<Integer>> MODEL_MAP = new HashMap();
+	public static Map<DrawMap, List<Integer>> TRANSLUCENT_MAP = new HashMap();
 
-//	public static Map<byte[], List<Integer>> E_GLOW_MAP = new HashMap();
-
-//	public static Map<byte[], List<Integer>> T_MODEL_MAP = new HashMap();
-//	public static Map<byte[], List<Integer>> T_TRANSLUCENT_MAP = new HashMap();
-
-	public static void add(byte[] byte_array)
+	public static void add(DrawMap drawmap)
 	{
 		List<Integer> index_integer_list;
-		Map<byte[], List<Integer>> data_map;
+		Map<DrawMap, List<Integer>> drawmap_map;
 
-//		if ((byte_array[4 + 4 + 4] & 16) == 16)
-//		{
-//			if ((byte_array[4 + 4 + 4] & 1) == 1)
-//			{
-//				index_integer_list = T_TRANSLUCENT_MAP.get(byte_array);
-//				data_map = T_TRANSLUCENT_MAP;
-//			}
-//			else
-//			{
-//				index_integer_list = T_MODEL_MAP.get(byte_array);
-//				data_map = T_MODEL_MAP;
-//			}
-//		}
-//		else
-//		{
-			/*if ((byte_array[4 + 4 + 4] & 8) == 8)
-			{
-//				index_integer_list = E_GLOW_MAP.get(byte_array);
-//				data_map = E_GLOW_MAP;
-			}
-		else */if ((byte_array[4 + 4 + 4] & 1) == 1)
+		if ((drawmap.extra_bit & 1) == 1)
 		{
-//			index_integer_list = E_TRANSLUCENT_MAP.get(byte_array);
-//			data_map = E_TRANSLUCENT_MAP;
-			index_integer_list = TRANSLUCENT_MAP.get(byte_array);
-			data_map = TRANSLUCENT_MAP;
+			index_integer_list = TRANSLUCENT_MAP.get(drawmap);
+			drawmap_map = TRANSLUCENT_MAP;
 		}
 		else
 		{
-//			index_integer_list = E_MODEL_MAP.get(byte_array);
-//			data_map = E_MODEL_MAP;
-			index_integer_list = MODEL_MAP.get(byte_array);
-			data_map = MODEL_MAP;
+			index_integer_list = MODEL_MAP.get(drawmap);
+			drawmap_map = MODEL_MAP;
 		}
-//		}
 
 		if (index_integer_list == null)
 		{
 			List list = new ArrayList();
 			list.add(DATA_SIZE);
-			data_map.put(byte_array, list);
+			drawmap_map.put(drawmap, list);
 		}
 		else
 		{
@@ -118,6 +85,49 @@ public class Draw
 
 		if (!TRANSLUCENT_MAP.isEmpty())
 		{
+//			List<Double> double_list = new ArrayList();
+//			for ()
+//			{
+//				DrawDa drawda = DRAWDA_LIST.get();
+//				double[] far_double_array = FAR_DOUBLE_ARRAY_LIST.get();
+//				double x = drawda.x + far_double_array[0];
+//				double y = drawda.y + far_double_array[1];
+//				double z = drawda.z + far_double_array[2];
+//				double d = Minecraft.getMinecraft().player.getDistanceSq(x, y, z);
+//				double_list.add(d);
+//			}
+//
+//			List<Integer> index_list = new ArrayList();
+//			int double_list_size = double_list.size();
+//
+//			for (int x = 0; x < double_list_size; ++x)
+//			{
+//				index_list.add(-1);
+//			}
+//
+//			double_list_size -= 1;
+//			for (int x = 0; x < double_list_size; ++x)
+//			{
+//				for (int y = 0; y < double_list_size; ++y)
+//				{
+//					int y1 = y + 1;
+//					double y_far = double_list.get(y);
+//					double y1_far = double_list.get(y1);
+//					if (y_far > y1_far)
+//					{
+//						double_list.set(y, y1_far);
+//						double_list.set(y1, y_far);
+//
+//						index_list.set(y, y1);
+//						index_list.set(y1, y);
+//					}
+//					else
+//					{
+//						index_list.set(y, y);
+//					}
+//				}
+//			}
+
 //			GL11.glDepthMask(false);
 			draw(TRANSLUCENT_MAP);
 		}
@@ -191,27 +201,28 @@ public class Draw
 //		T_TRANSLUCENT_MAP.clear();
 		DRAWDA_LIST.clear();
 		KEY_FLOAT_ARRAY_LIST.clear();
+		DrawMap.DRAWMAP_LIST.clear();
 	}
 
-	public static void draw(Map<byte[], List<Integer>> model_map)
+	public static void draw(Map<DrawMap, List<Integer>> model_map)
 	{
-		byte[][] keyset_byte_2d_array = model_map.keySet().toArray(new byte[0][]);
+		DrawMap[] drawmap_array = model_map.keySet().toArray(new DrawMap[0]);
 		List<Integer>[] values_integer_list = model_map.values().toArray(new ArrayList[0]);
 
-		for (int g = 0; g < keyset_byte_2d_array.length; ++g)
+		for (int g = 0; g < drawmap_array.length; ++g)
 		{
-			byte[] byte_array = keyset_byte_2d_array[g];
+			DrawMap drawmap = drawmap_array[g];
 			List<Integer> index_integer_list = values_integer_list[g];
-//			Nali.warn("rg " + ByteReader.getInt(byte_array, 0));
-			MemoG rg = G_LIST.get(ByteReader.getInt(byte_array, 0));
-			MemoS rs = S_LIST.get(ByteReader.getInt(byte_array, 4 + 4));
+//			Nali.warn("rg " + ByteReader.getInt(drawmap, 0));
+			MemoG rg = G_LIST.get(drawmap.rg);
+			MemoS rs = S_LIST.get(drawmap.rs);
 
 			RenderO.enableBuffer(rg, rs);
 
 			OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[2], 1);
-			if ((byte_array[4 + 4 + 4] & 4) == 4)//color
+			if ((drawmap.extra_bit & 4) == 4)//color
 			{
-				int color = ByteReader.getInt(byte_array, 4);
+				int color = drawmap.texture;
 				RenderO.FLOATBUFFER.clear();
 				RenderO.FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
 				RenderO.FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
@@ -223,9 +234,9 @@ public class Draw
 			else
 			{
 //				OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
-//				Nali.warn("texture " + ByteReader.getInt(byte_array, 4));
+//				Nali.warn("texture " + ByteReader.getInt(drawmap, 4));
 //				Nali.warn("texture_state " + (rg.state & 1));
-				RenderO.setTextureBuffer(ByteReader.getInt(byte_array, 4), (byte)(rg.flag & 1+2));
+				RenderO.setTextureBuffer(drawmap.texture, (byte)(rg.flag & 1+2));
 			}
 
 			for (Integer integer : index_integer_list)
@@ -260,7 +271,7 @@ public class Draw
 
 				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, drawda.light_b, drawda.light_s);
 
-				if ((byte_array[4 + 4 + 4] & 2) == 2)
+				if ((drawmap.extra_bit & 2) == 2)
 				{
 					RenderS.setFloatBuffer(KEY_FLOAT_ARRAY_LIST.get(integer));
 					OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[6], false, RenderS.BONE_FLOATBUFFER);

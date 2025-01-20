@@ -34,10 +34,10 @@
 //					smallsakuratypes.set((byte)(value - need));
 //				}
 //
-//				int index = 0;
+//				int rg = 0;
 //				for (IAttributeInstance iattributeinstance : skinningentities.getAttributeMap().getAllAttributes())
 //				{
-//					if (id == index++)
+//					if (id == rg++)
 //					{
 //						iattributeinstance.setBaseValue(f);
 //						break;

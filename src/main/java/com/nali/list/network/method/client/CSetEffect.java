@@ -21,14 +21,14 @@
 //		if (entity instanceof EntityLeInv)
 //		{
 //			EFFECTS_INT_ARRAY = new int[(clientmessage.data.length - 1 - 4) / 4];
-//			int index = 0;
+//			int rg = 0;
 //			for (int i = 1 + 4; i < clientmessage.data.length; i += 4)
 //			{
-//				EFFECTS_INT_ARRAY[index++] = ByteReader.getInt(clientmessage.data, i);
+//				EFFECTS_INT_ARRAY[rg++] = ByteReader.getInt(clientmessage.data, i);
 //				i += 4;
-//				EFFECTS_INT_ARRAY[index++] = ByteReader.getInt(clientmessage.data, i);
+//				EFFECTS_INT_ARRAY[rg++] = ByteReader.getInt(clientmessage.data, i);
 //				i += 4;
-//				EFFECTS_INT_ARRAY[index++] = ByteReader.getInt(clientmessage.data, i);
+//				EFFECTS_INT_ARRAY[rg++] = ByteReader.getInt(clientmessage.data, i);
 //			}
 //
 //			MixGui.GUIFEATURESLOADER = new EffectsGUIFeatures(MixGui.I);

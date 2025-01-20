@@ -33,7 +33,7 @@ public class ItemRegistry
 //		int list_size = ITEMS_CLASS_LIST.size();
 		int size = items_class_list.size();
 		ITEM_ARRAY = new Item[size];
-//		int index = 0;
+//		int rg = 0;
 //		for (Class clasz : ITEMS_CLASS_LIST)
 		for (int i = 0; i < size; ++i)
 		{
@@ -43,7 +43,7 @@ public class ItemRegistry
 				Item item = (Item)clasz.getConstructor(String[].class).newInstance((Object)StringReader.get(clasz));
 				clasz.getField("ID").set(null, i);
 				ITEM_ARRAY[i] = item;
-//				ITEM_ARRAY[index++] = (Item)constructor.newInstance(clasz.getSimpleName().toLowerCase());
+//				ITEM_ARRAY[rg++] = (Item)constructor.newInstance(clasz.getSimpleName().toLowerCase());
 			}
 			catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | NoSuchFieldException e)
 			{

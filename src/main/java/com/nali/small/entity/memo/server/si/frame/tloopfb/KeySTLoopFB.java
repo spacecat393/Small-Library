@@ -64,19 +64,19 @@ public class KeySTLoopFB
 
 //		int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
 //		byte[] frame_byte_array = this.s.getFrameByteArray();
-//		byte frame = frame_byte_array[this.index];
-//		byte index = frame_byte_array[this.index + 1];
+//		byte frame = frame_byte_array[this.rg];
+//		byte rg = frame_byte_array[this.rg + 1];
 //		int[] frame_int_array = this.siekey.frame_int_array;
-//		if (frame_int_array[frame] < frame_2d_int_array[index][0] || frame_int_array[frame] > frame_2d_int_array[index][1])
+//		if (frame_int_array[frame] < frame_2d_int_array[rg][0] || frame_int_array[frame] > frame_2d_int_array[rg][1])
 //		{
 //			this.step = 0;
-//			frame_int_array[frame] = frame_2d_int_array[index][0];
+//			frame_int_array[frame] = frame_2d_int_array[rg][0];
 //		}
-//		else if (frame_int_array[frame] == frame_2d_int_array[index][0])
+//		else if (frame_int_array[frame] == frame_2d_int_array[rg][0])
 //		{
 //			this.step = 1;
 //		}
-//		else if (frame_int_array[frame] == frame_2d_int_array[index][1])
+//		else if (frame_int_array[frame] == frame_2d_int_array[rg][1])
 //		{
 //			this.step = -1;
 //		}

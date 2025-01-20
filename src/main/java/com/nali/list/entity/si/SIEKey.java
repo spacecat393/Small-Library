@@ -81,15 +81,15 @@ public class SIEKey
 		for (Byte sync_byte : this.sync_byte_arraylist)
 		{
 //			Nali.warn("sync_byte " + sync_byte);
-//			int index = sync_index + sync_byte * 6;
-//			entitydatamanager.set(byte_dataparameter_array[index], this.key_index_byte_array[sync_byte]);
-//			entitydatamanager.set(byte_dataparameter_array[index + 1], (byte)this.time_short_array[sync_byte]);
-//			entitydatamanager.set(byte_dataparameter_array[index + 2], (byte)(this.time_short_array[sync_byte] >> 8));
+//			int rg = sync_index + sync_byte * 6;
+//			entitydatamanager.set(byte_dataparameter_array[rg], this.key_index_byte_array[sync_byte]);
+//			entitydatamanager.set(byte_dataparameter_array[rg + 1], (byte)this.time_short_array[sync_byte]);
+//			entitydatamanager.set(byte_dataparameter_array[rg + 2], (byte)(this.time_short_array[sync_byte] >> 8));
 //
 //			++sync_byte;
-//			entitydatamanager.set(byte_dataparameter_array[index + 3], this.key_index_byte_array[sync_byte]);
-//			entitydatamanager.set(byte_dataparameter_array[index + 4], (byte)this.time_short_array[sync_byte]);
-//			entitydatamanager.set(byte_dataparameter_array[index + 5], (byte)(this.time_short_array[sync_byte] >> 8));
+//			entitydatamanager.set(byte_dataparameter_array[rg + 3], this.key_index_byte_array[sync_byte]);
+//			entitydatamanager.set(byte_dataparameter_array[rg + 4], (byte)this.time_short_array[sync_byte]);
+//			entitydatamanager.set(byte_dataparameter_array[rg + 5], (byte)(this.time_short_array[sync_byte] >> 8));
 			int index = sync_index + sync_byte;
 			entitydatamanager.set(byte_dataparameter_array[index], (byte)(this.key_short_array[sync_byte] & 0xFF));
 			entitydatamanager.set(byte_dataparameter_array[index + 1], (byte)((this.key_short_array[sync_byte] >> 8) & 0xFF));

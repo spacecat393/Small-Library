@@ -26,26 +26,16 @@ public class KeySTLoopPWStand
 > extends KeySTLoop<BD, E, I, S, MS>
 {
 	public SIEPlayWithRSe sieplaywithrse;
-	public byte[] s2_id_byte_array;
 
-	public KeySTLoopPWStand(S s, byte key_data_index, byte[] s2_id_byte_array)
+	public KeySTLoopPWStand(S s, byte key_data_index)
 	{
 		super(s, key_data_index);
-		this.s2_id_byte_array = s2_id_byte_array;
-
-		this.sieplaywithrse = (SIEPlayWithRSe)this.s.ms.si_map.get(this.s2_id_byte_array[0]);
+		this.sieplaywithrse = (SIEPlayWithRSe)this.s.ms.si_map.get(SIEPlayWithRSe.ID);
 	}
-//
-//	@Override
-//	public void init()
-//	{
-//		super.init();
-//		this.sieplaywithrse = (SIEPlayWithRSe)this.s.ms.si_map.get(this.s2_id_byte_array[0]);
-//	}
 
 	@Override
 	public boolean onUpdate()
 	{
-		return this.sieplaywithrse.s2 != null && ((SIEPlayWithRSe)this.sieplaywithrse.s2.ms.si_map.get(this.s2_id_byte_array[1])).s2 == this.s && super.onUpdate();
+		return this.sieplaywithrse.s2 != null && ((SIEPlayWithRSe)this.sieplaywithrse.s2.ms.si_map.get(SIEPlayWithRSe.ID)).s2 == this.s && super.onUpdate();
 	}
 }

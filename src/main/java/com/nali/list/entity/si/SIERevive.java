@@ -256,7 +256,7 @@ public class SIERevive
 	////				Entity owner_entity = this.s.getOwner();
 	////				if (!this.die && this.entity != null && !this.entity.isEntityAlive())
 	////				if ((this.state & 1) == 0 && owner_entity != null && !this.entity.isEntityAlive())
-	//					int index = -1;
+	//					int rg = -1;
 	//					double far = Double.MAX_VALUE;
 	////					for (Entity entity : this.siearea.out_entity_list)
 	//					for (int i = 0; i < this.siearea.out_entity_list.size(); ++i)
@@ -269,7 +269,7 @@ public class SIERevive
 	//							if (new_far < far)
 	//							{
 	//								far = new_far;
-	//								index = i;
+	//								rg = i;
 	//							}
 	//						}
 	//						//				this.entity.isDead = false;
@@ -279,12 +279,12 @@ public class SIERevive
 	////					this.state |= 1;
 	//					}
 	//
-	//					if (index != -1)
+	//					if (rg != -1)
 	//					{
-	////						Entity entity = this.siearea.out_entity_list.get(index);
+	////						Entity entity = this.siearea.out_entity_list.get(rg);
 	////						this.entity_list.add(entity);
 	////						this.entity = entity;
-	//						this.entity = this.siearea.out_entity_list.get(index);
+	//						this.entity = this.siearea.out_entity_list.get(rg);
 	//						e_nbttagcompound.setBoolean("Nali_reviver", true);
 	////						e_nbttagcompound.setUniqueId("Nali_reviver", entity.getUniqueID());
 	////						this.uuid_list.add(entity.getUniqueID());
@@ -335,7 +335,7 @@ public class SIERevive
 							{
 	//							if (this.entity instanceof EntityPlayerMP)
 	//							{
-	//								e_nbttagcompound.setUniqueId("Nali_reviver", this.siearea.out_entity_list.get(index).getUniqueID());
+	//								e_nbttagcompound.setUniqueId("Nali_reviver", this.siearea.out_entity_list.get(rg).getUniqueID());
 	//							}
 								this.state |= 1;
 							}

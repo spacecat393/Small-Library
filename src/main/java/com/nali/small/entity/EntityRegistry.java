@@ -50,9 +50,9 @@ public class EntityRegistry
 //				String mod_id = string_array[1];
 //				Class<?> mod_class = Class.forName("com.nali." + mod_id + "." + Character.toUpperCase(mod_id.charAt(0)) + new String(mod_id.getBytes(), 1, mod_id.length() - 1));
 
-//				net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation(mod_id, name), clasz, name, index++, mod_class.getField("I").get(null), 64, 1, true, (int)clasz.getField("eggPrimary").get(null), (int)clasz.getField("eggSecondary").get(null));
+//				net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation(mod_id, name), clasz, name, rg++, mod_class.getField("I").get(null), 64, 1, true, (int)clasz.getField("eggPrimary").get(null), (int)clasz.getField("eggSecondary").get(null));
 				net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation(string_array[1], name), clasz, name, index++, Small.I, 64, 1, true, (int)clasz.getField("eggPrimary").get(null), (int)clasz.getField("eggSecondary").get(null));
-//				clasz.getField("ID").set(null, index++);
+//				clasz.getField("ID").set(null, rg++);
 			}
 			catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException | InvocationTargetException/* | ClassNotFoundException*/ e)
 			{

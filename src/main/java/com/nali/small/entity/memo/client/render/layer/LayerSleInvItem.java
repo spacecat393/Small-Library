@@ -63,7 +63,7 @@
 ////	public float[] transform_float_array;
 //
 //	public float x, y, z;
-//	public byte index;
+//	public byte rg;
 //
 //	public LayerSleInvItem(C c)
 //	{
@@ -91,7 +91,7 @@
 ////			}
 ////		}
 //
-//		this.index = 0;
+//		this.rg = 0;
 //		int[] iv_int_array = this.c.getIVIntArray();
 //		this.renderHeldItem(e.getHeldItemMainhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, iv_int_array[2], iv_int_array[3]);
 //		this.renderHeldItem(e.getHeldItemOffhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, iv_int_array[0], iv_int_array[1]);
@@ -107,7 +107,7 @@
 //	{
 //		if (!itemstack.isEmpty())
 //		{
-//			if (((this.c.sync_byte_array[0] >> this.index) & 1) == 0)
+//			if (((this.c.sync_byte_array[0] >> this.rg) & 1) == 0)
 //			{
 //				R r = this.c.r;
 //				float[] c_vec4 = r.get3DSkinning(this.x, this.y, this.z, 0, 0, 0, i, v);
@@ -152,12 +152,12 @@
 //			}
 //		}
 //
-//		++this.index;
+//		++this.rg;
 //	}
 //
 //	public void renderArmor(EntityEquipmentSlot entityequipmentslot, int i, int v, float partialTicks)
 //	{
-//		if (((this.c.sync_byte_array[0] >> this.index) & 1) == 0)
+//		if (((this.c.sync_byte_array[0] >> this.rg) & 1) == 0)
 //		{
 //			E e = this.c.i.getE();
 //			R r = this.c.r;
@@ -270,13 +270,13 @@
 //			}
 //		}
 //
-//		++this.index;
+//		++this.rg;
 //	}
 //
-//	public void setArmor(int index)
+//	public void setArmor(int rg)
 //	{
 //		GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
-//		int i = -(index - 3) * 3;
+//		int i = -(rg - 3) * 3;
 //		float[] transform_float_array = this.c.getTransformFloatArray();
 //		GL11.glTranslatef(transform_float_array[i], transform_float_array[i + 1], transform_float_array[i + 2]);
 //	}

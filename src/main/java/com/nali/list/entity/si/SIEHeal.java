@@ -86,7 +86,7 @@ public class SIEHeal
 	//				if (!(entity instanceof EntityLivingBase) || ((EntityLivingBase)entity).getMaxHealth() - ((EntityLivingBase)entity).getHealth() < 1.0F)
 					if (entity instanceof EntityLivingBase && ((EntityLivingBase)entity).getMaxHealth() - ((EntityLivingBase)entity).getHealth() >= 1.0F)
 					{
-	//					far[index] = Double.MAX_VALUE;
+	//					far[rg] = Double.MAX_VALUE;
 	//				}
 	//				else
 	//				{
@@ -101,7 +101,7 @@ public class SIEHeal
 							index = i;
 							max_dis = far;
 						}
-	//					far[index] = e.getDistanceSq(entity);
+	//					far[rg] = e.getDistanceSq(entity);
 
 	//					if (isTooClose(e, entity, this.minimum_distance))
 	//					{
@@ -122,12 +122,12 @@ public class SIEHeal
 	//						should_move = true;
 	//					}
 					}
-	//				++index;
+	//				++rg;
 				}
 
 	//			if (should_move && should_move2)
 	//			{
-	//				index = 0;
+	//				rg = 0;
 
 	//				double max_dis = Double.MAX_VALUE;
 
@@ -135,7 +135,7 @@ public class SIEHeal
 	//				{
 	//					if (far[i] < max_dis)
 	//					{
-	//						index = i;
+	//						rg = i;
 	//						max_dis = far[i];
 	//					}
 	//				}

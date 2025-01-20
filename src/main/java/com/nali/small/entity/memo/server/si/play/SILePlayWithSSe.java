@@ -76,7 +76,7 @@ public class SILePlayWithSSe
 					}
 					else if (e.ticksExisted % 200 == 0)
 					{
-//						int index = -1;
+//						int rg = -1;
 						double max = Double.MAX_VALUE;
 						for (int i = 0; i < this.siearea.out_entity_list.size(); ++i)
 						{
@@ -89,7 +89,7 @@ public class SILePlayWithSSe
 								double new_max = getDistanceAABBToAABB(e, entity);
 								if (new_max < max && this.shouldAdd(i))
 								{
-//										index = i;
+//										rg = i;
 									max = new_max;
 								}
 								else
@@ -106,9 +106,9 @@ public class SILePlayWithSSe
 //						{
 //							this.siesit2 = ((AIESit)this.o2.ms.si_map.get(AIESit.ID));
 //						}
-//						if (index != -1)
+//						if (rg != -1)
 //						{
-////							this.onFind(index);
+////							this.onFind(rg);
 //						}
 
 						this.tick = 1200 + e.world.rand.nextInt(5000);
@@ -155,7 +155,7 @@ public class SILePlayWithSSe
 		return this.r2.s2 == null && (this.r2.state & 1) == 1 && (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(entity, this.silesetlocation.blockpos, this.silesetlocation.far));
 	}
 
-//	public void onFind(int index)
+//	public void onFind(int rg)
 //	{
 //		if (s2 != null)
 //		{

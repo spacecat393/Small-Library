@@ -154,4 +154,19 @@ public class PageAttribute extends PageSelect
 		ByteWriter.set(byte_array, PageMe.ID, 4);
 		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 	}
+
+	@Override
+	public void draw()
+	{
+		if ((STATE & 4) == 4)
+		{
+			this.state &= 255-4;
+			this.clear();
+			this.init();
+
+			this.gen();
+			STATE &= 255-(2+4);
+		}
+		super.draw();
+	}
 }

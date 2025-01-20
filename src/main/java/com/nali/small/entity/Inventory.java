@@ -46,7 +46,7 @@
 ////	}
 //
 //	@Override
-//	public ItemStack getStackInSlot(int index)
+//	public ItemStack getStackInSlot(int rg)
 //	{
 //		int inv = this.inventory_itemstack_nonnulllist.size();
 //		int hands = this.hands_itemstack_nonnulllist.size();
@@ -54,16 +54,16 @@
 //		NonNullList<ItemStack> itemstack_nonnulllist = ((MixinInventoryCrafting)this.inventorycrafting).stackList();
 //		int craft = itemstack_nonnulllist.size();
 //
-//		return index > -1 &&
-//		index < inv ? this.inventory_itemstack_nonnulllist.get(index) :
-//		index < inv + hands ? this.hands_itemstack_nonnulllist.get(index - inv) :
-//		index < inv + hands + armor ? this.armor_itemstack_nonnulllist.get(index - inv - hands) :
-//		index < inv + hands + armor + craft ? itemstack_nonnulllist.get(index - inv - hands - armor) :
-//		index < inv + hands + armor + craft + this.offset_itemstack_nonnulllist.size() ? this.offset_itemstack_nonnulllist.get(index - inv - hands - armor - craft) : ItemStack.EMPTY;
+//		return rg > -1 &&
+//		rg < inv ? this.inventory_itemstack_nonnulllist.get(rg) :
+//		rg < inv + hands ? this.hands_itemstack_nonnulllist.get(rg - inv) :
+//		rg < inv + hands + armor ? this.armor_itemstack_nonnulllist.get(rg - inv - hands) :
+//		rg < inv + hands + armor + craft ? itemstack_nonnulllist.get(rg - inv - hands - armor) :
+//		rg < inv + hands + armor + craft + this.offset_itemstack_nonnulllist.size() ? this.offset_itemstack_nonnulllist.get(rg - inv - hands - armor - craft) : ItemStack.EMPTY;
 //	}
 //
 //	@Override
-//	public ItemStack decrStackSize(int index, int count)
+//	public ItemStack decrStackSize(int rg, int count)
 //	{
 //		int inv = this.inventory_itemstack_nonnulllist.size();
 //		int hands = this.hands_itemstack_nonnulllist.size();
@@ -73,25 +73,25 @@
 //
 //		ItemStack itemstack;
 //
-//		if (index >= inv + hands + armor + craft)
+//		if (rg >= inv + hands + armor + craft)
 //		{
-//			itemstack = ItemStackHelper.getAndSplit(this.offset_itemstack_nonnulllist, index - inv - hands - armor - craft, count);
+//			itemstack = ItemStackHelper.getAndSplit(this.offset_itemstack_nonnulllist, rg - inv - hands - armor - craft, count);
 //		}
-//		else if (index >= inv + hands + armor)
+//		else if (rg >= inv + hands + armor)
 //		{
-//			itemstack = ItemStackHelper.getAndSplit(itemstack_nonnulllist, index - inv - hands - armor, count);
+//			itemstack = ItemStackHelper.getAndSplit(itemstack_nonnulllist, rg - inv - hands - armor, count);
 //		}
-//		else if (index >= inv + hands)
+//		else if (rg >= inv + hands)
 //		{
-//			itemstack = ItemStackHelper.getAndSplit(this.armor_itemstack_nonnulllist, index - inv - hands, count);
+//			itemstack = ItemStackHelper.getAndSplit(this.armor_itemstack_nonnulllist, rg - inv - hands, count);
 //		}
-//		else if (index >= inv)
+//		else if (rg >= inv)
 //		{
-//			itemstack = ItemStackHelper.getAndSplit(this.hands_itemstack_nonnulllist, index - inv, count);
+//			itemstack = ItemStackHelper.getAndSplit(this.hands_itemstack_nonnulllist, rg - inv, count);
 //		}
 //		else
 //		{
-//			itemstack = ItemStackHelper.getAndSplit(this.inventory_itemstack_nonnulllist, index, count);
+//			itemstack = ItemStackHelper.getAndSplit(this.inventory_itemstack_nonnulllist, rg, count);
 //		}
 //
 //		if (!itemstack.isEmpty())
@@ -145,7 +145,7 @@
 ////	}
 //
 //	@Override
-//	public ItemStack removeStackFromSlot(int index)
+//	public ItemStack removeStackFromSlot(int rg)
 //	{
 //		int inv = this.inventory_itemstack_nonnulllist.size();
 //		int hands = this.hands_itemstack_nonnulllist.size();
@@ -153,7 +153,7 @@
 //		NonNullList<ItemStack> itemstack_nonnulllist = ((MixinInventoryCrafting)this.inventorycrafting).stackList();
 //		int craft = itemstack_nonnulllist.size();
 //
-//		ItemStack itemstack = this.inventory_itemstack_nonnulllist.get(index);
+//		ItemStack itemstack = this.inventory_itemstack_nonnulllist.get(rg);
 //
 //		if (itemstack.isEmpty())
 //		{
@@ -161,32 +161,32 @@
 //		}
 //		else
 //		{
-//			if (index >= inv + hands + armor + craft)
+//			if (rg >= inv + hands + armor + craft)
 //			{
-//				this.offset_itemstack_nonnulllist.set(index - inv - hands - armor - craft, ItemStack.EMPTY);
+//				this.offset_itemstack_nonnulllist.set(rg - inv - hands - armor - craft, ItemStack.EMPTY);
 //			}
-//			else if (index >= inv + hands + armor)
+//			else if (rg >= inv + hands + armor)
 //			{
-//				itemstack_nonnulllist.set(index - inv - hands - armor, ItemStack.EMPTY);
+//				itemstack_nonnulllist.set(rg - inv - hands - armor, ItemStack.EMPTY);
 //			}
-//			else if (index >= inv + hands)
+//			else if (rg >= inv + hands)
 //			{
-//				this.armor_itemstack_nonnulllist.set(index - inv - hands, ItemStack.EMPTY);
+//				this.armor_itemstack_nonnulllist.set(rg - inv - hands, ItemStack.EMPTY);
 //			}
-//			else if (index >= inv)
+//			else if (rg >= inv)
 //			{
-//				this.hands_itemstack_nonnulllist.set(index - inv, ItemStack.EMPTY);
+//				this.hands_itemstack_nonnulllist.set(rg - inv, ItemStack.EMPTY);
 //			}
 //			else
 //			{
-//				this.inventory_itemstack_nonnulllist.set(index, ItemStack.EMPTY);
+//				this.inventory_itemstack_nonnulllist.set(rg, ItemStack.EMPTY);
 //			}
 //			return itemstack;
 //		}
 //	}
 //
 //	@Override
-//	public void setInventorySlotContents(int index, ItemStack stack)
+//	public void setInventorySlotContents(int rg, ItemStack stack)
 //	{
 //		int inv = this.inventory_itemstack_nonnulllist.size();
 //		int hands = this.hands_itemstack_nonnulllist.size();
@@ -194,25 +194,25 @@
 //		NonNullList<ItemStack> itemstack_nonnulllist = ((MixinInventoryCrafting)this.inventorycrafting).stackList();
 //		int craft = itemstack_nonnulllist.size();
 //
-//		if (index >= inv + hands + armor + craft)
+//		if (rg >= inv + hands + armor + craft)
 //		{
-//			this.offset_itemstack_nonnulllist.set(index - inv - hands - armor - craft, stack);
+//			this.offset_itemstack_nonnulllist.set(rg - inv - hands - armor - craft, stack);
 //		}
-//		else if (index >= inv + hands + armor)
+//		else if (rg >= inv + hands + armor)
 //		{
-//			itemstack_nonnulllist.set(index - inv - hands - armor, stack);
+//			itemstack_nonnulllist.set(rg - inv - hands - armor, stack);
 //		}
-//		else if (index >= inv + hands)
+//		else if (rg >= inv + hands)
 //		{
-//			this.armor_itemstack_nonnulllist.set(index - inv - hands, stack);
+//			this.armor_itemstack_nonnulllist.set(rg - inv - hands, stack);
 //		}
-//		else if (index >= inv)
+//		else if (rg >= inv)
 //		{
-//			this.hands_itemstack_nonnulllist.set(index - inv, stack);
+//			this.hands_itemstack_nonnulllist.set(rg - inv, stack);
 //		}
 //		else
 //		{
-//			this.inventory_itemstack_nonnulllist.set(index, stack);
+//			this.inventory_itemstack_nonnulllist.set(rg, stack);
 //		}
 //
 ////		if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit())
@@ -328,7 +328,7 @@
 //	}
 //
 //	@Override
-//	public boolean isItemValidForSlot(int index, ItemStack itemstack)
+//	public boolean isItemValidForSlot(int rg, ItemStack itemstack)
 //	{
 //		return true;
 //	}

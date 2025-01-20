@@ -31,7 +31,7 @@
 ////			int id = BytesReader.getInt(servermessage.data, 17);
 //
 //			byte id = servermessage.data[17];
-//			byte index = (byte)(id / 8);
+//			byte rg = (byte)(id / 8);
 //			byte bit = (byte)(id % 8);
 //
 ////			{
@@ -55,7 +55,7 @@
 ////				NetworkRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
 ////			}
 //
-////			servere.ms.si_map.get(index).flip();
+////			servere.ms.si_map.get(rg).flip();
 ////			servere.main_work_byte_array[index] ^= (byte)Math.pow(2, bit);
 //
 ////			byte[] byte_array = new byte[1 + 4 + servere.main_work_byte_array.length];

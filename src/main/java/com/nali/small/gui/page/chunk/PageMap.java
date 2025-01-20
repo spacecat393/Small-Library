@@ -4,11 +4,13 @@ import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.key.Key;
 import com.nali.gui.key.KeySelect;
 import com.nali.gui.page.PageSelect;
+import com.nali.list.gui.da.server.SDaChunkList;
 import com.nali.list.gui.da.server.SDaChunkMap;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPage;
 import com.nali.network.NetworkRegistry;
 import com.nali.system.bytes.ByteReader;
+import com.nali.system.bytes.ByteWriter;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -19,39 +21,42 @@ public class PageMap extends PageSelect
 
 	public static byte
 		STATE,//enter client init
-		PAGE,//0-127
-		MAX_PAGE,//0-120
-		MAX_MIX_PAGE,//0-127
+		MAX_PAGE,//0-118
 		SELECT;
+	public static int
+		PAGE,
+		MAX_MIX_PAGE;
 
 	@Override
 	public void init()
 	{
-		if (BYTE_ARRAY != null/* && (PageChunkMap.STATE & 2) == 0*/)
+		if (BYTE_ARRAY != null)
 		{
 			short byte_array_length = (short)BYTE_ARRAY.length;
-			PAGE = BYTE_ARRAY[byte_array_length - 3];
-			MAX_PAGE = BYTE_ARRAY[byte_array_length - 2];
-			MAX_MIX_PAGE = BYTE_ARRAY[byte_array_length - 1];
+			PAGE = ByteReader.getInt(BYTE_ARRAY, byte_array_length - 4 - 1 - 4);
+			MAX_PAGE = BYTE_ARRAY[byte_array_length - 1 - 4];
+			MAX_MIX_PAGE = ByteReader.getInt(BYTE_ARRAY, byte_array_length - 4);
 
 			byte index = 0;
-			this.boxtextall_array = new BoxTextAll[2 + MAX_PAGE + 5];
+			this.boxtextall_array = new BoxTextAll[3 + MAX_PAGE + 6];
 			this.boxtextall_array[index++] = new BoxTextAll("CHUNK-MAP".toCharArray());
 			this.boxtextall_array[index++] = new BoxTextAll(("PAGE " + PAGE + " - " + MAX_MIX_PAGE).toCharArray());
 
 			short i = 2;
-			while (i < byte_array_length - 3)
+			while (i < byte_array_length - 4 - 1 - 4)
 			{
 				long id = ByteReader.getLong(BYTE_ARRAY, i);
 				i += 8+4+4;
-//				int x = ByteReader.getInt(BYTE_ARRAY, i);
-//				i += 4;
-//				int z = ByteReader.getInt(BYTE_ARRAY, i);
-//				i += 4;
-				this.boxtextall_array[index++] = new BoxTextAll(((int)id + " " + (int)(id >> 32)).toCharArray());
+				String text_string = (int)id + " " + (int)(id >> 32);
+				if (text_string.length() > 20)
+				{
+					text_string = text_string.substring(0, 20) + "...";
+				}
+				this.boxtextall_array[index++] = new BoxTextAll(text_string.toCharArray());
 			}
 
 			this.boxtextall_array[index++] = new BoxTextAll("ACTION".toCharArray());
+			this.boxtextall_array[index++] = new BoxTextAll("CLEAN".toCharArray());
 			this.boxtextall_array[index++] = new BoxTextAll("MORE".toCharArray());
 			this.boxtextall_array[index++] = new BoxTextAll("LESS".toCharArray());
 
@@ -66,7 +71,8 @@ public class PageMap extends PageSelect
 
 			this.group_byte_array = new byte[(byte)Math.ceil((this.boxtextall_array.length - 1) / 8.0F)];
 			this.group_byte_array[0 / 8] |= 1 << 0 % 8;
-			byte new_index = (byte)(index - 5);
+			this.group_byte_array[1 / 8] |= 1 << 1 % 8;
+			byte new_index = (byte)(index - 6);
 			this.group_byte_array[new_index / 8] |= 1 << new_index % 8;
 
 //			BYTE_ARRAY = null;
@@ -97,14 +103,10 @@ public class PageMap extends PageSelect
 	@Override
 	public void enter()
 	{
-//		if ((STATE & 1) == 0)
-//		{
-//			STATE |= 1;
-
-		byte[] byte_array = new byte[1 + 1 + 1 + 1];
+		byte[] byte_array = new byte[1 + 1 + 1 + 4];
 		byte_array[0] = SPage.ID;
 		byte_array[1] = SDaChunkMap.ID;
-		byte_array[3] = PAGE;
+		ByteWriter.set(byte_array, PAGE, 3);
 
 		byte boxtextall_array_length = (byte)this.boxtextall_array.length;
 		if (boxtextall_array_length == 6)
@@ -126,7 +128,11 @@ public class PageMap extends PageSelect
 		}
 		else
 		{
-			if (this.select == (boxtextall_array_length - 4))
+			if (this.select == (boxtextall_array_length - 5))
+			{
+				byte_array[2] = SDaChunkList.I_DELETE_ALL;
+			}
+			else if (this.select == (boxtextall_array_length - 4))
 			{
 				byte_array[2] = SDaChunkMap.I_MORE;
 			}
@@ -142,11 +148,11 @@ public class PageMap extends PageSelect
 			{
 				this.back();
 			}
-			else/* if (this.select > 1)*/
+			else
 			{
 				PAGE_LIST.add(this);
 				KEY_LIST.add(Key.KEY);
-				SELECT = (byte)(this.select - 2);
+				SELECT = (byte)(this.select - 3);
 				int new_index = 2 + SELECT * (8 + 2 * 4);
 				long id = ByteReader.getLong(BYTE_ARRAY, new_index);
 				this.set(new PagePiece((int)id, (int)(id >> 32), ByteReader.getInt(BYTE_ARRAY, new_index + 8), ByteReader.getInt(BYTE_ARRAY, new_index + 8 + 4)), new KeySelect());
@@ -155,8 +161,6 @@ public class PageMap extends PageSelect
 			}
 		}
 		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
-//			STATE &= 255-1;
-//		}
 	}
 
 	@Override

@@ -96,12 +96,13 @@ public class PagePiece extends PageSelect
 			switch (select)
 			{
 				case 6:
-					byte[] byte_array = new byte[1 + 1 + 1 + 1 + 1];
+					byte[] byte_array = new byte[1 + 1 + 1 + 4 + 1];
 					byte_array[0] = SPage.ID;
 					byte_array[1] = SDaChunkList.ID;
 					byte_array[2] = SDaChunkList.I_DELETE;
-					byte_array[3] = PageList.PAGE;
-					byte_array[4] = PageList.SELECT;
+					ByteWriter.set(byte_array, PageList.PAGE, 3);
+//					ByteWriter.set(byte_array, PageList.SELECT, 3 + 4);
+					byte_array[3 + 4] = PageList.SELECT;
 					NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 					this.back();
 					break;

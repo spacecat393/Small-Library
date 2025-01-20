@@ -144,7 +144,7 @@ public abstract class ServerLe
 		E e = this.i.getE();
 		e.rotation_yaw_head = ByteReader.getFloat(sidata.byte_array, sidata.index);
 //		e.prev_rotation_yaw_head = e.rotation_yaw_head;
-//		this.fix_yaw_head = ByteReader.getFloat(sidata.byte_array, sidata.index);
+//		this.fix_yaw_head = ByteReader.getFloat(sidata.byte_array, sidata.rg);
 		sidata.index += 4;
 	}
 

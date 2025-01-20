@@ -18,16 +18,17 @@ public class SDaChunkMap
 {
 	public static byte ID;
 
-	public final static byte MAX_SIZE = 120;
+	public final static byte MAX_SIZE = 118;
 	public final static byte I_MORE = 0;
 	public final static byte I_LESS = 1;
 	public final static byte I_FETCH = 2;
 	public final static byte I_DELETE = 3;
+	public final static byte I_DELETE_ALL = 4;
 
 	//stop on array
 	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
 	{
-		byte page = servermessage.data[3];
+		int page = ByteReader.getInt(servermessage.data, 3);
 		int chunk_map_size = ChunkCallBack.CHUNK_MAP.size();
 
 		if (servermessage.data[2] == I_MORE)
@@ -40,7 +41,7 @@ public class SDaChunkMap
 		}
 		else if (servermessage.data[2] == I_LESS)
 		{
-			byte new_page = (byte)(page - 1);
+			int new_page = page - 1;
 			if (new_page != -1)
 			{
 				if ((new_page * MAX_SIZE) < chunk_map_size)
@@ -52,18 +53,22 @@ public class SDaChunkMap
 		}
 		else if (servermessage.data[2] == I_DELETE)
 		{
-			long id = ByteReader.getLong(servermessage.data, 3);
+			long id = ByteReader.getLong(servermessage.data, 3+4);
 			ForgeChunkManager.releaseTicket(ChunkCallBack.CHUNK_MAP.get(id).ticket);
 			ChunkCallBack.CHUNK_MAP.remove(id);
-//			byte[] byte_array = new byte[1 + 1];
-//			byte_array[0] = CPage.ID;
-//			byte_array[1] = CDataChunkMap.ID;
-//			NetworkRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
+			servermessage.data[2] = I_FETCH;
+			--chunk_map_size;
+		}
+		else if (servermessage.data[2] == I_DELETE_ALL)
+		{
+			ChunkCallBack.CHUNK_MAP.clear();
+			servermessage.data[2] = I_FETCH;
+			chunk_map_size = 0;
 		}
 
 		if (servermessage.data[2] == I_FETCH)
 		{
-			byte max_mix_page = (byte)Math.ceil(chunk_map_size / (float)MAX_SIZE);
+			int max_mix_page = (int)Math.ceil(chunk_map_size / (float)MAX_SIZE);
 			byte max_page;
 
 			if (max_mix_page > 0)
@@ -88,7 +93,7 @@ public class SDaChunkMap
 				max_page = MAX_SIZE;
 			}
 
-			byte[] byte_array = new byte[1 + 1 + max_page * (2 * 4 + 8) + 1 + 1 + 1];
+			byte[] byte_array = new byte[1 + 1 + max_page * (2 * 4 + 8) + 4 + 1 + 4];
 			byte_array[0] = CPage.ID;
 			byte_array[1] = CDaChunkMap.ID;
 			short byte_array_index = 2;
@@ -105,9 +110,10 @@ public class SDaChunkMap
 				ByteWriter.set(byte_array, chunkpos.z, byte_array_index);
 				byte_array_index += 4;
 			}
-			byte_array[byte_array_index++] = page;//page
+			ByteWriter.set(byte_array, page, byte_array_index);
+			byte_array_index += 4;
 			byte_array[byte_array_index++] = max_page;//max_page
-			byte_array[byte_array_index] = max_mix_page;//max_mix_page
+			ByteWriter.set(byte_array, max_mix_page, byte_array_index);
 			NetworkRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
 		}
 	}

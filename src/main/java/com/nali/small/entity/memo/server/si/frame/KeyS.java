@@ -29,7 +29,7 @@ public abstract class KeyS
 	//need edit
 	//step += MAX_SHORT / max_key
 //	public short step;//0 - MAX_SHORT
-	//use as index
+	//use as rg
 //	public byte key;//0 - 255 -> SIEFrame
 	public byte key_data_index;
 	public SIEKey<BD, E, I, S, MS> siekey;
@@ -52,17 +52,17 @@ public abstract class KeyS
 //		EntityDataManager entitydatamanager = i.getE().getDataManager();
 //		DataParameter<Byte>[] byte_dataparameter_array = i.getByteDataParameterArray();
 //
-//		int index = sync_index + key_data_byte_array[this.key_data_index] * 6;
+//		int rg = sync_index + key_data_byte_array[this.key_data_index] * 6;
 ////		time_short_array[0] += this.step;
-//		entitydatamanager.set(byte_dataparameter_array[index], key_index_byte_array[0]);
-//		entitydatamanager.set(byte_dataparameter_array[index + 1], (byte)time_short_array[0]);
-//		entitydatamanager.set(byte_dataparameter_array[index + 2], (byte)(time_short_array[0] >> 8));
+//		entitydatamanager.set(byte_dataparameter_array[rg], key_index_byte_array[0]);
+//		entitydatamanager.set(byte_dataparameter_array[rg + 1], (byte)time_short_array[0]);
+//		entitydatamanager.set(byte_dataparameter_array[rg + 2], (byte)(time_short_array[0] >> 8));
 //
-////		index =
+////		rg =
 ////		time_short_array[1] += this.step[1];
-//		entitydatamanager.set(byte_dataparameter_array[index + 3], key_index_byte_array[1]);
-//		entitydatamanager.set(byte_dataparameter_array[index + 4], (byte)time_short_array[1]);
-//		entitydatamanager.set(byte_dataparameter_array[index + 5], (byte)(time_short_array[1] >> 8));
+//		entitydatamanager.set(byte_dataparameter_array[rg + 3], key_index_byte_array[1]);
+//		entitydatamanager.set(byte_dataparameter_array[rg + 4], (byte)time_short_array[1]);
+//		entitydatamanager.set(byte_dataparameter_array[rg + 5], (byte)(time_short_array[1] >> 8));
 //	}
 
 	public abstract boolean onUpdate();

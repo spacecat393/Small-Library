@@ -10,6 +10,7 @@ import com.nali.list.network.method.server.SPage;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.gui.page.entity.me.PageMe;
 import com.nali.system.bytes.ByteReader;
+import com.nali.system.bytes.ByteWriter;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -21,10 +22,11 @@ public class PageEntity extends PageSelect
 
 	public static byte
 		STATE,//enter client init
-		PAGE,//0-127
-		MAX_PAGE,//0-120
-		MAX_MIX_PAGE;//0-127
-//		SELECT;
+		MAX_PAGE;//0-119
+	public static int
+		PAGE,
+		MAX_MIX_PAGE;
+	public static long[] ID_LONG_ARRAY;
 
 	@Override
 	public void init()
@@ -32,26 +34,31 @@ public class PageEntity extends PageSelect
 		if (BYTE_ARRAY != null)
 		{
 			short byte_array_length = (short)BYTE_ARRAY.length;
-			PAGE = BYTE_ARRAY[byte_array_length - 3];
-			MAX_PAGE = BYTE_ARRAY[byte_array_length - 2];
-			MAX_MIX_PAGE = BYTE_ARRAY[byte_array_length - 1];
+			PAGE = ByteReader.getInt(BYTE_ARRAY, byte_array_length - 4 - 1 - 4);
+			MAX_PAGE = BYTE_ARRAY[byte_array_length - 1 - 4];
+			MAX_MIX_PAGE = ByteReader.getInt(BYTE_ARRAY, byte_array_length - 4);
 
 			byte index = 0;
-			this.boxtextall_array = new BoxTextAll[2 + MAX_PAGE + 5];
+			this.boxtextall_array = new BoxTextAll[3 + MAX_PAGE + 5];
 			this.boxtextall_array[index++] = new BoxTextAll("ENTITY".toCharArray());
-			this.boxtextall_array[index++] = new BoxTextAll(("PAGE " + PAGE + " - " + MAX_MIX_PAGE).toCharArray());
+//			this.boxtextall_array[index++] = new BoxTextAll(("PAGE " + PAGE + " - " + MAX_MIX_PAGE).toCharArray());
+
+			this.boxtextall_array[index++] = new BoxTextAll(("PAGE " + PAGE).toCharArray());
+			this.boxtextall_array[index++] = new BoxTextAll(("MAX-PAGE " + MAX_MIX_PAGE).toCharArray());
 
 			short i = 2;
-			byte name_index = 0;
+			byte n_index = 0;
 			NAME_STRING_ARRAY = new String[MAX_PAGE];
-			while (i < byte_array_length - 3)
+			ID_LONG_ARRAY = new long[MAX_PAGE];
+			while (i < byte_array_length - 4 - 1 - 4)
 			{
 				long id = ByteReader.getLong(BYTE_ARRAY, i);
 				i += 8;
 				int name_length = ByteReader.getInt(BYTE_ARRAY, i);
 				i += 4;
 				String name_string = new String(BYTE_ARRAY, i, name_length);
-				NAME_STRING_ARRAY[name_index++] = name_string;
+				ID_LONG_ARRAY[n_index] = id;
+				NAME_STRING_ARRAY[n_index++] = name_string;
 				String text_string = (int)id + " " + name_string;
 				if (text_string.length() > 20)
 				{
@@ -76,10 +83,9 @@ public class PageEntity extends PageSelect
 
 			this.group_byte_array = new byte[(byte)Math.ceil((this.boxtextall_array.length - 1) / 8.0F)];
 			this.group_byte_array[0 / 8] |= 1 << 0 % 8;
+			this.group_byte_array[1 / 8] |= 1 << 1 % 8;
 			byte new_index = (byte)(index - 5);
 			this.group_byte_array[new_index / 8] |= 1 << new_index % 8;
-
-//			BYTE_ARRAY = null;
 		}
 		else
 		{
@@ -107,14 +113,10 @@ public class PageEntity extends PageSelect
 	@Override
 	public void enter()
 	{
-//		if ((STATE & 1) == 0)
-//		{
-//			STATE |= 1;
-
-		byte[] byte_array = new byte[1 + 1 + 1 + 1];
+		byte[] byte_array = new byte[1 + 1 + 1 + 4];
 		byte_array[0] = SPage.ID;
 		byte_array[1] = SDaEntity.ID;
-		byte_array[3] = PAGE;
+		ByteWriter.set(byte_array, PAGE, 3);
 
 		byte boxtextall_array_length = (byte)this.boxtextall_array.length;
 		if (boxtextall_array_length == 6)
@@ -152,23 +154,17 @@ public class PageEntity extends PageSelect
 			{
 				this.back();
 			}
-			else/* if (this.select > 1)*/
+			else
 			{
 				PAGE_LIST.add(this);
 				KEY_LIST.add(Key.KEY);
-//					select = (byte)(this.select - 2);
-				byte select = (byte)(this.select - 2);
-				int new_index = 2 + select * (8 + 2 * 4);
-				long id = ByteReader.getLong(BYTE_ARRAY, new_index);
-//				this.set(new PageEntityMe((int)id, (int)(id >> 32), NAME_STRING_ARRAY[select]), new KeyEdit());
-				this.set(new PageMe(id, NAME_STRING_ARRAY[select]), new KeyEdit());
+				byte select = (byte)(this.select - 3);
+				this.set(new PageMe(ID_LONG_ARRAY[select], NAME_STRING_ARRAY[select]), new KeyEdit());
 				STATE &= 255-1;
 				return;
 			}
 		}
 		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
-//			STATE &= 255-1;
-//		}
 	}
 
 	@Override

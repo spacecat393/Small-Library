@@ -85,19 +85,19 @@ public class SIECareOwner
 				}
 	//			if (!this.far_double_list.isEmpty())
 	//			{
-	//				int index = 0;
+	//				int rg = 0;
 	//				double max_dis = Double.MAX_VALUE;
 	//				for (int i = 0; i < this.far_double_list.size(); ++i)
 	//				{
 	//					double far = this.far_double_list.get(i);
 	//					if (far < max_dis)
 	//					{
-	//						index = i;
+	//						rg = i;
 	//						max_dis = far;
 	//					}
 	//				}
 	//
-	//				this.target_entity = this.siearea.all_entity_list.get(index);
+	//				this.target_entity = this.siearea.all_entity_list.get(rg);
 	//			}
 	//			else
 	//			{

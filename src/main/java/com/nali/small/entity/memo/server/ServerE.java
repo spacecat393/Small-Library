@@ -136,14 +136,14 @@ public abstract class ServerE
 
 //		for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
 //		{
-//			ByteWriter.set(sidata.byte_array, entitydatamanager.get(float_dataparameter), sidata.index);
-//			sidata.index += 4;
+//			ByteWriter.set(sidata.byte_array, entitydatamanager.get(float_dataparameter), sidata.rg);
+//			sidata.rg += 4;
 //		}
 //
 //		for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
 //		{
-//			ByteWriter.set(sidata.byte_array, entitydatamanager.get(integer_dataparameter), sidata.index);
-//			sidata.index += 4;
+//			ByteWriter.set(sidata.byte_array, entitydatamanager.get(integer_dataparameter), sidata.rg);
+//			sidata.rg += 4;
 //		}
 
 		this.ms.writeFile(sidata);
@@ -195,17 +195,17 @@ public abstract class ServerE
 			entitydatamanager.set(byte_dataparameter, sidata.byte_array[sidata.index++]);
 		}
 
-//					this.scale = ByteReader.getFloat(sidata.byte_array, sidata.index);
+//					this.scale = ByteReader.getFloat(sidata.byte_array, sidata.rg);
 //					for (DataParameter<Float> float_dataparameter : float_dataparameter_array)
 //					{
-//						entitydatamanager.set(float_dataparameter, ByteReader.getFloat(sidata.byte_array, sidata.index));
-//						sidata.index += 4;
+//						entitydatamanager.set(float_dataparameter, ByteReader.getFloat(sidata.byte_array, sidata.rg));
+//						sidata.rg += 4;
 //					}
 //
 //					for (DataParameter<Integer> integer_dataparameter : integer_dataparameter_array)
 //					{
-//						entitydatamanager.set(integer_dataparameter, ByteReader.getInt(sidata.byte_array, sidata.index));
-//						sidata.index += 4;
+//						entitydatamanager.set(integer_dataparameter, ByteReader.getInt(sidata.byte_array, sidata.rg));
+//						sidata.rg += 4;
 //					}
 
 		this.ms.readFile(sidata);
@@ -370,9 +370,9 @@ public abstract class ServerE
 		byte_array[1 + 8] = i;
 	}
 
-//	public boolean isWork(byte index)
+//	public boolean isWork(byte rg)
 //	{
-//		for (byte i = this.workbytes.SIT(); i < index; ++i)
+//		for (byte i = this.workbytes.SIT(); i < rg; ++i)
 //		{
 //			if ((this.current_work_byte_array[i / 8] >> i % 8 & 1) == 1)
 //			{
@@ -380,12 +380,12 @@ public abstract class ServerE
 //			}
 //		}
 //
-//		return (this.current_work_byte_array[index / 8] >> index % 8 & 1) == 1;
+//		return (this.current_work_byte_array[rg / 8] >> rg % 8 & 1) == 1;
 //	}
 
-//	public boolean isWorkBypass(byte index, byte[] bypass_byte_array)
+//	public boolean isWorkBypass(byte rg, byte[] bypass_byte_array)
 //	{
-//		for (byte i = this.workbytes.SIT(); i < index; ++i)
+//		for (byte i = this.workbytes.SIT(); i < rg; ++i)
 //		{
 //			boolean on_bypass = false;
 //			for (byte bypass : bypass_byte_array)
@@ -403,7 +403,7 @@ public abstract class ServerE
 //			}
 //		}
 //
-//		return (this.current_work_byte_array[index / 8] >> index % 8 & 1) == 1;
+//		return (this.current_work_byte_array[rg / 8] >> rg % 8 & 1) == 1;
 //	}
 
 //	public void initWriteEntityToNBT(NBTTagCompound nbttagcompound)

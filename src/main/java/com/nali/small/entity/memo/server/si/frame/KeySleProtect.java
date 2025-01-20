@@ -142,19 +142,19 @@ public class KeySleProtect
 //			int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
 //			byte[] frame_byte_array = this.s.getFrameByteArray();
 //			this.step = 1;
-//			byte frame = frame_byte_array[this.index];
-//			byte index = frame_byte_array[this.index + 1];
-//			byte index1 = frame_byte_array[this.index + 2];
+//			byte frame = frame_byte_array[this.rg];
+//			byte rg = frame_byte_array[this.rg + 1];
+//			byte index1 = frame_byte_array[this.rg + 2];
 //			switch (this.sileprotect.state & (4+8))
 //			{
 //				case 0:
 //				{
-//					if (this.siekey.frame_int_array[frame] < frame_2d_int_array[index][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[index][1])
+//					if (this.siekey.frame_int_array[frame] < frame_2d_int_array[rg][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[rg][1])
 //					{
-//						this.siekey.frame_int_array[frame] = frame_2d_int_array[index][0];
+//						this.siekey.frame_int_array[frame] = frame_2d_int_array[rg][0];
 //						this.step = 0;
 //					}
-//					else if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index][1])
+//					else if (this.siekey.frame_int_array[frame] == frame_2d_int_array[rg][1])
 //					{
 //						this.siekey.frame_int_array[frame] = frame_2d_int_array[index1][0];
 //						this.step = 0;
@@ -181,7 +181,7 @@ public class KeySleProtect
 //				}
 //				case 8:
 //				{
-//					byte index2 = frame_byte_array[this.index + 3];
+//					byte index2 = frame_byte_array[this.rg + 3];
 //					if (this.siekey.frame_int_array[frame] < frame_2d_int_array[index2][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[index2][1])
 //					{
 //						this.siekey.frame_int_array[frame] = frame_2d_int_array[index2][0];
@@ -201,7 +201,7 @@ public class KeySleProtect
 //				}
 //				case 4+8:
 //				{
-//					byte index3 = frame_byte_array[this.index + 4];
+//					byte index3 = frame_byte_array[this.rg + 4];
 //					if (this.siekey.frame_int_array[frame] < frame_2d_int_array[index3][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[index3][1])
 //					{
 //						this.siekey.frame_int_array[frame] = frame_2d_int_array[index3][0];

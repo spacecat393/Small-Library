@@ -219,7 +219,7 @@ public class KeySleShoot
 
 //		int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
 //		byte[] frame_byte_array = this.s.getFrameByteArray();
-//		byte frame = frame_byte_array[this.index];
+//		byte frame = frame_byte_array[this.rg];
 //		if (this.sileattack.magic_point <= 0)
 //		{
 //			this.step = 1;
@@ -257,8 +257,8 @@ public class KeySleShoot
 //		}
 //		else if ((this.sileattack.flag & 2) == 2)
 //		{
-////			byte index = frame_byte_array[this.index + 1];
-//			byte index = this.getStartAttack();
+////			byte rg = frame_byte_array[this.index + 1];
+//			byte rg = this.getStartAttack();
 ////			byte index1 = frame_byte_array[this.index + 2];
 //			byte index1 = this.getAttack();
 //			if (this.siekey.frame_int_array[frame] >= frame_2d_int_array[index1][0] && this.siekey.frame_int_array[frame] <= frame_2d_int_array[index1][1])
@@ -276,9 +276,9 @@ public class KeySleShoot
 //				}
 //				return true;
 //			}
-//			else if (this.siekey.frame_int_array[frame] >= frame_2d_int_array[index][0] && this.siekey.frame_int_array[frame] <= frame_2d_int_array[index][1])
+//			else if (this.siekey.frame_int_array[frame] >= frame_2d_int_array[rg][0] && this.siekey.frame_int_array[frame] <= frame_2d_int_array[rg][1])
 //			{
-//				if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index][1])
+//				if (this.siekey.frame_int_array[frame] == frame_2d_int_array[rg][1])
 //				{
 //					this.siekey.frame_int_array[frame] = frame_2d_int_array[index1][1];
 //					this.step = 0;
@@ -288,9 +288,9 @@ public class KeySleShoot
 //				this.step = 1;
 //				return true;
 //			}
-//			else if (this.siekey.frame_int_array[frame] < frame_2d_int_array[index][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[index][1])
+//			else if (this.siekey.frame_int_array[frame] < frame_2d_int_array[rg][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[rg][1])
 //			{
-//				this.siekey.frame_int_array[frame] = frame_2d_int_array[index][0];
+//				this.siekey.frame_int_array[frame] = frame_2d_int_array[rg][0];
 //				this.step = 0;
 //				return true;
 //			}
@@ -383,17 +383,17 @@ public class KeySleShoot
 //	{
 //		int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
 //		byte[] frame_byte_array = this.s.getFrameByteArray();
-//		byte frame = frame_byte_array[this.index];
-////		byte index = frame_byte_array[this.index + 1];
-//		byte index = this.getStartAttack();
+//		byte frame = frame_byte_array[this.rg];
+////		byte rg = frame_byte_array[this.index + 1];
+//		byte rg = this.getStartAttack();
 ////		byte index1 = frame_byte_array[this.index + 2];
 //		byte index1 = this.getAttack();
 ////		byte index2 = frame_byte_array[this.index + 3];
 //		byte index2 = this.getEndAttack();
-//		if (this.siekey.frame_int_array[frame] >= frame_2d_int_array[index][0] && this.siekey.frame_int_array[frame] <= frame_2d_int_array[index][1])
+//		if (this.siekey.frame_int_array[frame] >= frame_2d_int_array[rg][0] && this.siekey.frame_int_array[frame] <= frame_2d_int_array[rg][1])
 //		{
 //			this.siefindmove.endGoal();
-//			if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index][1])
+//			if (this.siekey.frame_int_array[frame] == frame_2d_int_array[rg][1])
 //			{
 //				this.siekey.frame_int_array[frame] = frame_2d_int_array[index2][0];
 //				this.step = 0;
@@ -425,7 +425,7 @@ public class KeySleShoot
 //	{
 //		int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
 //		byte[] frame_byte_array = this.s.getFrameByteArray();
-//		byte frame = frame_byte_array[this.index];
+//		byte frame = frame_byte_array[this.rg];
 ////		byte index1 = frame_byte_array[this.index + 2];
 //		byte index1 = this.getAttack();
 //		this.step = 1;
@@ -441,21 +441,21 @@ public class KeySleShoot
 //
 //	public byte getStartAttack()
 //	{
-//		return this.s.getFrameByteArray()[this.index + 1];
+//		return this.s.getFrameByteArray()[this.rg + 1];
 //	}
 //
 //	public byte getAttack()
 //	{
-//		return this.s.getFrameByteArray()[this.index + 2];
+//		return this.s.getFrameByteArray()[this.rg + 2];
 //	}
 //
 //	public byte getEndAttack()
 //	{
-//		return this.s.getFrameByteArray()[this.index + 3];
+//		return this.s.getFrameByteArray()[this.rg + 3];
 //	}
 //
 //	public byte getReload()
 //	{
-//		return this.s.getFrameByteArray()[this.index + 4];
+//		return this.s.getFrameByteArray()[this.rg + 4];
 //	}
 }

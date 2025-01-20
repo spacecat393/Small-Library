@@ -24,12 +24,15 @@ public class PageSI extends PageSelect
 		MAX_PAGE,//0-120
 		MAX_MIX_PAGE;//0-127
 
+	public static int ENTITY_ID;
+
 	@Override
 	public void init()
 	{
 		if (BYTE_ARRAY != null)
 		{
 			short byte_array_length = (short)BYTE_ARRAY.length;
+			ENTITY_ID = ByteReader.getInt(BYTE_ARRAY, byte_array_length - 4 - 3);
 			PAGE = BYTE_ARRAY[byte_array_length - 3];
 			MAX_PAGE = BYTE_ARRAY[byte_array_length - 2];
 			MAX_MIX_PAGE = BYTE_ARRAY[byte_array_length - 1];
@@ -40,11 +43,11 @@ public class PageSI extends PageSelect
 			this.boxtextall_array[index++] = new BoxTextAll(("PAGE " + PAGE + " - " + MAX_MIX_PAGE).toCharArray());
 
 			short i = 2;
-			while (i < byte_array_length - 3)
+			while (i < byte_array_length - 3 - 4)
 			{
 				int si_id = ByteReader.getInt(BYTE_ARRAY, i);
 				i += 4;
-				String si_string = MixSIE.SI_CLASS_LIST.get(si_id).getName();
+				String si_string = si_id + " " + MixSIE.SI_CLASS_LIST.get(si_id).getName().substring(24);
 				if (si_string.length() > 20)
 				{
 					si_string = si_string.substring(0, 20) + "...";
@@ -150,5 +153,20 @@ public class PageSI extends PageSelect
 		byte_array[3] = PAGE;
 		ByteWriter.set(byte_array, PageMe.ID, 4);
 		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+	}
+
+	@Override
+	public void draw()
+	{
+		if ((STATE & 4) == 4)
+		{
+			this.state &= 255-4;
+			this.clear();
+			this.init();
+
+			this.gen();
+			STATE &= 255-(2+4);
+		}
+		super.draw();
 	}
 }

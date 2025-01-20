@@ -1,6 +1,6 @@
 package com.nali.list.gui.da.server;
 
-import com.nali.list.gui.da.client.CDaEntity;
+import com.nali.list.gui.da.client.CDaAttribute;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.client.CPage;
@@ -98,7 +98,7 @@ public class SDaAttribute
 			int new_page = page * MAX_SIZE;
 			byte[] byte_array = new byte[1 + 1 + max_page * 4 + 1 + 1 + 1];
 			byte_array[0] = CPage.ID;
-			byte_array[1] = CDaEntity.ID;
+			byte_array[1] = CDaAttribute.ID;
 //			if (list != null)
 //			{
 			for (int i = new_page; i < new_page + max_page; ++i)

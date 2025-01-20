@@ -50,14 +50,14 @@ public class SSToC
 					//						if (worldserver.getEntityFromUuid(uuid) instanceof SkinningEntities)
 					//						{
 					Entity e = s.i.getE();
-//					ByteWriter.set(byte_array, uuid, index);
-//					index += 16;
+//					ByteWriter.set(byte_array, uuid, rg);
+//					rg += 16;
 					ByteWriter.set(byte_array, (long)e.world.provider.getDimension() << 32 | e.getEntityId(), index);
 					index += 8;
-//					ByteWriter.set(byte_array, e.getEntityId(), index);
-//					index += 4;
-//					ByteWriter.set(byte_array, e.dimension, index);
-//					index += 4;
+//					ByteWriter.set(byte_array, e.getEntityId(), rg);
+//					rg += 4;
+//					ByteWriter.set(byte_array, e.dimension, rg);
+//					rg += 4;
 					ByteWriter.set(byte_array, EntityList.getID(e.getClass()), index);
 					index += 4;
 					//						}

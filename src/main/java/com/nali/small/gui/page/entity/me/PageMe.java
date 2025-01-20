@@ -82,14 +82,14 @@ public class PageMe extends PageEdit
 					//rename
 					byte[] name_byte_array = this.name.getBytes();
 					int name_byte_array_length = name_byte_array.length;
-					byte[] byte_array = new byte[1 + 1 + 1 + 1 + 8 + name_byte_array_length];
+					byte[] byte_array = new byte[1 + 1 + 1 + 4 + 8 + name_byte_array_length];
 					byte_array[0] = SPage.ID;
 					byte_array[1] = SDaEntity.ID;
 					byte_array[2] = SDaEntity.I_RENAME;
-					byte_array[3] = PageEntity.PAGE;
+					ByteWriter.set(byte_array, PageEntity.PAGE, 3);
 //					ByteWriter.set(byte_array, (long)this.d << 32 | this.i, 4);
-					ByteWriter.set(byte_array, ID, 4);
-					System.arraycopy(name_byte_array, 0, byte_array, 4+8, name_byte_array_length);
+					ByteWriter.set(byte_array, ID, 3+4);
+					System.arraycopy(name_byte_array, 0, byte_array, 3+4+8, name_byte_array_length);
 					NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 				}
 				else

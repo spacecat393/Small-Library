@@ -48,8 +48,8 @@ public class KeySleShootBF
 
 //		int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
 //		byte[] frame_byte_array = this.s.getFrameByteArray();
-//		byte frame = frame_byte_array[this.index];
-//		byte index1 = frame_byte_array[this.index + 2];
+//		byte frame = frame_byte_array[this.rg];
+//		byte index1 = frame_byte_array[this.rg + 2];
 //		if (this.siekey.frame_int_array[frame] == frame_2d_int_array[index1][0])
 //		{
 //			this.step = 1;

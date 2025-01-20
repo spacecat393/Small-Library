@@ -273,7 +273,7 @@
 //			for (Integer integer : index_integer_list)
 //			{
 ////				ObjectRender.enableBuffer(openglobjectmemory, openglobjectshadermemory);
-////				int index = step_size + id_integer_list.get(i);
+////				int rg = step_size + id_integer_list.get(i);
 ////				DrawWorldData drawworlddata = DRAWDA_LIST.get(data_id_integer_list.get(step_size + i));
 //				DrawWorldData drawworlddata = DRAWDA_LIST.get(integer);
 //

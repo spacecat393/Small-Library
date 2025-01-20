@@ -4,7 +4,7 @@ import com.nali.da.IBothDaO;
 import com.nali.render.RenderO;
 import com.nali.small.draw.Draw;
 import com.nali.small.draw.DrawDa;
-import com.nali.system.bytes.ByteWriter;
+import com.nali.small.draw.DrawMap;
 import com.nali.system.opengl.memo.client.MemoG;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -45,18 +45,19 @@ public interface IRenderO<BD extends IBothDaO, R extends RenderO<BD>>
 	default void drawLater(R r, int index)
 	{
 		MemoG rg = G_LIST.get(index);
-		Draw.add(Draw.KEY_MAP.computeIfAbsent(index + " " + r.getTextureBuffer(rg) + " " + r.getShaderID(rg) + " " + (byte)((r.getTransparent(rg) ? 1 : 0) | r.getExtraBit(rg)), k -> this.createByteArray(r, index)));
+//		Draw.add(Draw.KEY_MAP.computeIfAbsent(rg + " " + r.getTextureBuffer(rg) + " " + r.getShaderID(rg) + " " + (byte)((r.getTransparent(rg) ? 1 : 0) | r.getExtraBit(rg)), k -> this.createByteArray(r, rg)));
+		Draw.add(DrawMap.get(new DrawMap(index, r.getTextureBuffer(rg), r.getShaderID(rg), (byte)((r.getTransparent(rg) ? 1 : 0) | r.getExtraBit(rg)))));
 	}
 
-	default byte[] createByteArray(R r, int index)
-	{
-		MemoG rg = G_LIST.get(index);
-		byte[] byte_array = new byte[4 + 4 + 4 + 1];
-		ByteWriter.set(byte_array, index, 0);
-		ByteWriter.set(byte_array, r.getTextureBuffer(rg), 4);
-		ByteWriter.set(byte_array, r.getShaderID(rg), 4 + 4);
-		byte_array[4 + 4 + 4] = (byte)(r.getTransparent(rg) ? 1 : 0);
-		byte_array[4 + 4 + 4] += r.getExtraBit(rg);
-		return byte_array;
-	}
+//	default byte[] createByteArray(R r, int rg)
+//	{
+//		MemoG rg = G_LIST.get(rg);
+//		byte[] byte_array = new byte[4 + 4 + 4 + 1];
+//		ByteWriter.set(byte_array, rg, 0);
+//		ByteWriter.set(byte_array, r.getTextureBuffer(rg), 4);
+//		ByteWriter.set(byte_array, r.getShaderID(rg), 4 + 4);
+//		byte_array[4 + 4 + 4] = (byte)(r.getTransparent(rg) ? 1 : 0);
+//		byte_array[4 + 4 + 4] += r.getExtraBit(rg);
+//		return byte_array;
+//	}
 }

@@ -29,15 +29,15 @@
 //			byte[] byte_array = new byte[1 + 4 + (potioneffect_collection.size() * 3 * 4)];
 //			byte_array[0] = CSetEffect.ID;
 //			ByteWriter.set(byte_array, skinningentities.getEntityId(), 1);
-//			int index = 1 + 4;
+//			int rg = 1 + 4;
 //			for (PotionEffect potioneffect : potioneffect_collection)
 //			{
-//				ByteWriter.set(byte_array, Potion.getIdFromPotion(potioneffect.getPotion()), index);
-//				index += 4;
-//				ByteWriter.set(byte_array, potioneffect.getDuration(), index);
-//				index += 4;
-//				ByteWriter.set(byte_array, potioneffect.getAmplifier(), index);
-//				index += 4;
+//				ByteWriter.set(byte_array, Potion.getIdFromPotion(potioneffect.getPotion()), rg);
+//				rg += 4;
+//				ByteWriter.set(byte_array, potioneffect.getDuration(), rg);
+//				rg += 4;
+//				ByteWriter.set(byte_array, potioneffect.getAmplifier(), rg);
+//				rg += 4;
 //			}
 //			NetworkRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
 //		}

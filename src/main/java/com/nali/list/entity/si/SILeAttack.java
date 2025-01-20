@@ -253,7 +253,7 @@ public class SILeAttack
 	{
 		E e = this.s.i.getE();
 //		double[] far = new double[entity_list.size()];
-//		int index = 0;
+//		int rg = 0;
 		int index = -1;
 		double max_dis = Double.MAX_VALUE;
 		for (int i = 0; i < entity_list.size(); ++i)
@@ -265,7 +265,7 @@ public class SILeAttack
 				index = i;
 				max_dis = far;
 			}
-//			far[index++] = e.getDistanceSq(entity);
+//			far[rg++] = e.getDistanceSq(entity);
 			if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null ||
 				isInArea(entity, this.silesetlocation.blockpos, this.silesetlocation.far))
 			{
@@ -283,7 +283,7 @@ public class SILeAttack
 			}
 		}
 
-//		index = 0;
+//		rg = 0;
 
 //		double max_dis = Double.MAX_VALUE;
 
@@ -291,7 +291,7 @@ public class SILeAttack
 //		{
 //			if (far[i] < max_dis)
 //			{
-//				index = i;
+//				rg = i;
 //				max_dis = far[i];
 //			}
 //		}

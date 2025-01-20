@@ -79,7 +79,7 @@
 //					else if (e.ticksExisted % 200 == 0)
 //					{
 ////						EntityLeInv playwith_skinningentities = null;
-//						int index = -1;
+//						int rg = -1;
 //						double max = Double.MAX_VALUE;
 //						for (int i = 0; i < this.siearea.out_entity_list.size(); ++i)
 //						{
@@ -91,16 +91,16 @@
 //									double new_max = getDistanceAABBToAABB(e, entity);
 //									if (new_max < max)
 //									{
-//										index = i;
+//										rg = i;
 //										max = new_max;
 //									}
 //								}
 //							}
 //						}
 //
-//						if (index != -1)
+//						if (rg != -1)
 //						{
-//							this.onFind(index);
+//							this.onFind(rg);
 //						}
 //
 //						this.tick = 1200 + random.nextInt(5000);
@@ -163,7 +163,7 @@
 //		e.fallDistance = 0;
 //	}
 //
-//	public void onFind(int index)
+//	public void onFind(int rg)
 //	{
 ////		playwith_skinningentities = (EntityLeInv)entity;
 ////		if (((ServerE)playwith_skinningentities.bothentitiesmemory).skinningentities == null &&

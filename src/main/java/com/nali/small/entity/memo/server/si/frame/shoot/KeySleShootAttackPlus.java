@@ -68,8 +68,8 @@ public class KeySleShootAttackPlus
 		if (key_short_array[key_short_index] == fix_key_short_array[attack_fix_key_index + 1])
 		{
 			byte[] key_data_byte_array = this.s.getKeyDataByteArray();
-//			byte start_attack_size = frame_byte_array[this.index + 1];
-//			byte attack_size = frame_byte_array[this.index + 1 + start_attack_size];
+//			byte start_attack_size = frame_byte_array[this.rg + 1];
+//			byte attack_size = frame_byte_array[this.rg + 1 + start_attack_size];
 //			byte id = (byte)(this.s.i.getE().ticksExisted % start_attack_size);
 //			this.start_attack = id;
 //			this.attack = (byte)(this.s.i.getE().ticksExisted % attack_size);
@@ -87,14 +87,14 @@ public class KeySleShootAttackPlus
 	@Override
 	public byte getStartAttackFixKeyIndex(byte[] key_data_byte_array)
 	{
-//		return this.s.getFrameByteArray()[this.index + 1 + this.start_attack];
+//		return this.s.getFrameByteArray()[this.rg + 1 + this.start_attack];
 		return key_data_byte_array[this.key_data_index + 1 + this.attack];
 	}
 
 	@Override
 	public byte getAttackFixKeyIndex(byte[] key_data_byte_array)
 	{
-//		byte start_attack_size = frame_byte_array[this.index + 1];
+//		byte start_attack_size = frame_byte_array[this.rg + 1];
 		return key_data_byte_array[this.key_data_index + 1 + key_data_byte_array[this.key_data_index + 1]/* + 1*/ + this.attack];
 	}
 
