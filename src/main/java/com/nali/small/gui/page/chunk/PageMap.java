@@ -4,7 +4,6 @@ import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.key.Key;
 import com.nali.gui.key.KeySelect;
 import com.nali.gui.page.PageSelect;
-import com.nali.list.gui.da.server.SDaChunkList;
 import com.nali.list.gui.da.server.SDaChunkMap;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPage;
@@ -40,7 +39,8 @@ public class PageMap extends PageSelect
 			byte index = 0;
 			this.boxtextall_array = new BoxTextAll[3 + MAX_PAGE + 6];
 			this.boxtextall_array[index++] = new BoxTextAll("CHUNK-MAP".toCharArray());
-			this.boxtextall_array[index++] = new BoxTextAll(("PAGE " + PAGE + " - " + MAX_MIX_PAGE).toCharArray());
+			this.boxtextall_array[index++] = new BoxTextAll(("PAGE " + PAGE).toCharArray());
+			this.boxtextall_array[index++] = new BoxTextAll(("MAX-PAGE " + MAX_MIX_PAGE).toCharArray());
 
 			short i = 2;
 			while (i < byte_array_length - 4 - 1 - 4)
@@ -74,8 +74,6 @@ public class PageMap extends PageSelect
 			this.group_byte_array[1 / 8] |= 1 << 1 % 8;
 			byte new_index = (byte)(index - 6);
 			this.group_byte_array[new_index / 8] |= 1 << new_index % 8;
-
-//			BYTE_ARRAY = null;
 		}
 		else
 		{
@@ -130,7 +128,7 @@ public class PageMap extends PageSelect
 		{
 			if (this.select == (boxtextall_array_length - 5))
 			{
-				byte_array[2] = SDaChunkList.I_DELETE_ALL;
+				byte_array[2] = SDaChunkMap.I_DELETE_ALL;
 			}
 			else if (this.select == (boxtextall_array_length - 4))
 			{

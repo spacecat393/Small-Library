@@ -36,6 +36,7 @@ public interface IRenderO<BD extends IBothDaO, R extends RenderO<BD>>
 		drawda.light_s = r.light_s;
 	}
 
+	//clean
 	default void endDrawLater(DrawDa drawda)
 	{
 		Draw.DRAWDA_LIST.add(drawda);
