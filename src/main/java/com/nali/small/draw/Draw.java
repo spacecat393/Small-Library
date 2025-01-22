@@ -90,52 +90,7 @@ public class Draw
 //		}
 
 		if (!TRANSLUCENT_MAP.isEmpty())
-//		if (!TRANSLUCENT_DRAWDA_LIST.isEmpty())
 		{
-//			List<Double> double_list = new ArrayList();
-//			for ()
-//			{
-//				DrawDa drawda = DRAWDA_LIST.get();
-//				double[] far_double_array = FAR_DOUBLE_ARRAY_LIST.get();
-//				double x = drawda.x + far_double_array[0];
-//				double y = drawda.y + far_double_array[1];
-//				double z = drawda.z + far_double_array[2];
-//				double d = Minecraft.getMinecraft().player.getDistanceSq(x, y, z);
-//				double_list.add(d);
-//			}
-//
-//			List<Integer> index_list = new ArrayList();
-//			int double_list_size = double_list.size();
-//
-//			for (int x = 0; x < double_list_size; ++x)
-//			{
-//				index_list.add(-1);
-//			}
-//
-//			double_list_size -= 1;
-//			for (int x = 0; x < double_list_size; ++x)
-//			{
-//				for (int y = 0; y < double_list_size; ++y)
-//				{
-//					int y1 = y + 1;
-//					double y_far = double_list.get(y);
-//					double y1_far = double_list.get(y1);
-//					if (y_far > y1_far)
-//					{
-//						double_list.set(y, y1_far);
-//						double_list.set(y1, y_far);
-//
-//						index_list.set(y, y1);
-//						index_list.set(y1, y);
-//					}
-//					else
-//					{
-//						index_list.set(y, y);
-//					}
-//				}
-//			}
-
-//			GL11.glDepthMask(false);
 //			draw(TRANSLUCENT_MAP);
 			drawT();
 		}
