@@ -28,7 +28,7 @@ public abstract class MixinEntityRenderer
 
 	@Shadow public abstract void disableLightmap();
 
-	private static byte BIT;//mix tr
+//	private static byte BIT;//mix tr
 
 	private static float PARTIALTICKS;
 	private static Frustum FRUSTUM;
@@ -88,42 +88,43 @@ public abstract class MixinEntityRenderer
 	private boolean nali_small_renderWorldPass0(EntityRenderer instance)
 	{
 //		ICamera icamera = new Frustum();
-		if ((BIT & 1) == 0)
+//		if ((Small.FLAG & 1) == 0)
+//		{
+		ForgeHooksClient.setRenderPass(0);
+		Entity entity = this.mc.getRenderViewEntity();
+		RenderGlobal renderglobal = this.mc.renderGlobal;
+		GlStateManager.matrixMode(5888);
+		GlStateManager.popMatrix();
+		GlStateManager.pushMatrix();
+		RenderHelper.enableStandardItemLighting();
+		renderglobal.renderEntities(entity, FRUSTUM, PARTIALTICKS);
+		RenderHelper.disableStandardItemLighting();
+		this.disableLightmap();
+
+		RenderO.take();
+		GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
+		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+
+		if (!Draw.MODEL_MAP.isEmpty())
 		{
-			ForgeHooksClient.setRenderPass(0);
-			Entity entity = this.mc.getRenderViewEntity();
-			RenderGlobal renderglobal = this.mc.renderGlobal;
-			GlStateManager.matrixMode(5888);
-			GlStateManager.popMatrix();
-			GlStateManager.pushMatrix();
-			RenderHelper.enableStandardItemLighting();
-			renderglobal.renderEntities(entity, FRUSTUM, PARTIALTICKS);
-			RenderHelper.disableStandardItemLighting();
-			this.disableLightmap();
+			Draw.draw(Draw.MODEL_MAP);
+		}
 
-			RenderO.take();
-			GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
-			GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
-
-			if (!Draw.MODEL_MAP.isEmpty())
-			{
-				Draw.draw(Draw.MODEL_MAP);
-			}
-
-			if ((BIT & 2) == 0)
-			{
-				if (!Draw.TRANSLUCENT_MAP.isEmpty())
-				{
-//					Draw.draw(Draw.TRANSLUCENT_MAP);
-					Draw.drawT();
-				}
+//			if ((BIT & 2) == 0)
+//			{
+		if (!Draw.TRANSLUCENT_MAP.isEmpty())
+		{
+			Draw.draw(Draw.TRANSLUCENT_MAP);
+//			Draw.drawT();
+		}
 
 //			Draw.run();
-			}
+//			}
 
-			RenderO.free();
-			Draw.clear();
-		}
+		RenderO.free();
+		Draw.clear();
+//			Display.update();
+//		}
 
 		return true;
 	}
@@ -135,52 +136,53 @@ public abstract class MixinEntityRenderer
 		return true;
 	}
 
-	//for tr check far camera then check block around model to camera
-	//later
-	@Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderGlobal;renderBlockLayer(Lnet/minecraft/util/BlockRenderLayer;DILnet/minecraft/entity/Entity;)I", shift = At.Shift.AFTER, ordinal = 3))
-	private void nali_small_renderWorldPassB(int pass, float partialTicks, long finishTimeNano, CallbackInfo ci)
-	{
-		if ((BIT & 1) == 1)
-		{
-			ForgeHooksClient.setRenderPass(0);
-			Entity entity = this.mc.getRenderViewEntity();
-			RenderGlobal renderglobal = this.mc.renderGlobal;
-//			GlStateManager.matrixMode(5888);
-//			GlStateManager.popMatrix();
-//			GlStateManager.pushMatrix();
-			RenderHelper.enableStandardItemLighting();
-			renderglobal.renderEntities(entity, FRUSTUM, PARTIALTICKS);
-			GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-			RenderHelper.disableStandardItemLighting();
-//			this.disableLightmap();
-//			ForgeHooksClient.setRenderPass(-1);
-
-			RenderO.take();
-			GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
-			GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
-
-			if (!Draw.MODEL_MAP.isEmpty())
-			{
-				Draw.draw(Draw.MODEL_MAP);
-			}
-
-			if ((BIT & 2) == 2)
-			{
-				if (!Draw.TRANSLUCENT_MAP.isEmpty())
-				{
-//					Draw.draw(Draw.TRANSLUCENT_MAP);
-					Draw.drawT();
-				}
-			}
-
-			RenderO.free();
-			Draw.clear();
-//			Draw.run();
-		}
-
-//		Draw.clear();
-		BIT ^= 1 | 2;
-	}
+//	//for tr check far camera then check block around model to camera
+//	//later
+//	@Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderGlobal;renderBlockLayer(Lnet/minecraft/util/BlockRenderLayer;DILnet/minecraft/entity/Entity;)I", shift = At.Shift.AFTER, ordinal = 3))
+//	private void nali_small_renderWorldPassB(int pass, float partialTicks, long finishTimeNano, CallbackInfo ci)
+//	{
+//		if ((Small.FLAG & 1) == 1)
+//		{
+//			ForgeHooksClient.setRenderPass(0);
+//			Entity entity = this.mc.getRenderViewEntity();
+//			RenderGlobal renderglobal = this.mc.renderGlobal;
+////			GlStateManager.matrixMode(5888);
+////			GlStateManager.popMatrix();
+////			GlStateManager.pushMatrix();
+//			RenderHelper.enableStandardItemLighting();
+//			renderglobal.renderEntities(entity, FRUSTUM, PARTIALTICKS);
+//			GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+//			RenderHelper.disableStandardItemLighting();
+////			this.disableLightmap();
+////			ForgeHooksClient.setRenderPass(-1);
+//
+//			RenderO.take();
+//			GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
+//			GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+//
+//			if (!Draw.MODEL_MAP.isEmpty())
+//			{
+//				Draw.draw(Draw.MODEL_MAP);
+//			}
+//
+////			if ((BIT & 2) == 2)
+//			{
+//				if (!Draw.TRANSLUCENT_MAP.isEmpty())
+//				{
+////					Draw.draw(Draw.TRANSLUCENT_MAP);
+//					Draw.drawT();
+//				}
+//			}
+//
+//			RenderO.free();
+//			Draw.clear();
+////			Draw.run();
+////			Display.update();
+//		}
+//
+////		Draw.clear();
+//		Small.FLAG ^= 1/* | 2*/;
+//	}
 
 //	@Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderGlobal;renderBlockLayer(Lnet/minecraft/util/BlockRenderLayer;DILnet/minecraft/entity/Entity;)I", shift = At.Shift.BEFORE, ordinal = 3))
 //	private void nali_renderWorldPass1(int pass, float partialTicks, long finishTimeNano, CallbackInfo ci)

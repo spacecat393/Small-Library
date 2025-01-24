@@ -32,6 +32,7 @@ import static com.nali.small.chunk.ChunkCallBack.CHUNK_LIST;
 public class Small
 {
 	public final static String ID = "small";
+//	public static byte FLAG;//blink
 
 	@Instance
 	public static Small I;
