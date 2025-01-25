@@ -162,6 +162,7 @@ public class SIEFindMove
 
 	public void updateMove(E e)
 	{
+//		e.noClip = true;
 	}
 
 	public void moveTo(E e)

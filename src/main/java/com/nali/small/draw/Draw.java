@@ -198,7 +198,8 @@ public class Draw
 //				OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
 //				Nali.warn("texture " + ByteReader.getInt(drawmap, 4));
 //				Nali.warn("texture_state " + (rg.state & 1));
-				RenderO.setTextureBuffer(drawmap.texture, (byte)(rg.flag & 1+2));
+//				RenderO.setTextureBuffer(drawmap.texture, (byte)(rg.flag & 1+2));
+				GL11.glBindTexture(GL11.GL_TEXTURE_2D, drawmap.texture);
 			}
 
 			for (Integer integer : index_integer_list)

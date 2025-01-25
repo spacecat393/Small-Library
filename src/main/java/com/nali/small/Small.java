@@ -18,6 +18,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -32,7 +34,9 @@ import static com.nali.small.chunk.ChunkCallBack.CHUNK_LIST;
 public class Small
 {
 	public final static String ID = "small";
-//	public static byte FLAG;//blink
+
+	@SideOnly(Side.CLIENT)
+	public static byte FLAG;//blink
 
 	@Instance
 	public static Small I;
