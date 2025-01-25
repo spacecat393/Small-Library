@@ -111,16 +111,16 @@ public abstract class MixinEntityRenderer
 				Draw.draw(Draw.MODEL_MAP);
 			}
 
-	//			if ((BIT & 2) == 0)
-	//			{
-			if (!Draw.TRANSLUCENT_MAP.isEmpty())
+			if ((Small.FLAG & 2) == 0)
 			{
-				Draw.draw(Draw.TRANSLUCENT_MAP);
-	//			Draw.drawT();
-			}
+				if (!Draw.TRANSLUCENT_MAP.isEmpty())
+				{
+					Draw.draw(Draw.TRANSLUCENT_MAP);
+		//			Draw.drawT();
+				}
 
 	//			Draw.run();
-	//			}
+			}
 
 			RenderO.free();
 			Draw.clear();
@@ -166,7 +166,7 @@ public abstract class MixinEntityRenderer
 				Draw.draw(Draw.MODEL_MAP);
 			}
 
-//			if ((BIT & 2) == 2)
+			if ((Small.FLAG & 2) == 0)
 			{
 				if (!Draw.TRANSLUCENT_MAP.isEmpty())
 				{

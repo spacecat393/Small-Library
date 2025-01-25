@@ -17,6 +17,7 @@ public interface IMixN
 {
 	default void Ninit()
 	{
+		//check server
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
 		{
 			this.newC();

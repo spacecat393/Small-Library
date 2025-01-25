@@ -14,7 +14,6 @@ import com.nali.small.entity.memo.client.render.FRenderE;
 import com.nali.small.render.IRenderS;
 import com.nali.system.BothLoader;
 import com.nali.system.opengl.memo.MemoF2;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -78,17 +77,17 @@ public abstract class MixRenderSe
 //		r.draw(/*ox, oy, oz*/);
 		DrawDa drawda = new DrawDa();
 		r.startDrawLater(this.c.i.getBD(), this.c.r, drawda);
-		if (/*e.isInvisible() || */e.isInvisibleToPlayer(Minecraft.getMinecraft().player))
-		{
-//			if (drawda.color_v4_float[3] == 0)
-//			{
-//				drawda.color_v4_float[3] = 0.75F;
-//			}
-//			else
-//			{
-			drawda.color_v4_float[3] *= 0.75F;
-//			}
-		}
+//		if (/*e.isInvisible() || */e.isInvisibleToPlayer(Minecraft.getMinecraft().player))
+//		{
+////			if (drawda.color_v4_float[3] == 0)
+////			{
+////				drawda.color_v4_float[3] = 0.75F;
+////			}
+////			else
+////			{
+//			drawda.color_v4_float[3] *= 0.75F;
+////			}
+//		}
 		r.endDrawLater(drawda);
 //		if (invisible)
 //		{
