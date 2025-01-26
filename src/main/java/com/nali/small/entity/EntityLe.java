@@ -257,7 +257,7 @@ public abstract class EntityLe extends EntityLivingBase implements IMixE
 	@Override
 	public boolean canBeCollidedWith()
 	{
-		return false;
+		return true;
 	}
 
 //	@Override
