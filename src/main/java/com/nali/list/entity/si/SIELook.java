@@ -108,77 +108,77 @@ public class SIELook
 		E e = this.s.i.getE();
 		if (this.s.isMove(e))
 		{
-//			if (this.max > 0)
-//			{
-////				int yaw;
-//
-//				this.looking = false;
-////				double xx = this.x - e.posX;
-////				double yy = this.y - e.posY;
-////				double zz = this.z - e.posZ;
-////				double xx = this.x + e.posX;
-////				double yy = this.y + e.posY;
-////				double zz = this.z + e.posZ;
-////				float new_yaw = (float)Math.toDegrees(Math.atan2(zz, xx));
-////				float new_yaw = (float)Math.toDegrees(Math.atan2(xx, zz));
-//				float new_yaw;
-////				float new_yaw = (float)Math.toDegrees(Math.atan2(this.z, this.x));
-////				float new_pitch = (float)Math.toDegrees(Math.asin(yy));
-//				float new_pitch;
-//				if (this.x == 0 && this.z == 0)
-//				{
-//					new_yaw = -90;
-//				}
-//				else
-//				{
-//					new_yaw = ((float)Math.toDegrees(Math.atan2(this.z, this.x)) - 90) / this.max;
-//				}
-//
-//				if (this.y == 0)
-//				{
-//					new_pitch = 0;
-//				}
-//				else
-//				{
-//					new_pitch = (float)Math.toDegrees(Math.asin(this.y)) / this.max;
-//				}
-//
-////				Nali.warn("new_yaw " + new_yaw);
-////				Nali.warn("new_pitch " + new_pitch);
-////				double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
-////				float f = (float)(MathHelper.atan2(d2, d0) * (180.0D / Math.PI)) - 90.0F;
-////				float f1 = (float)(-(MathHelper.atan2(d1, d3) * (180.0D / Math.PI)));
-//
-//				Entity riding_entity = e.getRidingEntity();
-//				if (riding_entity != null)
-//				{
-////					yaw = (int)riding_entity.rotationYaw;
-//////					riding_entity.rotationYaw = this.limitAngle(riding_entity.rotationYaw, f, this.max);
-//////					riding_entity.rotationPitch = this.limitAngle(riding_entity.rotationPitch, f1, this.max);
-//					riding_entity.setRotationYawHead(riding_entity.rotationYaw);
-//					e.rotationYaw = riding_entity.rotationYaw;
-//
-////					if (yaw == (int)riding_entity.rotationYaw)
-////					{
-////						this.done = true;
-////					}
-//				}
-//				else
-//				{
-////					yaw = (int)e.rotationYaw;
-//////					e.rotationYaw = this.limitAngle(e.rotationYaw, f, this.max);
-//////					e.rotationPitch = this.limitAngle(e.rotationPitch, f1, this.max);
-//
-//					e.rotationYaw = new_yaw;
-//					e.rotationPitch = new_pitch;
-//
-////					if (yaw == (int)e.rotationYaw)
-////					{
-////						this.done = true;
-////					}
-//				}
-//				--this.max;
-//			}
+			if (this.max > 0)
+			{
+//				int yaw;
+
+				this.looking = false;
+//				double xx = this.x - e.posX;
+//				double yy = this.y - e.posY;
+//				double zz = this.z - e.posZ;
+//				double xx = this.x + e.posX;
+//				double yy = this.y + e.posY;
+//				double zz = this.z + e.posZ;
+//				float new_yaw = (float)Math.toDegrees(Math.atan2(zz, xx));
+//				float new_yaw = (float)Math.toDegrees(Math.atan2(xx, zz));
+				float new_yaw;
+//				float new_yaw = (float)Math.toDegrees(Math.atan2(this.z, this.x));
+//				float new_pitch = (float)Math.toDegrees(Math.asin(yy));
+				float new_pitch;
+				if (this.x == 0 && this.z == 0)
+				{
+					new_yaw = -90;
+				}
+				else
+				{
+					new_yaw = ((float)Math.toDegrees(Math.atan2(this.z, this.x)) - 90) / this.max;
+				}
+
+				if (this.y == 0)
+				{
+					new_pitch = 0;
+				}
+				else
+				{
+					new_pitch = (float)Math.toDegrees(Math.asin(this.y)) / this.max;
+				}
+
+//				Nali.warn("new_yaw " + new_yaw);
+//				Nali.warn("new_pitch " + new_pitch);
+//				double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
+//				float f = (float)(MathHelper.atan2(d2, d0) * (180.0D / Math.PI)) - 90.0F;
+//				float f1 = (float)(-(MathHelper.atan2(d1, d3) * (180.0D / Math.PI)));
+
+				Entity riding_entity = e.getRidingEntity();
+				if (riding_entity != null)
+				{
+//					yaw = (int)riding_entity.rotationYaw;
+////					riding_entity.rotationYaw = this.limitAngle(riding_entity.rotationYaw, f, this.max);
+////					riding_entity.rotationPitch = this.limitAngle(riding_entity.rotationPitch, f1, this.max);
+					riding_entity.setRotationYawHead(riding_entity.rotationYaw);
+					e.rotationYaw = riding_entity.rotationYaw;
+
+//					if (yaw == (int)riding_entity.rotationYaw)
+//					{
+//						this.done = true;
+//					}
+				}
+				else
+				{
+//					yaw = (int)e.rotationYaw;
+////					e.rotationYaw = this.limitAngle(e.rotationYaw, f, this.max);
+////					e.rotationPitch = this.limitAngle(e.rotationPitch, f1, this.max);
+
+					e.rotationYaw = new_yaw;
+					e.rotationPitch = new_pitch;
+
+//					if (yaw == (int)e.rotationYaw)
+//					{
+//						this.done = true;
+//					}
+				}
+				--this.max;
+			}
 		}
 
 		this.syncLook(e);

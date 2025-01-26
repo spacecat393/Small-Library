@@ -5,15 +5,14 @@ import com.nali.small.Small;
 import com.nali.small.draw.Draw;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.BlockRenderLayer;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL14;
+import org.lwjgl.opengl.GL20;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityRenderer.class)
@@ -150,7 +149,10 @@ public abstract class MixinEntityRenderer
 
 //	@Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderGlobal;renderBlockLayer(Lnet/minecraft/util/BlockRenderLayer;DILnet/minecraft/entity/Entity;)I", shift = At.Shift.AFTER, ordinal = 3))
 //	private void nali_small_renderWorldPassB(int pass, float partialTicks, long finishTimeNano, CallbackInfo ci)
-	@Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderGlobal;renderBlockLayer(Lnet/minecraft/util/BlockRenderLayer;DILnet/minecraft/entity/Entity;)I", shift = At.Shift.BEFORE, ordinal = 0))
+	//draw before get pos
+//	@Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderGlobal;renderBlockLayer(Lnet/minecraft/util/BlockRenderLayer;DILnet/minecraft/entity/Entity;)I", shift = At.Shift.BEFORE, ordinal = 0))
+	@Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;disableAlpha()V", shift = At.Shift.AFTER, ordinal = 0))
+//	@Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderGlobal;renderEntities(Lnet/minecraft/entity/Entity;Lnet/minecraft/client/renderer/culling/ICamera;F)V", shift = At.Shift.AFTER, ordinal = 0))
 	private void nali_small_renderWorldPass(int pass, float partialTicks, long finishTimeNano, CallbackInfo ci)
 	{
 //		if ((Small.FLAG & 1) == 1)
@@ -168,9 +170,12 @@ public abstract class MixinEntityRenderer
 ////			this.disableLightmap();
 ////			ForgeHooksClient.setRenderPass(-1);
 //
+//		GlStateManager.enableAlpha();
 		RenderO.take();
-//			GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
-//			GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
+		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 
 		if (!Draw.MODEL_MAP.isEmpty())
 		{
@@ -215,16 +220,4 @@ public abstract class MixinEntityRenderer
 //	private void nali_renderWorldPass1(int pass, float partialTicks, long finishTimeNano, CallbackInfo ci)
 //	{
 //	}
-
-	@Redirect(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderGlobal;renderBlockLayer(Lnet/minecraft/util/BlockRenderLayer;DILnet/minecraft/entity/Entity;)I", ordinal = 0))
-	private int nali_small_renderWorldPassL0(RenderGlobal instance, BlockRenderLayer k, double d0, int d1, Entity d2)
-	{
-		return this.mc.renderGlobal.renderBlockLayer((Small.FLAG & 1) == 0 ? BlockRenderLayer.SOLID : BlockRenderLayer.TRANSLUCENT, d0, d1, d2);
-	}
-
-	@Redirect(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderGlobal;renderBlockLayer(Lnet/minecraft/util/BlockRenderLayer;DILnet/minecraft/entity/Entity;)I", ordinal = 3))
-	private int nali_small_renderWorldPassL2(RenderGlobal instance, BlockRenderLayer k, double d0, int d1, Entity d2)
-	{
-		return this.mc.renderGlobal.renderBlockLayer((Small.FLAG & 1) == 0 ? BlockRenderLayer.TRANSLUCENT : BlockRenderLayer.SOLID, d0, d1, d2);
-	}
 }
