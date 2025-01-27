@@ -1,20 +1,47 @@
-//package com.nali.small.mixin;
-//
-//import com.nali.render.RenderO;
-//import com.nali.small.Small;
-//import com.nali.small.draw.Draw;
-//import net.minecraft.client.renderer.EntityRenderer;
-//import org.lwjgl.opengl.GL11;
-//import org.lwjgl.opengl.GL14;
-//import org.lwjgl.opengl.GL20;
-//import org.spongepowered.asm.mixin.Mixin;
-//import org.spongepowered.asm.mixin.injection.At;
-//import org.spongepowered.asm.mixin.injection.Inject;
-//import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-//
-//@Mixin(EntityRenderer.class)
-//public abstract class MixinEntityRenderer
-//{
+package com.nali.small.mixin;
+
+import com.nali.render.RenderO;
+import com.nali.small.Small;
+import com.nali.small.draw.Draw;
+import net.minecraft.client.renderer.EntityRenderer;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL14;
+import org.lwjgl.opengl.GL20;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(EntityRenderer.class)
+public abstract class MixinEntityRenderer
+{
+	@Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderGlobal;renderEntities(Lnet/minecraft/entity/Entity;Lnet/minecraft/client/renderer/culling/ICamera;F)V", shift = At.Shift.AFTER, ordinal = 0))
+	private void nali_small_renderWorldPassA(int pass, float partialTicks, long finishTimeNano, CallbackInfo ci)
+	{
+		RenderO.take();
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
+		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+
+		if (!Draw.TE_MODEL_MAP.isEmpty())
+		{
+			Draw.draw(Draw.TE_MODEL_MAP);
+		}
+
+		if ((Small.FLAG & 1) == 0)
+		{
+			if (!Draw.TE_TRANSLUCENT_MAP.isEmpty())
+			{
+//				Draw.draw(Draw.TE_TRANSLUCENT_MAP);
+				Draw.drawT(Draw.TE_TRANSLUCENT_MAP);
+			}
+		}
+
+		RenderO.free();
+		Draw.clear();
+	}
+
 ////	@Shadow @Final private Minecraft mc;
 ////
 ////	@Shadow public abstract void disableLightmap();
@@ -39,16 +66,16 @@
 //////		GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
 //////		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 //////
-//////		if (!Draw.MODEL_MAP.isEmpty())
+//////		if (!Draw.E_MODEL_MAP.isEmpty())
 //////		{
-//////			Draw.draw(Draw.MODEL_MAP);
+//////			Draw.draw(Draw.E_MODEL_MAP);
 //////		}
 //////
 //////		if ((BIT & 1) == 0)
 //////		{
-//////			if (!Draw.TRANSLUCENT_MAP.isEmpty())
+//////			if (!Draw.E_TRANSLUCENT_MAP.isEmpty())
 //////			{
-////////			draw(TRANSLUCENT_MAP);
+////////			draw(E_TRANSLUCENT_MAP);
 //////				Draw.drawT();
 //////			}
 //////
@@ -60,9 +87,9 @@
 //////
 ////////		RenderO.take();
 ////////
-////////		if (!Draw.MODEL_MAP.isEmpty())
+////////		if (!Draw.E_MODEL_MAP.isEmpty())
 ////////		{
-////////			Draw.draw(Draw.MODEL_MAP);
+////////			Draw.draw(Draw.E_MODEL_MAP);
 ////////		}
 ////////
 ////////		//model texture
@@ -96,7 +123,7 @@
 ////////			GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
 ////////			GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 ////////
-////////			if (!Draw.MODEL_MAP.isEmpty())//mixin to own render
+////////			if (!Draw.E_MODEL_MAP.isEmpty())//mixin to own render
 ////////			{
 ////////				//bindtex 0
 //////////				GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
@@ -113,14 +140,14 @@
 //////////				GL11.glNormalPointer(GL11.GL_FLOAT, stride, 3 * Float.BYTES);
 //////////				GL11.glTexCoordPointer(2, GL11.GL_FLOAT, stride, 6 * Float.BYTES);
 ////////
-////////				Draw.draw(Draw.MODEL_MAP);
+////////				Draw.draw(Draw.E_MODEL_MAP);
 ////////			}
 ////////
 ////////			if ((Small.FLAG & 2) == 0)
 ////////			{
-////////				if (!Draw.TRANSLUCENT_MAP.isEmpty())
+////////				if (!Draw.E_TRANSLUCENT_MAP.isEmpty())
 ////////				{
-////////					Draw.draw(Draw.TRANSLUCENT_MAP);
+////////					Draw.draw(Draw.E_TRANSLUCENT_MAP);
 ////////		//			Draw.drawT();
 ////////				}
 ////////
@@ -174,17 +201,17 @@
 //		GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
 //		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 //
-//		if (!Draw.MODEL_MAP.isEmpty())
+//		if (!Draw.E_MODEL_MAP.isEmpty())
 //		{
-//			Draw.draw(Draw.MODEL_MAP);
+//			Draw.draw(Draw.E_MODEL_MAP);
 //		}
 //
 ////		if ((Small.FLAG & 2) == 0)
 //		if ((Small.FLAG & 1) == 0)
 //		{
-//			if (!Draw.TRANSLUCENT_MAP.isEmpty())
+//			if (!Draw.E_TRANSLUCENT_MAP.isEmpty())
 //			{
-////					Draw.draw(Draw.TRANSLUCENT_MAP);
+////					Draw.draw(Draw.E_TRANSLUCENT_MAP);
 //				Draw.drawT();
 //			}
 //		}
@@ -204,10 +231,10 @@
 ////	{
 ////		Draw.run();
 ///// /		RenderO.take();
-///// /		if (!Draw.TRANSLUCENT_MAP.isEmpty())
+///// /		if (!Draw.E_TRANSLUCENT_MAP.isEmpty())
 ///// /		{
 ///// ///			GL11.glDepthMask(false);
-///// /			Draw.draw(Draw.TRANSLUCENT_MAP);
+///// /			Draw.draw(Draw.E_TRANSLUCENT_MAP);
 ///// /		}
 ///// /		RenderO.free();
 ///// /		Draw.clear();
@@ -217,4 +244,4 @@
 ////	private void nali_renderWorldPass1(int pass, float partialTicks, long finishTimeNano, CallbackInfo ci)
 ////	{
 ////	}
-//}
+}

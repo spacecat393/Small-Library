@@ -37,7 +37,7 @@ public abstract class MixinRenderGlobal
 	private static ClassInheritanceMultiMap<Entity>[] NEW_ENTITY_CLASSINHERITANCEMULTIMAP_ARRAY = new ClassInheritanceMultiMap[1];
 
 	@Redirect(method = "renderEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/BlockPos;getY()I"))
-	private int nali_extra_renderEntities(BlockPos instance)
+	private int nali_small_renderEntities(BlockPos instance)
 	{
 		ClassInheritanceMultiMap<Entity> entity_classinheritancemultimap = ENTITY_CLASSINHERITANCEMULTIMAP_ARRAY[instance.getY() / 16];
 
@@ -119,14 +119,14 @@ public abstract class MixinRenderGlobal
 	}
 
 	@Redirect(method = "renderEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/chunk/Chunk;getEntityLists()[Lnet/minecraft/util/ClassInheritanceMultiMap;"))
-	private ClassInheritanceMultiMap<Entity>[] nali_extra_renderEntities(Chunk chunk)
+	private ClassInheritanceMultiMap<Entity>[] nali_small_renderEntities(Chunk chunk)
 	{
 		ENTITY_CLASSINHERITANCEMULTIMAP_ARRAY = chunk.getEntityLists();
 		return NEW_ENTITY_CLASSINHERITANCEMULTIMAP_ARRAY;
 	}
 
 	@Redirect(method = "renderEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderManager;shouldRender(Lnet/minecraft/entity/Entity;Lnet/minecraft/client/renderer/culling/ICamera;DDD)Z"))
-	private boolean nali_extra_renderEntities(RenderManager renderManager, Entity entity2, ICamera camera, double camX, double camY, double camZ)
+	private boolean nali_small_renderEntities(RenderManager renderManager, Entity entity2, ICamera camera, double camX, double camY, double camZ)
 	{
 		if (LAST != -3)
 		{
@@ -141,14 +141,14 @@ public abstract class MixinRenderGlobal
 
 //	//always true
 //	@Redirect(method = "renderEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/WorldClient;isBlockLoaded(Lnet/minecraft/util/math/BlockPos;)Z"))
-//	private boolean nali_extra_renderEntities(WorldClient instance, BlockPos blockPos)
+//	private boolean nali_small_renderEntities(WorldClient instance, BlockPos blockPos)
 //	{
 /// /		return instance.isBlockLoaded(blockPos);
 //		return true;
 //	}
 
 	@Inject(method = "renderEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderManager;renderEntityStatic(Lnet/minecraft/entity/Entity;FZ)V", ordinal = 1, shift = At.Shift.AFTER))
-	private void nali_extra_renderEntities(Entity renderViewEntity, ICamera camera, float partialTicks, CallbackInfo ci)
+	private void nali_small_renderEntities(Entity renderViewEntity, ICamera camera, float partialTicks, CallbackInfo ci)
 	{
 		if (LAST == -2)
 		{
@@ -158,17 +158,17 @@ public abstract class MixinRenderGlobal
 			GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
 			GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 
-			if (!Draw.MODEL_MAP.isEmpty())
+			if (!Draw.E_MODEL_MAP.isEmpty())
 			{
-				Draw.draw(Draw.MODEL_MAP);
+				Draw.draw(Draw.E_MODEL_MAP);
 			}
 
 			if ((Small.FLAG & 1) == 0)
 			{
-				if (!Draw.TRANSLUCENT_MAP.isEmpty())
+				if (!Draw.E_TRANSLUCENT_MAP.isEmpty())
 				{
-//					Draw.draw(Draw.TRANSLUCENT_MAP);
-					Draw.drawT();
+//					Draw.draw(Draw.E_TRANSLUCENT_MAP);
+					Draw.drawT(Draw.E_TRANSLUCENT_MAP);
 				}
 			}
 

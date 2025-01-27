@@ -29,8 +29,11 @@ public class Draw
 //	public static Map<Integer, double[]> FAR_DOUBLE_ARRAY_LIST = new HashMap();
 	public static int DATA_SIZE;
 
-	public static Map<DrawMap, List<Integer>> MODEL_MAP = new HashMap();
-	public static Map<DrawMap, List<Integer>> TRANSLUCENT_MAP = new HashMap();
+	public static Map<DrawMap, List<Integer>> E_MODEL_MAP = new HashMap();
+	public static Map<DrawMap, List<Integer>> E_TRANSLUCENT_MAP = new HashMap();
+
+	public static Map<DrawMap, List<Integer>> TE_MODEL_MAP = new HashMap();
+	public static Map<DrawMap, List<Integer>> TE_TRANSLUCENT_MAP = new HashMap();
 //	public static List<DrawDa> TRANSLUCENT_DRAWDA_LIST = new ArrayList();
 
 	public static void add(DrawMap drawmap)
@@ -38,16 +41,32 @@ public class Draw
 		List<Integer> index_integer_list;
 		Map<DrawMap, List<Integer>> drawmap_map;
 
-		if ((drawmap.extra_bit & 1) == 1)
+		if ((drawmap.extra_bit & 16) == 16)
 		{
-			index_integer_list = TRANSLUCENT_MAP.get(drawmap);
-			drawmap_map = TRANSLUCENT_MAP;
-//			return;
+			if ((drawmap.extra_bit & 1) == 1)
+			{
+				//no sort
+				index_integer_list = TE_TRANSLUCENT_MAP.get(drawmap);
+				drawmap_map = TE_TRANSLUCENT_MAP;
+			}
+			else
+			{
+				index_integer_list = TE_MODEL_MAP.get(drawmap);
+				drawmap_map = TE_MODEL_MAP;
+			}
 		}
 		else
 		{
-			index_integer_list = MODEL_MAP.get(drawmap);
-			drawmap_map = MODEL_MAP;
+			if ((drawmap.extra_bit & 1) == 1)
+			{
+				index_integer_list = E_TRANSLUCENT_MAP.get(drawmap);
+				drawmap_map = E_TRANSLUCENT_MAP;
+			}
+			else
+			{
+				index_integer_list = E_MODEL_MAP.get(drawmap);
+				drawmap_map = E_MODEL_MAP;
+			}
 		}
 
 		if (index_integer_list == null)
@@ -76,9 +95,9 @@ public class Draw
 //		GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
 //		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 //
-//		if (!MODEL_MAP.isEmpty())
+//		if (!E_MODEL_MAP.isEmpty())
 //		{
-//			draw(MODEL_MAP);
+//			draw(E_MODEL_MAP);
 //		}
 //
 //		//model texture
@@ -87,9 +106,9 @@ public class Draw
 ////			draw(E_GLOW_MAP);
 ////		}
 //
-//		if (!TRANSLUCENT_MAP.isEmpty())
+//		if (!E_TRANSLUCENT_MAP.isEmpty())
 //		{
-//			draw(TRANSLUCENT_MAP);
+//			draw(E_TRANSLUCENT_MAP);
 ////			drawT();
 //		}
 //
@@ -153,8 +172,8 @@ public class Draw
 	public static void clear()
 	{
 		DATA_SIZE = 0;
-		MODEL_MAP.clear();
-		TRANSLUCENT_MAP.clear();
+		E_MODEL_MAP.clear();
+		E_TRANSLUCENT_MAP.clear();
 //		TRANSLUCENT_DRAWDA_LIST.clear();
 //		E_MODEL_MAP.clear();
 //		E_TRANSLUCENT_MAP.clear();
@@ -164,6 +183,9 @@ public class Draw
 		DRAWDA_LIST.clear();
 		KEY_FLOAT_ARRAY_LIST.clear();
 		DrawMap.DRAWMAP_LIST.clear();
+
+		TE_MODEL_MAP.clear();
+		TE_TRANSLUCENT_MAP.clear();
 	}
 
 	public static void draw(Map<DrawMap, List<Integer>> model_map)
@@ -257,9 +279,8 @@ public class Draw
 		}
 	}
 
-	public static void drawT()
+	public static void drawT(Map<DrawMap, List<Integer>> model_map)
 	{
-		Map<DrawMap, List<Integer>> model_map = TRANSLUCENT_MAP;
 		DrawMap[] drawmap_array = model_map.keySet().toArray(new DrawMap[0]);
 		List<Integer>[] values_integer_list = model_map.values().toArray(new ArrayList[0]);
 
