@@ -22,10 +22,10 @@
 	],
 	"client": [
 		"IMixinLayerArmorBase",
-		"MixinEntityRenderer",
 		"MixinItemRenderer",
 		"MixinMinecraft",
 		"MixinRenderEntityItem",
+		"MixinRenderGlobal",
 		"MixinRenderItem"
 	]
 }
