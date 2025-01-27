@@ -14,11 +14,11 @@ public class MixinMinecraftServer
 	@Inject(method = "tick", at = @At(value = "HEAD"))
 	private void tick(CallbackInfo ci)
 	{
-		for (Runnable runnable : SDaInvSelect.RUNNABLE_LIST)
+		for (int i = 0; i < SDaInvSelect.RUNNABLE_LIST.size(); ++i)
 		{
 			try
 			{
-				runnable.run();
+				SDaInvSelect.RUNNABLE_LIST.get(i).run();
 			}
 			catch (Exception e)
 			{

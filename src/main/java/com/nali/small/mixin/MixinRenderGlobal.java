@@ -136,7 +136,13 @@ public abstract class MixinRenderGlobal
 			}
 		}
 
-		return renderManager.shouldRender(entity2, camera, camX, camY, camZ) || entity2.isRidingOrBeingRiddenBy(this.mc.player);
+		boolean render = renderManager.shouldRender(entity2, camera, camX, camY, camZ) || entity2.isRidingOrBeingRiddenBy(this.mc.player);
+		if (!render)
+		{
+			render();
+		}
+
+		return render;
 	}
 
 //	//always true
@@ -150,32 +156,7 @@ public abstract class MixinRenderGlobal
 	@Inject(method = "renderEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderManager;renderEntityStatic(Lnet/minecraft/entity/Entity;FZ)V", ordinal = 1, shift = At.Shift.AFTER))
 	private void nali_small_renderEntities(Entity renderViewEntity, ICamera camera, float partialTicks, CallbackInfo ci)
 	{
-		if (LAST == -2)
-		{
-			RenderO.take();
-			GL11.glEnable(GL11.GL_DEPTH_TEST);
-			GL11.glEnable(GL11.GL_BLEND);
-			GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
-			GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
-
-			if (!Draw.E_MODEL_MAP.isEmpty())
-			{
-				Draw.draw(Draw.E_MODEL_MAP);
-			}
-
-			if ((Small.FLAG & 1) == 0)
-			{
-				if (!Draw.E_TRANSLUCENT_MAP.isEmpty())
-				{
-//					Draw.draw(Draw.E_TRANSLUCENT_MAP);
-					Draw.drawT(Draw.E_TRANSLUCENT_MAP);
-				}
-			}
-
-			RenderO.free();
-			Draw.clear();
-			LAST = -3;
-		}
+		render();
 	}
 
 //	private static int PASS;
@@ -212,4 +193,34 @@ public abstract class MixinRenderGlobal
 //			Draw.clear();
 //		}
 //	}
+
+	private static void render()
+	{
+		if (LAST == -2)
+		{
+			RenderO.take();
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GL11.glEnable(GL11.GL_BLEND);
+			GL20.glBlendEquationSeparate(GL14.GL_FUNC_ADD, GL14.GL_FUNC_ADD);
+			GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+
+			if (!Draw.E_MODEL_MAP.isEmpty())
+			{
+				Draw.draw(Draw.E_MODEL_MAP);
+			}
+
+			if ((Small.FLAG & 1) == 0)
+			{
+				if (!Draw.E_TRANSLUCENT_MAP.isEmpty())
+				{
+//					Draw.draw(Draw.E_TRANSLUCENT_MAP);
+					Draw.drawT(Draw.E_TRANSLUCENT_MAP);
+				}
+			}
+
+			RenderO.free();
+			Draw.clear();
+			LAST = -3;
+		}
+	}
 }

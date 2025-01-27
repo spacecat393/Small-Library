@@ -102,6 +102,7 @@ public abstract class MixBoxE
 		if (index != -1)
 		{
 			this.hite_list.get(index).run(entity);
+			this.last_time = Minecraft.getSystemTime();
 			return true;
 		}
 

@@ -118,6 +118,7 @@ public class SIEFindMove
 					this.goal_x = (int)this.d_goal_x;
 					this.goal_y = (int)this.d_goal_y;
 					this.goal_z = (int)this.d_goal_z;
+//					e.noClip = true;
 					if (this.temp_goal_x == this.goal_x && this.temp_goal_y == this.goal_y && this.temp_goal_z == this.goal_z && this.to_goal_snode != null/* && !this.path_blockpos_list.isEmpty()*/)
 					{
 						this.moveTo(e);
@@ -157,6 +158,7 @@ public class SIEFindMove
 		if (this.move_y != 0 || this.move_x != 0 || this.move_z != 0)
 		{
 			e.move(MoverType.SELF, this.move_x, this.move_y, this.move_z);
+//			e.noClip = false;
 		}
 	}
 
@@ -185,7 +187,7 @@ public class SIEFindMove
 
 		BlockPos current_blockpos = this.to_goal_snode.blockpos;
 		double b_x = current_blockpos.getX() + 0.5D;
-		double b_y = current_blockpos.getY();
+		double b_y = current_blockpos.getY() + 0.5D;
 		double b_z = current_blockpos.getZ() + 0.5D;
 		this.move_x += (b_x - e.posX) / 2.0F;
 		this.move_y = (b_y - e.posY) / 2.0F;
