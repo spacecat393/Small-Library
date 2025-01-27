@@ -1,7 +1,6 @@
 package com.nali.small.entity.memo.server.si.frame.floopfree;
 
 import com.nali.da.IBothDaE;
-import com.nali.da.IBothDaO;
 import com.nali.da.IBothDaS;
 import com.nali.da.IBothDaSe;
 import com.nali.list.entity.si.SIEPat;
@@ -16,7 +15,7 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 
 public class KeySleFLoopFreePE
 <
-	BD extends IBothDaE & IBothDaO & IBothDaS & IBothDaSe,
+	BD extends IBothDaE & IBothDaS & IBothDaSe,
 	E extends EntityLe,
 	I extends IMixE<BD, E> & IMixES & IMixESInv,
 	S extends ServerLe<BD, E, I, MS> & IServerS,

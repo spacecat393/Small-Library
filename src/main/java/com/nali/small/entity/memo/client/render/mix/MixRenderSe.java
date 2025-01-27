@@ -115,14 +115,14 @@ public abstract class MixRenderSe
 		R r = this.c.r;
 		BD bd = this.c.i.getBD();
 		MemoF2 f2 = BothLoader.F2_LIST.get(bd.S_FrameID());
-		f2.initSkinning(bd, r.skinning_float_array/*memoanimation*/);
+		f2.initS(bd, r.skinning_float_array/*memoanimation*/);
 
 //		if (!this.c.fake)
 //		{
 		this.c.i.mulFrame(r.skinning_float_array, r.key_short_array, partial_ticks);
 //		}
 
-		f2.setSkinning(bd, r.skinning_float_array, r.key_short_array/*memoanimation*/);
+		f2.setS(bd, r.skinning_float_array, r.key_short_array/*memoanimation*/);
 	}
 
 //	public void renderHitBox(FRenderE<E> rendere)

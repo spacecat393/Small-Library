@@ -11,7 +11,6 @@ import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
 import com.nali.system.opengl.memo.client.MemoG;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -63,7 +62,7 @@ public class RenderSe
 		}
 
 		E e = i.getE();
-		return result/* || e == null*//* || e.isInvisible()*/ || e.isInvisibleToPlayer(Minecraft.getMinecraft().player);
+		return result || e == null || e.isInvisible()/* || e.isInvisibleToPlayer(Minecraft.getMinecraft().player)*/;
 	}
 
 //	@Override

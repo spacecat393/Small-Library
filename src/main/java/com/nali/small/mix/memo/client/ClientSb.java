@@ -35,9 +35,9 @@ public abstract class ClientSb
 		MemoF2 f2 = BothLoader.F2_LIST.get(bd.S_FrameID());
 
 		this.r.updateLight(t.getWorld(), t.getPos().up());
-		f2.initSkinning(bd, this.r.skinning_float_array/*memoanimation*/);
+		f2.initS(bd, this.r.skinning_float_array/*memoanimation*/);
 		this.updateFrame(this.r);
-		f2.setSkinning(bd, this.r.skinning_float_array, this.r.key_short_array/*memoanimation*/);
+		f2.setS(bd, this.r.skinning_float_array, this.r.key_short_array/*memoanimation*/);
 
 		super.render(t, x, y, z, partialTicks, destroyStage, alpha);
 //		GL11.glPushMatrix();

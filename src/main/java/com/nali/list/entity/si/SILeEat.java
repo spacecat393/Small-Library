@@ -2,7 +2,6 @@ package com.nali.list.entity.si;
 
 import com.mojang.authlib.GameProfile;
 import com.nali.da.IBothDaE;
-import com.nali.da.IBothDaO;
 import com.nali.da.IBothDaS;
 import com.nali.da.IBothDaSe;
 import com.nali.small.entity.EntityLe;
@@ -36,7 +35,7 @@ import java.util.List;
 
 public class SILeEat
 <
-	BD extends IBothDaE & IBothDaO & IBothDaS & IBothDaSe,
+	BD extends IBothDaE & IBothDaS & IBothDaSe,
 	E extends EntityLe,
 	I extends IMixE<BD, E> & IMixES & IMixESInv,
 	S extends ServerLe<BD, E, I, MS> & IServerS,
@@ -118,11 +117,11 @@ public class SILeEat
 			MemoF2 f2 = BothLoader.F2_LIST.get(bd.S_FrameID());
 			int max_bones = f2.bone;
 			float[] skinning_float_array = new float[max_bones * 16];
-			f2.initSkinning(bd, skinning_float_array);
+			f2.initS(bd, skinning_float_array);
 			this.s.i.mulFrame(skinning_float_array, this.siekey.key_short_array, 1);
-			f2.setSkinning(bd, skinning_float_array, this.siekey.key_short_array);
+			f2.setS(bd, skinning_float_array, this.siekey.key_short_array);
 			//e0-skinning
-			float[] pos_vec4 = f2.getScale3DSkinning(this.s.scale, skinning_float_array, (float)e.posX, (float)e.posY, (float)e.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
+			float[] pos_vec4 = f2.getSV4FloatArray(this.s.scale, skinning_float_array, (float)e.posX, (float)e.posY, (float)e.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
 
 			double x = pos_vec4[0] / pos_vec4[3];
 			double y = pos_vec4[1] / pos_vec4[3];
@@ -166,63 +165,15 @@ public class SILeEat
 	{
 		E e = this.s.i.getE();
 
-
-		BD bd = this.s.i.getBD();
-		int[] iv_int_array = this.s.i.getIVIntArray();
-		//s0-skinning
-		MemoF2 f2 = BothLoader.F2_LIST.get(bd.S_FrameID());
-		int max_bones = f2.bone;
-		float[] skinning_float_array = new float[max_bones * 16];
-		f2.initSkinning(bd, skinning_float_array);
-		this.s.i.mulFrame(skinning_float_array, this.siekey.key_short_array, 1);
-		f2.setSkinning(bd, skinning_float_array, this.siekey.key_short_array);
-		//e0-skinning
-//		//s0-find
-//		float epsilon = 0.00001F;
-//		MemoA2 ra2 = BothLoader.A2_MAP.get(iv_int_array[10]);
-//		float[] vertex_float_array = ra2.vertex_float_array;
-//		for (int i = 0; i < vertex_float_array.length; i += 3)
-//		{
-//			if
-//			(
-//				Math.abs(vertex_float_array[i + 0] - 0.000026F) < epsilon &&
-//				Math.abs(vertex_float_array[i + 1] - -0.101241F) < epsilon &&
-//				Math.abs(vertex_float_array[i + 2] - 0.671901F) < epsilon
-//			)
-//			{
-//				Nali.warn("I " + i);
-//				Nali.warn("X " + Math.abs(vertex_float_array[i + 0] - 0.000026F) + "   " + vertex_float_array[i + 0]);
-//				Nali.warn("Y " + Math.abs(vertex_float_array[i + 1] - -0.101241F) + "   " + vertex_float_array[i + 1]);
-//				Nali.warn("Z " + Math.abs(vertex_float_array[i + 2] - 0.671901F) + "   " + vertex_float_array[i + 2]);
-////					break;
-//				float[] pos_vec4 = f2.getScale3DSkinning(this.s.scale, skinning_float_array, (float)e.posX, (float)e.posY, (float)e.posZ, 0, 0, 0, iv_int_array[10], i);
-//
-//				double x = pos_vec4[0] / pos_vec4[3];
-//				double y = pos_vec4[1] / pos_vec4[3];
-//				double z = pos_vec4[2] / pos_vec4[3];
-//
-//				this.s.worldserver.spawnParticle(EnumParticleTypes.CRIT, x, y, z, 1, 0.0D, 0.0D, 0.0D, 0.0D);
-//			}
-//		}
-//		//e0-find
-//		float[] pos_vec4 = f2.getScale3DSkinning(this.s.scale, skinning_float_array, (float)e.posX, (float)e.posY, (float)e.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
-//
-//		double x = pos_vec4[0] / pos_vec4[3];
-//		double y = pos_vec4[1] / pos_vec4[3];
-//		double z = pos_vec4[2] / pos_vec4[3];
-//
-//		this.s.worldserver.spawnParticle(EnumParticleTypes.CRIT, x, y, z, 1, 0.0D, 0.0D, 0.0D, 0.0D);
-
-
 		if (this.time > 0 && !this.s.isZeroMove(e))
 		{
 			e.heal(1);
 			this.time -= 0.05F;
 		}
 
-		for (Runnable runnable : this.runnable_list)
+		for (int i = 0; i < this.runnable_list.size(); ++i)
 		{
-			runnable.run();
+			this.runnable_list.get(i).run();
 		}
 		this.runnable_list.clear();
 	}
