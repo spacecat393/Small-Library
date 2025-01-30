@@ -4,7 +4,6 @@ import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.key.Key;
 import com.nali.gui.key.KeyEdit;
 import com.nali.gui.key.KeySelect;
-import com.nali.gui.page.Page;
 import com.nali.gui.page.PageConfig;
 import com.nali.gui.page.PageSelect;
 import com.nali.list.key.SmallPage;
@@ -84,15 +83,7 @@ public class PageSmall extends PageSelect
 	@Override
 	public void exit()
 	{
-		Page.PAGE.clear();
-
-		SmallPage.PAGE = Page.PAGE;
-		SmallPage.KEY = Key.KEY;
-
-//			PAGE_LIST.clear();
-//			KEY_LIST.clear();
-		Page.PAGE = null;
-		Key.KEY = null;
+		SmallPage.setSmallPage();
 
 		super.exit();
 	}

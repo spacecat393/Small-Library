@@ -7,6 +7,7 @@ import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPage;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.gui.page.inv.PageInv;
+import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -75,11 +76,11 @@ public class PageAdd extends PageEdit
 		}
 		else
 		{
-			byte[] byte_array = new byte[1 + 1 + 2 + 1];
+			byte[] byte_array = new byte[1 + 1 + 4 + 1];
 			byte_array[0] = SPage.ID;
 			byte_array[1] = SDaInvSelectAdd.ID;
-			ByteWriter.set(byte_array, PageInv.INV, 2);
-			byte_array[2+2] = (byte)(this.select - 2);
+			ByteWriter.set(byte_array, ByteReader.getInt(PageInv.BYTE_ARRAY, 2 + PageInv.SELECT * 4), 2);
+			byte_array[2+4] = (byte)(this.select - 2);
 			NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 		}
 //			STATE &= 255-1;

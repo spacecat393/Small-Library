@@ -81,15 +81,16 @@ public class SDaSI
 
 			short byte_array_index = 2;
 			int new_page = page * MAX_SIZE;
-			byte[] byte_array = new byte[1 + 1 + max_page * 4 + 4 + 1 + 1 + 1];
+			byte[] byte_array = new byte[1 + 1 + max_page/* * 4*/ + 4 + 1 + 1 + 1];
 			byte_array[0] = CPage.ID;
 			byte_array[1] = CDaSI.ID;
 //			if (list != null)
 //			{
 			for (int i = new_page; i < new_page + max_page; ++i)
 			{
-				ByteWriter.set(byte_array, si_byte_lsit.get(i), byte_array_index);
-				byte_array_index += 4;
+//				ByteWriter.set(byte_array, si_byte_lsit.get(i), byte_array_index);
+//				byte_array_index += 4;
+				byte_array[byte_array_index++] = si_byte_lsit.get(i);
 			}
 //			}
 			//send back entity id

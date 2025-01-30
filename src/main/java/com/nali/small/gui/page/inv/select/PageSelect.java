@@ -23,10 +23,11 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 
 	public static byte
 		STATE,//enter client init
-		PAGE,//0-127
-		MAX_PAGE,//0-119
-		MAX_MIX_PAGE;//0-127
+		MAX_PAGE;//0-118
 //		SELECT;
+	public static int
+		PAGE,
+		MAX_MIX_PAGE;
 
 	@Override
 	public void init()
@@ -34,21 +35,22 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 		if (BYTE_ARRAY != null)
 		{
 			short byte_array_length = (short)BYTE_ARRAY.length;
-			PAGE = BYTE_ARRAY[byte_array_length - 3];
-			MAX_PAGE = BYTE_ARRAY[byte_array_length - 2];
-			MAX_MIX_PAGE = BYTE_ARRAY[byte_array_length - 1];
+			PAGE = ByteReader.getInt(BYTE_ARRAY, byte_array_length - 4 - 1 - 4);
+			MAX_PAGE = BYTE_ARRAY[byte_array_length - 1 - 4];
+			MAX_MIX_PAGE = ByteReader.getInt(BYTE_ARRAY, byte_array_length - 4);
 
 			byte index = 0;
-			this.boxtextall_array = new BoxTextAll[2 + MAX_PAGE + 6];
+			this.boxtextall_array = new BoxTextAll[3 + MAX_PAGE + 6];
 			this.boxtextall_array[index++] = new BoxTextAll("INV-SELECT".toCharArray());
-			this.boxtextall_array[index++] = new BoxTextAll(("PAGE " + PAGE + " - " + MAX_MIX_PAGE).toCharArray());
+			this.boxtextall_array[index++] = new BoxTextAll(("PAGE " + PAGE).toCharArray());
+			this.boxtextall_array[index++] = new BoxTextAll(("MAX-PAGE " + MAX_MIX_PAGE).toCharArray());
 
 			short i = 2;
-			while (i < byte_array_length - 3)
+			while (i < byte_array_length - 4 - 1 - 4)
 			{
 				int id = ByteReader.getInt(BYTE_ARRAY, i);
 				i += 4;
-				String text_string = (int)id + " " + new ItemStack(Item.getItemById(id)).getDisplayName();
+				String text_string = id + " " + new ItemStack(Item.getItemById(id)).getDisplayName();
 				if (text_string.length() > 20)
 				{
 					text_string = text_string.substring(0, 20) + "...";
@@ -72,6 +74,7 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 
 			this.group_byte_array = new byte[(byte)Math.ceil((this.boxtextall_array.length - 1) / 8.0F)];
 			this.group_byte_array[0 / 8] |= 1 << 0 % 8;
+			this.group_byte_array[1 / 8] |= 1 << 1 % 8;
 			byte new_index = (byte)(index - 6);
 			this.group_byte_array[new_index / 8] |= 1 << new_index % 8;
 
@@ -109,11 +112,11 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 //		{
 //			STATE |= 1;
 
-		byte[] byte_array = new byte[1 + 1 + 1 + 1 + 2];
+		byte[] byte_array = new byte[1 + 1 + 1 + 4 + 4];
 		byte_array[0] = SPage.ID;
 		byte_array[1] = SDaInvSelect.ID;
-		byte_array[3] = PAGE;
-		ByteWriter.set(byte_array, PageInv.INV, 4);
+		ByteWriter.set(byte_array, PAGE, 3);
+		ByteWriter.set(byte_array, ByteReader.getInt(PageInv.BYTE_ARRAY, 2 + PageInv.SELECT * 4), 3+4);
 
 		byte boxtextall_array_length = (byte)this.boxtextall_array.length;
 		if (boxtextall_array_length == 7)
@@ -179,7 +182,7 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 //					SELECT = (byte)(this.select - 2);
 //					int new_index = 2 + SELECT * (8 + 2 * 4);
 //					long id = ByteReader.getLong(BYTE_ARRAY, new_index);
-				this.set(new PageItem(ByteReader.getInt(BYTE_ARRAY, (byte)(this.select - 2) * 4 + 2)/*(int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]*/), new KeyEdit());
+				this.set(new PageItem(ByteReader.getInt(BYTE_ARRAY, 2 + (byte)(this.select - 3) * 4)/*(int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]*/), new KeyEdit());
 				STATE &= 255-1;
 				return;
 			}

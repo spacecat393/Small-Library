@@ -29,10 +29,10 @@ public class SDaInvSelectAdd
 			if ((SDaInvSelect.STATE & 1) == 0)
 			{
 				SDaInvSelect.STATE |= 1;
-				short inv = ByteReader.getShort(servermessage.data, 2);
+				int inv = ByteReader.getInt(servermessage.data, 2);
 				File inv_file = new File(entityplayermp.world.getSaveHandler().getWorldDirectory(), "nali/inv/" + inv);
 
-				byte item_slot = servermessage.data[2+2];
+				byte item_slot = servermessage.data[2+4];
 
 				ItemStack itemstack = entityplayermp.inventory.getStackInSlot(item_slot);
 				if (!itemstack.isEmpty())

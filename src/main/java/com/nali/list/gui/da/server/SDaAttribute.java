@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import java.util.ArrayList;
 import java.util.List;
 
+//won't use attribute much but can force mc mob
 public class SDaAttribute
 {
 	public static byte ID;

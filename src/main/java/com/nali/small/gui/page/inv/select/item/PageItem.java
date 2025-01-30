@@ -8,6 +8,7 @@ import com.nali.list.network.method.server.SPage;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.gui.page.inv.PageInv;
 import com.nali.small.gui.page.inv.select.PageSelect;
+import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -117,25 +118,25 @@ public class PageItem extends PageEdit
 			case 5:
 				break;
 			case 7:
-				byte_array = new byte[1 + 1 + 1 + 1 + 2 + 4 + 8];
+				byte_array = new byte[1 + 1 + 1 + 1 + 4 + 4 + 8];
 				byte_array[0] = SPage.ID;
 				byte_array[1] = SDaInvSelect.ID;
 				byte_array[2] = SDaInvSelect.I_MOVE;
-				byte_array[3] = PageSelect.PAGE;
-				ByteWriter.set(byte_array, PageInv.INV, 4);
-				ByteWriter.set(byte_array, this.item_id, 4+2);
-				ByteWriter.set(byte_array, this.nbt, 4+2+4);
+				ByteWriter.set(byte_array, PageSelect.PAGE, 3);
+				ByteWriter.set(byte_array, ByteReader.getInt(PageInv.BYTE_ARRAY, 2 + PageInv.SELECT * 4), 3+4);
+				ByteWriter.set(byte_array, this.item_id, 3+4+4);
+				ByteWriter.set(byte_array, this.nbt, 3+4+4+4);
 				NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 				this.back();
 				break;
 			case 8:
-				byte_array = new byte[1 + 1 + 1 + 1 + 2 + 4];
+				byte_array = new byte[1 + 1 + 1 + 1 + 4 + 4];
 				byte_array[0] = SPage.ID;
 				byte_array[1] = SDaInvSelect.ID;
 				byte_array[2] = SDaInvSelect.I_DELETE;
-				byte_array[3] = PageSelect.PAGE;
-				ByteWriter.set(byte_array, PageInv.INV, 4);
-				ByteWriter.set(byte_array, this.item_id, 4+2);
+				ByteWriter.set(byte_array, PageSelect.PAGE, 3);
+				ByteWriter.set(byte_array, ByteReader.getInt(PageInv.BYTE_ARRAY, 2 + PageInv.SELECT * 4), 3+4);
+				ByteWriter.set(byte_array, this.item_id, 3+4+4);
 				NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 				this.back();
 				break;

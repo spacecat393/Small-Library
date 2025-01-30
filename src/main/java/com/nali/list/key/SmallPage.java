@@ -2,7 +2,6 @@ package com.nali.list.key;
 
 import com.nali.gui.key.KeySelect;
 import com.nali.gui.page.Page;
-import com.nali.gui.page.PageSelect;
 import com.nali.key.Key;
 import com.nali.small.gui.page.PageSmall;
 import net.minecraft.client.Minecraft;
@@ -10,12 +9,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SideOnly(Side.CLIENT)
 public class SmallPage extends Key
 {
-	public byte state;
+	public static byte STATE;//1key 2bit
+
 	public static Page PAGE;
 	public static com.nali.gui.key.Key KEY;
+
+	public static List<Page> PAGE_LIST = new ArrayList();
+	public static List<com.nali.gui.key.Key> KEY_LIST = new ArrayList();
 
 	@Override
 	public void run()
@@ -24,7 +30,7 @@ public class SmallPage extends Key
 		{
 			if (Keyboard.isKeyDown(Keyboard.KEY_P))
 			{
-				if ((this.state & 1) == 0)
+				if ((STATE & 1) == 0)
 				{
 //					if ((this.state & 2) == 2)
 //					{
@@ -43,31 +49,68 @@ public class SmallPage extends Key
 					setSmallPage();
 //						this.state |= 2;
 //					}
-					this.state |= 1;
+					STATE |= 1;
 				}
 			}
 			else
 			{
-				this.state &= 255-1;
+				STATE &= 255-1;
 			}
 		}
 	}
 
 	public static void setSmallPage()
 	{
+		if (Page.PAGE != null)
+		{
+			PAGE.clear();
+		}
+
 		if (PAGE == null)
 		{
 			Page.PAGE = new PageSmall();
 			com.nali.gui.key.Key.KEY = new KeySelect();
+
+			PAGE = Page.PAGE;
+			KEY = com.nali.gui.key.Key.KEY;
+
+			PAGE_LIST = new ArrayList(Page.PAGE_LIST);
+			KEY_LIST = new ArrayList(Page.KEY_LIST);
+
+			Page.PAGE.init();
+			Page.WIDTH = -1;
 		}
 		else
 		{
-			((PageSelect)PAGE).state &= 255-2;
-			Page.PAGE = PAGE;
-			com.nali.gui.key.Key.KEY = KEY;
+			if ((STATE & 2) == 2)
+			{
+				PAGE = Page.PAGE;
+				KEY = com.nali.gui.key.Key.KEY;
+
+				PAGE_LIST = new ArrayList(Page.PAGE_LIST);
+				KEY_LIST = new ArrayList(Page.KEY_LIST);
+
+				Page.PAGE_LIST.clear();
+				Page.KEY_LIST.clear();
+
+				Page.PAGE = null;
+				com.nali.gui.key.Key.KEY = null;
+
+				Minecraft.getMinecraft().mouseHelper.grabMouseCursor();
+			}
+			else
+			{
+				Page.PAGE = PAGE;
+				com.nali.gui.key.Key.KEY = KEY;
+
+				Page.PAGE_LIST = PAGE_LIST;
+				Page.KEY_LIST = KEY_LIST;
+
+				Page.PAGE.init();
+				Page.WIDTH = -1;
+			}
 		}
 
-		Page.PAGE.init();
-		Page.WIDTH = -1;
+		STATE ^= 2;
 	}
 }

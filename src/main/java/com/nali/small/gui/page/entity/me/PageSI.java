@@ -1,5 +1,6 @@
 package com.nali.small.gui.page.entity.me;
 
+import com.nali.Nali;
 import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.key.Key;
 import com.nali.gui.page.PageSelect;
@@ -10,21 +11,26 @@ import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
+import net.minecraft.entity.EntityList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.lang.reflect.InvocationTargetException;
 
 @SideOnly(Side.CLIENT)
 public class PageSI extends PageSelect
 {
-	public static byte[] BYTE_ARRAY;//1+1 (4)*?+? +1+1+1
+	public static byte[] BYTE_ARRAY;//1+1 (1)*?+? +1+1+1
 
 	public static byte
 		STATE,//enter client init
 		PAGE,//0-127
 		MAX_PAGE,//0-120
-		MAX_MIX_PAGE;//0-127
+		MAX_MIX_PAGE,
+		GI;//0-127
 
-	public static int ENTITY_ID;
+	public static int
+		ENTITY_ID;
 
 	@Override
 	public void init()
@@ -45,8 +51,9 @@ public class PageSI extends PageSelect
 			short i = 2;
 			while (i < byte_array_length - 3 - 4)
 			{
-				int si_id = ByteReader.getInt(BYTE_ARRAY, i);
-				i += 4;
+//				int si_id = ByteReader.getInt(BYTE_ARRAY, i);
+//				i += 4;
+				byte si_id = BYTE_ARRAY[i++];
 				String si_string = si_id + " " + MixSIE.SI_CLASS_LIST.get(si_id).getName().substring(24);
 				if (si_string.length() > 20)
 				{
@@ -142,6 +149,16 @@ public class PageSI extends PageSelect
 			{
 				PAGE_LIST.add(this);
 				KEY_LIST.add(Key.KEY);
+
+				GI = BYTE_ARRAY[/*2 + */this.select/* - 2*/];
+				try
+				{
+					EntityList.getClassFromID(ENTITY_ID).getMethod("getGI").invoke(null);
+				}
+				catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
+				{
+					Nali.error(e);
+				}
 //				byte select = (byte)(this.select - 2);
 //				this.set(new PageAttributeE(), new KeyEdit());
 				STATE &= 255-1;
