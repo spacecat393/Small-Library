@@ -27,7 +27,7 @@ public class SDaInvSelect
 	public static byte STATE;//delete/add/move
 	public static List<Runnable> RUNNABLE_LIST;
 
-	public final static byte MAX_SIZE = 118;
+	public final static byte MAX_SIZE = 117;
 	public final static byte I_MORE = 0;
 	public final static byte I_LESS = 1;
 	public final static byte I_FETCH = 2;
@@ -180,10 +180,10 @@ public class SDaInvSelect
 				}
 			});
 		}
-		String[] inv_string_array = inv_file.list();
 
 		if (servermessage.data[2] == I_FETCH)
 		{
+			String[] inv_string_array = inv_file.list();
 			int max_mix_page = (int)Math.ceil(max_inv_file / (float)MAX_SIZE);
 			byte max_page;
 
@@ -217,19 +217,18 @@ public class SDaInvSelect
 			byte_array[0] = CPage.ID;
 			byte_array[1] = CDaInvSelect.ID;
 
-//			try
-//			{
 			for (int i = new_page; i < i_page; ++i)
 			{
-				//switch nbt to i
-				ByteWriter.set(byte_array, Integer.parseInt(inv_string_array[i]), byte_array_index);
-				byte_array_index += 4;
+				try
+				{
+					ByteWriter.set(byte_array, Integer.parseInt(inv_string_array[i]), byte_array_index);
+					byte_array_index += 4;
+				}
+				catch (Exception e)
+				{
+					++i_page;
+				}
 			}
-//			}
-//			catch (Exception e)
-//			{
-//				Nali.warn(e);
-//			}
 			ByteWriter.set(byte_array, page, byte_array_index);
 			byte_array_index += 4;
 			byte_array[byte_array_index++] = max_page;//max_page

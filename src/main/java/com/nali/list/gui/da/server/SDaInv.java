@@ -70,9 +70,7 @@ public class SDaInv
 		{
 			STATE |= 1;
 			int index = servermessage.data[4] + page * MAX_SIZE;
-//			PlayerData.INV_SHORT_LIST.remove(rg);
 
-//			File inv_i_file = new File(inv_file, "" + index);
 			File inv_i_file = inv_file.listFiles()[index];
 			File nbt_file = new File(inv_i_file, "nbt");
 			File[] nbt_n_file_array = nbt_file.listFiles();
@@ -91,25 +89,6 @@ public class SDaInv
 					nbt_n_file.delete();
 				}
 			}
-//			nbt_file.delete();
-
-//			File nbt_size_file = new File(inv_i_file, "nbt_size");
-//			File[] nbt_size_n_file_array = nbt_size_file.listFiles();
-//			if (nbt_size_n_file_array != null)
-//			{
-//				for (File nbt_size_n_file : nbt_size_n_file_array)
-//				{
-//					File[] nbt_size_i_file_array = nbt_size_n_file.listFiles();
-//					if (nbt_size_i_file_array != null)
-//					{
-//						for (File nbt_size_i_file : nbt_size_i_file_array)
-//						{
-//							nbt_size_i_file.delete();
-//						}
-//					}
-//					nbt_size_n_file.delete();
-//				}
-//			}
 
 			for (File file : inv_i_file.listFiles())
 			{
@@ -119,21 +98,12 @@ public class SDaInv
 
 			servermessage.data[2] = I_FETCH;
 			--max_inv_file;
-//			inv_string_array = inv_file.list();
-//			else
-//			{
-//				inv_string_array = new String[];
-//				for ()
-//				{
-//					inv_string_array[]
-//				}
-//			}
+
 			STATE &= 255-1;
 		}
 		else if (servermessage.data[2] == I_ADD && (STATE & 1) == 0)
 		{
 			STATE |= 1;
-//			PlayerData.INV_SHORT_LIST.add((short)inv_short_list_size);
 
 			int file_index = 0;
 			File file = new File(inv_file, "" + file_index);
@@ -143,17 +113,15 @@ public class SDaInv
 				file = new File(inv_file, "" + file_index);
 			}
 			new File(file, "nbt").mkdir();
-//			new File(file, "nbt_size").mkdir();
 
 			servermessage.data[2] = I_FETCH;
 			++max_inv_file;
-//			inv_string_array = inv_file.list();
 			STATE &= 255-1;
 		}
-		String[] inv_string_array = inv_file.list();
 
 		if (servermessage.data[2] == I_FETCH)
 		{
+			String[] inv_string_array = inv_file.list();
 			int max_mix_page = (int)Math.ceil(max_inv_file / (float)MAX_SIZE);
 			byte max_page;
 
