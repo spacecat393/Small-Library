@@ -2,6 +2,7 @@ package com.nali.small.mixin;
 
 import com.nali.render.RenderO;
 import com.nali.small.Small;
+import com.nali.small.SmallConfig;
 import com.nali.small.draw.Draw;
 import net.minecraft.client.renderer.EntityRenderer;
 import org.lwjgl.opengl.GL11;
@@ -29,7 +30,7 @@ public abstract class MixinEntityRenderer
 			Draw.draw(Draw.TE_MODEL_MAP);
 		}
 
-		if ((Small.FLAG & 1) == 0)
+		if (!SmallConfig.NEED_EXTRA || (Small.FLAG & 1) == 0)
 		{
 			if (!Draw.TE_TRANSLUCENT_MAP.isEmpty())
 			{

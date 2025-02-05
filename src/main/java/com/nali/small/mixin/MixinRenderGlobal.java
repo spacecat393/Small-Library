@@ -2,6 +2,7 @@ package com.nali.small.mixin;
 
 import com.nali.render.RenderO;
 import com.nali.small.Small;
+import com.nali.small.SmallConfig;
 import com.nali.small.draw.Draw;
 import com.nali.small.entity.IMixE;
 import net.minecraft.client.Minecraft;
@@ -55,10 +56,10 @@ public abstract class MixinRenderGlobal
 				}
 				else if (entity.isInvisible() || entity instanceof EntitySlime/* || entity.isInvisibleToPlayer(Minecraft.getMinecraft().player)*/)
 				{
-//					if ((Small.FLAG & 1) == 0)
-//					{
-					translucent_entity_list.add(entity);
-//					}
+					if (!SmallConfig.NEED_EXTRA || (Small.FLAG & 1) == 1)
+					{
+						translucent_entity_list.add(entity);
+					}
 				}
 				else
 				{
