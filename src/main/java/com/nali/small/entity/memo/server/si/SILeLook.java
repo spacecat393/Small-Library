@@ -3,7 +3,6 @@ package com.nali.small.entity.memo.server.si;
 import com.nali.da.IBothDaE;
 import com.nali.list.entity.si.SIELook;
 import com.nali.small.entity.EntityLe;
-import com.nali.small.entity.EntityMath;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerLe;
 import net.minecraft.network.datasync.DataParameter;
@@ -26,25 +25,30 @@ public class SILeLook
 	@Override
 	public void syncLook(E e)
 	{
-		e.rotationPitch = EntityMath.normalize(e.rotationPitch, 180.0F);
-		float difference = e.rotation_yaw_head - e.rotationYaw;
+		//need support other yaw later
+//		e.rotationPitch = EntityMath.normalize(e.rotationPitch, 180.0F);
+		e.rotationPitch = ((e.rotationPitch + 180) % 360 + 360) % 360 - 180;
+//		float difference = e.rotation_yaw_head - e.rotationYaw;
 
-		float new_difference = (e.rotation_yaw_head + 360) % 360 - (e.rotationYaw + 360) % 360;
-		if (Math.abs(new_difference) < Math.abs(difference))
-		{
-			difference = ((new_difference + 180) % 360 + 360) % 360 - 180;
-		}
-		if (difference > 45.0F)
-		{
-			difference = 45.0F;
-		}
-		else if (difference < -45.0F)
-		{
-			difference = -45.0F;
-		}
+//		float new_difference = (e.rotation_yaw_head + 360) % 360 - (e.rotationYaw + 360) % 360;
+//		if (Math.abs(new_difference) < Math.abs(difference))
+//		{
+//			difference = ((new_difference + 180) % 360 + 360) % 360 - 180;
+//		}
+//		if (difference > 45.0F)
+//		{
+//			difference = 45.0F;
+//		}
+//		else if (difference < -45.0F)
+//		{
+//			difference = -45.0F;
+//		}
 
-		e.rotation_yaw_head = EntityMath.normalize(e.rotationYaw + difference, 360.0F);
-		e.rotationYaw = EntityMath.normalize(e.rotationYaw, 360.0F);
+//		e.rotation_yaw_head = EntityMath.normalize(e.rotationYaw + difference, 360.0F);
+//		e.rotationYaw = EntityMath.normalize(e.rotationYaw, 360.0F);
+//		e.rotation_yaw_head = ((e.rotationYaw + difference + 180) % 360 + 360) % 360 - 180;
+		e.rotation_yaw_head = ((e.rotationYaw + 180) % 360 + 360) % 360 - 180;
+		e.rotationYaw = ((e.rotationYaw + 180) % 360 + 360) % 360 - 180;
 
 		int rotation_yaw_head_int = Float.floatToIntBits(e.rotation_yaw_head);
 		I i = this.s.i;

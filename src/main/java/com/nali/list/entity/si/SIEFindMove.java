@@ -192,7 +192,7 @@ public class SIEFindMove
 		this.move_x += (b_x - e.posX) / 2.0F;
 		this.move_y = (b_y - e.posY) / 2.0F;
 		this.move_z += (b_z - e.posZ) / 2.0F;
-		this.sielook.set(this.move_x, this.move_y, this.move_z, (byte)1);
+		this.sielook.set(this.move_x, this.move_y, this.move_z, (byte)2);
 
 //		if (this.mo_tick++ == 2)
 //		{
@@ -293,17 +293,20 @@ public class SIEFindMove
 		double to_x = (this.goal_x + 0.5D) - (start_snode.blockpos.getX() + 0.5D);
 		double to_y = (this.goal_y + 0.5D) - (start_snode.blockpos.getY() + 0.5D);
 		double to_z = (this.goal_z + 0.5D) - (start_snode.blockpos.getZ() + 0.5D);
-		double length = to_x * to_x + to_y * to_y + to_z * to_z;
-		byte new_x = 0;
-		byte new_y = 0;
-		byte new_z = 0;
-		if (length != 0)
-		{
-			length = Math.sqrt(length);
-			new_x = PathMath.signum(to_x / length);
-			new_y = PathMath.signum(to_y / length);
-			new_z = PathMath.signum(to_z / length);
-		}
+//		double length = to_x * to_x + to_y * to_y + to_z * to_z;
+//		byte new_x = 0;
+//		byte new_y = 0;
+//		byte new_z = 0;
+//		if (length != 0)
+//		{
+//			length = Math.sqrt(length);
+//			new_x = (byte)Math.signum(to_x / length);
+//			new_y = (byte)Math.signum(to_y / length);
+//			new_z = (byte)Math.signum(to_z / length);
+//		}
+		byte new_x = (byte)Math.signum(to_x);
+		byte new_y = (byte)Math.signum(to_y);
+		byte new_z = (byte)Math.signum(to_z);
 
 		byte index = PathMath.getIndex(new_x, new_y, new_z);
 		SNode pre_snode = this.getChild(index, start_snode, new_x, new_y, new_z);

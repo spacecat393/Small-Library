@@ -136,23 +136,23 @@ public class EntityMath
 //			look_to_center_z >= box_double_array[2] && look_to_center_z <= box_double_array[5];
 	}
 
-	public static float normalize(float pitch, float degrees)
-	{
-		float half_degrees = degrees / 2.0F;
-		pitch = pitch % degrees;
-
-		if (pitch >= half_degrees)
-		{
-			pitch -= degrees;
-		}
-
-		if (pitch < -half_degrees)
-		{
-			pitch += degrees;
-		}
-
-		return pitch;
-	}
+//	public static float normalize(float pitch, float degrees)
+//	{
+//		float half_degrees = degrees / 2.0F;
+//		pitch = pitch % degrees;
+//
+//		if (pitch >= half_degrees)
+//		{
+//			pitch -= degrees;
+//		}
+//
+//		if (pitch < -half_degrees)
+//		{
+//			pitch += degrees;
+//		}
+//
+//		return pitch;
+//	}
 //	public static float normalize(float yaw)
 //	{
 //		yaw = yaw % 360;
@@ -172,18 +172,26 @@ public class EntityMath
 
 	public static float interpolateRotation(float old_yaw, float yaw, float partial_ticks)
 	{
-		float f = yaw - old_yaw;
-
-		while (f < -180.0F)
+//		float f = yaw - old_yaw;
+//
+//		while (f < -180.0F)
+//		{
+//			f += 360.0F;
+//		}
+//
+//		while (f >= 180.0F)
+//		{
+//			f -= 360.0F;
+//		}
+//
+//		return old_yaw + partial_ticks * f;
+		float f = (yaw - old_yaw + 180.0F) % 360.0F;
+		if (f < 0)
 		{
 			f += 360.0F;
 		}
-
-		while (f >= 180.0F)
-		{
-			f -= 360.0F;
-		}
-
+		f -= 180.0F;
 		return old_yaw + partial_ticks * f;
+//		return old_yaw + partial_ticks * ((yaw - old_yaw + 180.0F) % 360.0F - 180.0F);
 	}
 }

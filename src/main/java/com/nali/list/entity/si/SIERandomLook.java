@@ -47,6 +47,7 @@ public class SIERandomLook
 	public void onUpdate()
 	{
 		E e = this.s.i.getE();
+		//add le
 		//need to check all state before set state & si
 //		if (this.s.isMove(e))
 //		{

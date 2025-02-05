@@ -30,15 +30,15 @@ public class PathMath
 		return -1;
 	}
 
-	public static byte signum(double i)
-	{
-		if (i > 0.0D)
-		{
-			return (byte)1;
-		}
-		else
-		{
-			return i < 0.0D ? (byte)-1 : (byte)0;
-		}
-	}
+//	public static byte signum(double i)
+//	{
+//		if (i > 0.0D)
+//		{
+//			return (byte)1;
+//		}
+//		else
+//		{
+//			return i < 0.0D ? (byte)-1 : (byte)0;
+//		}
+//	}
 }
