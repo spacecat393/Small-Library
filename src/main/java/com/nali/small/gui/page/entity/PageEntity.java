@@ -6,7 +6,7 @@ import com.nali.gui.key.KeyEdit;
 import com.nali.gui.page.PageSelect;
 import com.nali.list.gui.da.server.SDaEntity;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.SPage;
+import com.nali.list.network.method.server.SPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.gui.page.entity.me.PageMe;
 import com.nali.system.bytes.ByteReader;
@@ -114,7 +114,7 @@ public class PageEntity extends PageSelect
 	public void enter()
 	{
 		byte[] byte_array = new byte[1 + 1 + 1 + 4];
-		byte_array[0] = SPage.ID;
+		byte_array[0] = SPageDa.ID;
 		byte_array[1] = SDaEntity.ID;
 		ByteWriter.set(byte_array, PAGE, 3);
 

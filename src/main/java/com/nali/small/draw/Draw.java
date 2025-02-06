@@ -36,6 +36,10 @@ public class Draw
 	public static Map<DrawMap, List<Integer>> TE_TRANSLUCENT_MAP = new HashMap();
 //	public static List<DrawDa> TRANSLUCENT_DRAWDA_LIST = new ArrayList();
 
+	public static float
+		LIGHT_B,
+		LIGHT_S;
+
 	public static void add(DrawMap drawmap)
 	{
 		List<Integer> index_integer_list;
@@ -243,8 +247,8 @@ public class Draw
 				RenderO.FLOATBUFFER.clear();
 				if ((rg.flag & 16) == 16)
 				{
-					RenderO.FLOATBUFFER.put(-1.0F);
-					RenderO.FLOATBUFFER.put(-1.0F);
+					RenderO.FLOATBUFFER.put(0.0F);
+					RenderO.FLOATBUFFER.put(0.0F);
 				}
 				else
 				{
@@ -390,8 +394,8 @@ public class Draw
 				RenderO.FLOATBUFFER.clear();
 				if ((rg.flag & 16) == 16)
 				{
-					RenderO.FLOATBUFFER.put(-1.0F);
-					RenderO.FLOATBUFFER.put(-1.0F);
+					RenderO.FLOATBUFFER.put(0.0F);
+					RenderO.FLOATBUFFER.put(0.0F);
 				}
 				else
 				{

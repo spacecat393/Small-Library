@@ -108,8 +108,7 @@ public class SIEMineTo
 					}
 					else
 					{
-						//!look
-//						this.sielook.set(this.blockpos.getX() + 0.5D, this.blockpos.getY(), this.blockpos.getZ() + 0.5D, 5.0F);
+						this.sielook.set(this.blockpos.getX() + 0.5D - e.posX, this.blockpos.getY() - e.posY, this.blockpos.getZ() + 0.5D - e.posZ, (byte)2);
 						this.siefindmove.endGoal();
 
 						FakePlayer fakeplayer = new FakePlayer(this.s.worldserver, new GameProfile(null, "!"));

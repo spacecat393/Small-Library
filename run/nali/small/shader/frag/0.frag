@@ -17,7 +17,7 @@ void main()
 	vec4 texture_color = texture2D(Texture, fragment_texcoord);
 
 	vec4 lightmap_color;
-	if (Light.x == -1.0)
+	if (Light.x == 0.0)
 	{
 		lightmap_color = vec4(1.0);
 	}

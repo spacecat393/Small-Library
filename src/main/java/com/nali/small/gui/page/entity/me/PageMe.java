@@ -7,7 +7,7 @@ import com.nali.gui.key.KeySelect;
 import com.nali.gui.page.PageEdit;
 import com.nali.list.gui.da.server.SDaEntity;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.SPage;
+import com.nali.list.network.method.server.SPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.gui.page.entity.PageEntity;
 import com.nali.system.bytes.ByteWriter;
@@ -83,7 +83,7 @@ public class PageMe extends PageEdit
 					byte[] name_byte_array = this.name.getBytes();
 					int name_byte_array_length = name_byte_array.length;
 					byte[] byte_array = new byte[1 + 1 + 1 + 4 + 8 + name_byte_array_length];
-					byte_array[0] = SPage.ID;
+					byte_array[0] = SPageDa.ID;
 					byte_array[1] = SDaEntity.ID;
 					byte_array[2] = SDaEntity.I_RENAME;
 					ByteWriter.set(byte_array, PageEntity.PAGE, 3);

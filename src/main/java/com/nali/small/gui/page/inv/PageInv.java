@@ -6,7 +6,7 @@ import com.nali.gui.key.KeySelect;
 import com.nali.gui.page.PageEdit;
 import com.nali.list.gui.da.server.SDaInv;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.SPage;
+import com.nali.list.network.method.server.SPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.gui.page.inv.select.PageSelect;
 import com.nali.system.bytes.ByteReader;
@@ -109,7 +109,7 @@ public class PageInv extends PageEdit
 //			STATE |= 1;
 
 		byte[] byte_array = new byte[1 + 1 + 1 + 4];
-		byte_array[0] = SPage.ID;
+		byte_array[0] = SPageDa.ID;
 		byte_array[1] = SDaInv.ID;
 		ByteWriter.set(byte_array, PAGE, 3);
 

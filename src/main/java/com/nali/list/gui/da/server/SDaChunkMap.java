@@ -3,7 +3,7 @@ package com.nali.list.gui.da.server;
 import com.nali.list.gui.da.client.CDaChunkMap;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.client.CPage;
+import com.nali.list.network.method.client.CPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.chunk.ChunkCallBack;
 import com.nali.system.bytes.ByteReader;
@@ -94,7 +94,7 @@ public class SDaChunkMap
 			}
 
 			byte[] byte_array = new byte[1 + 1 + max_page * (2 * 4 + 8) + 4 + 1 + 4];
-			byte_array[0] = CPage.ID;
+			byte_array[0] = CPageDa.ID;
 			byte_array[1] = CDaChunkMap.ID;
 			short byte_array_index = 2;
 			int new_page = page * MAX_SIZE;

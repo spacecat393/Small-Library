@@ -15,7 +15,7 @@ dependencies
 ```
 >gradle.properties
 ```properties
-mod_version = 2.1.0
+mod_version = 2.2.0
 root_package = com.nali
 mod_id = small
 mod_name = Small

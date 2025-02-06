@@ -5,7 +5,7 @@ import com.nali.gui.key.Key;
 import com.nali.gui.page.PageSelect;
 import com.nali.list.gui.da.server.SDaAttribute;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.SPage;
+import com.nali.list.network.method.server.SPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.SmallAttribute;
 import com.nali.system.bytes.ByteReader;
@@ -148,7 +148,7 @@ public class PageAttribute extends PageSelect
 				return;
 			}
 		}
-		byte_array[0] = SPage.ID;
+		byte_array[0] = SPageDa.ID;
 		byte_array[1] = SDaAttribute.ID;
 		byte_array[3] = PAGE;
 		ByteWriter.set(byte_array, PageMe.ID, 4);

@@ -184,8 +184,7 @@ public class SILeAttack
 
 					if ((this.siefindmove.state & 1) == 0)
 					{
-						//!look
-//						this.sielook.set(target_entity.posX, target_entity.posY, target_entity.posZ, 20.0F);
+						this.sielook.set(target_entity.posX - e.posX, target_entity.posY - e.posY, target_entity.posZ - e.posZ, (byte)2);
 					}
 
 					if ((this.flag & 16+8) == 16 && !(e.canEntityBeSeen(target_entity) && getDistanceAABBToAABB(e, target_entity) <= this.minimum_distance))

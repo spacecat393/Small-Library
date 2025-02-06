@@ -4,7 +4,7 @@ import com.nali.Nali;
 import com.nali.list.gui.da.client.CDaInvSelectItem;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.client.CPage;
+import com.nali.list.network.method.client.CPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
@@ -32,7 +32,7 @@ public class SDaInvSelectItem
 			try
 			{
 				byte[] byte_array = new byte[1 + 1 + 8];
-				byte_array[0] = CPage.ID;
+				byte_array[0] = CPageDa.ID;
 				byte_array[1] = CDaInvSelectItem.ID;
 				ByteWriter.set(byte_array, ByteReader.getLong(Files.readAllBytes(inv_n_file.toPath()), 0), 2);
 				NetworkRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);

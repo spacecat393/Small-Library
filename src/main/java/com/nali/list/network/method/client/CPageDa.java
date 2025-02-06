@@ -10,7 +10,7 @@ import java.util.List;
 import static com.nali.Nali.error;
 import static com.nali.Nali.warn;
 
-public class CPage
+public class CPageDa
 {
 	public static byte ID;
 

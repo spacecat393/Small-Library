@@ -6,7 +6,7 @@ import com.nali.gui.key.KeySelect;
 import com.nali.gui.page.PageSelect;
 import com.nali.list.gui.da.server.SDaChunkMap;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.SPage;
+import com.nali.list.network.method.server.SPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
@@ -102,7 +102,7 @@ public class PageMap extends PageSelect
 	public void enter()
 	{
 		byte[] byte_array = new byte[1 + 1 + 1 + 4];
-		byte_array[0] = SPage.ID;
+		byte_array[0] = SPageDa.ID;
 		byte_array[1] = SDaChunkMap.ID;
 		ByteWriter.set(byte_array, PAGE, 3);
 

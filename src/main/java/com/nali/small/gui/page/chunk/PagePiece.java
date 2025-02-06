@@ -5,7 +5,7 @@ import com.nali.gui.page.PageSelect;
 import com.nali.list.gui.da.server.SDaChunkList;
 import com.nali.list.gui.da.server.SDaChunkMap;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.SPage;
+import com.nali.list.network.method.server.SPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
@@ -97,7 +97,7 @@ public class PagePiece extends PageSelect
 			{
 				case 6:
 					byte[] byte_array = new byte[1 + 1 + 1 + 4 + 1];
-					byte_array[0] = SPage.ID;
+					byte_array[0] = SPageDa.ID;
 					byte_array[1] = SDaChunkList.ID;
 					byte_array[2] = SDaChunkList.I_DELETE;
 					ByteWriter.set(byte_array, PageList.PAGE, 3);
@@ -118,7 +118,7 @@ public class PagePiece extends PageSelect
 				case 7:
 					byte[] byte_array = new byte[1 + 1 + 1 + 8];
 					ByteWriter.set(byte_array, ByteReader.getLong(PageMap.BYTE_ARRAY, 2 + PageMap.SELECT * (8 + 2 * 4)), 3);
-					byte_array[0] = SPage.ID;
+					byte_array[0] = SPageDa.ID;
 					byte_array[1] = SDaChunkMap.ID;
 					byte_array[2] = SDaChunkMap.I_DELETE;
 					NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));

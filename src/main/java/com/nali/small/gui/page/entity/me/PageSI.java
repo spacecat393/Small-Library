@@ -6,7 +6,7 @@ import com.nali.gui.key.Key;
 import com.nali.gui.page.PageSelect;
 import com.nali.list.gui.da.server.SDaSI;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.SPage;
+import com.nali.list.network.method.server.SPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.system.bytes.ByteReader;
@@ -153,7 +153,7 @@ public class PageSI extends PageSelect
 				GI = BYTE_ARRAY[/*2 + */this.select/* - 2*/];
 				try
 				{
-					EntityList.getClassFromID(ENTITY_ID).getMethod("getGI").invoke(null);
+					EntityList.getClassFromID(ENTITY_ID).getMethod("setGI").invoke(null);
 				}
 				catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
 				{
@@ -165,7 +165,7 @@ public class PageSI extends PageSelect
 				return;
 			}
 		}
-		byte_array[0] = SPage.ID;
+		byte_array[0] = SPageDa.ID;
 		byte_array[1] = SDaSI.ID;
 		byte_array[3] = PAGE;
 		ByteWriter.set(byte_array, PageMe.ID, 4);

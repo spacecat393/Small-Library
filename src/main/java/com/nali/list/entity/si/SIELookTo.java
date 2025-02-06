@@ -23,7 +23,7 @@ public class SIELookTo
 	public SIEArea<BD, E, I, S, MS> siearea;
 	public SIELook<BD, E, I, S, MS> sielook;
 
-	public byte state;//on
+	public byte state = 1;//on
 	public Entity entity;
 	public BlockPos blockpos;
 	public int tick;
@@ -98,13 +98,11 @@ public class SIELookTo
 				{
 					if (this.blockpos != null)
 					{
-						//!look
-//						this.sielook.set(this.blockpos.getX(), this.blockpos.getY(), this.blockpos.getZ(), 5.0F);
+						this.sielook.set(this.blockpos.getX() - e.posX, this.blockpos.getY() - e.posY, this.blockpos.getZ() - e.posZ, (byte)2);
 					}
 					else if (this.entity != null)
 					{
-						//!look
-//						this.sielook.set(this.entity.posX, this.entity.posY + this.entity.getEyeHeight(), this.entity.posZ, 5.0F);
+						this.sielook.set(this.entity.posX - e.posX, this.entity.posY + this.entity.getEyeHeight() - e.posY, this.entity.posZ - e.posZ, (byte)2);
 					}
 				}
 				else

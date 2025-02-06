@@ -2,7 +2,6 @@ package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
 import com.nali.list.network.message.ClientMessage;
-import com.nali.list.network.method.client.CSetArea;
 import com.nali.list.network.method.client.CSetTarget;
 import com.nali.list.network.method.client.CSetTroublemaker;
 import com.nali.network.NetworkRegistry;
@@ -83,7 +82,7 @@ public class SIEArea
 				this.clearTroublemaker();
 				break;
 			case 4:
-				this.fetch();
+//				this.fetch();
 				break;
 			default:
 				warn("BIT_FLIP");
@@ -322,16 +321,16 @@ public class SIEArea
 			}
 		}
 
-		this.fetch();
+//		this.fetch();
 	}
 
-	public void fetch()
-	{
-		byte[] byte_array = new byte[1 + 1];
-		byte_array[0] = CSetArea.ID;
-		byte_array[1] = this.flag;
-		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
-	}
+//	public void fetch()
+//	{
+//		byte[] byte_array = new byte[1 + 1];
+//		byte_array[0] = CSetArea.ID;
+//		byte_array[1] = this.flag;
+//		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
+//	}
 
 	public void fetchTarget()
 	{

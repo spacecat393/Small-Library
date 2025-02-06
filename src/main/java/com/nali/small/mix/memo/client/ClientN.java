@@ -2,8 +2,10 @@ package com.nali.small.mix.memo.client;
 
 import com.nali.da.IBothDaO;
 import com.nali.render.RenderO;
+import com.nali.small.draw.Draw;
 import com.nali.small.mix.IMixN;
 import com.nali.small.mix.memo.IBothN;
+import com.nali.small.render.IRenderO;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -15,7 +17,7 @@ import org.lwjgl.opengl.GL11;
 public class ClientN
 <
 	BD extends IBothDaO,
-	R extends RenderO<BD>,
+	R extends RenderO<BD> & IRenderO<BD, R>,
 	I extends IMixN<BD, ?, E>,
 	E
 > implements IBothN
@@ -58,7 +60,7 @@ public class ClientN
 //		GL11.glRotatef(0.0F, 0.0F, 0.0F, 1.0F);
 
 		RenderO.take();
-		this.r.draw(this.i.getBD());
+		this.r.doDraw(/*this.i.getBD()*/);
 		RenderO.free();
 
 		GL11.glPopMatrix();
@@ -80,6 +82,7 @@ public class ClientN
 	@Override
 	public void light()
 	{
-		this.r.light_b = -1.0F;
+//		this.r.light_b = -1.0F;
+		Draw.LIGHT_B = 0.0F;
 	}
 }

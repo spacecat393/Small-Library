@@ -4,7 +4,7 @@ import com.nali.Nali;
 import com.nali.list.gui.da.client.CDaInvSelectAdd;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.client.CPage;
+import com.nali.list.network.method.client.CPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
@@ -143,7 +143,7 @@ public class SDaInvSelectAdd
 
 					NetworkRegistry.I.sendTo(new ClientMessage(new byte[]
 					{
-						CPage.ID,
+						CPageDa.ID,
 						CDaInvSelectAdd.ID
 					}), entityplayermp);
 				}

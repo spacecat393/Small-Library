@@ -3,7 +3,7 @@ package com.nali.list.gui.da.server;
 import com.nali.list.gui.da.client.CDaEntity;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.client.CPage;
+import com.nali.list.network.method.client.CPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.system.bytes.ByteReader;
@@ -101,7 +101,7 @@ public class SDaEntity
 				name_max_size += name_byte_array.length;
 			}
 			byte[] byte_array = new byte[1 + 1 + max_page * (8 + 4) + name_max_size + 4 + 1 + 4];
-			byte_array[0] = CPage.ID;
+			byte_array[0] = CPageDa.ID;
 			byte_array[1] = CDaEntity.ID;
 			byte name_index = 0;
 			for (int i = new_page; i < i_page; ++i)

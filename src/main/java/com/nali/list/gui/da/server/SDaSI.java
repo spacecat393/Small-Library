@@ -3,7 +3,7 @@ package com.nali.list.gui.da.server;
 import com.nali.list.gui.da.client.CDaSI;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.client.CPage;
+import com.nali.list.network.method.client.CPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.system.bytes.ByteReader;
@@ -82,7 +82,7 @@ public class SDaSI
 			short byte_array_index = 2;
 			int new_page = page * MAX_SIZE;
 			byte[] byte_array = new byte[1 + 1 + max_page/* * 4*/ + 4 + 1 + 1 + 1];
-			byte_array[0] = CPage.ID;
+			byte_array[0] = CPageDa.ID;
 			byte_array[1] = CDaSI.ID;
 //			if (list != null)
 //			{

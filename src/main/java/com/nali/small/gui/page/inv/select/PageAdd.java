@@ -4,7 +4,7 @@ import com.nali.gui.box.text.BoxTextAll;
 import com.nali.gui.page.PageEdit;
 import com.nali.list.gui.da.server.SDaInvSelectAdd;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.SPage;
+import com.nali.list.network.method.server.SPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.gui.page.inv.PageInv;
 import com.nali.system.bytes.ByteReader;
@@ -77,7 +77,7 @@ public class PageAdd extends PageEdit
 		else
 		{
 			byte[] byte_array = new byte[1 + 1 + 4 + 1];
-			byte_array[0] = SPage.ID;
+			byte_array[0] = SPageDa.ID;
 			byte_array[1] = SDaInvSelectAdd.ID;
 			ByteWriter.set(byte_array, ByteReader.getInt(PageInv.BYTE_ARRAY, 2 + PageInv.SELECT * 4), 2);
 			byte_array[2+4] = (byte)(this.select - 2);

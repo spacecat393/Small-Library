@@ -76,7 +76,7 @@ public abstract class MixRenderSe
 		r.updateLight(e.world, e.getPosition());
 //		r.draw(/*ox, oy, oz*/);
 		DrawDa drawda = new DrawDa();
-		r.startDrawLater(this.c.i.getBD(), this.c.r, drawda);
+		r.startDrawLater(drawda);
 //		if (/*e.isInvisible() || */e.isInvisibleToPlayer(Minecraft.getMinecraft().player))
 //		{
 ////			if (drawda.color_v4_float[3] == 0)

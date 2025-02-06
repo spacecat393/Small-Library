@@ -2,8 +2,7 @@ package com.nali.small.render;
 
 import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaO;
-import com.nali.da.IBothDaS;
-import com.nali.render.RenderS;
+import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
@@ -16,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderSe
+public class RenderOe
 <
 	E extends Entity,
 	I extends IMixE<BD, E>,
@@ -24,13 +23,13 @@ public class RenderSe
 	MB extends MixBoxE<BD, ?, E, I, MC, MR, C>,
 	MR extends MixRenderE<BD, ?, E, I, MC, MB, C>,
 	C extends ClientE<BD, ?, E, I, MC, MB, MR>,
-	BD extends IBothDaE & IBothDaO & IBothDaS,
-	R extends RenderS<BD> & IRenderS<BD, R>
-> extends RenderS<BD> implements IRenderS<BD, R>, IRenderE<E, I, MC, MB, MR, C, BD, R>
+	BD extends IBothDaE & IBothDaO,
+	R extends RenderO<BD> & IRenderO<BD, R>
+> extends RenderO<BD> implements IRenderO<BD, R>, IRenderE<E, I, MC, MB, MR, C, BD, R>
 {
 	public C c;
 
-	public RenderSe(BD bd)
+	public RenderOe(BD bd)
 	{
 		super(bd);
 	}
@@ -63,15 +62,11 @@ public class RenderSe
 	public void draw()
 	{
 		this.drawE();
-//		IRenderE.super.draw();
-//		super.draw();
 	}
 
 	@Override
 	public void setUniform()
 	{
 		this.setUniformE();
-//		IRenderE.super.setUniform();
-//		super.setUniform();
 	}
 }

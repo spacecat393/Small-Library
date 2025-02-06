@@ -5,7 +5,7 @@ import com.nali.gui.page.PageEdit;
 import com.nali.list.gui.da.server.SDaInvSelect;
 import com.nali.list.gui.da.server.SDaInvSelectItem;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.server.SPage;
+import com.nali.list.network.method.server.SPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.gui.page.inv.PageInv;
 import com.nali.small.gui.page.inv.select.PageSelect;
@@ -120,7 +120,7 @@ public class PageItem extends PageEdit
 				break;
 			case 4://size
 				byte_array = new byte[1 + 1 + 4 + 4];
-				byte_array[0] = SPage.ID;
+				byte_array[0] = SPageDa.ID;
 				byte_array[1] = SDaInvSelectItem.ID;
 				ByteWriter.set(byte_array, ByteReader.getInt(PageInv.BYTE_ARRAY, 2 + PageInv.SELECT * 4), 2);
 				ByteWriter.set(byte_array, this.item_id, 2+4);
@@ -132,7 +132,7 @@ public class PageItem extends PageEdit
 				break;
 			case 8:
 				byte_array = new byte[1 + 1 + 1 + 4 + 4 + 4 + 8];
-				byte_array[0] = SPage.ID;
+				byte_array[0] = SPageDa.ID;
 				byte_array[1] = SDaInvSelect.ID;
 				byte_array[2] = SDaInvSelect.I_MOVE;
 				ByteWriter.set(byte_array, PageSelect.PAGE, 3);
@@ -144,7 +144,7 @@ public class PageItem extends PageEdit
 				break;
 			case 9:
 				byte_array = new byte[1 + 1 + 1 + 4 + 4 + 4];
-				byte_array[0] = SPage.ID;
+				byte_array[0] = SPageDa.ID;
 				byte_array[1] = SDaInvSelect.ID;
 				byte_array[2] = SDaInvSelect.I_DELETE;
 				ByteWriter.set(byte_array, PageSelect.PAGE, 3);

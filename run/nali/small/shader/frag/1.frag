@@ -14,7 +14,7 @@ uniform vec2 Light;
 void main()
 {
 	vec4 lightmap_color;
-	if (Light.x == -1.0)
+	if (Light.x == 0.0)
 	{
 		lightmap_color = vec4(1.0);
 	}

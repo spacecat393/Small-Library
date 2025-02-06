@@ -35,7 +35,8 @@ public class ClientB
 		GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
 		this.scale();
 		DrawDa drawda = new DrawDa();
-		this.r.startDrawLater(this.i.getBD(), this.r, drawda);
+//		this.r.startDrawLater(this.i.getBD(), this.r, drawda);
+		this.r.startDrawLater(drawda);
 		this.r.endDrawLater(drawda);
 		GL11.glPopMatrix();
 	}

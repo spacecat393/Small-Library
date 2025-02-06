@@ -9,12 +9,22 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public interface IRenderS<BD extends IBothDaO & IBothDaS, R extends RenderS<BD>> extends IRenderO<BD, R>
+public interface IRenderS
+<
+	BD extends IBothDaO & IBothDaS,
+	R extends RenderS<BD>
+> extends IRenderO<BD, R>
 {
 	@Override
-	default void startDrawLater(BD bd, R r, DrawDa drawda)
+	default void startDrawLater(DrawDa drawda)
 	{
-		IRenderO.super.startDrawLater(bd, r, drawda);
-		Draw.KEY_FLOAT_ARRAY_LIST.put(Draw.DATA_SIZE, r.skinning_float_array);
+		IRenderO.super.startDrawLater(drawda);
+		Draw.KEY_FLOAT_ARRAY_LIST.put(Draw.DATA_SIZE, this.getR().skinning_float_array);
+	}
+
+	@Override
+	default byte getExtraBit()
+	{
+		return 2;//skinning
 	}
 }

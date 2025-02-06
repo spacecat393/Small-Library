@@ -145,6 +145,8 @@ public class MixSIE
 
 		for (byte b : this.s.i.getSI())
 		{
+//			Nali.warn("si " + this.si_map.get(b));
+//			Nali.warn("state " + this.state);
 			this.si_map.get(b).onUpdate();
 		}
 

@@ -4,7 +4,7 @@ import com.nali.Nali;
 import com.nali.list.gui.da.client.CDaInv;
 import com.nali.list.network.message.ClientMessage;
 import com.nali.list.network.message.ServerMessage;
-import com.nali.list.network.method.client.CPage;
+import com.nali.list.network.method.client.CPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
@@ -148,7 +148,7 @@ public class SDaInv
 			}
 
 			byte[] byte_array = new byte[1 + 1 + max_page * 4 + 4 + 1 + 4];
-			byte_array[0] = CPage.ID;
+			byte_array[0] = CPageDa.ID;
 			byte_array[1] = CDaInv.ID;
 			short byte_array_index = 2;
 			int new_page = page * MAX_SIZE;
