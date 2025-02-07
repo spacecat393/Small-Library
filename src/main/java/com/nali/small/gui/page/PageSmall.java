@@ -16,6 +16,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class PageSmall extends PageSelect
 {
+	public static byte[] NET_BYTE_ARRAY;
+
 	@Override
 	public void init()
 	{

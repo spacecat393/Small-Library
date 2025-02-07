@@ -36,12 +36,12 @@ public class SDaInvSelectItem
 				byte_array[1] = CDaInvSelectItem.ID;
 				ByteWriter.set(byte_array, ByteReader.getLong(Files.readAllBytes(inv_n_file.toPath()), 0), 2);
 				NetworkRegistry.I.sendTo(new ClientMessage(byte_array), entityplayermp);
-				SDaInvSelect.STATE &= 255-1;
 			}
 			catch (IOException e)
 			{
 				Nali.warn(e);
 			}
+			SDaInvSelect.STATE &= 255-1;
 		}
 	}
 }

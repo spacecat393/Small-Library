@@ -205,81 +205,84 @@ public class Draw
 			MemoG rg = G_LIST.get(drawmap.rg);
 			MemoS rs = S_LIST.get(drawmap.rs);
 
-			RenderO.enableBuffer(rg, rs);
-
-			OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[2], 1);
-			if ((drawmap.extra_bit & 4) == 4)//color
-			{
-				int color = drawmap.texture;
-				RenderO.FLOATBUFFER.clear();
-				RenderO.FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
-				RenderO.FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
-				RenderO.FLOATBUFFER.put((color & 0xFF) / 255.0F);
-				RenderO.FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
-				RenderO.FLOATBUFFER.flip();
-				OpenGlHelper.glUniform4(rs.uniformlocation_int_array[5], RenderO.FLOATBUFFER);
-			}
-			else
-			{
-//				OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
-//				Nali.warn("texture " + ByteReader.getInt(drawmap, 4));
-//				Nali.warn("texture_state " + (rg.state & 1));
-//				RenderO.setTextureBuffer(drawmap.texture, (byte)(rg.flag & 1+2));
-				GL11.glBindTexture(GL11.GL_TEXTURE_2D, drawmap.texture);
-			}
+			startBuffer(drawmap, rg, rs);
+//			RenderO.enableBuffer(rg, rs);
+//
+//			OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[2], 1);
+//			if ((drawmap.extra_bit & 4) == 4)//color
+//			{
+//				int color = drawmap.texture;
+//				RenderO.FLOATBUFFER.clear();
+//				RenderO.FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
+//				RenderO.FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
+//				RenderO.FLOATBUFFER.put((color & 0xFF) / 255.0F);
+//				RenderO.FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
+//				RenderO.FLOATBUFFER.flip();
+//				OpenGlHelper.glUniform4(rs.uniformlocation_int_array[5], RenderO.FLOATBUFFER);
+//			}
+//			else
+//			{
+////				OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
+////				Nali.warn("texture " + ByteReader.getInt(drawmap, 4));
+////				Nali.warn("texture_state " + (rg.state & 1));
+////				RenderO.setTextureBuffer(drawmap.texture, (byte)(rg.flag & 1+2));
+//				GL11.glBindTexture(GL11.GL_TEXTURE_2D, drawmap.texture);
+//			}
 
 			for (Integer integer : index_integer_list)
 			{
-				DrawDa drawda = DRAWDA_LIST.get(integer);
-//				Nali.warn("g" + g + " i" + integer);
-
-				RenderO.FLOATBUFFER.limit(16);
-				MemoA.put(RenderO.FLOATBUFFER, drawda.projection_m4x4_float, 16);
-				OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[0], false, RenderO.FLOATBUFFER);
-				MemoA.put(RenderO.FLOATBUFFER, drawda.modelview_m4x4_float, 16);
-				OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[1], false, RenderO.FLOATBUFFER);
-				RenderO.FLOATBUFFER.limit(4);
-				MemoA.put(RenderO.FLOATBUFFER, drawda.color_v4_float, 4);
-				OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4], RenderO.FLOATBUFFER);
-//				MemoA.put(RenderO.FLOATBUFFER, drawda.light0position_v4_float, 4);
-//				OpenGlHelper.glUniform4(rs.uniformlocation_int_array[2], RenderO.FLOATBUFFER);
-
-				RenderO.FLOATBUFFER.clear();
-				if ((rg.flag & 16) == 16)
-				{
-					RenderO.FLOATBUFFER.put(0.0F);
-					RenderO.FLOATBUFFER.put(0.0F);
-				}
-				else
-				{
-					RenderO.FLOATBUFFER.put(drawda.light_b);
-					RenderO.FLOATBUFFER.put(drawda.light_s);
-				}
-				RenderO.FLOATBUFFER.flip();
-				OpenGlHelper.glUniform2(rs.uniformlocation_int_array[3], RenderO.FLOATBUFFER);
-
-				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, drawda.light_b, drawda.light_s);
-
-				if ((drawmap.extra_bit & 2) == 2)
-				{
-					RenderS.setFloatBuffer(KEY_FLOAT_ARRAY_LIST.get(integer));
-					OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[6], false, RenderS.BONE_FLOATBUFFER);
-				}
-
-				if (NaliConfig.VAO)
-				{
-					NaliGL.glDrawElementsTUi0(rg.index_length);
-				}
-				else
-				{
-					GL11.glDrawElements(GL11.GL_TRIANGLES, rg.index_length, GL11.GL_UNSIGNED_INT, 0);
-				}
+				render(integer, drawmap, rg, rs);
+//				DrawDa drawda = DRAWDA_LIST.get(integer);
+////				Nali.warn("g" + g + " i" + integer);
+//
+//				RenderO.FLOATBUFFER.limit(16);
+//				MemoA.put(RenderO.FLOATBUFFER, drawda.projection_m4x4_float, 16);
+//				OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[0], false, RenderO.FLOATBUFFER);
+//				MemoA.put(RenderO.FLOATBUFFER, drawda.modelview_m4x4_float, 16);
+//				OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[1], false, RenderO.FLOATBUFFER);
+//				RenderO.FLOATBUFFER.limit(4);
+//				MemoA.put(RenderO.FLOATBUFFER, drawda.color_v4_float, 4);
+//				OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4], RenderO.FLOATBUFFER);
+////				MemoA.put(RenderO.FLOATBUFFER, drawda.light0position_v4_float, 4);
+////				OpenGlHelper.glUniform4(rs.uniformlocation_int_array[2], RenderO.FLOATBUFFER);
+//
+//				RenderO.FLOATBUFFER.clear();
+//				if ((rg.flag & 16) == 16)
+//				{
+//					RenderO.FLOATBUFFER.put(0.0F);
+//					RenderO.FLOATBUFFER.put(0.0F);
+//				}
+//				else
+//				{
+//					RenderO.FLOATBUFFER.put(drawda.light_b);
+//					RenderO.FLOATBUFFER.put(drawda.light_s);
+//				}
+//				RenderO.FLOATBUFFER.flip();
+//				OpenGlHelper.glUniform2(rs.uniformlocation_int_array[3], RenderO.FLOATBUFFER);
+//
+//				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, drawda.light_b, drawda.light_s);
+//
+//				if ((drawmap.extra_bit & 2) == 2)
+//				{
+//					RenderS.setFloatBuffer(KEY_FLOAT_ARRAY_LIST.get(integer));
+//					OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[6], false, RenderS.BONE_FLOATBUFFER);
+//				}
+//
+//				if (NaliConfig.VAO)
+//				{
+//					NaliGL.glDrawElementsTUi0(rg.index_length);
+//				}
+//				else
+//				{
+//					GL11.glDrawElements(GL11.GL_TRIANGLES, rg.index_length, GL11.GL_UNSIGNED_INT, 0);
+//				}
 			}
 
-			if (!NaliConfig.VAO)
-			{
-				RenderO.disableBuffer(rs);
-			}
+			endBuffer(rs);
+//			if (!NaliConfig.VAO)
+//			{
+//				RenderO.disableBuffer(rs);
+//			}
 		}
 	}
 
@@ -351,82 +354,167 @@ public class Draw
 			MemoG rg = G_LIST.get(drawmap.rg);
 			MemoS rs = S_LIST.get(drawmap.rs);
 
-			RenderO.enableBuffer(rg, rs);
+			startBuffer(drawmap, rg, rs);
+//			RenderO.enableBuffer(rg, rs);
+//
+//			OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[2], 1);
+//			if ((drawmap.extra_bit & 4) == 4)//color
+//			{
+//				int color = drawmap.texture;
+//				RenderO.FLOATBUFFER.clear();
+//				RenderO.FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
+//				RenderO.FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
+//				RenderO.FLOATBUFFER.put((color & 0xFF) / 255.0F);
+//				RenderO.FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
+//				RenderO.FLOATBUFFER.flip();
+//				OpenGlHelper.glUniform4(rs.uniformlocation_int_array[5], RenderO.FLOATBUFFER);
+//			}
+//			else
+//			{
+////				OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
+////				Nali.warn("texture " + ByteReader.getInt(drawmap, 4));
+////				Nali.warn("texture_state " + (rg.state & 1));
+////				RenderO.setTextureBuffer(drawmap.texture, (byte)(rg.flag & 1+2));
+//				GL11.glBindTexture(GL11.GL_TEXTURE_2D, drawmap.texture);
+//			}
 
-			OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[2], 1);
-			if ((drawmap.extra_bit & 4) == 4)//color
-			{
-				int color = drawmap.texture;
-				RenderO.FLOATBUFFER.clear();
-				RenderO.FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
-				RenderO.FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
-				RenderO.FLOATBUFFER.put((color & 0xFF) / 255.0F);
-				RenderO.FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
-				RenderO.FLOATBUFFER.flip();
-				OpenGlHelper.glUniform4(rs.uniformlocation_int_array[5], RenderO.FLOATBUFFER);
-			}
-			else
-			{
+			render(drawda_integer_list.get(g), drawmap, rg, rs);
+////			for (Integer integer : drawda_integer_list)
+//			{
+//				Integer integer = drawda_integer_list.get(g);
+//				DrawDa drawda = DRAWDA_LIST.get(integer);
+////				Nali.warn("g" + g + " i" + integer);
+//
+//				RenderO.FLOATBUFFER.limit(16);
+//				MemoA.put(RenderO.FLOATBUFFER, drawda.projection_m4x4_float, 16);
+//				OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[0], false, RenderO.FLOATBUFFER);
+//				MemoA.put(RenderO.FLOATBUFFER, drawda.modelview_m4x4_float, 16);
+//				OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[1], false, RenderO.FLOATBUFFER);
+//				RenderO.FLOATBUFFER.limit(4);
+//				MemoA.put(RenderO.FLOATBUFFER, drawda.color_v4_float, 4);
+//				OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4], RenderO.FLOATBUFFER);
+////				MemoA.put(RenderO.FLOATBUFFER, drawda.light0position_v4_float, 4);
+////				OpenGlHelper.glUniform4(rs.uniformlocation_int_array[2], RenderO.FLOATBUFFER);
+//
+//				RenderO.FLOATBUFFER.clear();
+//				if ((rg.flag & 16) == 16)
+//				{
+//					RenderO.FLOATBUFFER.put(0.0F);
+//					RenderO.FLOATBUFFER.put(0.0F);
+//				}
+//				else
+//				{
+//					RenderO.FLOATBUFFER.put(drawda.light_b);
+//					RenderO.FLOATBUFFER.put(drawda.light_s);
+//				}
+//				RenderO.FLOATBUFFER.flip();
+//				OpenGlHelper.glUniform2(rs.uniformlocation_int_array[3], RenderO.FLOATBUFFER);
+//
+//				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, drawda.light_b, drawda.light_s);
+//
+//				if ((drawmap.extra_bit & 2) == 2)
+//				{
+//					RenderS.setFloatBuffer(KEY_FLOAT_ARRAY_LIST.get(integer));
+//					OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[6], false, RenderS.BONE_FLOATBUFFER);
+//				}
+//
+//				if (NaliConfig.VAO)
+//				{
+//					NaliGL.glDrawElementsTUi0(rg.index_length);
+//				}
+//				else
+//				{
+//					GL11.glDrawElements(GL11.GL_TRIANGLES, rg.index_length, GL11.GL_UNSIGNED_INT, 0);
+//				}
+//			}
+
+			endBuffer(rs);
+//			if (!NaliConfig.VAO)
+//			{
+//				RenderO.disableBuffer(rs);
+//			}
+		}
+	}
+
+	public static void startBuffer(DrawMap drawmap, MemoG rg, MemoS rs)
+	{
+		RenderO.enableBuffer(rg, rs);
+
+		OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[2], 1);
+		if ((drawmap.extra_bit & 4) == 4)//color
+		{
+			int color = drawmap.texture;
+			RenderO.FLOATBUFFER.clear();
+			RenderO.FLOATBUFFER.put(((color >> 16) & 0xFF) / 255.0F);
+			RenderO.FLOATBUFFER.put(((color >> 8) & 0xFF) / 255.0F);
+			RenderO.FLOATBUFFER.put((color & 0xFF) / 255.0F);
+			RenderO.FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
+			RenderO.FLOATBUFFER.flip();
+			OpenGlHelper.glUniform4(rs.uniformlocation_int_array[5], RenderO.FLOATBUFFER);
+		}
+		else
+		{
 //				OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
 //				Nali.warn("texture " + ByteReader.getInt(drawmap, 4));
 //				Nali.warn("texture_state " + (rg.state & 1));
 //				RenderO.setTextureBuffer(drawmap.texture, (byte)(rg.flag & 1+2));
-				GL11.glBindTexture(GL11.GL_TEXTURE_2D, drawmap.texture);
-			}
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, drawmap.texture);
+		}
+	}
 
-//			for (Integer integer : drawda_integer_list)
-			{
-				Integer integer = drawda_integer_list.get(g);
-				DrawDa drawda = DRAWDA_LIST.get(integer);
+	public static void render(Integer integer, DrawMap drawmap, MemoG rg, MemoS rs)
+	{
+		DrawDa drawda = DRAWDA_LIST.get(integer);
 //				Nali.warn("g" + g + " i" + integer);
 
-				RenderO.FLOATBUFFER.limit(16);
-				MemoA.put(RenderO.FLOATBUFFER, drawda.projection_m4x4_float, 16);
-				OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[0], false, RenderO.FLOATBUFFER);
-				MemoA.put(RenderO.FLOATBUFFER, drawda.modelview_m4x4_float, 16);
-				OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[1], false, RenderO.FLOATBUFFER);
-				RenderO.FLOATBUFFER.limit(4);
-				MemoA.put(RenderO.FLOATBUFFER, drawda.color_v4_float, 4);
-				OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4], RenderO.FLOATBUFFER);
+		RenderO.FLOATBUFFER.limit(16);
+		MemoA.put(RenderO.FLOATBUFFER, drawda.projection_m4x4_float, 16);
+		OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[0], false, RenderO.FLOATBUFFER);
+		MemoA.put(RenderO.FLOATBUFFER, drawda.modelview_m4x4_float, 16);
+		OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[1], false, RenderO.FLOATBUFFER);
+		RenderO.FLOATBUFFER.limit(4);
+		MemoA.put(RenderO.FLOATBUFFER, drawda.color_v4_float, 4);
+		OpenGlHelper.glUniform4(rs.uniformlocation_int_array[4], RenderO.FLOATBUFFER);
 //				MemoA.put(RenderO.FLOATBUFFER, drawda.light0position_v4_float, 4);
 //				OpenGlHelper.glUniform4(rs.uniformlocation_int_array[2], RenderO.FLOATBUFFER);
 
-				RenderO.FLOATBUFFER.clear();
-				if ((rg.flag & 16) == 16)
-				{
-					RenderO.FLOATBUFFER.put(0.0F);
-					RenderO.FLOATBUFFER.put(0.0F);
-				}
-				else
-				{
-					RenderO.FLOATBUFFER.put(drawda.light_b);
-					RenderO.FLOATBUFFER.put(drawda.light_s);
-				}
-				RenderO.FLOATBUFFER.flip();
-				OpenGlHelper.glUniform2(rs.uniformlocation_int_array[3], RenderO.FLOATBUFFER);
+		RenderO.FLOATBUFFER.clear();
+		if ((rg.flag & 16) == 16)
+		{
+			RenderO.FLOATBUFFER.put(0.0F);
+			RenderO.FLOATBUFFER.put(0.0F);
+		}
+		else
+		{
+			RenderO.FLOATBUFFER.put(drawda.light_b);
+			RenderO.FLOATBUFFER.put(drawda.light_s);
+		}
+		RenderO.FLOATBUFFER.flip();
+		OpenGlHelper.glUniform2(rs.uniformlocation_int_array[3], RenderO.FLOATBUFFER);
 
-				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, drawda.light_b, drawda.light_s);
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, drawda.light_b, drawda.light_s);
 
-				if ((drawmap.extra_bit & 2) == 2)
-				{
-					RenderS.setFloatBuffer(KEY_FLOAT_ARRAY_LIST.get(integer));
-					OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[6], false, RenderS.BONE_FLOATBUFFER);
-				}
+		if ((drawmap.extra_bit & 2) == 2)
+		{
+			RenderS.setFloatBuffer(KEY_FLOAT_ARRAY_LIST.get(integer));
+			OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[6], false, RenderS.BONE_FLOATBUFFER);
+		}
 
-				if (NaliConfig.VAO)
-				{
-					NaliGL.glDrawElementsTUi0(rg.index_length);
-				}
-				else
-				{
-					GL11.glDrawElements(GL11.GL_TRIANGLES, rg.index_length, GL11.GL_UNSIGNED_INT, 0);
-				}
-			}
+		if (NaliConfig.VAO)
+		{
+			NaliGL.glDrawElementsTUi0(rg.index_length);
+		}
+		else
+		{
+			GL11.glDrawElements(GL11.GL_TRIANGLES, rg.index_length, GL11.GL_UNSIGNED_INT, 0);
+		}
+	}
 
-			if (!NaliConfig.VAO)
-			{
-				RenderO.disableBuffer(rs);
-			}
+	public static void endBuffer(MemoS rs)
+	{
+		if (!NaliConfig.VAO)
+		{
+			RenderO.disableBuffer(rs);
 		}
 	}
 }

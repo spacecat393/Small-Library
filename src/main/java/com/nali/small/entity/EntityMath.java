@@ -172,6 +172,8 @@ public class EntityMath
 
 	public static float interpolateRotation(float old_yaw, float yaw, float partial_ticks)
 	{
+//		return yaw;
+
 //		float f = yaw - old_yaw;
 //
 //		while (f < -180.0F)

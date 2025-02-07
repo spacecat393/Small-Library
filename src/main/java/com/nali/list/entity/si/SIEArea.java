@@ -83,9 +83,6 @@ public class SIEArea
 				break;
 			case 4:
 //				this.fetch();
-				break;
-			default:
-				warn("BIT_FLIP");
 		}
 	}
 

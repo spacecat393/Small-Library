@@ -8,6 +8,7 @@ import com.nali.list.gui.da.server.SDaChunkMap;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPageDa;
 import com.nali.network.NetworkRegistry;
+import com.nali.small.gui.page.PageSmall;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraftforge.fml.relauncher.Side;
@@ -101,24 +102,19 @@ public class PageMap extends PageSelect
 	@Override
 	public void enter()
 	{
-		byte[] byte_array = new byte[1 + 1 + 1 + 4];
-		byte_array[0] = SPageDa.ID;
-		byte_array[1] = SDaChunkMap.ID;
-		ByteWriter.set(byte_array, PAGE, 3);
-
 		byte boxtextall_array_length = (byte)this.boxtextall_array.length;
 		if (boxtextall_array_length == 6)
 		{
 			switch (this.select)
 			{
 				case 2:
-					byte_array[2] = SDaChunkMap.I_MORE;
+					this.sendNet(SDaChunkMap.I_MORE);
 					break;
 				case 3:
-					byte_array[2] = SDaChunkMap.I_LESS;
+					this.sendNet(SDaChunkMap.I_LESS);
 					break;
 				case 4:
-					byte_array[2] = SDaChunkMap.I_FETCH;
+					this.sendNet(SDaChunkMap.I_FETCH);
 					break;
 				case 5:
 					this.back();
@@ -128,19 +124,19 @@ public class PageMap extends PageSelect
 		{
 			if (this.select == (boxtextall_array_length - 5))
 			{
-				byte_array[2] = SDaChunkMap.I_DELETE_ALL;
+				this.sendNet(SDaChunkMap.I_DELETE_ALL);
 			}
 			else if (this.select == (boxtextall_array_length - 4))
 			{
-				byte_array[2] = SDaChunkMap.I_MORE;
+				this.sendNet(SDaChunkMap.I_MORE);
 			}
 			else if (this.select == (boxtextall_array_length - 3))
 			{
-				byte_array[2] = SDaChunkMap.I_LESS;
+				this.sendNet(SDaChunkMap.I_LESS);
 			}
 			else if (this.select == (boxtextall_array_length - 2))
 			{
-				byte_array[2] = SDaChunkMap.I_FETCH;
+				this.sendNet(SDaChunkMap.I_FETCH);
 			}
 			else if (this.select == (boxtextall_array_length - 1))
 			{
@@ -155,10 +151,8 @@ public class PageMap extends PageSelect
 				long id = ByteReader.getLong(BYTE_ARRAY, new_index);
 				this.set(new PagePiece((int)id, (int)(id >> 32), ByteReader.getInt(BYTE_ARRAY, new_index + 8), ByteReader.getInt(BYTE_ARRAY, new_index + 8 + 4)), new KeySelect());
 				STATE &= 255-1;
-				return;
 			}
 		}
-		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 	}
 
 	@Override
@@ -174,5 +168,15 @@ public class PageMap extends PageSelect
 			STATE &= 255-(2+4);
 		}
 		super.draw();
+	}
+
+	public void sendNet(byte b2)
+	{
+		PageSmall.NET_BYTE_ARRAY = new byte[1 + 1 + 1 + 4];
+		PageSmall.NET_BYTE_ARRAY[0] = SPageDa.ID;
+		PageSmall.NET_BYTE_ARRAY[1] = SDaChunkMap.ID;
+		PageSmall.NET_BYTE_ARRAY[2] = b2;
+		ByteWriter.set(PageSmall.NET_BYTE_ARRAY, PAGE, 3);
+		NetworkRegistry.I.sendToServer(new ServerMessage(PageSmall.NET_BYTE_ARRAY));
 	}
 }

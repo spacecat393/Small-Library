@@ -93,41 +93,41 @@ public class PagePiece extends PageSelect
 		byte select = this.select;
 		if (this.i == -1)
 		{
-			switch (select)
+			if (select == 6)
 			{
-				case 6:
-					byte[] byte_array = new byte[1 + 1 + 1 + 4 + 1];
-					byte_array[0] = SPageDa.ID;
-					byte_array[1] = SDaChunkList.ID;
-					byte_array[2] = SDaChunkList.I_DELETE;
-					ByteWriter.set(byte_array, PageList.PAGE, 3);
+				byte[] byte_array = new byte[1 + 1 + 1 + 4 + 1];
+				byte_array[0] = SPageDa.ID;
+				byte_array[1] = SDaChunkList.ID;
+				byte_array[2] = SDaChunkList.I_DELETE;
+				ByteWriter.set(byte_array, PageList.PAGE, 3);
 //					ByteWriter.set(byte_array, PageList.SELECT, 3 + 4);
-					byte_array[3 + 4] = PageList.SELECT;
-					NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
-					this.back();
-					break;
-				case 7:
-					this.back();
-					break;
+				byte_array[3 + 4] = PageList.SELECT;
+				NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+//				this.back();
 			}
+//			else//7
+//			{
+//				this.back();
+//			}
+			this.back();
 		}
 		else
 		{
-			switch (select)
+			if (select == 7)
 			{
-				case 7:
-					byte[] byte_array = new byte[1 + 1 + 1 + 8];
-					ByteWriter.set(byte_array, ByteReader.getLong(PageMap.BYTE_ARRAY, 2 + PageMap.SELECT * (8 + 2 * 4)), 3);
-					byte_array[0] = SPageDa.ID;
-					byte_array[1] = SDaChunkMap.ID;
-					byte_array[2] = SDaChunkMap.I_DELETE;
-					NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
-					this.back();
-					break;
-				case 8:
-					this.back();
-					break;
+				byte[] byte_array = new byte[1 + 1 + 1 + 8];
+				ByteWriter.set(byte_array, ByteReader.getLong(PageMap.BYTE_ARRAY, 2 + PageMap.SELECT * (8 + 2 * 4)), 3);
+				byte_array[0] = SPageDa.ID;
+				byte_array[1] = SDaChunkMap.ID;
+				byte_array[2] = SDaChunkMap.I_DELETE;
+				NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
+//				this.back();
 			}
+//			else//8
+//			{
+//				this.back();
+//			}
+			this.back();
 		}
 	}
 }

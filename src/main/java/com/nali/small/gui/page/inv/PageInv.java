@@ -8,6 +8,7 @@ import com.nali.list.gui.da.server.SDaInv;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPageDa;
 import com.nali.network.NetworkRegistry;
+import com.nali.small.gui.page.PageSmall;
 import com.nali.small.gui.page.inv.select.PageSelect;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
@@ -107,28 +108,22 @@ public class PageInv extends PageEdit
 //		if ((STATE & 1) == 0)
 //		{
 //			STATE |= 1;
-
-		byte[] byte_array = new byte[1 + 1 + 1 + 4];
-		byte_array[0] = SPageDa.ID;
-		byte_array[1] = SDaInv.ID;
-		ByteWriter.set(byte_array, PAGE, 3);
-
 		byte boxtextall_array_length = (byte)this.boxtextall_array.length;
 		if (boxtextall_array_length == 8)
 		{
 			switch (this.select)
 			{
 				case 2:
-					byte_array[2] = SDaInv.I_MORE;
+					this.sendNet(SDaInv.I_MORE);
 					break;
 				case 3:
-					byte_array[2] = SDaInv.I_LESS;
+					this.sendNet(SDaInv.I_LESS);
 					break;
 				case 4:
-					byte_array[2] = SDaInv.I_FETCH;
+					this.sendNet(SDaInv.I_FETCH);
 					break;
 				case 5:
-					byte_array[2] = SDaInv.I_ADD;
+					this.sendNet(SDaInv.I_ADD);
 					break;
 				case 6:
 					break;
@@ -140,23 +135,24 @@ public class PageInv extends PageEdit
 		{
 			if (this.select == (boxtextall_array_length - 6))
 			{
-				byte_array[2] = SDaInv.I_MORE;
+				this.sendNet(SDaInv.I_MORE);
 			}
 			else if (this.select == (boxtextall_array_length - 5))
 			{
-				byte_array[2] = SDaInv.I_LESS;
+				this.sendNet(SDaInv.I_LESS);
 			}
 			else if (this.select == (boxtextall_array_length - 4))
 			{
-				byte_array[2] = SDaInv.I_FETCH;
+				this.sendNet(SDaInv.I_FETCH);
 			}
 			else if (this.select == (boxtextall_array_length - 3))
 			{
-				byte_array[2] = SDaInv.I_ADD;
+				this.sendNet(SDaInv.I_ADD);
 			}
 			else if (this.select == (boxtextall_array_length - 2))
 			{
 				//command
+//				this.sendNet();
 			}
 			else if (this.select == (boxtextall_array_length - 1))
 			{
@@ -171,10 +167,8 @@ public class PageInv extends PageEdit
 //				INV = ByteReader.getInt(BYTE_ARRAY, 2 + (this.select - 3) * 4);
 				this.set(new PageSelect(), new KeySelect());
 				STATE &= 255-1;
-				return;
 			}
 		}
-		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 //			STATE &= 255-1;
 //		}
 	}
@@ -192,5 +186,15 @@ public class PageInv extends PageEdit
 			STATE &= 255-(2+4);
 		}
 		super.draw();
+	}
+
+	public void sendNet(byte b2)
+	{
+		PageSmall.NET_BYTE_ARRAY = new byte[1 + 1 + 1 + 4];
+		PageSmall.NET_BYTE_ARRAY[0] = SPageDa.ID;
+		PageSmall.NET_BYTE_ARRAY[1] = SDaInv.ID;
+		PageSmall.NET_BYTE_ARRAY[2] = b2;
+		ByteWriter.set(PageSmall.NET_BYTE_ARRAY, PAGE, 3);
+		NetworkRegistry.I.sendToServer(new ServerMessage(PageSmall.NET_BYTE_ARRAY));
 	}
 }

@@ -25,30 +25,50 @@ public class SILeLook
 	@Override
 	public void syncLook(E e)
 	{
-		//need support other yaw later
-//		e.rotationPitch = EntityMath.normalize(e.rotationPitch, 180.0F);
-		e.rotationPitch = ((e.rotationPitch + 180) % 360 + 360) % 360 - 180;
-//		float difference = e.rotation_yaw_head - e.rotationYaw;
+		super.syncLook(e);
+//		//need support other yaw later
+////		e.rotationPitch = EntityMath.normalize(e.rotationPitch, 180.0F);
+//		e.rotationPitch = ((e.rotationPitch + 180) % 360 + 360) % 360 - 180;
+////		float difference = e.rotation_yaw_head - e.rotationYaw;
+//
+////		float new_difference = (e.rotation_yaw_head + 360) % 360 - (e.rotationYaw + 360) % 360;
+////		if (Math.abs(new_difference) < Math.abs(difference))
+////		{
+////			difference = ((new_difference + 180) % 360 + 360) % 360 - 180;
+////		}
+////		if (difference > 45.0F)
+////		{
+////			difference = 45.0F;
+////		}
+////		else if (difference < -45.0F)
+////		{
+////			difference = -45.0F;
+////		}
+//
+////		e.rotation_yaw_head = EntityMath.normalize(e.rotationYaw + difference, 360.0F);
+////		e.rotationYaw = EntityMath.normalize(e.rotationYaw, 360.0F);
+////		e.rotation_yaw_head = ((e.rotationYaw + difference + 180) % 360 + 360) % 360 - 180;
+//		e.rotation_yaw_head = ((e.rotationYaw + 180) % 360 + 360) % 360 - 180;
+//		e.rotationYaw = e.rotation_yaw_head;
 
-//		float new_difference = (e.rotation_yaw_head + 360) % 360 - (e.rotationYaw + 360) % 360;
-//		if (Math.abs(new_difference) < Math.abs(difference))
-//		{
-//			difference = ((new_difference + 180) % 360 + 360) % 360 - 180;
-//		}
-//		if (difference > 45.0F)
-//		{
-//			difference = 45.0F;
-//		}
-//		else if (difference < -45.0F)
-//		{
-//			difference = -45.0F;
-//		}
+//		e.rotation_yaw_head = e.rotationYaw;
 
-//		e.rotation_yaw_head = EntityMath.normalize(e.rotationYaw + difference, 360.0F);
-//		e.rotationYaw = EntityMath.normalize(e.rotationYaw, 360.0F);
-//		e.rotation_yaw_head = ((e.rotationYaw + difference + 180) % 360 + 360) % 360 - 180;
-		e.rotation_yaw_head = ((e.rotationYaw + 180) % 360 + 360) % 360 - 180;
-		e.rotationYaw = ((e.rotationYaw + 180) % 360 + 360) % 360 - 180;
+		float yaw = e.rotationYaw - e.rotation_yaw_head;
+		float delta = ((yaw + 180) % 360 + 360) % 360 - 180;
+		if (delta > 180)
+		{
+			delta -= 360;
+		}
+//		if (delta > -35 && delta < 35)
+//		{
+//			delta /= 2;
+//		}
+//		else
+		if (delta < -35 || delta > 35)
+		{
+			delta -= 35 * Math.signum(delta);
+			e.rotation_yaw_head += delta;
+		}
 
 		int rotation_yaw_head_int = Float.floatToIntBits(e.rotation_yaw_head);
 		I i = this.s.i;

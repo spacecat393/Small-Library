@@ -51,15 +51,15 @@ public abstract class ClientLe
 		E e = this.i.getE();
 		e.rotation_yaw_head = ByteReader.getFloat(this.sync_byte_array, 4);
 		e.prev_rotation_yaw_head = e.rotation_yaw_head;
-		while (e.rotation_yaw_head - e.prev_rotation_yaw_head < -180.0F)
-		{
-			e.prev_rotation_yaw_head -= 360.0F;
-		}
-
-		while (e.rotation_yaw_head - e.prev_rotation_yaw_head >= 180.0F)
-		{
-			e.prev_rotation_yaw_head += 360.0F;
-		}
+//		while (e.rotation_yaw_head - e.prev_rotation_yaw_head < -180.0F)
+//		{
+//			e.prev_rotation_yaw_head -= 360.0F;
+//		}
+//
+//		while (e.rotation_yaw_head - e.prev_rotation_yaw_head >= 180.0F)
+//		{
+//			e.prev_rotation_yaw_head += 360.0F;
+//		}
 	}
 
 	@Override

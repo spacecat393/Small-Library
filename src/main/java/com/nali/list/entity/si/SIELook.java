@@ -62,7 +62,15 @@ public class SIELook
 		this.s.ms.state &= 255-2;
 
 		E e = this.s.i.getE();
-		this.yaw = ((float)Math.toDegrees(Math.atan2(-this.x, this.z)) - e.rotationYaw) / this.max;
+//		float yaw = (float)Math.toDegrees(Math.atan2(-this.x, this.z)) - ((EntityLe)e).rotation_yaw_head;
+		float yaw = (float)Math.toDegrees(Math.atan2(-this.x, this.z)) - e.rotationYaw;
+		float delta = ((yaw + 180) % 360 + 360) % 360 - 180;
+		if (delta > 180)
+		{
+			delta -= 360;
+		}
+		this.yaw = delta / this.max;
+//		this.yaw = ((float)Math.toDegrees(Math.atan2(-this.x, this.z)) - ((EntityLe)e).rotation_yaw_head) / this.max;
 		this.pitch = ((float)Math.toDegrees(Math.atan2(-this.y, Math.sqrt(this.x * this.x + this.z * this.z))) - e.rotationPitch) / this.max;
 	}
 
@@ -82,6 +90,10 @@ public class SIELook
 				}
 				else
 				{
+//					Nali.warn("this.yaw " + this.yaw);
+//					Nali.warn("((EntityLe)e).rotation_yaw_head " + ((EntityLe)e).rotation_yaw_head);
+//					((EntityLe)e).rotation_yaw_head += this.yaw;
+//					((EntityLe)e).rotation_yaw_head = (float)Math.toDegrees(Math.atan2(-this.x, this.z));
 					e.rotationYaw += this.yaw;
 					e.rotationPitch += this.pitch;
 				}
@@ -90,6 +102,7 @@ public class SIELook
 		}
 
 		this.syncLook(e);
+//		Nali.warn("e.rotationYaw " + e.rotationYaw);
 	}
 
 	@Override
@@ -110,6 +123,8 @@ public class SIELook
 
 	public void syncLook(E e)
 	{
+//		((EntityLe)e).rotation_yaw_head = ((((EntityLe)e).rotation_yaw_head + 180) % 360 + 360) % 360 - 180;
+//		e.rotationYaw = ((EntityLe)e).rotation_yaw_head;
 		e.rotationPitch = ((e.rotationPitch + 180) % 360 + 360) % 360 - 180;
 		e.rotationYaw = ((e.rotationYaw + 180) % 360 + 360) % 360 - 180;
 	}

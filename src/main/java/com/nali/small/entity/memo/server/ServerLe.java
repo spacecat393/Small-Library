@@ -22,11 +22,11 @@ public abstract class ServerLe
 > extends ServerE<BD, E, I, MS> implements IBothLe<E>
 {
 //	public WorkEBodyYaw workebodyyaw;
-	public byte serverle_state;//attackEntityAsMob attackEntityFrom attackEntityAsMob_trigger attackEntityFrom_trigger
+//	public byte serverle_state;//attackEntityAsMob attackEntityFrom attackEntityAsMob_trigger attackEntityFrom_trigger
 //	public float fix_yaw_head;
 
-	public Entity attack_entity_as_mob_entity;
-	public DamageSource attack_entity_from_damagesource;
+//	public Entity attack_entity_as_mob_entity;
+//	public DamageSource attack_entity_from_damagesource;
 //	public AIEOwner<SD, BD, E, I, ?, MS> sieowner;
 //	public AILeLockDMG<SD, BD, E, I, ?, MS> ailelockdmg;
 
@@ -110,19 +110,20 @@ public abstract class ServerLe
 	@Override
 	public boolean attackEntityFrom(DamageSource damagesource, float amount)
 	{
-		this.attack_entity_from_damagesource = damagesource;
-		this.serverle_state |= 8;
-		this.ms.call(SILeLockDMG.ID);
-		return true;
+//		this.attack_entity_from_damagesource = damagesource;
+//		this.serverle_state |= 8;
+//		this.ms.call(SILeLockDMG.ID);
+		return ((SILeLockDMG)this.ms.si_map.get(SILeLockDMG.ID)).attackEntityFrom(damagesource, amount);
 	}
 
 	@Override
 	public boolean attackEntityAsMob(Entity entity)//both?
 	{
-		this.attack_entity_as_mob_entity = entity;
-		this.serverle_state |= 4;
-		this.ms.call(SILeLockDMG.ID);
-		return (this.serverle_state & 1) == 1;
+//		this.attack_entity_as_mob_entity = entity;
+//		this.serverle_state |= 4;
+//		this.ms.call(SILeLockDMG.ID);
+//		return (this.serverle_state & 1) == 1;
+		return ((SILeLockDMG)this.ms.si_map.get(SILeLockDMG.ID)).attackEntityAsMob(entity);
 	}
 
 	@Override

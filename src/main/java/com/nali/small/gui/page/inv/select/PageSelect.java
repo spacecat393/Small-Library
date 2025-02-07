@@ -8,6 +8,7 @@ import com.nali.list.gui.da.server.SDaInvSelect;
 import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPageDa;
 import com.nali.network.NetworkRegistry;
+import com.nali.small.gui.page.PageSmall;
 import com.nali.small.gui.page.inv.PageInv;
 import com.nali.small.gui.page.inv.select.item.PageItem;
 import com.nali.system.bytes.ByteReader;
@@ -113,28 +114,19 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 //		if ((STATE & 1) == 0)
 //		{
 //			STATE |= 1;
-
-		byte[] byte_array = new byte[1 + 1 + 1 + 4 + 4];
-		byte_array[0] = SPageDa.ID;
-		ByteWriter.set(byte_array, PAGE, 3);
-		ByteWriter.set(byte_array, ByteReader.getInt(PageInv.BYTE_ARRAY, 2 + PageInv.SELECT * 4), 3+4);
-
 		byte boxtextall_array_length = (byte)this.boxtextall_array.length;
 		if (boxtextall_array_length == 8)
 		{
 			switch (this.select)
 			{
 				case 2:
-					byte_array[1] = SDaInvSelect.ID;
-					byte_array[2] = SDaInvSelect.I_MORE;
+					this.sendNet(SDaInvSelect.ID, SDaInvSelect.I_MORE);
 					break;
 				case 3:
-					byte_array[1] = SDaInvSelect.ID;
-					byte_array[2] = SDaInvSelect.I_LESS;
+					this.sendNet(SDaInvSelect.ID, SDaInvSelect.I_LESS);
 					break;
 				case 4:
-					byte_array[1] = SDaInvSelect.ID;
-					byte_array[2] = SDaInvSelect.I_FETCH;
+					this.sendNet(SDaInvSelect.ID, SDaInvSelect.I_FETCH);
 					break;
 				case 5:
 					PAGE_LIST.add(this);
@@ -144,33 +136,27 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 //					long id = ByteReader.getLong(BYTE_ARRAY, new_index);
 					this.set(new PageAdd(/*(int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]*/), new KeyEdit());
 					STATE &= 255-1;
-					return;
 				case 6:
-					byte_array[1] = SDaInv.ID;
-					byte_array[2] = SDaInv.I_DELETE;
+					this.sendNet(SDaInv.ID, SDaInv.I_DELETE);
 					this.back();
 					break;
 				case 7:
 					this.back();
-					return;
 			}
 		}
 		else
 		{
 			if (this.select == (boxtextall_array_length - 6))
 			{
-				byte_array[1] = SDaInvSelect.ID;
-				byte_array[2] = SDaInvSelect.I_MORE;
+				this.sendNet(SDaInvSelect.ID, SDaInvSelect.I_MORE);
 			}
 			else if (this.select == (boxtextall_array_length - 5))
 			{
-				byte_array[1] = SDaInvSelect.ID;
-				byte_array[2] = SDaInvSelect.I_LESS;
+				this.sendNet(SDaInvSelect.ID, SDaInvSelect.I_LESS);
 			}
 			else if (this.select == (boxtextall_array_length - 4))
 			{
-				byte_array[1] = SDaInvSelect.ID;
-				byte_array[2] = SDaInvSelect.I_FETCH;
+				this.sendNet(SDaInvSelect.ID, SDaInvSelect.I_FETCH);
 			}
 			else if (this.select == (boxtextall_array_length - 3))
 			{
@@ -182,18 +168,15 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 //					long id = ByteReader.getLong(BYTE_ARRAY, new_index);
 				this.set(new PageAdd(/*(int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]*/), new KeyEdit());
 				STATE &= 255-1;
-				return;
 			}
 			else if (this.select == (boxtextall_array_length - 2))
 			{
-				byte_array[1] = SDaInv.ID;
-				byte_array[2] = SDaInv.I_DELETE;
+				this.sendNet(SDaInv.ID, SDaInv.I_DELETE);
 				this.back();
 			}
 			else if (this.select == (boxtextall_array_length - 1))
 			{
 				this.back();
-				return;
 			}
 			else/* if (this.select > 1)*/
 			{
@@ -204,10 +187,8 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 //					long id = ByteReader.getLong(BYTE_ARRAY, new_index);
 				this.set(new PageItem(ByteReader.getInt(BYTE_ARRAY, 2 + (byte)(this.select - 3) * 4)/*(int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]*/), new KeyEdit());
 				STATE &= 255-1;
-				return;
 			}
 		}
-		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 //			STATE &= 255-1;
 //		}
 	}
@@ -225,5 +206,23 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 			STATE &= 255-(2+4);
 		}
 		super.draw();
+	}
+
+	public void sendNet(byte b1, byte b2)
+	{
+		PageSmall.NET_BYTE_ARRAY = new byte[1 + 1 + 1 + 4 + 4];
+		PageSmall.NET_BYTE_ARRAY[0] = SPageDa.ID;
+		PageSmall.NET_BYTE_ARRAY[1] = b1;
+		PageSmall.NET_BYTE_ARRAY[2] = b2;
+		if (b1 == SDaInv.ID)
+		{
+			ByteWriter.set(PageSmall.NET_BYTE_ARRAY, PageInv.PAGE, 3);
+		}
+		else
+		{
+			ByteWriter.set(PageSmall.NET_BYTE_ARRAY, PAGE, 3);
+		}
+		ByteWriter.set(PageSmall.NET_BYTE_ARRAY, ByteReader.getInt(PageInv.BYTE_ARRAY, 2 + PageInv.SELECT * 4), 3+4);
+		NetworkRegistry.I.sendToServer(new ServerMessage(PageSmall.NET_BYTE_ARRAY));
 	}
 }

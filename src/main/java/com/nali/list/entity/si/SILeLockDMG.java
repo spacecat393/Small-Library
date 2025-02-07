@@ -52,21 +52,21 @@ public class SILeLockDMG
 	@Override
 	public void call()
 	{
-		if ((this.s.serverle_state & 4) == 4)
-		{
-			this.attackEntityAsMob();
-			this.s.serverle_state &= 255-4;
-		}
-		if ((this.s.serverle_state & 8) == 8)
-		{
-			this.attackEntityFrom();
-			this.s.serverle_state &= 255-8;
-		}
+//		if ((this.s.serverle_state & 4) == 4)
+//		{
+//			this.attackEntityAsMob();
+//			this.s.serverle_state &= 255-4;
+//		}
+//		if ((this.s.serverle_state & 8) == 8)
+//		{
+//			this.attackEntityFrom();
+//			this.s.serverle_state &= 255-8;
+//		}
 	}
 
-	public void attackEntityAsMob()//both?
+	public boolean attackEntityAsMob(Entity entity)
 	{
-		Entity entity = this.s.attack_entity_as_mob_entity;
+//		Entity entity = this.s.attack_entity_as_mob_entity;
 //		entity.hurtResistantTime = 0;
 		if (entity instanceof EntityLivingBase)
 		{
@@ -128,12 +128,13 @@ public class SILeLockDMG
 			((IMixinEntity)e).GOapplyEnchantments(e, entity);
 		}
 
-		this.s.serverle_state |= flag ? 1 : 0;
+//		this.s.serverle_state |= flag ? 1 : 0;
+		return flag;
 	}
 
-	public boolean attackEntityFrom()
+	public boolean attackEntityFrom(DamageSource damagesource, float amount)
 	{
-		DamageSource damagesource = this.s.attack_entity_from_damagesource;
+//		DamageSource damagesource = this.s.attack_entity_from_damagesource;
 //		if (!this.world.isRemote)
 //		{
 //		if ((this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] >> this.workbytes.LOCK_DAMAGE() % 8 & 1) == 1)

@@ -95,6 +95,7 @@ public class SIELookTo
 	//			}
 
 				if (--this.tick > 300)
+//				if (this.tick != 0)
 				{
 					if (this.blockpos != null)
 					{

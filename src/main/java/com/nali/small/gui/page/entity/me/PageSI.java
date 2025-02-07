@@ -9,6 +9,7 @@ import com.nali.list.network.message.ServerMessage;
 import com.nali.list.network.method.server.SPageDa;
 import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.memo.server.si.MixSIE;
+import com.nali.small.gui.page.PageSmall;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.EntityList;
@@ -106,44 +107,41 @@ public class PageSI extends PageSelect
 	@Override
 	public void enter()
 	{
-		byte[] byte_array = new byte[1 + 1 + 1 + 1 + 8];
 		byte boxtextall_array_length = (byte)this.boxtextall_array.length;
 		if (boxtextall_array_length == 6)
 		{
 			switch (this.select)
 			{
 				case 2:
-					byte_array[2] = SDaSI.I_MORE;
+					this.sendNet(SDaSI.I_MORE);
 					break;
 				case 3:
-					byte_array[2] = SDaSI.I_LESS;
+					this.sendNet(SDaSI.I_LESS);
 					break;
 				case 4:
-					byte_array[2] = SDaSI.I_FETCH;
+					this.sendNet(SDaSI.I_FETCH);
 					break;
 				case 5:
 					this.back();
-					return;
 			}
 		}
 		else
 		{
 			if (this.select == (boxtextall_array_length - 4))
 			{
-				byte_array[2] = SDaSI.I_MORE;
+				this.sendNet(SDaSI.I_MORE);
 			}
 			else if (this.select == (boxtextall_array_length - 3))
 			{
-				byte_array[2] = SDaSI.I_LESS;
+				this.sendNet(SDaSI.I_LESS);
 			}
 			else if (this.select == (boxtextall_array_length - 2))
 			{
-				byte_array[2] = SDaSI.I_FETCH;
+				this.sendNet(SDaSI.I_FETCH);
 			}
 			else if (this.select == (boxtextall_array_length - 1))
 			{
 				this.back();
-				return;
 			}
 			else
 			{
@@ -162,14 +160,8 @@ public class PageSI extends PageSelect
 //				byte select = (byte)(this.select - 2);
 //				this.set(new PageAttributeE(), new KeyEdit());
 				STATE &= 255-1;
-				return;
 			}
 		}
-		byte_array[0] = SPageDa.ID;
-		byte_array[1] = SDaSI.ID;
-		byte_array[3] = PAGE;
-		ByteWriter.set(byte_array, PageMe.ID, 4);
-		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 	}
 
 	@Override
@@ -185,5 +177,16 @@ public class PageSI extends PageSelect
 			STATE &= 255-(2+4);
 		}
 		super.draw();
+	}
+
+	public void sendNet(byte b2)
+	{
+		PageSmall.NET_BYTE_ARRAY = new byte[1 + 1 + 1 + 1 + 8];
+		PageSmall.NET_BYTE_ARRAY[0] = SPageDa.ID;
+		PageSmall.NET_BYTE_ARRAY[1] = SDaSI.ID;
+		PageSmall.NET_BYTE_ARRAY[2] = b2;
+		PageSmall.NET_BYTE_ARRAY[3] = PAGE;
+		ByteWriter.set(PageSmall.NET_BYTE_ARRAY, PageMe.ID, 4);
+		NetworkRegistry.I.sendToServer(new ServerMessage(PageSmall.NET_BYTE_ARRAY));
 	}
 }
