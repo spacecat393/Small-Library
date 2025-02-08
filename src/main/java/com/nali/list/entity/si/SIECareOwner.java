@@ -29,7 +29,7 @@ public class SIECareOwner
 	public SIEOwner<BD, E, I, S, MS> sieowner;
 	public SIEArea<BD, E, I, S, MS> siearea;
 
-	public byte state;
+	public byte state = 1;
 
 	public List<Entity> target_entity_list = new ArrayList();
 	public List<Double> far_double_list = new ArrayList();

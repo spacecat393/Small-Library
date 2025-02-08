@@ -21,7 +21,7 @@ public class SDaInv
 	public static byte ID;
 	public static byte STATE;//delete/add
 
-	public final static byte MAX_SIZE = 117;
+	public final static byte MAX_SIZE = 118;
 	public final static byte I_MORE = 0;
 	public final static byte I_LESS = 1;
 	public final static byte I_FETCH = 2;

@@ -22,7 +22,7 @@ public class PageInv extends PageEdit
 
 	public static byte
 		STATE,//enter client init
-		MAX_PAGE,//0-117
+		MAX_PAGE,//0-118
 		SELECT;
 	public static int
 		PAGE,
@@ -44,7 +44,7 @@ public class PageInv extends PageEdit
 			MAX_MIX_PAGE = ByteReader.getInt(BYTE_ARRAY, byte_array_length - 4);
 
 			byte index = 0;
-			this.boxtextall_array = new BoxTextAll[3 + MAX_PAGE + 7];
+			this.boxtextall_array = new BoxTextAll[3 + MAX_PAGE + 6];
 			this.boxtextall_array[index++] = new BoxTextAll("ME-INV".toCharArray());
 			this.boxtextall_array[index++] = new BoxTextAll(("PAGE " + PAGE).toCharArray());
 			this.boxtextall_array[index++] = new BoxTextAll(("MAX-PAGE " + MAX_MIX_PAGE).toCharArray());
@@ -68,13 +68,12 @@ public class PageInv extends PageEdit
 
 			this.boxtextall_array[index++] = new BoxTextAll("FETCH".toCharArray());
 			this.boxtextall_array[index++] = new BoxTextAll("ADD".toCharArray());
-			this.boxtextall_array[index++] = new BoxTextAll("COMMAND".toCharArray());
 			this.boxtextall_array[index] = new BoxTextAll("BACK".toCharArray());
 
 			this.group_byte_array = new byte[(byte)Math.ceil((this.boxtextall_array.length - 1) / 8.0F)];
 			this.group_byte_array[0 / 8] |= 1 << 0 % 8;
 			this.group_byte_array[1 / 8] |= 1 << 1 % 8;
-			byte new_index = (byte)(index - 7);
+			byte new_index = (byte)(index - 6);
 			this.group_byte_array[new_index / 8] |= 1 << new_index % 8;
 		}
 		else
@@ -87,7 +86,6 @@ public class PageInv extends PageEdit
 				new BoxTextAll("LESS".toCharArray()),
 				new BoxTextAll("FETCH".toCharArray()),
 				new BoxTextAll("ADD".toCharArray()),
-				new BoxTextAll("COMMAND".toCharArray()),
 				new BoxTextAll("BACK".toCharArray())
 			};
 
@@ -109,7 +107,7 @@ public class PageInv extends PageEdit
 //		{
 //			STATE |= 1;
 		byte boxtextall_array_length = (byte)this.boxtextall_array.length;
-		if (boxtextall_array_length == 8)
+		if (boxtextall_array_length == 7)
 		{
 			switch (this.select)
 			{
@@ -126,33 +124,26 @@ public class PageInv extends PageEdit
 					this.sendNet(SDaInv.I_ADD);
 					break;
 				case 6:
-					break;
-				case 7:
 					this.back();
 			}
 		}
 		else
 		{
-			if (this.select == (boxtextall_array_length - 6))
+			if (this.select == (boxtextall_array_length - 5))
 			{
 				this.sendNet(SDaInv.I_MORE);
 			}
-			else if (this.select == (boxtextall_array_length - 5))
+			else if (this.select == (boxtextall_array_length - 4))
 			{
 				this.sendNet(SDaInv.I_LESS);
 			}
-			else if (this.select == (boxtextall_array_length - 4))
+			else if (this.select == (boxtextall_array_length - 3))
 			{
 				this.sendNet(SDaInv.I_FETCH);
 			}
-			else if (this.select == (boxtextall_array_length - 3))
-			{
-				this.sendNet(SDaInv.I_ADD);
-			}
 			else if (this.select == (boxtextall_array_length - 2))
 			{
-				//command
-//				this.sendNet();
+				this.sendNet(SDaInv.I_ADD);
 			}
 			else if (this.select == (boxtextall_array_length - 1))
 			{

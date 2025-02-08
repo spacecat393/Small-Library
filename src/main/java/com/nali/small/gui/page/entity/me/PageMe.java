@@ -51,8 +51,8 @@ public class PageMe extends PageEdit
 			//edit inv in si
 			new BoxTextAll("ME-ATTRIBUTE".toCharArray()),
 			new BoxTextAll("ME-SI".toCharArray()),
-//			new BoxTextAll("ME-INV".toCharArray()),
-			new BoxTextAll("ME-MAP".toCharArray()),
+			new BoxTextAll("ME-INV".toCharArray()),
+//			new BoxTextAll("ME-MAP".toCharArray()),
 			new BoxTextAll("ME-EFFECT".toCharArray()),
 			new BoxTextAll("ACTION".toCharArray()),
 			new BoxTextAll("DONE".toCharArray())
@@ -119,7 +119,7 @@ public class PageMe extends PageEdit
 			case 5:
 				PAGE_LIST.add(this);
 				KEY_LIST.add(Key.KEY);
-				this.set(new PageMap(), new KeySelect());
+				this.set(new PageInv(), new KeySelect());
 				break;
 			case 6:
 				PAGE_LIST.add(this);

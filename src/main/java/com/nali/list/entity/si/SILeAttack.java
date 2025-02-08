@@ -41,7 +41,7 @@ public class SILeAttack
 
 	public int[] attack_frame_int_array;
 
-	public byte flag = 16;//move_to prepare hit | remote walk_to
+	public byte flag = 32;//move_to prepare hit | remote attack_pose walk_to
 	public float minimum_distance = 3.0F;
 	public int
 		magic_point,
@@ -87,12 +87,12 @@ public class SILeAttack
 				{
 //					smallsakuratypes.set((byte)(value - 1));
 					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-					this.flag |= 16;
+					this.flag |= 32;
 				}
 			}
 			else
 			{
-				this.flag &= 255 - 16;
+				this.flag &= 255 - 32;
 			}
 		}
 		else if (id == 1.2F)
@@ -161,7 +161,7 @@ public class SILeAttack
 //		if ((!work && should_work && !this.silecareowner.target_entity_list.isEmpty()) || (work && !this.siearea.all_entity_list.isEmpty()))
 		if ((this.s.ms.state & 1) == 1)
 		{
-			if (((this.silecareowner.state & 1) == 1 && !this.silecareowner.target_entity_list.isEmpty()) || ((this.flag & (8+16)) != 0 && !this.siearea.all_entity_list.isEmpty()))
+			if (((this.silecareowner.state & 1) == 1 && !this.silecareowner.target_entity_list.isEmpty()) || ((this.flag & (8+32)) != 0 && !this.siearea.all_entity_list.isEmpty()))
 			{
 	//			if ((this.s.main_work_byte_array[this.s.bytele.MINE() / 8] >> this.s.bytele.MINE() % 8 & 1) == 1 && this.s.entitiesaimemory.skinningentitiesmine.blockpos != null)
 	//			{
@@ -187,7 +187,7 @@ public class SILeAttack
 						this.sielook.set(target_entity.posX - e.posX, target_entity.posY - e.posY, target_entity.posZ - e.posZ, (byte)2);
 					}
 
-					if ((this.flag & 16+8) == 16 && !(e.canEntityBeSeen(target_entity) && getDistanceAABBToAABB(e, target_entity) <= this.minimum_distance))
+					if ((this.flag & 32+8) == 32 && !(e.canEntityBeSeen(target_entity) && getDistanceAABBToAABB(e, target_entity) <= this.minimum_distance))
 					{
 	//					this.siefindmove.setBreakGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
 						this.siefindmove.setGoal(target_entity.posX, target_entity.posY, target_entity.posZ);

@@ -11,20 +11,19 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.player.PlayerData;
 import com.nali.small.mixin.IMixinWorldServer;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.*;
-
-import static com.nali.Nali.warn;
 
 public class SIEArea
 <
@@ -49,8 +48,15 @@ public class SIEArea
 	public List<Integer> troublemaker_list = new ArrayList();
 	public List<Integer> target_list = new ArrayList();
 
-	//	public byte state;
-	public byte flag;//check_tameable is_tameable | put_player put_owner put_other_tameable put_owner_tameable put_all_tameable put_object
+	public final static byte I_BYPASS_ARMY = 1;
+	public final static byte I_PUT_ANIMAL = 2;
+	public final static byte I_PUT_PLAYER = 4;
+	public final static byte I_PUT_OWNER = 8;
+	public final static byte I_PUT_OTHER_TAMEABLE = 16;
+	public final static byte I_PUT_OWNER_TAMEABLE = 32;
+	public final static byte I_PUT_ALL_TAMEABLE = 64;
+	public final static byte I_PUT_OBJECT = (byte)128;
+	public byte state;
 
 	public SIEArea(S s)
 	{
@@ -210,116 +216,116 @@ public class SIEArea
 		this.troublemaker_list.clear();
 	}
 
-	public void set()
-	{
-		byte[] byte_array = this.s.ms.byte_array;
-		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
-		float x = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
-
-//		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
-//		byte value = smallsakuratypes.get();
-		UUID player_uuid = this.s.ms.entityplayermp.getUniqueID();
-		byte value = PlayerData.SAKURA_MAP.getOrDefault(player_uuid, (byte)0);
-
-		if (id == 0.1F)
-		{
-			if (x == 1)
-			{
-				if (value >= 1)
-				{
-//					smallsakuratypes.set((byte)(value - 1));
-					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-					this.flag |= 4;
-				}
-			}
-			else
-			{
-				this.flag &= 255 - 4;
-			}
-		}
-		else if (id == 0.2F)
-		{
-			if (x == 1)
-			{
-				if (value >= 1)
-				{
-//					smallsakuratypes.set((byte)(value - 1));
-					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-					this.flag |= 8;
-				}
-			}
-			else
-			{
-				this.flag &= 255 - 8;
-			}
-		}
-		else if (id == 0.3F)
-		{
-			if (x == 1)
-			{
-				if (value >= 1)
-				{
-//					smallsakuratypes.set((byte)(value - 1));
-					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-					this.flag |= 128;
-				}
-			}
-			else
-			{
-				this.flag &= 255 - 128;
-			}
-		}
-		else if (id == 1.1F)
-		{
-			if (x == 1)
-			{
-				if (value >= 1)
-				{
-//					smallsakuratypes.set((byte)(value - 1));
-					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-					this.flag |= 16;
-				}
-			}
-			else
-			{
-				this.flag &= 255 - 16;
-			}
-		}
-		else if (id == 1.2F)
-		{
-			if (x == 1)
-			{
-				if (value >= 1)
-				{
-//					smallsakuratypes.set((byte)(value - 1));
-					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-					this.flag |= 32;
-				}
-			}
-			else
-			{
-				this.flag &= 255 - 32;
-			}
-		}
-		else if (id == 1.3F)
-		{
-			if (x == 1)
-			{
-				if (value >= 1)
-				{
-//					smallsakuratypes.set((byte)(value - 1));
-					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-					this.flag |= 64;
-				}
-			}
-			else
-			{
-				this.flag &= 255 - 64;
-			}
-		}
-
-//		this.fetch();
-	}
+//	public void set()
+//	{
+//		byte[] byte_array = this.s.ms.byte_array;
+//		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
+//		float x = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
+//
+////		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+////		byte value = smallsakuratypes.get();
+//		UUID player_uuid = this.s.ms.entityplayermp.getUniqueID();
+//		byte value = PlayerData.SAKURA_MAP.getOrDefault(player_uuid, (byte)0);
+//
+//		if (id == 0.1F)
+//		{
+//			if (x == 1)
+//			{
+//				if (value >= 1)
+//				{
+////					smallsakuratypes.set((byte)(value - 1));
+//					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//					this.flag |= 4;
+//				}
+//			}
+//			else
+//			{
+//				this.flag &= 255 - 4;
+//			}
+//		}
+//		else if (id == 0.2F)
+//		{
+//			if (x == 1)
+//			{
+//				if (value >= 1)
+//				{
+////					smallsakuratypes.set((byte)(value - 1));
+//					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//					this.flag |= 8;
+//				}
+//			}
+//			else
+//			{
+//				this.flag &= 255 - 8;
+//			}
+//		}
+//		else if (id == 0.3F)
+//		{
+//			if (x == 1)
+//			{
+//				if (value >= 1)
+//				{
+////					smallsakuratypes.set((byte)(value - 1));
+//					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//					this.flag |= 128;
+//				}
+//			}
+//			else
+//			{
+//				this.flag &= 255 - 128;
+//			}
+//		}
+//		else if (id == 1.1F)
+//		{
+//			if (x == 1)
+//			{
+//				if (value >= 1)
+//				{
+////					smallsakuratypes.set((byte)(value - 1));
+//					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//					this.flag |= 16;
+//				}
+//			}
+//			else
+//			{
+//				this.flag &= 255 - 16;
+//			}
+//		}
+//		else if (id == 1.2F)
+//		{
+//			if (x == 1)
+//			{
+//				if (value >= 1)
+//				{
+////					smallsakuratypes.set((byte)(value - 1));
+//					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//					this.flag |= 32;
+//				}
+//			}
+//			else
+//			{
+//				this.flag &= 255 - 32;
+//			}
+//		}
+//		else if (id == 1.3F)
+//		{
+//			if (x == 1)
+//			{
+//				if (value >= 1)
+//				{
+////					smallsakuratypes.set((byte)(value - 1));
+//					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//					this.flag |= 64;
+//				}
+//			}
+//			else
+//			{
+//				this.flag &= 255 - 64;
+//			}
+//		}
+//
+////		this.fetch();
+//	}
 
 //	public void fetch()
 //	{
@@ -360,7 +366,8 @@ public class SIEArea
 	@Override
 	public void onUpdate()
 	{
-		if (this.s.isMove(this.s.i.getE()))
+		E e = this.s.i.getE();
+		if (this.s.isMove(e))
 		{
 			this.xp_entity_list.clear();
 			this.item_entity_list.clear();
@@ -372,7 +379,7 @@ public class SIEArea
 //			for (Entity entity : new ArrayList<>(this.entity_map.values()))
 			for (Entity entity : this.entity_collection)
 			{
-				if (!entity.isEntityAlive())
+				if (!entity.isEntityAlive() || entity == e)
 				{
 					continue;
 				}
@@ -402,7 +409,7 @@ public class SIEArea
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.flag;
+		sidata.byte_array[sidata.index++] = this.state;
 
 		int[] target_int_array = this.target_list.stream().mapToInt(Integer::intValue).toArray();
 		ByteWriter.set(sidata.byte_array, target_int_array.length, sidata.index);
@@ -426,7 +433,7 @@ public class SIEArea
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.flag = sidata.byte_array[sidata.index++];
+		this.state = sidata.byte_array[sidata.index++];
 
 		int target_size = ByteReader.getInt(sidata.byte_array, sidata.index);
 		sidata.index += 4;
@@ -453,9 +460,8 @@ public class SIEArea
 
 	public boolean isTarget(Entity entity)
 	{
-		boolean result = this.target_list.isEmpty();
-
-		if (result)
+//		boolean result = this.target_list.isEmpty();
+		if (/*result && */((this.state & I_BYPASS_ARMY) == 0))
 		{
 			for (Class clasz : EntityRegistry.ENTITIES_CLASS_LIST)
 			{
@@ -465,85 +471,76 @@ public class SIEArea
 				}
 			}
 		}
-		else
+
+		if (!this.target_list.isEmpty())
 		{
-			for (int id : this.target_list)
+			for (Integer id : this.target_list)
 			{
-				if (id < EntityRegistry.ENTITIES_CLASS_LIST.size() && entity.getClass().equals(EntityRegistry.ENTITIES_CLASS_LIST.get(id)))
+				if (entity.getClass() == EntityList.getClassFromID(id))
 				{
-					result = true;
-					break;
+					return true;
 				}
 			}
+			return false;
 		}
 
-		for (int id : this.troublemaker_list)
+		for (Integer id : this.troublemaker_list)
 		{
-			if (id < EntityRegistry.ENTITIES_CLASS_LIST.size() && entity.getClass().equals(EntityRegistry.ENTITIES_CLASS_LIST.get(id)))
+			if (entity.getClass() == EntityList.getClassFromID(id))
 			{
 				return false;
 			}
 		}
 
-		if (result)
+//		if (result)
+//		{
+		if ((this.state & I_PUT_ALL_TAMEABLE) == 0 && entity instanceof EntityTameable)
 		{
-			//check tameable
-			if ((this.flag & 64) == 0)
+			if ((this.state & I_PUT_OTHER_TAMEABLE) == 0)
 			{
-				if ((this.flag & 16) == 0)
+				if (((EntityTameable)entity).getOwnerId() != null)
 				{
-					if (entity instanceof EntityTameable)
-					{
-						if (((EntityTameable)entity).getOwnerId() != null)
-						{
-							return false;
-						}
-						else
-						{
-							this.flag |= 1 + 2;
-						}
-					}
+					return false;
 				}
+			}
 
-				if ((this.flag & 32) == 0)
+			if ((this.state & I_PUT_OWNER_TAMEABLE) == 0)
+			{
+				UUID uuid = this.sieowner.uuid;
+				if (uuid != null)
 				{
-					UUID uuid = this.sieowner.uuid;
-					if (uuid != null)
+					if (((EntityTameable)entity).getOwnerId() == uuid)
 					{
-						byte flag = (byte)(this.flag & 1+2);
-						if (flag == 0)
-						{
-							if (entity instanceof EntityTameable && ((EntityTameable)entity).getOwnerId() == uuid)
-							{
-								this.flag &= 255-1;
-								return false;
-							}
-						}
-						else if (flag == 3 && ((EntityTameable)entity).getOwnerId() == uuid)
-						{
-							this.flag &= 255-(1+2);
-							return false;
-						}
+						return false;
 					}
 				}
 			}
+		}
 
-			if ((this.flag & 4) == 0 && entity instanceof EntityPlayer)
-			{
-				return false;
-			}
+		if ((this.state & I_PUT_PLAYER) == 0 && entity instanceof EntityPlayer)
+		{
+			return false;
+		}
 
-			if ((this.flag & 8) == 0 && entity.getUniqueID().equals(this.sieowner.uuid))
-			{
-				return false;
-			}
-
-			if ((this.flag & 128) == 0 && !(entity instanceof EntityLivingBase))
+		if (this.sieowner.uuid != null)
+		{
+			if ((this.state & I_PUT_OWNER) == 0 && entity.getUniqueID().equals(this.sieowner.uuid))
 			{
 				return false;
 			}
 		}
 
-		return result;
+		if ((this.state & I_PUT_OBJECT) == 0 && !(entity instanceof EntityLivingBase))
+		{
+			return false;
+		}
+
+		if ((this.state & I_PUT_ANIMAL) == 0 && entity instanceof IAnimals)
+		{
+			return false;
+		}
+//		}
+
+		return true;
 	}
 }
