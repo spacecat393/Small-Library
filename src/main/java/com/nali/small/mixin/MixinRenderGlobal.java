@@ -56,7 +56,7 @@ public abstract class MixinRenderGlobal
 				}
 				else if (entity.isInvisible() || entity instanceof EntitySlime/* || entity.isInvisibleToPlayer(Minecraft.getMinecraft().player)*/)
 				{
-					if (!SmallConfig.NEED_EXTRA || (Small.FLAG & 1) == 1)
+					if (!SmallConfig.NEED_EXTRA || (SmallConfig.FAST_RAW_FPS && Small.FLAG == 0) || (!SmallConfig.FAST_RAW_FPS && (Small.FLAG & 1) == 1))
 					{
 						translucent_entity_list.add(entity);
 					}
@@ -210,7 +210,7 @@ public abstract class MixinRenderGlobal
 				Draw.draw(Draw.E_MODEL_MAP);
 			}
 
-			if ((Small.FLAG & 1) == 0)
+			if (!SmallConfig.NEED_EXTRA || (SmallConfig.FAST_RAW_FPS && Small.FLAG == 1) || (!SmallConfig.FAST_RAW_FPS && (Small.FLAG & 1) == 0))
 			{
 				if (!Draw.E_TRANSLUCENT_MAP.isEmpty())
 				{

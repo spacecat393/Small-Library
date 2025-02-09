@@ -7,4 +7,5 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class SmallConfig
 {
 	public final static boolean NEED_EXTRA = true;
+	public final static boolean FAST_RAW_FPS = true;
 }
