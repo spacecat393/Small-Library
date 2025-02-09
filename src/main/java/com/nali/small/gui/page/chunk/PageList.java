@@ -103,13 +103,13 @@ public class PageList extends PageSelect
 			switch (this.select)
 			{
 				case 2:
-					this.sendNet(SDaChunkList.I_MORE);
+					this.sendNet(SDaChunkList.B_MORE);
 					break;
 				case 3:
-					this.sendNet(SDaChunkList.I_LESS);
+					this.sendNet(SDaChunkList.B_LESS);
 					break;
 				case 4:
-					this.sendNet(SDaChunkList.I_FETCH);
+					this.sendNet(SDaChunkList.B_FETCH);
 					break;
 				case 5:
 					this.back();
@@ -119,19 +119,19 @@ public class PageList extends PageSelect
 		{
 			if (this.select == (boxtextall_array_length - 5))
 			{
-				this.sendNet(SDaChunkList.I_DELETE_ALL);
+				this.sendNet(SDaChunkList.B_DELETE_ALL);
 			}
 			else if (this.select == (boxtextall_array_length - 4))
 			{
-				this.sendNet(SDaChunkList.I_MORE);
+				this.sendNet(SDaChunkList.B_MORE);
 			}
 			else if (this.select == (boxtextall_array_length - 3))
 			{
-				this.sendNet(SDaChunkList.I_LESS);
+				this.sendNet(SDaChunkList.B_LESS);
 			}
 			else if (this.select == (boxtextall_array_length - 2))
 			{
-				this.sendNet(SDaChunkList.I_FETCH);
+				this.sendNet(SDaChunkList.B_FETCH);
 			}
 			else if (this.select == (boxtextall_array_length - 1))
 			{

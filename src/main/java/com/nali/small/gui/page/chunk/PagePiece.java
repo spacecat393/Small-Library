@@ -98,7 +98,7 @@ public class PagePiece extends PageSelect
 				byte[] byte_array = new byte[1 + 1 + 1 + 4 + 1];
 				byte_array[0] = SPageDa.ID;
 				byte_array[1] = SDaChunkList.ID;
-				byte_array[2] = SDaChunkList.I_DELETE;
+				byte_array[2] = SDaChunkList.B_DELETE;
 				ByteWriter.set(byte_array, PageList.PAGE, 3);
 //					ByteWriter.set(byte_array, PageList.SELECT, 3 + 4);
 				byte_array[3 + 4] = PageList.SELECT;
@@ -119,7 +119,7 @@ public class PagePiece extends PageSelect
 				ByteWriter.set(byte_array, ByteReader.getLong(PageMap.BYTE_ARRAY, 2 + PageMap.SELECT * (8 + 2 * 4)), 3);
 				byte_array[0] = SPageDa.ID;
 				byte_array[1] = SDaChunkMap.ID;
-				byte_array[2] = SDaChunkMap.I_DELETE;
+				byte_array[2] = SDaChunkMap.B_DELETE;
 				NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 //				this.back();
 			}

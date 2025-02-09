@@ -108,13 +108,13 @@ public class PageMap extends PageSelect
 			switch (this.select)
 			{
 				case 2:
-					this.sendNet(SDaChunkMap.I_MORE);
+					this.sendNet(SDaChunkMap.B_MORE);
 					break;
 				case 3:
-					this.sendNet(SDaChunkMap.I_LESS);
+					this.sendNet(SDaChunkMap.B_LESS);
 					break;
 				case 4:
-					this.sendNet(SDaChunkMap.I_FETCH);
+					this.sendNet(SDaChunkMap.B_FETCH);
 					break;
 				case 5:
 					this.back();
@@ -124,19 +124,19 @@ public class PageMap extends PageSelect
 		{
 			if (this.select == (boxtextall_array_length - 5))
 			{
-				this.sendNet(SDaChunkMap.I_DELETE_ALL);
+				this.sendNet(SDaChunkMap.B_DELETE_ALL);
 			}
 			else if (this.select == (boxtextall_array_length - 4))
 			{
-				this.sendNet(SDaChunkMap.I_MORE);
+				this.sendNet(SDaChunkMap.B_MORE);
 			}
 			else if (this.select == (boxtextall_array_length - 3))
 			{
-				this.sendNet(SDaChunkMap.I_LESS);
+				this.sendNet(SDaChunkMap.B_LESS);
 			}
 			else if (this.select == (boxtextall_array_length - 2))
 			{
-				this.sendNet(SDaChunkMap.I_FETCH);
+				this.sendNet(SDaChunkMap.B_FETCH);
 			}
 			else if (this.select == (boxtextall_array_length - 1))
 			{

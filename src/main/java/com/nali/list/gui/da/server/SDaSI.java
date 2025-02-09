@@ -19,9 +19,9 @@ public class SDaSI
 	public static byte ID;
 
 	public final static byte MAX_SIZE = 120;
-	public final static byte I_MORE = 0;
-	public final static byte I_LESS = 1;
-	public final static byte I_FETCH = 2;
+	public final static byte B_MORE = 0;
+	public final static byte B_LESS = 1;
+	public final static byte B_FETCH = 2;
 
 	//stop on array
 	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
@@ -31,15 +31,15 @@ public class SDaSI
 		List<Byte> si_byte_lsit = new ArrayList<Byte>(s.ms.si_map.keySet());
 		int si_size = si_byte_lsit.size();
 
-		if (servermessage.data[2] == I_MORE)
+		if (servermessage.data[2] == B_MORE)
 		{
 			if (((page + 1) * MAX_SIZE) < si_size)
 			{
 				++page;
-				servermessage.data[2] = I_FETCH;
+				servermessage.data[2] = B_FETCH;
 			}
 		}
-		else if (servermessage.data[2] == I_LESS)
+		else if (servermessage.data[2] == B_LESS)
 		{
 			byte new_page = (byte)(page - 1);
 			if (new_page != -1)
@@ -47,12 +47,12 @@ public class SDaSI
 				if ((new_page * MAX_SIZE) < si_size)
 				{
 					--page;
-					servermessage.data[2] = I_FETCH;
+					servermessage.data[2] = B_FETCH;
 				}
 			}
 		}
 
-		if (servermessage.data[2] == I_FETCH)
+		if (servermessage.data[2] == B_FETCH)
 		{
 			byte max_mix_page = (byte)Math.ceil(si_size / (float)MAX_SIZE);
 			byte max_page;

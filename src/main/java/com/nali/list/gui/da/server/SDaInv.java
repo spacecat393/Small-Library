@@ -22,11 +22,11 @@ public class SDaInv
 	public static byte STATE;//delete/add
 
 	public final static byte MAX_SIZE = 118;
-	public final static byte I_MORE = 0;
-	public final static byte I_LESS = 1;
-	public final static byte I_FETCH = 2;
-	public final static byte I_DELETE = 3;
-	public final static byte I_ADD = 4;
+	public final static byte B_MORE = 0;
+	public final static byte B_LESS = 1;
+	public final static byte B_FETCH = 2;
+	public final static byte B_DELETE = 3;
+	public final static byte B_ADD = 4;
 
 	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
 	{
@@ -46,80 +46,84 @@ public class SDaInv
 
 		int page = ByteReader.getInt(servermessage.data, 3);
 
-		if (servermessage.data[2] == I_MORE)
+		switch (servermessage.data[2])
 		{
-			if (((long)(page + 1) * MAX_SIZE) < max_inv_file)
-			{
-				++page;
-				servermessage.data[2] = I_FETCH;
-			}
-		}
-		else if (servermessage.data[2] == I_LESS)
-		{
-			int new_page = page - 1;
-			if (new_page != -1)
-			{
-				if (((long)new_page * MAX_SIZE) < max_inv_file)
+			case B_MORE:
+				if (((long)(page + 1) * MAX_SIZE) < max_inv_file)
 				{
-					--page;
-					servermessage.data[2] = I_FETCH;
+					++page;
+					servermessage.data[2] = B_FETCH;
 				}
-			}
-		}
-		else if (servermessage.data[2] == I_DELETE && (STATE & 1) == 0)
-		{
-			STATE |= 1;
-			int index = servermessage.data[4] + page * MAX_SIZE;
-
-			File inv_i_file = inv_file.listFiles()[index];
-			File nbt_file = new File(inv_i_file, "nbt");
-			File[] nbt_n_file_array = nbt_file.listFiles();
-			if (nbt_n_file_array != null)
-			{
-				for (File nbt_n_file : nbt_n_file_array)
+				break;
+			case B_LESS:
+				int new_page = page - 1;
+				if (new_page != -1)
 				{
-					File[] nbt_i_file_array = nbt_n_file.listFiles();
-					if (nbt_i_file_array != null)
+					if (((long)new_page * MAX_SIZE) < max_inv_file)
 					{
-						for (File nbt_i_file : nbt_i_file_array)
+						--page;
+						servermessage.data[2] = B_FETCH;
+					}
+				}
+				break;
+			case B_DELETE:
+				if ((STATE & 1) == 0)
+				{
+					STATE |= 1;
+					int index = servermessage.data[4] + page * MAX_SIZE;
+
+					File inv_i_file = inv_file.listFiles()[index];
+					File nbt_file = new File(inv_i_file, "nbt");
+					File[] nbt_n_file_array = nbt_file.listFiles();
+					if (nbt_n_file_array != null)
+					{
+						for (File nbt_n_file : nbt_n_file_array)
 						{
-							nbt_i_file.delete();
+							File[] nbt_i_file_array = nbt_n_file.listFiles();
+							if (nbt_i_file_array != null)
+							{
+								for (File nbt_i_file : nbt_i_file_array)
+								{
+									nbt_i_file.delete();
+								}
+							}
+							nbt_n_file.delete();
 						}
 					}
-					nbt_n_file.delete();
+
+					for (File file : inv_i_file.listFiles())
+					{
+						file.delete();
+					}
+					inv_i_file.delete();
+
+					servermessage.data[2] = B_FETCH;
+					--max_inv_file;
+
+					STATE &= 255-1;
 				}
-			}
+				break;
+			case B_ADD:
+				if ((STATE & 1) == 0)
+				{
+					STATE |= 1;
 
-			for (File file : inv_i_file.listFiles())
-			{
-				file.delete();
-			}
-			inv_i_file.delete();
+					int file_index = 0;
+					File file = new File(inv_file, "" + file_index);
+					while (!file.mkdir())
+					{
+						++file_index;
+						file = new File(inv_file, "" + file_index);
+					}
+					new File(file, "nbt").mkdir();
 
-			servermessage.data[2] = I_FETCH;
-			--max_inv_file;
-
-			STATE &= 255-1;
-		}
-		else if (servermessage.data[2] == I_ADD && (STATE & 1) == 0)
-		{
-			STATE |= 1;
-
-			int file_index = 0;
-			File file = new File(inv_file, "" + file_index);
-			while (!file.mkdir())
-			{
-				++file_index;
-				file = new File(inv_file, "" + file_index);
-			}
-			new File(file, "nbt").mkdir();
-
-			servermessage.data[2] = I_FETCH;
-			++max_inv_file;
-			STATE &= 255-1;
+					servermessage.data[2] = B_FETCH;
+					++max_inv_file;
+					STATE &= 255-1;
+				}
 		}
 
-		if (servermessage.data[2] == I_FETCH)
+		if (servermessage.data[2] == B_FETCH)
 		{
 			String[] inv_string_array = inv_file.list();
 			int max_mix_page = (int)Math.ceil(max_inv_file / (float)MAX_SIZE);

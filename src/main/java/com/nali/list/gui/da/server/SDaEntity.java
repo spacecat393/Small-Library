@@ -19,10 +19,10 @@ public class SDaEntity
 	public static byte ID;
 
 	public final static byte MAX_SIZE = 119;
-	public final static byte I_MORE = 0;
-	public final static byte I_LESS = 1;
-	public final static byte I_FETCH = 2;
-	public final static byte I_RENAME = 3;
+	public final static byte B_MORE = 0;
+	public final static byte B_LESS = 1;
+	public final static byte B_FETCH = 2;
+	public final static byte B_RENAME = 3;
 
 	//stop on array
 	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
@@ -30,35 +30,34 @@ public class SDaEntity
 		int page = ByteReader.getInt(servermessage.data, 3);
 		int s_map_size = ServerE.S_MAP.size();
 
-		if (servermessage.data[2] == I_MORE)
+		switch (servermessage.data[2])
 		{
-			if (((page + 1) * MAX_SIZE) < s_map_size)
-			{
-				++page;
-				servermessage.data[2] = I_FETCH;
-			}
-		}
-		else if (servermessage.data[2] == I_LESS)
-		{
-			int new_page = page - 1;
-			if (new_page != -1)
-			{
-				if ((new_page * MAX_SIZE) < s_map_size)
+			case B_MORE:
+				if (((page + 1) * MAX_SIZE) < s_map_size)
 				{
-					--page;
-					servermessage.data[2] = I_FETCH;
+					++page;
+					servermessage.data[2] = B_FETCH;
 				}
-			}
-		}
-		else if (servermessage.data[2] == I_RENAME)
-		{
-			long key = ByteReader.getLong(servermessage.data, 3+4);
-			String name = new String(servermessage.data, 3+4+8, servermessage.data.length - (3+4+8));
-			ServerE.S_MAP.get(key).i.getE().setCustomNameTag(name);
-			servermessage.data[2] = I_FETCH;
+				break;
+			case B_LESS:
+				int new_page = page - 1;
+				if (new_page != -1)
+				{
+					if ((new_page * MAX_SIZE) < s_map_size)
+					{
+						--page;
+						servermessage.data[2] = B_FETCH;
+					}
+				}
+				break;
+			case B_RENAME:
+				long key = ByteReader.getLong(servermessage.data, 3+4);
+				String name = new String(servermessage.data, 3+4+8, servermessage.data.length - (3+4+8));
+				ServerE.S_MAP.get(key).i.getE().setCustomNameTag(name);
+				servermessage.data[2] = B_FETCH;
 		}
 
-		if (servermessage.data[2] == I_FETCH)
+		if (servermessage.data[2] == B_FETCH)
 		{
 			int max_mix_page = (int)Math.ceil(s_map_size / (float)MAX_SIZE);
 			byte max_page;

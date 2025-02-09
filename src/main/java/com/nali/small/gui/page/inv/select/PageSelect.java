@@ -120,13 +120,13 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 			switch (this.select)
 			{
 				case 2:
-					this.sendNet(SDaInvSelect.ID, SDaInvSelect.I_MORE);
+					this.sendNet(SDaInvSelect.ID, SDaInvSelect.B_MORE);
 					break;
 				case 3:
-					this.sendNet(SDaInvSelect.ID, SDaInvSelect.I_LESS);
+					this.sendNet(SDaInvSelect.ID, SDaInvSelect.B_LESS);
 					break;
 				case 4:
-					this.sendNet(SDaInvSelect.ID, SDaInvSelect.I_FETCH);
+					this.sendNet(SDaInvSelect.ID, SDaInvSelect.B_FETCH);
 					break;
 				case 5:
 					PAGE_LIST.add(this);
@@ -137,7 +137,7 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 					this.set(new PageAdd(/*(int)id, (int)(id >> 32), NAME_STRING_ARRAY[SELECT]*/), new KeyEdit());
 					STATE &= 255-1;
 				case 6:
-					this.sendNet(SDaInv.ID, SDaInv.I_DELETE);
+					this.sendNet(SDaInv.ID, SDaInv.B_DELETE);
 					this.back();
 					break;
 				case 7:
@@ -148,15 +148,15 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 		{
 			if (this.select == (boxtextall_array_length - 6))
 			{
-				this.sendNet(SDaInvSelect.ID, SDaInvSelect.I_MORE);
+				this.sendNet(SDaInvSelect.ID, SDaInvSelect.B_MORE);
 			}
 			else if (this.select == (boxtextall_array_length - 5))
 			{
-				this.sendNet(SDaInvSelect.ID, SDaInvSelect.I_LESS);
+				this.sendNet(SDaInvSelect.ID, SDaInvSelect.B_LESS);
 			}
 			else if (this.select == (boxtextall_array_length - 4))
 			{
-				this.sendNet(SDaInvSelect.ID, SDaInvSelect.I_FETCH);
+				this.sendNet(SDaInvSelect.ID, SDaInvSelect.B_FETCH);
 			}
 			else if (this.select == (boxtextall_array_length - 3))
 			{
@@ -171,7 +171,7 @@ public class PageSelect extends com.nali.gui.page.PageSelect
 			}
 			else if (this.select == (boxtextall_array_length - 2))
 			{
-				this.sendNet(SDaInv.ID, SDaInv.I_DELETE);
+				this.sendNet(SDaInv.ID, SDaInv.B_DELETE);
 				this.back();
 			}
 			else if (this.select == (boxtextall_array_length - 1))

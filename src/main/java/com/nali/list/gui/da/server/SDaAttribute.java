@@ -23,9 +23,9 @@ public class SDaAttribute
 	public static byte ID;
 
 	public final static byte MAX_SIZE = 120;
-	public final static byte I_MORE = 0;
-	public final static byte I_LESS = 1;
-	public final static byte I_FETCH = 2;
+	public final static byte B_MORE = 0;
+	public final static byte B_LESS = 1;
+	public final static byte B_FETCH = 2;
 
 	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
 	{
@@ -47,15 +47,15 @@ public class SDaAttribute
 			attribute_size = 0;
 		}
 
-		if (servermessage.data[2] == I_MORE)
+		if (servermessage.data[2] == B_MORE)
 		{
 			if (((page + 1) * MAX_SIZE) < attribute_size)
 			{
 				++page;
-				servermessage.data[2] = I_FETCH;
+				servermessage.data[2] = B_FETCH;
 			}
 		}
-		else if (servermessage.data[2] == I_LESS)
+		else if (servermessage.data[2] == B_LESS)
 		{
 			byte new_page = (byte)(page - 1);
 			if (new_page != -1)
@@ -63,12 +63,12 @@ public class SDaAttribute
 				if ((new_page * MAX_SIZE) < attribute_size)
 				{
 					--page;
-					servermessage.data[2] = I_FETCH;
+					servermessage.data[2] = B_FETCH;
 				}
 			}
 		}
 
-		if (servermessage.data[2] == I_FETCH)
+		if (servermessage.data[2] == B_FETCH)
 		{
 			byte max_mix_page = (byte)Math.ceil(attribute_size / (float)MAX_SIZE);
 			byte max_page;

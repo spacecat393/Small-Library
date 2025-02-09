@@ -120,13 +120,13 @@ public class PageEntity extends PageSelect
 			switch (this.select)
 			{
 				case 2:
-					this.sendNet(SDaEntity.I_MORE);
+					this.sendNet(SDaEntity.B_MORE);
 					break;
 				case 3:
-					this.sendNet(SDaEntity.I_LESS);
+					this.sendNet(SDaEntity.B_LESS);
 					break;
 				case 4:
-					this.sendNet(SDaEntity.I_FETCH);
+					this.sendNet(SDaEntity.B_FETCH);
 					break;
 				case 5:
 					this.back();
@@ -136,15 +136,15 @@ public class PageEntity extends PageSelect
 		{
 			if (this.select == (boxtextall_array_length - 4))
 			{
-				this.sendNet(SDaEntity.I_MORE);
+				this.sendNet(SDaEntity.B_MORE);
 			}
 			else if (this.select == (boxtextall_array_length - 3))
 			{
-				this.sendNet(SDaEntity.I_LESS);
+				this.sendNet(SDaEntity.B_LESS);
 			}
 			else if (this.select == (boxtextall_array_length - 2))
 			{
-				this.sendNet(SDaEntity.I_FETCH);
+				this.sendNet(SDaEntity.B_FETCH);
 			}
 			else if (this.select == (boxtextall_array_length - 1))
 			{

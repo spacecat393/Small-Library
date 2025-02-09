@@ -28,11 +28,11 @@ public class SDaInvSelect
 	public static List<Runnable> RUNNABLE_LIST;
 
 	public final static byte MAX_SIZE = 117;
-	public final static byte I_MORE = 0;
-	public final static byte I_LESS = 1;
-	public final static byte I_FETCH = 2;
-	public final static byte I_DELETE = 3;
-	public final static byte I_MOVE = 4;
+	public final static byte B_MORE = 0;
+	public final static byte B_LESS = 1;
+	public final static byte B_FETCH = 2;
+	public final static byte B_DELETE = 3;
+	public final static byte B_MOVE = 4;
 
 	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
 	{
@@ -52,136 +52,137 @@ public class SDaInvSelect
 		}
 		int page = ByteReader.getInt(servermessage.data, 3);
 
-		if (servermessage.data[2] == I_MORE)
+		switch (servermessage.data[2])
 		{
-			if (((long)(page + 1) * MAX_SIZE) < max_inv_file)
-			{
-				++page;
-				servermessage.data[2] = I_FETCH;
-			}
-		}
-		else if (servermessage.data[2] == I_LESS)
-		{
-			int new_page = page - 1;
-			if (new_page != -1)
-			{
-				if (((long)new_page * MAX_SIZE) < max_inv_file)
+			case B_MORE:
+				if (((long)(page + 1) * MAX_SIZE) < max_inv_file)
 				{
-					--page;
-					servermessage.data[2] = I_FETCH;
+					++page;
+					servermessage.data[2] = B_FETCH;
 				}
-			}
-		}
-		else if (servermessage.data[2] == I_DELETE && (STATE & 1) == 0)
-		{
-			STATE |= 1;
-			int delete_item_id = ByteReader.getInt(servermessage.data, 3+4+4);
-			File file = new File(inv_file, "" + delete_item_id);
-			File nbt_n_file = new File(inv_file, "nbt/" + delete_item_id);
-			File[] nbt_n_file_array =  nbt_n_file.listFiles();
-			if (nbt_n_file_array != null)
-			{
-				for (File nbt_i_file : nbt_n_file_array)
+				break;
+			case B_LESS:
+				int new_page = page - 1;
+				if (new_page != -1)
 				{
-					nbt_i_file.delete();
+					if (((long)new_page * MAX_SIZE) < max_inv_file)
+					{
+						--page;
+						servermessage.data[2] = B_FETCH;
+					}
 				}
-			}
-			nbt_n_file.delete();
-			file.delete();
-
-//			servermessage.data[2] = I_FETCH;
-			STATE &= 255-1;
-		}
-		else if (servermessage.data[2] == I_MOVE)
-		{
-			RUNNABLE_LIST.add(() ->
-			{
+				break;
+			case B_DELETE:
 				if ((STATE & 1) == 0)
 				{
 					STATE |= 1;
-					int move_item_id = ByteReader.getInt(servermessage.data, 3+4+4);
-					long nbt = ByteReader.getLong(servermessage.data, 3+4+4+4);
-					File item_file = new File(inv_file, "" + move_item_id);
-					try
+					int delete_item_id = ByteReader.getInt(servermessage.data, 3+4+4);
+					File file = new File(inv_file, "" + delete_item_id);
+					File nbt_n_file = new File(inv_file, "nbt/" + delete_item_id);
+					File[] nbt_n_file_array =  nbt_n_file.listFiles();
+					if (nbt_n_file_array != null)
 					{
-						ItemStack itemstack = new ItemStack(Item.getItemById(move_item_id));
-						byte[] byte_array = Files.readAllBytes(item_file.toPath());
-						long count = ByteReader.getLong(byte_array, 0);
-						int will_take_count;
-						long take_count;
-						int final_take;
-
-						NBTTagCompound nbttagcompound = null;
-						if (nbt == -1)
+						for (File nbt_i_file : nbt_n_file_array)
 						{
-							File nbt_n_file = new File(inv_file, "nbt/" + move_item_id);
-							File[] nbt_n_file_array = nbt_n_file.listFiles();
-							if (nbt_n_file_array != null)
+							nbt_i_file.delete();
+						}
+					}
+					nbt_n_file.delete();
+					file.delete();
+
+//			servermessage.data[2] = B_FETCH;
+					STATE &= 255-1;
+				}
+				break;
+			case B_MOVE:
+				RUNNABLE_LIST.add(() ->
+				{
+					if ((STATE & 1) == 0)
+					{
+						STATE |= 1;
+						int move_item_id = ByteReader.getInt(servermessage.data, 3+4+4);
+						long nbt = ByteReader.getLong(servermessage.data, 3+4+4+4);
+						File item_file = new File(inv_file, "" + move_item_id);
+						try
+						{
+							ItemStack itemstack = new ItemStack(Item.getItemById(move_item_id));
+							byte[] byte_array = Files.readAllBytes(item_file.toPath());
+							long count = ByteReader.getLong(byte_array, 0);
+							int will_take_count;
+							long take_count;
+							int final_take;
+
+							NBTTagCompound nbttagcompound = null;
+							if (nbt == -1)
 							{
-								for (File nbt_i_file : nbt_n_file_array)
+								File nbt_n_file = new File(inv_file, "nbt/" + move_item_id);
+								File[] nbt_n_file_array = nbt_n_file.listFiles();
+								if (nbt_n_file_array != null)
 								{
-									nbttagcompound = ByteReader.deserializeNBT(Files.readAllBytes(nbt_i_file.toPath()));
-									nbt_i_file.delete();
-									nbt = 0;
-									break;
+									for (File nbt_i_file : nbt_n_file_array)
+									{
+										nbttagcompound = ByteReader.deserializeNBT(Files.readAllBytes(nbt_i_file.toPath()));
+										nbt_i_file.delete();
+										nbt = 0;
+										break;
+									}
 								}
 							}
-						}
-						if (nbt != -1)
-						{
-							will_take_count = 1;
-							take_count = count - 1;
-
-							final_take = 1;
-						}
-						else
-						{
-							will_take_count = itemstack.getMaxStackSize();
-							take_count = count - will_take_count;
-
-							if (take_count < 0)
+							if (nbt != -1)
 							{
-								final_take = (int)count;
+								will_take_count = 1;
+								take_count = count - 1;
+
+								final_take = 1;
 							}
 							else
 							{
-								final_take = will_take_count;
+								will_take_count = itemstack.getMaxStackSize();
+								take_count = count - will_take_count;
+
+								if (take_count < 0)
+								{
+									final_take = (int)count;
+								}
+								else
+								{
+									final_take = will_take_count;
+								}
+							}
+
+							itemstack.setCount(final_take);
+							if (nbttagcompound != null)
+							{
+								itemstack.setTagCompound(nbttagcompound);
+							}
+
+							if (final_take == will_take_count && take_count != 0)
+							{
+								ByteWriter.set(byte_array, take_count, 0);
+								Files.write(item_file.toPath(), byte_array);
+							}
+							else
+							{
+								item_file.delete();
+							}
+
+							if (!entityplayermp.inventory.addItemStackToInventory(itemstack))
+							{
+								entityplayermp.world.spawnEntity(new EntityItem(entityplayermp.world, entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, itemstack));
 							}
 						}
-
-						itemstack.setCount(final_take);
-						if (nbttagcompound != null)
+						catch (IOException e)
 						{
-							itemstack.setTagCompound(nbttagcompound);
-						}
-
-						if (final_take == will_take_count && take_count != 0)
-						{
-							ByteWriter.set(byte_array, take_count, 0);
-							Files.write(item_file.toPath(), byte_array);
-						}
-						else
-						{
+							Nali.warn(e);
 							item_file.delete();
 						}
 
-						if (!entityplayermp.inventory.addItemStackToInventory(itemstack))
-						{
-							entityplayermp.world.spawnEntity(new EntityItem(entityplayermp.world, entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, itemstack));
-						}
+						STATE &= 255-1;
 					}
-					catch (IOException e)
-					{
-						Nali.warn(e);
-						item_file.delete();
-					}
-
-					STATE &= 255-1;
-				}
-			});
+				});
 		}
 
-		if (servermessage.data[2] == I_FETCH)
+		if (servermessage.data[2] == B_FETCH)
 		{
 			String[] inv_string_array = inv_file.list();
 			int max_mix_page = (int)Math.ceil(max_inv_file / (float)MAX_SIZE);

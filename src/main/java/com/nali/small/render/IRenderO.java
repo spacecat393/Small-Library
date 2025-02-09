@@ -5,6 +5,7 @@ import com.nali.render.RenderO;
 import com.nali.small.draw.Draw;
 import com.nali.small.draw.DrawDa;
 import com.nali.small.draw.DrawMap;
+import com.nali.system.opengl.memo.client.MemoG;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
@@ -61,12 +62,12 @@ public interface IRenderO
 	default void drawLater()
 	{
 		R r = this.getR();
-		Draw.add(DrawMap.get(new DrawMap(r.i, r.getTextureBuffer(), r.getShaderID(), (byte)((this.getTransparent() ? 1 : 0) | this.getExtraBit()))));
+		Draw.add(DrawMap.get(new DrawMap(r.i, r.getTextureBuffer(), r.getShaderID(), this.getExtraBit())));
 	}
 
 	default byte getExtraBit()
 	{
-		return 0;
+		return (byte)(this.getTransparent() ? DrawMap.B_TRANSPARENT : 0);
 	}
 
 	default void updateLight(World world, BlockPos blockpos)
@@ -131,13 +132,13 @@ public interface IRenderO
 //	boolean getGlow();
 	default boolean getGlow()
 	{
-		return (this.getR().rg.flag & 16) == 16;
+		return (this.getR().rg.state & MemoG.B_GLOW) == MemoG.B_GLOW;
 	}
 
 //	boolean getTransparent();
 	default boolean getTransparent()
 	{
-		return (this.getR().rg.flag & 8) == 8;
+		return (this.getR().rg.state & MemoG.B_TRANSPARENT) == MemoG.B_TRANSPARENT;
 	}
 
 //	default byte[] createByteArray(R r, int rg)

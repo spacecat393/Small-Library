@@ -112,16 +112,16 @@ public class PageInv extends PageEdit
 			switch (this.select)
 			{
 				case 2:
-					this.sendNet(SDaInv.I_MORE);
+					this.sendNet(SDaInv.B_MORE);
 					break;
 				case 3:
-					this.sendNet(SDaInv.I_LESS);
+					this.sendNet(SDaInv.B_LESS);
 					break;
 				case 4:
-					this.sendNet(SDaInv.I_FETCH);
+					this.sendNet(SDaInv.B_FETCH);
 					break;
 				case 5:
-					this.sendNet(SDaInv.I_ADD);
+					this.sendNet(SDaInv.B_ADD);
 					break;
 				case 6:
 					this.back();
@@ -131,19 +131,19 @@ public class PageInv extends PageEdit
 		{
 			if (this.select == (boxtextall_array_length - 5))
 			{
-				this.sendNet(SDaInv.I_MORE);
+				this.sendNet(SDaInv.B_MORE);
 			}
 			else if (this.select == (boxtextall_array_length - 4))
 			{
-				this.sendNet(SDaInv.I_LESS);
+				this.sendNet(SDaInv.B_LESS);
 			}
 			else if (this.select == (boxtextall_array_length - 3))
 			{
-				this.sendNet(SDaInv.I_FETCH);
+				this.sendNet(SDaInv.B_FETCH);
 			}
 			else if (this.select == (boxtextall_array_length - 2))
 			{
-				this.sendNet(SDaInv.I_ADD);
+				this.sendNet(SDaInv.B_ADD);
 			}
 			else if (this.select == (boxtextall_array_length - 1))
 			{

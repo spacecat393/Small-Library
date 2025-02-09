@@ -45,31 +45,30 @@ public class Draw
 		List<Integer> index_integer_list;
 		Map<DrawMap, List<Integer>> drawmap_map;
 
-		if ((drawmap.extra_bit & 16) == 16)
+		if ((drawmap.extra_bit & DrawMap.B_TILE_ENTITY) == 0)
 		{
-			if ((drawmap.extra_bit & 1) == 1)
+			if ((drawmap.extra_bit & DrawMap.B_TRANSPARENT) == 0)
 			{
-				//no sort
-				index_integer_list = TE_TRANSLUCENT_MAP.get(drawmap);
-				drawmap_map = TE_TRANSLUCENT_MAP;
+				index_integer_list = E_MODEL_MAP.get(drawmap);
+				drawmap_map = E_MODEL_MAP;
 			}
 			else
-			{
-				index_integer_list = TE_MODEL_MAP.get(drawmap);
-				drawmap_map = TE_MODEL_MAP;
-			}
-		}
-		else
-		{
-			if ((drawmap.extra_bit & 1) == 1)
 			{
 				index_integer_list = E_TRANSLUCENT_MAP.get(drawmap);
 				drawmap_map = E_TRANSLUCENT_MAP;
 			}
+		}
+		else
+		{
+			if ((drawmap.extra_bit & DrawMap.B_TRANSPARENT) == 0)
+			{
+				index_integer_list = TE_MODEL_MAP.get(drawmap);
+				drawmap_map = TE_MODEL_MAP;
+			}
 			else
 			{
-				index_integer_list = E_MODEL_MAP.get(drawmap);
-				drawmap_map = E_MODEL_MAP;
+				index_integer_list = TE_TRANSLUCENT_MAP.get(drawmap);
+				drawmap_map = TE_TRANSLUCENT_MAP;
 			}
 		}
 
@@ -441,7 +440,15 @@ public class Draw
 		RenderO.enableBuffer(rg, rs);
 
 		OpenGlHelper.glUniform1i(rs.uniformlocation_int_array[2], 1);
-		if ((drawmap.extra_bit & 4) == 4)//color
+		if ((drawmap.extra_bit & DrawMap.B_COLOR) == 0)
+		{
+//				OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
+//				Nali.warn("texture " + ByteReader.getInt(drawmap, 4));
+//				Nali.warn("texture_state " + (rg.state & 1));
+//				RenderO.setTextureBuffer(drawmap.texture, (byte)(rg.flag & 1+2));
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, drawmap.texture);
+		}
+		else
 		{
 			int color = drawmap.texture;
 			RenderO.FLOATBUFFER.clear();
@@ -451,14 +458,6 @@ public class Draw
 			RenderO.FLOATBUFFER.put(((color >> 24) & 0xFF) / 255.0F);
 			RenderO.FLOATBUFFER.flip();
 			OpenGlHelper.glUniform4(rs.uniformlocation_int_array[5], RenderO.FLOATBUFFER);
-		}
-		else
-		{
-//				OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0);
-//				Nali.warn("texture " + ByteReader.getInt(drawmap, 4));
-//				Nali.warn("texture_state " + (rg.state & 1));
-//				RenderO.setTextureBuffer(drawmap.texture, (byte)(rg.flag & 1+2));
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, drawmap.texture);
 		}
 	}
 
@@ -479,22 +478,22 @@ public class Draw
 //				OpenGlHelper.glUniform4(rs.uniformlocation_int_array[2], RenderO.FLOATBUFFER);
 
 		RenderO.FLOATBUFFER.clear();
-		if ((rg.flag & 16) == 16)
-		{
-			RenderO.FLOATBUFFER.put(0.0F);
-			RenderO.FLOATBUFFER.put(0.0F);
-		}
-		else
+		if ((rg.state & MemoG.B_GLOW) == 0)
 		{
 			RenderO.FLOATBUFFER.put(drawda.light_b);
 			RenderO.FLOATBUFFER.put(drawda.light_s);
+		}
+		else
+		{
+			RenderO.FLOATBUFFER.put(0.0F);
+			RenderO.FLOATBUFFER.put(0.0F);
 		}
 		RenderO.FLOATBUFFER.flip();
 		OpenGlHelper.glUniform2(rs.uniformlocation_int_array[3], RenderO.FLOATBUFFER);
 
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, drawda.light_b, drawda.light_s);
 
-		if ((drawmap.extra_bit & 2) == 2)
+		if ((drawmap.extra_bit & DrawMap.B_SKINNING) == DrawMap.B_SKINNING)
 		{
 			RenderS.setFloatBuffer(KEY_FLOAT_ARRAY_LIST.get(integer));
 			OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[6], false, RenderS.BONE_FLOATBUFFER);

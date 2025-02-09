@@ -5,6 +5,7 @@ import com.nali.da.IBothDaS;
 import com.nali.render.RenderS;
 import com.nali.small.draw.Draw;
 import com.nali.small.draw.DrawDa;
+import com.nali.small.draw.DrawMap;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,6 +26,6 @@ public interface IRenderS
 	@Override
 	default byte getExtraBit()
 	{
-		return 2;//skinning
+		return (byte)(DrawMap.B_SKINNING | IRenderO.super.getExtraBit());//skinning
 	}
 }

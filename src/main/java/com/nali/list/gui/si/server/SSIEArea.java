@@ -14,20 +14,20 @@ public class SSIEArea
 {
 	public static byte ID;
 
-	public final static byte I_FETCH = 0;
-	public final static byte I_SET = 1;
+	public final static byte B_FETCH = 0;
+	public final static byte B_SET = 1;
 
 	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
 	{
 		ServerE s = ServerE.S_MAP.get(ByteReader.getLong(servermessage.data, 3));
 		SIEArea siearea = (SIEArea)s.ms.si_map.get(SIEArea.ID);
-		if (servermessage.data[2] == I_SET)
+		if (servermessage.data[2] == B_SET)
 		{
 			siearea.state ^= servermessage.data[3+8];
-			servermessage.data[2] = I_FETCH;
+			servermessage.data[2] = B_FETCH;
 		}
 
-		if (servermessage.data[2] == I_FETCH)
+		if (servermessage.data[2] == B_FETCH)
 		{
 			byte[] byte_array = new byte[1 + 1 + 1];
 			byte_array[0] = CPageSI.ID;

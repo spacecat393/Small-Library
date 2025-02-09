@@ -187,12 +187,12 @@ public class SIEFindMove
 
 		BlockPos current_blockpos = this.to_goal_snode.blockpos;
 		double b_x = current_blockpos.getX() + 0.5D;
-		double b_y = current_blockpos.getY() + 0.5D;
+		double b_y = current_blockpos.getY()/* + 0.5D*/;
 		double b_z = current_blockpos.getZ() + 0.5D;
 		this.move_x += (b_x - e.posX) / 2.0F;
-		this.move_y = (b_y - e.posY) / 2.0F;
+		this.move_y = (b_y - e.posY)/* / 2.0F*/;
 		this.move_z += (b_z - e.posZ) / 2.0F;
-		this.sielook.set(this.move_x, this.move_y, this.move_z, (byte)2);
+		this.look(e);
 
 //		if (this.mo_tick++ == 2)
 //		{
@@ -528,6 +528,11 @@ public class SIEFindMove
 		}
 
 		return false;
+	}
+
+	public void look(E e)
+	{
+		this.sielook.set(this.move_x, this.move_y, this.move_z, (byte)2);
 	}
 
 	public static boolean passBlock(Material material)

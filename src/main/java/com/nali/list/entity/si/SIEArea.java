@@ -48,14 +48,14 @@ public class SIEArea
 	public List<Integer> troublemaker_list = new ArrayList();
 	public List<Integer> target_list = new ArrayList();
 
-	public final static byte I_BYPASS_ARMY = 1;
-	public final static byte I_PUT_ANIMAL = 2;
-	public final static byte I_PUT_PLAYER = 4;
-	public final static byte I_PUT_OWNER = 8;
-	public final static byte I_PUT_OTHER_TAMEABLE = 16;
-	public final static byte I_PUT_OWNER_TAMEABLE = 32;
-	public final static byte I_PUT_ALL_TAMEABLE = 64;
-	public final static byte I_PUT_OBJECT = (byte)128;
+	public final static byte B_BYPASS_ARMY = 1;
+	public final static byte B_PUT_ANIMAL = 2;
+	public final static byte B_PUT_PLAYER = 4;
+	public final static byte B_PUT_OWNER = 8;
+	public final static byte B_PUT_OTHER_TAMEABLE = 16;
+	public final static byte B_PUT_OWNER_TAMEABLE = 32;
+	public final static byte B_PUT_ALL_TAMEABLE = 64;
+	public final static byte B_PUT_OBJECT = (byte)128;
 	public byte state;
 
 	public SIEArea(S s)
@@ -461,7 +461,7 @@ public class SIEArea
 	public boolean isTarget(Entity entity)
 	{
 //		boolean result = this.target_list.isEmpty();
-		if (/*result && */((this.state & I_BYPASS_ARMY) == 0))
+		if (/*result && */((this.state & B_BYPASS_ARMY) == 0))
 		{
 			for (Class clasz : EntityRegistry.ENTITIES_CLASS_LIST)
 			{
@@ -494,9 +494,9 @@ public class SIEArea
 
 //		if (result)
 //		{
-		if ((this.state & I_PUT_ALL_TAMEABLE) == 0 && entity instanceof EntityTameable)
+		if ((this.state & B_PUT_ALL_TAMEABLE) == 0 && entity instanceof EntityTameable)
 		{
-			if ((this.state & I_PUT_OTHER_TAMEABLE) == 0)
+			if ((this.state & B_PUT_OTHER_TAMEABLE) == 0)
 			{
 				if (((EntityTameable)entity).getOwnerId() != null)
 				{
@@ -504,7 +504,7 @@ public class SIEArea
 				}
 			}
 
-			if ((this.state & I_PUT_OWNER_TAMEABLE) == 0)
+			if ((this.state & B_PUT_OWNER_TAMEABLE) == 0)
 			{
 				UUID uuid = this.sieowner.uuid;
 				if (uuid != null)
@@ -517,25 +517,25 @@ public class SIEArea
 			}
 		}
 
-		if ((this.state & I_PUT_PLAYER) == 0 && entity instanceof EntityPlayer)
+		if ((this.state & B_PUT_PLAYER) == 0 && entity instanceof EntityPlayer)
 		{
 			return false;
 		}
 
 		if (this.sieowner.uuid != null)
 		{
-			if ((this.state & I_PUT_OWNER) == 0 && entity.getUniqueID().equals(this.sieowner.uuid))
+			if ((this.state & B_PUT_OWNER) == 0 && entity.getUniqueID().equals(this.sieowner.uuid))
 			{
 				return false;
 			}
 		}
 
-		if ((this.state & I_PUT_OBJECT) == 0 && !(entity instanceof EntityLivingBase))
+		if ((this.state & B_PUT_OBJECT) == 0 && !(entity instanceof EntityLivingBase))
 		{
 			return false;
 		}
 
-		if ((this.state & I_PUT_ANIMAL) == 0 && entity instanceof IAnimals)
+		if ((this.state & B_PUT_ANIMAL) == 0 && entity instanceof IAnimals)
 		{
 			return false;
 		}

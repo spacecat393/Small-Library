@@ -134,7 +134,7 @@ public class PageItem extends PageEdit
 				byte_array = new byte[1 + 1 + 1 + 4 + 4 + 4 + 8];
 				byte_array[0] = SPageDa.ID;
 				byte_array[1] = SDaInvSelect.ID;
-				byte_array[2] = SDaInvSelect.I_MOVE;
+				byte_array[2] = SDaInvSelect.B_MOVE;
 				ByteWriter.set(byte_array, PageSelect.PAGE, 3);
 				ByteWriter.set(byte_array, ByteReader.getInt(PageInv.BYTE_ARRAY, 2 + PageInv.SELECT * 4), 3+4);
 				ByteWriter.set(byte_array, this.item_id, 3+4+4);
@@ -146,7 +146,7 @@ public class PageItem extends PageEdit
 				byte_array = new byte[1 + 1 + 1 + 4 + 4 + 4];
 				byte_array[0] = SPageDa.ID;
 				byte_array[1] = SDaInvSelect.ID;
-				byte_array[2] = SDaInvSelect.I_DELETE;
+				byte_array[2] = SDaInvSelect.B_DELETE;
 				ByteWriter.set(byte_array, PageSelect.PAGE, 3);
 				ByteWriter.set(byte_array, ByteReader.getInt(PageInv.BYTE_ARRAY, 2 + PageInv.SELECT * 4), 3+4);
 				ByteWriter.set(byte_array, this.item_id, 3+4+4);

@@ -113,13 +113,13 @@ public class PageSI extends PageSelect
 			switch (this.select)
 			{
 				case 2:
-					this.sendNet(SDaSI.I_MORE);
+					this.sendNet(SDaSI.B_MORE);
 					break;
 				case 3:
-					this.sendNet(SDaSI.I_LESS);
+					this.sendNet(SDaSI.B_LESS);
 					break;
 				case 4:
-					this.sendNet(SDaSI.I_FETCH);
+					this.sendNet(SDaSI.B_FETCH);
 					break;
 				case 5:
 					this.back();
@@ -129,15 +129,15 @@ public class PageSI extends PageSelect
 		{
 			if (this.select == (boxtextall_array_length - 4))
 			{
-				this.sendNet(SDaSI.I_MORE);
+				this.sendNet(SDaSI.B_MORE);
 			}
 			else if (this.select == (boxtextall_array_length - 3))
 			{
-				this.sendNet(SDaSI.I_LESS);
+				this.sendNet(SDaSI.B_LESS);
 			}
 			else if (this.select == (boxtextall_array_length - 2))
 			{
-				this.sendNet(SDaSI.I_FETCH);
+				this.sendNet(SDaSI.B_FETCH);
 			}
 			else if (this.select == (boxtextall_array_length - 1))
 			{

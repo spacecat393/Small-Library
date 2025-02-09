@@ -19,11 +19,11 @@ public class SDaChunkMap
 	public static byte ID;
 
 	public final static byte MAX_SIZE = 118;
-	public final static byte I_MORE = 0;
-	public final static byte I_LESS = 1;
-	public final static byte I_FETCH = 2;
-	public final static byte I_DELETE = 3;
-	public final static byte I_DELETE_ALL = 4;
+	public final static byte B_MORE = 0;
+	public final static byte B_LESS = 1;
+	public final static byte B_FETCH = 2;
+	public final static byte B_DELETE = 3;
+	public final static byte B_DELETE_ALL = 4;
 
 	//stop on array
 	public static void run(EntityPlayerMP entityplayermp, ServerMessage servermessage)
@@ -31,42 +31,40 @@ public class SDaChunkMap
 		int page = ByteReader.getInt(servermessage.data, 3);
 		int chunk_map_size = ChunkCallBack.CHUNK_MAP.size();
 
-		if (servermessage.data[2] == I_MORE)
+		switch (servermessage.data[2])
 		{
-			if (((page + 1) * MAX_SIZE) < chunk_map_size)
-			{
-				++page;
-				servermessage.data[2] = I_FETCH;
-			}
-		}
-		else if (servermessage.data[2] == I_LESS)
-		{
-			int new_page = page - 1;
-			if (new_page != -1)
-			{
-				if ((new_page * MAX_SIZE) < chunk_map_size)
+			case B_MORE:
+				if (((page + 1) * MAX_SIZE) < chunk_map_size)
 				{
-					--page;
-					servermessage.data[2] = I_FETCH;
+					++page;
+					servermessage.data[2] = B_FETCH;
 				}
-			}
-		}
-		else if (servermessage.data[2] == I_DELETE)
-		{
-			long id = ByteReader.getLong(servermessage.data, 3+4);
-			ForgeChunkManager.releaseTicket(ChunkCallBack.CHUNK_MAP.get(id).ticket);
-			ChunkCallBack.CHUNK_MAP.remove(id);
-			servermessage.data[2] = I_FETCH;
-			--chunk_map_size;
-		}
-		else if (servermessage.data[2] == I_DELETE_ALL)
-		{
-			ChunkCallBack.CHUNK_MAP.clear();
-			servermessage.data[2] = I_FETCH;
-			chunk_map_size = 0;
+				break;
+			case B_LESS:
+				int new_page = page - 1;
+				if (new_page != -1)
+				{
+					if ((new_page * MAX_SIZE) < chunk_map_size)
+					{
+						--page;
+						servermessage.data[2] = B_FETCH;
+					}
+				}
+				break;
+			case B_DELETE:
+				long id = ByteReader.getLong(servermessage.data, 3+4);
+				ForgeChunkManager.releaseTicket(ChunkCallBack.CHUNK_MAP.get(id).ticket);
+				ChunkCallBack.CHUNK_MAP.remove(id);
+				servermessage.data[2] = B_FETCH;
+				--chunk_map_size;
+				break;
+			case B_DELETE_ALL:
+				ChunkCallBack.CHUNK_MAP.clear();
+				servermessage.data[2] = B_FETCH;
+				chunk_map_size = 0;
 		}
 
-		if (servermessage.data[2] == I_FETCH)
+		if (servermessage.data[2] == B_FETCH)
 		{
 			int max_mix_page = (int)Math.ceil(chunk_map_size / (float)MAX_SIZE);
 			byte max_page;

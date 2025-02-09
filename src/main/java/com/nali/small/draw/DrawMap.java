@@ -16,7 +16,11 @@ public class DrawMap
 		texture,
 		rs;
 //		hash_code;
-	public byte extra_bit;//transparent
+	public byte extra_bit;
+	public final static byte B_TRANSPARENT = 1;
+	public final static byte B_SKINNING = 2;
+	public final static byte B_COLOR = 4;
+	public final static byte B_TILE_ENTITY = 16;
 
 	public DrawMap(int rg, int texture, int rs, byte extra_bit)
 	{

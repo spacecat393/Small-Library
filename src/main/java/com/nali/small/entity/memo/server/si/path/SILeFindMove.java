@@ -34,4 +34,11 @@ public class SILeFindMove
 			e.motionY += (0.05D * (double)(e.getActivePotionEffect(MobEffects.LEVITATION).getAmplifier() + 1) - e.motionY) * 0.2D;
 		}
 	}
+
+	@Override
+	public void look(E e)
+	{
+		super.look(e);
+		e.rotation_yaw_head = e.rotationYaw;
+	}
 }

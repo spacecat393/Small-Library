@@ -85,7 +85,7 @@ public class PageMe extends PageEdit
 					byte[] byte_array = new byte[1 + 1 + 1 + 4 + 8 + name_byte_array_length];
 					byte_array[0] = SPageDa.ID;
 					byte_array[1] = SDaEntity.ID;
-					byte_array[2] = SDaEntity.I_RENAME;
+					byte_array[2] = SDaEntity.B_RENAME;
 					ByteWriter.set(byte_array, PageEntity.PAGE, 3);
 //					ByteWriter.set(byte_array, (long)this.d << 32 | this.i, 4);
 					ByteWriter.set(byte_array, ID, 3+4);
