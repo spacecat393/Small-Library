@@ -17,6 +17,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.world.BlockEvent;
@@ -56,8 +57,11 @@ public class SIEFindMove
 	public SNode
 		to_goal_snode,
 		debug_to_goal_snode;
+
+	public final static byte B_TRY_MOVE = 1;
+	public final static byte B_IS_GOAL = 2;
 	public byte
-		state,//try_move is_goal
+		flag,
 		mo_tick = 0;
 
 	public double move_x, move_y, move_z;
@@ -79,9 +83,8 @@ public class SIEFindMove
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
 	@Override
@@ -97,7 +100,7 @@ public class SIEFindMove
 
 		if (this.s.isMove(e))
 		{
-			if ((this.siesit.state & 1) == 0)
+			if ((this.siesit.flag & SIESit.B_ON) == 0)
 			{
 				BlockPos blockpos = e.getPosition();
 
@@ -113,7 +116,7 @@ public class SIEFindMove
 					s_to_goal_snode = s_to_goal_snode.parent_snode;
 				}
 
-				if ((this.state & 1) == 1)
+				if ((this.flag & B_TRY_MOVE) == B_TRY_MOVE)
 				{
 					this.goal_x = (int)this.d_goal_x;
 					this.goal_y = (int)this.d_goal_y;
@@ -125,7 +128,7 @@ public class SIEFindMove
 					}
 					else
 					{
-						this.state &= 255-2;
+						this.flag &= 255 - B_IS_GOAL;
 						this.siemineto.clear();
 						this.siewalkto.blockpos_list.clear();
 
@@ -222,13 +225,13 @@ public class SIEFindMove
 		this.d_goal_x = x;
 		this.d_goal_y = y;
 		this.d_goal_z = z;
-		this.state |= 1;
-		this.s.ms.state &= 255-(1+2);
+		this.flag |= B_TRY_MOVE;
+		this.s.ms.flag &= 255 - (MixSIE.B_MAIN_WORK + MixSIE.B_SUB_WORK);
 	}
 
 	public void endGoal()
 	{
-		this.state &= 255-1;
+		this.flag &= 255 - B_TRY_MOVE;
 		this.to_goal_snode = null;
 		this.siemineto.clear();
 	}
@@ -246,10 +249,10 @@ public class SIEFindMove
 		int start_snode_blockpos_y = start_snode_blockpos.getY();
 		int start_snode_blockpos_z = start_snode_blockpos.getZ();
 
-		if ((this.state & 2) == 2 || start_snode_blockpos_x == this.goal_x && start_snode_blockpos_y == this.goal_y && start_snode_blockpos_z == this.goal_z)
+		if ((this.flag & B_IS_GOAL) == B_IS_GOAL || start_snode_blockpos_x == this.goal_x && start_snode_blockpos_y == this.goal_y && start_snode_blockpos_z == this.goal_z)
 		{
 //			this.to_goal_snode = start_snode;
-			this.state |= 2;
+//			this.state |= 2;
 //			this.endGoal();
 			return null;
 		}
@@ -504,7 +507,7 @@ public class SIEFindMove
 
 	public boolean isPassWithAct(BlockPos blockpos)
 	{
-		if ((this.siewalkto.state & 1) == 1)
+		if ((this.siewalkto.flag & SIEWalkTo.B_ON) == 0)
 		{
 			return false;
 		}
@@ -517,7 +520,7 @@ public class SIEFindMove
 			return true;
 		}
 
-		if ((this.siemineto.state & 1) == 1)
+		if ((this.siemineto.flag & SIEMineTo.B_ON) == SIEMineTo.B_ON)
 		{
 			if (this.siemineto.blockpos == null)
 			{

@@ -1,7 +1,7 @@
 package com.nali.small.mix.block;
 
 import com.nali.small.Small;
-import com.nali.small.tile.TileRegistry;
+import com.nali.small.mix.block.tile.TileRegistry;
 import com.nali.system.Reflect;
 import com.nali.system.StringReader;
 import net.minecraft.block.Block;

@@ -11,6 +11,7 @@ import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.small.entity.memo.server.si.frame.KeyS;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
 
@@ -49,9 +50,8 @@ public class SIEKey
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
 	@Override

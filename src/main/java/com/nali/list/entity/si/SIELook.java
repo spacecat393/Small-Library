@@ -6,8 +6,8 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.system.bytes.ByteReader;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 public class SIELook
 <
@@ -32,25 +32,24 @@ public class SIELook
 	@Override
 	public void init()
 	{
-
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-		byte[] byte_array = this.s.ms.byte_array;
-		int id = (int)ByteReader.getFloat(byte_array, 1 + 8 + 1);
-		float f = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 4);
-
-		E e = this.s.i.getE();
-		if (id == 1)
-		{
-			e.rotationPitch = f;
-		}
-		else if (id == 0)
-		{
-			e.rotationYaw = f;
-		}
+//		byte[] byte_array = this.s.ms.byte_array;
+//		int id = (int)ByteReader.getFloat(byte_array, 1 + 8 + 1);
+//		float f = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 4);
+//
+//		E e = this.s.i.getE();
+//		if (id == 1)
+//		{
+//			e.rotationPitch = f;
+//		}
+//		else if (id == 0)
+//		{
+//			e.rotationYaw = f;
+//		}
 	}
 
 	public void set(double x, double y, double z, byte max)
@@ -59,7 +58,7 @@ public class SIELook
 		this.y = y;
 		this.z = z;
 		this.max = max;
-		this.s.ms.state &= 255-2;
+		this.s.ms.flag &= 255 - MixSIE.B_SUB_WORK;
 
 		E e = this.s.i.getE();
 //		float yaw = (float)Math.toDegrees(Math.atan2(-this.x, this.z)) - ((EntityLe)e).rotation_yaw_head;

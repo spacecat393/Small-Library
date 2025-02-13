@@ -49,6 +49,6 @@ public class KeySleFLoopOffSetAttackEndWalkSSle
 	public boolean onUpdate()
 	{
 		SIEFindMove siefindmove = (SIEFindMove)this.sileplaywithssle.s2.ms.si_map.get(SIEFindMove.ID);
-		return this.sileplaywithssle.s2 != null && (((SILeAttack<BD2, E2, I2, S2, A2>)this.sileplaywithssle.s2.ms.si_map.get(SILeAttack.ID)).flag & 16) == 16 && siefindmove.move_x == 0 && siefindmove.move_z == 0 && super.onUpdate();
+		return this.sileplaywithssle.s2 != null && (((SILeAttack<BD2, E2, I2, S2, A2>)this.sileplaywithssle.s2.ms.si_map.get(SILeAttack.ID)).state & SILeAttack.B_ATTACK_POSE) == SILeAttack.B_ATTACK_POSE && siefindmove.move_x == 0 && siefindmove.move_z == 0 && super.onUpdate();
 	}
 }

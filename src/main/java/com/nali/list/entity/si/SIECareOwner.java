@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,8 @@ public class SIECareOwner
 	public SIEOwner<BD, E, I, S, MS> sieowner;
 	public SIEArea<BD, E, I, S, MS> siearea;
 
-	public byte state = 1;
+	public final static byte B_ON = 1;
+	public byte flag = B_ON;
 
 	public List<Entity> target_entity_list = new ArrayList();
 	public List<Double> far_double_list = new ArrayList();
@@ -47,9 +49,8 @@ public class SIECareOwner
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
 	@Override
@@ -60,7 +61,7 @@ public class SIECareOwner
 		{
 			Entity owner_entity = this.sieowner.getOwner();
 //			if (this.s.isWork(this.s.bytele.CARE_OWNER()) && owner_entity != null && !this.siearea.all_entity_list.isEmpty())
-			if ((this.s.ms.state & 1) == 1 && (this.state & 1) == 1 && owner_entity != null && !this.siearea.all_entity_list.isEmpty())
+			if ((this.s.ms.flag & MixSIE.B_MAIN_WORK) == MixSIE.B_MAIN_WORK && (this.flag & B_ON) == B_ON && owner_entity != null && !this.siearea.all_entity_list.isEmpty())
 			{
 				List<Entity> target_entity_list = new ArrayList(this.target_entity_list);
 				this.target_entity_list.clear();
@@ -117,13 +118,13 @@ public class SIECareOwner
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 	}
 
 	@Override

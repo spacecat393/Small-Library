@@ -1,9 +1,6 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
-import com.nali.list.network.message.ClientMessage;
-import com.nali.list.network.method.client.CSetLocation;
-import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.EntityMath;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
@@ -13,6 +10,7 @@ import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 
 public class SIESetLocation
@@ -32,7 +30,9 @@ public class SIESetLocation
 	public float far;
 	public BlockPos blockpos;
 //	public BlockPos temp_blockpos;
-	public byte state;//on_move
+
+	public final static byte B_ON = 1;
+	public byte flag;//on_move
 
 	public SIESetLocation(S s)
 	{
@@ -46,33 +46,32 @@ public class SIESetLocation
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
-	public void set()
-	{
-		byte[] byte_array = this.s.ms.byte_array;
-		int id = (int) ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
-		if (id == 1)
-		{
-			this.far = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
-		}
-		else
-		{
-			this.blockpos_long = new BlockPos(ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4), ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4 + 4), ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4 + 4 + 4)).toLong();
-		}
-	}
+//	public void set()
+//	{
+//		byte[] byte_array = this.s.ms.byte_array;
+//		int id = (int) ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
+//		if (id == 1)
+//		{
+//			this.far = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
+//		}
+//		else
+//		{
+//			this.blockpos_long = new BlockPos(ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4), ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4 + 4), ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4 + 4 + 4)).toLong();
+//		}
+//	}
 
-	public void fetch()
-	{
-		byte[] byte_array = new byte[1 + 8 + 4];
-		byte_array[0] = CSetLocation.ID;
-		ByteWriter.set(byte_array, this.blockpos_long, 1);
-		ByteWriter.set(byte_array, this.far, 1 + 8);
-		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
-	}
+//	public void fetch()
+//	{
+//		byte[] byte_array = new byte[1 + 8 + 4];
+//		byte_array[0] = CSetLocation.ID;
+//		ByteWriter.set(byte_array, this.blockpos_long, 1);
+//		ByteWriter.set(byte_array, this.far, 1 + 8);
+//		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
+//	}
 
 	@Override
 	public void onUpdate()
@@ -96,11 +95,11 @@ public class SIESetLocation
 //						this.set_location = true;
 					}
 //					else if (this.set_location)
-					else if ((this.state & 1) == 1)
+					else if ((this.flag & B_ON) == B_ON)
 					{
 						this.siefindmove.endGoal();
 //						this.set_location = false;
-						this.state &= 255-1;
+						this.flag &= 255 - B_ON;
 					}
 				}
 //				this.temp_blockpos = this.blockpos;
@@ -108,26 +107,26 @@ public class SIESetLocation
 			else
 			{
 //				if (this.set_location)
-				if ((this.state & 1) == 1)
+				if ((this.flag & B_ON) == B_ON)
 				{
 					this.siefindmove.endGoal();
 //					this.set_location = false;
 					this.blockpos = null;
 				}
 
-				this.state &= 255-1;
+				this.flag &= 255 - B_ON;
 			}
 		}
 		else
 		{
-			this.state &= 255-1;
+			this.flag &= 255 - B_ON;
 		}
 	}
 
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 
 		ByteWriter.set(sidata.byte_array, this.blockpos_long, sidata.index);
 		sidata.index += 8;
@@ -139,7 +138,7 @@ public class SIESetLocation
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 
 		this.blockpos_long = ByteReader.getLong(sidata.byte_array, sidata.index);
 		sidata.index += 8;

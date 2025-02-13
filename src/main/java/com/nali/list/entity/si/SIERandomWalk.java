@@ -7,6 +7,7 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import java.util.Random;
 
@@ -27,7 +28,10 @@ public class SIERandomWalk
 	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public int tick;
-	public byte state;//on walk
+
+	public final static byte B_ON = 1;
+	public final static byte B_WORK = 2;
+	public byte flag = B_ON;//on walk
 
 	public SIERandomWalk(S s)
 	{
@@ -42,9 +46,8 @@ public class SIERandomWalk
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
 	@Override
@@ -54,15 +57,19 @@ public class SIERandomWalk
 		if (this.s.isMove(e))
 		{
 	//		if (serverentitiesmemory.isWork(serverentitiesmemory.workbytes.RANDOM_WALK()))
-			if ((this.s.ms.state & 1) == 1 && (this.state & 1) == 1)
+			if ((this.s.ms.flag & MixSIE.B_MAIN_WORK) == MixSIE.B_MAIN_WORK && (this.flag & B_ON) == B_ON)
 			{
-				if (e.ticksExisted % 100 == 0)
+//				if (e.ticksExisted % 100 == 0)
+//				{
+//					this.siefindmove.endGoal();
+//					this.state &= 255-2;
+////					this.walk = false;
+//				}
+				if ((this.flag & B_WORK) == B_WORK && this.tick <= 500)
 				{
 					this.siefindmove.endGoal();
-					this.state &= 255-2;
-//					this.walk = false;
+					this.flag &= 255 - B_WORK;
 				}
-
 				if (--this.tick <= 0)
 				{
 					Random random = e.world.rand;
@@ -73,16 +80,16 @@ public class SIERandomWalk
 					if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(x, y, z, this.silesetlocation.blockpos, this.silesetlocation.far))
 					{
 						this.siefindmove.setGoal(x, y, z);
+						this.flag |= B_WORK;
 					}
-					this.tick = random.nextInt(100) + 100;
-					this.state |= 2;
+					this.tick = random.nextInt(1000) + 500;
 //					this.walk = true;
 				}
 			}
-			else if ((this.state & 2) == 2)
+			else if ((this.flag & B_WORK) == B_WORK)
 			{
 				this.siefindmove.endGoal();
-				this.state &= 255-2;
+				this.flag &= 255 - B_WORK;
 //				this.walk = false;
 			}
 
@@ -96,13 +103,13 @@ public class SIERandomWalk
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 	}
 
 	@Override

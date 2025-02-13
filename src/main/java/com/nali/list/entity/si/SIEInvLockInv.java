@@ -7,6 +7,7 @@ import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.small.entity.memo.server.si.MixSIEInv;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 public class SIEInvLockInv
 <
@@ -21,7 +22,8 @@ public class SIEInvLockInv
 
 	public SIEOwner<BD, E, I, S, MS> sieowner;
 
-	public byte state;//on
+	public final static byte B_ON = 1;
+	public byte flag;//on
 
 	public SIEInvLockInv(S s)
 	{
@@ -35,9 +37,8 @@ public class SIEInvLockInv
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
 	@Override
@@ -49,13 +50,13 @@ public class SIEInvLockInv
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class SIEInvLockInv
 
 	public boolean canPass(Entity entity)
 	{
-		if ((this.state & 1) == 1)
+		if ((this.flag & B_ON) == B_ON)
 		{
 			return this.sieowner.uuid == null || entity.getUniqueID().equals(this.sieowner.uuid);
 		}

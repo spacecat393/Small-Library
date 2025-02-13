@@ -1,10 +1,6 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
-import com.nali.list.network.message.ClientMessage;
-import com.nali.list.network.method.client.CSetTarget;
-import com.nali.list.network.method.client.CSetTroublemaker;
-import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.EntityRegistry;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
@@ -22,6 +18,7 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import java.util.*;
 
@@ -71,26 +68,31 @@ public class SIEArea
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-		switch (this.s.ms.byte_array[18])
-		{
-			case 0:
-				this.addTarget();
-				break;
-			case 1:
-				this.clearTarget();
-				break;
-			case 2:
-				this.addTroublemaker();
-				break;
-			case 3:
-				this.clearTroublemaker();
-				break;
-			case 4:
-//				this.fetch();
-		}
 	}
+
+//	@Override
+//	public void call()
+//	{
+//		switch (this.s.ms.byte_array[18])
+//		{
+//			case 0:
+//				this.addTarget();
+//				break;
+//			case 1:
+//				this.clearTarget();
+//				break;
+//			case 2:
+//				this.addTroublemaker();
+//				break;
+//			case 3:
+//				this.clearTroublemaker();
+//				break;
+//			case 4:
+////				this.fetch();
+//		}
+//	}
 
 	public void addTarget()
 	{
@@ -335,33 +337,33 @@ public class SIEArea
 //		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
 //	}
 
-	public void fetchTarget()
-	{
-		int size = this.target_list.size() * 4;
-		byte[] byte_array = new byte[1 + size];
-		byte_array[0] = CSetTarget.ID;
-		int index = 0;
-		for (int i = 1; i < size; i += 4)
-		{
-			ByteWriter.set(byte_array, this.target_list.get(index++), i);
-		}
+//	public void fetchTarget()
+//	{
+//		int size = this.target_list.size() * 4;
+//		byte[] byte_array = new byte[1 + size];
+//		byte_array[0] = CSetTarget.ID;
+//		int index = 0;
+//		for (int i = 1; i < size; i += 4)
+//		{
+//			ByteWriter.set(byte_array, this.target_list.get(index++), i);
+//		}
+//
+//		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
+//	}
 
-		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
-	}
-
-	public void fetchTroublemaker()
-	{
-		int size = this.troublemaker_list.size() * 4;
-		byte[] byte_array = new byte[1 + size];
-		byte_array[0] = CSetTroublemaker.ID;
-		int index = 0;
-		for (int i = 1; i < size; i += 4)
-		{
-			ByteWriter.set(byte_array, this.troublemaker_list.get(index++), i);
-		}
-
-		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
-	}
+//	public void fetchTroublemaker()
+//	{
+//		int size = this.troublemaker_list.size() * 4;
+//		byte[] byte_array = new byte[1 + size];
+//		byte_array[0] = CSetTroublemaker.ID;
+//		int index = 0;
+//		for (int i = 1; i < size; i += 4)
+//		{
+//			ByteWriter.set(byte_array, this.troublemaker_list.get(index++), i);
+//		}
+//
+//		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
+//	}
 
 	@Override
 	public void onUpdate()

@@ -1,12 +1,12 @@
 package com.nali.small;
 
-import com.nali.list.gui.da.server.SDaInvSelect;
 import com.nali.small.chunk.ChunkCallBack;
 import com.nali.small.chunk.ChunkData;
 import com.nali.small.entity.EntityRegistry;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.player.PlayerData;
-import com.nali.small.tile.TileRegistry;
+import com.nali.small.mix.block.tile.TileRegistry;
+import com.nali.small.world.WorldRegistry;
 import com.nali.system.bytes.ByteReader;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -54,6 +54,7 @@ public class Small
 	public void onFMLInitializationEvent(FMLInitializationEvent event)
 	{
 		EntityRegistry.set();
+		WorldRegistry.set();
 //		CapabilityRegistry.register();
 //		NetworkRegistry.INSTANCE.registerGuiHandler(I, new GuiHandler());
 	}
@@ -90,7 +91,7 @@ public class Small
 	@EventHandler
 	public void onFMLServerAboutToStartEvent(FMLServerAboutToStartEvent event)
 	{
-		SDaInvSelect.RUNNABLE_LIST = new ArrayList();
+//		SDaInvSelect.RUNNABLE_LIST = new ArrayList();
 
 		ServerE.S_MAP = new HashMap();
 		ChunkCallBack.set();
@@ -200,6 +201,6 @@ public class Small
 		ServerE.S_MAP = null;
 		ChunkCallBack.free();
 
-		SDaInvSelect.RUNNABLE_LIST = null;
+//		SDaInvSelect.RUNNABLE_LIST = null;
 	}
 }

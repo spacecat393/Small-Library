@@ -8,6 +8,7 @@ import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.system.bytes.ByteReader;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumParticleTypes;
 
 public class SIEPat
@@ -21,7 +22,8 @@ public class SIEPat
 {
 	public static byte ID;
 
-	public byte state;//t-pat
+	public final static byte B_T_PAT = 1;
+	public byte flag;//t-pat
 
 	public SIEPat(S s)
 	{
@@ -34,11 +36,11 @@ public class SIEPat
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-		this.state |= 1;
+		this.flag |= B_T_PAT;
 		E e = this.s.i.getE();
-		this.s.worldserver.spawnParticle(EnumParticleTypes.HEART, e.posX, ByteReader.getFloat(this.s.ms.byte_array, 1 + 8 + 1), e.posZ, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+		this.s.worldserver.spawnParticle(EnumParticleTypes.HEART, e.posX, ByteReader.getFloat(byte_array, 1 + 8 + 1), e.posZ, 1, 0.0D, 0.0D, 0.0D, 0.0D);
 	}
 
 	@Override
@@ -49,13 +51,13 @@ public class SIEPat
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 	}
 
 	@Override

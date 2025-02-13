@@ -1,9 +1,6 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
-import com.nali.list.network.message.ClientMessage;
-import com.nali.list.network.method.client.CSetManageItem;
-import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.inv.InvLe;
@@ -11,14 +8,12 @@ import com.nali.small.entity.memo.server.ServerLeInv;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.player.PlayerData;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-
-import java.util.UUID;
 
 import static com.nali.list.entity.si.SIEInvGetItem.isSameItemSameTags;
 
@@ -38,7 +33,14 @@ public class SILeInvManageItem
 	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public BlockPos in_blockpos, out_blockpos;
-	public byte state;//remote_in remote_out random_in random_out in out
+
+	public final static byte B_REMOTE_IN = 1;
+	public final static byte B_REMOTE_OUT = 2;
+	public final static byte B_RANDOM_IN = 4;
+	public final static byte B_RANDOM_OUT = 8;
+	public final static byte B_IN = 16;
+	public final static byte B_OUT = 32;
+	public byte flag;//remote_in remote_out random_in random_out in out
 	public int in_random = 2, out_random = 2;
 
 	public SILeInvManageItem(S s)
@@ -54,176 +56,175 @@ public class SILeInvManageItem
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
-	public void set()
-	{
-		byte[] byte_array = this.s.ms.byte_array;
-		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
-		BlockPos blockpos = null;
-
-		float x = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
-		if (byte_array.length > 1 + 8 + 1 + 1 + 4 + 4)
-		{
-			float y = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4 + 4);
-			float z = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4 + 4 + 4);
-			blockpos = new BlockPos(x, y, z);
-		}
-
-//			Small.LOGGER.info("ID " + id);
-//			Small.LOGGER.info("X " + x);
-
-//		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
-//		byte value = smallsakuratypes.get();
-		UUID player_uuid = this.s.ms.entityplayermp.getUniqueID();
-		byte value = PlayerData.SAKURA_MAP.getOrDefault(player_uuid, (byte)0);
-
-//			if (id >= 2)
+//	public void set()
+//	{
+//		byte[] byte_array = this.s.ms.byte_array;
+//		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
+//		BlockPos blockpos = null;
+//
+//		float x = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
+//		if (byte_array.length > 1 + 8 + 1 + 1 + 4 + 4)
+//		{
+//			float y = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4 + 4);
+//			float z = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4 + 4 + 4);
+//			blockpos = new BlockPos(x, y, z);
+//		}
+//
+////			Small.LOGGER.info("ID " + id);
+////			Small.LOGGER.info("X " + x);
+//
+////		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+////		byte value = smallsakuratypes.get();
+//		UUID player_uuid = this.s.ms.entityplayermp.getUniqueID();
+//		byte value = PlayerData.SAKURA_MAP.getOrDefault(player_uuid, (byte)0);
+//
+////			if (id >= 2)
+////			{
+//		if (id == 2.1F)
+//		{
+//			if (x == 1)
 //			{
-		if (id == 2.1F)
-		{
-			if (x == 1)
-			{
-				if (value >= 1)
-				{
-//					smallsakuratypes.set((byte)(value - 1));
-					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-					this.state |= 32;
-				}
-			}
-			else
-			{
-				this.state &= 255 - 32;
-			}
-		}
-		else if (id == 2.2F)
-		{
-			if (x == 1)
-			{
-				if (value >= 1)
-				{
-//					smallsakuratypes.set((byte)(value - 1));
-					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-					this.state |= 2;
-				}
-			}
-			else
-			{
-				this.state &= 255 - 2;
-			}
-		}
-		else if (id == 2.3F)
-		{
-			int v = (int)x;
-			if (value >= v)
-			{
-//				smallsakuratypes.set((byte)(value - v));
-				PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - v));
-				this.out_random = v;
-			}
-		}
-		else if (id == 2.0F)
-		{
-			if (blockpos != null)
-			{
-				this.out_blockpos = blockpos;
-			}
-			else
-			{
-				this.out_blockpos = null;
-				this.state ^= 8;
-			}
-		}
+//				if (value >= 1)
+//				{
+////					smallsakuratypes.set((byte)(value - 1));
+//					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//					this.state |= 32;
+//				}
 //			}
-//			else if (id >= 1)
+//			else
 //			{
-		else if (id == 1.1F)
-		{
-			if (x == 1)
-			{
-				if (value >= 1)
-				{
-//					smallsakuratypes.set((byte)(value - 1));
-					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-					this.state |= 16;
-				}
-			}
-			else
-			{
-				this.state &= 255 - 16;
-			}
-		}
-		else if (id == 1.2F)
-		{
-			if (x == 1)
-			{
-				if (value >= 1)
-				{
-//					smallsakuratypes.set((byte)(value - 1));
-					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-					this.state |= 1;
-				}
-			}
-			else
-			{
-				this.state &= 255 - 1;
-			}
-		}
-		else if (id == 1.3F)
-		{
-			int v = (int)x;
-			if (value >= v)
-			{
-//				smallsakuratypes.set((byte)(value - v));
-				PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - v));
-				this.in_random = v;
-			}
-		}
-		else if (id == 1.0F)
-		{
-			if (blockpos != null)
-			{
-				this.in_blockpos = blockpos;
-			}
-			else
-			{
-				this.in_blockpos = null;
-				this.state ^= 4;
-			}
-		}
+//				this.state &= 255 - 32;
 //			}
-
-		this.fetch();
-	}
-
-	public void fetch()
-	{
-		byte[] byte_array = new byte[1 + 1 + 8 + 8 + 4 + 4];
-		byte_array[0] = CSetManageItem.ID;
-		byte_array[1] = this.state;
-		if (this.in_blockpos != null)
-		{
-			ByteWriter.set(byte_array, this.in_blockpos.toLong(), 1 + 1);
-		}
-		else
-		{
-			byte_array[1 + 1] = -1;
-		}
-		if (this.out_blockpos != null)
-		{
-			ByteWriter.set(byte_array, this.out_blockpos.toLong(), 1 + 1 + 8);
-		}
-		else
-		{
-			byte_array[1 + 1 + 8] = -1;
-		}
-		ByteWriter.set(byte_array, this.in_random, 1 + 1 + 8 + 8);
-		ByteWriter.set(byte_array, this.out_random, 1 + 1 + 8 + 8 + 4);
-		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
-	}
+//		}
+//		else if (id == 2.2F)
+//		{
+//			if (x == 1)
+//			{
+//				if (value >= 1)
+//				{
+////					smallsakuratypes.set((byte)(value - 1));
+//					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//					this.state |= 2;
+//				}
+//			}
+//			else
+//			{
+//				this.state &= 255 - 2;
+//			}
+//		}
+//		else if (id == 2.3F)
+//		{
+//			int v = (int)x;
+//			if (value >= v)
+//			{
+////				smallsakuratypes.set((byte)(value - v));
+//				PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - v));
+//				this.out_random = v;
+//			}
+//		}
+//		else if (id == 2.0F)
+//		{
+//			if (blockpos != null)
+//			{
+//				this.out_blockpos = blockpos;
+//			}
+//			else
+//			{
+//				this.out_blockpos = null;
+//				this.state ^= 8;
+//			}
+//		}
+////			}
+////			else if (id >= 1)
+////			{
+//		else if (id == 1.1F)
+//		{
+//			if (x == 1)
+//			{
+//				if (value >= 1)
+//				{
+////					smallsakuratypes.set((byte)(value - 1));
+//					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//					this.state |= 16;
+//				}
+//			}
+//			else
+//			{
+//				this.state &= 255 - 16;
+//			}
+//		}
+//		else if (id == 1.2F)
+//		{
+//			if (x == 1)
+//			{
+//				if (value >= 1)
+//				{
+////					smallsakuratypes.set((byte)(value - 1));
+//					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//					this.state |= 1;
+//				}
+//			}
+//			else
+//			{
+//				this.state &= 255 - 1;
+//			}
+//		}
+//		else if (id == 1.3F)
+//		{
+//			int v = (int)x;
+//			if (value >= v)
+//			{
+////				smallsakuratypes.set((byte)(value - v));
+//				PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - v));
+//				this.in_random = v;
+//			}
+//		}
+//		else if (id == 1.0F)
+//		{
+//			if (blockpos != null)
+//			{
+//				this.in_blockpos = blockpos;
+//			}
+//			else
+//			{
+//				this.in_blockpos = null;
+//				this.state ^= 4;
+//			}
+//		}
+////			}
+//
+//		this.fetch();
+//	}
+//
+//	public void fetch()
+//	{
+//		byte[] byte_array = new byte[1 + 1 + 8 + 8 + 4 + 4];
+//		byte_array[0] = CSetManageItem.ID;
+//		byte_array[1] = this.state;
+//		if (this.in_blockpos != null)
+//		{
+//			ByteWriter.set(byte_array, this.in_blockpos.toLong(), 1 + 1);
+//		}
+//		else
+//		{
+//			byte_array[1 + 1] = -1;
+//		}
+//		if (this.out_blockpos != null)
+//		{
+//			ByteWriter.set(byte_array, this.out_blockpos.toLong(), 1 + 1 + 8);
+//		}
+//		else
+//		{
+//			byte_array[1 + 1 + 8] = -1;
+//		}
+//		ByteWriter.set(byte_array, this.in_random, 1 + 1 + 8 + 8);
+//		ByteWriter.set(byte_array, this.out_random, 1 + 1 + 8 + 8 + 4);
+//		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
+//	}
 
 	@Override
 	public void onUpdate()
@@ -410,7 +411,7 @@ public class SILeInvManageItem
 			sidata.index += 8;
 		}
 
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 
 		ByteWriter.set(sidata.byte_array, this.in_random, sidata.index);
 		sidata.index += 4;
@@ -435,7 +436,7 @@ public class SILeInvManageItem
 			sidata.index += 8;
 		}
 
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 
 		this.in_random = ByteReader.getInt(sidata.byte_array, sidata.index);
 		sidata.index += 4;

@@ -2,7 +2,7 @@ package com.nali.small.mix.item;
 
 import com.nali.small.Small;
 import com.nali.small.mix.block.BlockRegistry;
-import com.nali.small.tile.TileRegistry;
+import com.nali.small.mix.block.tile.TileRegistry;
 import com.nali.system.Reflect;
 import com.nali.system.StringReader;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

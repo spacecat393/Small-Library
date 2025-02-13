@@ -37,7 +37,7 @@ public class KeySleProtect
 	@Override
 	public boolean onUpdate()
 	{
-		if ((this.sileprotect.state & 1) == 1)
+		if ((this.sileprotect.flag & SIEProtect.B_ON) == SIEProtect.B_ON)
 		{
 			short[] key_short_array = this.siekey.key_short_array;
 			short[] fix_key_short_array = this.s.getFixKeyShortArray();
@@ -47,7 +47,7 @@ public class KeySleProtect
 			byte fix_key_index0;
 			byte fix_key_index1;
 
-			switch (this.sileprotect.state & (4+8))
+			switch (this.sileprotect.flag & (SIEProtect.B_ANIMATE1 + SIEProtect.B_ANIMATE2))
 			{
 				case 0:
 				{
@@ -61,7 +61,7 @@ public class KeySleProtect
 					else if (key_short_array[key_short_index] == fix_key_short_array[fix_key_index0 + 1])
 					{
 						key_short_array[key_short_index] = fix_key_short_array[fix_key_index1];
-						this.sileprotect.state |= 4;
+						this.sileprotect.flag |= SIEProtect.B_ANIMATE1;
 					}
 					else
 					{
@@ -70,7 +70,7 @@ public class KeySleProtect
 
 					break;
 				}
-				case 4:
+				case SIEProtect.B_ANIMATE1:
 				{
 					fix_key_index1 = key_data_byte_array[this.key_data_index + 2];
 
@@ -89,7 +89,7 @@ public class KeySleProtect
 
 					break;
 				}
-				case 8:
+				case SIEProtect.B_ANIMATE2:
 				{
 					byte fix_key_index2 = key_data_byte_array[this.key_data_index + 3];
 
@@ -100,7 +100,7 @@ public class KeySleProtect
 					else if (key_short_array[key_short_index] == fix_key_short_array[fix_key_index2 + 1])
 					{
 						key_short_array[key_short_index] = fix_key_short_array[fix_key_index2];
-						this.sileprotect.state ^= 4+8;
+						this.sileprotect.flag ^= SIEProtect.B_ANIMATE1 + SIEProtect.B_ANIMATE2;
 					}
 					else
 					{
@@ -109,7 +109,7 @@ public class KeySleProtect
 
 					break;
 				}
-				case 4+8:
+				case SIEProtect.B_ANIMATE1 + SIEProtect.B_ANIMATE2:
 				{
 					fix_key_index0 = key_data_byte_array[this.key_data_index + 1];
 
@@ -122,7 +122,7 @@ public class KeySleProtect
 					else if (key_short_array[key_short_index] == fix_key_short_array[fix_key_index3 + 1])
 					{
 						key_short_array[key_short_index] = fix_key_short_array[fix_key_index0];
-						this.sileprotect.state &= 255-(4+8);
+						this.sileprotect.flag &= 255 - (SIEProtect.B_ANIMATE1 + SIEProtect.B_ANIMATE2);
 					}
 					else
 					{

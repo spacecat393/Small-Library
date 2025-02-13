@@ -38,12 +38,12 @@ public class KeySFLoopFreeHardReady
 	@Override
 	public boolean step()
 	{
-		return (this.siesit.state & 2) == 2;
+		return (this.siesit.flag & SIESit.B_ANIMATE_HARD_READY) == SIESit.B_ANIMATE_HARD_READY;
 	}
 
 	@Override
 	public void free()
 	{
-		this.siesit.state &= 255-2;
+		this.siesit.flag &= 255 - SIESit.B_ANIMATE_HARD_READY;
 	}
 }

@@ -43,7 +43,11 @@ public class SIERevive
 	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 	public SIELook<BD, E, I, S, MS> sielook;
 
-	public byte state;//try_revive-N revive_owner revive_other_entity remote
+	public final static byte B_TRY_REVIVE_N = 1;
+	public final static byte B_REVIVE_OWNER = 2;
+	public final static byte B_REVIVE_OTHER_ENTITY = 4;
+	public final static byte B_REMOTE = 8;
+	public byte flag;//try_revive-N revive_owner revive_other_entity remote
 
 //	public int tick = 0;
 	public Entity entity;
@@ -71,9 +75,8 @@ public class SIERevive
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
 	@Override
@@ -83,7 +86,7 @@ public class SIERevive
 		if (this.s.isMove(e))
 		{
 //			if (this.s.isWork(this.s.bytele.REVIVE()))
-			if ((this.s.ms.state & 1) == 1)
+			if ((this.s.ms.flag & MixSIE.B_MAIN_WORK) == MixSIE.B_MAIN_WORK)
 			{
 //				Entity owner_entity = this.s.getOwner();
 //				NBTTagCompound e_nbttagcompound = e.getEntityData();
@@ -120,7 +123,7 @@ public class SIERevive
 				else
 				{
 	//				if (this.die && !this.entity.isEntityAlive() && (this.current_entity == null || !this.current_entity.isEntityAlive()))
-					if ((this.state & 1) == 1)
+					if ((this.flag & B_TRY_REVIVE_N) == B_TRY_REVIVE_N)
 					{
 	//					int size = this.entity_list.size();
 	//					byte[] byte_array = new byte[(int)Math.ceil(size / 8.0F)];
@@ -296,16 +299,16 @@ public class SIERevive
 	//						this.state |= 1;
 	//					}
 
-						if ((this.state & 2) == 2)
+						if ((this.flag & B_REVIVE_OWNER) == B_REVIVE_OWNER)
 						{
 							Entity owner_entity = this.sieowner.getOwner();
 							if (owner_entity != null && !owner_entity.isEntityAlive()/* && owner_entity instanceof EntityPlayerMP*/)
 							{
 	//							e_nbttagcompound.setUniqueId("Nali_reviver", owner_entity.getUniqueID());
-								this.state |= 1;
+								this.flag |= B_TRY_REVIVE_N;
 							}
 						}
-						else if ((this.state & 4) == 4)//?
+						else if ((this.flag & B_REVIVE_OTHER_ENTITY) == B_REVIVE_OTHER_ENTITY)//?
 						{
 							int index = -1;
 							double max_far = Double.MAX_VALUE;
@@ -336,7 +339,7 @@ public class SIERevive
 	//							{
 	//								e_nbttagcompound.setUniqueId("Nali_reviver", this.siearea.out_entity_list.get(rg).getUniqueID());
 	//							}
-								this.state |= 1;
+								this.flag |= B_TRY_REVIVE_N;
 							}
 						}
 					}
@@ -363,7 +366,7 @@ public class SIERevive
 	//				this.die = false;
 				}
 			}
-			else if ((this.state & 1) == 1)
+			else if ((this.flag & B_TRY_REVIVE_N) == B_TRY_REVIVE_N)
 			{
 //				this.clear();
 				this.siefindmove.endGoal();
@@ -372,7 +375,7 @@ public class SIERevive
 				this.blockpos = null;
 //					this.die = false;
 //					this.current_entity = null;
-				this.state &= 255-1;
+				this.flag &= 255 - B_TRY_REVIVE_N;
 			}
 		}
 	}

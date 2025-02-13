@@ -1,6 +1,7 @@
 package com.nali.list.entity.si;
 
 import com.mojang.authlib.GameProfile;
+import com.nali.Nali;
 import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaS;
 import com.nali.da.IBothDaSe;
@@ -29,9 +30,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class SILeEat
 <
@@ -42,11 +41,16 @@ public class SILeEat
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
-	public List<Runnable> runnable_list = new ArrayList();
+//	public List<Runnable> runnable_list = new ArrayList();
 	public static byte ID;
 
-	public byte state;//t-eat t-drinkMilk
+	public final static byte B_EAT = 1;
+	public final static byte B_DRINK = 2;
+	public byte flag;//t-eat t-drinkMilk
 	public float time;
+
+//	public ItemStack itemstack;
+//	public EntityPlayerMP entityplayermp;
 
 	public SIEKey<BD, E, I, S, MS> siekey;
 
@@ -62,21 +66,32 @@ public class SILeEat
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-		EntityPlayerMP entityplayermp = this.s.ms.entityplayermp;
-		this.runnable_list.add(() ->
+		MS ms = this.s.ms;
+		if ((ms.flag & MixSIE.B_LOCK_NET) == 0)
 		{
-			ItemStack itemstack = entityplayermp.getHeldItemMainhand();
-			if (itemstack.getItem() == Items.MILK_BUCKET)
-			{
-				this.drinkMilk(entityplayermp);
-			}
-			else
-			{
-				this.eat(itemstack, entityplayermp);
-			}
-		});
+			ms.flag |= MixSIE.B_LOCK_NET;
+//			ms.entityplayermp_id = entityplayermp.getEntityId();
+			ms.entityplayermp = entityplayermp;
+			ms.byte_array = byte_array;
+//			int length = byte_array.length;
+//			ms.byte_array = new byte[length];
+//			System.arraycopy(byte_array, 0, ms.byte_array, 0, length);
+		}
+//		EntityPlayerMP entityplayermp = this.s.ms.entityplayermp;
+//		this.runnable_list.add(() ->
+//		{
+//			ItemStack itemstack = entityplayermp.getHeldItemMainhand();
+//			if (itemstack.getItem() == Items.MILK_BUCKET)
+//			{
+//				this.drinkMilk(entityplayermp);
+//			}
+//			else
+//			{
+//				this.eat(itemstack, entityplayermp);
+//			}
+//		});
 	}
 
 	public void eat(ItemStack itemstack, EntityPlayerMP entityplayermp)
@@ -98,7 +113,7 @@ public class SILeEat
 				e.addPotionEffect(potioneffect);
 			}
 
-			this.state |= 1;
+			this.flag |= B_EAT;
 
 			worldserver.spawnEntity(new EntityXPOrb(worldserver, e.posX, e.posY, e.posZ, 10));
 			this.time += itemfood.getHealAmount(itemstack) + itemfood.getSaturationModifier(itemstack);
@@ -171,23 +186,41 @@ public class SILeEat
 			this.time -= 0.05F;
 		}
 
-		for (int i = 0; i < this.runnable_list.size(); ++i)
+		MS ms = this.s.ms;
+//		EntityPlayerMP entityplayermp = (EntityPlayerMP)e.world.getEntityByID(ms.entityplayermp_id);
+		EntityPlayerMP entityplayermp = ms.entityplayermp;
+		if (entityplayermp != null)
 		{
-			this.runnable_list.get(i).run();
+			ItemStack itemstack = entityplayermp.getHeldItem(entityplayermp.getActiveHand());
+			if (itemstack.getItem() == Items.MILK_BUCKET)
+			{
+				this.drinkMilk(entityplayermp);
+			}
+			else
+			{
+				this.eat(itemstack, entityplayermp);
+			}
+			ms.entityplayermp = null;
+			ms.byte_array = null;
+			ms.flag &= 255 - MixSIE.B_LOCK_NET;
 		}
-		this.runnable_list.clear();
+//		for (int i = 0; i < this.runnable_list.size(); ++i)
+//		{
+//			this.runnable_list.get(i).run();
+//		}
+//		this.runnable_list.clear();
 	}
 
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 	}
 
 	@Override

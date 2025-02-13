@@ -113,7 +113,7 @@ public class KeySleShoot
 
 			return true;
 		}
-		else if ((this.sileattack.flag & 2) == 2)
+		else if ((this.sileattack.state & SILeAttack.B_PREPARE) == SILeAttack.B_PREPARE)
 		{
 //			Nali.warn("(this.sileattack.flag & 2) == 2");
 			byte start_attack_fix_key_index = this.getStartAttackFixKeyIndex(key_data_byte_array);
@@ -127,7 +127,7 @@ public class KeySleShoot
 					if (key_short_array[key_short_index] == attack_frame)
 					{
 						this.sileattack.magic_point -= 1;
-						this.sileattack.flag |= 4;
+						this.sileattack.state |= SILeAttack.B_HIT;
 						break;
 					}
 				}

@@ -47,6 +47,6 @@ public class KeySleFLoopSSeRSePlay
 	@Override
 	public boolean onUpdate()
 	{
-		return this.sileplaywithsse.s2 != null && (((R2)this.sileplaywithsse.s2.ms.si_map.get(R2.ID)).state & 2) == 2 && super.onUpdate();
+		return this.sileplaywithsse.s2 != null && (((R2)this.sileplaywithsse.s2.ms.si_map.get(R2.ID)).flag & SIEPlayWithRSe.B_PLAY) == SIEPlayWithRSe.B_PLAY && super.onUpdate();
 	}
 }

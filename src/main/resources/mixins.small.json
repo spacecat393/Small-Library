@@ -14,10 +14,8 @@
 		"IMixinWorldServer",
 		"MixinBaseAttribute",
 		"MixinCommandSummon",
-		"MixinEntityLivingBase",
 		"MixinInventoryCrafting",
 		"MixinItemMonsterPlacer",
-		"MixinMinecraftServer",
 		"MixinWorldProvider"
 	],
 	"client": [

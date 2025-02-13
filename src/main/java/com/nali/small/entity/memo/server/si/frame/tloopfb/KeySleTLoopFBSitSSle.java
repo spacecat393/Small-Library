@@ -46,6 +46,6 @@ public class KeySleTLoopFBSitSSle
 	@Override
 	public boolean onUpdate()
 	{
-		return this.sileplaywithssle.s2 != null && (((SIESit<BD2, E2, I2, S2, A2>)this.sileplaywithssle.s2.ms.si_map.get(SIESit.ID)).state & 1) == 1 && super.onUpdate();
+		return this.sileplaywithssle.s2 != null && (((SIESit<BD2, E2, I2, S2, A2>)this.sileplaywithssle.s2.ms.si_map.get(SIESit.ID)).flag & SIESit.B_ON) == SIESit.B_ON && super.onUpdate();
 	}
 }

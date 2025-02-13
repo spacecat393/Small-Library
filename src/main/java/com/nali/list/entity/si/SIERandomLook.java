@@ -7,6 +7,7 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import java.util.Random;
 
@@ -24,7 +25,9 @@ public class SIERandomLook
 	public SIELook<BD, E, I, S, MS> sielook;
 
 	public int tick;
-	public byte state = 1;//on look
+	public final static byte B_ON = 1;
+	public final static byte B_LOOK = 2;
+	public byte flag = B_ON;//on look
 //	public double x, y, z;
 //	public byte[] bypass_int_array = {e.bothentitiesmemory.workbytes.SIT(), e.bothentitiesmemory.workbytes.PROTECT()};
 
@@ -40,9 +43,8 @@ public class SIERandomLook
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
 	@Override
@@ -52,7 +54,7 @@ public class SIERandomLook
 		//add le
 		if (this.s.isMove(e))
 		{
-			if ((this.s.ms.state & 2) == 2 && (this.state & 1) == 1)
+			if ((this.s.ms.flag & MixSIE.B_SUB_WORK) == MixSIE.B_SUB_WORK && (this.flag & B_ON) == B_ON)
 //			if (serverentitiesmemory.isWorkBypass(serverentitiesmemory.workbytes.RANDOM_LOOK(), this.bypass_int_array))
 			{
 				if (--this.tick <= 0)
@@ -85,13 +87,13 @@ public class SIERandomLook
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 	}
 
 	@Override

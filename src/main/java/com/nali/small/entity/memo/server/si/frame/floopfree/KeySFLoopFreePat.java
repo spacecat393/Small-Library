@@ -38,12 +38,12 @@ public class KeySFLoopFreePat
 	@Override
 	public boolean step()
 	{
-		return (this.siepat.state & 1) == 1;
+		return (this.siepat.flag & SIEPat.B_T_PAT) == SIEPat.B_T_PAT;
 	}
 
 	@Override
 	public void free()
 	{
-		this.siepat.state &= 255-1;
+		this.siepat.flag &= 255 - SIEPat.B_T_PAT;
 	}
 }

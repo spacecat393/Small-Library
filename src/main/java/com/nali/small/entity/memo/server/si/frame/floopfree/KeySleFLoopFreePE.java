@@ -44,13 +44,13 @@ public class KeySleFLoopFreePE
 	@Override
 	public boolean step()
 	{
-		return (this.siepat.state & 1) == 1 || (this.sileeat.state & 1) == 1;
+		return (this.siepat.flag & SIEPat.B_T_PAT) == SIEPat.B_T_PAT || (this.sileeat.flag & SILeEat.B_EAT) == SILeEat.B_EAT;
 	}
 
 	@Override
 	public void free()
 	{
-		this.siepat.state &= 255-1;
-		this.sileeat.state &= 255-1;
+		this.siepat.flag &= 255 - SIEPat.B_T_PAT;
+		this.sileeat.flag &= 255 - SILeEat.B_EAT;
 	}
 }

@@ -3,10 +3,6 @@ package com.nali.small.entity.memo.client.box.mix;
 import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaO;
 import com.nali.da.IBothDaS;
-import com.nali.gui.key.Key;
-import com.nali.gui.key.KeyEdit;
-import com.nali.gui.page.Page;
-import com.nali.list.key.SmallPage;
 import com.nali.render.RenderS;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
@@ -17,7 +13,6 @@ import com.nali.small.entity.memo.client.box.hit.HitOleEat;
 import com.nali.small.entity.memo.client.box.hit.HitOlePat;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
-import com.nali.small.gui.page.entity.me.PageMe;
 import com.nali.small.render.IRenderS;
 import com.nali.system.BothLoader;
 import net.minecraft.entity.Entity;
@@ -41,6 +36,7 @@ public class MixBoxSleInv
 	C extends ClientLe<BD, R, E, I, MC, ?, MR>
 > extends MixBoxE<BD, R, E, I, MC, MR, C>
 {
+	public static EntityLe ENTITYLE;
 	public MixBoxSleInv(C c)
 	{
 		super(c);
@@ -67,27 +63,30 @@ public class MixBoxSleInv
 	{
 		if (entity.isSneaking())
 		{
-			E e = this.c.i.getE();
-			SmallPage.setSmallPage();
+			ENTITYLE = c.i.getE();
+//			E e = this.c.i.getE();
+//			PAGE |= B_OPEN;
 
-			if (Page.PAGE_LIST.size() > 1)
-			{
-				int index = Page.PAGE_LIST.size() - 1;
-				Page.PAGE.set(Page.PAGE_LIST.get(index), Page.KEY_LIST.get(index));
-				Page.PAGE_LIST.remove(index);
-				Page.KEY_LIST.remove(index);
-			}
-
+////			SmallPage.setSmallPage();
+//
+//			if (Page.PAGE_LIST.size() > 1)
+//			{
+//				int index = Page.PAGE_LIST.size() - 1;
+//				Page.PAGE.set(Page.PAGE_LIST.get(index), Page.KEY_LIST.get(index));
+//				Page.PAGE_LIST.remove(index);
+//				Page.KEY_LIST.remove(index);
+//			}
+//
+////			Page.PAGE_LIST.add(Page.PAGE);
+////			Page.KEY_LIST.add(Key.KEY);
+////			Page.PAGE.set(new PageEntity(), new KeySelect());
+//
 //			Page.PAGE_LIST.add(Page.PAGE);
 //			Page.KEY_LIST.add(Key.KEY);
-//			Page.PAGE.set(new PageEntity(), new KeySelect());
-
-			Page.PAGE_LIST.add(Page.PAGE);
-			Page.KEY_LIST.add(Key.KEY);
-//			Page.PAGE.set(new PageEntityMe(e.getEntityId(), e.world.provider.getDimension(), e.getName()), new KeyEdit());
-			Page.PAGE.set(new PageMe((long)e.world.provider.getDimension() << 32 | e.getEntityId(), e.getName()), new KeyEdit());
-
-//			this.c.sendSSI(new byte[1 + 8 + 1], SIEInvOpenInv.ID);
+////			Page.PAGE.set(new PageEntityMe(e.getEntityId(), e.world.provider.getDimension(), e.getName()), new KeyEdit());
+//			Page.PAGE.set(new PageMe((long)e.world.provider.getDimension() << 32 | e.getEntityId(), e.getName()), new KeyEdit());
+//
+////			this.c.sendSSI(new byte[1 + 8 + 1], SIEInvOpenInv.ID);
 			return true;
 		}
 		else

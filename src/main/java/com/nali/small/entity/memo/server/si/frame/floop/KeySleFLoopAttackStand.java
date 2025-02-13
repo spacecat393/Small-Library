@@ -38,6 +38,6 @@ public class KeySleFLoopAttackStand
 	@Override
 	public boolean onUpdate()
 	{
-		return (this.sileattack.flag & 16) == 16 && super.onUpdate();
+		return (this.sileattack.state & SILeAttack.B_ATTACK_POSE) == SILeAttack.B_ATTACK_POSE && super.onUpdate();
 	}
 }

@@ -41,6 +41,6 @@ public class KeySleTLoopAttackWalk
 	@Override
 	public boolean onUpdate()
 	{
-		return (this.sileattack.flag & 16) == 16 && (this.siefindmove.move_x != 0 || this.siefindmove.move_z != 0) && super.onUpdate();
+		return (this.sileattack.state & SILeAttack.B_ATTACK_POSE) == SILeAttack.B_ATTACK_POSE && (this.siefindmove.move_x != 0 || this.siefindmove.move_z != 0) && super.onUpdate();
 	}
 }

@@ -35,7 +35,7 @@ public class KeySFLoopFreeRSePlay
 	@Override
 	public boolean step()
 	{
-		return this.sieplaywithrse.s2 == null ? false : (((SIEPlayWithRSe)this.sieplaywithrse.s2.ms.si_map.get(SIEPlayWithRSe.ID)).state & 2) == 2;
+		return this.sieplaywithrse.s2 == null ? false : (((SIEPlayWithRSe)this.sieplaywithrse.s2.ms.si_map.get(SIEPlayWithRSe.ID)).flag & SIEPlayWithRSe.B_PLAY) == SIEPlayWithRSe.B_PLAY;
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class KeySFLoopFreeRSePlay
 	{
 		if (this.sieplaywithrse.s2 != null)
 		{
-			((SIEPlayWithRSe)this.sieplaywithrse.s2.ms.si_map.get(SIEPlayWithRSe.ID)).state &= 255-2;
+			((SIEPlayWithRSe)this.sieplaywithrse.s2.ms.si_map.get(SIEPlayWithRSe.ID)).flag &= 255 - SIEPlayWithRSe.B_PLAY;
 		}
 	}
 }

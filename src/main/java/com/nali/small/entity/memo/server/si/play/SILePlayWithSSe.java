@@ -61,7 +61,7 @@ public class SILePlayWithSSe
 		E e = this.s.i.getE();
 		if (this.s.isMove(e))
 		{
-			if ((this.s.ms.state & 1) == 1 && (this.state & 1) == 1)
+			if ((this.s.ms.flag & MixSIE.B_MAIN_WORK) == MixSIE.B_MAIN_WORK && (this.flag & B_ON) == B_ON)
 			{
 				E2 e2 = this.s2.i.getE();
 				if (this.s2 != null && this.s.worldserver.getEntityFromUuid(e2.getUniqueID()) == null)
@@ -118,7 +118,7 @@ public class SILePlayWithSSe
 				{
 					if (this.s2 != null && (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(e2, this.silesetlocation.blockpos, this.silesetlocation.far)))
 					{
-						if ((this.state & 2) == 0)
+						if ((this.flag & B_PLAY) == 0)
 						{
 							this.onAdd();
 						}
@@ -152,7 +152,7 @@ public class SILePlayWithSSe
 		Entity entity = this.siearea.out_entity_list.get(index);
 		this.s2 = (S2)ServerE.S_MAP.get(entity.getUniqueID());
 		this.r2 = ((R2)this.s2.ms.si_map.get(SIEPlayWithRSe.ID));
-		return this.r2.s2 == null && (this.r2.state & 1) == 1 && (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(entity, this.silesetlocation.blockpos, this.silesetlocation.far));
+		return this.r2.s2 == null && (this.r2.flag & B_ON) == B_ON && (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(entity, this.silesetlocation.blockpos, this.silesetlocation.far));
 	}
 
 //	public void onFind(int rg)
@@ -178,10 +178,10 @@ public class SILePlayWithSSe
 		E2 e2 = this.s2.i.getE();
 		if (e.getEntityBoundingBox().intersects(e2.getEntityBoundingBox()))
 		{
-			if ((this.r2.state & 1) == 1 && this.r2.s2 == null)
+			if ((this.r2.flag & B_ON) == B_ON && this.r2.s2 == null)
 			{
 				this.r2.s2 = this.s;
-				this.state |= 2;
+				this.flag |= B_PLAY;
 //				this.aieplaywith2.state |= 2+4;
 			}
 			else
@@ -207,18 +207,13 @@ public class SILePlayWithSSe
 //		this.siesit2 = null;
 		this.r2.s2 = null;
 //		this.aieplaywith2.state &= 255-(2+4);
-		this.r2.state &= 255-2;
+		this.r2.flag &= 255 - B_PLAY;
 		this.r2 = null;
 
 		this.s2 = null;
 //		this.state &= 255-(2+4);
-		this.state &= 255-2;
+		this.flag &= 255 - B_PLAY;
 
 		this.tick = 1200 + this.s.i.getE().world.rand.nextInt(1200);
-	}
-
-	@Override
-	public void call()
-	{
 	}
 }

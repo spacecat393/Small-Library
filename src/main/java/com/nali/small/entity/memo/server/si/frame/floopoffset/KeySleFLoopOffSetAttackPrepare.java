@@ -42,6 +42,6 @@ public class KeySleFLoopOffSetAttackPrepare
 	@Override
 	public boolean onUpdate()
 	{
-		return (this.sileattack.flag & 2) == 0 && super.onUpdate() && this.siefindmove.endGoalT();
+		return (this.sileattack.state & SILeAttack.B_PREPARE) == 0 && super.onUpdate() && this.siefindmove.endGoalT();
 	}
 }

@@ -5,6 +5,7 @@ import com.nali.list.entity.si.SIEInvLockInv;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 public class MixSIEInv
 <
@@ -21,11 +22,11 @@ public class MixSIEInv
 		this.aileinvlockinv = (SIEInvLockInv<BD, E, I, S, ?>)this.si_map.get(SIEInvLockInv.ID);
 	}
 
-	public void call(byte id)
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-		if (this.aileinvlockinv.canPass(this.s.ms.entityplayermp))
+		if (this.aileinvlockinv.canPass(entityplayermp))
 		{
-			super.call(id);
+			super.call(entityplayermp, byte_array);
 		}
 	}
 }

@@ -1,9 +1,6 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
-import com.nali.list.network.message.ClientMessage;
-import com.nali.list.network.method.client.CSetGetItem;
-import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.inv.InvE;
 import com.nali.small.entity.memo.IBothEInv;
@@ -11,12 +8,9 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.player.PlayerData;
-import com.nali.system.bytes.ByteReader;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-
-import java.util.UUID;
 
 public class SIEInvGetItem
 <
@@ -34,7 +28,15 @@ public class SIEInvGetItem
 	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
 	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
-	public byte flag;//move_to | remote_xp remote_item can_take_xp can_take_item walk_to_xp walk_to_item
+	public final static byte B_MOVE_TO = 1;
+	public final static byte B_REMOTE_XP = 2;
+	public final static byte B_REMOTE_ITEM = 4;
+	public final static byte B_CAN_TAKE_XP = 8;
+	public final static byte B_CAN_TAKE_ITEM = 16;
+	public final static byte B_WALK_TO_XP = 32;
+	public final static byte B_WALK_TO_ITEM = 64;
+	public final static byte B_GHOST_INV = (byte)128;
+	public byte state;//move_to | remote_xp remote_item can_take_xp can_take_item walk_to_xp walk_to_item
 //	public boolean pickup;
 //	public int item_time_out, xp_time_out;
 
@@ -52,135 +54,134 @@ public class SIEInvGetItem
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
-	public void set()
-	{
-		byte[] byte_array = this.s.ms.byte_array;
-		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
-		float f = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
-
-//		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
-//		byte value = smallsakuratypes.get();
-		UUID player_uuid = this.s.ms.entityplayermp.getUniqueID();
-		byte value = PlayerData.SAKURA_MAP.getOrDefault(player_uuid, (byte)0);
-
-		if (id >= 2)
-		{
-			if (id == 2.1F)
-			{
-				if (f == 1)
-				{
-					if (value >= 1)
-					{
-//						smallsakuratypes.set((byte)(value - 1));
-						PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-						this.flag |= 4;
-					}
-				}
-				else
-				{
-					this.flag &= 255-4;
-				}
-			}
-			else if (id == 2.2F)
-			{
-				if (f == 1)
-				{
-					if (value >= 1)
-					{
-//						smallsakuratypes.set((byte)(value - 1));
-						PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-						this.flag |= 64;
-					}
-				}
-				else
-				{
-					this.flag &= 255-64;
-				}
-			}
-			else if (id == 2.3F)
-			{
-				if (f == 1)
-				{
-					if (value >= 1)
-					{
-//						smallsakuratypes.set((byte)(value - 1));
-						PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-						this.flag |= 16;
-					}
-				}
-				else
-				{
-					this.flag &= 255-16;
-				}
-			}
-		}
-		else if (id >= 1)
-		{
-			if (id == 1.1F)
-			{
-				if (f == 1)
-				{
-					if (value >= 1)
-					{
-//						smallsakuratypes.set((byte)(value - 1));
-						PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-						this.flag |= 2;
-					}
-				}
-				else
-				{
-					this.flag &= 255-2;
-				}
-			}
-			else if (id == 1.2F)
-			{
-				if (f == 1)
-				{
-					if (value >= 1)
-					{
-//						smallsakuratypes.set((byte)(value - 1));
-						PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-						this.flag |= 32;
-					}
-				}
-				else
-				{
-					this.flag &= 255-32;
-				}
-			}
-			else if (id == 1.3F)
-			{
-				if (f == 1)
-				{
-					if (value >= 1)
-					{
-//						smallsakuratypes.set((byte)(value - 1));
-						PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-						this.flag |= 8;
-					}
-				}
-				else
-				{
-					this.flag &= 255-8;
-				}
-			}
-		}
-
-		this.fetch();
-	}
-
-	public void fetch()
-	{
-		byte[] byte_array = new byte[1 + 1];
-		byte_array[0] = CSetGetItem.ID;
-		byte_array[1] = this.flag;
-		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
-	}
+//	public void set()
+//	{
+//		byte[] byte_array = this.s.ms.byte_array;
+//		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
+//		float f = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
+//
+////		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+////		byte value = smallsakuratypes.get();
+//		UUID player_uuid = this.s.ms.entityplayermp.getUniqueID();
+//		byte value = PlayerData.SAKURA_MAP.getOrDefault(player_uuid, (byte)0);
+//
+//		if (id >= 2)
+//		{
+//			if (id == 2.1F)
+//			{
+//				if (f == 1)
+//				{
+//					if (value >= 1)
+//					{
+////						smallsakuratypes.set((byte)(value - 1));
+//						PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//						this.flag |= 4;
+//					}
+//				}
+//				else
+//				{
+//					this.flag &= 255-4;
+//				}
+//			}
+//			else if (id == 2.2F)
+//			{
+//				if (f == 1)
+//				{
+//					if (value >= 1)
+//					{
+////						smallsakuratypes.set((byte)(value - 1));
+//						PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//						this.flag |= 64;
+//					}
+//				}
+//				else
+//				{
+//					this.flag &= 255-64;
+//				}
+//			}
+//			else if (id == 2.3F)
+//			{
+//				if (f == 1)
+//				{
+//					if (value >= 1)
+//					{
+////						smallsakuratypes.set((byte)(value - 1));
+//						PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//						this.flag |= 16;
+//					}
+//				}
+//				else
+//				{
+//					this.flag &= 255-16;
+//				}
+//			}
+//		}
+//		else if (id >= 1)
+//		{
+//			if (id == 1.1F)
+//			{
+//				if (f == 1)
+//				{
+//					if (value >= 1)
+//					{
+////						smallsakuratypes.set((byte)(value - 1));
+//						PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//						this.flag |= 2;
+//					}
+//				}
+//				else
+//				{
+//					this.flag &= 255-2;
+//				}
+//			}
+//			else if (id == 1.2F)
+//			{
+//				if (f == 1)
+//				{
+//					if (value >= 1)
+//					{
+////						smallsakuratypes.set((byte)(value - 1));
+//						PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//						this.flag |= 32;
+//					}
+//				}
+//				else
+//				{
+//					this.flag &= 255-32;
+//				}
+//			}
+//			else if (id == 1.3F)
+//			{
+//				if (f == 1)
+//				{
+//					if (value >= 1)
+//					{
+////						smallsakuratypes.set((byte)(value - 1));
+//						PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//						this.flag |= 8;
+//					}
+//				}
+//				else
+//				{
+//					this.flag &= 255-8;
+//				}
+//			}
+//		}
+//
+//		this.fetch();
+//	}
+//
+//	public void fetch()
+//	{
+//		byte[] byte_array = new byte[1 + 1];
+//		byte_array[0] = CSetGetItem.ID;
+//		byte_array[1] = this.flag;
+//		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
+//	}
 
 	@Override
 	public void onUpdate()
@@ -366,13 +367,13 @@ public class SIEInvGetItem
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.flag;
+		sidata.byte_array[sidata.index++] = this.state;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.flag = sidata.byte_array[sidata.index++];
+		this.state = sidata.byte_array[sidata.index++];
 	}
 
 	@Override

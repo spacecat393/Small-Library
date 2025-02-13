@@ -17,10 +17,10 @@ public class SSI
 		ServerE s = S_MAP.get(ByteReader.getLong(servermessage.data, 1));
 		if (s != null/* && (s.ms.state & 8) == 8*/)
 		{
-			s.ms.set(entityplayermp, servermessage.data);
+//			s.ms.set(entityplayermp, servermessage.data);
 //			s.ms.call(servermessage.data[1 + 16]);
-			s.ms.call(servermessage.data[1 + 8]);
-			s.ms.clear();
+			s.ms.call(entityplayermp, servermessage.data);
+//			s.ms.clear();
 		}
 	}
 }

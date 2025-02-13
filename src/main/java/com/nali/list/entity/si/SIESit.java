@@ -7,6 +7,7 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 public class SIESit
 <
@@ -19,7 +20,10 @@ public class SIESit
 {
 	public static byte ID;
 
-	public byte state;//on t-ready/hard_ready f-ready/soft_ready
+	public final static byte B_ON = 1;
+	public final static byte B_ANIMATE_HARD_READY = 2;
+	public final static byte B_ANIMATE_SOFT_READY = 4;
+	public byte flag;//on t-ready/hard_ready f-ready/soft_ready
 
 	public SIESit(S s)
 	{
@@ -33,17 +37,17 @@ public class SIESit
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-		if ((this.state & 1) == 1)
+		if ((this.flag & B_ON) == B_ON)
 		{
-			this.state |= 4;
-			this.state &= 255-(2+1);
+			this.flag |= B_ANIMATE_SOFT_READY;
+			this.flag &= 255 - (B_ANIMATE_HARD_READY + B_ON);
 		}
 		else
 		{
-			this.state |= 2+1;
-			this.state &= 255-4;
+			this.flag |= B_ANIMATE_HARD_READY + B_ON;
+			this.flag &= 255 - B_ANIMATE_SOFT_READY;
 		}
 //		this.state ^= 1;
 	}
@@ -51,23 +55,23 @@ public class SIESit
 	@Override
 	public void onUpdate()
 	{
-		if ((this.state & 1) == 1)
+		if ((this.flag & B_ON) == B_ON)
 		{
-			this.state |= 1;
-			this.s.ms.state &= 255-1;
+			this.flag |= B_ON;
+			this.s.ms.flag &= 255 - MixSIE.B_MAIN_WORK;
 		}
 	}
 
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -36,7 +37,8 @@ public class SIEWalkTo
 
 	public SIESit<BD, E, I, S, MS> siesit;
 
-	public byte state;
+	public final static byte B_ON = 1;
+	public byte flag = B_ON;
 
 //	public List<Block> block_list = new List<Block>();
 	public List<BlockPos> blockpos_list = new ArrayList();
@@ -56,20 +58,19 @@ public class SIEWalkTo
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
 	@Override
 	public void onUpdate()
 	{
 		E e = this.s.i.getE();
-		if (this.s.isMove(e) && (this.siesit.state & 1) == 1)
+		if (this.s.isMove(e) && (this.siesit.flag & SIESit.B_ON) == 0)
 		{
 	//		if ((this.s.current_work_byte_array[this.s.workbytes.WALK_TO() / 8] >> this.s.workbytes.WALK_TO() % 8 & 1) == 1)
 	//		if ((this.s.work_byte_array[this.num / 8] >> this.num % 8 & 1) == 1)
-			if ((this.state & 1) == 1)
+			if ((this.flag & B_ON) == B_ON)
 			{
 				if (e.ticksExisted % 20 == 0)
 				{
@@ -118,13 +119,13 @@ public class SIEWalkTo
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 	}
 
 	@Override

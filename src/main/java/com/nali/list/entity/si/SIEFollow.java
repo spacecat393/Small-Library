@@ -1,22 +1,16 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
-import com.nali.list.network.message.ClientMessage;
-import com.nali.list.network.method.client.CSetFollow;
-import com.nali.network.NetworkRegistry;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.player.PlayerData;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
-
-import java.util.UUID;
 
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
@@ -39,7 +33,12 @@ public class SIEFollow
 
 	public float max_distance = 196.0F;
 	public float min_distance = 96.0F;
-	public byte flag = 4;//move_to | tp_to walk_to
+
+	public final static byte B_MOVE_TO = 1;
+
+	public final static byte B_TP_TO = 2;
+	public final static byte B_WALK_TO = 4;
+	public byte state = B_WALK_TO;//move_to | tp_to walk_to
 
 	public SIEFollow(S s)
 	{
@@ -55,75 +54,74 @@ public class SIEFollow
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
-	public void set()
-	{
-		byte[] byte_array = this.s.ms.byte_array;
-		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
-		float x = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
-
-//		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
-//		byte value = smallsakuratypes.get();
-		UUID player_uuid = this.s.ms.entityplayermp.getUniqueID();
-		byte value = PlayerData.SAKURA_MAP.getOrDefault(player_uuid, (byte)0);
-
-		if (id == 1.1F)
-		{
-			if (x == 1)
-			{
-				if (value >= 1)
-				{
-//					smallsakuratypes.set((byte)(value - 1));
-					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-					this.flag |= 4;
-				}
-			}
-			else
-			{
-				this.flag &= 255 - 4;
-			}
-		}
-		else if (id == 1.2F)
-		{
-			if (x == 1)
-			{
-				if (value >= 1)
-				{
-//					smallsakuratypes.set((byte)(value - 1));
-					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
-					this.flag |= 2;
-				}
-			}
-			else
-			{
-				this.flag &= 255 - 2;
-			}
-		}
-		else if (id == 2.1F)
-		{
-			this.max_distance = x;
-		}
-		else if (id == 2.2F)
-		{
-			this.min_distance = x;
-		}
-
-		this.fetch();
-	}
-
-	public void fetch()
-	{
-		byte[] byte_array = new byte[1 + 1 + 4 + 4];
-		byte_array[0] = CSetFollow.ID;
-		byte_array[1] = this.flag;
-		ByteWriter.set(byte_array, this.min_distance, 1 + 1);
-		ByteWriter.set(byte_array, this.max_distance, 1 + 1 + 4);
-		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
-	}
+//	public void set()
+//	{
+//		byte[] byte_array = this.s.ms.byte_array;
+//		float id = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1);
+//		float x = ByteReader.getFloat(byte_array, 1 + 8 + 1 + 1 + 4);
+//
+////		SmallSakuraType smallsakuratypes = this.s.ms.entityplayermp.getCapability(SmallSakuraSerializable.SMALLSAKURATYPES_CAPABILITY, null);
+////		byte value = smallsakuratypes.get();
+//		UUID player_uuid = this.s.ms.entityplayermp.getUniqueID();
+//		byte value = PlayerData.SAKURA_MAP.getOrDefault(player_uuid, (byte)0);
+//
+//		if (id == 1.1F)
+//		{
+//			if (x == 1)
+//			{
+//				if (value >= 1)
+//				{
+////					smallsakuratypes.set((byte)(value - 1));
+//					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//					this.flag |= 4;
+//				}
+//			}
+//			else
+//			{
+//				this.flag &= 255 - 4;
+//			}
+//		}
+//		else if (id == 1.2F)
+//		{
+//			if (x == 1)
+//			{
+//				if (value >= 1)
+//				{
+////					smallsakuratypes.set((byte)(value - 1));
+//					PlayerData.SAKURA_MAP.put(player_uuid, (byte)(value - 1));
+//					this.flag |= 2;
+//				}
+//			}
+//			else
+//			{
+//				this.flag &= 255 - 2;
+//			}
+//		}
+//		else if (id == 2.1F)
+//		{
+//			this.max_distance = x;
+//		}
+//		else if (id == 2.2F)
+//		{
+//			this.min_distance = x;
+//		}
+//
+//		this.fetch();
+//	}
+//
+//	public void fetch()
+//	{
+//		byte[] byte_array = new byte[1 + 1 + 4 + 4];
+//		byte_array[0] = CSetFollow.ID;
+//		byte_array[1] = this.flag;
+//		ByteWriter.set(byte_array, this.min_distance, 1 + 1);
+//		ByteWriter.set(byte_array, this.max_distance, 1 + 1 + 4);
+//		NetworkRegistry.I.sendTo(new ClientMessage(byte_array), this.s.ms.entityplayermp);
+//	}
 
 	@Override
 	public void onUpdate()
@@ -140,9 +138,9 @@ public class SIEFollow
 		}
 
 		E e = this.s.i.getE();
-		boolean move_to = (this.flag & 1) == 1;
+		boolean move_to = (this.state & B_MOVE_TO) == B_MOVE_TO;
 		if (owner_entity != null &&
-			(this.s.ms.state & 1) == 1 &&
+			(this.s.ms.flag & MixSIE.B_MAIN_WORK) == MixSIE.B_MAIN_WORK &&
 //			this.s.isWork(this.s.bytele.FOLLOW()) &&
 			(this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(owner_entity, this.silesetlocation.blockpos, this.silesetlocation.far)) &&
 //			(e.getDistanceSq(owner_entity) > this.min_distance || move_to))
@@ -165,7 +163,7 @@ public class SIEFollow
 //				this.s.entitiesaimemory.skinningentitiesmine.breakWork();
 //			}
 
-			this.flag |= 1;
+			this.state |= B_MOVE_TO;
 			if (e.isRiding())
 			{
 				e.dismountRidingEntity();
@@ -175,17 +173,17 @@ public class SIEFollow
 
 //			if ((this.flag & 2) == 2 && step >= this.max_distance)
 //			if ((this.flag & 2) == 2 && e.getDistanceSq(owner_entity) >= this.max_distance)
-			if ((this.flag & 2) == 2 && getDistanceAABBToAABB(e, owner_entity) >= this.max_distance)
+			if ((this.state & B_TP_TO) == B_TP_TO && getDistanceAABBToAABB(e, owner_entity) >= this.max_distance)
 			{
 				this.tryTeleport(owner_entity);
 			}
-			else if ((this.flag & 4) == 4)
+			else if ((this.state & B_WALK_TO) == B_WALK_TO)
 			{
 //				if (step <= getClose(e, owner_entity, 1.0D))
 				if (getDistanceAABBToAABB(e, owner_entity) <= 1.0D)
 				{
 					this.siefindmove.endGoal();
-					this.flag &= 255-1;
+					this.state &= 255 - B_MOVE_TO;
 				}
 				else
 				{
@@ -197,7 +195,7 @@ public class SIEFollow
 		else if (move_to)
 		{
 			this.siefindmove.endGoal();
-			this.flag ^= 1;
+			this.state ^= B_MOVE_TO;
 		}
 
 //		if ((this.flag & 1) == 0)
@@ -209,7 +207,7 @@ public class SIEFollow
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.flag;
+		sidata.byte_array[sidata.index++] = this.state;
 
 		ByteWriter.set(sidata.byte_array, this.min_distance, sidata.index);
 		sidata.index += 4;
@@ -221,7 +219,7 @@ public class SIEFollow
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.flag = sidata.byte_array[sidata.index++];
+		this.state = sidata.byte_array[sidata.index++];
 
 		this.min_distance = ByteReader.getFloat(sidata.byte_array, sidata.index);
 		sidata.index += 4;

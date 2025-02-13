@@ -7,6 +7,7 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 public class SIEPlayWithRSe
 <
@@ -28,7 +29,9 @@ public class SIEPlayWithRSe
 
 	public S2 s2;
 
-	public byte state;//R se> on play
+	public final static byte B_ON = 1;
+	public final static byte B_PLAY = 2;
+	public byte flag = B_ON;//R se> on play
 	//S sle> on should_play -first_playwith-
 
 	public SIEPlayWithRSe(S s)
@@ -40,6 +43,12 @@ public class SIEPlayWithRSe
 	public void init()
 	{
 
+	}
+
+	@Override
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
+	{
+//		this.state |= 2;
 	}
 
 //	@Override
@@ -61,12 +70,6 @@ public class SIEPlayWithRSe
 //	}
 
 	@Override
-	public void call()
-	{
-		this.state |= 2;
-	}
-
-	@Override
 	public void onUpdate()
 	{
 
@@ -75,13 +78,13 @@ public class SIEPlayWithRSe
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 	}
 
 	@Override

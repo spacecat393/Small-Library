@@ -15,6 +15,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -36,7 +37,8 @@ public class SILeLockDMG
 
 	public SIEOwner<BD, E, I, S, MS> sieowner;
 
-	public byte state;//on
+	public final static byte B_ON = 1;
+	public byte flag = B_ON;//on
 
 	public SILeLockDMG(S s)
 	{
@@ -50,7 +52,7 @@ public class SILeLockDMG
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
 //		if ((this.s.serverle_state & 4) == 4)
 //		{
@@ -89,7 +91,7 @@ public class SILeLockDMG
 //		{
 		Entity owner_entity = this.sieowner.getOwner();
 //		if ((this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] >> this.workbytes.LOCK_DAMAGE() % 8 & 1) == 1 && owner_entity instanceof EntityLivingBase)
-		if ((this.state & 1) == 1 && owner_entity instanceof EntityLivingBase)
+		if ((this.flag & B_ON) == B_ON && owner_entity instanceof EntityLivingBase)
 		{
 			by_entitylivingbase = (EntityLivingBase)owner_entity;
 		}
@@ -138,7 +140,7 @@ public class SILeLockDMG
 //		if (!this.world.isRemote)
 //		{
 //		if ((this.main_work_byte_array[this.workbytes.LOCK_DAMAGE() / 8] >> this.workbytes.LOCK_DAMAGE() % 8 & 1) == 1)
-		if ((this.state & 1) == 1)
+		if ((this.flag & B_ON) == B_ON)
 		{
 			Entity owner_entity = this.sieowner.getOwner();
 			if (owner_entity != null && owner_entity.equals(damagesource.getTrueSource()))
@@ -372,13 +374,13 @@ public class SILeLockDMG
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 	}
 
 	@Override

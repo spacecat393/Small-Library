@@ -3,7 +3,6 @@ package com.nali.small.entity.memo.client.box.mix;
 import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaO;
 import com.nali.list.entity.si.SIEPlayWithRSe;
-import com.nali.list.key.SmallPage;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
@@ -29,6 +28,9 @@ public class MixBoxSeRSe
 	C extends ClientE<BD, R, E, I, MC, ?, MR>
 > extends MixBoxE<BD, R, E, I, MC, MR, C>
 {
+	public final static byte B_OPEN = 1;
+	public static byte PAGE;
+
 	public MixBoxSeRSe(C c)
 	{
 		super(c);
@@ -39,7 +41,8 @@ public class MixBoxSeRSe
 	{
 		if (entity.isSneaking())
 		{
-			SmallPage.setSmallPage();
+			PAGE |= B_OPEN;
+//			SmallPage.setSmallPage();
 //			this.c.sendSSI(new byte[1 + 8 + 1], SIEInvOpenInv.ID);
 		}
 		else

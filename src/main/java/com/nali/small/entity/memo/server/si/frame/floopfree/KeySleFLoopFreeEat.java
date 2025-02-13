@@ -40,12 +40,12 @@ public class KeySleFLoopFreeEat
 	@Override
 	public boolean step()
 	{
-		return (this.sileeat.state & 1) == 1;
+		return (this.sileeat.flag & SILeEat.B_EAT) == SILeEat.B_EAT;
 	}
 
 	@Override
 	public void free()
 	{
-		this.sileeat.state &= 255-1;
+		this.sileeat.flag &= 255 - SILeEat.B_EAT;
 	}
 }

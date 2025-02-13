@@ -19,7 +19,7 @@ public class KeySleHeal
 	MS extends MixSIE<BD, E, I, S>
 > extends KeyS<BD, E, I, S, MS>
 {
-	public SIEHeal<BD, E, I, S, MS> sileheal;
+	public SIEHeal<BD, E, I, S, MS> sieheal;
 
 //	public byte rg;
 
@@ -28,20 +28,20 @@ public class KeySleHeal
 		super(s, key_data_index);
 //		rg = rg;
 
-		this.sileheal = (SIEHeal<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEHeal.ID);
+		this.sieheal = (SIEHeal<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEHeal.ID);
 	}
 //
 //	@Override
 //	public void init()
 //	{
 //		super.init();
-//		this.sileheal = (SILeHeal<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeHeal.ID);
+//		this.sieheal = (SILeHeal<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(SILeHeal.ID);
 //	}
 
 	@Override
 	public boolean onUpdate()
 	{
-		if ((this.sileheal.state & 1) == 1)
+		if ((this.sieheal.flag & SIEHeal.B_ON) == SIEHeal.B_ON)
 		{
 			short[] key_short_array = this.siekey.key_short_array;
 			short[] fix_key_short_array = this.s.getFixKeyShortArray();
@@ -50,11 +50,11 @@ public class KeySleHeal
 			byte key_short_index = key_data_byte_array[this.key_data_index];
 			byte fix_key_index0 = key_data_byte_array[this.key_data_index + 1];
 
-			for (int heal_frame : this.sileheal.heal_frame_int_array)
+			for (int heal_frame : this.sieheal.heal_frame_int_array)
 			{
 				if (key_short_array[key_short_index] == heal_frame)
 				{
-					this.sileheal.state |= 4;
+					this.sieheal.flag |= SIEHeal.B_ANIMATE_HEAL;
 					break;
 				}
 			}
@@ -80,11 +80,11 @@ public class KeySleHeal
 //			int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
 //			byte[] frame_byte_array = this.s.getFrameByteArray();
 //			byte frame = frame_byte_array[this.rg];
-//			for (int heal_frame : this.sileheal.heal_frame_int_array)
+//			for (int heal_frame : this.sieheal.heal_frame_int_array)
 //			{
 //				if (this.siekey.frame_int_array[frame] == heal_frame)
 //				{
-//					this.sileheal.state |= 4;
+//					this.sieheal.state |= 4;
 //					break;
 //				}
 //			}

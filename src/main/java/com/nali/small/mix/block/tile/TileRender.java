@@ -1,4 +1,4 @@
-package com.nali.small.tile;
+package com.nali.small.mix.block.tile;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;

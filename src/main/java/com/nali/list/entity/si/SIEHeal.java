@@ -8,6 +8,7 @@ import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 import static com.nali.small.entity.EntityMath.isInArea;
@@ -30,10 +31,14 @@ public class SIEHeal
 	public int[] heal_frame_int_array;
 
 	public int cooldown;
-	public boolean heal = false;
 	public float how_heal = 16.0F;
 	public double minimum_distance = 3.0D;
-	public byte state;//on1 ani2-4
+
+	public final static byte B_ON = 1;
+	public final static byte B_ANIMATE_START = 2;
+	public final static byte B_ANIMATE_HEAL = 4;
+	public final static byte B_WORK = 8;
+	public byte flag = B_ON;//on1 ani2-4
 //	2-4 0
 //	2-4 2
 //	2-4 4
@@ -54,9 +59,8 @@ public class SIEHeal
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
 	@Override
@@ -66,9 +70,10 @@ public class SIEHeal
 		if (this.s.isMove(e))
 		{
 //			if (this.s.isWork(this.s.bytele.HEAL()) && !this.siearea.out_entity_list.isEmpty() && ++this.cooldown >= 200)
-			if ((this.s.ms.state & 1) == 1 && (this.state & 1) == 1)
+			if ((this.s.ms.flag & MixSIE.B_MAIN_WORK) == MixSIE.B_MAIN_WORK && (this.flag & B_ON) == B_ON)
 			{
-				this.heal = true;
+				this.flag |= B_WORK;
+//				this.heal = true;
 	//			double[] far = new double[this.siearea.out_entity_list.size()];
 	//			boolean should_move = false;
 	//			boolean should_move2 = true;
@@ -147,15 +152,15 @@ public class SIEHeal
 					if (getDistanceAABBToAABB(e, entity) <= this.minimum_distance)
 					{
 //						if (this.state == -1)
-						if ((this.state & (2+4)) == 0)
+						if ((this.flag & (B_ANIMATE_START + B_ANIMATE_HEAL)) == 0)
 						{
 //							this.state = 0;
-							this.state |= 2;
-							this.state &= 255-4;
+							this.flag |= B_ANIMATE_START;
+							this.flag &= 255-4;
 						}
 
 //						if (this.state == 1)
-						if ((this.state & (2+4)) == 4)
+						if ((this.flag & (B_ANIMATE_START + B_ANIMATE_HEAL)) == B_ANIMATE_HEAL)
 						{
 							((EntityLivingBase)entity).heal(this.how_heal);
 						}
@@ -193,11 +198,11 @@ public class SIEHeal
 	//			}
 
 //				if (this.state == 1)
-				if ((this.state & (2+4)) == 4)
+				if ((this.flag & (B_ANIMATE_START + B_ANIMATE_HEAL)) == B_ANIMATE_HEAL)
 				{
 					this.cooldown = 0;
 //					this.state = -1;
-					this.state &= 255-(2+4);
+					this.flag &= 255 - (B_ANIMATE_START + B_ANIMATE_HEAL);
 				}
 	//			if (!should_move && should_move2)
 	//			{
@@ -206,13 +211,13 @@ public class SIEHeal
 			}
 			else
 			{
-				if (this.heal)
+				if ((this.flag & B_WORK) == B_WORK)
 				{
 					this.cooldown = 0;
 //					this.state = -1;
-					this.state &= 255-(2+4);
+					this.flag &= 255 - (B_ANIMATE_START + B_ANIMATE_HEAL + B_WORK);
 					this.siefindmove.endGoal();
-					this.heal = false;
+//					this.flag ^= B_WORK;
 				}
 
 //				this.s.current_work_byte_array[this.s.bytele.HEAL() / 8] &= (byte)(255 - Math.pow(2, this.s.bytele.HEAL() % 8));//0
@@ -223,13 +228,13 @@ public class SIEHeal
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 	}
 
 	@Override

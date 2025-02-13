@@ -7,6 +7,7 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 
 public class SIELookTo
@@ -23,7 +24,8 @@ public class SIELookTo
 	public SIEArea<BD, E, I, S, MS> siearea;
 	public SIELook<BD, E, I, S, MS> sielook;
 
-	public byte state = 1;//on
+	public final static byte B_ON = 1;
+	public byte flag = 1;//on
 	public Entity entity;
 	public BlockPos blockpos;
 	public int tick;
@@ -42,9 +44,8 @@ public class SIELookTo
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class SIELookTo
 		E e = this.s.i.getE();
 		if (this.s.isMove(e))
 		{
-			if ((this.s.ms.state & 2) == 2 && (this.state & 1) == 1)
+			if ((this.s.ms.flag & MixSIE.B_SUB_WORK) == MixSIE.B_SUB_WORK && (this.flag & B_ON) == B_ON)
 			{
 				double max_far = Double.MAX_VALUE;
 	//			Entity current_entity = null;
@@ -122,13 +123,13 @@ public class SIELookTo
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 	}
 
 	@Override

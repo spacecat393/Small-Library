@@ -38,6 +38,6 @@ public class KeySFLoopSit
 	@Override
 	public boolean onUpdate()
 	{
-		return (this.siesit.state & 1) == 1 && super.onUpdate();
+		return (this.siesit.flag & SIESit.B_ON) == SIESit.B_ON && super.onUpdate();
 	}
 }

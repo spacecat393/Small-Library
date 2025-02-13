@@ -56,7 +56,7 @@ public class KeySleAttack
 			{
 				if (key_short_array[key_short_index] == attack_frame)
 				{
-					this.sileattack.flag |= 4;
+					this.sileattack.state |= SILeAttack.B_HIT;
 					break;
 				}
 			}
@@ -79,7 +79,7 @@ public class KeySleAttack
 
 	public boolean step()
 	{
-		return (this.sileattack.flag & 2) == 2;
+		return (this.sileattack.state & SILeAttack.B_PREPARE) == SILeAttack.B_PREPARE;
 	}
 
 	public byte getFixKeyIndex(byte[] key_data_byte_array)

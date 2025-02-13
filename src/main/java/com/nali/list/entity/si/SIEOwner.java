@@ -9,6 +9,7 @@ import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import java.util.UUID;
 
@@ -37,9 +38,9 @@ public class SIEOwner
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-		this.uuid = this.s.ms.entityplayermp.getUniqueID();
+//		this.uuid = this.s.ms.entityplayermp.getUniqueID();
 	}
 
 	@Override

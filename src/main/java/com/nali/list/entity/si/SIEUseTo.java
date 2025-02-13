@@ -7,6 +7,7 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 public class SIEUseTo
 <
@@ -19,7 +20,8 @@ public class SIEUseTo
 {
 	public static byte ID;
 
-	public byte state;//on
+	public final static byte B_ON = 1;
+	public byte flag = B_ON;//on
 
 	public SIEUseTo(S s)
 	{
@@ -29,31 +31,28 @@ public class SIEUseTo
 	@Override
 	public void init()
 	{
-
 	}
 
 	@Override
-	public void call()
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-
 	}
 
 	@Override
 	public void onUpdate()
 	{
-
 	}
 
 	@Override
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
-		this.state = sidata.byte_array[sidata.index++];
+		this.flag = sidata.byte_array[sidata.index++];
 	}
 
 	@Override

@@ -27,8 +27,15 @@ public class MixSIE
 
 	public S s;
 	public Map<Byte, SI/*<SD, BD, E, I, S, ?>*/> si_map = new HashMap();
-	public byte state = (byte)255-(4+8);//main_work sub_work init !load_chunk! !ai-lock0! !read_file0! ?map ?regen
 
+	public final static byte B_MAIN_WORK = 1;
+	public final static byte B_SUB_WORK = 2;
+	public final static byte B_INIT = 4;
+	public final static byte B_LOAD_CHUNK = 8;
+	public final static byte B_LOCK_NET = 16;
+	public byte flag = (byte)255 - (B_INIT + B_LOAD_CHUNK + B_LOCK_NET);
+
+//	public int entityplayermp_id;
 	public EntityPlayerMP entityplayermp;
 	public byte[] byte_array;
 
@@ -116,7 +123,7 @@ public class MixSIE
 
 	public void writeFile(SIData sidata)
 	{
-		sidata.byte_array[sidata.index++] = this.state;
+		sidata.byte_array[sidata.index++] = this.flag;
 
 		for (byte b : this.s.i.getSI())
 		{
@@ -126,7 +133,7 @@ public class MixSIE
 
 	public void readFile(SIData sidata)
 	{
-		this.state = (byte)(sidata.byte_array[sidata.index++] & 255/*-8*/);
+		this.flag = (byte)((sidata.byte_array[sidata.index++] & 255/* - MixSIE.B_LOAD_CHUNK*/) - B_LOCK_NET);
 
 		for (byte b : this.s.i.getSI())
 		{
@@ -150,25 +157,29 @@ public class MixSIE
 			this.si_map.get(b).onUpdate();
 		}
 
-		this.state = (byte)255;
+		this.flag |= B_MAIN_WORK + B_SUB_WORK;
 	}
 
-	public void set(EntityPlayerMP entityplayermp, byte[] byte_array)
+//	public void set(EntityPlayerMP entityplayermp, byte[] byte_array)
+//	{
+//		if ((this.flag & B_LOCK_NET) == 0)
+//		{
+//			this.flag |= B_LOCK_NET;
+//			this.entityplayermp = entityplayermp;
+//			this.byte_array = byte_array;
+//		}
+//	}
+
+	public void call(EntityPlayerMP entityplayermp, byte[] byte_array)
 	{
-		this.entityplayermp = entityplayermp;
-		this.byte_array = byte_array;
+		this.si_map.get(byte_array[1 + 8]).call(entityplayermp, byte_array);
 	}
 
-	public void call(byte id)
-	{
-		this.si_map.get(id).call();
-	}
-
-	public void clear()
-	{
-		this.entityplayermp = null;
-		this.byte_array = null;
-	}
+//	public void clear()
+//	{
+//		this.entityplayermp = null;
+//		this.byte_array = null;
+//	}
 //	{
 //		this.ms.aie_list.get().num;
 //		this.main_work_byte_array[this.workbytes.FOLLOW() / 8] ^= (byte)Math.pow(2, this.workbytes.FOLLOW() % 8);

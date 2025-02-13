@@ -48,14 +48,14 @@ public class KeySleFLoopFreePSrE
 	@Override
 	public boolean step()
 	{
-		return (this.siepat.state & 1) == 1 || (this.siesit.state & 4) == 4 || (this.sileeat.state & 1+2) != 0;
+		return (this.siepat.flag & SIEPat.B_T_PAT) == SIEPat.B_T_PAT || (this.siesit.flag & SIESit.B_ANIMATE_SOFT_READY) == SIESit.B_ANIMATE_SOFT_READY || (this.sileeat.flag & SILeEat.B_EAT + SILeEat.B_DRINK) != 0;
 	}
 
 	@Override
 	public void free()
 	{
-		this.siepat.state &= 255-1;
-		this.siesit.state &= 255-4;
-		this.sileeat.state &= 255-(1+2);
+		this.siepat.flag &= 255 - SIEPat.B_T_PAT;
+		this.siesit.flag &= 255 - SIESit.B_ANIMATE_SOFT_READY;
+		this.sileeat.flag &= 255 - (SILeEat.B_EAT + SILeEat.B_DRINK);
 	}
 }

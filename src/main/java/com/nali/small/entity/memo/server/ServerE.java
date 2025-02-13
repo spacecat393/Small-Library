@@ -217,9 +217,9 @@ public abstract class ServerE
 	@Override
 	public void readFile()
 	{
-		if ((this.ms.state & 4) == 0)
+		if ((this.ms.flag & MixSIE.B_INIT) == 0)
 		{
-			this.ms.state |= 4;
+			this.ms.flag |= MixSIE.B_INIT;
 
 			Entity e = this.i.getE();
 			File file = new File(this.worldserver.getSaveHandler().getWorldDirectory(), "nali/entity/" + e.world.provider.getDimension() + "/data/" + e.getUniqueID());

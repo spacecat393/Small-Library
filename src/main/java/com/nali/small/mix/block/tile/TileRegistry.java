@@ -1,4 +1,4 @@
-package com.nali.small.tile;
+package com.nali.small.mix.block.tile;
 
 import com.nali.system.Reflect;
 import com.nali.system.StringReader;
@@ -11,7 +11,6 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Comparator;
 import java.util.List;
 
 import static com.nali.Nali.error;
@@ -20,10 +19,10 @@ import static com.nali.Nali.error;
 public class TileRegistry
 {
 	public static List<Class> TILES_CLASS_LIST = Reflect.getClasses("com.nali.list.block.tile");
-	static
-	{
-		TILES_CLASS_LIST.sort(Comparator.comparing(Class::getName));
-	}
+//	static
+//	{
+//		TILES_CLASS_LIST.sort(Comparator.comparing(Class::getName));
+//	}
 
 	//	@SubscribeEvent
 	public static void onBlockRegister(RegistryEvent.Register<Block> event)
@@ -49,7 +48,7 @@ public class TileRegistry
 	public static void onModelRegistryEvent(ModelRegistryEvent event)
 	{
 		List<Class> tilerender_class_list = Reflect.getClasses("com.nali.list.block.tile.render");
-		tilerender_class_list.sort(Comparator.comparing(Class::getName));
+//		tilerender_class_list.sort(Comparator.comparing(Class::getName));
 
 		for (int i = 0; i < TILES_CLASS_LIST.size(); ++i)
 		{
