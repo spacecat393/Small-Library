@@ -33,7 +33,7 @@ public class MixSIE
 	public final static byte B_INIT = 4;
 	public final static byte B_LOAD_CHUNK = 8;
 	public final static byte B_LOCK_NET = 16;
-	public byte flag = (byte)255 - (B_INIT + B_LOAD_CHUNK + B_LOCK_NET);
+	public byte flag = (byte)255 - (B_INIT/* + B_LOAD_CHUNK*/ + B_LOCK_NET);
 
 //	public int entityplayermp_id;
 	public EntityPlayerMP entityplayermp;
@@ -133,7 +133,7 @@ public class MixSIE
 
 	public void readFile(SIData sidata)
 	{
-		this.flag = (byte)((sidata.byte_array[sidata.index++] & 255/* - MixSIE.B_LOAD_CHUNK*/) - B_LOCK_NET);
+		this.flag = (byte)(sidata.byte_array[sidata.index++] & 255 - B_LOCK_NET/* - B_LOAD_CHUNK*/);
 
 		for (byte b : this.s.i.getSI())
 		{

@@ -16,7 +16,8 @@
 		"MixinCommandSummon",
 		"MixinInventoryCrafting",
 		"MixinItemMonsterPlacer",
-		"MixinWorldProvider"
+		"MixinWorldProvider",
+		"MixinWorldServer"
 	],
 	"client": [
 		"IMixinLayerArmorBase",

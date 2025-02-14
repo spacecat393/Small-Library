@@ -1,7 +1,6 @@
 package com.nali.list.entity.si;
 
 import com.mojang.authlib.GameProfile;
-import com.nali.Nali;
 import com.nali.da.IBothDaE;
 import com.nali.da.IBothDaS;
 import com.nali.da.IBothDaSe;
@@ -118,7 +117,6 @@ public class SILeEat
 			worldserver.spawnEntity(new EntityXPOrb(worldserver, e.posX, e.posY, e.posZ, 10));
 			this.time += itemfood.getHealAmount(itemstack) + itemfood.getSaturationModifier(itemstack);
 			e.heal(this.time);
-			itemstack.shrink(1);
 
 //						Vec3d view_vec3d = skinningentities.getLookVec().scale(0.25F);
 			e.playSound(SoundEvents.ENTITY_GENERIC_EAT, e.getSoundVolume(), e.getSoundPitch());
@@ -158,6 +156,7 @@ public class SILeEat
 //			ByteWriter.set(byte_array, ByteReader.getFloat(a_byte_array, 1 + 16 + 1 + 4 + 4), 1 + 4 + 4);
 //			ByteWriter.set(byte_array, Item.getIdFromItem(itemfood), 1 + 4 + 4 + 4);
 //			NetworkRegistry.I.sendToAll(new ClientMessage(byte_array));
+			itemstack.shrink(1);
 		}
 	}
 

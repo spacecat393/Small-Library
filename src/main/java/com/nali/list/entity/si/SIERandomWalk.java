@@ -30,6 +30,7 @@ public class SIERandomWalk
 	public int tick;
 
 	public final static byte B_ON = 1;
+
 	public final static byte B_WORK = 2;
 	public byte flag = B_ON;//on walk
 

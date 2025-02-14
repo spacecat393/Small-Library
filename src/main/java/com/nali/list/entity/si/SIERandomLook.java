@@ -26,7 +26,7 @@ public class SIERandomLook
 
 	public int tick;
 	public final static byte B_ON = 1;
-	public final static byte B_LOOK = 2;
+//	public final static byte B_LOOK = 2;
 	public byte flag = B_ON;//on look
 //	public double x, y, z;
 //	public byte[] bypass_int_array = {e.bothentitiesmemory.workbytes.SIT(), e.bothentitiesmemory.workbytes.PROTECT()};

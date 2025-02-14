@@ -19,6 +19,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -45,6 +46,7 @@ public abstract class ServerE
 	public MS ms;
 
 	public WorldServer worldserver;
+	public Chunk chunk;
 
 //	public UUID uuid;
 	public float scale;
