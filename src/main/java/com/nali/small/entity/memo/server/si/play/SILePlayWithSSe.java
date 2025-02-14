@@ -150,7 +150,8 @@ public class SILePlayWithSSe
 	public boolean shouldAdd(int index)
 	{
 		Entity entity = this.siearea.out_entity_list.get(index);
-		this.s2 = (S2)ServerE.S_MAP.get(entity.getUniqueID());
+//		this.s2 = (S2)ServerE.S_MAP.get(entity.getUniqueID());
+		this.s2 = (S2)MixSIE.MS_MAP.get(entity.getUniqueID()).s;
 		this.r2 = ((R2)this.s2.ms.si_map.get(SIEPlayWithRSe.ID));
 		return this.r2.s2 == null && (this.r2.flag & B_ON) == B_ON && (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(entity, this.silesetlocation.blockpos, this.silesetlocation.far));
 	}

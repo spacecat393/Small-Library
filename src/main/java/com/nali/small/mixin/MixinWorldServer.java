@@ -16,13 +16,16 @@ public abstract class MixinWorldServer
 	@Inject(method = "tick", at = @At("HEAD"))
 	public void nali_small_tick(CallbackInfo ci)
 	{
-		for (ServerE s : ServerE.S_MAP.values())
+//		for (ServerE s : ServerE.S_MAP.values())
+		for (MixSIE ms : MixSIE.MS_MAP.values())
 		{
-			if ((s.ms.flag & MixSIE.B_LOAD_CHUNK) == MixSIE.B_LOAD_CHUNK)
+			if ((ms.flag & MixSIE.B_LOAD_CHUNK) == MixSIE.B_LOAD_CHUNK)
 			{
+				ServerE s = ms.s;
 				Chunk chunk = s.worldserver.getChunk(s.i.getE().getPosition());
 				if (s.chunk != chunk)
 				{
+//					Nali.warn("chunk");
 					ChunkLoader.updateChunk(s);
 					s.chunk = chunk;
 				}

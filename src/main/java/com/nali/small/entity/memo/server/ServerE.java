@@ -26,7 +26,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Map;
 
 import static com.nali.Nali.error;
 import static com.nali.Nali.warn;
@@ -40,7 +39,7 @@ public abstract class ServerE
 > implements IBothE<E>
 {
 //	public static Map<UUID, ServerE> S_MAP;
-	public static Map<Long, ServerE> S_MAP;
+//	public static Map<Long, ServerE> S_MAP;
 
 	public I i;
 	public MS ms;
@@ -73,6 +72,10 @@ public abstract class ServerE
 //			}
 //		}
 //	});
+//	public static ServerE getS(long id)
+//	{
+//		return S_MAP.get(id).ms.get();
+//	}
 
 	public ServerE(I i)
 	{
@@ -231,7 +234,8 @@ public abstract class ServerE
 //			warn("S_MAP " + S_MAP);
 //			warn("e " + e);
 //			warn("this " + this);
-			S_MAP.put((long)e.world.provider.getDimension() << 32 | e.getEntityId(), this);
+//			S_MAP.put((long)e.world.provider.getDimension() << 32 | e.getEntityId(), this);
+			MixSIE.MS_MAP.put((long)e.world.provider.getDimension() << 32 | e.getEntityId(), this.ms);
 
 			try
 			{
@@ -345,7 +349,8 @@ public abstract class ServerE
 //		UUID uuid = this.i.getE().getUniqueID();
 		SIEFindMove.SIEFINDMOVE_MAP.remove(key);
 		ChunkLoader.removeChunk(key, e.getUniqueID(), this.worldserver.getSaveHandler().getWorldDirectory());
-		S_MAP.remove(key);
+//		S_MAP.remove(key);
+		MixSIE.MS_MAP.remove(key);
 	}
 
 //	public Entity getOwner()

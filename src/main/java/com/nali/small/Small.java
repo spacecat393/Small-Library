@@ -3,8 +3,7 @@ package com.nali.small;
 import com.nali.small.chunk.ChunkCallBack;
 import com.nali.small.chunk.ChunkData;
 import com.nali.small.entity.EntityRegistry;
-import com.nali.small.entity.memo.server.ServerE;
-import com.nali.small.entity.player.PlayerData;
+import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.mix.block.tile.TileRegistry;
 import com.nali.small.world.WorldRegistry;
 import com.nali.system.bytes.ByteReader;
@@ -93,7 +92,8 @@ public class Small
 	{
 //		SDaInvSelect.RUNNABLE_LIST = new ArrayList();
 
-		ServerE.S_MAP = new HashMap();
+//		ServerE.S_MAP = new HashMap();
+		MixSIE.MS_MAP = new HashMap();
 		ChunkCallBack.set();
 	}
 
@@ -109,7 +109,7 @@ public class Small
 		file.mkdirs();
 
 		//s0-playerdata
-		PlayerData.read(world_file);
+//		PlayerData.read(world_file);
 		//e0-playerdata
 
 		File[] d_file_array = file.listFiles();
@@ -158,11 +158,13 @@ public class Small
 	{
 		File world_file = DimensionManager.getCurrentSaveRootDirectory();
 		//s0-playerdata
-		PlayerData.write(world_file);
+//		PlayerData.write(world_file);
 		//e0-playerdata
 
-		List<ServerE> s_list = new ArrayList(ServerE.S_MAP.values());
-		if (!s_list.isEmpty())
+//		List<ServerE> s_list = new ArrayList(ServerE.S_MAP.values());
+		List<MixSIE> ms_list = new ArrayList(MixSIE.MS_MAP.values());
+//		if (!s_list.isEmpty())
+		if (!ms_list.isEmpty())
 		{
 //			File[] d_file_array = new File(s_list.get(0).worldserver.getSaveHandler().getWorldDirectory(), "nali/entity").listFiles();
 			File[] d_file_array = new File(world_file, "nali/entity").listFiles();
@@ -192,13 +194,16 @@ public class Small
 				}
 			}
 
-			for (ServerE servere : s_list)
+//			for (ServerE servere : s_list)
+			for (MixSIE ms : ms_list)
 			{
-				servere.writeFile();
+//				servere.writeFile();
+				ms.s.writeFile();
 			}
 		}
 
-		ServerE.S_MAP = null;
+//		ServerE.S_MAP = null;
+		MixSIE.MS_MAP = null;
 		ChunkCallBack.free();
 
 //		SDaInvSelect.RUNNABLE_LIST = null;

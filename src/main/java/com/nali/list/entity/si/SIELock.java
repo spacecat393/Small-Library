@@ -5,17 +5,17 @@ import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.MixSIEInv;
+import com.nali.small.entity.memo.server.si.MixSIELock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 
-public class SIEInvLockInv
+public class SIELock
 <
 	BD extends IBothDaE,
 	E extends Entity,
 	I extends IMixE<BD, E>,
 	S extends ServerE<BD, E, I, MS>,
-	MS extends MixSIEInv<BD, E, I, S>
+	MS extends MixSIELock<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
 	public static byte ID;
@@ -23,9 +23,9 @@ public class SIEInvLockInv
 	public SIEOwner<BD, E, I, S, MS> sieowner;
 
 	public final static byte B_ON = 1;
-	public byte flag;//on
+	public byte flag = B_ON;//on
 
-	public SIEInvLockInv(S s)
+	public SIELock(S s)
 	{
 		super(s);
 	}

@@ -24,6 +24,7 @@ public class MixSIE
 >
 {
 	public static List<Class> SI_CLASS_LIST;
+	public static Map<Long, MixSIE> MS_MAP;
 
 	public S s;
 	public Map<Byte, SI/*<SD, BD, E, I, S, ?>*/> si_map = new HashMap();
@@ -73,6 +74,11 @@ public class MixSIE
 				error(e);
 			}
 		}
+	}
+
+	public SI getSI(EntityPlayerMP entityplayermp, byte id)
+	{
+		return this.si_map.get(id);
 	}
 
 	public int size()
