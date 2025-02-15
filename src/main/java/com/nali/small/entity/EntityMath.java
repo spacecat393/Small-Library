@@ -2,7 +2,6 @@ package com.nali.small.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -21,24 +20,36 @@ public class EntityMath
 //		return (width + height + minimum_distance) * (width + height + minimum_distance);
 //	}
 
-	public static boolean isInArea(double x, double y, double z, BlockPos blockpos, double minimum_distance)
-	{
-		double d0 = x - blockpos.getX() + 0.5;
-		double d1 = y - blockpos.getY() + 0.5;
-		double d2 = z - blockpos.getZ() + 0.5;
-		return d0 * d0 + d1 * d1 + d2 * d2 < minimum_distance;
-	}
+//	public static boolean isInArea(Entity entity, double xb, double yb, double zb, double minimum_distance)
+//	{
+//		return isInArea(entity.posX, entity.posY, entity.posZ, xb, yb, zb, minimum_distance);
+//	}
+//
+//	public static boolean isInArea(double xa, double ya, double za, double xb, double yb, double zb, double minimum_distance)
+//	{
+//		double d0 = xa - xb;
+//		double d1 = ya - yb;
+//		double d2 = za - zb;
+//		return d0 * d0 + d1 * d1 + d2 * d2 < minimum_distance;
+//	}
+//	public static boolean isInArea(double x, double y, double z, BlockPos blockpos, double minimum_distance)
+//	{
+//		double d0 = x - blockpos.getX() + 0.5;
+//		double d1 = y - blockpos.getY() + 0.5;
+//		double d2 = z - blockpos.getZ() + 0.5;
+//		return d0 * d0 + d1 * d1 + d2 * d2 < minimum_distance;
+//	}
 
-	public static boolean isInArea(BlockPos main_blockpos, BlockPos blockpos, double minimum_distance)
-	{
-		return main_blockpos.distanceSq(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5) < minimum_distance;
-	}
-
-	public static boolean isInArea(Entity entity, BlockPos blockpos, double minimum_distance)
-	{
-		return entity.getDistanceSq(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5) < minimum_distance;
-//		return entity.getDistanceSq(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5) < getClose(entity, minimum_distance);
-	}
+//	public static boolean isInArea(BlockPos main_blockpos, BlockPos blockpos, double minimum_distance)
+//	{
+//		return main_blockpos.distanceSq(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5) < minimum_distance;
+//	}
+//
+//	public static boolean isInArea(Entity entity, BlockPos blockpos, double minimum_distance)
+//	{
+//		return entity.getDistanceSq(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5) < minimum_distance;
+////		return entity.getDistanceSq(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5) < getClose(entity, minimum_distance);
+//	}
 
 	public static double getDistanceAABBToAABB(Entity entity_a, Entity entity_b)
 	{

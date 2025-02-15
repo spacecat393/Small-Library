@@ -22,7 +22,7 @@ public class SIEMineTo
 {
 	public static byte ID;
 
-	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIELocation<BD, E, I, S, MS> sielocation;
 	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 	public SIELook<BD, E, I, S, MS> sielook;
 
@@ -43,7 +43,7 @@ public class SIEMineTo
 	@Override
 	public void init()
 	{
-		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.sielocation = (SIELocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELocation.ID);
 		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
 //		if (this.sielook == null)
@@ -63,7 +63,7 @@ public class SIEMineTo
 //		E e = this.s.i.getE();
 //		if (this.s.isMove(e))
 //		{
-//			if ((this.flag & B_ON) == B_ON)
+//			if ((this.flag & B_WORK) == B_WORK)
 //			{
 //	//			if (e.isEntityInsideOpaqueBlock())
 //				if (this.s.worldserver.getBlockState(e.getPosition().up()).getMaterial().isSolid())
@@ -93,7 +93,7 @@ public class SIEMineTo
 //					if (e.getDistanceSq(this.blockpos) > 8.0D)
 //					{
 //	//					BlockPos blockpos = this.blockpos;
-//						if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(this.blockpos, this.silesetlocation.blockpos, this.silesetlocation.far))
+//						if (this.sielocation.far == 0 || this.sielocation.blockpos == null || isInArea(this.blockpos, this.sielocation.blockpos, this.sielocation.far))
 //						{
 //							this.siefindmove.setGoal(this.blockpos.getX() + 0.5D, this.blockpos.getY() + 0.5D, this.blockpos.getZ() + 0.5D);
 //						}

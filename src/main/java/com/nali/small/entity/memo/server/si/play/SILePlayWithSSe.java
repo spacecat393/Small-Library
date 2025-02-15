@@ -3,8 +3,8 @@ package com.nali.small.entity.memo.server.si.play;
 import com.nali.da.IBothDaE;
 import com.nali.list.entity.si.SIEArea;
 import com.nali.list.entity.si.SIEFindMove;
+import com.nali.list.entity.si.SIELocation;
 import com.nali.list.entity.si.SIEPlayWithRSe;
-import com.nali.list.entity.si.SIESetLocation;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.server.ServerE;
@@ -13,7 +13,6 @@ import com.nali.small.entity.memo.server.si.MixSIE;
 import net.minecraft.entity.Entity;
 
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
-import static com.nali.small.entity.EntityMath.isInArea;
 
 public class SILePlayWithSSe
 <
@@ -34,7 +33,7 @@ public class SILePlayWithSSe
 
 	public SIEArea<BD, E, I, S, MS> siearea;
 	public SIEFindMove<BD, E, I, S, MS> siefindmove;
-	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIELocation<BD, E, I, S, MS> sielocation;
 
 //	public AIESit<SD2, BD2, E2, I2, S2, A2> siesit2;
 	public R2 r2;
@@ -52,7 +51,7 @@ public class SILePlayWithSSe
 	{
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
 		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
-		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.sielocation = (SIELocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELocation.ID);
 	}
 
 	@Override
@@ -116,7 +115,7 @@ public class SILePlayWithSSe
 				}
 				else
 				{
-					if (this.s2 != null && (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(e2, this.silesetlocation.blockpos, this.silesetlocation.far)))
+					if (this.s2 != null && this.sielocation.in(e2))
 					{
 						if ((this.flag & B_PLAY) == 0)
 						{
@@ -153,7 +152,7 @@ public class SILePlayWithSSe
 //		this.s2 = (S2)ServerE.S_MAP.get(entity.getUniqueID());
 		this.s2 = (S2)MixSIE.MS_MAP.get(entity.getUniqueID()).s;
 		this.r2 = ((R2)this.s2.ms.si_map.get(SIEPlayWithRSe.ID));
-		return this.r2.s2 == null && (this.r2.flag & B_ON) == B_ON && (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(entity, this.silesetlocation.blockpos, this.silesetlocation.far));
+		return this.r2.s2 == null && (this.r2.flag & B_ON) == B_ON && this.sielocation.in(entity);
 	}
 
 //	public void onFind(int rg)
@@ -194,7 +193,7 @@ public class SILePlayWithSSe
 		}
 		else
 		{
-			if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(e2, this.silesetlocation.blockpos, this.silesetlocation.far))
+			if (this.sielocation.in(e2))
 			{
 				this.siefindmove.setGoal(e2.posX, e2.posY, e2.posZ);
 			}

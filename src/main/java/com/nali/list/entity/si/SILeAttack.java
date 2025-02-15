@@ -16,7 +16,6 @@ import net.minecraft.util.EnumHand;
 import java.util.List;
 
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
-import static com.nali.small.entity.EntityMath.isInArea;
 
 public class SILeAttack
 <
@@ -30,7 +29,7 @@ public class SILeAttack
 	public static byte ID;
 
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIELocation<BD, E, I, S, MS> sielocation;
 	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 	public SIELook<BD, E, I, S, MS> sielook;
 	public SIECareOwner<BD, E, I, S, MS> siecareowner;
@@ -60,7 +59,7 @@ public class SILeAttack
 	public void init()
 	{
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.sielocation = (SIELocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELocation.ID);
 		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
 		this.siecareowner = (SIECareOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SIECareOwner.ID);
@@ -181,7 +180,7 @@ public class SILeAttack
 					target_entity = this.attackAndFind(this.siearea.all_entity_list);
 				}
 
-				if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(target_entity, this.silesetlocation.blockpos, this.silesetlocation.far))
+				if (this.sielocation.in(target_entity))
 				{
 					this.state |= B_PREPARE;
 
@@ -268,8 +267,7 @@ public class SILeAttack
 				max_dis = far;
 			}
 //			far[rg++] = e.getDistanceSq(entity);
-			if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null ||
-				isInArea(entity, this.silesetlocation.blockpos, this.silesetlocation.far))
+			if (this.sielocation.in(entity))
 			{
 //				if ((this.flag & 8) == 8 || (e.canEntityBeSeen(entity) && isTooClose(e, entity, this.minimum_distance)))
 				if ((this.state & B_REMOTE) == B_REMOTE || (e.canEntityBeSeen(entity) && getDistanceAABBToAABB(e, entity) <= this.minimum_distance))

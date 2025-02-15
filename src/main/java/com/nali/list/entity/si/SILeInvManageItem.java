@@ -3,6 +3,7 @@ package com.nali.list.entity.si;
 import com.nali.da.IBothDaE;
 import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixE;
+import com.nali.small.entity.inv.InvE;
 import com.nali.small.entity.inv.InvLe;
 import com.nali.small.entity.memo.server.ServerLeInv;
 import com.nali.small.entity.memo.server.si.MixSIE;
@@ -14,8 +15,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-
-import static com.nali.list.entity.si.SIEInvGetItem.isSameItemSameTags;
 
 public class SILeInvManageItem
 <
@@ -29,7 +28,7 @@ public class SILeInvManageItem
 {
 	public static byte ID;
 
-	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIELocation<BD, E, I, S, MS> sielocation;
 	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public BlockPos in_blockpos, out_blockpos;
@@ -51,7 +50,7 @@ public class SILeInvManageItem
 	@Override
 	public void init()
 	{
-		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.sielocation = (SIELocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELocation.ID);
 		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 
@@ -317,7 +316,7 @@ public class SILeInvManageItem
 //					else if ((this.s.ms.state & 1) == 1)
 //					{
 ////							this.siefindmove.setBreakGoal(this.in_blockpos.getX(), this.in_blockpos.getY(), this.in_blockpos.getZ());
-//						if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(this.in_blockpos, this.silesetlocation.blockpos, this.silesetlocation.far))
+//						if (this.sielocation.far == 0 || this.sielocation.blockpos == null || isInArea(this.in_blockpos, this.sielocation.blockpos, this.sielocation.far))
 //						{
 //							this.siefindmove.setGoal(this.in_blockpos.getX(), this.in_blockpos.getY(), this.in_blockpos.getZ());
 //						}
@@ -381,7 +380,7 @@ public class SILeInvManageItem
 //					else if ((this.s.ms.state & 1) == 1)
 //					{
 ////							this.siefindmove.setBreakGoal(this.out_blockpos.getX(), this.out_blockpos.getY(), this.out_blockpos.getZ());
-//						if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(this.out_blockpos, this.silesetlocation.blockpos, this.silesetlocation.far))
+//						if (this.sielocation.far == 0 || this.sielocation.blockpos == null || isInArea(this.out_blockpos, this.sielocation.blockpos, this.sielocation.far))
 //						{
 //							this.siefindmove.setGoal(this.out_blockpos.getX(), this.out_blockpos.getY(), this.out_blockpos.getZ());
 //						}
@@ -470,7 +469,7 @@ public class SILeInvManageItem
 
 			int max_count = inv_itemstack.getCount() + e_count;
 			int count = max_count - max_stack;
-			if (isSameItemSameTags(inv_itemstack, itemstack))
+			if (InvE.isSameItemSameTags(inv_itemstack, itemstack))
 			{
 				if (count <= 0)
 				{

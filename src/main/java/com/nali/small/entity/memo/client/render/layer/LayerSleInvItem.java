@@ -1,28 +1,26 @@
 //package com.nali.small.entity.memo.client.render.layer;
 //
 //import com.mojang.authlib.GameProfile;
-//import com.nali.da.IBothDaNe;
-//import com.nali.da.IBothDaSn;
-//import com.nali.da.client.IClientDaS;
+//import com.nali.da.IBothDaE;
+//import com.nali.da.IBothDaO;
+//import com.nali.da.IBothDaS;
 //import com.nali.render.RenderS;
 //import com.nali.small.entity.IMixE;
-//import com.nali.small.entity.IMixESoundDa;
+//import com.nali.small.entity.IMixESInv;
 //import com.nali.small.entity.inv.InvLe;
 //import com.nali.small.entity.memo.IBothEInv;
-//import com.nali.small.entity.memo.client.ClientLe;
-//import com.nali.small.entity.memo.client.IClientERsInv;
-//import com.nali.small.entity.memo.client.box.mix.MixBoxSleInv;
+//import com.nali.small.entity.memo.client.ClientE;
+//import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 //import com.nali.small.entity.memo.client.ci.MixCIE;
 //import com.nali.small.entity.memo.client.render.FRenderFle;
-//import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
+//import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 //import com.nali.small.mixin.IMixinLayerArmorBase;
-//import com.nali.sound.ISoundDaLe;
 //import net.minecraft.client.Minecraft;
 //import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 //import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
 //import net.minecraft.client.renderer.entity.layers.LayerElytra;
 //import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
-//import net.minecraft.entity.EntityLivingBase;
+//import net.minecraft.entity.Entity;
 //import net.minecraft.init.Blocks;
 //import net.minecraft.init.Items;
 //import net.minecraft.inventory.EntityEquipmentSlot;
@@ -42,17 +40,15 @@
 //public class LayerSleInvItem
 //<
 //	IE extends InvLe,
-//	RC extends IClientDaS,
-//	R extends RenderS<BD, RC>,
-//	SD extends ISoundDaLe,
-//	BD extends IBothDaNe & IBothDaSn,
-//	E extends EntityLivingBase,
-//	I extends IMixE<BD, E> & IMixESoundDa<SD>,
-//	MC extends MixCIE<RC, R, BD, E, I, MB, MR, C>,
-//	MR extends MixRenderSe<RC, R, BD, E, I, MC, MB, C>,
-//	MB extends MixBoxSleInv<RC, R, SD, BD, E, I, MC, MR, C>,
-//	C extends ClientLe<RC, R, SD, BD, E, I, MC, MB, MR> & IClientERsInv & IBothEInv<IE>
-//> extends LayerE<RC, R, BD, E, I, MC, MR, MB, C>
+//	BD extends IBothDaE & IBothDaO & IBothDaS,
+//	R extends RenderS<BD>,
+//	E extends Entity,
+//	I extends IMixE<BD, E> & IMixESInv,
+//	MC extends MixCIE<BD, R, E, I, MB, MR, C>,
+//	MR extends MixRenderE<BD, R, E, I, MC, MB, C>,
+//	MB extends MixBoxE<BD, R, E, I, MC, MR, C>,
+//	C extends ClientE<BD, R, E, I, MC, MB, MR> & IBothEInv<IE>
+//> extends LayerE<BD, R, E, I, MC, MR, MB, C>
 //{
 //	public static FRenderFle FRENDERFLE = new FRenderFle();
 //	public static LayerBipedArmor LAYERBIPEDARMOR = new LayerBipedArmor(FRENDERFLE);
@@ -92,9 +88,11 @@
 ////		}
 //
 //		this.rg = 0;
-//		int[] iv_int_array = this.c.getIVIntArray();
-//		this.renderHeldItem(e.getHeldItemMainhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, iv_int_array[2], iv_int_array[3]);
-//		this.renderHeldItem(e.getHeldItemOffhand(), ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, iv_int_array[0], iv_int_array[1]);
+//		IE ie = this.c.getIE();
+//		int[] iv_int_array = this.c.i.getIVIntArray();
+//
+//		this.renderHeldItem(ie.hands_itemstack_nonnulllist.get(0), ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, iv_int_array[2], iv_int_array[3]);
+//		this.renderHeldItem(ie.hands_itemstack_nonnulllist.get(1), ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, iv_int_array[0], iv_int_array[1]);
 //
 //		this.renderArmor(EntityEquipmentSlot.HEAD, iv_int_array[4], iv_int_array[5], partialTicks);
 //		this.renderArmor(EntityEquipmentSlot.CHEST, iv_int_array[6], iv_int_array[7], partialTicks);
@@ -277,7 +275,7 @@
 //	{
 //		GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
 //		int i = -(rg - 3) * 3;
-//		float[] transform_float_array = this.c.getTransformFloatArray();
+//		float[] transform_float_array = this.c.i.getTransformFloatArray();
 //		GL11.glTranslatef(transform_float_array[i], transform_float_array[i + 1], transform_float_array[i + 2]);
 //	}
 //}

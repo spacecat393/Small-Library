@@ -11,7 +11,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
-import static com.nali.small.entity.EntityMath.isInArea;
 
 public class SIEHeal
 <
@@ -25,7 +24,7 @@ public class SIEHeal
 	public static byte ID;
 
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIELocation<BD, E, I, S, MS> sielocation;
 	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public int[] heal_frame_int_array;
@@ -54,7 +53,7 @@ public class SIEHeal
 	public void init()
 	{
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.sielocation = (SIELocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELocation.ID);
 		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 
@@ -169,7 +168,7 @@ public class SIEHeal
 					}
 					else
 					{
-						if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(entity, this.silesetlocation.blockpos, this.silesetlocation.far))
+						if (this.sielocation.in(entity))
 						{
 							this.siefindmove.setGoal(entity.posX, entity.posY, entity.posZ);
 						}

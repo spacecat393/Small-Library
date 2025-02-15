@@ -11,8 +11,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 
 import java.util.Random;
 
-import static com.nali.small.entity.EntityMath.isInArea;
-
 public class SIERandomWalk
 <
 	BD extends IBothDaE,
@@ -24,7 +22,7 @@ public class SIERandomWalk
 {
 	public static byte ID;
 
-	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIELocation<BD, E, I, S, MS> sielocation;
 	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public int tick;
@@ -42,7 +40,7 @@ public class SIERandomWalk
 	@Override
 	public void init()
 	{
-		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.sielocation = (SIELocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELocation.ID);
 		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 
@@ -78,7 +76,7 @@ public class SIERandomWalk
 					y = e.posY + random.nextInt(5) - random.nextInt(5),
 					z = e.posZ + random.nextInt(5) - random.nextInt(5);
 
-					if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(x, y, z, this.silesetlocation.blockpos, this.silesetlocation.far))
+					if (this.sielocation.in(x, y, z))
 					{
 						this.siefindmove.setGoal(x, y, z);
 						this.flag |= B_WORK;

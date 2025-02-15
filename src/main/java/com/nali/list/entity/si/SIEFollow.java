@@ -13,7 +13,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
-import static com.nali.small.entity.EntityMath.isInArea;
 import static com.nali.small.entity.memo.server.si.path.PathMath.PATH_BYTE_ARRAY;
 
 public class SIEFollow
@@ -28,7 +27,7 @@ public class SIEFollow
 	public static byte ID;
 
 	public SIEOwner<BD, E, I, S, MS> sieowner;
-	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIELocation<BD, E, I, S, MS> sielocation;
 	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 
 	public float max_distance = 196.0F;
@@ -49,7 +48,7 @@ public class SIEFollow
 	public void init()
 	{
 		this.sieowner = (SIEOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEOwner.ID);
-		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.sielocation = (SIELocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELocation.ID);
 		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 	}
 
@@ -142,7 +141,7 @@ public class SIEFollow
 		if (owner_entity != null &&
 			(this.s.ms.flag & MixSIE.B_MAIN_WORK) == MixSIE.B_MAIN_WORK &&
 //			this.s.isWork(this.s.bytele.FOLLOW()) &&
-			(this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(owner_entity, this.silesetlocation.blockpos, this.silesetlocation.far)) &&
+			this.sielocation.in(owner_entity) &&
 //			(e.getDistanceSq(owner_entity) > this.min_distance || move_to))
 			(getDistanceAABBToAABB(e, owner_entity) > this.min_distance || move_to))
 		{

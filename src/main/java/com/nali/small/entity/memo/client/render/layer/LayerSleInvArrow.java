@@ -1,19 +1,17 @@
 //package com.nali.small.entity.memo.client.render.layer;
 //
-//import com.nali.da.IBothDaNe;
-//import com.nali.da.IBothDaSn;
-//import com.nali.da.client.IClientDaS;
+//import com.nali.da.IBothDaE;
+//import com.nali.da.IBothDaO;
+//import com.nali.da.IBothDaS;
 //import com.nali.render.RenderS;
 //import com.nali.small.entity.IMixE;
-//import com.nali.small.entity.IMixESoundDa;
-//import com.nali.small.entity.memo.client.ClientLe;
-//import com.nali.small.entity.memo.client.IClientERsInv;
-//import com.nali.small.entity.memo.client.box.mix.MixBoxSleInv;
+//import com.nali.small.entity.IMixESInv;
+//import com.nali.small.entity.memo.client.ClientE;
+//import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 //import com.nali.small.entity.memo.client.ci.MixCIE;
 //import com.nali.small.entity.memo.client.render.FRenderE;
-//import com.nali.small.entity.memo.client.render.mix.MixRenderSe;
-//import com.nali.sound.ISoundDaLe;
-//import com.nali.system.opengl.memo.client.MemoA2;
+//import com.nali.small.entity.memo.client.render.mix.MixRenderE;
+//import com.nali.system.opengl.memo.MemoA2;
 //import net.minecraft.entity.Entity;
 //import net.minecraft.entity.EntityLivingBase;
 //import net.minecraft.entity.projectile.EntityTippedArrow;
@@ -31,17 +29,15 @@
 //@SideOnly(Side.CLIENT)
 //public class LayerSleInvArrow
 //<
-//	RC extends IClientDaS,
-//	R extends RenderS<BD, RC>,
-//	SD extends ISoundDaLe,
-//	BD extends IBothDaNe & IBothDaSn,
+//	BD extends IBothDaE & IBothDaO & IBothDaS,
+//	R extends RenderS<BD>,
 //	E extends EntityLivingBase,
-//	I extends IMixE<BD, E> & IMixESoundDa<SD>,
-//	MC extends MixCIE<RC, R, BD, E, I, MB, MR, C>,
-//	MR extends MixRenderSe<RC, R, BD, E, I, MC, MB, C>,
-//	MB extends MixBoxSleInv<RC, R, SD, BD, E, I, MC, MR, C>,
-//	C extends ClientLe<RC, R, SD, BD, E, I, MC, MB, MR> & IClientERsInv
-//> extends LayerE<RC, R, BD, E, I, MC, MR, MB, C>
+//	I extends IMixE<BD, E> & IMixESInv,
+//	MC extends MixCIE<BD, R, E, I, MB, MR, C>,
+//	MR extends MixRenderE<BD, R, E, I, MC, MB, C>,
+//	MB extends MixBoxE<BD, R, E, I, MC, MR, C>,
+//	C extends ClientE<BD, R, E, I, MC, MB, MR>
+//> extends LayerE<BD, R, E, I, MC, MR, MB, C>
 //{
 //	public List<int[]> index_int_array_list = new ArrayList();
 //	public List<float[]> float_array_list = new ArrayList();

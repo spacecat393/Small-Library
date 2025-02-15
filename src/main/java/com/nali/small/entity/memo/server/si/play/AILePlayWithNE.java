@@ -23,7 +23,7 @@
 //
 //	public AIEArea<SD, BD, E, I, S, MS> siearea;
 //	public AILeFindMove<SD, BD, E, I, S, MS> siefindmove;
-//	public AILeSetLocation<SD, BD, E, I, S, MS> silesetlocation;
+//	public AILeSetLocation<SD, BD, E, I, S, MS> sielocation;
 //
 //	public Class[] class_array;
 //	public int tick;
@@ -40,7 +40,7 @@
 //	{
 //		this.siearea = (AIEArea<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(AIEArea.ID);
 //		this.siefindmove = (AILeFindMove<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(AILeFindMove.ID);
-//		this.silesetlocation = (AILeSetLocation<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(AILeSetLocation.ID);
+//		this.sielocation = (AILeSetLocation<SD, BD, E, I, S, MS>)this.s.ms.si_map.get(AILeSetLocation.ID);
 //	}
 //
 //	@Override
@@ -117,7 +117,7 @@
 //				}
 //				else
 //				{
-//					if (this.e2 != null && (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(this.e2, this.silesetlocation.blockpos, this.silesetlocation.far)))
+//					if (this.e2 != null && (this.sielocation.far == 0 || this.sielocation.blockpos == null || isInArea(this.e2, this.sielocation.blockpos, this.sielocation.far)))
 //					{
 ////						play = true;
 ////						if (!this.should_play)
@@ -168,7 +168,7 @@
 ////		playwith_skinningentities = (EntityLeInv)entity;
 ////		if (((ServerE)playwith_skinningentities.bothentitiesmemory).skinningentities == null &&
 ////				e.getDataManager().get(this.s.i.getFloatDataParameterArray()[0]) <= playwith_skinningentities.getDataManager().get(playwith_skinningentities.getFloatDataParameterArray()[0]) &&
-////				(this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(playwith_skinningentities, this.silesetlocation.blockpos, this.silesetlocation.far)))
+////				(this.sielocation.far == 0 || this.sielocation.blockpos == null || isInArea(playwith_skinningentities, this.sielocation.blockpos, this.sielocation.far)))
 ////		{
 ////			break;
 ////		}
@@ -197,7 +197,7 @@
 ////		}
 ////		else
 ////		{
-////			if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(this.e2, this.silesetlocation.blockpos, this.silesetlocation.far))
+////			if (this.sielocation.far == 0 || this.sielocation.blockpos == null || isInArea(this.e2, this.sielocation.blockpos, this.sielocation.far))
 ////			{
 ////				this.s.entitiesaimemory.skinningentitiesfindmove.setGoal(this.e2.posX, this.e2.posY, this.e2.posZ);
 ////			}

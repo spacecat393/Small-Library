@@ -10,11 +10,11 @@
 		"IMixinEntityCreeper",
 		"IMixinEntityLivingBase",
 		"IMixinEntityPlayer",
+		"IMixinEntityXPOrb",
 		"IMixinItemFood",
 		"IMixinWorldServer",
 		"MixinBaseAttribute",
 		"MixinCommandSummon",
-		"MixinInventoryCrafting",
 		"MixinItemMonsterPlacer",
 		"MixinWorldProvider",
 		"MixinWorldServer"

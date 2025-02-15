@@ -24,7 +24,6 @@ import java.util.UUID;
 
 import static com.nali.Nali.error;
 import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
-import static com.nali.small.entity.EntityMath.isInArea;
 
 public class SIERevive
 <
@@ -39,7 +38,7 @@ public class SIERevive
 
 	public SIEOwner<BD, E, I, S, MS> sieowner;
 	public SIEArea<BD, E, I, S, MS> siearea;
-	public SIESetLocation<BD, E, I, S, MS> silesetlocation;
+	public SIELocation<BD, E, I, S, MS> sielocation;
 	public SIEFindMove<BD, E, I, S, MS> siefindmove;
 	public SIELook<BD, E, I, S, MS> sielook;
 
@@ -69,7 +68,7 @@ public class SIERevive
 	{
 		this.sieowner = (SIEOwner<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEOwner.ID);
 		this.siearea = (SIEArea<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEArea.ID);
-		this.silesetlocation = (SIESetLocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIESetLocation.ID);
+		this.sielocation = (SIELocation<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELocation.ID);
 		this.siefindmove = (SIEFindMove<BD, E, I, S, MS>)this.s.ms.si_map.get(SIEFindMove.ID);
 		this.sielook = (SIELook<BD, E, I, S, MS>)this.s.ms.si_map.get(SIELook.ID);
 	}
@@ -233,7 +232,7 @@ public class SIERevive
 							}
 							else
 							{
-								if (this.silesetlocation.far == 0 || this.silesetlocation.blockpos == null || isInArea(this.entity, this.silesetlocation.blockpos, this.silesetlocation.far))
+								if (this.sielocation.in(this.entity))
 								{
 									this.siefindmove.setGoal(this.entity.posX, this.entity.posY, this.entity.posZ);
 								}
