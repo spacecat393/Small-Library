@@ -203,6 +203,7 @@ public class SIEInvGet
 				to_entityxporb = this.siearea.xp_entity_list.get(this.siearea.xp_entity_list.size() - 1);
 				//!need le
 //				xp_itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, e);
+				xp_itemstack = this.getXPItemStack(e);
 				should_get_xp = !xp_itemstack.isEmpty()/* && itemstack.isItemStackDamageable()*/ && xp_itemstack.getItemDamage() > 0/* && EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, itemstack) > 0*/;
 			}
 
@@ -269,7 +270,8 @@ public class SIEInvGet
 							{
 	//							Nali.LOGGER.info("XP TAKE");
 								//!need le
-//								e.onItemPickup(entityxporb, 1);
+								IE ie = this.s.getIE();
+								ie.pick(e, entityxporb, 1);
 
 								if (!xp_itemstack.isEmpty() && xp_itemstack.isItemDamaged())
 								{
@@ -385,6 +387,11 @@ public class SIEInvGet
 	public int size()
 	{
 		return 1;
+	}
+
+	public ItemStack getXPItemStack(E e)
+	{
+		return ItemStack.EMPTY;
 	}
 
 //	public static int roundAverage(float value)

@@ -6,6 +6,9 @@ import com.nali.list.entity.si.SIEPlayWithRSe;
 import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
+import com.nali.small.entity.memo.client.box.hit.HitE;
+import com.nali.small.entity.memo.client.box.hit.HitEPage;
+import com.nali.small.entity.memo.client.box.hit.HitEPlayWithRSe;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import net.minecraft.entity.Entity;
@@ -37,20 +40,27 @@ public class MixBoxSeRSe
 	}
 
 	@Override
-	public boolean isOn(Entity entity, Vec3d stand_vec3d, Vec3d look_vec3d)
+	public HitE isOn(Entity entity, Vec3d stand_vec3d, Vec3d look_vec3d, boolean work)
 	{
 		if (entity.isSneaking())
 		{
-			PAGE |= B_OPEN;
+			if (work)
+			{
+				PAGE |= B_OPEN;
+			}
+			return HitEPage.HITEPAGE;
 //			SmallPage.setSmallPage();
 //			this.c.sendSSI(new byte[1 + 8 + 1], SIEInvOpenInv.ID);
 		}
 		else
 		{
-			this.c.sendSSI(new byte[1 + 8 + 1], SIEPlayWithRSe.ID);
+			if (work)
+			{
+				this.c.sendSSI(new byte[1 + 8 + 1], SIEPlayWithRSe.ID);
+			}
+			return HitEPlayWithRSe.HITEPLAYWITHRSE;
 		}
-
-		return true;
+//		return null;
 	}
 
 	@Override

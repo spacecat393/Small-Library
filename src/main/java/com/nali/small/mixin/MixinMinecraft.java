@@ -116,10 +116,12 @@ public abstract class MixinMinecraft
 //					}
 //					//e0-test
 
-					if (c.mb.isOn(entityplayersp, player_vec3d, look_vec3d))
-					{
-						Minecraft.getMinecraft().player.swingArm(EnumHand.MAIN_HAND);
-					}
+//					if (c.mb.isOn(entityplayersp, player_vec3d, look_vec3d))
+//					{
+//						Minecraft.getMinecraft().player.swingArm(EnumHand.MAIN_HAND);
+//					}
+					c.mb.isOn(entityplayersp, player_vec3d, look_vec3d, true);
+					Minecraft.getMinecraft().player.swingArm(EnumHand.MAIN_HAND);
 				}
 			}
 		}

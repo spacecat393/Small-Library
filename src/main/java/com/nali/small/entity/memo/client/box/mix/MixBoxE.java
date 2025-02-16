@@ -8,6 +8,7 @@ import com.nali.small.entity.EntityMath;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.box.hit.HitE;
+import com.nali.small.entity.memo.client.box.hit.HitESit;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import net.minecraft.client.Minecraft;
@@ -75,7 +76,7 @@ public abstract class MixBoxE
 //		NetworkRegistry.I.sendToServer(new ServerMessage(byte_array));
 //	}
 
-	public boolean isOn(Entity entity, Vec3d stand_vec3d, Vec3d look_vec3d)
+	public HitE isOn(Entity entity, Vec3d stand_vec3d, Vec3d look_vec3d, boolean work)
 	{
 //		Vec3d player_vec3d = player_entity.getPositionEyes(1.0f);
 //		Vec3d look_vec3d = player_entity.getLookVec();
@@ -101,19 +102,36 @@ public abstract class MixBoxE
 
 		if (index != -1)
 		{
-			this.hite_list.get(index).run(entity);
-			this.last_time = Minecraft.getSystemTime();
-			return true;
+			HitE hite = this.hite_list.get(index);
+			if (work)
+			{
+				hite.run(entity);
+				this.last_time = Minecraft.getSystemTime();
+			}
+//			return true;
+			return hite;
 		}
 
 		long new_time = Minecraft.getSystemTime();
 		if (new_time - this.last_time >= 1000)//1sec
 		{
-			this.c.sendSSI(new byte[1 + 8 + 1], SIESit.ID);
-			this.last_time = new_time;
+			if (work)
+			{
+				this.c.sendSSI(new byte[1 + 8 + 1], SIESit.ID);
+				this.last_time = new_time;
+			}
+
+			return HitESit.HITESIT;
+		}
+
+		if (index != -1)
+		{
+			HitE hite = this.hite_list.get(index);
+			return hite;
 		}
 //		this.c.sendPacketUUID(AIESit.ID);
-		return true;
+//		return true;
+		return null;
 	}
 
 	public abstract List<AxisAlignedBB> getAxisAlignedBBList();
