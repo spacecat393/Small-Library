@@ -429,11 +429,11 @@ public abstract class ServerE
 //	{
 //	}
 
-//	@SideOnly(Side.CLIENT)
-	@Override
-	public void onReadNBT()
-	{
-	}
+////	@SideOnly(Side.CLIENT)
+//	@Override
+//	public void onReadNBT()
+//	{
+//	}
 
 //	@SideOnly(Side.CLIENT)
 //	@Override

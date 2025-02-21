@@ -1,6 +1,6 @@
 package com.nali.small.entity;
 
-import com.nali.small.SmallConfig;
+import com.nali.NaliConfig;
 import com.nali.small.entity.memo.IBothLe;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -8,6 +8,9 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
@@ -21,8 +24,13 @@ import javax.annotation.Nullable;
 
 public abstract class EntityLe extends EntityLivingBase implements IMixE
 {
-	public float rotation_yaw_head;
-	public float prev_rotation_yaw_head;
+	public static DataParameter<ItemStack> MOUTH_ITEMSTACK_DATAPARAMETER = EntityDataManager.createKey(EntityLe.class, DataSerializers.ITEM_STACK);
+
+	public float
+		rotation_yaw_body,
+		prev_rotation_yaw_body,
+		prev_rotation_yaw,
+		prev_rotation_pitch;
 
 	public EntityLe(World world)
 	{
@@ -157,6 +165,8 @@ public abstract class EntityLe extends EntityLivingBase implements IMixE
 	{
 		super.entityInit();
 		this.EentityInit();
+//		this.getB().entityInit();
+		this.dataManager.register(MOUTH_ITEMSTACK_DATAPARAMETER, ItemStack.EMPTY);
 	}
 
 	//	@Override
@@ -167,14 +177,14 @@ public abstract class EntityLe extends EntityLivingBase implements IMixE
 //		this.getB().writeEntityToNBT(nbttagcompound);
 //	}
 //
-	@Override
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound)
-	{
-		this.getB().onReadNBT();
-//		super.readEntityFromNBT(nbttagcompound);
-//		this.EreadEntityFromNBT(nbttagcompound);
-//		this.getB().readEntityFromNBT(nbttagcompound);
-	}
+//	@Override
+//	public void readEntityFromNBT(NBTTagCompound nbttagcompound)
+//	{
+//		this.getB().onReadNBT();
+////		super.readEntityFromNBT(nbttagcompound);
+////		this.EreadEntityFromNBT(nbttagcompound);
+////		this.getB().readEntityFromNBT(nbttagcompound);
+//	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbttagcompound)
@@ -259,7 +269,7 @@ public abstract class EntityLe extends EntityLivingBase implements IMixE
 	public boolean canBeCollidedWith()
 	{
 //		return true;
-		return !SmallConfig.NEED_EXTRA;
+		return !NaliConfig.NEED_EXTRA;
 	}
 
 //	@Override
@@ -289,4 +299,42 @@ public abstract class EntityLe extends EntityLivingBase implements IMixE
 	}
 
 	public abstract IBothLe getB();
+
+	//s0-inv
+	@Override
+	public void damageArmor(float damage)
+	{
+		this.getB().damageArmor(damage);
+	}
+
+	@Override
+	public Iterable<ItemStack> getHeldEquipment()
+	{
+		return this.getB().getHeldEquipment();
+	}
+
+	@Override
+	public Iterable<ItemStack> getArmorInventoryList()
+	{
+		return this.getB().getArmorInventoryList();
+	}
+
+	@Override
+	public ItemStack getItemStackFromSlot(EntityEquipmentSlot entityequipmentslot)
+	{
+		return this.getB().getItemStackFromSlot(entityequipmentslot);
+	}
+
+	@Override
+	public void setItemStackToSlot(EntityEquipmentSlot entityequipmentslot, ItemStack itemstack)
+	{
+		this.getB().setItemStackToSlot(entityequipmentslot, itemstack);
+	}
+	//e0-inv
+
+	@Override
+	public Entity getE()
+	{
+		return this;
+	}
 }

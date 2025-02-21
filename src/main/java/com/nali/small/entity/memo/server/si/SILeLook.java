@@ -29,9 +29,9 @@ public class SILeLook
 //		//need support other yaw later
 ////		e.rotationPitch = EntityMath.normalize(e.rotationPitch, 180.0F);
 //		e.rotationPitch = ((e.rotationPitch + 180) % 360 + 360) % 360 - 180;
-////		float difference = e.rotation_yaw_head - e.rotationYaw;
+////		float difference = e.rotation_yaw_body - e.rotationYaw;
 //
-////		float new_difference = (e.rotation_yaw_head + 360) % 360 - (e.rotationYaw + 360) % 360;
+////		float new_difference = (e.rotation_yaw_body + 360) % 360 - (e.rotationYaw + 360) % 360;
 ////		if (Math.abs(new_difference) < Math.abs(difference))
 ////		{
 ////			difference = ((new_difference + 180) % 360 + 360) % 360 - 180;
@@ -45,15 +45,15 @@ public class SILeLook
 ////			difference = -45.0F;
 ////		}
 //
-////		e.rotation_yaw_head = EntityMath.normalize(e.rotationYaw + difference, 360.0F);
+////		e.rotation_yaw_body = EntityMath.normalize(e.rotationYaw + difference, 360.0F);
 ////		e.rotationYaw = EntityMath.normalize(e.rotationYaw, 360.0F);
-////		e.rotation_yaw_head = ((e.rotationYaw + difference + 180) % 360 + 360) % 360 - 180;
-//		e.rotation_yaw_head = ((e.rotationYaw + 180) % 360 + 360) % 360 - 180;
-//		e.rotationYaw = e.rotation_yaw_head;
+////		e.rotation_yaw_body = ((e.rotationYaw + difference + 180) % 360 + 360) % 360 - 180;
+//		e.rotation_yaw_body = ((e.rotationYaw + 180) % 360 + 360) % 360 - 180;
+//		e.rotationYaw = e.rotation_yaw_body;
 
-//		e.rotation_yaw_head = e.rotationYaw;
+//		e.rotation_yaw_body = e.rotationYaw;
 
-		float yaw = e.rotationYaw - e.rotation_yaw_head;
+		float yaw = e.rotationYaw - e.rotation_yaw_body;
 		float delta = ((yaw + 180) % 360 + 360) % 360 - 180;
 		if (delta > 180)
 		{
@@ -67,10 +67,10 @@ public class SILeLook
 		if (delta < -35 || delta > 35)
 		{
 			delta -= 35 * Math.signum(delta);
-			e.rotation_yaw_head += delta;
+			e.rotation_yaw_body += delta;
 		}
 
-		int rotation_yaw_head_int = Float.floatToIntBits(e.rotation_yaw_head);
+		int rotation_yaw_head_int = Float.floatToIntBits(e.rotation_yaw_body);
 		I i = this.s.i;
 		EntityDataManager entitydatamanager = i.getE().getDataManager();
 		DataParameter<Byte>[] byte_dataparameter_array = i.getByteDataParameterArray();

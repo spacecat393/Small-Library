@@ -36,11 +36,11 @@ public class CIESound
 		super(c);
 	}
 
-	@Override
-	public void init()
-	{
-
-	}
+//	@Override
+//	public void init()
+//	{
+//
+//	}
 
 	@Override
 	public void call()
@@ -56,9 +56,9 @@ public class CIESound
 		this.c.getSound().set((float)e.posX, (float)e.posY, (float)e.posZ/*, this.c.mr.head_rot, this.c.mr.head_pitch*/);
 	}
 
-	@Override
-	public void onReadNBT()
-	{
-
-	}
+//	@Override
+//	public void onReadNBT()
+//	{
+//
+//	}
 }

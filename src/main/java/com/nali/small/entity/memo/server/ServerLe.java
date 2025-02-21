@@ -1,26 +1,31 @@
 package com.nali.small.entity.memo.server;
 
 import com.nali.da.IBothDaE;
+import com.nali.list.entity.si.SIEInv;
 import com.nali.list.entity.si.SILeLockDMG;
 import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.IBothLe;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SIData;
+import com.nali.small.entity.memo.server.si.SILeInv;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
 import net.minecraft.entity.Entity;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 
 public abstract class ServerLe
 <
-//	SD extends ISoundDaLe,
 	BD extends IBothDaE,
 	E extends EntityLe,
-	I extends IMixE<BD, E>/* & IMixESoundDa<SD>*/,
+	I extends IMixE<BD, E>,
 	MS extends MixSIE<BD, E, I, ?>
 > extends ServerE<BD, E, I, MS> implements IBothLe<E>
 {
+//	public static DataParameter<ItemStack> MOUTH_ITEMSTACK_DATAPARAMETER;
 //	public WorkEBodyYaw workebodyyaw;
 //	public byte serverle_state;//attackEntityAsMob attackEntityFrom attackEntityAsMob_trigger attackEntityFrom_trigger
 //	public float fix_yaw_head;
@@ -28,14 +33,18 @@ public abstract class ServerLe
 //	public Entity attack_entity_as_mob_entity;
 //	public DamageSource attack_entity_from_damagesource;
 //	public AIEOwner<SD, BD, E, I, ?, MS> sieowner;
-//	public AILeLockDMG<SD, BD, E, I, ?, MS> ailelockdmg;
+	public SILeLockDMG<BD, E, I, ?, MS> silelockdmg;
+	public SILeInv<BD, E, I, ?, MS> sileinv;
 
 	public ServerLe(I i)
 	{
 		super(i);
-//		this.workebodyyaw = new WorkEBodyYaw();
-//		this.sieowner = (AIEOwner<SD, BD, E, I, ?, MS>)this.ms.si_map.get(AIEOwner.ID);
-//		this.ailelockdmg = (AILeLockDMG<SD, BD, E, I, ?, MS>)this.ms.si_map.get(AILeLockDMG.ID);
+	}
+
+	public void init()
+	{
+		this.sileinv = (SILeInv<BD, E, I, ?, MS>)this.ms.si_map.get(SIEInv.ID);
+		this.silelockdmg = (SILeLockDMG<BD, E, I, ?, MS>)this.ms.si_map.get(SILeLockDMG.ID);
 	}
 
 //	@Override
@@ -61,19 +70,19 @@ public abstract class ServerLe
 ////		++e.rotationYaw;
 ////		if (this.fix_yaw_head != 0)
 ////		{
-////			this.rotation_yaw_head = this.fix_yaw_head;
+////			this.rotation_yaw_body = this.fix_yaw_head;
 ////			e.prev_rotation_yaw_head = this.fix_yaw_head;
 ////		}
 //		//normal -180 180 -90 90
 //		//yaw move/body
 //		//yawhead head
 //		e.rotationPitch = EntityMath.normalize(e.rotationPitch, 180.0F);
-////		this.rotation_yaw_head = EntityMath.normalize(this.rotation_yaw_head, 360.0F);
+////		this.rotation_yaw_body = EntityMath.normalize(this.rotation_yaw_body, 360.0F);
 //
-////		float difference = e.rotationYaw - this.rotation_yaw_head - 45.0F;
-//		float difference = e.rotation_yaw_head - e.rotationYaw;
+////		float difference = e.rotationYaw - this.rotation_yaw_body - 45.0F;
+//		float difference = e.rotation_yaw_body - e.rotationYaw;
 //
-//		float new_difference = (e.rotation_yaw_head + 360) % 360 - (e.rotationYaw + 360) % 360;
+//		float new_difference = (e.rotation_yaw_body + 360) % 360 - (e.rotationYaw + 360) % 360;
 //		if (Math.abs(new_difference) < Math.abs(difference))
 //		{
 //			difference = ((new_difference + 180) % 360 + 360) % 360 - 180;
@@ -89,14 +98,14 @@ public abstract class ServerLe
 //
 //		//rotationYawHead not sync in correct
 //		//create new rotationYawHead
-//		e.rotation_yaw_head = EntityMath.normalize(e.rotationYaw + difference, 360.0F);
-////		this.rotation_yaw_head = EntityMath.normalize(this.rotation_yaw_head + difference, 360.0F);
+//		e.rotation_yaw_body = EntityMath.normalize(e.rotationYaw + difference, 360.0F);
+////		this.rotation_yaw_body = EntityMath.normalize(this.rotation_yaw_body + difference, 360.0F);
 //		e.rotationYaw = EntityMath.normalize(e.rotationYaw, 360.0F);
-////		e.prev_rotation_yaw_head = this.rotation_yaw_head;
+////		e.prev_rotation_yaw_head = this.rotation_yaw_body;
 ////		e.prevRotationYaw = e.rotationYaw;
-////		Nali.warn("YH " + this.rotation_yaw_head);
+////		Nali.warn("YH " + this.rotation_yaw_body);
 //
-//		int rotation_yaw_head_int = Float.floatToIntBits(e.rotation_yaw_head);
+//		int rotation_yaw_head_int = Float.floatToIntBits(e.rotation_yaw_body);
 //		I i = this.i;
 //		EntityDataManager entitydatamanager = i.getE().getDataManager();
 //		DataParameter<Byte>[] byte_dataparameter_array = i.getByteDataParameterArray();
@@ -113,7 +122,7 @@ public abstract class ServerLe
 //		this.attack_entity_from_damagesource = damagesource;
 //		this.serverle_state |= 8;
 //		this.ms.call(SILeLockDMG.ID);
-		return ((SILeLockDMG)this.ms.si_map.get(SILeLockDMG.ID)).attackEntityFrom(damagesource, amount);
+		return this.silelockdmg.attackEntityFrom(damagesource, amount);
 	}
 
 	@Override
@@ -123,7 +132,7 @@ public abstract class ServerLe
 //		this.serverle_state |= 4;
 //		this.ms.call(SILeLockDMG.ID);
 //		return (this.serverle_state & 1) == 1;
-		return ((SILeLockDMG)this.ms.si_map.get(SILeLockDMG.ID)).attackEntityAsMob(entity);
+		return this.silelockdmg.attackEntityAsMob(entity);
 	}
 
 	@Override
@@ -143,8 +152,8 @@ public abstract class ServerLe
 	public void readFile(SIData sidata)
 	{
 		E e = this.i.getE();
-		e.rotation_yaw_head = ByteReader.getFloat(sidata.byte_array, sidata.index);
-//		e.prev_rotation_yaw_head = e.rotation_yaw_head;
+		e.rotation_yaw_body = ByteReader.getFloat(sidata.byte_array, sidata.index);
+//		e.prev_rotation_yaw_head = e.rotation_yaw_body;
 //		this.fix_yaw_head = ByteReader.getFloat(sidata.byte_array, sidata.rg);
 		sidata.index += 4;
 	}
@@ -154,7 +163,7 @@ public abstract class ServerLe
 	{
 		E e = this.i.getE();
 //		this.fix_yaw_head = e.rotationYaw;
-		e.rotation_yaw_head = e.rotationYaw;
+		e.rotation_yaw_body = e.rotationYaw;
 //		e.prev_rotation_yaw_head = e.rotationYaw;
 	}
 //	@Override
@@ -174,8 +183,92 @@ public abstract class ServerLe
 //	@Override
 //	public void getDeathSound()
 //	{
-////		this.ms.byte_array = new byte[1 + 8 + 1 + 4];
+
+//	@Override
+//	public void entityInit()
+//	{
+//		this.i.getE().getDataManager().register(MOUTH_ITEMSTACK_DATAPARAMETER, ItemStack.EMPTY);
+//	}
+
+	////		this.ms.byte_array = new byte[1 + 8 + 1 + 4];
 ////		ByteWriter.set(this.ms.byte_array, this.i.getSD().DEATH(), 1 + 8 + 1);
 ////		this.ms.call(SIESound.ID);
 //	}
+
+	//inv
+	@Override
+	public void damageArmor(float damage)
+	{
+		damage = damage / 4.0F;
+
+		if (damage < 1.0F)
+		{
+			damage = 1.0F;
+		}
+
+		for (int i = 0; i < this.sileinv.armor_itemstack_nonnulllist.size(); ++i)
+		{
+			ItemStack itemstack = this.sileinv.armor_itemstack_nonnulllist.get(i);
+
+			if (itemstack.getItem() instanceof ItemArmor)
+			{
+				itemstack.damageItem((int)damage, this.i.getE());
+			}
+		}
+	}
+
+	@Override
+	public void setItemStackToSlot(EntityEquipmentSlot entityequipmentslot, ItemStack itemstack)
+	{
+		this.i.getE().playEquipSound(itemstack);
+		switch (entityequipmentslot.getSlotType())
+		{
+			case HAND:
+			{
+				this.sileinv.hands_itemstack_nonnulllist.set(entityequipmentslot.getIndex(), itemstack);
+				break;
+			}
+			case ARMOR:
+			{
+				this.sileinv.armor_itemstack_nonnulllist.set(entityequipmentslot.getIndex(), itemstack);
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
+	}
+
+	@Override
+	public Iterable<ItemStack> getHeldEquipment()
+	{
+		return this.sileinv.hands_itemstack_nonnulllist;
+	}
+
+	@Override
+	public Iterable<ItemStack> getArmorInventoryList()
+	{
+		return this.sileinv.armor_itemstack_nonnulllist;
+	}
+
+	@Override
+	public ItemStack getItemStackFromSlot(EntityEquipmentSlot entityequipmentslot)
+	{
+		switch (entityequipmentslot.getSlotType())
+		{
+			case HAND:
+			{
+				return this.sileinv.hands_itemstack_nonnulllist.get(entityequipmentslot.getIndex());
+			}
+			case ARMOR:
+			{
+				return this.sileinv.armor_itemstack_nonnulllist.get(entityequipmentslot.getIndex());
+			}
+			default:
+			{
+				return ItemStack.EMPTY;
+			}
+		}
+	}
 }

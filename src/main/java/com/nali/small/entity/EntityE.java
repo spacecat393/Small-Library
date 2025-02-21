@@ -7,6 +7,10 @@ import net.minecraft.world.World;
 
 public abstract class EntityE extends Entity implements IMixE
 {
+	public float
+		prev_rotation_yaw,
+		prev_rotation_pitch;
+
 	public EntityE(World world)
 	{
 		super(world);
@@ -45,13 +49,13 @@ public abstract class EntityE extends Entity implements IMixE
 //		this.getB().writeEntityToNBT(nbttagcompound);
 //	}
 
-	@Override
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound)
-	{
-		this.getB().onReadNBT();
-//		this.EreadEntityFromNBT(nbttagcompound);
-//		this.getB().readEntityFromNBT(nbttagcompound);
-	}
+//	@Override
+//	public void readEntityFromNBT(NBTTagCompound nbttagcompound)
+//	{
+//		this.getB().onReadNBT();
+////		this.EreadEntityFromNBT(nbttagcompound);
+////		this.getB().readEntityFromNBT(nbttagcompound);
+//	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbttagcompound)

@@ -1,28 +1,25 @@
 package com.nali.list.entity.si;
 
 import com.nali.da.IBothDaE;
-import com.nali.small.entity.EntityLeInv;
 import com.nali.small.entity.IMixE;
-import com.nali.small.entity.inv.InvE;
-import com.nali.small.entity.inv.InvLe;
-import com.nali.small.entity.memo.server.ServerLeInv;
+import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
 import com.nali.system.bytes.ByteReader;
 import com.nali.system.bytes.ByteWriter;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 
-public class SILeInvManageItem
+public class SIEManageItem
 <
-	IE extends InvLe,
 	BD extends IBothDaE,
-	E extends EntityLeInv,
+	E extends Entity,
 	I extends IMixE<BD, E>,
-	S extends ServerLeInv<IE, BD, E, I, MS>,
+	S extends ServerE<BD, E, I, MS>,
 	MS extends MixSIE<BD, E, I, S>
 > extends SI<BD, E, I, S, MS>
 {
@@ -42,7 +39,7 @@ public class SILeInvManageItem
 	public byte flag;//remote_in remote_out random_in random_out in out
 	public int in_random = 2, out_random = 2;
 
-	public SILeInvManageItem(S s)
+	public SIEManageItem(S s)
 	{
 		super(s);
 	}
@@ -469,7 +466,7 @@ public class SILeInvManageItem
 
 			int max_count = inv_itemstack.getCount() + e_count;
 			int count = max_count - max_stack;
-			if (InvE.isSameItemSameTags(inv_itemstack, itemstack))
+			if (SIEInv.isSameItemSameTags(inv_itemstack, itemstack))
 			{
 				if (count <= 0)
 				{

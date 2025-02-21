@@ -14,13 +14,14 @@ import com.nali.small.entity.memo.client.render.FRenderE;
 import com.nali.small.render.IRenderS;
 import com.nali.system.BothLoader;
 import com.nali.system.opengl.memo.MemoF2;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public abstract class MixRenderSe
+public class MixRenderSe
 <
 	BD extends IBothDaE & IBothDaO & IBothDaS,
 	R extends RenderS<BD> & IRenderS<BD, R>,
@@ -53,7 +54,27 @@ public abstract class MixRenderSe
 //		this.updateData(/*rendere, */partial_ticks);
 		this.updateSkinning(partial_ticks);
 
-		GL11.glTranslated(ox, oy, oz);
+//		GL11.glTranslated(ox, oy, oz);
+//		IMixinRenderManager imixinrendermanager = (IMixinRenderManager)rendere.getRenderManager();
+//		GL11.glTranslated(this.x - imixinrendermanager.renderPosX(), this.y - imixinrendermanager.renderPosY(), this.z - imixinrendermanager.renderPosZ());
+		RenderManager rendermanager = rendere.getRenderManager();
+		GL11.glTranslated(this.x - rendermanager.viewerPosX, this.y - rendermanager.viewerPosY, this.z - rendermanager.viewerPosZ);
+//		GL11.glTranslated(this.x, this.y, this.z);
+//		Nali.warn("rx " + rendermanager.viewerPosX);
+//		Nali.warn("ry " + rendermanager.viewerPosY);
+//		Nali.warn("rz " + rendermanager.viewerPosZ);
+//
+//		Nali.warn("ox " + ox);
+//		Nali.warn("oy " + oy);
+//		Nali.warn("oz " + oz);
+//
+//		Nali.warn("x- " + (this.x - rendermanager.viewerPosX));
+//		Nali.warn("y- " + (this.y - rendermanager.viewerPosY));
+//		Nali.warn("z- " + (this.z - rendermanager.viewerPosZ));
+//
+//		Nali.warn("x " + this.x);
+//		Nali.warn("y " + this.y);
+//		Nali.warn("z " + this.z);
 
 //		this.renderHitBox(rendere);
 
@@ -96,6 +117,7 @@ public abstract class MixRenderSe
 
 		GL11.glPopMatrix();
 //		this.renderLayer(t, ox, oy, oz, partial_ticks);
+		super.doRender(rendere, ox, oy, oz, partial_ticks);
 	}
 
 //	public void updateData(/*RenderE<E> rendere, */float partial_ticks)
@@ -119,7 +141,7 @@ public abstract class MixRenderSe
 
 //		if (!this.c.fake)
 //		{
-		this.c.i.mulFrame(r.skinning_float_array, r.key_short_array, partial_ticks);
+		this.c.i.mulFrame(r.skinning_float_array, r.key_short_array);
 //		}
 
 		f2.setS(bd, r.skinning_float_array, r.key_short_array/*memoanimation*/);

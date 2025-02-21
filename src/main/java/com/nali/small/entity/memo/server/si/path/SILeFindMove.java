@@ -39,6 +39,6 @@ public class SILeFindMove
 	public void look(E e)
 	{
 		super.look(e);
-		e.rotation_yaw_head = e.rotationYaw;
+		e.rotation_yaw_body = e.rotationYaw;
 	}
 }

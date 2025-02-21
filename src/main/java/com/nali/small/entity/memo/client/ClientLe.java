@@ -11,12 +11,14 @@ import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
 import com.nali.system.bytes.ByteReader;
 import net.minecraft.entity.Entity;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public abstract class ClientLe
+public class ClientLe
 <
 	BD extends IBothDaE & IBothDaO,
 	R extends RenderO<BD>,
@@ -49,14 +51,14 @@ public abstract class ClientLe
 	{
 		super.onUpdate();
 		E e = this.i.getE();
-		e.rotation_yaw_head = ByteReader.getFloat(this.sync_byte_array, 4);
-		e.prev_rotation_yaw_head = e.rotation_yaw_head;
-//		while (e.rotation_yaw_head - e.prev_rotation_yaw_head < -180.0F)
+		e.rotation_yaw_body = ByteReader.getFloat(this.sync_byte_array, 4);
+//		e.prev_rotation_yaw_head = e.rotation_yaw_body;
+//		while (e.rotation_yaw_body - e.prev_rotation_yaw_head < -180.0F)
 //		{
 //			e.prev_rotation_yaw_head -= 360.0F;
 //		}
 //
-//		while (e.rotation_yaw_head - e.prev_rotation_yaw_head >= 180.0F)
+//		while (e.rotation_yaw_body - e.prev_rotation_yaw_head >= 180.0F)
 //		{
 //			e.prev_rotation_yaw_head += 360.0F;
 //		}
@@ -86,7 +88,35 @@ public abstract class ClientLe
 		return false;
 	}
 
-//	@Override
+	@Override
+	public void damageArmor(float damage)
+	{
+	}
+
+	@Override
+	public void setItemStackToSlot(EntityEquipmentSlot entityequipmentslot, ItemStack itemstack)
+	{
+	}
+
+	@Override
+	public ItemStack getItemStackFromSlot(EntityEquipmentSlot entityequipmentslot)
+	{
+		return null;
+	}
+
+	@Override
+	public Iterable<ItemStack> getArmorInventoryList()
+	{
+		return null;
+	}
+
+	@Override
+	public Iterable<ItemStack> getHeldEquipment()
+	{
+		return null;
+	}
+
+	//	@Override
 //	public WorkEBodyYaw getWorkEBodyYaw()
 //	{
 //		return this.workebodyyaw;

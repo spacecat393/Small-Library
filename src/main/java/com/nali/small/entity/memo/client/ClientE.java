@@ -17,11 +17,8 @@ import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @SideOnly(Side.CLIENT)
-public abstract class ClientE
+public class ClientE
 <
 	BD extends IBothDaE & IBothDaO,
 	R extends RenderO<BD>,
@@ -32,9 +29,9 @@ public abstract class ClientE
 	MR extends MixRenderE<BD, R, E, I, MC, MB, ?>
 > implements IBothE<E>
 {
-	public static String EMPTY_STRING = "---";
-
-	public static Map<Long, ClientE> C_MAP = new HashMap();
+//	public static String EMPTY_STRING = "---";
+//
+//	public static Map<Long, ClientE> C_MAP = new HashMap();
 
 	public I i;
 	public R r;
@@ -46,13 +43,13 @@ public abstract class ClientE
 	public byte[] sync_byte_array;
 //	public boolean should_render;
 
-	//fake
-	public long key;
-	public int e_id;
-	public boolean fake;
-	public String name_string = EMPTY_STRING;
-	public byte state;//regen outline/glowing die
-	public float x, y, z, hp;
+//	//fake
+//	public long key;
+//	public int e_id;
+//	public boolean fake;
+//	public String name_string = EMPTY_STRING;
+//	public byte state;//regen outline/glowing die
+//	public float x, y, z, hp;
 
 	public ClientE(R r)
 	{
@@ -65,6 +62,7 @@ public abstract class ClientE
 		this.i = i;
 
 		this.sync_byte_array = new byte[this.i.getBD().E_MaxSync()];
+		this.i.getE();
 	}
 
 	@Override
@@ -77,11 +75,11 @@ public abstract class ClientE
 	{
 	}
 
-	@Override
-	public void onReadNBT()
-	{
-		this.mc.onReadNBT();
-	}
+//	@Override
+//	public void onReadNBT()
+//	{
+//		this.mc.onReadNBT();
+//	}
 
 //	@Override
 //	public void setShouldRender(boolean result)

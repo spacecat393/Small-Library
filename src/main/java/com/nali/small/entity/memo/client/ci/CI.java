@@ -29,8 +29,8 @@ public abstract class CI
 		this.c = c;
 	}
 
-	public abstract void init();
+//	public abstract void init();
 	public abstract void call();
 	public abstract void onUpdate();
-	public abstract void onReadNBT();
+//	public abstract void onReadNBT();
 }

@@ -75,21 +75,21 @@ public class MixCIE
 		}
 	}
 
-	public void init()
-	{
-		for (CI ci : this.ci_map.values())
-		{
-			ci.init();
-		}
-	}
+//	public void init()
+//	{
+//		for (CI ci : this.ci_map.values())
+//		{
+//			ci.init();
+//		}
+//	}
 
-	public void onReadNBT()
-	{
-		for (byte b : this.c.i.getCI())
-		{
-			this.ci_map.get(b).onReadNBT();
-		}
-	}
+//	public void onReadNBT()
+//	{
+//		for (byte b : this.c.i.getCI())
+//		{
+//			this.ci_map.get(b).onReadNBT();
+//		}
+//	}
 
 	public void call(byte id)
 	{
@@ -98,27 +98,27 @@ public class MixCIE
 
 	public void onUpdate()
 	{
-		if (!this.c.fake)
+//		if (!this.c.fake)
+//		{
+		I i = this.c.i;
+		E e = i.getE();
+
+		EntityDataManager entitydatamanager = e.getDataManager();
+		DataParameter<Byte>[] byte_dataparameter_array = i.getByteDataParameterArray();
+
+		for (int x = 0; x < byte_dataparameter_array.length; ++x)
 		{
-			I i = this.c.i;
-			E e = i.getE();
-
-			EntityDataManager entitydatamanager = e.getDataManager();
-			DataParameter<Byte>[] byte_dataparameter_array = i.getByteDataParameterArray();
-
-			for (int x = 0; x < byte_dataparameter_array.length; ++x)
-			{
-				this.c.sync_byte_array[x] = entitydatamanager.get(byte_dataparameter_array[x]);
-			}
+			this.c.sync_byte_array[x] = entitydatamanager.get(byte_dataparameter_array[x]);
+		}
 
 //			this.updateNotFake();
-			this.updateBox();
+		this.updateBox();
 
-			for (byte b : this.c.i.getCI())
-			{
-				this.ci_map.get(b).onUpdate();
-			}
+		for (byte b : this.c.i.getCI())
+		{
+			this.ci_map.get(b).onUpdate();
 		}
+//		}
 	}
 
 //	public void updateNotFake()

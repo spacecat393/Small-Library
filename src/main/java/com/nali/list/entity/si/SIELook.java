@@ -61,7 +61,7 @@ public class SIELook
 		this.s.ms.flag &= 255 - MixSIE.B_SUB_WORK;
 
 		E e = this.s.i.getE();
-//		float yaw = (float)Math.toDegrees(Math.atan2(-this.x, this.z)) - ((EntityLe)e).rotation_yaw_head;
+//		float yaw = (float)Math.toDegrees(Math.atan2(-this.x, this.z)) - ((EntityLe)e).rotation_yaw_body;
 		float yaw = (float)Math.toDegrees(Math.atan2(-this.x, this.z)) - e.rotationYaw;
 		float delta = ((yaw + 180) % 360 + 360) % 360 - 180;
 		if (delta > 180)
@@ -69,7 +69,7 @@ public class SIELook
 			delta -= 360;
 		}
 		this.yaw = delta / this.max;
-//		this.yaw = ((float)Math.toDegrees(Math.atan2(-this.x, this.z)) - ((EntityLe)e).rotation_yaw_head) / this.max;
+//		this.yaw = ((float)Math.toDegrees(Math.atan2(-this.x, this.z)) - ((EntityLe)e).rotation_yaw_body) / this.max;
 		this.pitch = ((float)Math.toDegrees(Math.atan2(-this.y, Math.sqrt(this.x * this.x + this.z * this.z))) - e.rotationPitch) / this.max;
 	}
 
@@ -90,9 +90,9 @@ public class SIELook
 				else
 				{
 //					Nali.warn("this.yaw " + this.yaw);
-//					Nali.warn("((EntityLe)e).rotation_yaw_head " + ((EntityLe)e).rotation_yaw_head);
-//					((EntityLe)e).rotation_yaw_head += this.yaw;
-//					((EntityLe)e).rotation_yaw_head = (float)Math.toDegrees(Math.atan2(-this.x, this.z));
+//					Nali.warn("((EntityLe)e).rotation_yaw_body " + ((EntityLe)e).rotation_yaw_body);
+//					((EntityLe)e).rotation_yaw_body += this.yaw;
+//					((EntityLe)e).rotation_yaw_body = (float)Math.toDegrees(Math.atan2(-this.x, this.z));
 					e.rotationYaw += this.yaw;
 					e.rotationPitch += this.pitch;
 				}
@@ -122,8 +122,8 @@ public class SIELook
 
 	public void syncLook(E e)
 	{
-//		((EntityLe)e).rotation_yaw_head = ((((EntityLe)e).rotation_yaw_head + 180) % 360 + 360) % 360 - 180;
-//		e.rotationYaw = ((EntityLe)e).rotation_yaw_head;
+//		((EntityLe)e).rotation_yaw_body = ((((EntityLe)e).rotation_yaw_body + 180) % 360 + 360) % 360 - 180;
+//		e.rotationYaw = ((EntityLe)e).rotation_yaw_body;
 		e.rotationPitch = ((e.rotationPitch + 180) % 360 + 360) % 360 - 180;
 		e.rotationYaw = ((e.rotationYaw + 180) % 360 + 360) % 360 - 180;
 	}

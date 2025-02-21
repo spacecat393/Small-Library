@@ -36,10 +36,10 @@ public class CIEFrame
 		super(c);
 	}
 
-	@Override
-	public void init()
-	{
-	}
+//	@Override
+//	public void init()
+//	{
+//	}
 
 	@Override
 	public void call()
@@ -49,11 +49,11 @@ public class CIEFrame
 	@Override
 	public void onUpdate()
 	{
-		if (!this.c.fake)
-		{
-			I i = this.c.i;
-			R r = this.c.r;
-			BD bd = i.getBD();
+//		if (!this.c.fake)
+//		{
+		I i = this.c.i;
+		R r = this.c.r;
+		BD bd = i.getBD();
 
 //			EntityDataManager entitydatamanager = i.getE().getDataManager();
 //			DataParameter<Byte>[] byte_dataparameter = i.getByteDataParameterArray();
@@ -65,12 +65,16 @@ public class CIEFrame
 //				scale |= (this.c.sync_byte_array[b] & 0xFF) << (b * 8);
 //			}
 //			r.scale = scale;
-			r.scale = ByteReader.getFloat(this.c.sync_byte_array, 0);
+		r.scale = ByteReader.getFloat(this.c.sync_byte_array, 0);
+//		if (r.scale == 0)
+//		{
+//			r.scale = 1;
+//		}
 
-			short[] key_short_array = r.key_short_array;
+		short[] key_short_array = r.key_short_array;
 //			short key = 0;
-			for (int x = 0; x < bd.S_MaxFrame(); ++x)
-			{
+		for (int x = 0; x < bd.S_MaxFrame(); ++x)
+		{
 //				byte b = (byte)(x % 2);
 ////				key |= (entitydatamanager.get(byte_dataparameter[bd.Se_SyncIndex() + x]) & 0xFF) << (b * 8);
 //				key |= (this.c.sync_byte_array[bd.Se_SyncIndex() + x] & 0xFF) << (b * 8);
@@ -80,18 +84,18 @@ public class CIEFrame
 //					key_short_array[x] = key;
 //					key = 0;
 //				}
-				key_short_array[x] = ByteReader.getShort(this.c.sync_byte_array, bd.Se_SyncIndex() + x * 2);
-			}
+			key_short_array[x] = ByteReader.getShort(this.c.sync_byte_array, bd.Se_SyncIndex() + x * 2);
 		}
-	}
-
-	@Override
-	public void onReadNBT()
-	{
-//		if (this.c.mc.fake)
-//		{
-		this.c.r.scale = this.c.i.getBD().E_Scale();
-//		this.c.mr.updateSkinning();
 //		}
 	}
+
+//	@Override
+//	public void onReadNBT()
+//	{
+////		if (this.c.mc.fake)
+////		{
+//		this.c.r.scale = this.c.i.getBD().E_Scale();
+////		this.c.mr.updateSkinning();
+////		}
+//	}
 }

@@ -1,5 +1,6 @@
 package com.nali.small.mixin;
 
+import com.nali.NaliConfig;
 import com.nali.render.RenderO;
 import com.nali.small.Small;
 import com.nali.small.SmallConfig;
@@ -30,7 +31,7 @@ public abstract class MixinEntityRenderer
 			Draw.draw(Draw.TE_MODEL_MAP);
 		}
 
-		if (!SmallConfig.NEED_EXTRA || (SmallConfig.FAST_RAW_FPS && Small.FLAG == 1) || (!SmallConfig.FAST_RAW_FPS && (Small.FLAG & 1) == 0))
+		if (!NaliConfig.NEED_EXTRA || (SmallConfig.FAST_RAW_FPS && Small.FLAG == 1) || (!SmallConfig.FAST_RAW_FPS && (Small.FLAG & 1) == 0))
 		{
 			if (!Draw.TE_TRANSLUCENT_MAP.isEmpty())
 			{

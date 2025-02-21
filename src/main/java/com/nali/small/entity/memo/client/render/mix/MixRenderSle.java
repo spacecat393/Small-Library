@@ -8,28 +8,27 @@ import com.nali.small.entity.EntityLe;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.IMixES;
 import com.nali.small.entity.IMixESInv;
-import com.nali.small.entity.inv.InvLe;
-import com.nali.small.entity.memo.IBothEInv;
 import com.nali.small.entity.memo.client.ClientLe;
 import com.nali.small.entity.memo.client.box.mix.MixBoxSleInv;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.FRenderE;
 import com.nali.small.render.IRenderS;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+//renew + layer
 @SideOnly(Side.CLIENT)
-public abstract class MixRenderSleInv
+public class MixRenderSle
 <
-	IE extends InvLe,
 	BD extends IBothDaE & IBothDaO & IBothDaS,
 	R extends RenderS<BD> & IRenderS<BD, R>,
 	E extends EntityLe,
 	I extends IMixE<BD, E> & IMixES & IMixESInv,
 	MC extends MixCIE<BD, R, E, I, MB, ?, C>,
 	MB extends MixBoxSleInv<BD, R, E, I, MC, ?, C>,
-	C extends ClientLe<BD, R, E, I, MC, MB, ?> & IBothEInv<IE>
+	C extends ClientLe<BD, R, E, I, MC, MB, ?>
 > extends MixRenderSe<BD, R, E, I, MC, MB, C>
 {
 //	public LayerSleInvArrow<RC, R, SD, BD, E, I, MC, ?, MB, C> layersleinvarrow;
@@ -39,7 +38,7 @@ public abstract class MixRenderSleInv
 //		body_rot,
 //		net_head_yaw;
 
-	public MixRenderSleInv(C c)
+	public MixRenderSle(C c)
 	{
 		super(c);
 //		this.layersleinvarrow = new LayerSleInvArrow(c);
@@ -58,18 +57,25 @@ public abstract class MixRenderSleInv
 	@Override
 	public void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partial_ticks)
 	{
-		this.renderLayer(rendere, ox, oy, oz, partial_ticks);
+		this.renderLayer(rendere/*, ox, oy, oz, partial_ticks*/);
 		super.doRender(rendere, ox, oy, oz, partial_ticks);
 	}
 
-	public void renderLayer(FRenderE<E> rendere, double ox, double oy, double oz, float partial_ticks)
+	public void renderLayer(FRenderE<E> rendere/*, double ox, double oy, double oz, float partial_ticks*/)
 	{
 		R r = this.c.r;
 		GL11.glPushMatrix();
 
-		GL11.glTranslated(ox, oy, oz);
+//		GL11.glTranslated(ox, oy, oz);
+//		GL11.glScalef(r.scale, r.scale, r.scale);
+//		GL11.glTranslated(-ox, -oy, -oz);
+		RenderManager rendermanager = rendere.getRenderManager();
+		double x = this.x - rendermanager.viewerPosX;
+		double y = this.y - rendermanager.viewerPosY;
+		double z = this.z - rendermanager.viewerPosZ;
+		GL11.glTranslated(x, y, z);
 		GL11.glScalef(r.scale, r.scale, r.scale);
-		GL11.glTranslated(-ox, -oy, -oz);
+		GL11.glTranslated(-x, -y, -z);
 //		this.layersleinvitem.x = (float)ox;
 //		this.layersleinvitem.y = (float)oy;
 //		this.layersleinvitem.z = (float)oz;

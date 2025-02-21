@@ -2,6 +2,8 @@ package com.nali.small.entity.memo;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 
 public interface IBothLe
@@ -28,4 +30,11 @@ public interface IBothLe
 	boolean attackEntityFrom(DamageSource damagesource, float amount);
 	void getHurtSound(DamageSource damagesource);
 	void getDeathSound();
+
+	//server-inv
+	void damageArmor(float damage);
+	Iterable<ItemStack> getHeldEquipment();
+	Iterable<ItemStack> getArmorInventoryList();
+	ItemStack getItemStackFromSlot(EntityEquipmentSlot entityequipmentslot);
+	void setItemStackToSlot(EntityEquipmentSlot entityequipmentslot, ItemStack itemstack);
 }

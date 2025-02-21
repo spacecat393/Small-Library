@@ -495,7 +495,10 @@ public class Draw
 
 		if ((drawmap.extra_bit & DrawMap.B_SKINNING) == DrawMap.B_SKINNING)
 		{
-			RenderS.setFloatBuffer(KEY_FLOAT_ARRAY_LIST.get(integer));
+//			RenderS.setFloatBuffer(KEY_FLOAT_ARRAY_LIST.get(integer));
+			RenderS.BONE_FLOATBUFFER.clear();
+			RenderS.BONE_FLOATBUFFER.put(KEY_FLOAT_ARRAY_LIST.get(integer));
+			RenderS.BONE_FLOATBUFFER.flip();
 			OpenGlHelper.glUniformMatrix4(rs.uniformlocation_int_array[6], false, RenderS.BONE_FLOATBUFFER);
 		}
 

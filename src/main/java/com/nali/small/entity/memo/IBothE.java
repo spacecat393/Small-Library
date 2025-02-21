@@ -35,7 +35,7 @@ public interface IBothE
 	//	@SideOnly(Side.CLIENT)
 //	void setGlowing(boolean b);
 //	@SideOnly(Side.CLIENT)
-	void onReadNBT();//need check again
+//	void onReadNBT();//need check again
 //	@SideOnly(Side.CLIENT)
 //	void setShouldRender(boolean result);
 	@SideOnly(Side.CLIENT)
@@ -49,4 +49,7 @@ public interface IBothE
 //	void playSound(int i);
 
 //	I getI();
+
+	//both
+//	void entityInit();
 }
