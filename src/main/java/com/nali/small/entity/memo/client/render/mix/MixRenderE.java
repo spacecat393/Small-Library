@@ -33,6 +33,10 @@ public class MixRenderE
 	public MixRenderE(C c)
 	{
 		this.c = c;
+//		E e = this.c.i.getE();
+//		this.x = e.posX;
+//		this.y = e.posY;
+//		this.z = e.posZ;
 	}
 
 	public void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partialTicks)

@@ -19,6 +19,7 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.math.AxisAlignedBB;
 
 import java.util.*;
 
@@ -59,6 +60,38 @@ public class SIEArea
 	{
 		super(s);
 	}
+
+	//s0-math
+	public static double getDistanceAABBToAABB(Entity entity_a, Entity entity_b)
+	{
+		return getDistanceAABBToAABB(entity_a.getEntityBoundingBox(), entity_b.getEntityBoundingBox());
+	}
+
+	public static double getDistanceAABBToAABB(AxisAlignedBB entity_a_aabb, AxisAlignedBB entity_b_aabb)
+	{
+		double dx = getDistanceAxis(entity_a_aabb.minX, entity_a_aabb.maxX, entity_b_aabb.minX, entity_b_aabb.maxX);
+		double dy = getDistanceAxis(entity_a_aabb.minY, entity_a_aabb.maxY, entity_b_aabb.minY, entity_b_aabb.maxY);
+		double dz = getDistanceAxis(entity_a_aabb.minZ, entity_a_aabb.maxZ, entity_b_aabb.minZ, entity_b_aabb.maxZ);
+
+		return dx * dx + dy * dy + dz * dz;
+	}
+
+	public static double getDistanceAxis(double min1, double max1, double min2, double max2)
+	{
+		if (max1 < min2)
+		{
+			return min2 - max1;
+		}
+		else if (max2 < min1)
+		{
+			return min1 - max2;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	//e0-math
 
 	@Override
 	public void init()

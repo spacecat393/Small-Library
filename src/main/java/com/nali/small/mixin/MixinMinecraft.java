@@ -1,8 +1,9 @@
 package com.nali.small.mixin;
 
-import com.nali.small.entity.EntityMath;
+import com.nali.list.entity.si.SIEArea;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
+import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
@@ -46,9 +47,9 @@ public abstract class MixinMinecraft
 						continue;
 					}
 
-					if (EntityMath.ray(entity.getEntityBoundingBox(), player_vec3d, look_vec3d))
+					if (MixBoxE.ray(entity.getEntityBoundingBox(), player_vec3d, look_vec3d))
 					{
-						double new_max = EntityMath.getDistanceAABBToAABB(entityplayersp, entity);
+						double new_max = SIEArea.getDistanceAABBToAABB(entityplayersp, entity);
 						if (new_max < max)
 						{
 							index = i;

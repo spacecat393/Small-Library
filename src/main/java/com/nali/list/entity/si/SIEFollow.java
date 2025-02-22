@@ -12,9 +12,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 
-import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
-import static com.nali.small.entity.memo.server.si.path.PathMath.PATH_BYTE_ARRAY;
-
 public class SIEFollow
 <
 	BD extends IBothDaE,
@@ -143,7 +140,7 @@ public class SIEFollow
 //			this.s.isWork(this.s.bytele.FOLLOW()) &&
 			this.sielocation.in(owner_entity) &&
 //			(e.getDistanceSq(owner_entity) > this.min_distance || move_to))
-			(getDistanceAABBToAABB(e, owner_entity) > this.min_distance || move_to))
+			(SIEArea.getDistanceAABBToAABB(e, owner_entity) > this.min_distance || move_to))
 		{
 //			if ((owner_entity.world).provider.getDimension() != ((e.world).provider.getDimension()))
 //			{
@@ -172,14 +169,14 @@ public class SIEFollow
 
 //			if ((this.flag & 2) == 2 && step >= this.max_distance)
 //			if ((this.flag & 2) == 2 && e.getDistanceSq(owner_entity) >= this.max_distance)
-			if ((this.state & B_TP_TO) == B_TP_TO && getDistanceAABBToAABB(e, owner_entity) >= this.max_distance)
+			if ((this.state & B_TP_TO) == B_TP_TO && SIEArea.getDistanceAABBToAABB(e, owner_entity) >= this.max_distance)
 			{
 				this.tryTeleport(owner_entity);
 			}
 			else if ((this.state & B_WALK_TO) == B_WALK_TO)
 			{
 //				if (step <= getClose(e, owner_entity, 1.0D))
-				if (getDistanceAABBToAABB(e, owner_entity) <= 1.0D)
+				if (SIEArea.getDistanceAABBToAABB(e, owner_entity) <= 1.0D)
 				{
 					this.siefindmove.endGoal();
 					this.state &= 255 - B_MOVE_TO;
@@ -237,11 +234,11 @@ public class SIEFollow
 	{
 		BlockPos blockpos = owner_entity.getPosition();
 
-		for (byte xi : PATH_BYTE_ARRAY)
+		for (byte xi : SIEFindMove.PATH_BYTE_ARRAY)
 		{
-			for (byte yi : PATH_BYTE_ARRAY)
+			for (byte yi : SIEFindMove.PATH_BYTE_ARRAY)
 			{
-				for (byte zi : PATH_BYTE_ARRAY)
+				for (byte zi : SIEFindMove.PATH_BYTE_ARRAY)
 				{
 					if (!(xi == 0 && yi == 0 && zi == 0))
 					{

@@ -27,19 +27,24 @@ public class SILeInv
 	@Override
 	public ItemStack invGet(int index)
 	{
+//		Nali.warn("index " + index);
 		int length = super.invSize();
 		if (index < length)
 		{
 			return super.invGet(index);
 		}
 
-		length += this.hands_itemstack_nonnulllist.size();
+		index -= length;
+//		Nali.warn("new_index " + index);
+		length = this.hands_itemstack_nonnulllist.size();
+//		Nali.warn("new_length " + length);
 		if (index < length)
 		{
 			return this.hands_itemstack_nonnulllist.get(index);
 		}
 
-		length += this.armor_itemstack_nonnulllist.size();
+		index -= length;
+		length = this.armor_itemstack_nonnulllist.size();
 		if (index < length)
 		{
 			return this.armor_itemstack_nonnulllist.get(index);
@@ -56,22 +61,31 @@ public class SILeInv
 	@Override
 	public void invSet(int index, ItemStack itemstack)
 	{
+//		Nali.warn("index " + index);
 		int length = super.invSize();
+//		Nali.warn("length " + length);
 		if (index < length)
 		{
 			super.invSet(index, itemstack);
+			return;
 		}
 
-		length += this.hands_itemstack_nonnulllist.size();
+		index -= length;
+//		Nali.warn("new_index " + index);
+		length = this.hands_itemstack_nonnulllist.size();
+//		Nali.warn("new_length " + length);
 		if (index < length)
 		{
 			this.hands_itemstack_nonnulllist.set(index, itemstack);
+			return;
 		}
 
-		length += this.armor_itemstack_nonnulllist.size();
+		index -= length;
+		length = this.armor_itemstack_nonnulllist.size();
 		if (index < length)
 		{
 			this.armor_itemstack_nonnulllist.set(index, itemstack);
+			return;
 		}
 		this.mouth_itemstack = itemstack;
 	}

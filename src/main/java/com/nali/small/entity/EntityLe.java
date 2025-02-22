@@ -1,6 +1,5 @@
 package com.nali.small.entity;
 
-import com.nali.NaliConfig;
 import com.nali.small.entity.memo.IBothLe;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -269,7 +268,7 @@ public abstract class EntityLe extends EntityLivingBase implements IMixE
 	public boolean canBeCollidedWith()
 	{
 //		return true;
-		return !NaliConfig.NEED_EXTRA;
+		return /*!NaliConfig.NEED_EXTRA || */!this.world.isRemote;
 	}
 
 //	@Override

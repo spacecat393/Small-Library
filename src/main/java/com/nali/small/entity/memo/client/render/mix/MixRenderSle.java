@@ -9,9 +9,10 @@ import com.nali.small.entity.IMixE;
 import com.nali.small.entity.IMixES;
 import com.nali.small.entity.IMixESInv;
 import com.nali.small.entity.memo.client.ClientLe;
-import com.nali.small.entity.memo.client.box.mix.MixBoxSleInv;
+import com.nali.small.entity.memo.client.box.mix.MixBoxSle;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.FRenderE;
+import com.nali.small.entity.memo.client.render.layer.LayerSleArrow;
 import com.nali.small.render.IRenderS;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.relauncher.Side;
@@ -27,12 +28,12 @@ public class MixRenderSle
 	E extends EntityLe,
 	I extends IMixE<BD, E> & IMixES & IMixESInv,
 	MC extends MixCIE<BD, R, E, I, MB, ?, C>,
-	MB extends MixBoxSleInv<BD, R, E, I, MC, ?, C>,
+	MB extends MixBoxSle<BD, R, E, I, MC, ?, C>,
 	C extends ClientLe<BD, R, E, I, MC, MB, ?>
 > extends MixRenderSe<BD, R, E, I, MC, MB, C>
 {
-//	public LayerSleInvArrow<RC, R, SD, BD, E, I, MC, ?, MB, C> layersleinvarrow;
-//	public LayerSleInvItem<IE, RC, R, SD, BD, E, I, MC, ?, MB, C> layersleinvitem;
+	public LayerSleArrow<BD, R, E, I, MC, ?, MB, C> layerslearrow;
+//	public LayerSleInvItem<R, BD, E, I, MC, ?, MB, C> layersleinvitem;
 
 //	public float
 //		body_rot,
@@ -41,7 +42,7 @@ public class MixRenderSle
 	public MixRenderSle(C c)
 	{
 		super(c);
-//		this.layersleinvarrow = new LayerSleInvArrow(c);
+		this.layerslearrow = new LayerSleArrow(c);
 //		this.layersleinvitem = new LayerSleInvItem(c);
 	}
 
@@ -57,11 +58,11 @@ public class MixRenderSle
 	@Override
 	public void doRender(FRenderE<E> rendere, double ox, double oy, double oz, float partial_ticks)
 	{
-		this.renderLayer(rendere/*, ox, oy, oz, partial_ticks*/);
+		this.renderLayer(rendere/*, ox, oy, oz*/, partial_ticks);
 		super.doRender(rendere, ox, oy, oz, partial_ticks);
 	}
 
-	public void renderLayer(FRenderE<E> rendere/*, double ox, double oy, double oz, float partial_ticks*/)
+	public void renderLayer(FRenderE<E> rendere/*, double ox, double oy, double oz*/, float partial_ticks)
 	{
 		R r = this.c.r;
 		GL11.glPushMatrix();
@@ -80,7 +81,7 @@ public class MixRenderSle
 //		this.layersleinvitem.y = (float)oy;
 //		this.layersleinvitem.z = (float)oz;
 //		this.layersleinvitem.layer(partial_ticks);
-//		this.layersleinvarrow.layer(rendere, (float)ox, (float)oy, (float)oz, partial_ticks);
+		this.layerslearrow.layer(rendere/*, (float)ox, (float)oy, (float)oz*/, partial_ticks);
 
 		GL11.glPopMatrix();
 	}

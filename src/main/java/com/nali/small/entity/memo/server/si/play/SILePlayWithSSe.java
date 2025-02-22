@@ -12,8 +12,6 @@ import com.nali.small.entity.memo.server.ServerLe;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import net.minecraft.entity.Entity;
 
-import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
-
 public class SILePlayWithSSe
 <
 	R2 extends SIEPlayWithRSe<S, BD, E, I, MS, BD2, E2, I2, S2, A2>,
@@ -85,7 +83,7 @@ public class SILePlayWithSSe
 //							if (entity.getClass() == clasz)
 							if (entity.getClass() == this.e2_class)
 							{
-								double new_max = getDistanceAABBToAABB(e, entity);
+								double new_max = SIEArea.getDistanceAABBToAABB(e, entity);
 								if (new_max < max && this.shouldAdd(i))
 								{
 //										rg = i;

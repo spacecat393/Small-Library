@@ -15,8 +15,6 @@ import net.minecraft.util.EnumHand;
 
 import java.util.List;
 
-import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
-
 public class SILeAttack
 <
 	BD extends IBothDaE,
@@ -189,7 +187,7 @@ public class SILeAttack
 						this.sielook.set(target_entity.posX - e.posX, target_entity.posY - e.posY, target_entity.posZ - e.posZ, (byte)2);
 					}
 
-					if ((this.state & B_WALK_TO + B_REMOTE) == B_WALK_TO && !(e.canEntityBeSeen(target_entity) && getDistanceAABBToAABB(e, target_entity) <= this.minimum_distance))
+					if ((this.state & B_WALK_TO + B_REMOTE) == B_WALK_TO && !(e.canEntityBeSeen(target_entity) && SIEArea.getDistanceAABBToAABB(e, target_entity) <= this.minimum_distance))
 					{
 	//					this.siefindmove.setBreakGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
 						this.siefindmove.setGoal(target_entity.posX, target_entity.posY, target_entity.posZ);
@@ -270,7 +268,7 @@ public class SILeAttack
 			if (this.sielocation.in(entity))
 			{
 //				if ((this.flag & 8) == 8 || (e.canEntityBeSeen(entity) && isTooClose(e, entity, this.minimum_distance)))
-				if ((this.state & B_REMOTE) == B_REMOTE || (e.canEntityBeSeen(entity) && getDistanceAABBToAABB(e, entity) <= this.minimum_distance))
+				if ((this.state & B_REMOTE) == B_REMOTE || (e.canEntityBeSeen(entity) && SIEArea.getDistanceAABBToAABB(e, entity) <= this.minimum_distance))
 				{
 					if ((this.state & B_HIT) == B_HIT)
 					{

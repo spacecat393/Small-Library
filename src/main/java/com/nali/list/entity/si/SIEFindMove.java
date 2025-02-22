@@ -7,7 +7,6 @@ import com.nali.small.entity.memo.server.ServerE;
 import com.nali.small.entity.memo.server.si.MixSIE;
 import com.nali.small.entity.memo.server.si.SI;
 import com.nali.small.entity.memo.server.si.SIData;
-import com.nali.small.entity.memo.server.si.path.PathMath;
 import com.nali.small.entity.memo.server.si.path.SNode;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
@@ -70,6 +69,36 @@ public class SIEFindMove
 	{
 		super(s);
 	}
+
+	//s0-math
+	public final static byte[] PATH_BYTE_ARRAY = { -1, 0, 1 };
+
+	public static byte getIndex(byte x, byte y, byte z)
+	{
+		byte index = 0;
+
+		for (byte xi : PATH_BYTE_ARRAY)
+		{
+			for (byte yi : PATH_BYTE_ARRAY)
+			{
+				for (byte zi : PATH_BYTE_ARRAY)
+				{
+					if (!(xi == 0 && yi == 0 && zi == 0))
+					{
+						if (xi == x && yi == y && zi == z)
+						{
+							return index;
+						}
+
+						++index;
+					}
+				}
+			}
+		}
+
+		return -1;
+	}
+	//e0-math
 
 	@Override
 	public void init()
@@ -311,7 +340,7 @@ public class SIEFindMove
 		byte new_y = (byte)Math.signum(to_y);
 		byte new_z = (byte)Math.signum(to_z);
 
-		byte index = PathMath.getIndex(new_x, new_y, new_z);
+		byte index = getIndex(new_x, new_y, new_z);
 		SNode pre_snode = this.getChild(index, start_snode, new_x, new_y, new_z);
 		if (pre_snode == null)
 		{
@@ -327,11 +356,11 @@ public class SIEFindMove
 		double to_goal = Double.MAX_VALUE;
 		index = 0;
 		byte pre_snode_index = -1;
-		for (byte x : PathMath.PATH_BYTE_ARRAY)
+		for (byte x : PATH_BYTE_ARRAY)
 		{
-			for (byte y : PathMath.PATH_BYTE_ARRAY)
+			for (byte y : PATH_BYTE_ARRAY)
 			{
-				for (byte z : PathMath.PATH_BYTE_ARRAY)
+				for (byte z : PATH_BYTE_ARRAY)
 				{
 					if (!(x == 0 && y == 0 && z == 0))
 					{

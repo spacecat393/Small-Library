@@ -14,6 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -30,6 +31,8 @@ public class ClientLe
 	MR extends MixRenderE<BD, R, E, I, MC, MB, ?>
 > extends ClientE<BD, R, E, I, MC, MB, MR> implements IBothLe<E>
 {
+	public NonNullList<ItemStack> hands_itemstack_nonnulllist = NonNullList.withSize(2, ItemStack.EMPTY);
+	public NonNullList<ItemStack> armor_itemstack_nonnulllist = NonNullList.withSize(4, ItemStack.EMPTY);
 //	public WorkEBodyYaw workebodyyaw;
 
 //	public byte[] work_byte_array;
@@ -88,6 +91,7 @@ public class ClientLe
 		return false;
 	}
 
+	//s0-inv
 	@Override
 	public void damageArmor(float damage)
 	{
@@ -96,25 +100,58 @@ public class ClientLe
 	@Override
 	public void setItemStackToSlot(EntityEquipmentSlot entityequipmentslot, ItemStack itemstack)
 	{
+		this.i.getE().playEquipSound(itemstack);
+		switch (entityequipmentslot.getSlotType())
+		{
+			case HAND:
+			{
+				this.hands_itemstack_nonnulllist.set(entityequipmentslot.getIndex(), itemstack);
+				break;
+			}
+			case ARMOR:
+			{
+				this.armor_itemstack_nonnulllist.set(entityequipmentslot.getIndex(), itemstack);
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
 	}
 
 	@Override
 	public ItemStack getItemStackFromSlot(EntityEquipmentSlot entityequipmentslot)
 	{
-		return null;
+		switch (entityequipmentslot.getSlotType())
+		{
+			case HAND:
+			{
+				return this.hands_itemstack_nonnulllist.get(entityequipmentslot.getIndex());
+			}
+			case ARMOR:
+			{
+				return this.armor_itemstack_nonnulllist.get(entityequipmentslot.getIndex());
+			}
+			default:
+			{
+				return ItemStack.EMPTY;
+			}
+		}
 	}
 
 	@Override
 	public Iterable<ItemStack> getArmorInventoryList()
 	{
-		return null;
+		return this.armor_itemstack_nonnulllist;
 	}
 
 	@Override
 	public Iterable<ItemStack> getHeldEquipment()
 	{
-		return null;
+		return this.hands_itemstack_nonnulllist;
 	}
+	//e0-inv
 
 	//	@Override
 //	public WorkEBodyYaw getWorkEBodyYaw()

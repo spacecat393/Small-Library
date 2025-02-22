@@ -1,5 +1,6 @@
 package com.nali.small;
 
+import com.nali.Nali;
 import com.nali.small.chunk.ChunkCallBack;
 import com.nali.small.chunk.ChunkData;
 import com.nali.small.entity.EntityRegistry;
@@ -156,6 +157,7 @@ public class Small
 	@EventHandler
 	public void onFMLServerStoppingEvent(FMLServerStoppingEvent event)
 	{
+		Nali.warn("SAVE_STATE NEED");
 		File world_file = DimensionManager.getCurrentSaveRootDirectory();
 		//s0-playerdata
 //		PlayerData.write(world_file);
@@ -207,5 +209,6 @@ public class Small
 		ChunkCallBack.free();
 
 //		SDaInvSelect.RUNNABLE_LIST = null;
+		Nali.warn("SAVE_STATE DONE");
 	}
 }

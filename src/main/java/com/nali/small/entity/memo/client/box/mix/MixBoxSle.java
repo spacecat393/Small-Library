@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class MixBoxSleInv
+public class MixBoxSle
 <
 	BD extends IBothDaE & IBothDaO & IBothDaS,
 	R extends RenderS<BD> & IRenderS<BD, R>,
@@ -39,7 +39,7 @@ public class MixBoxSleInv
 > extends MixBoxE<BD, R, E, I, MC, MR, C>
 {
 	public static EntityLe ENTITYLE;
-	public MixBoxSleInv(C c)
+	public MixBoxSle(C c)
 	{
 		super(c);
 	}

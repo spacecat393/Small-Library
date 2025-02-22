@@ -20,6 +20,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketCollectItem;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
 import java.io.File;
@@ -49,10 +50,23 @@ public class SIEInv
 	public final static byte B_CAN_TAKE_ITEM = 16;
 	public final static byte B_WALK_TO_XP = 32;
 	public final static byte B_WALK_TO_ITEM = 64;
+
+//	public final static short B_LOCK = 128;
 //	public final static byte B_GHOST_INV = (byte)128;
 	public byte state = B_CAN_TAKE_XP | B_CAN_TAKE_ITEM;//move_to | remote_xp remote_item can_take_xp can_take_item walk_to_xp walk_to_item
 //	public boolean pickup;
 //	public int item_time_out, xp_time_out;
+	public int xp;
+
+	//s0-net
+	public EntityPlayerMP entityplayermp;
+	public final static byte N_CHECK = 0;
+//	public final static byte N_ADD = 0;
+	public final static byte N_DELETE = 1;
+//	public final static byte N_MOVE = 2;
+	public byte net = -1;
+	public int net_slot = -1;
+	//e0-net
 
 	//s0-inv
 	public final static byte BS_LOCK = 1;
@@ -92,76 +106,73 @@ public class SIEInv
 			return false;
 		}
 
-		if ((ST & BS_LOCK) == 0)
+//		if ((ST & BS_LOCK) == 0)
+//		{
+//			ST |= BS_LOCK;
+		File inv_file = new File(world_file, "nali/inv/" + inv);
+
+		int item_id = Item.getIdFromItem(itemstack.getItem());
+		File inv_n_file = new File(inv_file, "" + item_id);
+
+		long count = itemstack.getCount();
+		byte[] count_byte_array = new byte[Long.BYTES];
+
+		if (inv_n_file.exists())
 		{
-			ST |= BS_LOCK;
-
-			File inv_file = new File(world_file, "nali/inv/" + inv);
-
-			int item_id = Item.getIdFromItem(itemstack.getItem());
-			File inv_n_file = new File(inv_file, "" + item_id);
-
-			long count = itemstack.getCount();
-			byte[] count_byte_array = new byte[Long.BYTES];
-
-			if (inv_n_file.exists())
-			{
-				try
-				{
-					byte[] byte_array = Files.readAllBytes(inv_n_file.toPath());
-					count += ByteReader.getLong(byte_array, 0);
-					if ((count & (1L << 63)) != 0)
-					{
-						ST &= 255 - BS_LOCK;
-						return false;
-					}
-				}
-				catch (Exception e)
-				{
-					Nali.warn(e);
-					inv_n_file.delete();
-				}
-			}
 			try
 			{
-				ByteWriter.set(count_byte_array, count, 0);
-				Files.write(inv_n_file.toPath(), count_byte_array);
+				byte[] byte_array = Files.readAllBytes(inv_n_file.toPath());
+				count += ByteReader.getLong(byte_array, 0);
+				if ((count & (1L << 63)) != 0)
+				{
+					ST &= 255 - BS_LOCK;
+					return false;
+				}
+			}
+			catch (Exception e)
+			{
+				Nali.warn(e);
+				inv_n_file.delete();
+			}
+		}
+		try
+		{
+			ByteWriter.set(count_byte_array, count, 0);
+			Files.write(inv_n_file.toPath(), count_byte_array);
+		}
+		catch (IOException e)
+		{
+			Nali.warn(e);
+		}
+
+		NBTTagCompound nbttagcompound = itemstack.getTagCompound();
+		if (nbttagcompound != null)
+		{
+			byte[] nbt_byte_array = ByteWriter.serializeNBT(nbttagcompound);
+
+			File nbt_n_file = new File(inv_file, "nbt/" + item_id);
+			nbt_n_file.mkdir();
+			try
+			{
+				long file_index = 0;
+				File nbt_i_file = new File(nbt_n_file, "" + file_index);
+				while (nbt_i_file.exists())
+				{
+					++file_index;
+					nbt_i_file = new File(nbt_n_file, "" + file_index);
+				}
+
+				Files.write(nbt_i_file.toPath(), nbt_byte_array);
 			}
 			catch (IOException e)
 			{
 				Nali.warn(e);
 			}
-
-			NBTTagCompound nbttagcompound = itemstack.getTagCompound();
-			if (nbttagcompound != null)
-			{
-				byte[] nbt_byte_array = ByteWriter.serializeNBT(nbttagcompound);
-
-				File nbt_n_file = new File(inv_file, "nbt/" + item_id);
-				nbt_n_file.mkdir();
-				try
-				{
-					long file_index = 0;
-					File nbt_i_file = new File(nbt_n_file, "" + file_index);
-					while (nbt_i_file.exists())
-					{
-						++file_index;
-						nbt_i_file = new File(nbt_n_file, "" + file_index);
-					}
-
-					Files.write(nbt_i_file.toPath(), nbt_byte_array);
-				}
-				catch (IOException e)
-				{
-					Nali.warn(e);
-				}
-			}
-
-			ST &= 255 - BS_LOCK;
-			return true;
 		}
-
-		return false;
+//			ST &= 255 - BS_LOCK;
+		return true;
+//		}
+//		return false;
 	}
 
 	public static boolean isSameItemSameTags(ItemStack itemstack_a, ItemStack itemstack_b)
@@ -392,8 +403,9 @@ public class SIEInv
 	//							this.s.current_work_byte_array[this.s.bytele.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, this.s.bytele.GET_ITEM() % 8));
 							}
 	//						Nali.LOGGER.info("XP STEP");
-							if ((this.state & B_CAN_TAKE_XP) == B_CAN_TAKE_XP)
+							if ((this.state & B_CAN_TAKE_XP/* + B_LOCK*/) == B_CAN_TAKE_XP)
 							{
+//								this.state |= B_LOCK;
 	//							Nali.LOGGER.info("XP TAKE");
 								//!need le
 								this.invPick(e, entityxporb, 1);
@@ -407,6 +419,7 @@ public class SIEInv
 								}
 
 								entityxporb.setDead();
+//								this.state &= 255 - B_LOCK;
 							}
 						}
 					}
@@ -429,10 +442,12 @@ public class SIEInv
 	//						this.s.current_work_byte_array[this.s.bytele.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, this.s.bytele.GET_ITEM() % 8));
 						}
 	//					Nali.LOGGER.info("ITEM STEP");
-						if ((this.state & B_CAN_TAKE_ITEM) == B_CAN_TAKE_ITEM)
+						if ((this.state & B_CAN_TAKE_ITEM/* + B_LOCK*/) == B_CAN_TAKE_ITEM)
 						{
+//							this.state |= B_LOCK;
+
 	//						Nali.LOGGER.info("ITEM TAKE");
-							for (byte i = 0; i < this.invSize(); ++i)
+							for (int i = 0; i < this.invSize(); ++i)
 							{
 								ItemStack inv_itemstack = this.invGet(i);
 
@@ -477,6 +492,8 @@ public class SIEInv
 									}
 								}
 							}
+
+//							this.state &= 255 - B_LOCK;
 						}
 					}
 				}
@@ -493,29 +510,211 @@ public class SIEInv
 //				this.s.current_work_byte_array[this.s.bytele.GET_ITEM() / 8] &= (byte)(255 - Math.pow(2, this.s.bytele.GET_ITEM() % 8));
 //			}
 		}
+
+//		if ((this.state & B_LOCK) == 0)
+//		{
+//		this.state |= B_LOCK;
+
+		if (this.net == N_CHECK)
+		{
+			ItemStack inv_itemstack = this.invGet(this.net_slot);
+			if (inv_itemstack.isEmpty())
+			{
+				ItemStack player_itemstack = this.entityplayermp.getHeldItem(this.entityplayermp.getActiveHand());
+				if (!player_itemstack.isEmpty())
+				{
+					int max_stack = inv_itemstack.getMaxStackSize();
+					int e_count = player_itemstack.getCount();
+
+					if (inv_itemstack.isEmpty())
+					{
+						this.invSet(this.net_slot, player_itemstack.copy());
+						player_itemstack.setCount(0);
+					}
+					else
+					{
+						int max_count = inv_itemstack.getCount() + e_count;
+						int count = max_count - max_stack;
+						if (SIEInv.isSameItemSameTags(inv_itemstack, player_itemstack))
+						{
+							if (count <= 0)
+							{
+								inv_itemstack.setCount(max_count);
+								player_itemstack.setCount(0);
+							}
+							else
+							{
+								inv_itemstack.setCount(max_stack);
+								player_itemstack.setCount(count);
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				if (!this.entityplayermp.inventory.addItemStackToInventory(inv_itemstack))
+				{
+					World world = this.entityplayermp.world;
+					world.spawnEntity(new EntityItem(world, this.entityplayermp.posX, this.entityplayermp.posY, this.entityplayermp.posZ, inv_itemstack));
+				}
+			}
+			this.clearNet();
+		}
+		else if (this.net == N_DELETE)
+		{
+			for (int i = 0; i < this.invSize(); ++i)
+			{
+				this.invSet(i, ItemStack.EMPTY);
+			}
+			this.clearNet();
+		}
+//		ItemStack itemstack;
+//		switch (this.net)
+//		{
+//			case N_ADD:
+//				itemstack = this.entityplayermp.getHeldItem(this.entityplayermp.getActiveHand());
+//				if (!itemstack.isEmpty())
+//				{
+//					for (int i = 0; i < this.invSize(); ++i)
+//					{
+//						ItemStack inv_itemstack = this.invGet(i);
+//
+//						int max_stack = inv_itemstack.getMaxStackSize();
+//						int e_count = itemstack.getCount();
+//
+//						if (inv_itemstack.isEmpty())
+//						{
+//							this.invSet(i, itemstack);
+//							itemstack.setCount(0);
+//							break;
+//						}
+//
+//						int max_count = inv_itemstack.getCount() + e_count;
+//						int count = max_count - max_stack;
+//						if (SIEInv.isSameItemSameTags(inv_itemstack, itemstack))
+//						{
+//							if (count <= 0)
+//							{
+//								inv_itemstack.setCount(max_count);
+//								itemstack.setCount(0);
+//								break;
+//							}
+//							else
+//							{
+//								inv_itemstack.setCount(max_stack);
+//								itemstack.setCount(count);
+//							}
+//						}
+//					}
+//				}
+//				this.clearNet();
+//				break;
+//			case N_DELETE:
+//				for (int i = 0; i < this.invSize(); ++i)
+//				{
+//					this.invSet(i, ItemStack.EMPTY);
+//				}
+//				this.clearNet();
+//				break;
+//			case N_MOVE:
+//				itemstack = this.invGet(this.net_slot);
+//				if (!this.entityplayermp.inventory.addItemStackToInventory(itemstack))
+//				{
+//					World world = this.entityplayermp.world;
+//					world.spawnEntity(new EntityItem(world, this.entityplayermp.posX, this.entityplayermp.posY, this.entityplayermp.posZ, itemstack));
+//				}
+//				this.clearNet();
+//				break;
+//		}
+////		this.state &= 255 - B_LOCK;
+////		}
 	}
 
 	@Override
 	public void writeFile(SIData sidata)
 	{
 		sidata.byte_array[sidata.index++] = this.state;
+
+		ByteWriter.set(sidata.byte_array, this.byteSize(), sidata.index);
+		sidata.index += 4;
+
+		for (int i = 0; i < this.invSize(); ++i)
+		{
+			ItemStack itemstack = this.invGet(i);
+			if (!itemstack.isEmpty())
+			{
+				NBTTagCompound nbttagcompound = new NBTTagCompound();
+				itemstack.writeToNBT(nbttagcompound);
+				byte[] byte_array = ByteWriter.serializeNBT(nbttagcompound);
+				int byte_array_length = byte_array.length;
+
+				ByteWriter.set(sidata.byte_array, byte_array_length, sidata.index);
+				sidata.index += 4;
+
+				System.arraycopy(byte_array, 0, sidata.byte_array, sidata.index, byte_array_length);
+				sidata.index += byte_array_length;
+			}
+		}
 	}
 
 	@Override
 	public void readFile(SIData sidata)
 	{
 		this.state = sidata.byte_array[sidata.index++];
+
+		int byte_size = ByteReader.getInt(sidata.byte_array, sidata.index);
+		sidata.index += 4;
+
+		for (int i = 0; i < byte_size; ++i)
+		{
+			ItemStack itemstack = this.invGet(i);
+			if (!itemstack.isEmpty())
+			{
+				int byte_array_length = ByteReader.getInt(sidata.byte_array, sidata.index);
+				sidata.index += 4;
+
+				byte[] byte_array = new byte[byte_array_length];
+				System.arraycopy(sidata.byte_array, sidata.index, byte_array, 0, byte_array_length);
+				NBTTagCompound nbttagcompound = ByteReader.deserializeNBT(byte_array);
+				this.invSet(i, new ItemStack(nbttagcompound));
+				sidata.index += byte_array_length;
+			}
+		}
 	}
 
 	@Override
 	public int size()
 	{
-		return 1;
+		return 1 + 4 + this.byteSize();
 	}
 
 	public ItemStack getXPItemStack(E e)
 	{
 		return ItemStack.EMPTY;
+	}
+
+	public int byteSize()
+	{
+		int size = 0;
+		for (int i = 0; i < this.invSize(); ++i)
+		{
+			ItemStack itemstack = this.invGet(i);
+			if (!itemstack.isEmpty())
+			{
+				NBTTagCompound nbttagcompound = new NBTTagCompound();
+				itemstack.writeToNBT(nbttagcompound);
+				size += 4 + ByteWriter.serializeNBT(nbttagcompound).length;
+			}
+		}
+		return size;
+	}
+
+	public void clearNet()
+	{
+		this.entityplayermp = null;
+		this.net = -1;
+		this.net_slot = -1;
 	}
 
 //	public static int roundAverage(float value)

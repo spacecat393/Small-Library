@@ -10,8 +10,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 
-import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
-
 public class SIEHeal
 <
 	BD extends IBothDaE,
@@ -148,7 +146,7 @@ public class SIEHeal
 				{
 					Entity entity = this.siearea.out_entity_list.get(index);
 	//				if (isTooClose(e, entity, this.minimum_distance))
-					if (getDistanceAABBToAABB(e, entity) <= this.minimum_distance)
+					if (SIEArea.getDistanceAABBToAABB(e, entity) <= this.minimum_distance)
 					{
 //						if (this.state == -1)
 						if ((this.flag & (B_ANIMATE_START + B_ANIMATE_HEAL)) == 0)

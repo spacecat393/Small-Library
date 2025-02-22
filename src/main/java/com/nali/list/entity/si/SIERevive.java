@@ -23,7 +23,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
 import static com.nali.Nali.error;
-import static com.nali.small.entity.EntityMath.getDistanceAABBToAABB;
 
 public class SIERevive
 <
@@ -322,7 +321,7 @@ public class SIERevive
 										continue;
 									}
 
-									double new_far = getDistanceAABBToAABB(e, entity);
+									double new_far = SIEArea.getDistanceAABBToAABB(e, entity);
 									if (new_far < max_far)
 									{
 										this.entity = entity;

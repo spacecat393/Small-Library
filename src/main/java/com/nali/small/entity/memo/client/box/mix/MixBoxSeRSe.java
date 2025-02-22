@@ -7,7 +7,6 @@ import com.nali.render.RenderO;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.memo.client.ClientE;
 import com.nali.small.entity.memo.client.box.hit.HitE;
-import com.nali.small.entity.memo.client.box.hit.HitEPage;
 import com.nali.small.entity.memo.client.box.hit.HitEPlayWithRSe;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.mix.MixRenderE;
@@ -31,8 +30,8 @@ public class MixBoxSeRSe
 	C extends ClientE<BD, R, E, I, MC, ?, MR>
 > extends MixBoxE<BD, R, E, I, MC, MR, C>
 {
-	public final static byte B_OPEN = 1;
-	public static byte PAGE;
+//	public final static byte B_OPEN = 1;
+//	public static byte PAGE;
 
 	public MixBoxSeRSe(C c)
 	{
@@ -42,24 +41,24 @@ public class MixBoxSeRSe
 	@Override
 	public HitE isOn(Entity entity, Vec3d stand_vec3d, Vec3d look_vec3d, boolean work)
 	{
-		if (entity.isSneaking())
+//		if (entity.isSneaking())
+//		{
+//			if (work)
+//			{
+//				PAGE |= B_OPEN;
+//			}p
+//			return HitEPage.HITEPAGE;
+////			SmallPage.setSmallPage();
+////			this.c.sendSSI(new byte[1 + 8 + 1], SIEInvOpenInv.ID);
+//		}
+//		else
+//		{
+		if (work)
 		{
-			if (work)
-			{
-				PAGE |= B_OPEN;
-			}
-			return HitEPage.HITEPAGE;
-//			SmallPage.setSmallPage();
-//			this.c.sendSSI(new byte[1 + 8 + 1], SIEInvOpenInv.ID);
+			this.c.sendSSI(new byte[1 + 8 + 1], SIEPlayWithRSe.ID);
 		}
-		else
-		{
-			if (work)
-			{
-				this.c.sendSSI(new byte[1 + 8 + 1], SIEPlayWithRSe.ID);
-			}
-			return HitEPlayWithRSe.HITEPLAYWITHRSE;
-		}
+		return HitEPlayWithRSe.HITEPLAYWITHRSE;
+//		}
 //		return null;
 	}
 
@@ -72,6 +71,5 @@ public class MixBoxSeRSe
 	@Override
 	public void init(C c)
 	{
-
 	}
 }
