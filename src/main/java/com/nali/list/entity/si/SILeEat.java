@@ -131,8 +131,15 @@ public class SILeEat
 			int max_bones = f2.bone;
 			float[] skinning_float_array = new float[max_bones * 16];
 			f2.initS(bd, skinning_float_array);
-			this.s.i.mulFrame(skinning_float_array, this.siekey.key_short_array);
-			f2.setS(bd, skinning_float_array, this.siekey.key_short_array);
+			//!frame
+			byte max_frame = bd.S_MaxFrame();
+			short[] key_short_array = new short[max_frame];
+			for (byte i = 0; i < max_frame; ++i)
+			{
+				key_short_array[i] = (short)(bd.S_FixKeyShortArray()[this.siekey.action_byte_array[i]] + this.siekey.line_short_array[i]);
+			}
+			this.s.i.mulFrame(skinning_float_array, key_short_array);
+			f2.setS(bd, skinning_float_array, key_short_array, null, null);
 			//e0-skinning
 			float[] pos_vec4 = f2.getSV4FloatArray(this.s.scale, skinning_float_array, (float)e.posX, (float)e.posY, (float)e.posZ, 0, 0, 0, iv_int_array[10], iv_int_array[11]);
 

@@ -106,7 +106,7 @@ public interface IServerS
 	KeyS[][] getKeyS2DArray();
 //	byte[] getFrameByteArray();
 	byte[] getKeyDataByteArray();
-	short[] getFixKeyShortArray();
+//	short[] getFixKeyShortArray();
 //	int[][] getFrame2DIntArray();
 //	int[] getFrameIntArray();
 }

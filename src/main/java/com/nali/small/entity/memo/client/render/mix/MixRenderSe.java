@@ -141,10 +141,10 @@ public class MixRenderSe
 
 //		if (!this.c.fake)
 //		{
-		this.c.i.mulFrame(r.skinning_float_array, r.key_short_array);
+		this.c.i.mulFrame(r.skinning_float_array, r.mix_key_short_array);
 //		}
 
-		f2.setS(bd, r.skinning_float_array, r.key_short_array/*memoanimation*/);
+		f2.setS(bd, r.skinning_float_array, r.mix_key_short_array, r.action_byte_array, r.line_float_array);
 	}
 
 //	public void renderHitBox(FRenderE<E> rendere)

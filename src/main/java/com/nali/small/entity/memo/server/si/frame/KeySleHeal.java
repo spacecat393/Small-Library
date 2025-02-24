@@ -41,69 +41,72 @@ public class KeySleHeal
 	@Override
 	public boolean onUpdate()
 	{
-		if ((this.sieheal.flag & SIEHeal.B_ON) == SIEHeal.B_ON)
-		{
-			short[] key_short_array = this.siekey.key_short_array;
-			short[] fix_key_short_array = this.s.getFixKeyShortArray();
-			byte[] key_data_byte_array = this.s.getKeyDataByteArray();
-
-			byte key_short_index = key_data_byte_array[this.key_data_index];
-			byte fix_key_index0 = key_data_byte_array[this.key_data_index + 1];
-
-			for (int heal_frame : this.sieheal.heal_frame_int_array)
-			{
-				if (key_short_array[key_short_index] == heal_frame)
-				{
-					this.sieheal.flag |= SIEHeal.B_ANIMATE_HEAL;
-					break;
-				}
-			}
-
-			if (key_short_array[key_short_index] < fix_key_short_array[fix_key_index0] || key_short_array[key_short_index] > fix_key_short_array[fix_key_index0 + 1])
-			{
-				key_short_array[key_short_index] = fix_key_short_array[fix_key_index0];
-			}
-			else if (key_short_array[key_short_index] == fix_key_short_array[fix_key_index0 + 1])
-			{
-				key_short_array[key_short_index] = fix_key_short_array[fix_key_index0];
-			}
-			else
-			{
-				++key_short_array[key_short_index];
-			}
-
-			this.siekey.sync_byte_arraylist.add(key_short_index);
-			return true;
-
-//			this.step = 1;
+		//!frame
+		return false;
+//		if ((this.sieheal.flag & SIEHeal.B_ON) == SIEHeal.B_ON)
+//		{
+//			short[] key_short_array = this.siekey.key_short_array;
+////			short[] fix_key_short_array = this.s.getFixKeyShortArray();
+//			short[] fix_key_short_array = this.s.i.getBD().S_KeyShortArray();
+//			byte[] key_data_byte_array = this.s.getKeyDataByteArray();
 //
-//			int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
-//			byte[] frame_byte_array = this.s.getFrameByteArray();
-//			byte frame = frame_byte_array[this.rg];
+//			byte key_short_index = key_data_byte_array[this.key_data_index];
+//			byte fix_key_index0 = key_data_byte_array[this.key_data_index + 1];
+//
 //			for (int heal_frame : this.sieheal.heal_frame_int_array)
 //			{
-//				if (this.siekey.frame_int_array[frame] == heal_frame)
+//				if (key_short_array[key_short_index] == heal_frame)
 //				{
-//					this.sieheal.state |= 4;
+//					this.sieheal.flag |= SIEHeal.B_ANIMATE_HEAL;
 //					break;
 //				}
 //			}
 //
-//			byte rg = frame_byte_array[this.rg + 1];
-//			if (this.siekey.frame_int_array[frame] < frame_2d_int_array[rg][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[rg][1])
+//			if (key_short_array[key_short_index] < fix_key_short_array[fix_key_index0] || key_short_array[key_short_index] > fix_key_short_array[fix_key_index0 + 1])
 //			{
-//				this.siekey.frame_int_array[frame] = frame_2d_int_array[rg][0];
-//				this.step = 0;
+//				key_short_array[key_short_index] = fix_key_short_array[fix_key_index0];
 //			}
-//			else if (this.siekey.frame_int_array[frame] == frame_2d_int_array[rg][1])
+//			else if (key_short_array[key_short_index] == fix_key_short_array[fix_key_index0 + 1])
 //			{
-//				this.siekey.frame_int_array[frame] = frame_2d_int_array[rg][0];
-//				this.step = 0;
+//				key_short_array[key_short_index] = fix_key_short_array[fix_key_index0];
+//			}
+//			else
+//			{
+//				++key_short_array[key_short_index];
 //			}
 //
+//			this.siekey.sync_byte_arraylist.add(key_short_index);
 //			return true;
-		}
-
-		return false;
+//
+////			this.step = 1;
+////
+////			int[][] frame_2d_int_array = this.s.getFrame2DIntArray();
+////			byte[] frame_byte_array = this.s.getFrameByteArray();
+////			byte frame = frame_byte_array[this.rg];
+////			for (int heal_frame : this.sieheal.heal_frame_int_array)
+////			{
+////				if (this.siekey.frame_int_array[frame] == heal_frame)
+////				{
+////					this.sieheal.state |= 4;
+////					break;
+////				}
+////			}
+////
+////			byte rg = frame_byte_array[this.rg + 1];
+////			if (this.siekey.frame_int_array[frame] < frame_2d_int_array[rg][0] || this.siekey.frame_int_array[frame] > frame_2d_int_array[rg][1])
+////			{
+////				this.siekey.frame_int_array[frame] = frame_2d_int_array[rg][0];
+////				this.step = 0;
+////			}
+////			else if (this.siekey.frame_int_array[frame] == frame_2d_int_array[rg][1])
+////			{
+////				this.siekey.frame_int_array[frame] = frame_2d_int_array[rg][0];
+////				this.step = 0;
+////			}
+////
+////			return true;
+//		}
+//
+//		return false;
 	}
 }

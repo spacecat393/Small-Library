@@ -43,38 +43,40 @@ public class KeySleAttack
 	@Override
 	public boolean onUpdate()
 	{
-		if (this.step())
-		{
-			short[] key_short_array = this.siekey.key_short_array;
-			short[] fix_key_short_array = this.s.getFixKeyShortArray();
-			byte[] key_data_byte_array = this.s.getKeyDataByteArray();
-
-			byte key_short_index = key_data_byte_array[this.key_data_index];
-			byte fix_key_index = this.getFixKeyIndex(key_data_byte_array);
-
-			for (int attack_frame : this.sileattack.attack_frame_int_array)
-			{
-				if (key_short_array[key_short_index] == attack_frame)
-				{
-					this.sileattack.state |= SILeAttack.B_HIT;
-					break;
-				}
-			}
-
-			if (key_short_array[key_short_index] < fix_key_short_array[fix_key_index] || key_short_array[key_short_index] >= fix_key_short_array[fix_key_index + 1])
-			{
-				key_short_array[key_short_index] = fix_key_short_array[fix_key_index];
-			}
-			else
-			{
-				++key_short_array[key_short_index];
-			}
-
-			this.siekey.sync_byte_arraylist.add(key_short_index);
-			return true;
-		}
-
+		//!frame
 		return false;
+//		if (this.step())
+//		{
+//			short[] key_short_array = this.siekey.key_short_array;
+//			short[] fix_key_short_array = this.s.getFixKeyShortArray();
+//			byte[] key_data_byte_array = this.s.getKeyDataByteArray();
+//
+//			byte key_short_index = key_data_byte_array[this.key_data_index];
+//			byte fix_key_index = this.getFixKeyIndex(key_data_byte_array);
+//
+//			for (int attack_frame : this.sileattack.attack_frame_int_array)
+//			{
+//				if (key_short_array[key_short_index] == attack_frame)
+//				{
+//					this.sileattack.state |= SILeAttack.B_HIT;
+//					break;
+//				}
+//			}
+//
+//			if (key_short_array[key_short_index] < fix_key_short_array[fix_key_index] || key_short_array[key_short_index] >= fix_key_short_array[fix_key_index + 1])
+//			{
+//				key_short_array[key_short_index] = fix_key_short_array[fix_key_index];
+//			}
+//			else
+//			{
+//				++key_short_array[key_short_index];
+//			}
+//
+//			this.siekey.sync_byte_arraylist.add(key_short_index);
+//			return true;
+//		}
+//
+//		return false;
 	}
 
 	public boolean step()

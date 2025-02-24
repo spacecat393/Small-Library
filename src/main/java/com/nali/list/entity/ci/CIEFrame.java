@@ -8,6 +8,7 @@ import com.nali.render.RenderS;
 import com.nali.small.entity.IMixE;
 import com.nali.small.entity.IMixES;
 import com.nali.small.entity.memo.client.ClientE;
+import com.nali.small.entity.memo.client.IClientS;
 import com.nali.small.entity.memo.client.box.mix.MixBoxE;
 import com.nali.small.entity.memo.client.ci.CI;
 import com.nali.small.entity.memo.client.ci.MixCIE;
@@ -26,7 +27,7 @@ public class CIEFrame
 	MC extends MixCIE<BD, R, E, I, MB, MR, C>,
 	MB extends MixBoxE<BD, R, E, I, MC, MR, C>,
 	MR extends MixRenderSe<BD, R, E, I, MC, MB, C>,
-	C extends ClientE<BD, R, E, I, MC, MB, MR>
+	C extends ClientE<BD, R, E, I, MC, MB, MR> & IClientS
 > extends CI<BD, R, E, I, MC, MB, MR, C>
 {
 	public static byte ID;
@@ -71,7 +72,9 @@ public class CIEFrame
 //			r.scale = 1;
 //		}
 
-		short[] key_short_array = r.key_short_array;
+		byte[] action_byte_array = r.action_byte_array;
+		short[] mix_key_short_array = r.mix_key_short_array;
+		float[] line_float_array = r.line_float_array;
 //			short key = 0;
 		for (int x = 0; x < bd.S_MaxFrame(); ++x)
 		{
@@ -84,7 +87,22 @@ public class CIEFrame
 //					key_short_array[x] = key;
 //					key = 0;
 //				}
-			key_short_array[x] = ByteReader.getShort(this.c.sync_byte_array, bd.Se_SyncIndex() + x * 2);
+			int x2 = x * 2;
+			int x2_1 = x2 + 1;
+			int x3 = x * 3;
+			int x4p1 = x * (4 + 1);
+			action_byte_array[x3] = this.c.sync_byte_array[bd.Se_SyncIndex() + x4p1];
+
+			line_float_array[x3] = ByteReader.getFloat(this.c.sync_byte_array, bd.Se_SyncIndex() + x4p1 + 1);
+			byte action = action_byte_array[x3];
+			short
+				start = bd.S_FixKeyShortArray()[action],
+				end = bd.S_FixKeyShortArray()[action + 1];
+			mix_key_short_array[x2] = start;
+			mix_key_short_array[x2_1] = end;
+//			action_byte_array[x2_1] = (byte)(start < end ? 1 : 0);
+//			action_byte_array[x2_1] = bd.S_ActionState()[action];
+			action_byte_array[x3 + 2] = this.c.getActionStateByteArray()[action / 2];
 		}
 //		}
 	}

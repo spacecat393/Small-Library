@@ -27,34 +27,41 @@ public class KeySFLoop
 	@Override
 	public boolean onUpdate()
 	{
-		short[] key_short_array = this.siekey.key_short_array;
-		short[] fix_key_short_array = this.s.getFixKeyShortArray();
-		byte[] key_data_byte_array = this.s.getKeyDataByteArray();
-
-		byte key_short_index = key_data_byte_array[this.key_data_index];
-		byte fix_key_index = this.getFixKeyIndex(key_data_byte_array);
-
-//		Nali.warn("key_short_array[key_short_index] " + key_short_array[key_short_index]);
-		if (key_short_array[key_short_index] < fix_key_short_array[fix_key_index] || key_short_array[key_short_index] > fix_key_short_array[fix_key_index + 1])
-		{
-//			Nali.warn("=");
-			key_short_array[key_short_index] = fix_key_short_array[fix_key_index];
-			this.siekey.sync_byte_arraylist.add(key_short_index);
-		}
-		else if (key_short_array[key_short_index] < fix_key_short_array[fix_key_index + 1])
-		{
-//			Nali.warn("++");
-			++key_short_array[key_short_index];
-			this.siekey.sync_byte_arraylist.add(key_short_index);
-		}
-//		else
+		//!frame
+		return false;
+//		byte[] action_byte_array = this.siekey.action_byte_array;
+//		float[] line_float_array = this.siekey.line_short_array;
+//		short[] fix_key_short_array = this.s.i.getBD().S_FixKeyShortArray();
+//		byte[] key_data_byte_array = this.s.getKeyDataByteArray();
+//
+//		byte key_short_index = key_data_byte_array[this.key_data_index];
+//		byte fix_key_index = this.getFixKeyIndex(key_data_byte_array);
+//
+//		if (action_byte_array[key_short_index] != fix_key_index)
 //		{
-////			Nali.warn("Done");
-//			return false;
+//			line_float_array[key_short_index] = 0;
+//			action_byte_array[key_short_index] = fix_key_index;
+//			this.siekey.sync_byte_arraylist.add(key_short_index);
+//			return true;
 //		}
-
-//		Nali.warn("Sync");
-		return true;
+//
+//		float new_line = line_float_array[key_short_index] + this.fps;
+//		short end = (short)(fix_key_short_array[fix_key_index + 1] - fix_key_short_array[fix_key_index]);
+//		if (line_float_array[key_short_index] != end)
+//		{
+//			if ((this.fps > 0 && new_line < end) || (this.fps < 0 && new_line > end))
+//			{
+//				line_float_array[key_short_index] += new_line;
+//				this.siekey.sync_byte_arraylist.add(key_short_index);
+//			}
+//			else
+//			{
+//				line_float_array[key_short_index] = end;
+//				this.siekey.sync_byte_arraylist.add(key_short_index);
+//			}
+//		}
+//
+//		return true;
 	}
 
 	public byte getFixKeyIndex(byte[] key_data_byte_array)

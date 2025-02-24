@@ -31,6 +31,7 @@ public abstract class KeyS
 //	public short step;//0 - MAX_SHORT
 	//use as rg
 //	public byte key;//0 - 255 -> SIEFrame
+	public float fps = 25.0F/20;//25 fps
 	public byte key_data_index;
 	public SIEKey<BD, E, I, S, MS> siekey;
 

@@ -27,27 +27,30 @@ public class KeySFLoopOffSet
 	@Override
 	public boolean onUpdate()
 	{
-		short[] key_short_array = this.siekey.key_short_array;
-		short[] fix_key_short_array = this.s.getFixKeyShortArray();
-		byte[] key_data_byte_array = this.s.getKeyDataByteArray();
-
-		byte key_short_index = key_data_byte_array[this.key_data_index];
-		byte fix_key_index0 = key_data_byte_array[this.key_data_index + 1];
-		byte fix_key_index1 = key_data_byte_array[this.key_data_index + 2];
-
-		if (key_short_array[key_short_index] >= fix_key_short_array[fix_key_index0 + 1] && key_short_array[key_short_index] < fix_key_short_array[fix_key_index1])
-		{
-			key_short_array[key_short_index] = fix_key_short_array[fix_key_index1];
-			this.siekey.sync_byte_arraylist.add(key_short_index);
-			return true;
-		}
-		else if (key_short_array[key_short_index] >= fix_key_short_array[fix_key_index0] && key_short_array[key_short_index] < fix_key_short_array[fix_key_index1 + 1])
-		{
-			++key_short_array[key_short_index];
-			this.siekey.sync_byte_arraylist.add(key_short_index);
-			return true;
-		}
-
+		//!frame
 		return false;
+//
+//		short[] key_short_array = this.siekey.key_short_array;
+//		short[] fix_key_short_array = this.s.getFixKeyShortArray();
+//		byte[] key_data_byte_array = this.s.getKeyDataByteArray();
+//
+//		byte key_short_index = key_data_byte_array[this.key_data_index];
+//		byte fix_key_index0 = key_data_byte_array[this.key_data_index + 1];
+//		byte fix_key_index1 = key_data_byte_array[this.key_data_index + 2];
+//
+//		if (key_short_array[key_short_index] >= fix_key_short_array[fix_key_index0 + 1] && key_short_array[key_short_index] < fix_key_short_array[fix_key_index1])
+//		{
+//			key_short_array[key_short_index] = fix_key_short_array[fix_key_index1];
+//			this.siekey.sync_byte_arraylist.add(key_short_index);
+//			return true;
+//		}
+//		else if (key_short_array[key_short_index] >= fix_key_short_array[fix_key_index0] && key_short_array[key_short_index] < fix_key_short_array[fix_key_index1 + 1])
+//		{
+//			++key_short_array[key_short_index];
+//			this.siekey.sync_byte_arraylist.add(key_short_index);
+//			return true;
+//		}
+//
+//		return false;
 	}
 }
