@@ -45,7 +45,7 @@ public abstract class KeySFLoopFree
 			}
 			else
 			{
-				super.onUpdate();
+				return super.onUpdate();
 			}
 //			short[] key_short_array = this.siekey.key_short_array;
 //			short[] fix_key_short_array = this.s.getFixKeyShortArray();

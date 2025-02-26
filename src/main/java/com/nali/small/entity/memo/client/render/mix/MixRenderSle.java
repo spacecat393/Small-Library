@@ -13,6 +13,7 @@ import com.nali.small.entity.memo.client.box.mix.MixBoxSle;
 import com.nali.small.entity.memo.client.ci.MixCIE;
 import com.nali.small.entity.memo.client.render.FRenderE;
 import com.nali.small.entity.memo.client.render.layer.LayerSleArrow;
+import com.nali.small.entity.memo.client.render.layer.LayerSleItem;
 import com.nali.small.render.IRenderS;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,7 +34,7 @@ public class MixRenderSle
 > extends MixRenderSe<BD, R, E, I, MC, MB, C>
 {
 	public LayerSleArrow<BD, R, E, I, MC, ?, MB, C> layerslearrow;
-//	public LayerSleInvItem<R, BD, E, I, MC, ?, MB, C> layersleinvitem;
+	public LayerSleItem<BD, R, E, I, MC, ?, MB, C> layersleitem;
 
 //	public float
 //		body_rot,
@@ -43,7 +44,7 @@ public class MixRenderSle
 	{
 		super(c);
 		this.layerslearrow = new LayerSleArrow(c);
-//		this.layersleinvitem = new LayerSleInvItem(c);
+		this.layersleitem = new LayerSleItem(c);
 	}
 
 //	@Override
@@ -75,12 +76,13 @@ public class MixRenderSle
 		double y = this.y - rendermanager.viewerPosY;
 		double z = this.z - rendermanager.viewerPosZ;
 		GL11.glTranslated(x, y, z);
-		GL11.glScalef(r.scale, r.scale, r.scale);
-		GL11.glTranslated(-x, -y, -z);
+		float scale = r.scale / this.c.i.getBD().E_Scale();
+		GL11.glScalef(scale, scale, scale);
+//		GL11.glTranslated(-x, -y, -z);
 //		this.layersleinvitem.x = (float)ox;
 //		this.layersleinvitem.y = (float)oy;
 //		this.layersleinvitem.z = (float)oz;
-//		this.layersleinvitem.layer(partial_ticks);
+		this.layersleitem.layer(partial_ticks);
 		this.layerslearrow.layer(rendere/*, (float)ox, (float)oy, (float)oz*/, partial_ticks);
 
 		GL11.glPopMatrix();
